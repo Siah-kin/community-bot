@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bonzi</title>
+    <meta name="description" content="your community's new best friend">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FAFAFA;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #E4E4E7;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--purple);
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Minimal nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .nav-logo {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: lowercase;
+        }
+
+        /* Opening - just bonzi */
+        .opening {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opening-bonzi {
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .opening-text {
+            margin-top: 48px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .opening-text h1 {
+            font-size: clamp(48px, 10vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            color: var(--black);
+        }
+
+        .opening-text p {
+            margin-top: 16px;
+            font-size: 16px;
+            color: var(--gray);
+            letter-spacing: 0.02em;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+        }
+
+        .scroll-hint span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gray), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* History section */
+        .history {
+            padding: 120px 48px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .history-content {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .history-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 24px;
+        }
+
+        .history-text {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--black);
+        }
+
+        .history-text em {
+            color: var(--purple);
+            font-style: normal;
+        }
+
+        /* Reveal section */
+        .reveal {
+            min-height: 80vh;
+            padding: 120px 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reveal-content {
+            max-width: 800px;
+        }
+
+        .reveal-line {
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .reveal-line span {
+            display: block;
+            font-size: clamp(32px, 6vw, 64px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            transform: translateY(100%);
+        }
+
+        .reveal-line span.purple {
+            color: var(--purple);
+        }
+
+        /* Big statement */
+        .statement {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .statement-text {
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .statement-text .highlight {
+            color: var(--purple-light);
+        }
+
+        /* Pain points section */
+        .pain-section {
+            padding: 120px 48px;
+            background: var(--white);
+        }
+
+        .pain-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 48px;
+            line-height: 1.2;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .pain-item {
+            padding: 32px;
+            background: #FAFAFA;
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+        }
+
+        .pain-item h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .pain-item p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Solutions section */
+        .solutions-section {
+            padding: 120px 48px;
+            background: #FAFAFA;
+        }
+
+        .solutions-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .solution-item {
+            display: flex;
+            gap: 24px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .solution-item:last-child {
+            border-bottom: none;
+        }
+
+        .solution-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--purple);
+            flex-shrink: 0;
+            width: 32px;
+        }
+
+        .solution-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .solution-content p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Comparison section */
+        .comparison-section {
+            padding: 120px 48px;
+            background: var(--white);
+        }
+
+        .comparison-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 48px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .comparison-table th {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison-table th:first-child {
+            color: var(--purple);
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .comparison-table .check {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .comparison-table .cross {
+            color: var(--gray);
+        }
+
+        .comparison-table .highlight-col {
+            background: rgba(124, 58, 237, 0.04);
+        }
+
+        /* Mission section */
+        .mission-section {
+            padding: 120px 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .mission-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple-light);
+            margin-bottom: 24px;
+        }
+
+        .mission-title {
+            font-size: clamp(24px, 4vw, 40px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+            line-height: 1.3;
+        }
+
+        .mission-flow {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .mission-item {
+            text-align: center;
+        }
+
+        .mission-percent {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--purple-light);
+            letter-spacing: -0.03em;
+        }
+
+        .mission-desc {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        .mission-footer {
+            margin-top: 64px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mission-footer p {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .mission-footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .mission-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Demo section */
+        .demo-section {
+            min-height: 100vh;
+            padding: 120px 48px;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .demo-intro {
+            text-align: center;
+            max-width: 500px;
+            margin-bottom: 64px;
+        }
+
+        .demo-intro h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 16px;
+        }
+
+        .demo-intro p {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        /* Chat widget - clean, light, no logo spam */
+        .chat-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow:
+                0 0 0 1px rgba(0,0,0,0.04),
+                0 4px 32px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 20px 24px;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar-header {
+            width: 40px;
+            height: 40px;
+            background: var(--purple);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .chat-header-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .chat-header-info span {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .chat-status {
+            width: 8px;
+            height: 8px;
+            background: #22C55E;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .chat-messages {
+            height: 360px;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: #F9FAFB;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 10px;
+            max-width: 85%;
+            animation: msgIn 0.3s ease;
+        }
+
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+            margin-left: auto;
+        }
+
+        .bot-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--purple);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--gray-light);
+            flex-shrink: 0;
+        }
+
+        .chat-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-message.bot .chat-bubble {
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 16px 16px 16px 4px;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: var(--purple);
+            color: white;
+            border-radius: 16px 16px 4px 16px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: 16px 16px 16px 4px;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .chat-input-area {
+            padding: 16px 20px;
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--purple);
+        }
+
+        .chat-input-area button {
+            padding: 12px 20px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: none;
+            transition: background 0.2s;
+        }
+
+        .chat-input-area button:hover {
+            background: var(--purple-dark);
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 20px 16px;
+            background: var(--white);
+        }
+
+        .suggestion {
+            padding: 8px 14px;
+            background: #F4F4F5;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--gray);
+            cursor: none;
+            transition: all 0.2s;
+        }
+
+        .suggestion:hover {
+            background: var(--purple);
+            color: white;
+        }
+
+        /* Links section */
+        .links-section {
+            padding: 120px 48px;
+            background: var(--white);
+        }
+
+        .links-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .link-card {
+            padding: 48px 32px;
+            background: #FAFAFA;
+            border: 1px solid var(--gray-light);
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            border-color: var(--purple);
+        }
+
+        .link-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .link-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .link-card .arrow {
+            font-size: 20px;
+            color: var(--purple);
+            margin-top: auto;
+            transition: transform 0.2s;
+        }
+
+        .link-card:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Footer - minimal, no logo */
+        footer {
+            padding: 48px;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .footer-right {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .opening {
+                padding: 24px;
+            }
+
+            .opening-bonzi {
+                width: 140px;
+                height: 140px;
+            }
+
+            .history {
+                padding: 80px 24px;
+            }
+
+            .reveal {
+                padding: 80px 24px;
+            }
+
+            .demo-section {
+                padding: 80px 24px;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pain-section,
+            .solutions-section,
+            .comparison-section,
+            .mission-section {
+                padding: 80px 24px;
+            }
+
+            .comparison-table {
+                font-size: 13px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 8px;
+            }
+
+            .mission-flow {
+                gap: 32px;
+            }
+
+            .mission-percent {
+                font-size: 36px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        /* Hide cursor on mobile */
+        @media (hover: none) {
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+            button, a, .suggestion { cursor: pointer; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<!-- Nav -->
+<nav>
+    <a href="#" class="nav-logo">bonzi</a>
+    <div class="nav-links">
+        <a href="#demo">try it</a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+    </div>
+</nav>
+
+<!-- Opening -->
+<section class="opening">
+    <img src="bonzi-logo.png" alt="bonzi" class="opening-bonzi">
+    <div class="opening-text">
+        <h1>bonzi</h1>
+        <p>est. 1999 · reborn for web3</p>
+    </div>
+    <div class="scroll-hint">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- History -->
+<section class="history">
+    <div class="history-content">
+        <p class="history-label">a bit of history</p>
+        <p class="history-text">
+            Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.
+            <br><br>
+            But here's the thing. I never stopped wanting to help. So I've been rebuilt. <em>No spyware, promise.</em> Just pure, open-source helpfulness. This time I'm actually useful: I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>
+        </p>
+    </div>
+</section>
+
+<!-- Reveal -->
+<section class="reveal">
+    <div class="reveal-content">
+        <div class="reveal-line"><span>communities don't need</span></div>
+        <div class="reveal-line"><span>another dashboard.</span></div>
+        <div class="reveal-line"><span>they need a</span></div>
+        <div class="reveal-line"><span class="purple">friend.</span></div>
+    </div>
+</section>
+
+<!-- Statement -->
+<section class="statement">
+    <p class="statement-text">
+        an AI that <span class="highlight">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class="highlight">their worst nightmare.</span>
+    </p>
+</section>
+
+<!-- Pain Points -->
+<section class="pain-section">
+    <div class="pain-container">
+        <p class="section-label">the problem</p>
+        <h2 class="section-title">community management is broken</h2>
+        <div class="pain-grid">
+            <div class="pain-item">
+                <h4>"wen token?" (for the 47th time today)</h4>
+                <p>Your mods are burnt out answering the same questions. Your docs exist but nobody reads them. You're stuck in an endless loop of copy-paste.</p>
+            </div>
+            <div class="pain-item">
+                <h4>farmers gaming your airdrop</h4>
+                <p>While you sleep, bots are grinding fake engagement. By the time you wake up, your snapshot is full of sybils and your real community got diluted.</p>
+            </div>
+            <div class="pain-item">
+                <h4>FUD spreads at 3am</h4>
+                <p>Someone drops a lie in chat when no mod is online. It festers for 8 hours. By morning, the damage is done and you're in firefighting mode.</p>
+            </div>
+            <div class="pain-item">
+                <h4>manual raid reviews don't scale</h4>
+                <p>You're running raids on Twitter but manually checking every submission. Half are copy-paste garbage. The other half you can't even verify. Your team is drowning.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solutions -->
+<section class="solutions-section">
+    <div class="solutions-container">
+        <p class="section-label">what bonzi does</p>
+        <h2 class="section-title">actually solves these problems</h2>
+
+        <div class="solution-item">
+            <span class="solution-number">01</span>
+            <div class="solution-content">
+                <h4>answers questions forever</h4>
+                <p>Feed bonzi your docs once. It learns them better than your team did. Then it answers the same question 1000 times without complaining or quitting.</p>
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <span class="solution-number">02</span>
+            <div class="solution-content">
+                <h4>AI-powered raid review</h4>
+                <p>Submissions get reviewed automatically. Bonzi checks if the tweet actually exists, if the content is original, if the account is real. No more manual verification hell.</p>
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <span class="solution-number">03</span>
+            <div class="solution-content">
+                <h4>spots farmers before you do</h4>
+                <p>Pattern recognition, not vibes. Bonzi tracks behavior across your community and flags suspicious activity before your airdrop turns into a sybil farm.</p>
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <span class="solution-number">04</span>
+            <div class="solution-content">
+                <h4>24/7 FUD patrol</h4>
+                <p>Bonzi doesn't sleep. When someone drops misinformation at 3am, it responds with facts from your docs instantly. No more waking up to dumpster fires.</p>
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <span class="solution-number">05</span>
+            <div class="solution-content">
+                <h4>tracks real contributors</h4>
+                <p>Not task completion numbers. Actual value. Who's helping others? Who's creating content? Who's onboarding newcomers? Bonzi sees everything.</p>
+            </div>
+        </div>
+
+        <div class="solution-item">
+            <span class="solution-number">06</span>
+            <div class="solution-content">
+                <h4>lives where your community lives</h4>
+                <p>Not another dashboard tab. Not another login. Bonzi sits in your Telegram, Discord, wherever your people actually are.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison -->
+<section class="comparison-section">
+    <div class="comparison-container">
+        <p class="section-label">vs. the rest</p>
+        <h2 class="section-title">why bonzi is different</h2>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="highlight-col">Bonzi</th>
+                    <th>Galxe</th>
+                    <th>Zealy</th>
+                    <th>Mava</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lives in your chat</td>
+                    <td class="highlight-col check">✓ native</td>
+                    <td class="cross">✗ dashboard</td>
+                    <td class="cross">✗ dashboard</td>
+                    <td class="cross">✗ dashboard</td>
+                </tr>
+                <tr>
+                    <td>AI raid review</td>
+                    <td class="highlight-col check">✓ automatic</td>
+                    <td class="cross">✗ manual</td>
+                    <td class="cross">✗ manual</td>
+                    <td class="cross">✗</td>
+                </tr>
+                <tr>
+                    <td>AI answers questions</td>
+                    <td class="highlight-col check">✓ learns your docs</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗ human agents</td>
+                </tr>
+                <tr>
+                    <td>Auto-moderation</td>
+                    <td class="highlight-col check">✓ 24/7</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗ manual</td>
+                </tr>
+                <tr>
+                    <td>Farmer detection</td>
+                    <td class="highlight-col check">✓ pattern-based</td>
+                    <td class="cross">✗ you figure it out</td>
+                    <td class="cross">✗ you figure it out</td>
+                    <td class="cross">✗</td>
+                </tr>
+                <tr>
+                    <td>Open source</td>
+                    <td class="highlight-col check">✓ verify everything</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗</td>
+                    <td class="cross">✗</td>
+                </tr>
+                <tr>
+                    <td>Funding model</td>
+                    <td class="highlight-col check">not-for-profit</td>
+                    <td class="cross">VC-backed</td>
+                    <td class="cross">VC-backed</td>
+                    <td class="cross">VC-backed</td>
+                </tr>
+                <tr>
+                    <td>Cost</td>
+                    <td class="highlight-col check">$0 forever</td>
+                    <td>freemium</td>
+                    <td>freemium</td>
+                    <td>$500+/mo</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Mission -->
+<section class="mission-section">
+    <div class="mission-container">
+        <p class="mission-label">where it goes</p>
+        <h2 class="mission-title">this isn't a startup. it's a mission.</h2>
+
+        <div class="mission-flow">
+            <div class="mission-item">
+                <div class="mission-percent">5%</div>
+                <div class="mission-desc">back to users</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-percent">95%</div>
+                <div class="mission-desc">social impact startups</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-percent">0%</div>
+                <div class="mission-desc">to VCs</div>
+            </div>
+        </div>
+
+        <div class="mission-footer">
+            <p>Built by the founders of <a href="https://defiants.org" target="_blank">Defiants.org</a>. Open source, not-for-profit. We're not here to make money off communities. We're here to make communities actually work.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Demo -->
+<section class="demo-section" id="demo">
+    <div class="demo-intro">
+        <h2>try it</h2>
+        <p>ask bonzi anything. see what happens.</p>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-avatar-header">B</div>
+            <div class="chat-header-info">
+                <h4>bonzi</h4>
+                <span><span class="chat-status"></span>online</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot">
+                <div class="bot-avatar">B</div>
+                <div class="chat-bubble">hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated</div>
+            </div>
+        </div>
+
+        <div class="suggestions">
+            <button class="suggestion">what can you do?</button>
+            <button class="suggestion">tell me a joke</button>
+            <button class="suggestion">are you still spyware?</button>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="type something..." autocomplete="off">
+            <button id="chat-send">send</button>
+        </div>
+    </div>
+</section>
+
+<!-- Links -->
+<section class="links-section">
+    <div class="links-grid">
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="link-card">
+            <h3>source code</h3>
+            <p>fully open source. fork it, run it, break it, fix it. trust but verify.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://t.me/ethervistatoken" target="_blank" class="link-card">
+            <h3>telegram</h3>
+            <p>see bonzi in action. judge for yourself.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://x.com/ethaboringtoshi" target="_blank" class="link-card">
+            <h3>updates</h3>
+            <p>follow the redemption arc in real time.</p>
+            <span class="arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-left">open source · mit license · no bananas harmed</div>
+    <div class="footer-right">est. 1999</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.querySelector('.cursor');
+const cursorDot = document.querySelector('.cursor-dot');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+    cursorDot.style.left = e.clientX - 2 + 'px';
+    cursorDot.style.top = e.clientY - 2 + 'px';
+});
+
+document.querySelectorAll('a, button, .suggestion').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+// Opening animation
+gsap.to('.opening-bonzi', {
+    opacity: 1,
+    scale: 1,
+    duration: 1,
+    ease: 'back.out(1.7)',
+    delay: 0.3
+});
+
+gsap.to('.opening-text', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    delay: 0.6
+});
+
+gsap.to('.scroll-hint', {
+    opacity: 1,
+    duration: 0.6,
+    delay: 1.2
+});
+
+// History section animation
+gsap.to('.history-content', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+        trigger: '.history',
+        start: 'top 70%',
+        toggleActions: 'play none none reverse'
+    }
+});
+
+// Reveal text animation
+gsap.utils.toArray('.reveal-line span').forEach((line, i) => {
+    gsap.to(line, {
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: line,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        delay: i * 0.1
+    });
+});
+
+// Statement parallax
+gsap.to('.statement-text', {
+    y: -50,
+    scrollTrigger: {
+        trigger: '.statement',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1
+    }
+});
+
+// Chat demo
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+
+const responses = {
+    patterns: [
+        { match: /what.*(can|do)/i, reply: "i answer questions 24/7, learn your project docs, moderate spam, track contributions, run quests... basically i'm the community manager who never sleeps. or eats. or complains about the hours." },
+        { match: /who.*(made|built|created)/i, reply: "some anon devs who got tired of answering 'wen token?' 1000 times a day. now i do it instead. they owe me bananas." },
+        { match: /joke/i, reply: "why did the smart contract go to therapy? it had too many trust issues. 🥁 ...i'll be here all week. literally. i don't sleep." },
+        { match: /gm|hello|hi|hey/i, reply: "gm fren! ready to help. what's on your mind?" },
+        { match: /price|token|moon/i, reply: "ah, the classic. look, i don't do price predictions. last time i tried, i said 'to the moon' about a stablecoin. embarrassing." },
+        { match: /wen|when/i, reply: "soon™. the only timeline that's never wrong because it's never specific" },
+        { match: /how.*(work|use)/i, reply: "drop me in your telegram, feed me your docs, and watch me answer questions while you actually get some sleep for once." },
+        { match: /free|cost/i, reply: "open source = free forever. self-host it, fork it, make it yours. my therapist says i have abandonment issues but that's fine." },
+        { match: /spyware|spy|malware|virus/i, reply: "look... we need to talk about the 90s. yes, i had a phase. yes, i'm in recovery. but this time i'm fully open source. you can literally read every line of my code. trust issues are valid, verify everything." },
+        { match: /purple|color|colour/i, reply: "born purple, stayed purple. it's not a phase, mom." },
+        { match: /banana/i, reply: "🍌 you rang? my favorite. did you know gorillas can eat up to 50 pounds of food a day? unrelated. totally unrelated." }
+    ],
+    default: "interesting question! in production, i'd actually pull from your project's knowledge base to answer that. but right now i'm just a humble demo, living my best limited life."
+};
+
+function addMessage(text, isUser) {
+    const msg = document.createElement('div');
+    msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+    msg.innerHTML = isUser
+        ? `<div class="chat-bubble">${text.replace(/</g, '&lt;')}</div><div class="user-avatar"></div>`
+        : `<div class="bot-avatar">B</div><div class="chat-bubble">${text}</div>`;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function getResponse(text) {
+    for (const r of responses.patterns) {
+        if (r.match.test(text)) return r.reply;
+    }
+    return responses.default;
+}
+
+function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, true);
+    chatInput.value = '';
+
+    // Typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'chat-message bot';
+    typing.innerHTML = `<div class="bot-avatar">B</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+        typing.remove();
+        addMessage(getResponse(text), false);
+    }, 800);
+}
+
+document.getElementById('chat-send').addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', e => e.key === 'Enter' && sendMessage());
+
+document.querySelectorAll('.suggestion').forEach(btn => {
+    btn.addEventListener('click', () => {
+        chatInput.value = btn.textContent;
+        sendMessage();
+    });
+});
+</script>
+
+</body>
+</html>

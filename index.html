@@ -66,27 +66,23 @@
             z-index: 9999;
         }
 
-        /* Language switcher */
+        /* Language switcher - integrated in nav */
         .lang-switcher {
-            position: fixed;
-            top: 24px;
-            right: 48px;
-            z-index: 101;
             display: flex;
-            gap: 8px;
+            gap: 6px;
+            margin-left: 24px;
         }
 
         .lang-btn {
-            padding: 6px 10px;
+            padding: 4px 8px;
             background: transparent;
             border: 1px solid rgba(255,255,255,0.3);
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             color: var(--white);
             cursor: none;
             transition: all 0.2s;
-            mix-blend-mode: difference;
         }
 
         .lang-btn:hover, .lang-btn.active {
@@ -118,8 +114,8 @@
 
         .nav-links {
             display: flex;
+            align-items: center;
             gap: 32px;
-            margin-right: 200px;
         }
 
         .nav-links a {
@@ -1041,20 +1037,19 @@
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
 
-<div class="lang-switcher">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="pt">PT</button>
-    <button class="lang-btn" data-lang="zh">中文</button>
-    <button class="lang-btn" data-lang="tr">TR</button>
-    <button class="lang-btn" data-lang="ru">RU</button>
-    <button class="lang-btn" data-lang="fr">FR</button>
-</div>
-
 <nav>
     <a href="#" class="nav-logo">bonzi</a>
     <div class="nav-links">
         <a href="#demo" data-i18n="nav.tryit">try it</a>
         <a href="https://github.com/Siah-kin/community-bot" target="_blank" data-i18n="nav.source">source</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
     </div>
 </nav>
 

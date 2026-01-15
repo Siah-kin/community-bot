@@ -1189,43 +1189,43 @@
 
 <section class="pricing-section">
     <div class="pricing-container">
-        <p class="pricing-label">for teams who want more</p>
-        <h2 class="pricing-title">bonzi as a service</h2>
-        <p class="pricing-subtitle">self-host free forever. or let us handle everything.</p>
+        <p class="pricing-label" data-i18n="pricing.label">for teams who want more</p>
+        <h2 class="pricing-title" data-i18n="pricing.title">bonzi as a service</h2>
+        <p class="pricing-subtitle" data-i18n="pricing.subtitle">self-host free forever. or let us handle everything.</p>
 
         <div class="pricing-grid">
             <div class="price-card">
-                <h4>Free</h4>
-                <div class="price">$0<span>/forever</span></div>
+                <h4 data-i18n="pricing.free.name">Free</h4>
+                <div class="price">$0<span data-i18n="pricing.free.period">/forever</span></div>
                 <ul>
-                    <li>Self-hosted</li>
-                    <li>Unlimited interactions</li>
-                    <li>Full source code</li>
-                    <li>Community support</li>
+                    <li data-i18n="pricing.free.f1">Self-hosted</li>
+                    <li data-i18n="pricing.free.f2">Unlimited interactions</li>
+                    <li data-i18n="pricing.free.f3">Full source code</li>
+                    <li data-i18n="pricing.free.f4">Community support</li>
                 </ul>
-                <a href="https://github.com/Siah-kin/community-bot" class="btn btn-ghost">view source</a>
+                <a href="https://github.com/Siah-kin/community-bot" class="btn btn-ghost" data-i18n="pricing.free.cta">view source</a>
             </div>
             <div class="price-card featured">
                 <h4>Pro</h4>
-                <div class="price">$299<span>/mo</span></div>
+                <div class="price">$299<span data-i18n="pricing.pro.period">/mo</span></div>
                 <ul>
-                    <li>3,000 interactions/mo</li>
-                    <li>20 knowledge docs</li>
-                    <li>Cross-tenant sybil intel</li>
-                    <li>Priority support</li>
+                    <li data-i18n="pricing.pro.f1">3,000 interactions/mo</li>
+                    <li data-i18n="pricing.pro.f2">20 knowledge docs</li>
+                    <li data-i18n="pricing.pro.f3">Cross-tenant sybil intel</li>
+                    <li data-i18n="pricing.pro.f4">Priority support</li>
                 </ul>
-                <a href="https://t.me/ethervistatoken" class="btn btn-primary">get started</a>
+                <a href="https://t.me/ethervistatoken" class="btn btn-primary" data-i18n="pricing.pro.cta">get started</a>
             </div>
             <div class="price-card">
-                <h4>Enterprise</h4>
-                <div class="price">Custom</div>
+                <h4 data-i18n="pricing.enterprise.name">Enterprise</h4>
+                <div class="price" data-i18n="pricing.enterprise.price">Custom</div>
                 <ul>
-                    <li>Unlimited interactions</li>
-                    <li>Dedicated instance</li>
-                    <li>SLA guarantee</li>
-                    <li>White-glove onboarding</li>
+                    <li data-i18n="pricing.enterprise.f1">Unlimited interactions</li>
+                    <li data-i18n="pricing.enterprise.f2">Dedicated instance</li>
+                    <li data-i18n="pricing.enterprise.f3">SLA guarantee</li>
+                    <li data-i18n="pricing.enterprise.f4">White-glove onboarding</li>
                 </ul>
-                <a href="https://t.me/ethervistatoken" class="btn btn-ghost">contact us</a>
+                <a href="https://t.me/ethervistatoken" class="btn btn-ghost" data-i18n="pricing.enterprise.cta">contact us</a>
             </div>
         </div>
     </div>
@@ -1330,6 +1330,10 @@ const translations = {
         "solutions.item6.title": "lives where your community lives", "solutions.item6.desc": "Not another dashboard tab. Not another login. Bonzi sits in your Telegram, Discord, wherever your people actually are.",
         "comparison.label": "vs. the rest", "comparison.title": "why bonzi is different",
         "comparison.row1": "Lives in your chat", "comparison.row2": "AI raid review", "comparison.row3": "AI answers questions", "comparison.row4": "Auto-moderation", "comparison.row5": "Farmer detection", "comparison.row6": "Open source", "comparison.row7": "Funding model", "comparison.row8": "Cost",
+        "pricing.label": "for teams who want more", "pricing.title": "bonzi as a service", "pricing.subtitle": "self-host free forever. or let us handle everything.",
+        "pricing.free.name": "Free", "pricing.free.period": "/forever", "pricing.free.f1": "Self-hosted", "pricing.free.f2": "Unlimited interactions", "pricing.free.f3": "Full source code", "pricing.free.f4": "Community support", "pricing.free.cta": "view source",
+        "pricing.pro.period": "/mo", "pricing.pro.f1": "3,000 interactions/mo", "pricing.pro.f2": "20 knowledge docs", "pricing.pro.f3": "Cross-tenant sybil intel", "pricing.pro.f4": "Priority support", "pricing.pro.cta": "get started",
+        "pricing.enterprise.name": "Enterprise", "pricing.enterprise.price": "Custom", "pricing.enterprise.f1": "Unlimited interactions", "pricing.enterprise.f2": "Dedicated instance", "pricing.enterprise.f3": "SLA guarantee", "pricing.enterprise.f4": "White-glove onboarding", "pricing.enterprise.cta": "contact us",
         "mission.label": "where it goes", "mission.title": "this isn't a startup. it's a mission.", "mission.users": "back to users", "mission.social": "social impact startups", "mission.vcs": "to VCs",
         "mission.footer": "Built by the founders of <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, not-for-profit. We're not here to make money off communities. We're here to make communities actually work.",
         "demo.label": "try it", "demo.title": "ask bonzi anything. see what happens.", "demo.online": "online",
@@ -1359,6 +1363,10 @@ const translations = {
         "solutions.item6.title": "vive onde sua comunidade vive", "solutions.item6.desc": "Nao e mais uma aba de dashboard. Nem outro login. Bonzi fica no seu Telegram, Discord, onde seu pessoal realmente esta.",
         "comparison.label": "vs. o resto", "comparison.title": "por que bonzi e diferente",
         "comparison.row1": "Vive no seu chat", "comparison.row2": "Revisao de raid por IA", "comparison.row3": "IA responde perguntas", "comparison.row4": "Auto-moderacao", "comparison.row5": "Deteccao de farmers", "comparison.row6": "Open source", "comparison.row7": "Modelo de financiamento", "comparison.row8": "Custo",
+        "pricing.label": "para equipes que querem mais", "pricing.title": "bonzi como servico", "pricing.subtitle": "hospede gratis para sempre. ou deixe a gente cuidar de tudo.",
+        "pricing.free.name": "Gratis", "pricing.free.period": "/sempre", "pricing.free.f1": "Auto-hospedado", "pricing.free.f2": "Interacoes ilimitadas", "pricing.free.f3": "Codigo fonte completo", "pricing.free.f4": "Suporte da comunidade", "pricing.free.cta": "ver codigo",
+        "pricing.pro.period": "/mes", "pricing.pro.f1": "3.000 interacoes/mes", "pricing.pro.f2": "20 docs de conhecimento", "pricing.pro.f3": "Intel sybil cross-tenant", "pricing.pro.f4": "Suporte prioritario", "pricing.pro.cta": "comecar",
+        "pricing.enterprise.name": "Empresarial", "pricing.enterprise.price": "Personalizado", "pricing.enterprise.f1": "Interacoes ilimitadas", "pricing.enterprise.f2": "Instancia dedicada", "pricing.enterprise.f3": "Garantia SLA", "pricing.enterprise.f4": "Onboarding VIP", "pricing.enterprise.cta": "fale conosco",
         "mission.label": "para onde vai", "mission.title": "isso nao e uma startup. e uma missao.", "mission.users": "de volta aos usuarios", "mission.social": "startups de impacto social", "mission.vcs": "para VCs",
         "mission.footer": "Construido pelos fundadores da <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, sem fins lucrativos. Nao estamos aqui pra ganhar dinheiro com comunidades. Estamos aqui pra fazer comunidades funcionarem.",
         "demo.label": "experimente", "demo.title": "pergunte qualquer coisa ao bonzi.", "demo.online": "online",
@@ -1388,6 +1396,10 @@ const translations = {
         "solutions.item6.title": "住在你的社区住的地方", "solutions.item6.desc": "不是另一个仪表板标签。不是另一个登录。Bonzi就在你的Telegram、Discord，你的人实际所在的地方。",
         "comparison.label": "vs. 其他", "comparison.title": "为什么bonzi不同",
         "comparison.row1": "住在你的群里", "comparison.row2": "AI raid审核", "comparison.row3": "AI回答问题", "comparison.row4": "自动审核", "comparison.row5": "刷子检测", "comparison.row6": "开源", "comparison.row7": "资金模式", "comparison.row8": "费用",
+        "pricing.label": "给想要更多的团队", "pricing.title": "bonzi服务", "pricing.subtitle": "永久免费自托管。或者让我们处理一切。",
+        "pricing.free.name": "免费", "pricing.free.period": "/永久", "pricing.free.f1": "自托管", "pricing.free.f2": "无限互动", "pricing.free.f3": "完整源代码", "pricing.free.f4": "社区支持", "pricing.free.cta": "查看源码",
+        "pricing.pro.period": "/月", "pricing.pro.f1": "3,000次互动/月", "pricing.pro.f2": "20个知识文档", "pricing.pro.f3": "跨租户女巫情报", "pricing.pro.f4": "优先支持", "pricing.pro.cta": "开始使用",
+        "pricing.enterprise.name": "企业版", "pricing.enterprise.price": "定制", "pricing.enterprise.f1": "无限互动", "pricing.enterprise.f2": "专用实例", "pricing.enterprise.f3": "SLA保证", "pricing.enterprise.f4": "专属入门服务", "pricing.enterprise.cta": "联系我们",
         "mission.label": "去向何方", "mission.title": "这不是创业公司。这是使命。", "mission.users": "回馈用户", "mission.social": "社会影响力创业", "mission.vcs": "给VC",
         "mission.footer": "由<a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>的创始人构建。开源，非营利。我们不是来从社区赚钱的。我们是来让社区真正运作的。",
         "demo.label": "试试看", "demo.title": "问bonzi任何问题。", "demo.online": "在线",
@@ -1417,6 +1429,10 @@ const translations = {
         "solutions.item6.title": "toplulugunuzun yasadigi yerde yasar", "solutions.item6.desc": "Baska bir pano sekmesi degil. Bonzi Telegram'inizda oturur.",
         "comparison.label": "vs. digerleri", "comparison.title": "bonzi neden farkli",
         "comparison.row1": "Sohbetinizde yasar", "comparison.row2": "Yapay zeka raid incelemesi", "comparison.row3": "Yapay zeka sorulari yanitlar", "comparison.row4": "Otomatik moderasyon", "comparison.row5": "Farmer tespiti", "comparison.row6": "Acik kaynak", "comparison.row7": "Finansman modeli", "comparison.row8": "Maliyet",
+        "pricing.label": "daha fazlasini isteyen ekipler icin", "pricing.title": "hizmet olarak bonzi", "pricing.subtitle": "kendiniz barindirin sonsuza kadar ucretsiz. ya da biz her seyi halledelim.",
+        "pricing.free.name": "Ucretsiz", "pricing.free.period": "/sonsuza kadar", "pricing.free.f1": "Kendi sunucunuz", "pricing.free.f2": "Sinirsiz etkilesim", "pricing.free.f3": "Tam kaynak kodu", "pricing.free.f4": "Topluluk destegi", "pricing.free.cta": "kaynagi gor",
+        "pricing.pro.period": "/ay", "pricing.pro.f1": "3.000 etkilesim/ay", "pricing.pro.f2": "20 bilgi dokumani", "pricing.pro.f3": "Coklu-kiralic sybil istihbarati", "pricing.pro.f4": "Oncelikli destek", "pricing.pro.cta": "basla",
+        "pricing.enterprise.name": "Kurumsal", "pricing.enterprise.price": "Ozel", "pricing.enterprise.f1": "Sinirsiz etkilesim", "pricing.enterprise.f2": "Ozel sunucu", "pricing.enterprise.f3": "SLA garantisi", "pricing.enterprise.f4": "VIP entegrasyon", "pricing.enterprise.cta": "iletisime gec",
         "mission.label": "nereye gidiyor", "mission.title": "bu bir startup degil. bir gorev.", "mission.users": "kullanicilara geri", "mission.social": "sosyal etki startup'lari", "mission.vcs": "VC'lere",
         "mission.footer": "<a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a> kurucularinin eseri. Acik kaynak, kar amaci gutmez.",
         "demo.label": "deneyin", "demo.title": "bonzi'ye bir seyler sorun.", "demo.online": "cevrimici",
@@ -1446,6 +1462,10 @@ const translations = {
         "solutions.item6.title": "живет там где живет ваше сообщество", "solutions.item6.desc": "Не еще одна вкладка дашборда. Bonzi сидит в вашем Telegram.",
         "comparison.label": "vs. остальные", "comparison.title": "почему bonzi другой",
         "comparison.row1": "Живет в вашем чате", "comparison.row2": "ИИ проверка рейдов", "comparison.row3": "ИИ отвечает на вопросы", "comparison.row4": "Авто-модерация", "comparison.row5": "Обнаружение фармеров", "comparison.row6": "Open source", "comparison.row7": "Модель финансирования", "comparison.row8": "Стоимость",
+        "pricing.label": "для команд которые хотят больше", "pricing.title": "bonzi как сервис", "pricing.subtitle": "хостите бесплатно навсегда. или мы все сделаем за вас.",
+        "pricing.free.name": "Бесплатно", "pricing.free.period": "/навсегда", "pricing.free.f1": "Свой хостинг", "pricing.free.f2": "Безлимитные взаимодействия", "pricing.free.f3": "Полный исходный код", "pricing.free.f4": "Поддержка сообщества", "pricing.free.cta": "смотреть код",
+        "pricing.pro.period": "/мес", "pricing.pro.f1": "3000 взаимодействий/мес", "pricing.pro.f2": "20 документов знаний", "pricing.pro.f3": "Кросс-тенантная разведка сибилов", "pricing.pro.f4": "Приоритетная поддержка", "pricing.pro.cta": "начать",
+        "pricing.enterprise.name": "Корпоративный", "pricing.enterprise.price": "Индивидуально", "pricing.enterprise.f1": "Безлимитные взаимодействия", "pricing.enterprise.f2": "Выделенный сервер", "pricing.enterprise.f3": "Гарантия SLA", "pricing.enterprise.f4": "VIP-онбординг", "pricing.enterprise.cta": "связаться",
         "mission.label": "куда идет", "mission.title": "это не стартап. это миссия.", "mission.users": "обратно пользователям", "mission.social": "социальные стартапы", "mission.vcs": "венчурным капиталистам",
         "mission.footer": "Создано основателями <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, некоммерческий.",
         "demo.label": "попробуй", "demo.title": "спроси bonzi что угодно.", "demo.online": "онлайн",
@@ -1475,6 +1495,10 @@ const translations = {
         "solutions.item6.title": "vit la ou vit votre communaute", "solutions.item6.desc": "Pas un autre onglet de dashboard. Bonzi est dans votre Telegram.",
         "comparison.label": "vs. les autres", "comparison.title": "pourquoi bonzi est different",
         "comparison.row1": "Vit dans votre chat", "comparison.row2": "Review de raid par IA", "comparison.row3": "L'IA repond aux questions", "comparison.row4": "Auto-moderation", "comparison.row5": "Detection de farmers", "comparison.row6": "Open source", "comparison.row7": "Modele de financement", "comparison.row8": "Cout",
+        "pricing.label": "pour les equipes qui veulent plus", "pricing.title": "bonzi en tant que service", "pricing.subtitle": "hebergez gratuitement pour toujours. ou laissez-nous tout gerer.",
+        "pricing.free.name": "Gratuit", "pricing.free.period": "/pour toujours", "pricing.free.f1": "Auto-heberge", "pricing.free.f2": "Interactions illimitees", "pricing.free.f3": "Code source complet", "pricing.free.f4": "Support communautaire", "pricing.free.cta": "voir le code",
+        "pricing.pro.period": "/mois", "pricing.pro.f1": "3000 interactions/mois", "pricing.pro.f2": "20 docs de connaissances", "pricing.pro.f3": "Intel sybil cross-tenant", "pricing.pro.f4": "Support prioritaire", "pricing.pro.cta": "commencer",
+        "pricing.enterprise.name": "Entreprise", "pricing.enterprise.price": "Sur mesure", "pricing.enterprise.f1": "Interactions illimitees", "pricing.enterprise.f2": "Instance dediee", "pricing.enterprise.f3": "Garantie SLA", "pricing.enterprise.f4": "Onboarding VIP", "pricing.enterprise.cta": "nous contacter",
         "mission.label": "ou ca va", "mission.title": "ce n'est pas une startup. c'est une mission.", "mission.users": "retour aux utilisateurs", "mission.social": "startups a impact social", "mission.vcs": "aux VCs",
         "mission.footer": "Construit par les fondateurs de <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, sans but lucratif.",
         "demo.label": "essayer", "demo.title": "demandez n'importe quoi a bonzi.", "demo.online": "en ligne",

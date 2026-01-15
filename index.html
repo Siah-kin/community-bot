@@ -288,31 +288,31 @@
             color: var(--purple-light);
         }
 
-        /* Pain points section - Victim Grid - RED WARNING ZONE */
-        .pain-section { padding: 120px 48px; background: linear-gradient(180deg, #200808 0%, #2a0a0a 50%, #200808 100%); color: var(--white); border-top: 4px solid #EF4444; border-bottom: 4px solid #EF4444; box-shadow: inset 0 0 150px rgba(239,68,68,0.15), 0 0 60px rgba(239,68,68,0.1); }
+        /* Pain points section - Victim Grid - PURPLE ACCENT */
+        .pain-section { padding: 120px 48px; background: linear-gradient(180deg, #0f0a14 0%, #1a1024 50%, #0f0a14 100%); color: var(--white); border-top: 4px solid var(--purple); border-bottom: 4px solid var(--purple); box-shadow: inset 0 0 150px rgba(124,58,237,0.12), 0 0 60px rgba(124,58,237,0.08); }
         .pain-container { max-width: 1100px; margin: 0 auto; }
         .pain-header { text-align: center; margin-bottom: 64px; }
         .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 24px; }
-        .danger-label { color: #EF4444; font-weight: 600; }
+        .danger-label { color: var(--purple-light); font-weight: 600; }
         .section-title { font-size: clamp(28px, 5vw, 48px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1.2; }
         .pain-headline { font-size: clamp(36px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 24px; line-height: 1.1; }
-        .strike-text { color: #EF4444; text-decoration: line-through; text-decoration-thickness: 4px; }
+        .strike-text { color: var(--purple); text-decoration: line-through; text-decoration-thickness: 4px; }
         .pain-subhead { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; }
         .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .pain-card { padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; transition: all 0.3s ease; }
-        .victim-card:hover { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); transform: translateY(-4px); }
-        .farmer-card { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
-        .farmer-card:hover { background: rgba(34,197,94,0.15); transform: translateY(-4px); }
+        .victim-card:hover { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.3); transform: translateY(-4px); }
+        .farmer-card { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.2); }
+        .farmer-card:hover { background: rgba(124,58,237,0.12); transform: translateY(-4px); }
         .victim-icon { font-size: 32px; margin-bottom: 16px; }
         .victim-name { font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 12px; text-transform: lowercase; }
         .victim-pain { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px; min-height: 60px; }
         .victim-stat { padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .stat-number { display: block; font-size: 28px; font-weight: 700; color: #EF4444; margin-bottom: 4px; }
+        .stat-number { display: block; font-size: 28px; font-weight: 700; color: var(--purple-light); margin-bottom: 4px; }
         .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
-        .victim-stat.winner .stat-number { color: #22C55E; }
+        .victim-stat.winner .stat-number { color: var(--purple); }
         .pain-conclusion { margin-top: 64px; text-align: center; }
         .pain-statement { font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: var(--white); line-height: 1.3; }
-        .highlight-red { color: #EF4444; }
+        .highlight-purple { color: var(--purple); }
         @media (max-width: 900px) { .pain-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .pain-grid { grid-template-columns: 1fr; } .victim-pain { min-height: auto; } }
 
@@ -1144,7 +1144,7 @@
             </div>
         </div>
         <div class="pain-conclusion">
-            <p class="pain-statement" data-i18n="pain.statement">this isn't community building.<br>it's <span class="highlight-red">extraction theatre.</span></p>
+            <p class="pain-statement" data-i18n="pain.statement">this isn't community building.<br>it's <span class="highlight-purple">extraction theatre.</span></p>
         </div>
     </div>
 </section>

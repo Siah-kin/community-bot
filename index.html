@@ -1217,7 +1217,7 @@
             <div class="feature-card">
                 <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></div>
                 <h4 data-i18n="features.claim.title">100 pts = ETH</h4>
-                <p data-i18n="features.claim.desc">Hit 100 points, claim ETH directly. Stakers get 1.1x bonus. Real rewards for real contribution.</p>
+                <p data-i18n="features.claim.desc">Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.</p>
                 <div class="feature-detail" data-i18n="features.claim.detail">On-chain claims via connected wallet</div>
             </div>
             <div class="feature-card">
@@ -1250,9 +1250,12 @@
             </div>
         </div>
         <div class="suggestions">
-            <button class="suggestion" data-scenario="raid">review my raid</button>
-            <button class="suggestion" data-scenario="sybil">catch a sybil</button>
-            <button class="suggestion" data-scenario="og">recognize an OG</button>
+            <button class="suggestion" data-scenario="raid">raid review</button>
+            <button class="suggestion" data-scenario="sybil">sybil detect</button>
+            <button class="suggestion" data-scenario="og">OG recognition</button>
+            <button class="suggestion" data-scenario="fud">FUD patrol</button>
+            <button class="suggestion" data-scenario="qa">24/7 Q&A</button>
+            <button class="suggestion" data-scenario="emotion">emotion read</button>
         </div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
@@ -1392,7 +1395,7 @@ const translations = {
         "features.raid.title": "Raid & Earn", "features.raid.desc": "Submit raid screenshots. AI verifies tweet exists, content is original, account is real. No more manual review hell.", "features.raid.detail": "Auto-verification + originality check",
         "features.thanks.title": "Thanks System", "features.thanks.desc": "React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.", "features.thanks.detail": "Reaction tracking via Telethon",
         "features.leaderboard.title": "Live Leaderboard", "features.leaderboard.desc": "Quality-weighted rankings. Not task counts. Who's actually helping? Who's creating value? Bonzi tracks it all.", "features.leaderboard.detail": "Cooperation score multipliers",
-        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Hit 100 points, claim ETH directly. Stakers get 1.1x bonus. Real rewards for real contribution.", "features.claim.detail": "On-chain claims via connected wallet",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.", "features.claim.detail": "On-chain claims via connected wallet",
         "features.sybil.title": "Sybil Detection", "features.sybil.desc": "AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.", "features.sybil.detail": "Cross-tenant intel sharing",
         "demo.label": "try it", "demo.title": "ask bonzi anything. see what happens.", "demo.online": "online",
         "demo.greeting": "hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated",
@@ -1434,7 +1437,7 @@ const translations = {
         "features.raid.title": "Raid & Ganhe", "features.raid.desc": "Envie screenshots de raid. IA verifica se tweet existe, conteudo e original, conta e real. Chega de revisao manual infernal.", "features.raid.detail": "Auto-verificacao + checagem de originalidade",
         "features.thanks.title": "Sistema de Obrigados", "features.thanks.desc": "Reaja a posts uteis com emoji. Autor ganha +1 pt. Apreciacao real, pronta para on-chain.", "features.thanks.detail": "Rastreamento de reacoes via Telethon",
         "features.leaderboard.title": "Ranking ao Vivo", "features.leaderboard.desc": "Rankings ponderados por qualidade. Nao contagem de tarefas. Quem realmente ajuda? Quem cria valor? Bonzi rastreia tudo.", "features.leaderboard.detail": "Multiplicadores de pontuacao de cooperacao",
-        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Alcance 100 pontos, resgate ETH diretamente. Stakers ganham bonus de 1.1x. Recompensas reais por contribuicao real.", "features.claim.detail": "Resgates on-chain via carteira conectada",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Alcance 100 pontos, resgate ETH diretamente. Holders ganham bonus de 1.1x. Recompensas reais por contribuicao real.", "features.claim.detail": "Resgates on-chain via carteira conectada",
         "features.sybil.title": "Deteccao de Sybil", "features.sybil.desc": "IA detecta padroes extrativos. Farmers copiar-colar, sybils multi-carteira, conteudo gerado por bot. Marcados antes do snapshot.", "features.sybil.detail": "Compartilhamento de intel entre tenants",
         "demo.label": "experimente", "demo.title": "pergunte qualquer coisa ao bonzi.", "demo.online": "online",
         "demo.greeting": "opa! sou o bonzi. voltei dos mortos e pronto pra ajudar. pergunte qualquer coisa. so nao pergunte sobre meu passado, e... complicado",
@@ -1476,7 +1479,7 @@ const translations = {
         "features.raid.title": "Raid赚分", "features.raid.desc": "提交raid截图。AI验证推文是否存在、内容是否原创、账户是否真实。告别手动审核地狱。", "features.raid.detail": "自动验证+原创性检查",
         "features.thanks.title": "感谢系统", "features.thanks.desc": "用表情对有用帖子做出反应。作者获得+1分。真实的感谢，链上就绪。", "features.thanks.detail": "通过Telethon追踪反应",
         "features.leaderboard.title": "实时排行榜", "features.leaderboard.desc": "质量加权排名。不是任务计数。谁真正在帮忙？谁在创造价值？Bonzi全程追踪。", "features.leaderboard.detail": "合作分数乘数",
-        "features.claim.title": "100分=ETH", "features.claim.desc": "达到100分，直接领取ETH。质押者获得1.1倍奖励。真实贡献真实回报。", "features.claim.detail": "通过连接的钱包链上领取",
+        "features.claim.title": "100分=ETH", "features.claim.desc": "达到100分，直接领取ETH。持币者获得1.1倍奖励。真实贡献真实回报。", "features.claim.detail": "通过连接的钱包链上领取",
         "features.sybil.title": "女巫检测", "features.sybil.desc": "AI检测榨取模式。复制粘贴刷子、多钱包女巫、机器人生成内容。快照前标记。", "features.sybil.detail": "跨租户情报共享",
         "demo.label": "试试看", "demo.title": "问bonzi任何问题。", "demo.online": "在线",
         "demo.greeting": "嗨！我是bonzi。死而复生，准备好帮忙了。问我任何事。只是别问我的过去，那...有点复杂",
@@ -1518,7 +1521,7 @@ const translations = {
         "features.raid.title": "Raid & Kazan", "features.raid.desc": "Raid ekran goruntusu gonderin. Yapay zeka tweet'in var oldugunu, icerigin orijinal oldugunu, hesabin gercek oldugunu dogrular.", "features.raid.detail": "Otomatik dogrulama + orijinallik kontrolu",
         "features.thanks.title": "Tesekkur Sistemi", "features.thanks.desc": "Faydali paylasimlara emoji ile tepki verin. Yazar +1 puan alir. Gercek takdir, zincir uzerinde hazir.", "features.thanks.detail": "Telethon ile tepki takibi",
         "features.leaderboard.title": "Canli Siralama", "features.leaderboard.desc": "Kalite agirlikli siralamaiar. Gorev sayilari degil. Kim gercekten yardim ediyor? Kim deger yaratiyor? Bonzi hepsini takip eder.", "features.leaderboard.detail": "Isbirligi puani carpanlari",
-        "features.claim.title": "100 puan = ETH", "features.claim.desc": "100 puana ulasin, dogrudan ETH talep edin. Stake edenler 1.1x bonus alir. Gercek katki icin gercek oduller.", "features.claim.detail": "Bagli cuzdan ile zincir uzerinde talep",
+        "features.claim.title": "100 puan = ETH", "features.claim.desc": "100 puana ulasin, dogrudan ETH talep edin. Token sahipleri 1.1x bonus alir. Gercek katki icin gercek oduller.", "features.claim.detail": "Bagli cuzdan ile zincir uzerinde talep",
         "features.sybil.title": "Sybil Tespiti", "features.sybil.desc": "Yapay zeka cikarici kaliplari tespit eder. Kopyala-yapistir farmer'lar, coklu-cuzdan sybil'ler, bot uretimi icerik. Snapshot oncesi isaretlenir.", "features.sybil.detail": "Coklu-kiralic istihbarat paylasimi",
         "demo.label": "deneyin", "demo.title": "bonzi'ye bir seyler sorun.", "demo.online": "cevrimici",
         "demo.greeting": "selam! ben bonzi. olumden dondun ve yardima hazirim. bana bir sey sorun. sadece gecmisimi sormayin, o... karisik",
@@ -1560,7 +1563,7 @@ const translations = {
         "features.raid.title": "Рейди & Зарабатывай", "features.raid.desc": "Отправляй скриншоты рейдов. ИИ проверяет существование твита, оригинальность контента, реальность аккаунта.", "features.raid.detail": "Авто-проверка + проверка оригинальности",
         "features.thanks.title": "Система Благодарностей", "features.thanks.desc": "Реагируй эмодзи на полезные посты. Автор получает +1 очко. Реальная благодарность, готова для блокчейна.", "features.thanks.detail": "Отслеживание реакций через Telethon",
         "features.leaderboard.title": "Живой Рейтинг", "features.leaderboard.desc": "Рейтинги взвешенные по качеству. Не подсчеты заданий. Кто реально помогает? Кто создает ценность? Bonzi все отслеживает.", "features.leaderboard.detail": "Множители очков сотрудничества",
-        "features.claim.title": "100 очков = ETH", "features.claim.desc": "Набери 100 очков, получи ETH напрямую. Стейкеры получают бонус 1.1x. Реальные награды за реальный вклад.", "features.claim.detail": "Ончейн выплаты через подключенный кошелек",
+        "features.claim.title": "100 очков = ETH", "features.claim.desc": "Набери 100 очков, получи ETH напрямую. Холдеры получают бонус 1.1x. Реальные награды за реальный вклад.", "features.claim.detail": "Ончейн выплаты через подключенный кошелек",
         "features.sybil.title": "Детекция Сибилов", "features.sybil.desc": "ИИ обнаруживает паттерны извлечения. Копипаст фармеры, мульти-кошельковые сибилы, бот-контент. Помечаются до снимка.", "features.sybil.detail": "Кросс-тенантный обмен разведданными",
         "demo.label": "попробуй", "demo.title": "спроси bonzi что угодно.", "demo.online": "онлайн",
         "demo.greeting": "привет! я bonzi. вернулся из мертвых и готов помочь. спрашивай что угодно. только не спрашивай о моем прошлом, оно... сложное",
@@ -1602,7 +1605,7 @@ const translations = {
         "features.raid.title": "Raid & Gagnez", "features.raid.desc": "Soumettez des captures de raid. L'IA verifie que le tweet existe, que le contenu est original, que le compte est reel.", "features.raid.detail": "Auto-verification + controle d'originalite",
         "features.thanks.title": "Systeme de Mercis", "features.thanks.desc": "Reagissez aux posts utiles avec des emoji. L'auteur gagne +1 pt. Vraie appreciation, prete pour la blockchain.", "features.thanks.detail": "Suivi des reactions via Telethon",
         "features.leaderboard.title": "Classement Live", "features.leaderboard.desc": "Classements ponderes par la qualite. Pas des comptages de taches. Qui aide vraiment? Qui cree de la valeur? Bonzi suit tout.", "features.leaderboard.detail": "Multiplicateurs de score de cooperation",
-        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Atteignez 100 points, reclamez de l'ETH directement. Les stakers obtiennent un bonus de 1.1x. Vraies recompenses pour vraie contribution.", "features.claim.detail": "Reclamations on-chain via wallet connecte",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Atteignez 100 points, reclamez de l'ETH directement. Les holders obtiennent un bonus de 1.1x. Vraies recompenses pour vraie contribution.", "features.claim.detail": "Reclamations on-chain via wallet connecte",
         "features.sybil.title": "Detection Sybil", "features.sybil.desc": "L'IA detecte les patterns d'extraction. Farmers copier-coller, sybils multi-wallets, contenu genere par bot. Signales avant le snapshot.", "features.sybil.detail": "Partage d'intel cross-tenant",
         "demo.label": "essayer", "demo.title": "demandez n'importe quoi a bonzi.", "demo.online": "en ligne",
         "demo.greeting": "salut ! je suis bonzi. revenu d'entre les morts et pret a aider. demandez-moi n'importe quoi. juste ne demandez pas mon passe, c'est... complique",
@@ -1709,6 +1712,44 @@ quality score: 94/100 (top 3%)
 • never asked "wen airdrop"
 
 auto-promoted to trusted tier.` }
+    ],
+    fud: [
+        { user: true, text: "🌙 3:47 AM - @anon_fudder: 'devs are dumping! check wallet 0x7f3...'" },
+        { user: false, text: "fact-checking..." },
+        { user: false, text: `🛡️ <b>FUD NEUTRALIZED</b>
+
+• wallet cited = exchange hot wallet (not team)
+• account created 2 hours ago
+• same FUD in 4 other groups tonight
+
+posted correction with sources.
+community protected while you slept.` }
+    ],
+    qa: [
+        { user: true, text: "how do i stake my tokens?" },
+        { user: false, text: `📚 <b>FROM YOUR DOCS</b>
+
+1. connect wallet at app.project.io/stake
+2. approve token spending
+3. select amount + lock period
+4. confirm transaction
+
+longer locks = higher APR (up to 42%)
+
+<i>source: docs/staking-guide.md</i>` }
+    ],
+    emotion: [
+        { user: true, text: "[chat sentiment shifting negative after price drop]" },
+        { user: false, text: `🎭 <b>ROOM READING</b>
+
+sentiment: 📉 anxious (was: neutral)
+trigger: -12% price movement
+mood shift: 23 mins ago
+
+adapting tone to: calm + factual
+avoiding: hype, promises, deflection
+
+<i>switching from playful → supportive mode</i>` }
     ]
 };
 

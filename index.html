@@ -755,6 +755,160 @@
             color: white;
         }
 
+        /* Pricing section */
+        .pricing-section {
+            padding: 120px 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .pricing-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pricing-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple-light);
+            margin-bottom: 16px;
+        }
+
+        .pricing-title {
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .pricing-subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 64px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .price-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+        }
+
+        .price-card.featured {
+            background: rgba(124,58,237,0.1);
+            border-color: var(--purple);
+            position: relative;
+        }
+
+        .price-card.featured::before {
+            content: 'most popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--purple);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .price-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .price-card .price {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .price-card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .price-card ul li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .price-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .price-card .btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .price-card .btn-primary {
+            background: var(--purple);
+            color: white;
+            border: none;
+        }
+
+        .price-card .btn-primary:hover {
+            background: var(--purple-dark);
+        }
+
+        .price-card .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .price-card .btn-ghost:hover {
+            border-color: var(--purple);
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-section {
+                padding: 80px 24px;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Links section */
         .links-section {
             padding: 120px 48px;
@@ -1008,6 +1162,50 @@
                 <tr><td data-i18n="comparison.row8">Cost</td><td class="highlight-col check">$0 forever</td><td>freemium</td><td>freemium</td><td>$500+/mo</td></tr>
             </tbody>
         </table>
+    </div>
+</section>
+
+<section class="pricing-section">
+    <div class="pricing-container">
+        <p class="pricing-label">for teams who want more</p>
+        <h2 class="pricing-title">bonzi as a service</h2>
+        <p class="pricing-subtitle">self-host free forever. or let us handle everything.</p>
+
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h4>Free</h4>
+                <div class="price">$0<span>/forever</span></div>
+                <ul>
+                    <li>Self-hosted</li>
+                    <li>Unlimited interactions</li>
+                    <li>Full source code</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="https://github.com/Siah-kin/community-bot" class="btn btn-ghost">view source</a>
+            </div>
+            <div class="price-card featured">
+                <h4>Pro</h4>
+                <div class="price">$299<span>/mo</span></div>
+                <ul>
+                    <li>3,000 interactions/mo</li>
+                    <li>20 knowledge docs</li>
+                    <li>Cross-tenant sybil intel</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://t.me/ethervistatoken" class="btn btn-primary">get started</a>
+            </div>
+            <div class="price-card">
+                <h4>Enterprise</h4>
+                <div class="price">Custom</div>
+                <ul>
+                    <li>Unlimited interactions</li>
+                    <li>Dedicated instance</li>
+                    <li>SLA guarantee</li>
+                    <li>White-glove onboarding</li>
+                </ul>
+                <a href="https://t.me/ethervistatoken" class="btn btn-ghost">contact us</a>
+            </div>
+        </div>
     </div>
 </section>
 

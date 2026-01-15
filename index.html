@@ -288,33 +288,21 @@
             color: var(--purple-light);
         }
 
-        /* Pain points section - Victim Grid - PURPLE ACCENT */
+        /* Pain points section - Domino Stack with purple accent bg */
         .pain-section { padding: 120px 48px; background: linear-gradient(180deg, #0f0a14 0%, #1a1024 50%, #0f0a14 100%); color: var(--white); border-top: 4px solid var(--purple); border-bottom: 4px solid var(--purple); box-shadow: inset 0 0 150px rgba(124,58,237,0.12), 0 0 60px rgba(124,58,237,0.08); }
-        .pain-container { max-width: 1100px; margin: 0 auto; }
-        .pain-header { text-align: center; margin-bottom: 64px; }
+        .pain-container { max-width: 900px; margin: 0 auto; }
         .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 24px; }
-        .danger-label { color: var(--purple-light); font-weight: 600; }
         .section-title { font-size: clamp(28px, 5vw, 48px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1.2; }
-        .pain-headline { font-size: clamp(36px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 24px; line-height: 1.1; }
-        .strike-text { color: var(--purple); text-decoration: line-through; text-decoration-thickness: 4px; }
-        .pain-subhead { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; }
-        .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .pain-card { padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; transition: all 0.3s ease; }
-        .victim-card:hover { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.3); transform: translateY(-4px); }
-        .farmer-card { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.2); }
-        .farmer-card:hover { background: rgba(124,58,237,0.12); transform: translateY(-4px); }
-        .victim-icon { font-size: 32px; margin-bottom: 16px; }
-        .victim-name { font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 12px; text-transform: lowercase; }
-        .victim-pain { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px; min-height: 60px; }
-        .victim-stat { padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .stat-number { display: block; font-size: 28px; font-weight: 700; color: var(--purple-light); margin-bottom: 4px; }
-        .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
-        .victim-stat.winner .stat-number { color: var(--purple); }
-        .pain-conclusion { margin-top: 64px; text-align: center; }
-        .pain-statement { font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: var(--white); line-height: 1.3; }
-        .highlight-purple { color: var(--purple); }
-        @media (max-width: 900px) { .pain-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .pain-grid { grid-template-columns: 1fr; } .victim-pain { min-height: auto; } }
+        .domino-stack { display: flex; flex-direction: column; gap: 0; }
+        .domino-card { padding: 24px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-left: calc(var(--index) * 20px); margin-bottom: -8px; transition: all 0.3s ease; }
+        .domino-card:hover { background: rgba(124,58,237,0.1); border-color: var(--purple); transform: translateX(8px); }
+        .domino-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: rgba(124,58,237,0.2); color: var(--purple-light); border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 14px; }
+        .domino-card h4 { display: inline; font-size: 17px; font-weight: 600; color: var(--white); }
+        .domino-card p { margin-top: 10px; margin-left: 38px; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .pain-conclusion { margin-top: 56px; text-align: center; }
+        .pain-statement { font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: var(--purple-light); margin-bottom: 12px; }
+        .pain-answer { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto; line-height: 1.7; }
+        @media (max-width: 768px) { .domino-card { margin-left: calc(var(--index) * 8px); } }
 
         /* Solutions section */
         .solutions-section {
@@ -1082,69 +1070,38 @@
 
 <section class="pain-section">
     <div class="pain-container">
-        <div class="pain-header">
-            <p class="section-label danger-label" data-i18n="pain.label">the zealy problem</p>
-            <h2 class="pain-headline" data-i18n="pain.title">$2.7B in airdrops.<br><span class="strike-text">extracted</span> by farmers.</h2>
-            <p class="pain-subhead">every community runs the same playbook. every airdrop gets farmed the same way. here's who gets hurt:</p>
-        </div>
-        <div class="pain-grid">
-            <div class="pain-card victim-card">
-                <div class="victim-icon">👔</div>
-                <h3 class="victim-name">the founder</h3>
-                <p class="victim-pain">watches 80% of airdrop go to wallets that sell day one</p>
-                <div class="victim-stat">
-                    <span class="stat-number">47%</span>
-                    <span class="stat-label">average first-day dump</span>
-                </div>
+        <p class="section-label" data-i18n="pain.label">zealy created a degenerative experience</p>
+        <h2 class="section-title" data-i18n="pain.title">5 users affected by points theatre</h2>
+        <div class="domino-stack">
+            <div class="domino-card" style="--index: 0;">
+                <span class="domino-number">1</span>
+                <h4 data-i18n="pain.item1.title">reviewers drown</h4>
+                <p data-i18n="pain.item1.desc">Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.</p>
             </div>
-            <div class="pain-card victim-card">
-                <div class="victim-icon">🛡️</div>
-                <h3 class="victim-name">the mod</h3>
-                <p class="victim-pain">reviews 500 raid submissions. 400 are copy-paste garbage. burns out in 3 months.</p>
-                <div class="victim-stat">
-                    <span class="stat-number">12hr</span>
-                    <span class="stat-label">weekly review time</span>
-                </div>
+            <div class="domino-card" style="--index: 1;">
+                <span class="domino-number">2</span>
+                <h4 data-i18n="pain.item2.title">funders get farmed</h4>
+                <p data-i18n="pain.item2.desc">Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.</p>
             </div>
-            <div class="pain-card victim-card">
-                <div class="victim-icon">💎</div>
-                <h3 class="victim-name">the OG</h3>
-                <p class="victim-pain">believed before anyone. doesn't grind tasks. gets outranked by mercenaries.</p>
-                <div class="victim-stat">
-                    <span class="stat-number">#847</span>
-                    <span class="stat-label">leaderboard rank</span>
-                </div>
+            <div class="domino-card" style="--index: 2;">
+                <span class="domino-number">3</span>
+                <h4 data-i18n="pain.item3.title">OGs are neglected</h4>
+                <p data-i18n="pain.item3.desc">Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.</p>
             </div>
-            <div class="pain-card victim-card">
-                <div class="victim-icon">🌱</div>
-                <h3 class="victim-name">the newbie</h3>
-                <p class="victim-pain">asks a real question. nobody answers. leaves confused. never comes back.</p>
-                <div class="victim-stat">
-                    <span class="stat-number">73%</span>
-                    <span class="stat-label">churn in week one</span>
-                </div>
+            <div class="domino-card" style="--index: 3;">
+                <span class="domino-number">4</span>
+                <h4 data-i18n="pain.item4.title">normies are ignored</h4>
+                <p data-i18n="pain.item4.desc">New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.</p>
             </div>
-            <div class="pain-card victim-card">
-                <div class="victim-icon">📢</div>
-                <h3 class="victim-name">the KOL</h3>
-                <p class="victim-pain">gets 200 identical raid mentions daily. mutes your hashtag. algorithm buries you.</p>
-                <div class="victim-stat">
-                    <span class="stat-number">-40%</span>
-                    <span class="stat-label">reach after spam</span>
-                </div>
-            </div>
-            <div class="pain-card farmer-card">
-                <div class="victim-icon">🤖</div>
-                <h3 class="victim-name">the farmer</h3>
-                <p class="victim-pain">runs 50 wallets. copy-pastes everything. extracts max value. moves to next project.</p>
-                <div class="victim-stat winner">
-                    <span class="stat-number">+$47K</span>
-                    <span class="stat-label">average extraction</span>
-                </div>
+            <div class="domino-card" style="--index: 4;">
+                <span class="domino-number">5</span>
+                <h4 data-i18n="pain.item5.title">KOLs get spammed</h4>
+                <p data-i18n="pain.item5.desc">Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your "engagement" is actually hurting your reach.</p>
             </div>
         </div>
         <div class="pain-conclusion">
-            <p class="pain-statement" data-i18n="pain.statement">this isn't community building.<br>it's <span class="highlight-purple">extraction theatre.</span></p>
+            <p class="pain-statement" data-i18n="pain.statement">this isn't community building. it's extraction theatre.</p>
+            <p class="pain-answer" data-i18n="pain.answer">bonzi exists because communities deserve better than spreadsheets and sybils. real recognition for real contribution. AI that actually helps instead of just tracking. soul, not points.</p>
         </div>
     </div>
 </section>

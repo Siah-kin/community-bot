@@ -1250,9 +1250,9 @@
             </div>
         </div>
         <div class="suggestions">
-            <button class="suggestion" data-i18n="demo.sug1">what can you do?</button>
-            <button class="suggestion" data-i18n="demo.sug2">tell me a joke</button>
-            <button class="suggestion" data-i18n="demo.sug3">are you still spyware?</button>
+            <button class="suggestion" data-scenario="raid">review my raid</button>
+            <button class="suggestion" data-scenario="sybil">catch a sybil</button>
+            <button class="suggestion" data-scenario="og">recognize an OG</button>
         </div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
@@ -1669,29 +1669,91 @@ gsap.to('.statement-text', { y: -50, scrollTrigger: { trigger: '.statement', sta
 const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 
-const responses = {
-    patterns: [
-        { match: /what.*(can|do)/i, reply: "i answer questions 24/7, learn your project docs, moderate spam, track contributions, run quests... basically i'm the community manager who never sleeps." },
-        { match: /who.*(made|built|created)/i, reply: "some anon devs who got tired of answering 'wen token?' 1000 times a day. now i do it instead. they owe me bananas." },
-        { match: /joke/i, reply: "why did the smart contract go to therapy? it had too many trust issues. 🥁" },
-        { match: /gm|hello|hi|hey|salut|ola|привет|你好|selam/i, reply: "gm fren! ready to help. what's on your mind?" },
-        { match: /price|token|moon/i, reply: "ah, the classic. look, i don't do price predictions. last time i tried, i said 'to the moon' about a stablecoin. embarrassing." },
-        { match: /wen|when|quando|quand|когда|什么时候|ne zaman/i, reply: "soon™. the only timeline that's never wrong because it's never specific" },
-        { match: /how.*(work|use)/i, reply: "drop me in your telegram, feed me your docs, and watch me answer questions while you actually get some sleep for once." },
-        { match: /free|cost|preco|prix|цена|价格|fiyat/i, reply: "open source = free forever. self-host it, fork it, make it yours." },
-        { match: /spyware|spy|malware|virus/i, reply: "look... we need to talk about the 90s. yes, i had a phase. yes, i'm in recovery. but this time i'm fully open source. you can literally read every line of my code." },
-        { match: /purple|color|colour|roxo|violet|фиолетовый|紫色|mor/i, reply: "born purple, stayed purple. it's not a phase, mom." },
-        { match: /banana|banane|банан|香蕉|muz/i, reply: "🍌 you rang? my favorite." }
+// Scenario-based demos showcasing real Bonzi capabilities
+const scenarios = {
+    raid: [
+        { user: true, text: "📢 raid submitted by @cryptofan_2847" },
+        { user: false, text: "analyzing..." },
+        { user: false, text: `⚠️ <b>REJECTED</b>
+
+tweet: "Great project! $VISTA to the moon! 🚀🚀"
+
+• copy-paste detected (seen 847x today)
+• no project understanding shown
+• account age: 12 days
+
+real supporters explain WHY they're bullish.` }
     ],
-    default: "interesting question! in production, i'd actually pull from your project's knowledge base to answer that. but right now i'm just a humble demo."
+    sybil: [
+        { user: true, text: "who is @wallet_harvester_99?" },
+        { user: false, text: "cross-tenant scan..." },
+        { user: false, text: `🚨 <b>SYBIL CLUSTER</b>
+
+part of 23-account farm:
+• same IP as 22 others
+• identical timing (±3 sec)
+• wallet from same mixer
+• farming 14 airdrops
+
+you just saved ~$2,300 in tokens.` }
+    ],
+    og: [
+        { user: true, text: "@sarah_builds hit 6 months" },
+        { user: false, text: `✨ <b>OG RECOGNIZED</b>
+
+quality score: 94/100 (top 3%)
+
+• answered 127 questions
+• onboarded 34 members
+• reported 8 spammers
+• never asked "wen airdrop"
+
+auto-promoted to trusted tier.` }
+    ]
 };
 
-function addMessage(text, isUser) {
+const responses = {
+    patterns: [
+        { match: /what.*(can|do)/i, reply: "click the buttons above to see me in action: raid review, sybil detection, OG recognition. that's the real stuff." },
+        { match: /raid|quest|twitter/i, reply: "AI-powered raid review. no more checking 500 low-effort tweets. click 'review my raid' to see it." },
+        { match: /sybil|farmer|fake/i, reply: "cross-tenant intelligence catches coordinated farms. click 'catch a sybil' to see how." },
+        { match: /og|contributor/i, reply: "your best members deserve recognition. click 'recognize an OG' to see contribution tracking." },
+        { match: /gm|hello|hi|hey/i, reply: "gm! click a scenario button to see what i actually do." }
+    ],
+    default: "click one of the scenario buttons to see how i actually work. raid review, sybil detection, OG recognition."
+};
+
+function addMessage(text, isUser, isHtml = false) {
     const msg = document.createElement('div');
     msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
-    msg.innerHTML = isUser ? `<div class="chat-bubble">${text.replace(/</g, '&lt;')}</div><div class="user-avatar"></div>` : `<div class="bot-avatar">B</div><div class="chat-bubble">${text}</div>`;
+    const content = isHtml ? text : text.replace(/</g, '&lt;');
+    msg.innerHTML = isUser ? `<div class="chat-bubble">${content}</div><div class="user-avatar"></div>` : `<div class="bot-avatar">B</div><div class="chat-bubble">${content}</div>`;
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTyping() {
+    const typing = document.createElement('div');
+    typing.className = 'chat-message bot';
+    typing.innerHTML = `<div class="bot-avatar">B</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typing;
+}
+
+async function playScenario(name) {
+    const msgs = scenarios[name];
+    if (!msgs) return;
+    chatMessages.innerHTML = '';
+    for (const m of msgs) {
+        if (!m.user) {
+            const t = showTyping();
+            await new Promise(r => setTimeout(r, 600));
+            t.remove();
+        }
+        addMessage(m.text, m.user, !m.user);
+        await new Promise(r => setTimeout(r, 200));
+    }
 }
 
 function getResponse(text) {
@@ -1704,18 +1766,18 @@ function sendMessage() {
     if (!text) return;
     addMessage(text, true);
     chatInput.value = '';
-    const typing = document.createElement('div');
-    typing.className = 'chat-message bot';
-    typing.innerHTML = `<div class="bot-avatar">B</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
-    chatMessages.appendChild(typing);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    const typing = showTyping();
     setTimeout(() => { typing.remove(); addMessage(getResponse(text), false); }, 800);
 }
 
 document.getElementById('chat-send').addEventListener('click', sendMessage);
 chatInput.addEventListener('keypress', e => e.key === 'Enter' && sendMessage());
 document.querySelectorAll('.suggestion').forEach(btn => {
-    btn.addEventListener('click', () => { chatInput.value = btn.textContent; sendMessage(); });
+    btn.addEventListener('click', () => {
+        const scenario = btn.getAttribute('data-scenario');
+        if (scenario && scenarios[scenario]) { playScenario(scenario); }
+        else { chatInput.value = btn.textContent; sendMessage(); }
+    });
 });
 
 // Nav collapse on scroll

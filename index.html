@@ -963,7 +963,7 @@
 
         footer {
             padding: 48px;
-            border-top: 1px solid var(--gray-light);
+            background: var(--black);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -971,12 +971,12 @@
 
         .footer-left {
             font-size: 13px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
         }
 
         .footer-right {
             font-size: 12px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
         }
 
         .footer-sponsor {
@@ -984,14 +984,14 @@
             align-items: center;
             gap: 6px;
             font-size: 11px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.5);
         }
 
         .footer-sponsor a {
             display: flex;
             align-items: center;
-            gap: 4px;
-            color: var(--gray);
+            gap: 5px;
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
             transition: color 0.2s;
         }
@@ -1001,9 +1001,10 @@
         }
 
         .footer-sponsor img {
-            width: 14px;
-            height: 14px;
-            border-radius: 3px;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -1187,6 +1188,37 @@
     </div>
 </section>
 
+<section class="demo-section" id="demo">
+    <div class="demo-intro">
+        <h2 data-i18n="demo.label">try it</h2>
+        <p data-i18n="demo.title">ask bonzi anything. see what happens.</p>
+    </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-avatar-header">B</div>
+            <div class="chat-header-info">
+                <h4>bonzi</h4>
+                <span><span class="chat-status"></span><span data-i18n="demo.online">online</span></span>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot">
+                <div class="bot-avatar">B</div>
+                <div class="chat-bubble" data-i18n="demo.greeting">hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated</div>
+            </div>
+        </div>
+        <div class="suggestions">
+            <button class="suggestion" data-i18n="demo.sug1">what can you do?</button>
+            <button class="suggestion" data-i18n="demo.sug2">tell me a joke</button>
+            <button class="suggestion" data-i18n="demo.sug3">are you still spyware?</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
+            <button id="chat-send" data-i18n="demo.send">send</button>
+        </div>
+    </div>
+</section>
+
 <section class="pricing-section">
     <div class="pricing-container">
         <p class="pricing-label" data-i18n="pricing.label">for teams who want more</p>
@@ -1246,37 +1278,6 @@
     </div>
 </section>
 
-<section class="demo-section" id="demo">
-    <div class="demo-intro">
-        <h2 data-i18n="demo.label">try it</h2>
-        <p data-i18n="demo.title">ask bonzi anything. see what happens.</p>
-    </div>
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="chat-avatar-header">B</div>
-            <div class="chat-header-info">
-                <h4>bonzi</h4>
-                <span><span class="chat-status"></span><span data-i18n="demo.online">online</span></span>
-            </div>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-            <div class="chat-message bot">
-                <div class="bot-avatar">B</div>
-                <div class="chat-bubble" data-i18n="demo.greeting">hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated</div>
-            </div>
-        </div>
-        <div class="suggestions">
-            <button class="suggestion" data-i18n="demo.sug1">what can you do?</button>
-            <button class="suggestion" data-i18n="demo.sug2">tell me a joke</button>
-            <button class="suggestion" data-i18n="demo.sug3">are you still spyware?</button>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
-            <button id="chat-send" data-i18n="demo.send">send</button>
-        </div>
-    </div>
-</section>
-
 <section class="links-section">
     <div class="links-grid">
         <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="link-card">
@@ -1302,7 +1303,14 @@
     <div class="footer-sponsor">
         <span>sponsored by</span>
         <a href="https://ethervista.app" target="_blank">
-            <img src="https://pbs.twimg.com/profile_images/1830634294802710528/gOsJJHNW_400x400.jpg" alt="Ethervista">
+            <svg width="16" height="16" viewBox="0 0 100 100" style="border-radius:4px;">
+                <rect width="100" height="100" fill="#000"/>
+                <polygon points="50,10 90,50 50,90 10,50" fill="none" stroke="none"/>
+                <polygon points="50,15 30,50" fill="#EF6461"/>
+                <polygon points="50,15 70,50" fill="#7BC47F"/>
+                <polygon points="30,50 50,85" fill="#5B7BB3"/>
+                <polygon points="70,50 50,85" fill="#E8D282"/>
+            </svg>
             @Bonzivista
         </a>
     </div>

@@ -285,58 +285,21 @@
             color: var(--purple-light);
         }
 
-        /* Pain points section */
-        .pain-section {
-            padding: 120px 48px;
-            background: var(--white);
-        }
-
-        .pain-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--purple);
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: clamp(28px, 5vw, 48px);
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            margin-bottom: 48px;
-            line-height: 1.2;
-        }
-
-        .pain-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-        }
-
-        .pain-item {
-            padding: 32px;
-            background: #FAFAFA;
-            border: 1px solid var(--gray-light);
-            border-radius: 12px;
-        }
-
-        .pain-item h4 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-
-        .pain-item p {
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 1.6;
-        }
+        /* Pain points section - Domino Stack */
+        .pain-section { padding: 120px 48px; background: var(--black); color: var(--white); }
+        .pain-container { max-width: 900px; margin: 0 auto; }
+        .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 24px; }
+        .section-title { font-size: clamp(28px, 5vw, 48px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1.2; }
+        .domino-stack { display: flex; flex-direction: column; gap: 0; }
+        .domino-card { padding: 24px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-left: calc(var(--index) * 20px); margin-bottom: -8px; transition: all 0.3s ease; }
+        .domino-card:hover { background: rgba(124,58,237,0.1); border-color: var(--purple); transform: translateX(8px); }
+        .domino-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: rgba(239,68,68,0.2); color: #EF4444; border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 14px; }
+        .domino-card h4 { display: inline; font-size: 17px; font-weight: 600; color: var(--white); }
+        .domino-card p { margin-top: 10px; margin-left: 38px; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .pain-conclusion { margin-top: 56px; text-align: center; }
+        .pain-statement { font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: #EF4444; margin-bottom: 12px; }
+        .pain-answer { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto; line-height: 1.7; }
+        @media (max-width: 768px) { .domino-card { margin-left: calc(var(--index) * 8px); } }
 
         /* Solutions section */
         .solutions-section {
@@ -1086,25 +1049,38 @@
 
 <section class="pain-section">
     <div class="pain-container">
-        <p class="section-label" data-i18n="pain.label">the problem</p>
-        <h2 class="section-title" data-i18n="pain.title">community management is broken</h2>
-        <div class="pain-grid">
-            <div class="pain-item">
-                <h4 data-i18n="pain.item1.title">"wen token?" (for the 47th time today)</h4>
-                <p data-i18n="pain.item1.desc">Your mods are burnt out answering the same questions. Your docs exist but nobody reads them. You're stuck in an endless loop of copy-paste.</p>
+        <p class="section-label" data-i18n="pain.label">zealy created a degenerative experience</p>
+        <h2 class="section-title" data-i18n="pain.title">5 users affected by points theatre</h2>
+        <div class="domino-stack">
+            <div class="domino-card" style="--index: 0;">
+                <span class="domino-number">1</span>
+                <h4 data-i18n="pain.item1.title">reviewers drown</h4>
+                <p data-i18n="pain.item1.desc">Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.</p>
             </div>
-            <div class="pain-item">
-                <h4 data-i18n="pain.item2.title">farmers gaming your airdrop</h4>
-                <p data-i18n="pain.item2.desc">While you sleep, bots are grinding fake engagement. By the time you wake up, your snapshot is full of sybils and your real community got diluted.</p>
+            <div class="domino-card" style="--index: 1;">
+                <span class="domino-number">2</span>
+                <h4 data-i18n="pain.item2.title">funders get farmed</h4>
+                <p data-i18n="pain.item2.desc">Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.</p>
             </div>
-            <div class="pain-item">
-                <h4 data-i18n="pain.item3.title">FUD spreads at 3am</h4>
-                <p data-i18n="pain.item3.desc">Someone drops a lie in chat when no mod is online. It festers for 8 hours. By morning, the damage is done and you're in firefighting mode.</p>
+            <div class="domino-card" style="--index: 2;">
+                <span class="domino-number">3</span>
+                <h4 data-i18n="pain.item3.title">OGs are neglected</h4>
+                <p data-i18n="pain.item3.desc">Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.</p>
             </div>
-            <div class="pain-item">
-                <h4 data-i18n="pain.item4.title">manual raid reviews don't scale</h4>
-                <p data-i18n="pain.item4.desc">You're running raids on Twitter but manually checking every submission. Half are copy-paste garbage. The other half you can't even verify. Your team is drowning.</p>
+            <div class="domino-card" style="--index: 3;">
+                <span class="domino-number">4</span>
+                <h4 data-i18n="pain.item4.title">normies are ignored</h4>
+                <p data-i18n="pain.item4.desc">New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.</p>
             </div>
+            <div class="domino-card" style="--index: 4;">
+                <span class="domino-number">5</span>
+                <h4 data-i18n="pain.item5.title">KOLs get spammed</h4>
+                <p data-i18n="pain.item5.desc">Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your "engagement" is actually hurting your reach.</p>
+            </div>
+        </div>
+        <div class="pain-conclusion">
+            <p class="pain-statement" data-i18n="pain.statement">this isn't community building. it's extraction theatre.</p>
+            <p class="pain-answer" data-i18n="pain.answer">bonzi exists because communities deserve better than spreadsheets and sybils. real recognition for real contribution. AI that actually helps instead of just tracking. soul, not points.</p>
         </div>
     </div>
 </section>
@@ -1321,11 +1297,13 @@ const translations = {
         "history.label": "a bit of history", "history.text": "Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>But here's the thing. I never stopped wanting to help. So I've been rebuilt. <em>No spyware, promise.</em> Just pure, open-source helpfulness. This time I'm actually useful: I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>",
         "reveal.line1": "communities don't need", "reveal.line2": "another dashboard.", "reveal.line3": "they need a", "reveal.line4": "friend.",
         "statement.text": "an AI that <span class=\"highlight\">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class=\"highlight\">their worst nightmare.</span>",
-        "pain.label": "the problem", "pain.title": "community management is broken",
-        "pain.item1.title": "\"wen token?\" (for the 47th time today)", "pain.item1.desc": "Your mods are burnt out answering the same questions. Your docs exist but nobody reads them. You're stuck in an endless loop of copy-paste.",
-        "pain.item2.title": "farmers gaming your airdrop", "pain.item2.desc": "While you sleep, bots are grinding fake engagement. By the time you wake up, your snapshot is full of sybils and your real community got diluted.",
-        "pain.item3.title": "FUD spreads at 3am", "pain.item3.desc": "Someone drops a lie in chat when no mod is online. It festers for 8 hours. By morning, the damage is done and you're in firefighting mode.",
-        "pain.item4.title": "manual raid reviews don't scale", "pain.item4.desc": "You're running raids on Twitter but manually checking every submission. Half are copy-paste garbage. The other half you can't even verify. Your team is drowning.",
+        "pain.label": "zealy created a degenerative experience", "pain.title": "5 users affected by points theatre",
+        "pain.item1.title": "reviewers drown", "pain.item1.desc": "Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.",
+        "pain.item2.title": "funders get farmed", "pain.item2.desc": "Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.",
+        "pain.item3.title": "OGs are neglected", "pain.item3.desc": "Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.",
+        "pain.item4.title": "normies are ignored", "pain.item4.desc": "New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.",
+        "pain.item5.title": "KOLs get spammed", "pain.item5.desc": "Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your \"engagement\" is actually hurting your reach.",
+        "pain.statement": "this isn't community building. it's extraction theatre.", "pain.answer": "bonzi exists because communities deserve better than spreadsheets and sybils. real recognition for real contribution. AI that actually helps instead of just tracking. soul, not points.",
         "solutions.label": "what bonzi does", "solutions.title": "actually solves these problems",
         "solutions.item1.title": "answers questions forever", "solutions.item1.desc": "Feed bonzi your docs once. It learns them better than your team did. Then it answers the same question 1000 times without complaining or quitting.",
         "solutions.item2.title": "AI-powered raid review", "solutions.item2.desc": "Submissions get reviewed automatically. Bonzi checks if the tweet actually exists, if the content is original, if the account is real. No more manual verification hell.",
@@ -1354,11 +1332,13 @@ const translations = {
         "history.label": "um pouco de historia", "history.text": "Em 1999, eu era o amigo de desktop favorito de todos. Um pequeno gorila roxo que contava piadas, lia emails e fazia companhia nas noites de internet discada. <em>Depois ficou... complicado.</em> Veio junto com coisas que ninguem pediu. Ganhei ma fama. Justo.<br><br>Mas olha so. Nunca deixei de querer ajudar. Entao fui reconstruido. <em>Sem spyware, prometo.</em> Pura ajuda open-source. Desta vez sou realmente util: moro no seu Telegram, aprendo seu projeto e respondo perguntas pra voce nao precisar. <em>Considere meu arco de redencao.</em>",
         "reveal.line1": "comunidades nao precisam", "reveal.line2": "de outro dashboard.", "reveal.line3": "elas precisam de um", "reveal.line4": "amigo.",
         "statement.text": "uma IA que <span class=\"highlight\">realmente vive</span> no seu telegram. aprende seus docs. responde perguntas as 3h da manha. chuta farmers e fudders enquanto voce dorme. <span class=\"highlight\">o pior pesadelo deles.</span>",
-        "pain.label": "o problema", "pain.title": "gestao de comunidade esta quebrada",
-        "pain.item1.title": "\"wen token?\" (pela 47a vez hoje)", "pain.item1.desc": "Seus mods estao esgotados respondendo as mesmas perguntas. Seus docs existem mas ninguem le. Voce esta preso num loop infinito de copiar-colar.",
-        "pain.item2.title": "farmers explorando seu airdrop", "pain.item2.desc": "Enquanto voce dorme, bots geram engajamento falso. Quando acorda, seu snapshot esta cheio de sybils e sua comunidade real foi diluida.",
-        "pain.item3.title": "FUD se espalha as 3h", "pain.item3.desc": "Alguem solta uma mentira no chat quando nenhum mod esta online. Fermenta por 8 horas. De manha, o estrago esta feito.",
-        "pain.item4.title": "revisao manual de raids nao escala", "pain.item4.desc": "Voce faz raids no Twitter mas verifica cada envio manualmente. Metade e lixo copiado. A outra metade voce nem consegue verificar.",
+        "pain.label": "zealy criou uma experiencia degenerativa", "pain.title": "5 usuarios afetados pelo teatro de pontos",
+        "pain.item1.title": "revisores afogam", "pain.item1.desc": "Sua equipe passa horas verificando raids. Metade e lixo copiado. A outra metade e gerada por bots. Voce nao consegue mais distinguir. Burnout e real.",
+        "pain.item2.title": "investidores sao farmados", "pain.item2.desc": "Seu orcamento de airdrop vai para exercitos de sybils. Farmers profissionais com 50 carteiras extraem valor enquanto sua comunidade real e diluida a nada.",
+        "pain.item3.title": "OGs sao negligenciados", "pain.item3.desc": "Seus day-ones que acreditaram antes de todos? Eles nao grindam tarefas. Nao farmam pontos. O sistema os ignora enquanto mercenarios sobem no ranking.",
+        "pain.item4.title": "normies sao ignorados", "pain.item4.desc": "Novos membros fazem perguntas genuinas. Ninguem responde. Os docs existem mas ninguem le. Eles saem confusos. Seu funil vaza em cada etapa.",
+        "pain.item5.title": "KOLs sao spamados", "pain.item5.desc": "Suas tarefas de raid criam uma enchente de mencoes de baixo esforco. KOLs mutam sua hashtag. O algoritmo penaliza spam. Seu \"engajamento\" esta prejudicando seu alcance.",
+        "pain.statement": "isso nao e construcao de comunidade. e teatro de extracao.", "pain.answer": "bonzi existe porque comunidades merecem mais que planilhas e sybils. reconhecimento real por contribuicao real. IA que realmente ajuda em vez de apenas rastrear. alma, nao pontos.",
         "solutions.label": "o que bonzi faz", "solutions.title": "resolve esses problemas de verdade",
         "solutions.item1.title": "responde perguntas para sempre", "solutions.item1.desc": "Alimente o bonzi com seus docs uma vez. Ele aprende melhor que sua equipe. Depois responde a mesma pergunta 1000 vezes sem reclamar.",
         "solutions.item2.title": "revisao de raid por IA", "solutions.item2.desc": "Envios sao revisados automaticamente. Bonzi verifica se o tweet existe, se o conteudo e original, se a conta e real.",
@@ -1387,11 +1367,13 @@ const translations = {
         "history.label": "一点历史", "history.text": "1999年，我是每个人最喜欢的桌面伙伴。一只紫色小猩猩，会讲笑话、读邮件，在拨号上网的夜晚陪伴你。<em>然后事情变得...复杂了。</em>被捆绑了没人要的东西。名声变差了。算是活该。<br><br>但是这样。我从未停止想要帮助别人。所以我被重建了。<em>没有间谍软件，我保证。</em>纯粹的开源助手。这次我真的有用：我住在你的Telegram里，学习你的项目，回答问题，这样你就不用回答了。<em>就当是我的救赎之路。</em>",
         "reveal.line1": "社区不需要", "reveal.line2": "另一个仪表板。", "reveal.line3": "他们需要一个", "reveal.line4": "朋友。",
         "statement.text": "一个<span class=\"highlight\">真正住在</span>你Telegram里的AI。学习你的文档。凌晨3点回答问题。在你睡觉时踢走刷子和喷子。<span class=\"highlight\">他们最大的噩梦。</span>",
-        "pain.label": "问题", "pain.title": "社区管理已经崩溃",
-        "pain.item1.title": "\"什么时候发币？\"（今天第47次了）", "pain.item1.desc": "你的管理员已经被同样的问题累垮了。你的文档存在但没人读。你被困在无尽的复制粘贴循环中。",
-        "pain.item2.title": "刷子在利用你的空投", "pain.item2.desc": "当你睡觉时，机器人在刷假互动。当你醒来，你的快照已经充满了女巫，真正的社区被稀释了。",
-        "pain.item3.title": "FUD在凌晨3点传播", "pain.item3.desc": "有人在没有管理员在线时在群里散布谣言。发酵8小时。早上起来，损害已经造成。",
-        "pain.item4.title": "手动审核raid无法扩展", "pain.item4.desc": "你在Twitter上做raid但手动检查每个提交。一半是复制粘贴垃圾。另一半你根本无法验证。",
+        "pain.label": "zealy创造了退化体验", "pain.title": "5类用户受积分剧场影响",
+        "pain.item1.title": "审核员淹没", "pain.item1.desc": "你的团队花数小时验证raid提交。一半是复制粘贴垃圾。另一半是机器人生成的。你已经分不清了。倦怠是真实的。",
+        "pain.item2.title": "投资者被收割", "pain.item2.desc": "你的空投预算流向女巫大军。拥有50个钱包的专业农民榨取价值，而你真正的社区被稀释殆尽。快照成了笑话。",
+        "pain.item3.title": "OG被忽视", "pain.item3.desc": "那些最早相信你的人？他们不刷任务。不刷积分。所以系统忽视他们，而雇佣兵爬上排行榜。",
+        "pain.item4.title": "普通人被无视", "pain.item4.desc": "新成员问真诚的问题。没人回答。文档存在但没人读。他们困惑离开。你的漏斗每个环节都在漏水。",
+        "pain.item5.title": "KOL被轰炸", "pain.item5.desc": "你的raid任务制造了大量低质量提及。KOL屏蔽你的标签。算法惩罚垃圾信息。你的\"互动\"实际上在伤害你的触达。",
+        "pain.statement": "这不是社区建设。这是榨取剧场。", "pain.answer": "bonzi存在是因为社区值得比表格和女巫更好的东西。真实贡献获得真实认可。真正帮助的AI，而不只是追踪。灵魂，而非积分。",
         "solutions.label": "bonzi能做什么", "solutions.title": "真正解决这些问题",
         "solutions.item1.title": "永远回答问题", "solutions.item1.desc": "把你的文档喂给bonzi一次。它学得比你的团队还好。然后回答同样的问题1000次不抱怨也不辞职。",
         "solutions.item2.title": "AI驱动的raid审核", "solutions.item2.desc": "提交自动审核。Bonzi检查推文是否真实存在，内容是否原创，账号是否真实。",
@@ -1420,11 +1402,13 @@ const translations = {
         "history.label": "biraz tarih", "history.text": "1999'da herkesin en sevdigi masaustu arkadaydim. Saka yapan, e-posta okuyan ve dial-up gecelerinde size eslik eden kucuk mor bir goril. <em>Sonra isler... karisti.</em> Kimsenin istemedigi seylerle paketlendim. Kotu bir un kazandim. Hakettim.<br><br>Ama sunlar var. Yardim etmek istemekten hic vazgecmedim. Bu yuzden yeniden insa edildim. <em>Casus yazilim yok, soz.</em> Saf, acik kaynakli yardimserverlik. <em>Bunu benim kurtulus hikayem olarak kabul edin.</em>",
         "reveal.line1": "topluluklar baska bir", "reveal.line2": "panoya ihtiyac duymuyor.", "reveal.line3": "bir", "reveal.line4": "arkadasa ihtiyaclari var.",
         "statement.text": "telegram'inizda <span class=\"highlight\">gercekten yasayan</span> bir yapay zeka. dokumanlarinizi ogrenir. gece 3'te sorulari yanitlar. siz uyurken farmer'lari ve fud'cilari tekmeler. <span class=\"highlight\">onlarin en kotu kabusu.</span>",
-        "pain.label": "sorun", "pain.title": "topluluk yonetimi bozuk",
-        "pain.item1.title": "\"token ne zaman?\" (bugun 47. kez)", "pain.item1.desc": "Mod'lariniz ayni sorulari cevaplamaktan tukendi. Dokumanlariniz var ama kimse okumuyor.",
-        "pain.item2.title": "farmer'lar airdrop'unuzu suistimal ediyor", "pain.item2.desc": "Siz uyurken botlar sahte etkilesim uretiyorlar. Uyandiginizda snapshot'unuz sybil'lerle dolu.",
-        "pain.item3.title": "FUD gece 3'te yayilir", "pain.item3.desc": "Hicbir mod online degilken biri sohbette yalan birakir. 8 saat mayalanir.",
-        "pain.item4.title": "manuel raid incelemesi olceklenmiyor", "pain.item4.desc": "Twitter'da raid yapiyorsunuz ama her gonderimi manuel kontrol ediyorsunuz.",
+        "pain.label": "zealy dejeneratif bir deneyim yaratti", "pain.title": "puan tiyatrosundan etkilenen 5 kullanici",
+        "pain.item1.title": "incelemeciler boguluyor", "pain.item1.desc": "Ekibiniz raid gonderilerini dogrulamak icin saatler harcıyor. Yarisi kopyala-yapistir cop. Diger yarisi bot uretimi. Artik ayirt edemiyorsunuz. Tukenmislik gercek.",
+        "pain.item2.title": "yatirimcilar farmlaniyor", "pain.item2.desc": "Airdrop butceniz sybil ordularina gidiyor. 50 cuzdanli profesyonel farmer'lar deger cikarirken gercek toplulugunuz sifira seyreltiliyor.",
+        "pain.item3.title": "OG'ler ihmal ediliyor", "pain.item3.desc": "Herkesten once inanan ilk gunculer? Gorev grindlamiyorlar. Puan farmlamiyorlar. Sistem onlari gormezden gelirken paralı askerler siralama tablosuna tirmanıyor.",
+        "pain.item4.title": "normie'ler gormezden geliniyor", "pain.item4.desc": "Yeni uyeler gercek sorular soruyor. Kimse cevap vermiyor. Dokumanlar var ama kimse okumuyor. Kafasi karisik ayriliyorlar.",
+        "pain.item5.title": "KOL'ler spamlanıyor", "pain.item5.desc": "Raid gorevleriniz dusuk eforlu bahis seli yaratiyor. KOL'ler hashtag'inizi susturuyor. Algoritma spam'i cezalandiriyor. \"Etkilesiminiz\" aslinda eriaiminize zarar veriyor.",
+        "pain.statement": "bu topluluk insasi degil. bu cikarma tiyatrosu.", "pain.answer": "bonzi var cunku topluluklar tablolardan ve sybil'lerden daha iyisini hak ediyor. gercek katki icin gercek taninma. sadece izlemek yerine gercekten yardim eden yapay zeka. ruh, puan degil.",
         "solutions.label": "bonzi ne yapar", "solutions.title": "bu sorunlari gercekten cozer",
         "solutions.item1.title": "sorulari sonsuza kadar yanitlar", "solutions.item1.desc": "Bonzi'ye dokumanlarinizi bir kez verin. Ekibinizden daha iyi ogrenir.",
         "solutions.item2.title": "yapay zeka destekli raid incelemesi", "solutions.item2.desc": "Gonderiler otomatik incelenir. Bonzi tweet'in var olup olmadigini kontrol eder.",
@@ -1453,11 +1437,13 @@ const translations = {
         "history.label": "немного истории", "history.text": "В 1999 году я был любимым помощником на рабочем столе. Маленькая фиолетовая горилла, которая рассказывала шутки, читала письма и составляла компанию в ночи dial-up интернета. <em>Потом все... усложнилось.</em> Меня начали поставлять с тем, что никто не просил. Заработал плохую репутацию. Справедливо.<br><br>Но вот в чем дело. Я никогда не переставал хотеть помогать. Поэтому меня пересобрали. <em>Без шпионских программ, обещаю.</em> Чистая open-source помощь. <em>Считайте это моей искупительной аркой.</em>",
         "reveal.line1": "сообществам не нужна", "reveal.line2": "еще одна панель управления.", "reveal.line3": "им нужен", "reveal.line4": "друг.",
         "statement.text": "ИИ, который <span class=\"highlight\">реально живет</span> в вашем телеграме. учит ваши доки. отвечает на вопросы в 3 ночи. выгоняет фармеров и фудеров пока вы спите. <span class=\"highlight\">их худший кошмар.</span>",
-        "pain.label": "проблема", "pain.title": "управление сообществом сломано",
-        "pain.item1.title": "\"когда токен?\" (47-й раз за сегодня)", "pain.item1.desc": "Ваши модераторы выгорели отвечая на одни и те же вопросы.",
-        "pain.item2.title": "фармеры играют ваш аирдроп", "pain.item2.desc": "Пока вы спите, боты накручивают фейковое взаимодействие.",
-        "pain.item3.title": "FUD распространяется в 3 ночи", "pain.item3.desc": "Кто-то кидает ложь в чат когда ни один мод не онлайн.",
-        "pain.item4.title": "ручная проверка рейдов не масштабируется", "pain.item4.desc": "Вы делаете рейды в Twitter но вручную проверяете каждую заявку.",
+        "pain.label": "zealy создал дегенеративный опыт", "pain.title": "5 пользователей пострадали от театра очков",
+        "pain.item1.title": "ревьюеры тонут", "pain.item1.desc": "Ваша команда часами проверяет заявки на рейды. Половина - копипаста. Другая половина - сгенерирована ботами. Вы уже не различаете. Выгорание реально.",
+        "pain.item2.title": "инвесторов фармят", "pain.item2.desc": "Ваш бюджет аирдропа уходит армиям сибилов. Профессиональные фармеры с 50 кошельками выкачивают ценность, пока ваше реальное сообщество размывается до нуля.",
+        "pain.item3.title": "OG игнорируются", "pain.item3.desc": "Те, кто поверил раньше всех? Они не гриндят задания. Не фармят очки. Система их игнорирует, пока наемники поднимаются в рейтинге.",
+        "pain.item4.title": "обычных юзеров игнорируют", "pain.item4.desc": "Новые участники задают настоящие вопросы. Никто не отвечает. Доки есть, но никто их не читает. Они уходят в замешательстве.",
+        "pain.item5.title": "KOL спамят", "pain.item5.desc": "Ваши рейд-задания создают поток низкокачественных упоминаний. KOL мьютят ваш хештег. Алгоритм наказывает спам. Ваше \"взаимодействие\" на самом деле вредит охвату.",
+        "pain.statement": "это не построение сообщества. это театр извлечения.", "pain.answer": "bonzi существует потому что сообщества заслуживают лучшего чем таблицы и сибилы. реальное признание за реальный вклад. ИИ который реально помогает, а не просто отслеживает. душа, не очки.",
         "solutions.label": "что делает bonzi", "solutions.title": "реально решает эти проблемы",
         "solutions.item1.title": "отвечает на вопросы вечно", "solutions.item1.desc": "Скормите bonzi ваши доки один раз. Он выучит их лучше вашей команды.",
         "solutions.item2.title": "проверка рейдов на ИИ", "solutions.item2.desc": "Заявки проверяются автоматически. Bonzi проверяет существует ли твит.",
@@ -1486,11 +1472,13 @@ const translations = {
         "history.label": "un peu d'histoire", "history.text": "En 1999, j'etais l'ami de bureau prefere de tout le monde. Un petit gorille violet qui racontait des blagues, lisait les emails et vous tenait compagnie pendant ces nuits de modem 56k. <em>Puis ca s'est... complique.</em> Livre avec des trucs que personne n'avait demandes. Mauvaise reputation. C'est merite.<br><br>Mais voila. Je n'ai jamais cesse de vouloir aider. Alors j'ai ete reconstruit. <em>Pas de spyware, promis.</em> <em>Considerez ca comme mon arc de redemption.</em>",
         "reveal.line1": "les communautes n'ont pas besoin", "reveal.line2": "d'un autre tableau de bord.", "reveal.line3": "elles ont besoin d'un", "reveal.line4": "ami.",
         "statement.text": "une IA qui <span class=\"highlight\">vit vraiment</span> dans votre telegram. apprend vos docs. repond aux questions a 3h du mat. vire les farmers et les fudders pendant que vous dormez. <span class=\"highlight\">leur pire cauchemar.</span>",
-        "pain.label": "le probleme", "pain.title": "la gestion de communaute est cassee",
-        "pain.item1.title": "\"c'est quand le token ?\" (47eme fois aujourd'hui)", "pain.item1.desc": "Vos mods sont epuises a repondre aux memes questions.",
-        "pain.item2.title": "les farmers exploitent votre airdrop", "pain.item2.desc": "Pendant que vous dormez, des bots generent du faux engagement.",
-        "pain.item3.title": "le FUD se repand a 3h du mat", "pain.item3.desc": "Quelqu'un balance un mensonge dans le chat quand aucun mod n'est en ligne.",
-        "pain.item4.title": "la review manuelle des raids ne scale pas", "pain.item4.desc": "Vous faites des raids sur Twitter mais vous verifiez chaque soumission a la main.",
+        "pain.label": "zealy a cree une experience degenerative", "pain.title": "5 utilisateurs affectes par le theatre des points",
+        "pain.item1.title": "les reviewers se noient", "pain.item1.desc": "Votre equipe passe des heures a verifier les soumissions de raid. La moitie est du copier-coller. L'autre moitie est generee par des bots. Vous ne faites plus la difference. Le burnout est reel.",
+        "pain.item2.title": "les investisseurs se font farmer", "pain.item2.desc": "Votre budget airdrop va aux armees de sybils. Des farmers pro avec 50 wallets extraient la valeur pendant que votre vraie communaute est diluee a zero.",
+        "pain.item3.title": "les OG sont negliges", "pain.item3.desc": "Vos day-ones qui ont cru avant tout le monde? Ils ne grindent pas les taches. Ils ne farment pas les points. Le systeme les ignore pendant que les mercenaires grimpent le classement.",
+        "pain.item4.title": "les normies sont ignores", "pain.item4.desc": "Les nouveaux membres posent de vraies questions. Personne ne repond. Les docs existent mais personne ne les lit. Ils partent confus.",
+        "pain.item5.title": "les KOL se font spammer", "pain.item5.desc": "Vos taches de raid creent un deluge de mentions low-effort. Les KOL mute votre hashtag. L'algo penalise le spam. Votre \"engagement\" nuit en fait a votre portee.",
+        "pain.statement": "ce n'est pas de la construction de communaute. c'est du theatre d'extraction.", "pain.answer": "bonzi existe parce que les communautes meritent mieux que des tableaux et des sybils. reconnaissance reelle pour contribution reelle. IA qui aide vraiment au lieu de juste tracker. ame, pas points.",
         "solutions.label": "ce que fait bonzi", "solutions.title": "resout vraiment ces problemes",
         "solutions.item1.title": "repond aux questions pour toujours", "solutions.item1.desc": "Donnez vos docs a bonzi une fois. Il les apprend mieux que votre equipe.",
         "solutions.item2.title": "review de raid par IA", "solutions.item2.desc": "Les soumissions sont reviewees automatiquement. Bonzi verifie si le tweet existe.",

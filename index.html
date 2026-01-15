@@ -983,6 +983,33 @@
             color: var(--gray);
         }
 
+        .footer-sponsor {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .footer-sponsor a {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-sponsor a:hover {
+            color: var(--purple);
+        }
+
+        .footer-sponsor img {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
         @media (max-width: 768px) {
             nav { padding: 16px 24px; }
             .nav-links { display: none; }
@@ -1277,6 +1304,13 @@
 
 <footer>
     <div class="footer-left" data-i18n="footer.left">open source · mit license · no bananas harmed</div>
+    <div class="footer-sponsor">
+        <span>sponsored by</span>
+        <a href="https://ethervista.app" target="_blank">
+            <img src="https://pbs.twimg.com/profile_images/1830634294802710528/gOsJJHNW_400x400.jpg" alt="Ethervista">
+            @Bonzivista
+        </a>
+    </div>
     <div class="footer-right">est. 1999</div>
 </footer>
 

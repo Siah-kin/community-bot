@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://siah-kin.github.io/community-bot/sitemap.xml

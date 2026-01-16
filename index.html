@@ -1246,9 +1246,10 @@
         .footer-main {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 16px;
             flex-wrap: wrap;
             justify-content: center;
+            line-height: 20px;
         }
 
         .footer-main a {
@@ -1267,8 +1268,20 @@
             gap: 6px;
         }
 
+        .sponsor-logo img,
         .sponsor-logo svg {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
             vertical-align: middle;
+        }
+
+        .footer-sponsor,
+        .footer-credit,
+        .footer-support {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .footer-sep {

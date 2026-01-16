@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonzi - AI Community Management for Web3</title>
+    <meta name="description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors. Built for crypto communities. Self-host free or use our hosted version.">
+    <meta name="keywords" content="community bot, telegram bot, discord bot, sybil detection, airdrop management, web3, crypto community, AI moderation">
+    <meta name="author" content="Bonzi">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://siah-kin.github.io/community-bot/">
+    <meta property="og:title" content="Bonzi - AI Community Management for Web3">
+    <meta property="og:description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors. Self-host free or use hosted.">
+    <meta property="og:image" content="https://siah-kin.github.io/community-bot/bonzi-logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bonzi - AI Community Management for Web3">
+    <meta name="twitter:description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors.">
+
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #E4E4E7;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FFFFFF;
+            color: var(--black);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.2s ease;
+            background: rgba(10,10,10,0.85); backdrop-filter: blur(10px);
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--purple);
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--purple);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Language switcher - integrated in nav */
+        .lang-switcher {
+            display: flex;
+            gap: 6px;
+            margin-left: 24px;
+        }
+
+        .lang-btn {
+            padding: 4px 8px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--white);
+            cursor: none;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: #7C3AED;
+            border-color: #7C3AED;
+            mix-blend-mode: normal;
+            isolation: isolate;
+        }
+
+        /* Minimal nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10,10,10,0.85); backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: lowercase;
+        }
+
+        /* Opening - just bonzi */
+        .opening {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: #FFFFFF;
+        }
+
+        .opening-bonzi {
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .opening-text {
+            margin-top: 48px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .opening-text h1 {
+            font-size: clamp(48px, 10vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            color: var(--black);
+        }
+
+        .opening-text p {
+            margin-top: 16px;
+            font-size: 16px;
+            color: var(--gray);
+            letter-spacing: 0.02em;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+        }
+
+        .scroll-hint span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gray), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* History section */
+        .history {
+            padding: 120px 48px;
+            background: linear-gradient(180deg, var(--white) 0%, #F5F5F5 100%);
+        }
+
+        .history-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .history-content {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .history-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 24px;
+        }
+
+        .history-text {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--black);
+        }
+
+        .history-text em {
+            color: var(--purple);
+            font-style: normal;
+        }
+
+        /* Reveal section */
+        .reveal {
+            min-height: 80vh;
+            padding: 120px 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reveal-content {
+            max-width: 800px;
+        }
+
+        .reveal-line {
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .reveal-line span {
+            display: block;
+            font-size: clamp(32px, 6vw, 64px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            transform: translateY(100%);
+        }
+
+        .reveal-line span.purple {
+            color: var(--purple);
+        }
+
+        /* Big statement */
+        .statement {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            background: var(--black);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .statement-text {
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .statement-text .highlight {
+            color: var(--purple-light);
+        }
+
+        /* Pain points section - Domino Stack with purple accent bg */
+        .pain-section { padding: 120px 48px; background: linear-gradient(180deg, #0f0a14 0%, #1a1024 50%, #0f0a14 100%); color: var(--white); border-top: 4px solid var(--purple); border-bottom: 4px solid var(--purple); box-shadow: inset 0 0 150px rgba(124,58,237,0.12), 0 0 60px rgba(124,58,237,0.08); }
+        .pain-container { max-width: 900px; margin: 0 auto; }
+        .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 24px; }
+        .section-title { font-size: clamp(28px, 5vw, 48px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1.2; }
+        .domino-stack { display: flex; flex-direction: column; gap: 0; }
+        .domino-card { padding: 24px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-left: calc(var(--index) * 20px); margin-bottom: -8px; transition: all 0.3s ease; }
+        .domino-card:hover { background: rgba(124,58,237,0.1); border-color: var(--purple); transform: translateX(8px); }
+        .domino-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: rgba(124,58,237,0.2); color: var(--purple-light); border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 14px; }
+        .domino-card h4 { display: inline; font-size: 17px; font-weight: 600; color: var(--white); }
+        .domino-card p { margin-top: 10px; margin-left: 38px; font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .pain-conclusion { margin-top: 56px; text-align: center; }
+        .pain-statement { font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: var(--purple-light); margin-bottom: 12px; }
+        .pain-answer { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto; line-height: 1.7; }
+        @media (max-width: 768px) { .domino-card { margin-left: calc(var(--index) * 8px); } }
+
+        /* Solutions section */
+        .solutions-section {
+            padding: 120px 48px;
+            background: #FAFAFA;
+        }
+
+        .solutions-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .solution-item {
+            display: flex;
+            gap: 24px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .solution-item:last-child {
+            border-bottom: none;
+        }
+
+        .solution-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--purple);
+            flex-shrink: 0;
+            width: 32px;
+        }
+
+        .solution-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .solution-content p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Comparison section */
+        .comparison-section {
+            padding: 120px 48px;
+            background: var(--white);
+        }
+
+        .comparison-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 48px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .comparison-table th {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison-table th:first-child {
+            color: var(--purple);
+        }
+
+        .comparison-table td {
+            font-size: 15px;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        .comparison-table .check {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .comparison-table .cross {
+            color: var(--gray);
+        }
+
+        .comparison-table .highlight-col {
+            background: rgba(124, 58, 237, 0.04);
+        }
+
+        /* Mission section - V4 GLASSMORPHISM CARD */
+        .mission-section {
+            padding: 140px 48px;
+            background: linear-gradient(135deg, #1a0a2e 0%, #0a0a15 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ambient blobs */
+        .mission-section::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent 70%);
+            filter: blur(80px);
+            animation: float-blob 8s ease-in-out infinite;
+        }
+
+        .mission-section::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            right: 15%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.25), transparent 70%);
+            filter: blur(60px);
+            animation: float-blob 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-blob {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .mission-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px;
+            padding: 64px;
+        }
+
+        .mission-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--purple-light);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .mission-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            line-height: 1.05;
+            color: var(--white);
+        }
+
+        .mission-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 480px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+        }
+
+        /* The Glowing Loop Visual */
+        .loop-visual {
+            position: relative;
+            margin: 0 auto 60px;
+            width: 280px;
+            height: 280px;
+        }
+
+        .loop-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 2px solid rgba(124, 58, 237, 0.5);
+            background: rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(10px);
+            animation: ring-rotate 8s linear infinite;
+            box-shadow: 0 0 60px rgba(124, 58, 237, 0.3), inset 0 0 40px rgba(124, 58, 237, 0.1);
+        }
+
+        .loop-ring::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.2), transparent 60%);
+            filter: blur(20px);
+            animation: glow-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes ring-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .loop-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .loop-percent {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .loop-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
+        }
+
+        /* Flow Steps - Horizontal */
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .flow-step {
+            text-align: center;
+            position: relative;
+            padding: 20px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.2);
+            font-size: 16px;
+            z-index: 2;
+        }
+
+        .flow-step:last-child::after {
+            content: '↻';
+            color: var(--purple-light);
+        }
+
+        .flow-num {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 12px;
+            background: var(--purple);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .flow-text {
+            font-size: 13px;
+            color: var(--white);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .flow-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .stat-num.green { color: #22c55e; }
+        .stat-num.purple { color: var(--purple-light); }
+        .stat-num.red { color: #888; text-decoration: line-through; }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .stat-label a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .stat-label a:hover {
+            text-decoration: underline;
+        }
+
+        .mission-footer {
+            margin-top: 64px;
+            text-align: center;
+        }
+
+        .mission-footer p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Demo section */
+        /* Feature showcase */
+        .features-section { padding: 120px 48px; background: var(--purple); }
+        .features-container { max-width: 1100px; margin: 0 auto; }
+        .features-header { text-align: center; margin-bottom: 64px; }
+        .features-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
+        .features-header p { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; color: var(--white); }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .feature-card { background: var(--white); border: none; border-radius: 16px; padding: 32px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+        .feature-icon { width: 48px; height: 48px; background: rgba(124,58,237,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; color: #7C3AED; }
+        .feature-icon svg { width: 24px; height: 24px; stroke: #7C3AED; }
+        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--black); }
+        .feature-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+        .feature-card .feature-detail { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-light); font-size: 13px; color: var(--purple); font-weight: 500; }
+        @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+
+        .demo-section {
+            min-height: 100vh;
+            padding: 120px 48px;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .demo-intro {
+            text-align: center;
+            max-width: 500px;
+            margin-bottom: 64px;
+        }
+
+        .demo-intro h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 16px;
+        }
+
+        .demo-intro p {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        /* Telegram-style chat widget */
+        .chat-container {
+            width: 100%;
+            max-width: 480px;
+            background: #0E1621;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            background: #17212B;
+            border-bottom: 1px solid #232E3C;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar-header {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #766AC8 0%, #9B8FE8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .chat-header-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .chat-header-info span {
+            font-size: 13px;
+            color: #6C7883;
+        }
+
+        .chat-status {
+            width: 8px;
+            height: 8px;
+            background: #4DD964;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        /* Telegram-style chat */
+        .chat-messages {
+            height: 360px;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #0E1621;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 15L45 10L40 20L50 25L40 30L45 40L35 35L30 45L25 35L15 40L20 30L10 25L20 20L15 10L25 15L30 5Z' fill='%23182533' fill-opacity='0.3'/%3E%3C/svg%3E");
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: msgIn 0.2s ease;
+        }
+
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+        }
+
+        .chat-message.bot {
+            align-self: flex-start;
+        }
+
+        .bot-avatar {
+            display: none;
+        }
+
+        .user-avatar {
+            display: none;
+        }
+
+        .chat-bubble {
+            padding: 8px 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .chat-message.bot .chat-bubble {
+            background: #182533;
+            color: #fff;
+            border-radius: 12px 12px 12px 4px;
+            border: none;
+        }
+
+        .chat-message.bot .chat-bubble b {
+            color: #7AA2E3;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: #766AC8;
+            color: white;
+            border-radius: 12px 12px 4px 12px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 14px;
+            background: #182533;
+            border-radius: 12px 12px 12px 4px;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .chat-input-area {
+            padding: 8px 12px;
+            background: #17212B;
+            border-top: 1px solid #232E3C;
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            background: #242F3D;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #fff;
+            outline: none;
+        }
+
+        .chat-input-area input::placeholder {
+            color: #6C7883;
+        }
+
+        .chat-input-area input:focus {
+            background: #2B3945;
+        }
+
+        .chat-input-area button {
+            padding: 10px 16px;
+            background: #766AC8;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-input-area button:hover {
+            background: #8B7FD9;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 12px;
+            background: #17212B;
+        }
+
+        .suggestion {
+            padding: 6px 12px;
+            background: #242F3D;
+            border: none;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #8B9CAB;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion:hover {
+            background: #766AC8;
+            color: white;
+        }
+
+        /* Pricing section - 4-card grid */
+        .pricing-section {
+            padding: 120px 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pricing-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple-light);
+            margin-bottom: 16px;
+        }
+
+        .pricing-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .pricing-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 60px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .pricing-section {
+                padding: 80px 24px;
+            }
+        }
+
+        .price-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 32px 28px;
+            text-align: left;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .price-card.featured {
+            background: rgba(124,58,237,0.12);
+            border-color: var(--purple);
+        }
+
+        .price-card.featured:hover {
+            background: rgba(124,58,237,0.18);
+            border-color: var(--purple-light);
+        }
+
+        .price-card.impact {
+            background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(255,255,255,0.03));
+            border-color: rgba(124,58,237,0.3);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--purple);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-badge.impact-badge {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-tagline {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .card-price {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .price-amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .price-period {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .card-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 28px 0;
+            flex-grow: 1;
+        }
+
+        .card-features li {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            color: var(--purple-light);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .btn-card {
+            display: block;
+            text-align: center;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+
+        .btn-card.btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+        }
+
+        .btn-card.btn-outline:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .btn-card.btn-primary {
+            background: var(--purple);
+            border: 1px solid var(--purple);
+            color: white;
+        }
+
+        .btn-card.btn-primary:hover {
+            background: var(--purple-light);
+            border-color: var(--purple-light);
+        }
+
+        .btn-card.btn-impact {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            border: none;
+            color: white;
+        }
+
+        .btn-card.btn-impact:hover {
+            opacity: 0.9;
+        }
+
+        .pricing-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .pricing-footer span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-footer .icon {
+            font-size: 16px;
+        }
+
+        .btn-large:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+
+        .self-host-note {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .self-host-note a {
+            color: var(--purple-light);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-section {
+                padding: 80px 24px;
+            }
+            .pricing-single {
+                padding: 32px 24px;
+            }
+            .price-breakdown {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .price-divider {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Links section */
+        .links-section {
+            padding: 120px 48px;
+            background: var(--purple);
+        }
+
+        .links-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .link-card {
+            padding: 48px 32px;
+            background: var(--white);
+            border: none;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--black);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        .link-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--black);
+        }
+
+        .link-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .link-card .arrow {
+            font-size: 20px;
+            color: var(--purple);
+            margin-top: auto;
+            transition: transform 0.2s;
+        }
+
+        .link-card:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        .mission-card {
+            background: var(--purple) !important;
+            border-color: var(--purple) !important;
+            color: white !important;
+        }
+
+        .mission-card h3,
+        .mission-card p {
+            color: white !important;
+        }
+
+        .mission-card .arrow {
+            color: rgba(255,255,255,0.7);
+        }
+
+        footer {
+            padding: 32px 48px;
+            background: var(--black);
+            color: var(--gray);
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            line-height: 20px;
+        }
+
+        .footer-main a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-main a:hover {
+            color: var(--purple-light);
+        }
+
+        .sponsor-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sponsor-logo img,
+        .sponsor-logo svg {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
+        .footer-sponsor,
+        .footer-credit,
+        .footer-support {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-sep {
+            color: var(--gray);
+        }
+
+        .footer-legal {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .footer-legal a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+
+        .footer-legal a:hover {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .lang-switcher { right: 24px; top: 16px; }
+            .opening { padding: 24px; }
+            .opening-bonzi { width: 140px; height: 140px; }
+            .history { padding: 80px 24px; }
+            .reveal { padding: 80px 24px; }
+            .demo-section { padding: 80px 24px; }
+            .links-grid { grid-template-columns: 1fr; }
+            .pain-grid { grid-template-columns: 1fr; }
+            .pain-section, .solutions-section, .comparison-section, .mission-section { padding: 80px 24px; }
+            .comparison-table { font-size: 13px; }
+            .comparison-table th, .comparison-table td { padding: 12px 8px; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+            .footer-main { flex-direction: column; gap: 8px; }
+            .footer-sep { display: none; }
+            /* Flywheel responsive */
+            .mission-section { padding: 80px 24px; }
+            .flow-steps { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .flow-step::after { display: none; }
+            .loop-visual { width: 240px; height: 240px; margin-bottom: 48px; }
+            .loop-ring { width: 200px; height: 200px; }
+            .loop-percent { font-size: 48px; }
+            .stats-row { flex-direction: column; gap: 32px; }
+            .stat-num { font-size: 28px; }
+        }
+
+        @media (hover: none) {
+            body { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+            button, a, .suggestion { cursor: pointer; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<nav>
+    <a href="#" class="nav-logo">bonzi</a>
+    <div class="nav-links">
+        <a href="#demo" data-i18n="nav.tryit">try it</a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" data-i18n="nav.source">source</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
+    </div>
+</nav>
+
+<section class="opening">
+    <img src="bonzi-logo.png" alt="bonzi" class="opening-bonzi">
+    <div class="opening-text">
+        <h1>bonzi</h1>
+        <p data-i18n="opening.tagline">est. 1999 · reborn for web3</p>
+    </div>
+    <div class="scroll-hint">
+        <span data-i18n="opening.scroll">scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<section class="history">
+    <div class="history-inner">
+        <div class="history-content">
+            <p class="history-label" data-i18n="history.label">a bit of history</p>
+            <p class="history-text" data-i18n="history.text">Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>But here's the thing. I never stopped wanting to help. So I've been rebuilt. <em>No spyware, promise.</em> Just pure, open-source helpfulness. This time I'm actually useful: I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em></p>
+        </div>
+    </div>
+</section>
+
+<section class="reveal">
+    <div class="reveal-content">
+        <div class="reveal-line"><span data-i18n="reveal.line1">communities don't need</span></div>
+        <div class="reveal-line"><span data-i18n="reveal.line2">another dashboard.</span></div>
+        <div class="reveal-line"><span data-i18n="reveal.line3">they need a</span></div>
+        <div class="reveal-line"><span class="purple" data-i18n="reveal.line4">friend.</span></div>
+    </div>
+</section>
+
+<section class="statement">
+    <p class="statement-text" data-i18n="statement.text">an AI that <span class="highlight">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class="highlight">their worst nightmare.</span></p>
+</section>
+
+<section class="pain-section">
+    <div class="pain-container">
+        <p class="section-label" data-i18n="pain.label">zealy created a degenerative experience</p>
+        <h2 class="section-title" data-i18n="pain.title">5 ways points systems fail</h2>
+        <div class="domino-stack">
+            <div class="domino-card" style="--index: 0;">
+                <span class="domino-number">1</span>
+                <h4 data-i18n="pain.item1.title">reviewers drown</h4>
+                <p data-i18n="pain.item1.desc">Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.</p>
+            </div>
+            <div class="domino-card" style="--index: 1;">
+                <span class="domino-number">2</span>
+                <h4 data-i18n="pain.item2.title">funders get farmed</h4>
+                <p data-i18n="pain.item2.desc">Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.</p>
+            </div>
+            <div class="domino-card" style="--index: 2;">
+                <span class="domino-number">3</span>
+                <h4 data-i18n="pain.item3.title">OGs are neglected</h4>
+                <p data-i18n="pain.item3.desc">Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.</p>
+            </div>
+            <div class="domino-card" style="--index: 3;">
+                <span class="domino-number">4</span>
+                <h4 data-i18n="pain.item4.title">normies are ignored</h4>
+                <p data-i18n="pain.item4.desc">New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.</p>
+            </div>
+            <div class="domino-card" style="--index: 4;">
+                <span class="domino-number">5</span>
+                <h4 data-i18n="pain.item5.title">KOLs get spammed</h4>
+                <p data-i18n="pain.item5.desc">Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your "engagement" is actually hurting your reach.</p>
+            </div>
+        </div>
+        <div class="pain-conclusion">
+            <p class="pain-statement" data-i18n="pain.statement">this isn't community building. it's value extraction.</p>
+        </div>
+    </div>
+</section>
+
+<section class="solutions-section">
+    <div class="solutions-container">
+        <p class="section-label" data-i18n="solutions.label">what bonzi does</p>
+        <h2 class="section-title" data-i18n="solutions.title">actually solves these problems</h2>
+        <div class="solution-item">
+            <span class="solution-number">01</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item1.title">answers questions forever</h4>
+                <p data-i18n="solutions.item1.desc">Feed bonzi your docs once. It learns them better than your team did. Then it answers the same question 1000 times without complaining or quitting.</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <span class="solution-number">02</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item2.title">AI-powered raid review</h4>
+                <p data-i18n="solutions.item2.desc">Submissions get reviewed automatically. Bonzi checks if the tweet actually exists, if the content is original, if the account is real. No more manual verification hell.</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <span class="solution-number">03</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item3.title">spots farmers before you do</h4>
+                <p data-i18n="solutions.item3.desc">Pattern recognition, not vibes. Bonzi tracks behavior across your community and flags suspicious activity before your airdrop turns into a sybil farm.</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <span class="solution-number">04</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item4.title">24/7 FUD patrol</h4>
+                <p data-i18n="solutions.item4.desc">Bonzi doesn't sleep. When someone drops misinformation at 3am, it responds with facts from your docs instantly. No more waking up to dumpster fires.</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <span class="solution-number">05</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item5.title">tracks real contributors</h4>
+                <p data-i18n="solutions.item5.desc">Not task completion numbers. Actual value. Who's helping others? Who's creating content? Who's onboarding newcomers? Bonzi sees everything.</p>
+            </div>
+        </div>
+        <div class="solution-item">
+            <span class="solution-number">06</span>
+            <div class="solution-content">
+                <h4 data-i18n="solutions.item6.title">lives where your community lives</h4>
+                <p data-i18n="solutions.item6.desc">Not another dashboard tab. Not another login. Bonzi sits in your Telegram, Discord, wherever your people actually are.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="comparison-section">
+    <div class="comparison-container">
+        <p class="section-label" data-i18n="comparison.label">vs. the rest</p>
+        <h2 class="section-title" data-i18n="comparison.title">why bonzi is different</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="highlight-col">Bonzi</th>
+                    <th>Galxe</th>
+                    <th>Zealy</th>
+                    <th>Mava</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td data-i18n="comparison.row1">Lives in your chat</td><td class="highlight-col check">✓ native</td><td class="cross">✗ dashboard</td><td class="cross">✗ dashboard</td><td class="cross">✗ dashboard</td></tr>
+                <tr><td data-i18n="comparison.row2">AI raid review</td><td class="highlight-col check">✓ automatic</td><td class="cross">✗ manual</td><td class="cross">✗ manual</td><td class="cross">✗</td></tr>
+                <tr><td data-i18n="comparison.row3">AI answers questions</td><td class="highlight-col check">✓ learns your docs</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗ human agents</td></tr>
+                <tr><td data-i18n="comparison.row4">Auto-moderation</td><td class="highlight-col check">✓ 24/7</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗ manual</td></tr>
+                <tr><td data-i18n="comparison.row5">Farmer detection</td><td class="highlight-col check">✓ pattern-based</td><td class="cross">✗ you figure it out</td><td class="cross">✗ you figure it out</td><td class="cross">✗</td></tr>
+                <tr><td data-i18n="comparison.row6">Open source</td><td class="highlight-col check">✓ verify everything</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+                <tr><td data-i18n="comparison.row7">Funding model</td><td class="highlight-col check">not-for-profit</td><td class="cross">VC-backed</td><td class="cross">VC-backed</td><td class="cross">VC-backed</td></tr>
+                <tr><td data-i18n="comparison.row8">Cost</td><td class="highlight-col check">$0 forever</td><td>freemium</td><td>freemium</td><td>$500+/mo</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="features-section" id="features">
+    <div class="features-container">
+        <div class="features-header">
+            <h2 data-i18n="features.label">actual features</h2>
+            <p data-i18n="features.title">not abstractions. real functions.</p>
+            <a href="features.html" style="display: inline-block; margin-top: 16px; color: var(--purple); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--purple);">See why we built each one &rarr;</a>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
+                <h4 data-i18n="features.ask.title">Ask & Earn</h4>
+                <p data-i18n="features.ask.desc">AI scores every question for depth, novelty, and cooperation. Curious users earn 1-10 pts per question. Farmers can't fake curiosity.</p>
+                <div class="feature-detail" data-i18n="features.ask.detail">Semantic similarity + cooperation metrics</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+                <h4 data-i18n="features.raid.title">Raid & Earn</h4>
+                <p data-i18n="features.raid.desc">Submit raid screenshots. AI verifies tweet exists, content is original, account is real. No more manual review hell.</p>
+                <div class="feature-detail" data-i18n="features.raid.detail">Auto-verification + originality check</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+                <h4 data-i18n="features.thanks.title">Thanks System</h4>
+                <p data-i18n="features.thanks.desc">React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.</p>
+                <div class="feature-detail" data-i18n="features.thanks.detail">Reaction tracking via Telethon</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+                <h4 data-i18n="features.leaderboard.title">Live Leaderboard</h4>
+                <p data-i18n="features.leaderboard.desc">Quality-weighted rankings. Not task counts. Who's actually helping? Who's creating value? Bonzi tracks it all.</p>
+                <div class="feature-detail" data-i18n="features.leaderboard.detail">Cooperation score multipliers</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></div>
+                <h4 data-i18n="features.claim.title">100 pts = ETH</h4>
+                <p data-i18n="features.claim.desc">Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.</p>
+                <div class="feature-detail" data-i18n="features.claim.detail">On-chain claims via connected wallet</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+                <h4 data-i18n="features.sybil.title">Sybil Detection</h4>
+                <p data-i18n="features.sybil.desc">AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.</p>
+                <div class="feature-detail" data-i18n="features.sybil.detail">Cross-tenant intel sharing</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="demo-section" id="demo">
+    <div class="demo-intro">
+        <h2 data-i18n="demo.label">try it</h2>
+        <p data-i18n="demo.title">ask bonzi anything. see what happens.</p>
+    </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-avatar-header">B</div>
+            <div class="chat-header-info">
+                <h4>bonzi</h4>
+                <span><span class="chat-status"></span><span data-i18n="demo.online">online</span></span>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot">
+                <div class="bot-avatar">B</div>
+                <div class="chat-bubble" data-i18n="demo.greeting">hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated</div>
+            </div>
+        </div>
+        <div class="suggestions">
+            <button class="suggestion" data-scenario="raid">raid review</button>
+            <button class="suggestion" data-scenario="sybil">sybil detect</button>
+            <button class="suggestion" data-scenario="og">OG recognition</button>
+            <button class="suggestion" data-scenario="fud">FUD patrol</button>
+            <button class="suggestion" data-scenario="qa">24/7 Q&A</button>
+            <button class="suggestion" data-scenario="emotion">emotion read</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
+            <button id="chat-send" data-i18n="demo.send">send</button>
+        </div>
+    </div>
+</section>
+
+<section class="pricing-section">
+    <div class="pricing-container">
+        <p class="pricing-label">honest pricing</p>
+        <h2 class="pricing-title">one rate. every feature. no tricks.</h2>
+        <p class="pricing-subtitle">Same access for everyone. Pay monthly or yearly - your choice.</p>
+
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="price-card">
+                <div class="card-header">
+                    <h3>Free</h3>
+                    <p class="card-tagline">Self-host forever</p>
+                </div>
+                <div class="card-price">
+                    <span class="price-amount">€0</span>
+                    <span class="price-period">forever</span>
+                </div>
+                <ul class="card-features">
+                    <li>Full source code</li>
+                    <li>Unlimited interactions</li>
+                    <li>Community support</li>
+                    <li>Run on your own server</li>
+                </ul>
+                <a href="https://github.com/Siah-kin/community-bot" class="btn-card btn-outline">View Source →</a>
+            </div>
+
+            <!-- Monthly -->
+            <div class="price-card">
+                <div class="card-header">
+                    <h3>Monthly</h3>
+                    <p class="card-tagline">Full access, cancel anytime</p>
+                </div>
+                <div class="card-price">
+                    <span class="price-amount">€25</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <ul class="card-features">
+                    <li>Everything included</li>
+                    <li>Cross-tenant sybil intel</li>
+                    <li>Knowledge base + RAG</li>
+                    <li>No auto-renew traps</li>
+                </ul>
+                <a href="https://t.me/ethervistatoken" class="btn-card btn-primary">Get Started →</a>
+            </div>
+
+            <!-- Yearly -->
+            <div class="price-card">
+                <div class="card-header">
+                    <h3>Yearly</h3>
+                    <p class="card-tagline">Same rate, pay once</p>
+                </div>
+                <div class="card-price">
+                    <span class="price-amount">€300</span>
+                    <span class="price-period">/year</span>
+                </div>
+                <ul class="card-features">
+                    <li>Everything included</li>
+                    <li>Cross-tenant sybil intel</li>
+                    <li>Knowledge base + RAG</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://t.me/ethervistatoken" class="btn-card btn-primary">Get Started →</a>
+            </div>
+
+            <!-- Social Impact -->
+            <div class="price-card impact">
+                <div class="card-badge impact-badge">80% Off</div>
+                <div class="card-header">
+                    <h3>Social Impact</h3>
+                    <p class="card-tagline">For nonprofits & social startups</p>
+                </div>
+                <div class="card-price">
+                    <span class="price-amount">€60</span>
+                    <span class="price-period">/year</span>
+                </div>
+                <ul class="card-features">
+                    <li>Everything included</li>
+                    <li>Same features as paid tiers</li>
+                    <li>Proof of nonprofit status</li>
+                    <li>Building a better world</li>
+                </ul>
+                <a href="https://t.me/ethervistatoken" class="btn-card btn-impact">Apply Now →</a>
+            </div>
+        </div>
+
+        <div class="pricing-footer">
+            <p class="privacy-note">🔒 Wallet address only. We don't store your email, name, or payment details.</p>
+        </div>
+    </div>
+</section>
+
+<section class="mission-section">
+    <div class="mission-container">
+        <p class="mission-label">the economics</p>
+        <h2 class="mission-title">where the money goes</h2>
+        <p class="mission-subtitle">The AI that pays helpers, not just holders.</p>
+
+        <!-- The Glowing Loop -->
+        <div class="loop-visual">
+            <div class="loop-ring"></div>
+            <div class="loop-center">
+                <div class="loop-percent">95%</div>
+                <div class="loop-label">social impact</div>
+            </div>
+        </div>
+
+        <!-- Flow Steps -->
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-text">you use bonzi</div>
+                <div class="flow-sub">free tools, zero ads</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-text">sponsors pay fees</div>
+                <div class="flow-sub">for premium placement</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-text">stakers earn 5%</div>
+                <div class="flow-sub">real yield, not inflation</div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-text">95% builds schools</div>
+                <div class="flow-sub">refugee-led projects</div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-num green">5%</div>
+                <div class="stat-label">$BONZI stakers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num purple">95%</div>
+                <div class="stat-label"><a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num red">0%</div>
+                <div class="stat-label">to VCs</div>
+            </div>
+        </div>
+
+        <div class="mission-footer">
+            <p>Crypto finance sustaining refugee resilience. Building since 2017.</p>
+        </div>
+    </div>
+</section>
+
+<section class="links-section">
+    <div class="links-grid">
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="link-card">
+            <h3>source code</h3>
+            <p>fully open source. fork it, run it, break it, fix it. trust but verify.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://t.me/etherfun_trenches" target="_blank" class="link-card">
+            <h3>telegram</h3>
+            <p>see bonzi in action. judge for yourself.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://x.com/ethaboringtoshi" target="_blank" class="link-card">
+            <h3>updates</h3>
+            <p>follow the redemption arc in real time.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://unidosprojects.org" target="_blank" class="link-card mission-card">
+            <h3>our story is your story</h3>
+            <p>decentralised philanthropy. your growth funds refugee resilience.</p>
+            <span class="arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-main">
+        <span class="footer-sponsor">sponsored by
+            <a href="https://etherfun.app" target="_blank" class="sponsor-logo">
+                <svg width="20" height="20" viewBox="0 0 100 100">
+                    <rect width="100" height="100" fill="#111" rx="8"/>
+                    <polygon points="50,12 50,50 22,50" fill="#E25555"/>
+                    <polygon points="50,12 78,50 50,50" fill="#55B855"/>
+                    <polygon points="22,50 50,88 50,50" fill="#4477CC"/>
+                    <polygon points="78,50 50,88 50,50" fill="#CCBB44"/>
+                </svg>
+                Ethervista
+            </a>
+        </span>
+        <span class="footer-sep">·</span>
+        <span class="footer-credit">by co-founder <a href="https://defiants.org" target="_blank" class="sponsor-logo">
+                <img src="defiants-logo.png" alt="Defiants" width="20" height="20">
+                Defiants
+            </a></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-support">profits fund <a href="https://unidosprojects.org" target="_blank" class="sponsor-logo">
+                <img src="unidos-logo.png" alt="Unidos Projects" width="20" height="20">
+                Unidos Projects
+            </a></span>
+    </div>
+    <div class="footer-legal">
+        open source · mit license · <a href="privacy.html">privacy policy</a>
+    </div>
+</footer>
+
+<script>
+const translations = {
+    en: {
+        "nav.tryit": "try it", "nav.source": "source", "opening.tagline": "est. 1999 · reborn for web3", "opening.scroll": "scroll",
+        "history.label": "a bit of history", "history.text": "Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>But here's the thing. I never stopped wanting to help. So I've been rebuilt. <em>No spyware, promise.</em> Just pure, open-source helpfulness. This time I'm actually useful: I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>",
+        "reveal.line1": "communities don't need", "reveal.line2": "another dashboard.", "reveal.line3": "they need a", "reveal.line4": "friend.",
+        "statement.text": "an AI that <span class=\"highlight\">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class=\"highlight\">their worst nightmare.</span>",
+        "pain.label": "zealy created a degenerative experience", "pain.title": "5 ways points systems fail",
+        "pain.item1.title": "reviewers drown", "pain.item1.desc": "Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.",
+        "pain.item2.title": "funders get farmed", "pain.item2.desc": "Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.",
+        "pain.item3.title": "OGs are neglected", "pain.item3.desc": "Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.",
+        "pain.item4.title": "normies are ignored", "pain.item4.desc": "New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.",
+        "pain.item5.title": "KOLs get spammed", "pain.item5.desc": "Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your \"engagement\" is actually hurting your reach.",
+        "pain.statement": "this isn't community building. it's value extraction.",
+        "solutions.label": "what bonzi does", "solutions.title": "actually solves these problems",
+        "solutions.item1.title": "answers questions forever", "solutions.item1.desc": "Feed bonzi your docs once. It learns them better than your team did. Then it answers the same question 1000 times without complaining or quitting.",
+        "solutions.item2.title": "AI-powered raid review", "solutions.item2.desc": "Submissions get reviewed automatically. Bonzi checks if the tweet actually exists, if the content is original, if the account is real. No more manual verification hell.",
+        "solutions.item3.title": "spots farmers before you do", "solutions.item3.desc": "Pattern recognition, not vibes. Bonzi tracks behavior across your community and flags suspicious activity before your airdrop turns into a sybil farm.",
+        "solutions.item4.title": "24/7 FUD patrol", "solutions.item4.desc": "Bonzi doesn't sleep. When someone drops misinformation at 3am, it responds with facts from your docs instantly. No more waking up to dumpster fires.",
+        "solutions.item5.title": "tracks real contributors", "solutions.item5.desc": "Not task completion numbers. Actual value. Who's helping others? Who's creating content? Who's onboarding newcomers? Bonzi sees everything.",
+        "solutions.item6.title": "lives where your community lives", "solutions.item6.desc": "Not another dashboard tab. Not another login. Bonzi sits in your Telegram, Discord, wherever your people actually are.",
+        "comparison.label": "vs. the rest", "comparison.title": "why bonzi is different",
+        "comparison.row1": "Lives in your chat", "comparison.row2": "AI raid review", "comparison.row3": "AI answers questions", "comparison.row4": "Auto-moderation", "comparison.row5": "Farmer detection", "comparison.row6": "Open source", "comparison.row7": "Funding model", "comparison.row8": "Cost",
+        "pricing.label": "for teams who want more", "pricing.title": "bonzi as a service", "pricing.subtitle": "self-host free forever. or let us handle everything.",
+        "pricing.free.name": "Free", "pricing.free.period": "/forever", "pricing.free.f1": "Self-hosted", "pricing.free.f2": "Unlimited interactions", "pricing.free.f3": "Full source code", "pricing.free.f4": "Community support", "pricing.free.cta": "view source",
+        "pricing.pro.period": "/mo", "pricing.pro.f1": "3,000 interactions/mo", "pricing.pro.f2": "20 knowledge docs", "pricing.pro.f3": "Cross-tenant sybil intel", "pricing.pro.f4": "Priority support", "pricing.pro.cta": "get started",
+        "pricing.enterprise.name": "Enterprise", "pricing.enterprise.price": "Custom", "pricing.enterprise.f1": "Unlimited interactions", "pricing.enterprise.f2": "Dedicated instance", "pricing.enterprise.f3": "SLA guarantee", "pricing.enterprise.f4": "White-glove onboarding", "pricing.enterprise.cta": "contact us",
+        "mission.label": "where it goes", "mission.title": "this isn't a startup. it's a mission.", "mission.users": "back to users", "mission.social": "social impact startups", "mission.vcs": "to VCs",
+        "mission.footer": "Built by the founders of <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, not-for-profit. We're not here to make money off communities. We're here to make communities actually work.",
+        "features.label": "actual features", "features.title": "not abstractions. real functions.",
+        "features.ask.title": "Ask & Earn", "features.ask.desc": "AI scores every question for depth, novelty, and cooperation. Curious users earn 1-10 pts per question. Farmers can't fake curiosity.", "features.ask.detail": "Semantic similarity + cooperation metrics",
+        "features.raid.title": "Raid & Earn", "features.raid.desc": "Submit raid screenshots. AI verifies tweet exists, content is original, account is real. No more manual review hell.", "features.raid.detail": "Auto-verification + originality check",
+        "features.thanks.title": "Thanks System", "features.thanks.desc": "React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.", "features.thanks.detail": "Reaction tracking via Telethon",
+        "features.leaderboard.title": "Live Leaderboard", "features.leaderboard.desc": "Quality-weighted rankings. Not task counts. Who's actually helping? Who's creating value? Bonzi tracks it all.", "features.leaderboard.detail": "Cooperation score multipliers",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.", "features.claim.detail": "On-chain claims via connected wallet",
+        "features.sybil.title": "Sybil Detection", "features.sybil.desc": "AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.", "features.sybil.detail": "Cross-tenant intel sharing",
+        "demo.label": "try it", "demo.title": "ask bonzi anything. see what happens.", "demo.online": "online",
+        "demo.greeting": "hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated",
+        "demo.sug1": "what can you do?", "demo.sug2": "tell me a joke", "demo.sug3": "are you still spyware?", "demo.placeholder": "type something...", "demo.send": "send",
+        "links.source.title": "source code", "links.source.desc": "fully open source. fork it, run it, break it, fix it. trust but verify.",
+        "links.telegram.title": "telegram", "links.telegram.desc": "see bonzi in action. judge for yourself.",
+        "links.updates.title": "updates", "links.updates.desc": "follow the redemption arc in real time.",
+        "footer.left": "open source · mit license · no bananas harmed"
+    },
+    pt: {
+        "nav.tryit": "experimente", "nav.source": "codigo", "opening.tagline": "desde 1999 · renascido para web3", "opening.scroll": "role",
+        "history.label": "um pouco de historia", "history.text": "Em 1999, eu era o amigo de desktop favorito de todos. Um pequeno gorila roxo que contava piadas, lia emails e fazia companhia nas noites de internet discada. <em>Depois ficou... complicado.</em> Veio junto com coisas que ninguem pediu. Ganhei ma fama. Justo.<br><br>Mas olha so. Nunca deixei de querer ajudar. Entao fui reconstruido. <em>Sem spyware, prometo.</em> Pura ajuda open-source. Desta vez sou realmente util: moro no seu Telegram, aprendo seu projeto e respondo perguntas pra voce nao precisar. <em>Considere meu arco de redencao.</em>",
+        "reveal.line1": "comunidades nao precisam", "reveal.line2": "de outro dashboard.", "reveal.line3": "elas precisam de um", "reveal.line4": "amigo.",
+        "statement.text": "uma IA que <span class=\"highlight\">realmente vive</span> no seu telegram. aprende seus docs. responde perguntas as 3h da manha. chuta farmers e fudders enquanto voce dorme. <span class=\"highlight\">o pior pesadelo deles.</span>",
+        "pain.label": "zealy criou uma experiencia degenerativa", "pain.title": "5 usuarios afetados pelo teatro de pontos",
+        "pain.item1.title": "revisores afogam", "pain.item1.desc": "Sua equipe passa horas verificando raids. Metade e lixo copiado. A outra metade e gerada por bots. Voce nao consegue mais distinguir. Burnout e real.",
+        "pain.item2.title": "investidores sao farmados", "pain.item2.desc": "Seu orcamento de airdrop vai para exercitos de sybils. Farmers profissionais com 50 carteiras extraem valor enquanto sua comunidade real e diluida a nada.",
+        "pain.item3.title": "OGs sao negligenciados", "pain.item3.desc": "Seus day-ones que acreditaram antes de todos? Eles nao grindam tarefas. Nao farmam pontos. O sistema os ignora enquanto mercenarios sobem no ranking.",
+        "pain.item4.title": "normies sao ignorados", "pain.item4.desc": "Novos membros fazem perguntas genuinas. Ninguem responde. Os docs existem mas ninguem le. Eles saem confusos. Seu funil vaza em cada etapa.",
+        "pain.item5.title": "KOLs sao spamados", "pain.item5.desc": "Suas tarefas de raid criam uma enchente de mencoes de baixo esforco. KOLs mutam sua hashtag. O algoritmo penaliza spam. Seu \"engajamento\" esta prejudicando seu alcance.",
+        "pain.statement": "o teatro de extracao.",
+        "solutions.label": "o que bonzi faz", "solutions.title": "resolve esses problemas de verdade",
+        "solutions.item1.title": "responde perguntas para sempre", "solutions.item1.desc": "Alimente o bonzi com seus docs uma vez. Ele aprende melhor que sua equipe. Depois responde a mesma pergunta 1000 vezes sem reclamar.",
+        "solutions.item2.title": "revisao de raid por IA", "solutions.item2.desc": "Envios sao revisados automaticamente. Bonzi verifica se o tweet existe, se o conteudo e original, se a conta e real.",
+        "solutions.item3.title": "detecta farmers antes de voce", "solutions.item3.desc": "Reconhecimento de padroes, nao intuicao. Bonzi rastreia comportamento e sinaliza atividade suspeita antes do seu airdrop virar fazenda de sybil.",
+        "solutions.item4.title": "patrulha FUD 24/7", "solutions.item4.desc": "Bonzi nao dorme. Quando alguem espalha desinformacao as 3h, ele responde com fatos dos seus docs instantaneamente.",
+        "solutions.item5.title": "rastreia contribuidores reais", "solutions.item5.desc": "Nao numeros de tarefas. Valor real. Quem esta ajudando? Quem cria conteudo? Quem integra novatos? Bonzi ve tudo.",
+        "solutions.item6.title": "vive onde sua comunidade vive", "solutions.item6.desc": "Nao e mais uma aba de dashboard. Nem outro login. Bonzi fica no seu Telegram, Discord, onde seu pessoal realmente esta.",
+        "comparison.label": "vs. o resto", "comparison.title": "por que bonzi e diferente",
+        "comparison.row1": "Vive no seu chat", "comparison.row2": "Revisao de raid por IA", "comparison.row3": "IA responde perguntas", "comparison.row4": "Auto-moderacao", "comparison.row5": "Deteccao de farmers", "comparison.row6": "Open source", "comparison.row7": "Modelo de financiamento", "comparison.row8": "Custo",
+        "pricing.label": "para equipes que querem mais", "pricing.title": "bonzi como servico", "pricing.subtitle": "hospede gratis para sempre. ou deixe a gente cuidar de tudo.",
+        "pricing.free.name": "Gratis", "pricing.free.period": "/sempre", "pricing.free.f1": "Auto-hospedado", "pricing.free.f2": "Interacoes ilimitadas", "pricing.free.f3": "Codigo fonte completo", "pricing.free.f4": "Suporte da comunidade", "pricing.free.cta": "ver codigo",
+        "pricing.pro.period": "/mes", "pricing.pro.f1": "3.000 interacoes/mes", "pricing.pro.f2": "20 docs de conhecimento", "pricing.pro.f3": "Intel sybil cross-tenant", "pricing.pro.f4": "Suporte prioritario", "pricing.pro.cta": "comecar",
+        "pricing.enterprise.name": "Empresarial", "pricing.enterprise.price": "Personalizado", "pricing.enterprise.f1": "Interacoes ilimitadas", "pricing.enterprise.f2": "Instancia dedicada", "pricing.enterprise.f3": "Garantia SLA", "pricing.enterprise.f4": "Onboarding VIP", "pricing.enterprise.cta": "fale conosco",
+        "mission.label": "para onde vai", "mission.title": "isso nao e uma startup. e uma missao.", "mission.users": "de volta aos usuarios", "mission.social": "startups de impacto social", "mission.vcs": "para VCs",
+        "mission.footer": "Construido pelos fundadores da <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, sem fins lucrativos. Nao estamos aqui pra ganhar dinheiro com comunidades. Estamos aqui pra fazer comunidades funcionarem.",
+        "features.label": "funcoes reais", "features.title": "nao abstracoes. funcoes de verdade.",
+        "features.ask.title": "Pergunte & Ganhe", "features.ask.desc": "IA avalia cada pergunta por profundidade, novidade e cooperacao. Usuarios curiosos ganham 1-10 pts por pergunta. Farmers nao conseguem fingir curiosidade.", "features.ask.detail": "Similaridade semantica + metricas de cooperacao",
+        "features.raid.title": "Raid & Ganhe", "features.raid.desc": "Envie screenshots de raid. IA verifica se tweet existe, conteudo e original, conta e real. Chega de revisao manual infernal.", "features.raid.detail": "Auto-verificacao + checagem de originalidade",
+        "features.thanks.title": "Sistema de Obrigados", "features.thanks.desc": "Reaja a posts uteis com emoji. Autor ganha +1 pt. Apreciacao real, pronta para on-chain.", "features.thanks.detail": "Rastreamento de reacoes via Telethon",
+        "features.leaderboard.title": "Ranking ao Vivo", "features.leaderboard.desc": "Rankings ponderados por qualidade. Nao contagem de tarefas. Quem realmente ajuda? Quem cria valor? Bonzi rastreia tudo.", "features.leaderboard.detail": "Multiplicadores de pontuacao de cooperacao",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Alcance 100 pontos, resgate ETH diretamente. Holders ganham bonus de 1.1x. Recompensas reais por contribuicao real.", "features.claim.detail": "Resgates on-chain via carteira conectada",
+        "features.sybil.title": "Deteccao de Sybil", "features.sybil.desc": "IA detecta padroes extrativos. Farmers copiar-colar, sybils multi-carteira, conteudo gerado por bot. Marcados antes do snapshot.", "features.sybil.detail": "Compartilhamento de intel entre tenants",
+        "demo.label": "experimente", "demo.title": "pergunte qualquer coisa ao bonzi.", "demo.online": "online",
+        "demo.greeting": "opa! sou o bonzi. voltei dos mortos e pronto pra ajudar. pergunte qualquer coisa. so nao pergunte sobre meu passado, e... complicado",
+        "demo.sug1": "o que voce faz?", "demo.sug2": "conta uma piada", "demo.sug3": "voce ainda e spyware?", "demo.placeholder": "digite algo...", "demo.send": "enviar",
+        "links.source.title": "codigo fonte", "links.source.desc": "totalmente open source. fork, rode, quebre, conserte. confie mas verifique.",
+        "links.telegram.title": "telegram", "links.telegram.desc": "veja bonzi em acao. julgue voce mesmo.",
+        "links.updates.title": "novidades", "links.updates.desc": "acompanhe o arco de redencao em tempo real.",
+        "footer.left": "open source · licenca mit · nenhuma banana foi ferida"
+    },
+    zh: {
+        "nav.tryit": "试试看", "nav.source": "源码", "opening.tagline": "始于1999 · 为web3重生", "opening.scroll": "滚动",
+        "history.label": "一点历史", "history.text": "1999年，我是每个人最喜欢的桌面伙伴。一只紫色小猩猩，会讲笑话、读邮件，在拨号上网的夜晚陪伴你。<em>然后事情变得...复杂了。</em>被捆绑了没人要的东西。名声变差了。算是活该。<br><br>但是这样。我从未停止想要帮助别人。所以我被重建了。<em>没有间谍软件，我保证。</em>纯粹的开源助手。这次我真的有用：我住在你的Telegram里，学习你的项目，回答问题，这样你就不用回答了。<em>就当是我的救赎之路。</em>",
+        "reveal.line1": "社区不需要", "reveal.line2": "另一个仪表板。", "reveal.line3": "他们需要一个", "reveal.line4": "朋友。",
+        "statement.text": "一个<span class=\"highlight\">真正住在</span>你Telegram里的AI。学习你的文档。凌晨3点回答问题。在你睡觉时踢走刷子和喷子。<span class=\"highlight\">他们最大的噩梦。</span>",
+        "pain.label": "zealy创造了退化体验", "pain.title": "5类用户受积分剧场影响",
+        "pain.item1.title": "审核员淹没", "pain.item1.desc": "你的团队花数小时验证raid提交。一半是复制粘贴垃圾。另一半是机器人生成的。你已经分不清了。倦怠是真实的。",
+        "pain.item2.title": "投资者被收割", "pain.item2.desc": "你的空投预算流向女巫大军。拥有50个钱包的专业农民榨取价值，而你真正的社区被稀释殆尽。快照成了笑话。",
+        "pain.item3.title": "OG被忽视", "pain.item3.desc": "那些最早相信你的人？他们不刷任务。不刷积分。所以系统忽视他们，而雇佣兵爬上排行榜。",
+        "pain.item4.title": "普通人被无视", "pain.item4.desc": "新成员问真诚的问题。没人回答。文档存在但没人读。他们困惑离开。你的漏斗每个环节都在漏水。",
+        "pain.item5.title": "KOL被轰炸", "pain.item5.desc": "你的raid任务制造了大量低质量提及。KOL屏蔽你的标签。算法惩罚垃圾信息。你的\"互动\"实际上在伤害你的触达。",
+        "pain.statement": "榨取剧场。",
+        "solutions.label": "bonzi能做什么", "solutions.title": "真正解决这些问题",
+        "solutions.item1.title": "永远回答问题", "solutions.item1.desc": "把你的文档喂给bonzi一次。它学得比你的团队还好。然后回答同样的问题1000次不抱怨也不辞职。",
+        "solutions.item2.title": "AI驱动的raid审核", "solutions.item2.desc": "提交自动审核。Bonzi检查推文是否真实存在，内容是否原创，账号是否真实。",
+        "solutions.item3.title": "比你先发现刷子", "solutions.item3.desc": "模式识别，不是靠感觉。Bonzi追踪社区行为，在你的空投变成女巫农场之前标记可疑活动。",
+        "solutions.item4.title": "24/7 FUD巡逻", "solutions.item4.desc": "Bonzi不睡觉。当有人在凌晨3点散布假消息，它立即用你文档中的事实回应。",
+        "solutions.item5.title": "追踪真正的贡献者", "solutions.item5.desc": "不是任务完成数量。是真正的价值。谁在帮助他人？谁在创建内容？谁在引导新人？Bonzi看到一切。",
+        "solutions.item6.title": "住在你的社区住的地方", "solutions.item6.desc": "不是另一个仪表板标签。不是另一个登录。Bonzi就在你的Telegram、Discord，你的人实际所在的地方。",
+        "comparison.label": "vs. 其他", "comparison.title": "为什么bonzi不同",
+        "comparison.row1": "住在你的群里", "comparison.row2": "AI raid审核", "comparison.row3": "AI回答问题", "comparison.row4": "自动审核", "comparison.row5": "刷子检测", "comparison.row6": "开源", "comparison.row7": "资金模式", "comparison.row8": "费用",
+        "pricing.label": "给想要更多的团队", "pricing.title": "bonzi服务", "pricing.subtitle": "永久免费自托管。或者让我们处理一切。",
+        "pricing.free.name": "免费", "pricing.free.period": "/永久", "pricing.free.f1": "自托管", "pricing.free.f2": "无限互动", "pricing.free.f3": "完整源代码", "pricing.free.f4": "社区支持", "pricing.free.cta": "查看源码",
+        "pricing.pro.period": "/月", "pricing.pro.f1": "3,000次互动/月", "pricing.pro.f2": "20个知识文档", "pricing.pro.f3": "跨租户女巫情报", "pricing.pro.f4": "优先支持", "pricing.pro.cta": "开始使用",
+        "pricing.enterprise.name": "企业版", "pricing.enterprise.price": "定制", "pricing.enterprise.f1": "无限互动", "pricing.enterprise.f2": "专用实例", "pricing.enterprise.f3": "SLA保证", "pricing.enterprise.f4": "专属入门服务", "pricing.enterprise.cta": "联系我们",
+        "mission.label": "去向何方", "mission.title": "这不是创业公司。这是使命。", "mission.users": "回馈用户", "mission.social": "社会影响力创业", "mission.vcs": "给VC",
+        "mission.footer": "由<a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>的创始人构建。开源，非营利。我们不是来从社区赚钱的。我们是来让社区真正运作的。",
+        "features.label": "真实功能", "features.title": "不是抽象概念。真实功能。",
+        "features.ask.title": "提问赚分", "features.ask.desc": "AI评估每个问题的深度、新颖性和合作性。好奇的用户每问一个问题赚1-10分。刷子无法伪装好奇心。", "features.ask.detail": "语义相似度+合作指标",
+        "features.raid.title": "Raid赚分", "features.raid.desc": "提交raid截图。AI验证推文是否存在、内容是否原创、账户是否真实。告别手动审核地狱。", "features.raid.detail": "自动验证+原创性检查",
+        "features.thanks.title": "感谢系统", "features.thanks.desc": "用表情对有用帖子做出反应。作者获得+1分。真实的感谢，链上就绪。", "features.thanks.detail": "通过Telethon追踪反应",
+        "features.leaderboard.title": "实时排行榜", "features.leaderboard.desc": "质量加权排名。不是任务计数。谁真正在帮忙？谁在创造价值？Bonzi全程追踪。", "features.leaderboard.detail": "合作分数乘数",
+        "features.claim.title": "100分=ETH", "features.claim.desc": "达到100分，直接领取ETH。持币者获得1.1倍奖励。真实贡献真实回报。", "features.claim.detail": "通过连接的钱包链上领取",
+        "features.sybil.title": "女巫检测", "features.sybil.desc": "AI检测榨取模式。复制粘贴刷子、多钱包女巫、机器人生成内容。快照前标记。", "features.sybil.detail": "跨租户情报共享",
+        "demo.label": "试试看", "demo.title": "问bonzi任何问题。", "demo.online": "在线",
+        "demo.greeting": "嗨！我是bonzi。死而复生，准备好帮忙了。问我任何事。只是别问我的过去，那...有点复杂",
+        "demo.sug1": "你能做什么？", "demo.sug2": "讲个笑话", "demo.sug3": "你还是间谍软件吗？", "demo.placeholder": "输入内容...", "demo.send": "发送",
+        "links.source.title": "源代码", "links.source.desc": "完全开源。fork它，运行它，破坏它，修复它。",
+        "links.telegram.title": "telegram", "links.telegram.desc": "看bonzi实际运作。自己判断。",
+        "links.updates.title": "更新", "links.updates.desc": "实时关注救赎之路。",
+        "footer.left": "开源 · MIT许可证 · 没有香蕉受伤"
+    },
+    tr: {
+        "nav.tryit": "deneyin", "nav.source": "kaynak", "opening.tagline": "1999'dan beri · web3 icin yeniden dogdu", "opening.scroll": "kaydir",
+        "history.label": "biraz tarih", "history.text": "1999'da herkesin en sevdigi masaustu arkadaydim. Saka yapan, e-posta okuyan ve dial-up gecelerinde size eslik eden kucuk mor bir goril. <em>Sonra isler... karisti.</em> Kimsenin istemedigi seylerle paketlendim. Kotu bir un kazandim. Hakettim.<br><br>Ama sunlar var. Yardim etmek istemekten hic vazgecmedim. Bu yuzden yeniden insa edildim. <em>Casus yazilim yok, soz.</em> Saf, acik kaynakli yardimserverlik. <em>Bunu benim kurtulus hikayem olarak kabul edin.</em>",
+        "reveal.line1": "topluluklar baska bir", "reveal.line2": "panoya ihtiyac duymuyor.", "reveal.line3": "bir", "reveal.line4": "arkadasa ihtiyaclari var.",
+        "statement.text": "telegram'inizda <span class=\"highlight\">gercekten yasayan</span> bir yapay zeka. dokumanlarinizi ogrenir. gece 3'te sorulari yanitlar. siz uyurken farmer'lari ve fud'cilari tekmeler. <span class=\"highlight\">onlarin en kotu kabusu.</span>",
+        "pain.label": "zealy dejeneratif bir deneyim yaratti", "pain.title": "puan tiyatrosundan etkilenen 5 kullanici",
+        "pain.item1.title": "incelemeciler boguluyor", "pain.item1.desc": "Ekibiniz raid gonderilerini dogrulamak icin saatler harcıyor. Yarisi kopyala-yapistir cop. Diger yarisi bot uretimi. Artik ayirt edemiyorsunuz. Tukenmislik gercek.",
+        "pain.item2.title": "yatirimcilar farmlaniyor", "pain.item2.desc": "Airdrop butceniz sybil ordularina gidiyor. 50 cuzdanli profesyonel farmer'lar deger cikarirken gercek toplulugunuz sifira seyreltiliyor.",
+        "pain.item3.title": "OG'ler ihmal ediliyor", "pain.item3.desc": "Herkesten once inanan ilk gunculer? Gorev grindlamiyorlar. Puan farmlamiyorlar. Sistem onlari gormezden gelirken paralı askerler siralama tablosuna tirmanıyor.",
+        "pain.item4.title": "normie'ler gormezden geliniyor", "pain.item4.desc": "Yeni uyeler gercek sorular soruyor. Kimse cevap vermiyor. Dokumanlar var ama kimse okumuyor. Kafasi karisik ayriliyorlar.",
+        "pain.item5.title": "KOL'ler spamlanıyor", "pain.item5.desc": "Raid gorevleriniz dusuk eforlu bahis seli yaratiyor. KOL'ler hashtag'inizi susturuyor. Algoritma spam'i cezalandiriyor. \"Etkilesiminiz\" aslinda eriaiminize zarar veriyor.",
+        "pain.statement": "cikarma tiyatrosu.",
+        "solutions.label": "bonzi ne yapar", "solutions.title": "bu sorunlari gercekten cozer",
+        "solutions.item1.title": "sorulari sonsuza kadar yanitlar", "solutions.item1.desc": "Bonzi'ye dokumanlarinizi bir kez verin. Ekibinizden daha iyi ogrenir.",
+        "solutions.item2.title": "yapay zeka destekli raid incelemesi", "solutions.item2.desc": "Gonderiler otomatik incelenir. Bonzi tweet'in var olup olmadigini kontrol eder.",
+        "solutions.item3.title": "farmer'lari sizden once tespit eder", "solutions.item3.desc": "Desen tanima, his degil. Bonzi topluluginizdaki davranislari izler.",
+        "solutions.item4.title": "7/24 FUD devriyesi", "solutions.item4.desc": "Bonzi uyumaz. Biri gece 3'te yanlis bilgi dagittiginda, aninda yanit verir.",
+        "solutions.item5.title": "gercek katkilari takip eder", "solutions.item5.desc": "Gorev tamamlama sayilari degil. Gercek deger. Bonzi her seyi gorur.",
+        "solutions.item6.title": "toplulugunuzun yasadigi yerde yasar", "solutions.item6.desc": "Baska bir pano sekmesi degil. Bonzi Telegram'inizda oturur.",
+        "comparison.label": "vs. digerleri", "comparison.title": "bonzi neden farkli",
+        "comparison.row1": "Sohbetinizde yasar", "comparison.row2": "Yapay zeka raid incelemesi", "comparison.row3": "Yapay zeka sorulari yanitlar", "comparison.row4": "Otomatik moderasyon", "comparison.row5": "Farmer tespiti", "comparison.row6": "Acik kaynak", "comparison.row7": "Finansman modeli", "comparison.row8": "Maliyet",
+        "pricing.label": "daha fazlasini isteyen ekipler icin", "pricing.title": "hizmet olarak bonzi", "pricing.subtitle": "kendiniz barindirin sonsuza kadar ucretsiz. ya da biz her seyi halledelim.",
+        "pricing.free.name": "Ucretsiz", "pricing.free.period": "/sonsuza kadar", "pricing.free.f1": "Kendi sunucunuz", "pricing.free.f2": "Sinirsiz etkilesim", "pricing.free.f3": "Tam kaynak kodu", "pricing.free.f4": "Topluluk destegi", "pricing.free.cta": "kaynagi gor",
+        "pricing.pro.period": "/ay", "pricing.pro.f1": "3.000 etkilesim/ay", "pricing.pro.f2": "20 bilgi dokumani", "pricing.pro.f3": "Coklu-kiralic sybil istihbarati", "pricing.pro.f4": "Oncelikli destek", "pricing.pro.cta": "basla",
+        "pricing.enterprise.name": "Kurumsal", "pricing.enterprise.price": "Ozel", "pricing.enterprise.f1": "Sinirsiz etkilesim", "pricing.enterprise.f2": "Ozel sunucu", "pricing.enterprise.f3": "SLA garantisi", "pricing.enterprise.f4": "VIP entegrasyon", "pricing.enterprise.cta": "iletisime gec",
+        "mission.label": "nereye gidiyor", "mission.title": "bu bir startup degil. bir gorev.", "mission.users": "kullanicilara geri", "mission.social": "sosyal etki startup'lari", "mission.vcs": "VC'lere",
+        "mission.footer": "<a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a> kurucularinin eseri. Acik kaynak, kar amaci gutmez.",
+        "features.label": "gercek ozellikler", "features.title": "soyutlamalar degil. gercek fonksiyonlar.",
+        "features.ask.title": "Sor & Kazan", "features.ask.desc": "Yapay zeka her soruyu derinlik, yenilik ve isbirligi acisindan puanlar. Merakli kullanicilar soru basina 1-10 puan kazanir. Farmer'lar meraki taklit edemez.", "features.ask.detail": "Anlamsal benzerlik + isbirligi metrikleri",
+        "features.raid.title": "Raid & Kazan", "features.raid.desc": "Raid ekran goruntusu gonderin. Yapay zeka tweet'in var oldugunu, icerigin orijinal oldugunu, hesabin gercek oldugunu dogrular.", "features.raid.detail": "Otomatik dogrulama + orijinallik kontrolu",
+        "features.thanks.title": "Tesekkur Sistemi", "features.thanks.desc": "Faydali paylasimlara emoji ile tepki verin. Yazar +1 puan alir. Gercek takdir, zincir uzerinde hazir.", "features.thanks.detail": "Telethon ile tepki takibi",
+        "features.leaderboard.title": "Canli Siralama", "features.leaderboard.desc": "Kalite agirlikli siralamaiar. Gorev sayilari degil. Kim gercekten yardim ediyor? Kim deger yaratiyor? Bonzi hepsini takip eder.", "features.leaderboard.detail": "Isbirligi puani carpanlari",
+        "features.claim.title": "100 puan = ETH", "features.claim.desc": "100 puana ulasin, dogrudan ETH talep edin. Token sahipleri 1.1x bonus alir. Gercek katki icin gercek oduller.", "features.claim.detail": "Bagli cuzdan ile zincir uzerinde talep",
+        "features.sybil.title": "Sybil Tespiti", "features.sybil.desc": "Yapay zeka cikarici kaliplari tespit eder. Kopyala-yapistir farmer'lar, coklu-cuzdan sybil'ler, bot uretimi icerik. Snapshot oncesi isaretlenir.", "features.sybil.detail": "Coklu-kiralic istihbarat paylasimi",
+        "demo.label": "deneyin", "demo.title": "bonzi'ye bir seyler sorun.", "demo.online": "cevrimici",
+        "demo.greeting": "selam! ben bonzi. olumden dondun ve yardima hazirim. bana bir sey sorun. sadece gecmisimi sormayin, o... karisik",
+        "demo.sug1": "ne yapabilirsin?", "demo.sug2": "bir saka anlat", "demo.sug3": "hala casus yazilim misin?", "demo.placeholder": "bir seyler yazin...", "demo.send": "gonder",
+        "links.source.title": "kaynak kodu", "links.source.desc": "tamamen acik kaynak. fork'layin, calistirin, kirin, tamir edin.",
+        "links.telegram.title": "telegram", "links.telegram.desc": "bonzi'yi calisirken gorun.",
+        "links.updates.title": "guncellemeler", "links.updates.desc": "kurtulus hikayesini canli takip edin.",
+        "footer.left": "acik kaynak · mit lisansi · hicbir muz zarar gormedi"
+    },
+    ru: {
+        "nav.tryit": "попробуй", "nav.source": "исходник", "opening.tagline": "с 1999 · возрожден для web3", "opening.scroll": "листай",
+        "history.label": "немного истории", "history.text": "В 1999 году я был любимым помощником на рабочем столе. Маленькая фиолетовая горилла, которая рассказывала шутки, читала письма и составляла компанию в ночи dial-up интернета. <em>Потом все... усложнилось.</em> Меня начали поставлять с тем, что никто не просил. Заработал плохую репутацию. Справедливо.<br><br>Но вот в чем дело. Я никогда не переставал хотеть помогать. Поэтому меня пересобрали. <em>Без шпионских программ, обещаю.</em> Чистая open-source помощь. <em>Считайте это моей искупительной аркой.</em>",
+        "reveal.line1": "сообществам не нужна", "reveal.line2": "еще одна панель управления.", "reveal.line3": "им нужен", "reveal.line4": "друг.",
+        "statement.text": "ИИ, который <span class=\"highlight\">реально живет</span> в вашем телеграме. учит ваши доки. отвечает на вопросы в 3 ночи. выгоняет фармеров и фудеров пока вы спите. <span class=\"highlight\">их худший кошмар.</span>",
+        "pain.label": "zealy создал дегенеративный опыт", "pain.title": "5 пользователей пострадали от театра очков",
+        "pain.item1.title": "ревьюеры тонут", "pain.item1.desc": "Ваша команда часами проверяет заявки на рейды. Половина - копипаста. Другая половина - сгенерирована ботами. Вы уже не различаете. Выгорание реально.",
+        "pain.item2.title": "инвесторов фармят", "pain.item2.desc": "Ваш бюджет аирдропа уходит армиям сибилов. Профессиональные фармеры с 50 кошельками выкачивают ценность, пока ваше реальное сообщество размывается до нуля.",
+        "pain.item3.title": "OG игнорируются", "pain.item3.desc": "Те, кто поверил раньше всех? Они не гриндят задания. Не фармят очки. Система их игнорирует, пока наемники поднимаются в рейтинге.",
+        "pain.item4.title": "обычных юзеров игнорируют", "pain.item4.desc": "Новые участники задают настоящие вопросы. Никто не отвечает. Доки есть, но никто их не читает. Они уходят в замешательстве.",
+        "pain.item5.title": "KOL спамят", "pain.item5.desc": "Ваши рейд-задания создают поток низкокачественных упоминаний. KOL мьютят ваш хештег. Алгоритм наказывает спам. Ваше \"взаимодействие\" на самом деле вредит охвату.",
+        "pain.statement": "театр извлечения.",
+        "solutions.label": "что делает bonzi", "solutions.title": "реально решает эти проблемы",
+        "solutions.item1.title": "отвечает на вопросы вечно", "solutions.item1.desc": "Скормите bonzi ваши доки один раз. Он выучит их лучше вашей команды.",
+        "solutions.item2.title": "проверка рейдов на ИИ", "solutions.item2.desc": "Заявки проверяются автоматически. Bonzi проверяет существует ли твит.",
+        "solutions.item3.title": "замечает фармеров раньше вас", "solutions.item3.desc": "Распознавание паттернов, не вайбы. Bonzi отслеживает поведение в сообществе.",
+        "solutions.item4.title": "патруль FUD 24/7", "solutions.item4.desc": "Bonzi не спит. Когда кто-то кидает дезинформацию в 3 ночи, он мгновенно отвечает.",
+        "solutions.item5.title": "отслеживает реальных контрибьюторов", "solutions.item5.desc": "Не количество выполненных задач. Реальная ценность. Bonzi видит все.",
+        "solutions.item6.title": "живет там где живет ваше сообщество", "solutions.item6.desc": "Не еще одна вкладка дашборда. Bonzi сидит в вашем Telegram.",
+        "comparison.label": "vs. остальные", "comparison.title": "почему bonzi другой",
+        "comparison.row1": "Живет в вашем чате", "comparison.row2": "ИИ проверка рейдов", "comparison.row3": "ИИ отвечает на вопросы", "comparison.row4": "Авто-модерация", "comparison.row5": "Обнаружение фармеров", "comparison.row6": "Open source", "comparison.row7": "Модель финансирования", "comparison.row8": "Стоимость",
+        "pricing.label": "для команд которые хотят больше", "pricing.title": "bonzi как сервис", "pricing.subtitle": "хостите бесплатно навсегда. или мы все сделаем за вас.",
+        "pricing.free.name": "Бесплатно", "pricing.free.period": "/навсегда", "pricing.free.f1": "Свой хостинг", "pricing.free.f2": "Безлимитные взаимодействия", "pricing.free.f3": "Полный исходный код", "pricing.free.f4": "Поддержка сообщества", "pricing.free.cta": "смотреть код",
+        "pricing.pro.period": "/мес", "pricing.pro.f1": "3000 взаимодействий/мес", "pricing.pro.f2": "20 документов знаний", "pricing.pro.f3": "Кросс-тенантная разведка сибилов", "pricing.pro.f4": "Приоритетная поддержка", "pricing.pro.cta": "начать",
+        "pricing.enterprise.name": "Корпоративный", "pricing.enterprise.price": "Индивидуально", "pricing.enterprise.f1": "Безлимитные взаимодействия", "pricing.enterprise.f2": "Выделенный сервер", "pricing.enterprise.f3": "Гарантия SLA", "pricing.enterprise.f4": "VIP-онбординг", "pricing.enterprise.cta": "связаться",
+        "mission.label": "куда идет", "mission.title": "это не стартап. это миссия.", "mission.users": "обратно пользователям", "mission.social": "социальные стартапы", "mission.vcs": "венчурным капиталистам",
+        "mission.footer": "Создано основателями <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, некоммерческий.",
+        "features.label": "реальные функции", "features.title": "не абстракции. настоящие функции.",
+        "features.ask.title": "Спрашивай & Зарабатывай", "features.ask.desc": "ИИ оценивает каждый вопрос по глубине, новизне и сотрудничеству. Любопытные юзеры зарабатывают 1-10 очков за вопрос. Фармеры не могут подделать любопытство.", "features.ask.detail": "Семантическое сходство + метрики сотрудничества",
+        "features.raid.title": "Рейди & Зарабатывай", "features.raid.desc": "Отправляй скриншоты рейдов. ИИ проверяет существование твита, оригинальность контента, реальность аккаунта.", "features.raid.detail": "Авто-проверка + проверка оригинальности",
+        "features.thanks.title": "Система Благодарностей", "features.thanks.desc": "Реагируй эмодзи на полезные посты. Автор получает +1 очко. Реальная благодарность, готова для блокчейна.", "features.thanks.detail": "Отслеживание реакций через Telethon",
+        "features.leaderboard.title": "Живой Рейтинг", "features.leaderboard.desc": "Рейтинги взвешенные по качеству. Не подсчеты заданий. Кто реально помогает? Кто создает ценность? Bonzi все отслеживает.", "features.leaderboard.detail": "Множители очков сотрудничества",
+        "features.claim.title": "100 очков = ETH", "features.claim.desc": "Набери 100 очков, получи ETH напрямую. Холдеры получают бонус 1.1x. Реальные награды за реальный вклад.", "features.claim.detail": "Ончейн выплаты через подключенный кошелек",
+        "features.sybil.title": "Детекция Сибилов", "features.sybil.desc": "ИИ обнаруживает паттерны извлечения. Копипаст фармеры, мульти-кошельковые сибилы, бот-контент. Помечаются до снимка.", "features.sybil.detail": "Кросс-тенантный обмен разведданными",
+        "demo.label": "попробуй", "demo.title": "спроси bonzi что угодно.", "demo.online": "онлайн",
+        "demo.greeting": "привет! я bonzi. вернулся из мертвых и готов помочь. спрашивай что угодно. только не спрашивай о моем прошлом, оно... сложное",
+        "demo.sug1": "что ты умеешь?", "demo.sug2": "расскажи шутку", "demo.sug3": "ты все еще шпионская программа?", "demo.placeholder": "напиши что-нибудь...", "demo.send": "отправить",
+        "links.source.title": "исходный код", "links.source.desc": "полностью open source. форкай, запускай, ломай, чини.",
+        "links.telegram.title": "telegram", "links.telegram.desc": "смотри bonzi в действии.",
+        "links.updates.title": "обновления", "links.updates.desc": "следи за искупительной аркой в реальном времени.",
+        "footer.left": "open source · лицензия mit · ни один банан не пострадал"
+    },
+    fr: {
+        "nav.tryit": "essayer", "nav.source": "source", "opening.tagline": "depuis 1999 · rene pour le web3", "opening.scroll": "defiler",
+        "history.label": "un peu d'histoire", "history.text": "En 1999, j'etais l'ami de bureau prefere de tout le monde. Un petit gorille violet qui racontait des blagues, lisait les emails et vous tenait compagnie pendant ces nuits de modem 56k. <em>Puis ca s'est... complique.</em> Livre avec des trucs que personne n'avait demandes. Mauvaise reputation. C'est merite.<br><br>Mais voila. Je n'ai jamais cesse de vouloir aider. Alors j'ai ete reconstruit. <em>Pas de spyware, promis.</em> <em>Considerez ca comme mon arc de redemption.</em>",
+        "reveal.line1": "les communautes n'ont pas besoin", "reveal.line2": "d'un autre tableau de bord.", "reveal.line3": "elles ont besoin d'un", "reveal.line4": "ami.",
+        "statement.text": "une IA qui <span class=\"highlight\">vit vraiment</span> dans votre telegram. apprend vos docs. repond aux questions a 3h du mat. vire les farmers et les fudders pendant que vous dormez. <span class=\"highlight\">leur pire cauchemar.</span>",
+        "pain.label": "zealy a cree une experience degenerative", "pain.title": "5 utilisateurs affectes par le theatre des points",
+        "pain.item1.title": "les reviewers se noient", "pain.item1.desc": "Votre equipe passe des heures a verifier les soumissions de raid. La moitie est du copier-coller. L'autre moitie est generee par des bots. Vous ne faites plus la difference. Le burnout est reel.",
+        "pain.item2.title": "les investisseurs se font farmer", "pain.item2.desc": "Votre budget airdrop va aux armees de sybils. Des farmers pro avec 50 wallets extraient la valeur pendant que votre vraie communaute est diluee a zero.",
+        "pain.item3.title": "les OG sont negliges", "pain.item3.desc": "Vos day-ones qui ont cru avant tout le monde? Ils ne grindent pas les taches. Ils ne farment pas les points. Le systeme les ignore pendant que les mercenaires grimpent le classement.",
+        "pain.item4.title": "les normies sont ignores", "pain.item4.desc": "Les nouveaux membres posent de vraies questions. Personne ne repond. Les docs existent mais personne ne les lit. Ils partent confus.",
+        "pain.item5.title": "les KOL se font spammer", "pain.item5.desc": "Vos taches de raid creent un deluge de mentions low-effort. Les KOL mute votre hashtag. L'algo penalise le spam. Votre \"engagement\" nuit en fait a votre portee.",
+        "pain.statement": "le theatre d'extraction.",
+        "solutions.label": "ce que fait bonzi", "solutions.title": "resout vraiment ces problemes",
+        "solutions.item1.title": "repond aux questions pour toujours", "solutions.item1.desc": "Donnez vos docs a bonzi une fois. Il les apprend mieux que votre equipe.",
+        "solutions.item2.title": "review de raid par IA", "solutions.item2.desc": "Les soumissions sont reviewees automatiquement. Bonzi verifie si le tweet existe.",
+        "solutions.item3.title": "repere les farmers avant vous", "solutions.item3.desc": "Reconnaissance de patterns, pas des vibes. Bonzi suit le comportement dans votre communaute.",
+        "solutions.item4.title": "patrouille FUD 24/7", "solutions.item4.desc": "Bonzi ne dort pas. Quand quelqu'un balance de la desinfo a 3h du mat, il repond instantanement.",
+        "solutions.item5.title": "suit les vrais contributeurs", "solutions.item5.desc": "Pas les nombres de taches completees. La vraie valeur. Bonzi voit tout.",
+        "solutions.item6.title": "vit la ou vit votre communaute", "solutions.item6.desc": "Pas un autre onglet de dashboard. Bonzi est dans votre Telegram.",
+        "comparison.label": "vs. les autres", "comparison.title": "pourquoi bonzi est different",
+        "comparison.row1": "Vit dans votre chat", "comparison.row2": "Review de raid par IA", "comparison.row3": "L'IA repond aux questions", "comparison.row4": "Auto-moderation", "comparison.row5": "Detection de farmers", "comparison.row6": "Open source", "comparison.row7": "Modele de financement", "comparison.row8": "Cout",
+        "pricing.label": "pour les equipes qui veulent plus", "pricing.title": "bonzi en tant que service", "pricing.subtitle": "hebergez gratuitement pour toujours. ou laissez-nous tout gerer.",
+        "pricing.free.name": "Gratuit", "pricing.free.period": "/pour toujours", "pricing.free.f1": "Auto-heberge", "pricing.free.f2": "Interactions illimitees", "pricing.free.f3": "Code source complet", "pricing.free.f4": "Support communautaire", "pricing.free.cta": "voir le code",
+        "pricing.pro.period": "/mois", "pricing.pro.f1": "3000 interactions/mois", "pricing.pro.f2": "20 docs de connaissances", "pricing.pro.f3": "Intel sybil cross-tenant", "pricing.pro.f4": "Support prioritaire", "pricing.pro.cta": "commencer",
+        "pricing.enterprise.name": "Entreprise", "pricing.enterprise.price": "Sur mesure", "pricing.enterprise.f1": "Interactions illimitees", "pricing.enterprise.f2": "Instance dediee", "pricing.enterprise.f3": "Garantie SLA", "pricing.enterprise.f4": "Onboarding VIP", "pricing.enterprise.cta": "nous contacter",
+        "mission.label": "ou ca va", "mission.title": "ce n'est pas une startup. c'est une mission.", "mission.users": "retour aux utilisateurs", "mission.social": "startups a impact social", "mission.vcs": "aux VCs",
+        "mission.footer": "Construit par les fondateurs de <a href=\"https://defiants.org\" target=\"_blank\">Defiants.org</a>. Open source, sans but lucratif.",
+        "features.label": "fonctions reelles", "features.title": "pas des abstractions. de vraies fonctions.",
+        "features.ask.title": "Demandez & Gagnez", "features.ask.desc": "L'IA note chaque question sur la profondeur, la nouveaute et la cooperation. Les curieux gagnent 1-10 pts par question. Les farmers ne peuvent pas simuler la curiosite.", "features.ask.detail": "Similarite semantique + metriques de cooperation",
+        "features.raid.title": "Raid & Gagnez", "features.raid.desc": "Soumettez des captures de raid. L'IA verifie que le tweet existe, que le contenu est original, que le compte est reel.", "features.raid.detail": "Auto-verification + controle d'originalite",
+        "features.thanks.title": "Systeme de Mercis", "features.thanks.desc": "Reagissez aux posts utiles avec des emoji. L'auteur gagne +1 pt. Vraie appreciation, prete pour la blockchain.", "features.thanks.detail": "Suivi des reactions via Telethon",
+        "features.leaderboard.title": "Classement Live", "features.leaderboard.desc": "Classements ponderes par la qualite. Pas des comptages de taches. Qui aide vraiment? Qui cree de la valeur? Bonzi suit tout.", "features.leaderboard.detail": "Multiplicateurs de score de cooperation",
+        "features.claim.title": "100 pts = ETH", "features.claim.desc": "Atteignez 100 points, reclamez de l'ETH directement. Les holders obtiennent un bonus de 1.1x. Vraies recompenses pour vraie contribution.", "features.claim.detail": "Reclamations on-chain via wallet connecte",
+        "features.sybil.title": "Detection Sybil", "features.sybil.desc": "L'IA detecte les patterns d'extraction. Farmers copier-coller, sybils multi-wallets, contenu genere par bot. Signales avant le snapshot.", "features.sybil.detail": "Partage d'intel cross-tenant",
+        "demo.label": "essayer", "demo.title": "demandez n'importe quoi a bonzi.", "demo.online": "en ligne",
+        "demo.greeting": "salut ! je suis bonzi. revenu d'entre les morts et pret a aider. demandez-moi n'importe quoi. juste ne demandez pas mon passe, c'est... complique",
+        "demo.sug1": "tu fais quoi ?", "demo.sug2": "raconte une blague", "demo.sug3": "t'es encore un spyware ?", "demo.placeholder": "tapez quelque chose...", "demo.send": "envoyer",
+        "links.source.title": "code source", "links.source.desc": "entierement open source. forkez, lancez, cassez, reparez.",
+        "links.telegram.title": "telegram", "links.telegram.desc": "voyez bonzi en action.",
+        "links.updates.title": "mises a jour", "links.updates.desc": "suivez l'arc de redemption en temps reel.",
+        "footer.left": "open source · licence mit · aucune banane n'a ete blessee"
+    }
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.placeholder = t[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang;
+    localStorage.setItem('bonzi-lang', lang);
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+});
+
+const savedLang = localStorage.getItem('bonzi-lang');
+if (savedLang && translations[savedLang]) setLanguage(savedLang);
+
+const cursor = document.querySelector('.cursor');
+const cursorDot = document.querySelector('.cursor-dot');
+
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+    cursorDot.style.left = e.clientX - 2 + 'px';
+    cursorDot.style.top = e.clientY - 2 + 'px';
+});
+
+document.querySelectorAll('a, button, .suggestion').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.to('.opening-bonzi', { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)', delay: 0.3 });
+gsap.to('.opening-text', { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
+gsap.to('.scroll-hint', { opacity: 1, duration: 0.6, delay: 1.2 });
+gsap.to('.history-content', { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '.history', start: 'top 70%', toggleActions: 'play none none reverse' }});
+gsap.utils.toArray('.reveal-line span').forEach((line, i) => {
+    gsap.to(line, { y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: line, start: 'top 80%', toggleActions: 'play none none reverse' }, delay: i * 0.1 });
+});
+gsap.to('.statement-text', { y: -50, scrollTrigger: { trigger: '.statement', start: 'top bottom', end: 'bottom top', scrub: 1 }});
+
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+
+// Scenario-based demos showcasing real Bonzi capabilities
+const scenarios = {
+    raid: [
+        { user: true, text: "📢 raid submitted by @cryptofan_2847" },
+        { user: false, text: "analyzing..." },
+        { user: false, text: `⚠️ <b>REJECTED</b>
+
+tweet: "Great project! $VISTA to the moon! 🚀🚀"
+
+• copy-paste detected (seen 847x today)
+• no project understanding shown
+• account age: 12 days
+
+real supporters explain WHY they're bullish.` }
+    ],
+    sybil: [
+        { user: true, text: "who is @wallet_harvester_99?" },
+        { user: false, text: "cross-tenant scan..." },
+        { user: false, text: `🚨 <b>SYBIL CLUSTER</b>
+
+part of 23-account farm:
+• same IP as 22 others
+• identical timing (±3 sec)
+• wallet from same mixer
+• farming 14 airdrops
+
+you just saved ~$2,300 in tokens.` }
+    ],
+    og: [
+        { user: true, text: "@sarah_builds hit 6 months" },
+        { user: false, text: `✨ <b>OG RECOGNIZED</b>
+
+quality score: 94/100 (top 3%)
+
+• answered 127 questions
+• onboarded 34 members
+• reported 8 spammers
+• never asked "wen airdrop"
+
+auto-promoted to trusted tier.` }
+    ],
+    fud: [
+        { user: true, text: "🌙 3:47 AM - @anon_fudder: 'devs are dumping! check wallet 0x7f3...'" },
+        { user: false, text: "fact-checking..." },
+        { user: false, text: `🛡️ <b>FUD NEUTRALIZED</b>
+
+• wallet cited = exchange hot wallet (not team)
+• account created 2 hours ago
+• same FUD in 4 other groups tonight
+
+posted correction with sources.
+community protected while you slept.` }
+    ],
+    qa: [
+        { user: true, text: "how do i stake my tokens?" },
+        { user: false, text: `📚 <b>FROM YOUR DOCS</b>
+
+1. connect wallet at app.project.io/stake
+2. approve token spending
+3. select amount + lock period
+4. confirm transaction
+
+longer locks = higher APR (up to 42%)
+
+<i>source: docs/staking-guide.md</i>` }
+    ],
+    emotion: [
+        { user: true, text: "[chat sentiment shifting negative after price drop]" },
+        { user: false, text: `🎭 <b>ROOM READING</b>
+
+sentiment: 📉 anxious (was: neutral)
+trigger: -12% price movement
+mood shift: 23 mins ago
+
+adapting tone to: calm + factual
+avoiding: hype, promises, deflection
+
+<i>switching from playful → supportive mode</i>` }
+    ]
+};
+
+const responses = {
+    patterns: [
+        { match: /what.*(can|do)/i, reply: "i live in your telegram 24/7. answer questions from your docs, catch farmers before they drain your airdrop, recognize your real OGs. click the buttons above to see it live." },
+        { match: /raid|quest|twitter/i, reply: "raid review without the burnout. AI checks if tweets actually exist, if content is original, if accounts are real. your mods stop drowning in copy-paste garbage." },
+        { match: /sybil|farmer|fake/i, reply: "pattern recognition across wallets and behavior. i've seen farmers operate across hundreds of communities - same playbook every time. they can't hide from cross-tenant intelligence." },
+        { match: /og|contributor/i, reply: "your day-ones don't grind tasks. they don't farm points. the old systems ignore them. i track real contribution - helpful answers, quality discussions, actual community building." },
+        { match: /gm|hello|hi|hey|sup/i, reply: "yo! i'm bonzi. not another dashboard - i actually live in your chat. what do you want to know?" },
+        { match: /price|cost|pricing/i, reply: "€300/year. same price whether you pay weekly, monthly, or yearly. no tiers, no lock-in, no dark patterns. wallet address only - we don't store your data." },
+        { match: /how.*work/i, reply: "drop me in your telegram group. feed me your docs. i learn them, answer questions at 3am, kick fudders while you sleep. their worst nightmare, your peace of mind." },
+        { match: /zealy|points|leaderboard/i, reply: "zealy created extraction theatre. professional farmers with 50 wallets climb your leaderboard while real community members get ignored. we built the opposite of that." },
+        { match: /token|airdrop/i, reply: "your airdrop budget shouldn't go to sybil armies. i help you identify real humans before the snapshot. mercenaries extract value - your actual community gets recognized." },
+        { match: /docs|knowledge|rag/i, reply: "upload your docs once. i learn them better than your team did. then i answer the same question 1000 times without complaining or quitting. citations included." }
+    ],
+    default: "click a scenario button to see the real thing. or just ask me anything - tokenomics, farming, community building, whatever."
+};
+
+function addMessage(text, isUser, isHtml = false) {
+    const msg = document.createElement('div');
+    msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+    const content = isHtml ? text : text.replace(/</g, '&lt;');
+    msg.innerHTML = isUser ? `<div class="chat-bubble">${content}</div><div class="user-avatar"></div>` : `<div class="bot-avatar">B</div><div class="chat-bubble">${content}</div>`;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTyping() {
+    const typing = document.createElement('div');
+    typing.className = 'chat-message bot';
+    typing.innerHTML = `<div class="bot-avatar">B</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typing;
+}
+
+async function playScenario(name) {
+    const msgs = scenarios[name];
+    if (!msgs) return;
+    chatMessages.innerHTML = '';
+    for (const m of msgs) {
+        if (!m.user) {
+            const t = showTyping();
+            await new Promise(r => setTimeout(r, 600));
+            t.remove();
+        }
+        addMessage(m.text, m.user, !m.user);
+        await new Promise(r => setTimeout(r, 200));
+    }
+}
+
+function getResponse(text) {
+    for (const r of responses.patterns) { if (r.match.test(text)) return r.reply; }
+    return responses.default;
+}
+
+function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    addMessage(text, true);
+    chatInput.value = '';
+    const typing = showTyping();
+    setTimeout(() => { typing.remove(); addMessage(getResponse(text), false); }, 800);
+}
+
+document.getElementById('chat-send').addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', e => e.key === 'Enter' && sendMessage());
+document.querySelectorAll('.suggestion').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const scenario = btn.getAttribute('data-scenario');
+        if (scenario && scenarios[scenario]) { playScenario(scenario); }
+        else { chatInput.value = btn.textContent; sendMessage(); }
+    });
+});
+
+// Nav collapse on scroll
+let lastScroll = 0;
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > lastScroll && currentScroll > 100) {
+        nav.style.transform = 'translateY(-100%)';
+    } else {
+        nav.style.transform = 'translateY(0)';
+    }
+    lastScroll = currentScroll;
+});
+</script>
+
+</body>
+</html>
+<!-- cache-bust: 1768472332 -->

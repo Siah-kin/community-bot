@@ -991,6 +991,7 @@
         }
 
         /* Pricing section */
+        /* Pricing - Mullvad-style single price */
         .pricing-section {
             padding: 120px 48px;
             background: var(--black);
@@ -998,7 +999,7 @@
         }
 
         .pricing-container {
-            max-width: 1100px;
+            max-width: 700px;
             margin: 0 auto;
             text-align: center;
         }
@@ -1012,135 +1013,176 @@
         }
 
         .pricing-title {
-            font-size: clamp(28px, 5vw, 48px);
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            margin-bottom: 12px;
-        }
-
-        .pricing-subtitle {
-            font-size: 16px;
-            color: var(--gray);
-            margin-bottom: 64px;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .price-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 40px 32px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-
-        .price-card:hover {
-            border-color: var(--purple);
-            transform: translateY(-4px);
-        }
-
-        .price-card.featured {
-            background: rgba(124,58,237,0.1);
-            border-color: var(--purple);
-            position: relative;
-        }
-
-        .price-card.featured::before {
-            content: 'most popular';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--purple);
-            color: white;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .price-card h4 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-
-        .price-card .price {
-            font-size: 48px;
+            font-size: clamp(48px, 8vw, 80px);
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 24px;
+            margin-bottom: 8px;
         }
 
-        .price-card .price span {
-            font-size: 16px;
+        .price-period {
+            font-size: 0.4em;
             font-weight: 400;
             color: var(--gray);
         }
 
-        .price-card ul {
-            list-style: none;
-            margin-bottom: 32px;
+        .pricing-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 48px;
         }
 
-        .price-card ul li {
-            padding: 8px 0;
+        .pricing-single {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 48px 40px;
+        }
+
+        .price-breakdown {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .price-option {
+            text-align: center;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .price-option.featured {
+            background: rgba(124,58,237,0.15);
+            border-color: var(--purple);
+        }
+
+        .option-price {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .option-period {
             font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray);
         }
 
-        .price-card ul li:last-child {
+        .price-divider {
+            font-size: 24px;
+            color: var(--gray);
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pricing-features li:last-child {
             border-bottom: none;
         }
 
-        .price-card .btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 14px 24px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
+        .pricing-features .check {
+            color: var(--purple-light);
+            font-weight: bold;
         }
 
-        .price-card .btn-primary {
+        .pricing-philosophy {
+            background: rgba(124,58,237,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .pricing-philosophy h4 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-light);
+            margin-bottom: 12px;
+        }
+
+        .pricing-philosophy p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .pricing-philosophy p:last-child {
+            margin-bottom: 0;
+        }
+
+        .privacy-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px !important;
+            color: var(--purple-light) !important;
+        }
+
+        .privacy-note .lock {
+            font-size: 14px;
+        }
+
+        .btn-large {
+            display: inline-block;
+            padding: 18px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
             background: var(--purple);
             color: white;
-            border: none;
+            transition: all 0.2s;
+            margin-bottom: 24px;
         }
 
-        .price-card .btn-primary:hover {
+        .btn-large:hover {
             background: var(--purple-dark);
+            transform: translateY(-2px);
         }
 
-        .price-card .btn-ghost {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid rgba(255,255,255,0.2);
+        .self-host-note {
+            font-size: 14px;
+            color: var(--gray);
         }
 
-        .price-card .btn-ghost:hover {
-            border-color: var(--purple);
+        .self-host-note a {
             color: var(--purple-light);
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
             .pricing-section {
                 padding: 80px 24px;
             }
-            .pricing-grid {
-                grid-template-columns: 1fr;
+            .pricing-single {
+                padding: 32px 24px;
+            }
+            .price-breakdown {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .price-divider {
+                transform: rotate(90deg);
             }
         }
 
@@ -1559,44 +1601,45 @@
 
 <section class="pricing-section">
     <div class="pricing-container">
-        <p class="pricing-label" data-i18n="pricing.label">for teams who want more</p>
-        <h2 class="pricing-title" data-i18n="pricing.title">bonzi as a service</h2>
-        <p class="pricing-subtitle" data-i18n="pricing.subtitle">self-host free forever. or let us handle everything.</p>
+        <p class="pricing-label">one price. no tiers. no tricks.</p>
+        <h2 class="pricing-title">€300<span class="price-period">/year</span></h2>
+        <p class="pricing-subtitle">same rate whether you pay weekly, monthly, or yearly. no lock-in.</p>
 
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h4 data-i18n="pricing.free.name">Free</h4>
-                <div class="price">$0<span data-i18n="pricing.free.period">/forever</span></div>
-                <ul>
-                    <li data-i18n="pricing.free.f1">Self-hosted</li>
-                    <li data-i18n="pricing.free.f2">Unlimited interactions</li>
-                    <li data-i18n="pricing.free.f3">Full source code</li>
-                    <li data-i18n="pricing.free.f4">Community support</li>
-                </ul>
-                <a href="https://github.com/Siah-kin/community-bot" class="btn btn-ghost" data-i18n="pricing.free.cta">view source</a>
+        <div class="pricing-single">
+            <div class="price-breakdown">
+                <div class="price-option">
+                    <span class="option-price">€6</span>
+                    <span class="option-period">/week</span>
+                </div>
+                <div class="price-divider">=</div>
+                <div class="price-option">
+                    <span class="option-price">€25</span>
+                    <span class="option-period">/month</span>
+                </div>
+                <div class="price-divider">=</div>
+                <div class="price-option featured">
+                    <span class="option-price">€300</span>
+                    <span class="option-period">/year</span>
+                </div>
             </div>
-            <div class="price-card featured">
-                <h4>Pro</h4>
-                <div class="price">$299<span data-i18n="pricing.pro.period">/mo</span></div>
-                <ul>
-                    <li data-i18n="pricing.pro.f1">3,000 interactions/mo</li>
-                    <li data-i18n="pricing.pro.f2">20 knowledge docs</li>
-                    <li data-i18n="pricing.pro.f3">Cross-tenant sybil intel</li>
-                    <li data-i18n="pricing.pro.f4">Priority support</li>
-                </ul>
-                <a href="https://t.me/ethervistatoken" class="btn btn-primary" data-i18n="pricing.pro.cta">get started</a>
+
+            <ul class="pricing-features">
+                <li><span class="check">✓</span> Everything included. No feature gating.</li>
+                <li><span class="check">✓</span> Unlimited interactions</li>
+                <li><span class="check">✓</span> Cross-tenant sybil intelligence</li>
+                <li><span class="check">✓</span> Knowledge base + RAG</li>
+                <li><span class="check">✓</span> Cancel anytime. No auto-renew traps.</li>
+            </ul>
+
+            <div class="pricing-philosophy">
+                <h4>how it works</h4>
+                <p>Send payment to our contract. Get an access token. Use until it expires. Renew when you want.</p>
+                <p class="privacy-note"><span class="lock">🔒</span> Wallet address only. We don't store your email, name, or payment details.</p>
             </div>
-            <div class="price-card">
-                <h4 data-i18n="pricing.enterprise.name">Enterprise</h4>
-                <div class="price" data-i18n="pricing.enterprise.price">Custom</div>
-                <ul>
-                    <li data-i18n="pricing.enterprise.f1">Unlimited interactions</li>
-                    <li data-i18n="pricing.enterprise.f2">Dedicated instance</li>
-                    <li data-i18n="pricing.enterprise.f3">SLA guarantee</li>
-                    <li data-i18n="pricing.enterprise.f4">White-glove onboarding</li>
-                </ul>
-                <a href="https://t.me/ethervistatoken" class="btn btn-ghost" data-i18n="pricing.enterprise.cta">contact us</a>
-            </div>
+
+            <a href="https://t.me/ethervistatoken" class="btn btn-primary btn-large">get started</a>
+
+            <p class="self-host-note">prefer to self-host? <a href="https://github.com/Siah-kin/community-bot">source code is free forever</a></p>
         </div>
     </div>
 </section>

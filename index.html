@@ -410,329 +410,222 @@
             background: rgba(124, 58, 237, 0.04);
         }
 
-        /* Mission section - BENTO FLYWHEEL */
+        /* Mission section - CLEAN FLYWHEEL */
         .mission-section {
-            padding: 120px 48px;
-            background: var(--black);
+            padding: 140px 48px;
+            background: #0a0a0a;
             color: var(--white);
             position: relative;
             overflow: hidden;
         }
 
-        .mission-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 1200px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--purple), transparent);
-        }
-
         .mission-container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-        }
-
-        .mission-header {
             text-align: center;
-            margin-bottom: 64px;
         }
 
         .mission-label {
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             color: var(--purple-light);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             font-weight: 500;
         }
 
         .mission-title {
-            font-size: clamp(32px, 5vw, 56px);
+            font-size: clamp(36px, 6vw, 64px);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 16px;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            line-height: 1.05;
+            color: var(--white);
         }
 
         .mission-subtitle {
-            font-size: 16px;
-            color: var(--gray);
-            max-width: 500px;
-            margin: 0 auto;
+            font-size: 18px;
+            color: #888;
+            max-width: 480px;
+            margin: 0 auto 80px;
             line-height: 1.6;
         }
 
-        /* Bento Grid */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            grid-template-rows: auto auto auto;
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .bento-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
-            padding: 32px;
+        /* The Glowing Loop Visual */
+        .loop-visual {
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 0 auto 80px;
+            width: 320px;
+            height: 320px;
         }
 
-        .bento-card::before {
+        .loop-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+                        linear-gradient(135deg, #7c3aed, #a78bfa, #7c3aed) border-box;
+            animation: ring-rotate 8s linear infinite;
+        }
+
+        .loop-ring::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.4), transparent);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .bento-card:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(124, 58, 237, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .bento-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Card positions */
-        .bento-sponsors {
-            grid-column: span 7;
-        }
-
-        .bento-cycle {
-            grid-column: span 5;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(124, 58, 237, 0.05) 100%);
-            border-color: rgba(124, 58, 237, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 200px;
-        }
-
-        .bento-growth {
-            grid-column: span 5;
-        }
-
-        .bento-stakers {
-            grid-column: span 7;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, transparent 100%);
-            border-color: rgba(34, 197, 94, 0.2);
-        }
-
-        .bento-impact {
-            grid-column: span 12;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, transparent 50%);
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 48px;
-            align-items: center;
-        }
-
-        /* Card content */
-        .bento-step {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--gray);
-            margin-bottom: 16px;
-        }
-
-        .bento-step-num {
-            width: 20px;
-            height: 20px;
-            background: rgba(124, 58, 237, 0.3);
+            inset: -20px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--purple-light);
+            background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.15), transparent 60%);
+            filter: blur(20px);
+            animation: glow-pulse 4s ease-in-out infinite;
         }
 
-        .bento-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 20px;
-            opacity: 0.9;
+        @keyframes ring-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        .bento-icon svg {
-            width: 100%;
-            height: 100%;
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
-        .bento-h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 8px;
-            letter-spacing: -0.01em;
-        }
-
-        .bento-desc {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.6;
-        }
-
-        /* Cycle center card */
-        .cycle-icon {
-            width: 72px;
-            height: 72px;
-            margin-bottom: 16px;
-            animation: pulse-glow 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% {
-                filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4));
-                transform: scale(1);
-            }
-            50% {
-                filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.6));
-                transform: scale(1.05);
-            }
-        }
-
-        .cycle-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--purple-light);
-            font-weight: 600;
-        }
-
-        /* Staker rewards highlight */
-        .bento-stat {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .bento-stat-num {
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: #22c55e;
-        }
-
-        .bento-stat-label {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        /* Impact card */
-        .impact-stat {
+        .loop-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
         }
 
-        .impact-num {
-            font-size: 64px;
-            font-weight: 700;
+        .loop-percent {
+            font-size: 72px;
+            font-weight: 800;
             letter-spacing: -0.04em;
-            background: linear-gradient(135deg, var(--purple-light) 0%, #a78bfa 100%);
+            background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
         }
 
-        .impact-label {
+        .loop-label {
             font-size: 13px;
-            color: var(--gray);
-            margin-top: 8px;
+            color: #888;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
         }
 
-        .impact-content .bento-h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
+        /* Flow Steps - Horizontal */
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
         }
 
-        .impact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 16px;
-            color: var(--purple-light);
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: gap 0.3s;
+        .flow-step {
+            text-align: center;
+            position: relative;
         }
 
-        .impact-link:hover {
-            gap: 12px;
-        }
-
-        /* Flow arrows between cards */
-        .bento-flow {
+        .flow-step::after {
+            content: '→';
             position: absolute;
-            color: var(--purple);
-            opacity: 0.4;
+            right: -20px;
+            top: 24px;
+            color: #333;
+            font-size: 18px;
         }
 
-        /* Zero VCs badge */
-        .vc-badge {
-            display: inline-flex;
+        .flow-step:last-child::after {
+            content: '↻';
+            color: var(--purple);
+        }
+
+        .flow-num {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(124, 58, 237, 0.05) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .flow-text {
+            font-size: 14px;
+            color: var(--white);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .flow-sub {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .stat-num.green { color: #22c55e; }
+        .stat-num.purple { color: var(--purple-light); }
+        .stat-num.red { color: #888; text-decoration: line-through; }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #ef4444;
-            margin-top: 20px;
+        }
+
+        .stat-label a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .stat-label a:hover {
+            text-decoration: underline;
         }
 
         .mission-footer {
+            margin-top: 64px;
             text-align: center;
-            padding-top: 32px;
         }
 
         .mission-footer p {
             font-size: 14px;
-            color: var(--gray);
+            color: #555;
             line-height: 1.7;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
-        }
-
-        .mission-footer a {
-            color: var(--purple-light);
-            text-decoration: none;
-        }
-
-        .mission-footer a:hover {
-            text-decoration: underline;
         }
 
         /* Demo section */
@@ -1332,13 +1225,15 @@
             footer { flex-direction: column; gap: 16px; text-align: center; }
             .footer-main { flex-direction: column; gap: 8px; }
             .footer-sep { display: none; }
-            /* Bento responsive */
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-sponsors, .bento-cycle, .bento-growth, .bento-stakers, .bento-impact { grid-column: span 1; }
-            .bento-impact { grid-template-columns: 1fr; gap: 24px; text-align: center; }
-            .bento-card { padding: 24px; }
-            .impact-num { font-size: 48px; }
+            /* Flywheel responsive */
             .mission-section { padding: 80px 24px; }
+            .flow-steps { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .flow-step::after { display: none; }
+            .loop-visual { width: 240px; height: 240px; margin-bottom: 48px; }
+            .loop-ring { width: 200px; height: 200px; }
+            .loop-percent { font-size: 48px; }
+            .stats-row { flex-direction: column; gap: 32px; }
+            .stat-num { font-size: 28px; }
         }
 
         @media (hover: none) {
@@ -1646,102 +1541,61 @@
 
 <section class="mission-section">
     <div class="mission-container">
-        <div class="mission-header">
-            <p class="mission-label">decentralised philanthropy</p>
-            <h2 class="mission-title">where the money goes</h2>
-            <p class="mission-subtitle">A self-sustaining cycle where growth creates value for everyone—not just founders.</p>
+        <p class="mission-label">the economics</p>
+        <h2 class="mission-title">where the money goes</h2>
+        <p class="mission-subtitle">The AI that pays helpers, not just holders.</p>
+
+        <!-- The Glowing Loop -->
+        <div class="loop-visual">
+            <div class="loop-ring"></div>
+            <div class="loop-center">
+                <div class="loop-percent">95%</div>
+                <div class="loop-label">social impact</div>
+            </div>
         </div>
 
-        <div class="bento-grid">
-            <!-- Row 1 -->
-            <div class="bento-card bento-sponsors">
-                <div class="bento-step"><span class="bento-step-num">1</span> revenue source</div>
-                <div class="bento-icon">
-                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="4" y="8" width="40" height="32" rx="4" stroke="#7c3aed" stroke-width="2" fill="none"/>
-                        <path d="M4 16h40" stroke="#7c3aed" stroke-width="2"/>
-                        <rect x="8" y="24" width="12" height="8" rx="2" fill="rgba(124,58,237,0.3)"/>
-                        <path d="M28 26h12M28 30h8" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <h3 class="bento-h3">sponsors fund free tools</h3>
-                <p class="bento-desc">Partner projects pay for premium placement. Users get powerful tools at zero cost. No ads, no data harvesting.</p>
+        <!-- Flow Steps -->
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-text">you use bonzi</div>
+                <div class="flow-sub">free tools, zero ads</div>
             </div>
-
-            <div class="bento-card bento-cycle">
-                <div class="cycle-icon">
-                    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="36" cy="36" r="28" stroke="url(#cycleGrad)" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
-                        <path d="M36 16v8l6-4-6-4z" fill="#7c3aed"/>
-                        <path d="M56 36h-8l4 6 4-6z" fill="#7c3aed"/>
-                        <path d="M36 56v-8l-6 4 6 4z" fill="#7c3aed"/>
-                        <path d="M16 36h8l-4-6-4 6z" fill="#7c3aed"/>
-                        <circle cx="36" cy="36" r="12" fill="rgba(124,58,237,0.2)" stroke="#7c3aed" stroke-width="2"/>
-                        <defs>
-                            <linearGradient id="cycleGrad" x1="8" y1="8" x2="64" y2="64">
-                                <stop stop-color="#7c3aed"/>
-                                <stop offset="1" stop-color="#a78bfa"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span class="cycle-label">perpetual cycle</span>
+            <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-text">sponsors pay fees</div>
+                <div class="flow-sub">for premium placement</div>
             </div>
-
-            <!-- Row 2 -->
-            <div class="bento-card bento-growth">
-                <div class="bento-step"><span class="bento-step-num">2</span> network effect</div>
-                <div class="bento-icon">
-                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="24" cy="12" r="6" stroke="#7c3aed" stroke-width="2" fill="rgba(124,58,237,0.2)"/>
-                        <circle cx="10" cy="36" r="6" stroke="#7c3aed" stroke-width="2" fill="rgba(124,58,237,0.2)"/>
-                        <circle cx="38" cy="36" r="6" stroke="#7c3aed" stroke-width="2" fill="rgba(124,58,237,0.2)"/>
-                        <path d="M24 18v6M18 32l-4-8M30 32l4-8" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="24" cy="28" r="4" fill="#7c3aed"/>
-                    </svg>
-                </div>
-                <h3 class="bento-h3">communities grow</h3>
-                <p class="bento-desc">Better tools attract more users. More users attract more sponsors. Momentum builds.</p>
+            <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-text">stakers earn 5%</div>
+                <div class="flow-sub">real yield, not inflation</div>
             </div>
-
-            <div class="bento-card bento-stakers">
-                <div class="bento-step"><span class="bento-step-num">3</span> holder utility</div>
-                <div class="bento-icon">
-                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="8" y="20" width="32" height="20" rx="4" stroke="#22c55e" stroke-width="2" fill="none"/>
-                        <path d="M16 20v-6a8 8 0 1116 0v6" stroke="#22c55e" stroke-width="2" fill="none"/>
-                        <circle cx="24" cy="32" r="4" fill="#22c55e"/>
-                    </svg>
-                </div>
-                <h3 class="bento-h3">$BONZI stakers earn</h3>
-                <p class="bento-desc">Stake $BONZI, share 5% of all revenue. Real yield from real utility—not inflation.</p>
-                <div class="bento-stat">
-                    <span class="bento-stat-num">5%</span>
-                    <span class="bento-stat-label">revenue to stakers</span>
-                </div>
+            <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-text">95% builds schools</div>
+                <div class="flow-sub">refugee-led projects</div>
             </div>
+        </div>
 
-            <!-- Row 3 - Full width impact -->
-            <div class="bento-card bento-impact">
-                <div class="impact-stat">
-                    <div class="impact-num">95%</div>
-                    <div class="impact-label">to social impact</div>
-                </div>
-                <div class="impact-content">
-                    <div class="bento-step"><span class="bento-step-num">4</span> the mission</div>
-                    <h3 class="bento-h3">revenue funds refugee resilience</h3>
-                    <p class="bento-desc">The remaining 95% goes directly to Unidos Projects—refugee-led development initiatives. Your degen activity literally builds schools and funds sustainable agriculture in displacement camps.</p>
-                    <a href="https://unidosprojects.org" target="_blank" class="impact-link">see the impact <span>→</span></a>
-                    <div class="vc-badge">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        0% to VCs
-                    </div>
-                </div>
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-num green">5%</div>
+                <div class="stat-label">$BONZI stakers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num purple">95%</div>
+                <div class="stat-label"><a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num red">0%</div>
+                <div class="stat-label">to VCs</div>
             </div>
         </div>
 
         <div class="mission-footer">
-            <p>Piloting a model where crypto finance sustains refugee-led development, not mercenary capital extraction. Building since 2017.</p>
+            <p>Crypto finance sustaining refugee resilience. Building since 2017.</p>
         </div>
     </div>
 </section>

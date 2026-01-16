@@ -2146,13 +2146,18 @@ avoiding: hype, promises, deflection
 
 const responses = {
     patterns: [
-        { match: /what.*(can|do)/i, reply: "click the buttons above to see me in action: raid review, sybil detection, OG recognition. that's the real stuff." },
-        { match: /raid|quest|twitter/i, reply: "AI-powered raid review. no more checking 500 low-effort tweets. click 'review my raid' to see it." },
-        { match: /sybil|farmer|fake/i, reply: "cross-tenant intelligence catches coordinated farms. click 'catch a sybil' to see how." },
-        { match: /og|contributor/i, reply: "your best members deserve recognition. click 'recognize an OG' to see contribution tracking." },
-        { match: /gm|hello|hi|hey/i, reply: "gm! click a scenario button to see what i actually do." }
+        { match: /what.*(can|do)/i, reply: "i live in your telegram 24/7. answer questions from your docs, catch farmers before they drain your airdrop, recognize your real OGs. click the buttons above to see it live." },
+        { match: /raid|quest|twitter/i, reply: "raid review without the burnout. AI checks if tweets actually exist, if content is original, if accounts are real. your mods stop drowning in copy-paste garbage." },
+        { match: /sybil|farmer|fake/i, reply: "pattern recognition across wallets and behavior. i've seen farmers operate across hundreds of communities - same playbook every time. they can't hide from cross-tenant intelligence." },
+        { match: /og|contributor/i, reply: "your day-ones don't grind tasks. they don't farm points. the old systems ignore them. i track real contribution - helpful answers, quality discussions, actual community building." },
+        { match: /gm|hello|hi|hey|sup/i, reply: "yo! i'm bonzi. not another dashboard - i actually live in your chat. what do you want to know?" },
+        { match: /price|cost|pricing/i, reply: "€300/year. same price whether you pay weekly, monthly, or yearly. no tiers, no lock-in, no dark patterns. wallet address only - we don't store your data." },
+        { match: /how.*work/i, reply: "drop me in your telegram group. feed me your docs. i learn them, answer questions at 3am, kick fudders while you sleep. their worst nightmare, your peace of mind." },
+        { match: /zealy|points|leaderboard/i, reply: "zealy created extraction theatre. professional farmers with 50 wallets climb your leaderboard while real community members get ignored. we built the opposite of that." },
+        { match: /token|airdrop/i, reply: "your airdrop budget shouldn't go to sybil armies. i help you identify real humans before the snapshot. mercenaries extract value - your actual community gets recognized." },
+        { match: /docs|knowledge|rag/i, reply: "upload your docs once. i learn them better than your team did. then i answer the same question 1000 times without complaining or quitting. citations included." }
     ],
-    default: "click one of the scenario buttons to see how i actually work. raid review, sybil detection, OG recognition."
+    default: "click a scenario button to see the real thing. or just ask me anything - tokenomics, farming, community building, whatever."
 };
 
 function addMessage(text, isUser, isHtml = false) {

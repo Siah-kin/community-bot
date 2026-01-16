@@ -464,6 +464,56 @@
             margin-top: 8px;
         }
 
+        .mission-desc a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .mission-desc a:hover {
+            text-decoration: underline;
+        }
+
+        .flywheel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .flywheel-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .flywheel-num {
+            width: 24px;
+            height: 24px;
+            background: var(--purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .flywheel-text {
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .flywheel-arrow {
+            color: var(--purple-light);
+            font-size: 20px;
+        }
+
         .mission-footer {
             margin-top: 64px;
             padding-top: 48px;
@@ -901,10 +951,10 @@
         }
 
         .links-grid {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
         }
 
@@ -951,47 +1001,66 @@
             transform: translateX(4px);
         }
 
+        .mission-card {
+            background: var(--purple) !important;
+            border-color: var(--purple) !important;
+            color: white !important;
+        }
+
+        .mission-card h3,
+        .mission-card p {
+            color: white !important;
+        }
+
+        .mission-card .arrow {
+            color: rgba(255,255,255,0.7);
+        }
+
         footer {
-            padding: 48px;
+            padding: 32px 48px;
             background: var(--black);
+            color: var(--gray);
+            font-size: 13px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            gap: 12px;
         }
 
-        .footer-left {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .footer-right {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .footer-sponsor {
+        .footer-main {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .footer-sponsor a {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: rgba(255,255,255,0.8);
+        .footer-main a {
+            color: var(--white);
             text-decoration: none;
-            transition: color 0.2s;
+            font-weight: 500;
         }
 
-        .footer-sponsor a:hover {
-            color: var(--purple);
+        .footer-main a:hover {
+            color: var(--purple-light);
         }
 
-        .footer-sponsor svg {
-            display: block;
+        .footer-sep {
+            color: var(--gray);
+        }
+
+        .footer-legal {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .footer-legal a {
+            color: var(--gray);
+            text-decoration: none;
+        }
+
+        .footer-legal a:hover {
+            color: var(--purple-light);
         }
 
         @media (max-width: 768px) {
@@ -1317,15 +1386,39 @@
 
 <section class="mission-section">
     <div class="mission-container">
-        <p class="mission-label" data-i18n="mission.label">where it goes</p>
-        <h2 class="mission-title" data-i18n="mission.title">this isn't a startup. it's a mission.</h2>
-        <div class="mission-flow">
-            <div class="mission-item"><div class="mission-percent">5%</div><div class="mission-desc" data-i18n="mission.users">back to users</div></div>
-            <div class="mission-item"><div class="mission-percent">95%</div><div class="mission-desc" data-i18n="mission.social">social impact startups</div></div>
-            <div class="mission-item"><div class="mission-percent">0%</div><div class="mission-desc" data-i18n="mission.vcs">to VCs</div></div>
+        <p class="mission-label">decentralised philanthropy</p>
+        <h2 class="mission-title">the flywheel</h2>
+
+        <div class="flywheel">
+            <div class="flywheel-step">
+                <span class="flywheel-num">1</span>
+                <span class="flywheel-text">sponsors fund free tools</span>
+            </div>
+            <span class="flywheel-arrow">→</span>
+            <div class="flywheel-step">
+                <span class="flywheel-num">2</span>
+                <span class="flywheel-text">communities grow</span>
+            </div>
+            <span class="flywheel-arrow">→</span>
+            <div class="flywheel-step">
+                <span class="flywheel-num">3</span>
+                <span class="flywheel-text">OGs get rewarded</span>
+            </div>
+            <span class="flywheel-arrow">→</span>
+            <div class="flywheel-step">
+                <span class="flywheel-num">4</span>
+                <span class="flywheel-text">revenue funds impact</span>
+            </div>
         </div>
+
+        <div class="mission-flow">
+            <div class="mission-item"><div class="mission-percent">5%</div><div class="mission-desc">OG rewards</div></div>
+            <div class="mission-item"><div class="mission-percent">95%</div><div class="mission-desc"><a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></div></div>
+            <div class="mission-item"><div class="mission-percent">0%</div><div class="mission-desc">to VCs</div></div>
+        </div>
+
         <div class="mission-footer">
-            <p data-i18n="mission.footer">Built by the founders of <a href="https://defiants.org" target="_blank">Defiants.org</a>. Open source, not-for-profit. We're not here to make money off communities. We're here to make communities actually work.</p>
+            <p>Piloting a model where crypto finance sustains refugee-led development, not mercenary capital extraction. In development since 2017.</p>
         </div>
     </div>
 </section>
@@ -1333,39 +1426,39 @@
 <section class="links-section">
     <div class="links-grid">
         <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="link-card">
-            <h3 data-i18n="links.source.title">source code</h3>
-            <p data-i18n="links.source.desc">fully open source. fork it, run it, break it, fix it. trust but verify.</p>
+            <h3>source code</h3>
+            <p>fully open source. fork it, run it, break it, fix it. trust but verify.</p>
             <span class="arrow">→</span>
         </a>
-        <a href="https://t.me/ethervistatoken" target="_blank" class="link-card">
-            <h3 data-i18n="links.telegram.title">telegram</h3>
-            <p data-i18n="links.telegram.desc">see bonzi in action. judge for yourself.</p>
+        <a href="https://t.me/etherfun_trenches" target="_blank" class="link-card">
+            <h3>telegram</h3>
+            <p>see bonzi in action. judge for yourself.</p>
             <span class="arrow">→</span>
         </a>
         <a href="https://x.com/ethaboringtoshi" target="_blank" class="link-card">
-            <h3 data-i18n="links.updates.title">updates</h3>
-            <p data-i18n="links.updates.desc">follow the redemption arc in real time.</p>
+            <h3>updates</h3>
+            <p>follow the redemption arc in real time.</p>
+            <span class="arrow">→</span>
+        </a>
+        <a href="https://unidosprojects.org" target="_blank" class="link-card mission-card">
+            <h3>our story is your story</h3>
+            <p>decentralised philanthropy. your growth funds refugee resilience.</p>
             <span class="arrow">→</span>
         </a>
     </div>
 </section>
 
 <footer>
-    <div class="footer-left">open source · mit license · no bananas harmed 🍌</div>
-    <div class="footer-sponsor">
-        <span>sponsored by</span>
-        <a href="https://ethervista.app" target="_blank">
-            <svg width="16" height="16" viewBox="0 0 100 100" style="display:block;">
-                <rect width="100" height="100" fill="#111" rx="8"/>
-                <polygon points="50,12 50,50 22,50" fill="#E25555"/>
-                <polygon points="50,12 78,50 50,50" fill="#55B855"/>
-                <polygon points="22,50 50,88 50,50" fill="#4477CC"/>
-                <polygon points="78,50 50,88 50,50" fill="#CCBB44"/>
-            </svg>
-        </a>
-        <a href="https://x.com/bonzi_vista" target="_blank">@Bonzi_vista</a>
+    <div class="footer-main">
+        <span class="footer-sponsor">sponsored by <a href="https://etherfun.app" target="_blank">Ethervista</a></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-credit">by co-founder <a href="https://defiants.org" target="_blank">Defiants</a></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-support">profits fund <a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></span>
     </div>
-    <div class="footer-right">est. 1999</div>
+    <div class="footer-legal">
+        open source · mit license · <a href="https://bonzi-privacy-policy.onrender.com/" target="_blank">privacy</a>
+    </div>
 </footer>
 
 <script>

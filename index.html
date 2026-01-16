@@ -473,45 +473,76 @@
             text-decoration: underline;
         }
 
-        .flywheel {
+        .flywheel-circle {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto 48px;
+        }
+
+        .flywheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: var(--purple);
+            border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
+            z-index: 2;
         }
 
-        .flywheel-step {
+        .flywheel-icon {
+            font-size: 32px;
+        }
+
+        .flywheel-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .flywheel-item {
+            position: absolute;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 16px 20px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.05);
-            padding: 12px 20px;
-            border-radius: 8px;
+            gap: 12px;
+            white-space: nowrap;
         }
 
+        .flywheel-top { top: 0; left: 50%; transform: translateX(-50%); }
+        .flywheel-right { right: 0; top: 50%; transform: translateY(-50%); }
+        .flywheel-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .flywheel-left { left: 0; top: 50%; transform: translateY(-50%); }
+
         .flywheel-num {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             background: var(--purple);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
         .flywheel-text {
             font-size: 14px;
             color: var(--white);
-        }
-
-        .flywheel-arrow {
-            color: var(--purple-light);
-            font-size: 20px;
+            font-weight: 500;
         }
 
         .mission-footer {
@@ -1045,6 +1076,16 @@
             color: var(--purple-light);
         }
 
+        .sponsor-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sponsor-logo svg {
+            vertical-align: middle;
+        }
+
         .footer-sep {
             color: var(--gray);
         }
@@ -1080,6 +1121,11 @@
             .mission-flow { gap: 32px; }
             .mission-percent { font-size: 36px; }
             footer { flex-direction: column; gap: 16px; text-align: center; }
+            .footer-main { flex-direction: column; gap: 8px; }
+            .footer-sep { display: none; }
+            .flywheel-circle { width: 100%; height: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+            .flywheel-item { position: static; transform: none; }
+            .flywheel-center { position: static; transform: none; margin-bottom: 24px; }
         }
 
         @media (hover: none) {
@@ -1389,23 +1435,24 @@
         <p class="mission-label">decentralised philanthropy</p>
         <h2 class="mission-title">the flywheel</h2>
 
-        <div class="flywheel">
-            <div class="flywheel-step">
+        <div class="flywheel-circle">
+            <div class="flywheel-center">
+                <span class="flywheel-icon">♻️</span>
+                <span class="flywheel-label">cycle</span>
+            </div>
+            <div class="flywheel-item flywheel-top">
                 <span class="flywheel-num">1</span>
                 <span class="flywheel-text">sponsors fund free tools</span>
             </div>
-            <span class="flywheel-arrow">→</span>
-            <div class="flywheel-step">
+            <div class="flywheel-item flywheel-right">
                 <span class="flywheel-num">2</span>
                 <span class="flywheel-text">communities grow</span>
             </div>
-            <span class="flywheel-arrow">→</span>
-            <div class="flywheel-step">
+            <div class="flywheel-item flywheel-bottom">
                 <span class="flywheel-num">3</span>
                 <span class="flywheel-text">OGs get rewarded</span>
             </div>
-            <span class="flywheel-arrow">→</span>
-            <div class="flywheel-step">
+            <div class="flywheel-item flywheel-left">
                 <span class="flywheel-num">4</span>
                 <span class="flywheel-text">revenue funds impact</span>
             </div>
@@ -1450,14 +1497,25 @@
 
 <footer>
     <div class="footer-main">
-        <span class="footer-sponsor">sponsored by <a href="https://etherfun.app" target="_blank">Ethervista</a></span>
+        <span class="footer-sponsor">sponsored by
+            <a href="https://etherfun.app" target="_blank" class="sponsor-logo">
+                <svg width="20" height="20" viewBox="0 0 100 100">
+                    <rect width="100" height="100" fill="#111" rx="8"/>
+                    <polygon points="50,12 50,50 22,50" fill="#E25555"/>
+                    <polygon points="50,12 78,50 50,50" fill="#55B855"/>
+                    <polygon points="22,50 50,88 50,50" fill="#4477CC"/>
+                    <polygon points="78,50 50,88 50,50" fill="#CCBB44"/>
+                </svg>
+                Ethervista
+            </a>
+        </span>
         <span class="footer-sep">·</span>
         <span class="footer-credit">by co-founder <a href="https://defiants.org" target="_blank">Defiants</a></span>
         <span class="footer-sep">·</span>
         <span class="footer-support">profits fund <a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></span>
     </div>
     <div class="footer-legal">
-        open source · mit license · <a href="https://bonzi-privacy-policy.onrender.com/" target="_blank">privacy</a>
+        open source · mit license · <a href="https://bonzi-privacy-policy.onrender.com/" target="_blank">privacy policy</a>
     </div>
 </footer>
 

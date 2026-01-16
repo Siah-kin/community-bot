@@ -22,8 +22,13 @@
     <meta name="twitter:description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors.">
 
     <link rel="icon" href="bonzi-logo.png" type="image/png">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16ber8DW3l3fT2k4EJ0p7J0l8Z8VPHbnW9SqB5c4l3F5MqgSrPR3IwhT2dqMONPOkPDJPn2nrvgMPzLzVvAUlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjEq1P8K5F8dTFY+p0LDnrmKfTfIc8yKWj5UOLDdXqeUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         * {
@@ -1349,7 +1354,7 @@
     <div class="nav-links">
         <a href="#demo" data-i18n="nav.tryit">try it</a>
         <a href="faq.html" data-i18n="nav.faq">faq</a>
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" data-i18n="nav.source">source</a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" data-i18n="nav.source">source</a>
         <div class="lang-switcher">
             <button class="lang-btn active" data-lang="en">EN</button>
             <button class="lang-btn" data-lang="pt">PT</button>
@@ -1731,7 +1736,7 @@
             </div>
             <div class="stat-item">
                 <div class="stat-num purple">95%</div>
-                <div class="stat-label"><a href="https://unidosprojects.org" target="_blank">Unidos Projects</a></div>
+                <div class="stat-label"><a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">Unidos Projects</a></div>
             </div>
             <div class="stat-item">
                 <div class="stat-num red">0%</div>
@@ -1747,22 +1752,22 @@
 
 <section class="links-section">
     <div class="links-grid">
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="link-card">
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" class="link-card">
             <h3>source code</h3>
             <p>fully open source. fork it, run it, break it, fix it. trust but verify.</p>
             <span class="arrow">→</span>
         </a>
-        <a href="https://t.me/etherfun_trenches" target="_blank" class="link-card">
+        <a href="https://t.me/etherfun_trenches" target="_blank" rel="noopener noreferrer" class="link-card">
             <h3>telegram</h3>
             <p>see bonzi in action. judge for yourself.</p>
             <span class="arrow">→</span>
         </a>
-        <a href="https://x.com/ethaboringtoshi" target="_blank" class="link-card">
+        <a href="https://x.com/ethaboringtoshi" target="_blank" rel="noopener noreferrer" class="link-card">
             <h3>updates</h3>
             <p>follow the redemption arc in real time.</p>
             <span class="arrow">→</span>
         </a>
-        <a href="https://unidosprojects.org" target="_blank" class="link-card mission-card">
+        <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" class="link-card mission-card">
             <h3>our story is your story</h3>
             <p>decentralised philanthropy. your growth funds refugee resilience.</p>
             <span class="arrow">→</span>
@@ -1773,7 +1778,7 @@
 <footer>
     <div class="footer-main">
         <span class="footer-sponsor">sponsored by
-            <a href="https://etherfun.app" target="_blank" class="sponsor-logo">
+            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
                 <svg width="20" height="20" viewBox="0 0 100 100">
                     <rect width="100" height="100" fill="#111" rx="8"/>
                     <polygon points="50,12 50,50 22,50" fill="#E25555"/>
@@ -1785,12 +1790,12 @@
             </a>
         </span>
         <span class="footer-sep">·</span>
-        <span class="footer-credit">by co-founder <a href="https://defiants.org" target="_blank" class="sponsor-logo">
+        <span class="footer-credit">by co-founder <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
                 <img src="defiants-logo.png" alt="Defiants" width="20" height="20">
                 Defiants
             </a></span>
         <span class="footer-sep">·</span>
-        <span class="footer-support">profits fund <a href="https://unidosprojects.org" target="_blank" class="sponsor-logo">
+        <span class="footer-support">profits fund <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
                 <img src="unidos-logo.png" alt="Unidos Projects" width="20" height="20">
                 Unidos Projects
             </a></span>
@@ -2211,7 +2216,7 @@ const responses = {
 function addMessage(text, isUser, isHtml = false) {
     const msg = document.createElement('div');
     msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
-    const content = isHtml ? text : text.replace(/</g, '&lt;');
+    const content = isHtml ? text : text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     msg.innerHTML = isUser ? `<div class="chat-bubble">${content}</div><div class="user-avatar"></div>` : `<div class="bot-avatar">B</div><div class="chat-bubble">${content}</div>`;
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;

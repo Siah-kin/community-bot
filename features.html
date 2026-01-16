@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features Deep Dive - Bonzi AI Community Management</title>
+    <meta name="description" content="Why we built each feature the way we did. The engineering decisions behind AI community management that actually works.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/features.html">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .logo img { width: 32px; height: 32px; border-radius: 8px; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--purple); }
+
+        /* Hero */
+        .hero {
+            padding: 160px 40px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero-label {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 600px;
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            padding: 80px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-top: 1px solid var(--gray-light);
+        }
+        .feature-section:nth-child(even) {
+            background: var(--gray-light);
+            max-width: 100%;
+            padding-left: calc((100% - 820px) / 2);
+            padding-right: calc((100% - 820px) / 2);
+        }
+        .feature-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--purple);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+            stroke: white;
+        }
+        .feature-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .feature-title .tagline {
+            color: var(--gray);
+            font-size: 18px;
+        }
+
+        /* Content blocks */
+        .problem-block, .solution-block, .engineering-block {
+            margin-bottom: 40px;
+        }
+        .block-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+        .problem-block .block-label { color: #DC2626; }
+        .solution-block .block-label { color: #16A34A; }
+        .engineering-block .block-label { color: var(--purple); }
+
+        .block-content {
+            font-size: 16px;
+            color: var(--black);
+        }
+        .block-content p { margin-bottom: 16px; }
+        .block-content ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        .block-content li { margin-bottom: 8px; }
+        .block-content strong { color: var(--purple); }
+
+        /* Code/technical blocks */
+        .tech-detail {
+            background: var(--black);
+            color: #E4E4E7;
+            padding: 24px;
+            border-radius: 12px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+        .tech-detail .comment { color: #6B7280; }
+        .tech-detail .highlight { color: #A78BFA; }
+
+        /* Comparison table */
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        .comparison th, .comparison td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .comparison th {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+        .comparison td:first-child { font-weight: 600; }
+        .comparison .bad { color: #DC2626; }
+        .comparison .good { color: #16A34A; }
+
+        /* Flow diagram */
+        .flow-diagram {
+            background: var(--gray-light);
+            padding: 32px;
+            border-radius: 16px;
+            margin: 24px 0;
+            font-family: 'SF Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: var(--purple);
+            color: white;
+        }
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background: white;
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        footer a { color: var(--purple); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .feature-header { flex-direction: column; }
+            .feature-title h2 { font-size: 24px; }
+            nav { padding: 16px 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="bonzi-logo.png" alt="Bonzi">
+            <span>Bonzi</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#ask-earn">Ask & Earn</a>
+            <a href="#sybil">Sybil Detection</a>
+            <a href="#moderation">Auto-Mod</a>
+            <a href="https://github.com/Siah-kin/community-bot">GitHub</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">Engineering Deep Dive</div>
+        <h1>Why we built each feature the way we did.</h1>
+        <p>Every feature solves a specific problem we saw destroying crypto communities. Here's the thinking behind each one.</p>
+    </section>
+
+    <!-- ASK & EARN -->
+    <section class="feature-section" id="ask-earn">
+        <div class="feature-header">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Ask & Earn</h2>
+                <div class="tagline">AI-scored questions. Curiosity beats farming.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p>Traditional point systems reward <strong>quantity over quality</strong>. Users spam "gm" and copy-paste questions to farm points. Real contributors get drowned out by noise.</p>
+                <p>Manual moderation doesn't scale. Moderators burn out reviewing the same low-effort content. Communities become ghost towns of farmers waiting for airdrops.</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <p>AI scores every question on three dimensions:</p>
+                <ul>
+                    <li><strong>Depth</strong> - Does it require thought to answer? Single-word answers = low score.</li>
+                    <li><strong>Novelty</strong> - Has this been asked before? Semantic similarity check against history.</li>
+                    <li><strong>Cooperation</strong> - Does it help others learn? Questions that benefit the community score higher.</li>
+                </ul>
+                <p>Result: 1-10 points per question. Farmers get 1-2 pts for spam. Curious users get 7-10 pts for genuine questions.</p>
+            </div>
+        </div>
+
+        <div class="engineering-block">
+            <div class="block-label">Why We Engineered It This Way</div>
+            <div class="block-content">
+                <p><strong>Semantic similarity, not keyword matching.</strong> Farmers would game keyword rules instantly. By embedding questions and comparing vectors, we detect rephrased duplicates that humans would miss.</p>
+                <p><strong>Cooperation metrics.</strong> We track if a question leads to follow-up discussion. Questions that spark conversation get retroactive score boosts. This incentivizes questions that actually help the community.</p>
+
+                <div class="tech-detail">
+<span class="comment"># Simplified scoring logic</span>
+score = 0
+score += depth_score(question)      <span class="comment"># 0-4 pts</span>
+score += novelty_score(question)    <span class="comment"># 0-3 pts (penalize duplicates)</span>
+score += cooperation_score(thread)  <span class="comment"># 0-3 pts (retroactive)</span>
+
+<span class="comment"># Anti-gaming: score decays if user's questions never get answered</span>
+<span class="comment"># This catches users asking fake "deep" questions to farm</span>
+if user.unanswered_ratio > 0.8:
+    score *= 0.5
+                </div>
+            </div>
+        </div>
+
+        <table class="comparison">
+            <tr>
+                <th>Approach</th>
+                <th>Traditional</th>
+                <th>Bonzi</th>
+            </tr>
+            <tr>
+                <td>Scoring method</td>
+                <td class="bad">1 msg = 1 pt</td>
+                <td class="good">AI-scored 1-10 pts</td>
+            </tr>
+            <tr>
+                <td>Duplicate detection</td>
+                <td class="bad">None</td>
+                <td class="good">Semantic similarity</td>
+            </tr>
+            <tr>
+                <td>Gaming resistance</td>
+                <td class="bad">Easily farmed</td>
+                <td class="good">Cooperation metrics</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- SYBIL DETECTION -->
+    <section class="feature-section" id="sybil">
+        <div class="feature-header">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Sybil Detection</h2>
+                <div class="tagline">Flag farmers before the snapshot.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p>Airdrops get destroyed by sybils. One person runs 50 wallets, farms 50x the allocation, dumps on real users. Projects lose credibility. Real contributors get diluted.</p>
+                <p>Current solutions: manual wallet review (doesn't scale), on-chain analysis (catches some, misses many), trust scores (easily gamed with time).</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <p>Behavioral analysis across multiple dimensions:</p>
+                <ul>
+                    <li><strong>AI Fingerprinting</strong> - Detects bot-generated content patterns. ChatGPT summaries, template responses, unnaturally perfect grammar.</li>
+                    <li><strong>Temporal Clustering</strong> - Accounts that join within seconds, post at same times, exhibit coordinated behavior.</li>
+                    <li><strong>Cross-Tenant Intel</strong> - Patterns seen in one community shared (anonymized) across the network. Farmer caught once = flagged everywhere.</li>
+                    <li><strong>Extractive Behavior</strong> - Accounts that only take (claim rewards) but never give (help others). Cooperation ratio near zero.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="engineering-block">
+            <div class="block-label">Why We Engineered It This Way</div>
+            <div class="block-content">
+                <p><strong>Behavioral over identity.</strong> Wallet addresses are free. New accounts are free. The only thing farmers can't fake is genuine engagement over time. We measure cooperation, not credentials.</p>
+                <p><strong>Cross-tenant sharing.</strong> A farmer might be patient in one community but exposed in another. By sharing behavioral patterns (not personal data), we catch sophisticated actors faster.</p>
+                <p><strong>Pre-snapshot flagging.</strong> Most sybil detection happens after the airdrop, when it's too late. We flag suspicious accounts in real-time so projects can act before the snapshot.</p>
+
+                <div class="flow-diagram">
+User Activity
+    │
+    ▼
+┌─────────────────────────────────────┐
+│  AI Fingerprint Check               │
+│  Is content bot-generated?          │
+└─────────────────────────────────────┘
+    │ Pass
+    ▼
+┌─────────────────────────────────────┐
+│  Temporal Analysis                  │
+│  Coordinated with other accounts?   │
+└─────────────────────────────────────┘
+    │ Pass
+    ▼
+┌─────────────────────────────────────┐
+│  Cooperation Score                  │
+│  Helps others or just extracts?     │
+└─────────────────────────────────────┘
+    │ Pass
+    ▼
+✅ Legitimate User
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTO-MODERATION -->
+    <section class="feature-section" id="moderation">
+        <div class="feature-header">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Auto-Moderation</h2>
+                <div class="tagline">Questions answered. Spam blocked. You're off the hook.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p>Community moderators are <strong>human FAQ machines</strong>. The same questions get asked daily. Mods burn out. Response times suffer. Unanswered questions pile up.</p>
+                <p>When mods go offline, spam floods in. When mods are online, they're answering "wen token" for the 500th time instead of building community.</p>
+                <p><strong>The escalation trap:</strong> Bots say "I don't know, ask a human." Users DM founders. Founders become the bottleneck.</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <p>AI that <strong>answers or dead-ends</strong>. Never escalates for answerable questions.</p>
+                <ul>
+                    <li><strong>Authoritative FAQ</strong> - Known questions get definitive answers, not hedged "I'm not sure" responses.</li>
+                    <li><strong>RAG Knowledge Base</strong> - Upload docs, bot answers from them with citations.</li>
+                    <li><strong>Spam Blocking</strong> - AI fingerprint detection blocks bot spam before it posts.</li>
+                    <li><strong>FUD Rebuttals</strong> - Detects complaint patterns, responds with facts and links.</li>
+                    <li><strong>Silence Detection</strong> - Flags when chat goes dead, surfaces engagement metrics.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="engineering-block">
+            <div class="block-label">Why We Engineered It This Way</div>
+            <div class="block-content">
+                <p><strong>Definitive answers kill question loops.</strong> When a bot says "I don't have info on that," users escalate to humans. When a bot says "No. Here's why: [facts]" - the question dies. No escalation needed.</p>
+                <p><strong>Pattern matching before LLM.</strong> Known questions bypass the LLM entirely. This is faster, cheaper, and more reliable. LLM is fallback for novel questions.</p>
+                <p><strong>No "check docs" cop-outs.</strong> If the answer is in the docs, the bot should give the answer, not redirect. Users don't want to read docs. They want answers.</p>
+
+                <div class="flow-diagram">
+User Question
+    │
+    ▼
+┌─────────────────────────────────────┐
+│  FAQ Pattern Match                  │
+│  Known question? → Definitive answer│
+└─────────────────────────────────────┘
+    │ No match
+    ▼
+┌─────────────────────────────────────┐
+│  RAG Retrieval                      │
+│  In knowledge base? → Cite source   │
+└─────────────────────────────────────┘
+    │ No match
+    ▼
+┌─────────────────────────────────────┐
+│  LLM Generation                     │
+│  Generate with anti-hallucination   │
+└─────────────────────────────────────┘
+    │ Low confidence
+    ▼
+"Not documented. [link to official source]"
+    │
+    ▼
+STOP (no escalation to humans)
+                </div>
+
+                <p><strong>The key insight:</strong> Soft answers ("I'm not sure") create spam. Hard answers ("No, and here's why") end conversations. We optimize for ending conversations correctly, not for appearing helpful while being useless.</p>
+            </div>
+        </div>
+
+        <table class="comparison">
+            <tr>
+                <th>Scenario</th>
+                <th>Traditional Bot</th>
+                <th>Bonzi</th>
+            </tr>
+            <tr>
+                <td>Unknown question</td>
+                <td class="bad">"Ask a moderator"</td>
+                <td class="good">"Not documented. [link]"</td>
+            </tr>
+            <tr>
+                <td>FAQ question</td>
+                <td class="bad">LLM generation (slow, variable)</td>
+                <td class="good">Pattern match (instant, consistent)</td>
+            </tr>
+            <tr>
+                <td>Spam/FUD</td>
+                <td class="bad">Manual deletion</td>
+                <td class="good">Auto-blocked + rebutted</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- RAID VERIFICATION -->
+    <section class="feature-section" id="raid">
+        <div class="feature-header">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Raid & Earn</h2>
+                <div class="tagline">Auto-verified engagement. No manual review hell.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p>Raid campaigns are chaos. Users submit screenshots of their tweets. Mods manually verify each one: Does the tweet exist? Is it original? Is the account real?</p>
+                <p>Farmers submit fake screenshots, deleted tweets, copy-pasted content. Mods spend hours on verification instead of strategy.</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <ul>
+                    <li><strong>Tweet Existence Check</strong> - API verification that the tweet URL actually exists and hasn't been deleted.</li>
+                    <li><strong>Originality Analysis</strong> - Compare tweet content against known templates and other submissions. Flag copy-paste.</li>
+                    <li><strong>Account Quality</strong> - Check account age, follower count, engagement patterns. Bot accounts get flagged.</li>
+                    <li><strong>Automatic Scoring</strong> - Good raids get approved instantly. Suspicious ones queued for review.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="engineering-block">
+            <div class="block-label">Why We Engineered It This Way</div>
+            <div class="block-content">
+                <p><strong>Verify the source, not the screenshot.</strong> Screenshots can be faked. Tweet URLs can't. We always verify against the actual tweet.</p>
+                <p><strong>Originality over quantity.</strong> 100 copy-paste raids are worth less than 10 original ones. We score for creativity and genuine engagement.</p>
+                <p><strong>Tiered verification.</strong> Trusted users get fast-tracked. New users get extra scrutiny. This balances speed with security.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- THANKS SYSTEM -->
+    <section class="feature-section" id="thanks">
+        <div class="feature-header">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Thanks System</h2>
+                <div class="tagline">Peer recognition that counts.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p>Helpful community members go unrecognized. Someone answers questions all day, gets nothing. Someone posts one meme, goes viral. Recognition is random.</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <p>React to any helpful post with a designated emoji. The author gets +1 point. Simple, visible, trackable.</p>
+                <ul>
+                    <li><strong>Peer-to-peer</strong> - Recognition comes from community, not mods.</li>
+                    <li><strong>On-chain ready</strong> - Points tracked in database, exportable for airdrops.</li>
+                    <li><strong>Anti-gaming</strong> - Can't thank yourself. Rate-limited per user. Patterns detected.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to automate your community?</h2>
+        <p>Self-host free, or let us run it for you.</p>
+        <a href="index.html#demo" class="cta-btn">Try the Demo</a>
+    </section>
+
+    <footer>
+        <p>Built by <a href="https://defiants.org">Defiants.org</a>. Open source. Not for profit.</p>
+        <p style="margin-top: 8px;"><a href="index.html">Home</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="https://github.com/Siah-kin/community-bot">GitHub</a></p>
+    </footer>
+</body>
+</html>

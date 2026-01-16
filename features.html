@@ -262,6 +262,7 @@
         </a>
         <div class="nav-links">
             <a href="index.html">Home</a>
+            <a href="#adaptive-agents">Adaptive Agents</a>
             <a href="#ask-earn">Ask & Earn</a>
             <a href="#sybil">Sybil Detection</a>
             <a href="#moderation">Auto-Mod</a>
@@ -273,6 +274,108 @@
         <div class="hero-label">Engineering Deep Dive</div>
         <h1>Why we built each feature the way we did.</h1>
         <p>Every feature solves a specific problem we saw destroying crypto communities. Here's the thinking behind each one.</p>
+    </section>
+
+    <!-- ADAPTIVE AGENTS - CORE PHILOSOPHY -->
+    <section class="feature-section" id="adaptive-agents" style="background: linear-gradient(135deg, #7C3AED08 0%, #7C3AED15 100%); border-top: 3px solid var(--purple);">
+        <div class="feature-header">
+            <div class="feature-icon" style="background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <div class="feature-title">
+                <h2>Adaptive Agents</h2>
+                <div class="tagline">Not static bots. Learning systems that evolve with your community.</div>
+            </div>
+        </div>
+
+        <div class="problem-block">
+            <div class="block-label">The Problem</div>
+            <div class="block-content">
+                <p><strong>Static bots are dead-ends.</strong> You upload docs once. Bot answers from those docs forever. New products launch? Bot doesn't know. FAQ changes? Bot gives stale answers. Users ask questions the bot can't answer? They escalate to humans.</p>
+                <p>The result: founders become human FAQ machines. Every knowledge gap funnels to the same 2-3 people. They become bottlenecks. They burn out.</p>
+            </div>
+        </div>
+
+        <div class="solution-block">
+            <div class="block-label">Our Solution</div>
+            <div class="block-content">
+                <p><strong>Adaptive agents that curate communication.</strong> The system learns from every interaction:</p>
+                <ul>
+                    <li><strong>Gap Detection</strong> - When the bot can't answer, that gap is logged. Admins see what users are asking that isn't documented.</li>
+                    <li><strong>Real-time Updates</strong> - Admins add knowledge. The very next user asking that question gets the answer. No redeploy needed.</li>
+                    <li><strong>Pattern Recognition</strong> - Same question asked 10 times? System surfaces it for FAQ promotion. One-off edge cases stay in RAG.</li>
+                    <li><strong>Closed-Loop Learning</strong> - User feedback, admin corrections, and engagement signals all feed back into the system.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="engineering-block">
+            <div class="block-label">Why This Changes Everything</div>
+            <div class="block-content">
+                <p><strong>The feedback loop that eliminates bottlenecks:</strong></p>
+
+                <div class="flow-diagram">
+User asks question
+    │
+    ▼
+┌─────────────────────────────────────┐
+│  Bot answers OR logs gap            │
+│  Either way: human not needed       │
+└─────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────┐
+│  Gap Dashboard                      │
+│  Admin sees: "12 users asked about  │
+│  OREBIT fees, no answer exists"     │
+└─────────────────────────────────────┘
+    │
+    ▼
+┌─────────────────────────────────────┐
+│  Admin adds knowledge (30 seconds)  │
+│  "OREBIT fees go to OREBIT stakers" │
+└─────────────────────────────────────┘
+    │
+    ▼
+✅ Next user gets instant answer
+   No code change. No redeploy.
+                </div>
+
+                <p><strong>Static vs Adaptive:</strong></p>
+
+                <table class="comparison">
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Static Bot</th>
+                        <th>Adaptive Agent</th>
+                    </tr>
+                    <tr>
+                        <td>Knowledge updates</td>
+                        <td class="bad">Redeploy required</td>
+                        <td class="good">Real-time, no code</td>
+                    </tr>
+                    <tr>
+                        <td>Unknown questions</td>
+                        <td class="bad">Escalate to human</td>
+                        <td class="good">Log gap, dead-end cleanly</td>
+                    </tr>
+                    <tr>
+                        <td>Learning</td>
+                        <td class="bad">Never improves</td>
+                        <td class="good">Every interaction teaches</td>
+                    </tr>
+                    <tr>
+                        <td>Founder load</td>
+                        <td class="bad">Constant FAQ duty</td>
+                        <td class="good">Add knowledge once, done</td>
+                    </tr>
+                </table>
+
+                <p><strong>Real example from today:</strong> Users asked about Foundry token fee mechanics. Bot didn't know. Gap logged. Admin added the answer. Now anyone asking "Do OREBIT fees go to VISTA stakers?" gets: <em>"No. Each Foundry token's fees go only to that token's stakers."</em> Question answered. No human escalation. Loop closed.</p>
+
+                <p>This is the core philosophy behind every feature below. We don't build static tools. We build systems that get smarter as your community uses them.</p>
+            </div>
+        </div>
     </section>
 
     <!-- ASK & EARN -->

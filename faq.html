@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Bonzi AI Community Management</title>
+    <meta name="description" content="Frequently asked questions about Bonzi. Built for crypto communities by builders who survived 3 cycles.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/faq.html">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .logo img { width: 32px; height: 32px; border-radius: 8px; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--purple); }
+
+        /* Hero */
+        .hero {
+            padding: 160px 40px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero-label {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 600px;
+        }
+
+        /* FAQ Sections */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px 120px;
+        }
+
+        .faq-category {
+            margin-bottom: 64px;
+        }
+
+        .category-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--purple);
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--purple);
+        }
+
+        .faq-item {
+            margin-bottom: 40px;
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--black);
+        }
+
+        .faq-answer {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .faq-answer strong {
+            color: var(--black);
+        }
+
+        .faq-answer em {
+            color: var(--purple);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .highlight-box {
+            background: var(--gray-light);
+            border-left: 3px solid var(--purple);
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-size: 15px;
+        }
+
+        .highlight-box.quote {
+            background: var(--black);
+            color: var(--white);
+            border-left-color: var(--purple-light);
+        }
+
+        .comparison-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .comparison-mini div {
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .comparison-mini .generic {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .comparison-mini .bonzi {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .stat-highlight {
+            display: inline-block;
+            background: var(--purple);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .hero { padding: 120px 24px 60px; }
+            .hero h1 { font-size: 32px; }
+            .faq-container { padding: 0 24px 80px; }
+            .comparison-mini { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="bonzi-logo.png" alt="Bonzi">
+            <span>bonzi</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">home</a>
+            <a href="features.html">features</a>
+            <a href="faq.html" style="color: var(--purple);">faq</a>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">Straight Answers</div>
+        <h1>FAQ</h1>
+        <p>Questions from CT grinders and small KOLs who've seen too many "AI" tools that are just glorified prompts.</p>
+    </section>
+
+    <div class="faq-container">
+
+        <!-- BASICS -->
+        <div class="faq-category">
+            <h2 class="category-title">The Basics</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What is Bonzi?</h3>
+                <p class="faq-answer">
+                    AI bot for Telegram/Discord trained on <strong>15,613 real crypto conversations</strong>. Manages communities, answers questions, spots farmers, rewards OGs. Lives in your chat—no dashboard needed.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How is this different from ChatGPT or Claude?</h3>
+                <p class="faq-answer">
+                    Generic LLMs read about crypto. Bonzi <em>survived 3 cycles</em>.
+                </p>
+                <div class="comparison-mini">
+                    <div class="generic">
+                        <strong>Generic AI:</strong><br>
+                        "Always DYOR before investing"
+                    </div>
+                    <div class="bonzi">
+                        <strong>Bonzi:</strong><br>
+                        "Chart's weak—whale wallet moved 40% to CEX, same pattern as [specific example]. Here's why that matters..."
+                    </div>
+                </div>
+                <p class="faq-answer">
+                    We clone <em>judgment</em>, not just information. The corpus is 9 years of trading, DeFi mechanics, macro analysis, and investor psychology—hand-curated, not scraped.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What about Claude Code hype?</h3>
+                <p class="faq-answer">
+                    Different category entirely. <strong>Claude Code = general coding agent</strong>. Bonzi = crypto expertise clone.
+                </p>
+                <div class="highlight-box">
+                    Claude Code might scaffold a DeFi app. Bonzi tells you if that app's tokenomics are a trap.
+                </div>
+                <p class="faq-answer">
+                    CT calls general AI tools "bubble froth" for domain depth. We're not competitors—we're the <em>specialized fork</em> for crypto communities.
+                </p>
+            </div>
+        </div>
+
+        <!-- TRUST -->
+        <div class="faq-category">
+            <h2 class="category-title">Trust & Credibility</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Why should I trust another AI tool?</h3>
+                <p class="faq-answer">
+                    <strong>Verifiable lineage:</strong>
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li><span class="stat-highlight">600+ days</span> of on-chain reward distribution</li>
+                    <li>Git commits through the bear market (not just bull hype)</li>
+                    <li>Real partnerships: Ethervista, Defiants (relationships, not announcements)</li>
+                    <li>Open source: audit the code yourself</li>
+                </ul>
+                <div class="highlight-box quote">
+                    "Integrity beats all traits on long timelines. Reputation is hard to build, easy to lose."<br>
+                    <small style="color: var(--gray);">— CT sentiment on builder trust</small>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How do you prove you're better than generic AI?</h3>
+                <p class="faq-answer">
+                    <strong>"Point at the mistake" demos.</strong> Generic AI hallucinates DeFi yields and misreads whale patterns. Bonzi's corpus catches what they miss.
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    The validation method that works in crypto: side-by-side comparisons where generics fail and specialized clones succeed. Not benchmarks—<em>real calls</em>.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Do OGs actually respect "lineage" as a trust signal?</h3>
+                <p class="faq-answer">
+                    Yes. In a space where <em>95% of founders are seen as PVP</em> (player-vs-player, self-serving), bear market survival is proof of integrity.
+                </p>
+                <div class="highlight-box">
+                    OGs bet on builders who "wrote the spec, not chased the meta." Organic growth over hype builds trust. Consistency and genuine interaction trump attention farming.
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNICAL -->
+        <div class="faq-category">
+            <h2 class="category-title">Technical</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Is this just a ChatGPT wrapper?</h3>
+                <p class="faq-answer">
+                    No. The moat isn't the model—it's the <em>corpus</em>:
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li>15,613 messages of real crypto conversations</li>
+                    <li>Decision-making style captured (not just facts)</li>
+                    <li>Fine-tuned for DeFi mechanics, macro analysis, investor psychology</li>
+                    <li>Few-shot examples of judgment calls, not generic prompts</li>
+                </ul>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Is it open source? Doesn't that kill your business?</h3>
+                <p class="faq-answer">
+                    <strong>Code is open. Moat is not.</strong>
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Projects like LangChain and Bittensor prove this works. They open-source frameworks while gating:
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li>Training data (our 15k message corpus)</li>
+                    <li>Trust network and relationships</li>
+                    <li>Lineage proving consistency</li>
+                    <li>The "calibrated intuition" generics can't replicate</li>
+                </ul>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Open source means peer review (no spyware like old Bonzi). <em>Provenance matters more than secrecy in Web3.</em>
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What's the tech stack?</h3>
+                <p class="faq-answer">
+                    Hybrid approach: <strong>Fine-tuning + RAG</strong>. Fine-tuning embeds judgment permanently (10-20% accuracy boost over base models). RAG adds real-time on-chain data. Prompt engineering alone isn't robust enough for crypto nuance.
+                </p>
+            </div>
+        </div>
+
+        <!-- FOR SMALL KOLS -->
+        <div class="faq-category">
+            <h2 class="category-title">For Small KOLs</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How does this help me with <50k followers?</h3>
+                <p class="faq-answer">
+                    <strong>Frees you from 24/7 moderation</strong> so you can focus on alpha:
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li>Auto-verifies raids (no manual checking)</li>
+                    <li>Spots sybils farming your community</li>
+                    <li>Answers noob questions endlessly</li>
+                    <li>Rewards your real OGs, not grinders</li>
+                </ul>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    It's like having a co-founder who doesn't sleep. No more drowning in raids or FUD.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Can I clone my own expertise?</h3>
+                <p class="faq-answer">
+                    Yes. <strong>"Brain as a Service"</strong> model:
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li>Free tier: 100 interactions</li>
+                    <li>Paid tiers via Stripe or Base chain</li>
+                    <li>Your convos → your judgment → monetized</li>
+                </ul>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Market size: <span class="stat-highlight">$680M in 2025</span> → $4.3B by 2034. The niche: "talk to someone who's survived 3 cycles, not an AI that scraped them."
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What's the "flywheel" model?</h3>
+                <p class="faq-answer">
+                    <strong>Attention → Trust → Generosity → More Attention</strong>
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Give free value first. Build trust in CT. Then monetize relationships—not attention. This is how Fetch.ai and Virtuals Protocol grew: free demos build trust, leading to paid staking/subscriptions.
+                </p>
+            </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="faq-category">
+            <h2 class="category-title">Pricing & Business</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How much does it cost?</h3>
+                <p class="faq-answer">
+                    <strong>Free: $0 forever</strong> (self-hosted, full features)<br>
+                    <strong>Social Impact: $60/year</strong> (nonprofits, requires proof)
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    No VC money. No ads. No data selling. Dual billing rails: Stripe for fiat, Base chain for crypto-native.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Where does the money go?</h3>
+                <p class="faq-answer">
+                    <strong>95%</strong> to social impact (Unidos Projects, refugee resilience)<br>
+                    <strong>5%</strong> real yield to $BONZI stakers
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Decentralized philanthropy. Community growth funds refugee-led initiatives. Not extractive—<em>generative</em>.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Who are your competitors?</h3>
+                <p class="faq-answer">
+                    <strong>Not ChatGPT/Claude</strong>—they're general tools.<br>
+                    <strong>Not Galxe/Zealy</strong>—they're dashboards, we live in chat.
+                </p>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Closest: Fetch.ai (autonomous trading), Bittensor (subnet specialization), Virtuals (tokenized agents). But they're broad platforms. We're <em>niche sovereign</em>: community management + expertise cloning for crypto specifically.
+                </p>
+            </div>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="faq-category">
+            <h2 class="category-title">Security & Privacy</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Is this like the old Bonzi (spyware)?</h3>
+                <p class="faq-answer">
+                    No. That's exactly why we're <strong>open source</strong>—audit everything. The 1999 Bonzi got bundled with spyware by third parties. We rebuilt it clean.
+                </p>
+                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
+                    <li>No tracking</li>
+                    <li>No ads</li>
+                    <li>Self-hosted option = you control everything</li>
+                    <li>On-chain transparency for rewards</li>
+                </ul>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What data do you collect?</h3>
+                <p class="faq-answer">
+                    Only what's needed for features: messages for scoring, wallet for claims. See <a href="privacy.html" style="color: var(--purple);">privacy policy</a>. Self-host = you control everything. Data encrypted, never sold.
+                </p>
+            </div>
+        </div>
+
+        <!-- GETTING STARTED -->
+        <div class="faq-category">
+            <h2 class="category-title">Getting Started</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How do I start?</h3>
+                <p class="faq-answer">
+                    <strong>Option 1:</strong> Self-host from <a href="https://github.com/Siah-kin/community-bot" target="_blank" style="color: var(--purple);">GitHub</a> (free forever)<br>
+                    <strong>Option 2:</strong> Try the <a href="index.html#demo" style="color: var(--purple);">demo</a> on the main page<br>
+                    <strong>Option 3:</strong> DM <a href="https://x.com/bonzi_vista" target="_blank" style="color: var(--purple);">@bonzi_vista</a> for setup help
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What platforms are supported?</h3>
+                <p class="faq-answer">
+                    <strong>Telegram</strong> (native, full features)<br>
+                    <strong>Discord</strong> (coming soon)<br>
+                    <strong>Languages:</strong> EN, PT, 中文, TR, RU, FR
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Built by builders who survived 3 cycles.</p>
+        <p style="margin-top: 16px; color: var(--gray);">
+            <a href="index.html">Home</a> ·
+            <a href="features.html">Features</a> ·
+            <a href="privacy.html">Privacy</a> ·
+            <a href="https://github.com/Siah-kin/community-bot">GitHub</a> ·
+            <a href="https://x.com/bonzi_vista">@bonzi_vista</a>
+        </p>
+    </footer>
+</body>
+</html>

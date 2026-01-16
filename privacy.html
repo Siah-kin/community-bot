@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Bonzi</title>
+    <meta name="description" content="Bonzi Privacy Policy - How we collect, use, and protect your data.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/privacy.html">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--purple-light);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .last-updated {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--purple-light);
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 16px;
+        }
+
+        ul {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        li {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: rgba(124,58,237,0.1);
+            border: 1px solid rgba(124,58,237,0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box h3 {
+            margin-top: 0;
+            color: var(--purple-light);
+        }
+
+        .footer {
+            margin-top: 80px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Bonzi</a>
+
+        <h1>Privacy Policy</h1>
+        <p class="last-updated">Last updated: January 3, 2026</p>
+
+        <p>Bonzi is a Telegram AI bot that helps communities manage engagement, verify contributions, and reward real participants. This policy explains how we collect, use, and protect your data.</p>
+
+        <div class="highlight-box">
+            <h3>The short version</h3>
+            <p>We collect what we need to make the bot work. We don't sell your data. We don't track you across the web. Wallet address only - no emails, no names, no payment details stored.</p>
+        </div>
+
+        <h2>What We Collect</h2>
+
+        <h3>Data you provide directly</h3>
+        <ul>
+            <li>Messages and questions sent to the bot</li>
+            <li>Ratings and feedback on responses</li>
+            <li>Telegram user ID and chat ID</li>
+            <li>Commands you execute</li>
+            <li>Wallet addresses (for claims)</li>
+        </ul>
+
+        <h3>Data collected automatically</h3>
+        <ul>
+            <li>Usage frequency and session patterns</li>
+            <li>Quality scores and behavioral signals</li>
+            <li>Technical metadata and timestamps</li>
+        </ul>
+
+        <h3>What we DON'T collect</h3>
+        <ul>
+            <li>Personal names (unless you share them)</li>
+            <li>Email addresses</li>
+            <li>Location data</li>
+            <li>Contacts or phone numbers</li>
+            <li>Payment card details</li>
+        </ul>
+
+        <h2>How We Use Your Data</h2>
+        <p>We use collected information to:</p>
+        <ul>
+            <li>Answer your questions and process commands</li>
+            <li>Improve response quality over time</li>
+            <li>Detect sybil attacks and abuse patterns</li>
+            <li>Calculate contribution scores fairly</li>
+            <li>Process ETH claims for verified contributors</li>
+        </ul>
+
+        <h2>AI Processing</h2>
+        <p>Messages are processed through AI providers (OpenAI GPT, Anthropic Claude) to generate responses. We configure these services to prevent your data from being used for model training where possible.</p>
+        <p>Our quality improvement loop uses anonymized feedback patterns - not your specific messages - to identify gaming behavior and improve fairness.</p>
+
+        <h2>Storage & Security</h2>
+        <ul>
+            <li><strong>Database:</strong> PostgreSQL on Render.com (US region)</li>
+            <li><strong>Caching:</strong> Redis for performance</li>
+            <li><strong>Backups:</strong> Cloudflare R2</li>
+            <li><strong>Security:</strong> Encryption at rest and in transit</li>
+        </ul>
+
+        <h3>Retention periods</h3>
+        <ul>
+            <li>Messages: Kept indefinitely for context</li>
+            <li>Logs: Deleted after 30 days</li>
+            <li>Cached responses: 7 days</li>
+        </ul>
+
+        <h2>Third Parties</h2>
+        <p>We share data only with:</p>
+        <ul>
+            <li>AI providers (for message processing)</li>
+            <li>Hosting platforms (for infrastructure)</li>
+        </ul>
+        <p><strong>We never sell data to advertisers or data brokers.</strong></p>
+
+        <h2>Your Rights</h2>
+        <p>You can request:</p>
+        <ul>
+            <li><strong>Access:</strong> Get a copy of your data</li>
+            <li><strong>Deletion:</strong> Remove your data (processed within 30 days)</li>
+            <li><strong>Correction:</strong> Fix inaccurate information</li>
+        </ul>
+        <p>Contact us via Telegram at <a href="https://t.me/ethervistatoken" style="color: var(--purple-light);">@ethervistatoken</a> for any requests.</p>
+
+        <h2>Compliance</h2>
+        <p>This policy complies with:</p>
+        <ul>
+            <li>GDPR (European Union)</li>
+            <li>CCPA (California)</li>
+            <li>Telegram's Third-Party Bot Privacy Policy requirements</li>
+        </ul>
+
+        <h2>Changes</h2>
+        <p>We may update this policy. Significant changes will be announced in our Telegram community. Continued use after changes means you accept the updated policy.</p>
+
+        <div class="footer">
+            <p><a href="index.html">bonzi</a> · open source · <a href="https://github.com/Siah-kin/community-bot">mit license</a></p>
+        </div>
+    </div>
+</body>
+</html>

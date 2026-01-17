@@ -441,10 +441,36 @@
             text-decoration: underline;
         }
 
+        /* Language switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 6px;
+            margin-left: 24px;
+        }
+
+        .lang-btn {
+            padding: 4px 8px;
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             nav { padding: 16px 24px; }
             .nav-links { display: none; }
+            .lang-switcher { margin-left: auto; }
             .manifesto-hero { padding: 120px 24px 40px; }
             .manifesto-hero h1 { font-size: 36px; }
             .slap-section { padding: 60px 24px; }
@@ -467,18 +493,26 @@
             <span>bonzi</span>
         </a>
         <div class="nav-links">
-            <a href="index.html">home</a>
-            <a href="features.html">features</a>
-            <a href="faq.html" style="color: var(--purple);">manifesto</a>
-            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+            <a href="index.html" data-i18n="nav.home">home</a>
+            <a href="features.html" data-i18n="nav.features">features</a>
+            <a href="faq.html" style="color: var(--purple);" data-i18n="nav.manifesto">manifesto</a>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank" data-i18n="nav.source">source</a>
+        </div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="tr">TR</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
         </div>
     </nav>
 
     <!-- MANIFESTO HERO -->
     <section class="manifesto-hero">
-        <span class="warning-label">Not for the Faint of Heart</span>
-        <h1>The Manifesto</h1>
-        <p class="manifesto-intro">
+        <span class="warning-label" data-i18n="hero.warning">Not for the Faint of Heart</span>
+        <h1 data-i18n="hero.title">The Manifesto</h1>
+        <p class="manifesto-intro" data-i18n="hero.intro">
             If you're an anti-AI person, hear me out. If you're a 2-year "expert" who calls memes a fad while you were limping with celebrity tokens pretending to be a philanthropist - <strong>this is your wake-up call</strong>.
             <br><br>
             The OGs went through the most sour piss on their necks. We watched the footprint of printed debt in fiat AND the % losses by sheer pop size of participants in crypto. We're not here to sugar coat anything. We're here to build something that isn't a ponzi.
@@ -488,8 +522,8 @@
     <!-- THE SLAP -->
     <section class="slap-section">
         <div class="slap-content">
-            <h2>The Receipts</h2>
-            <p class="slap-text">
+            <h2 data-i18n="slap.title">The Receipts</h2>
+            <p class="slap-text" data-i18n="slap.text">
                 You got comfortable. While you were chasing <em>the next 100x</em>, the degens saw it clearly: the sugar-coating evolved from transvestites to realdolls - they got you by the balls, quite literally. The influencers, the celebrities, the "thought leaders" - <strong>they farmed you</strong>.
                 <br><br>
                 MrBeast allegedly <em>dumped tokens on his followers</em>. Andrew Tate's DADDY token had <span class="stat-callout">30% insider holdings</span> - $45 million before you even clicked buy. Drake, Metallica, Sydney Sweeney's accounts got hijacked to pump and dump - <span class="stat-callout">$10-13M losses</span> each time.
@@ -500,22 +534,22 @@
             <div class="carnage-stats">
                 <div class="carnage-stat">
                     <span class="number">11.6M</span>
-                    <span class="label">Projects Failed in 2025</span>
+                    <span class="label" data-i18n="stats.projects">Projects Failed in 2025</span>
                     <span class="source">CryptoNews</span>
                 </div>
                 <div class="carnage-stat">
                     <span class="number">86%</span>
-                    <span class="label">Were Meme Coins</span>
+                    <span class="label" data-i18n="stats.memecoins">Were Meme Coins</span>
                     <span class="source">CoinGecko Data</span>
                 </div>
                 <div class="carnage-stat">
                     <span class="number">$103B</span>
-                    <span class="label">Meme Cap Wiped</span>
+                    <span class="label" data-i18n="stats.wiped">Meme Cap Wiped</span>
                     <span class="source">$150.6B to $47.2B</span>
                 </div>
                 <div class="carnage-stat">
                     <span class="number">62%</span>
-                    <span class="label">of CT Lost to Rugs</span>
+                    <span class="label" data-i18n="stats.rugs">of CT Lost to Rugs</span>
                     <span class="source">Kook Capital Satire</span>
                 </div>
             </div>
@@ -527,7 +561,7 @@
 
         <!-- THE REAL PROBLEMS -->
         <div class="faq-category">
-            <h2 class="category-title">The Real Problems (Let's Not Pretend)</h2>
+            <h2 class="category-title" data-i18n="cat.problems">The Real Problems (Let's Not Pretend)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">What's the main issue with social media?</h3>
@@ -572,7 +606,7 @@
 
         <!-- CLAUDE CODE DIFFERENTIATION -->
         <div class="faq-category">
-            <h2 class="category-title">What About Claude Code? (The AI Hype Check)</h2>
+            <h2 class="category-title" data-i18n="cat.aihype">What About Claude Code? (The AI Hype Check)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">Isn't this just another ChatGPT/Claude wrapper?</h3>
@@ -636,7 +670,7 @@
 
         <!-- MARKET VALIDATION -->
         <div class="faq-category">
-            <h2 class="category-title">Market Validation (The Numbers)</h2>
+            <h2 class="category-title" data-i18n="cat.market">Market Validation (The Numbers)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">What's the market size for "Brain as a Service"?</h3>
@@ -712,15 +746,15 @@
         </div>
 
         <div class="manifesto-quote">
-            <blockquote>
+            <blockquote data-i18n="quote.integrity">
                 "Integrity beats all traits on long timelines. Reputation is hard to build, easy to lose."
             </blockquote>
-            <cite> -  The only truth that survived 3 cycles</cite>
+            <cite data-i18n="quote.cite"> -  The only truth that survived 3 cycles</cite>
         </div>
 
         <!-- FOR SMALL KOLS -->
         <div class="faq-category">
-            <h2 class="category-title">For Small KOLs (Under 50k Followers)</h2>
+            <h2 class="category-title" data-i18n="cat.kols">For Small KOLs (Under 50k Followers)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">What is Bonzi, and why should a small KOL like me care?</h3>
@@ -769,7 +803,7 @@
 
         <!-- TRUST & CREDIBILITY -->
         <div class="faq-category">
-            <h2 class="category-title">For the Skeptics (Good, You Should Be)</h2>
+            <h2 class="category-title" data-i18n="cat.skeptics">For the Skeptics (Good, You Should Be)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">How defensible is "lineage" as a trust signal?</h3>
@@ -855,7 +889,7 @@
 
         <!-- SYSTEMS -->
         <div class="faq-category">
-            <h2 class="category-title">Addressable & Accountable Systems</h2>
+            <h2 class="category-title" data-i18n="cat.systems">Addressable & Accountable Systems</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">How do you prevent becoming another ponzi?</h3>
@@ -948,7 +982,7 @@
 
         <!-- GETTING STARTED -->
         <div class="faq-category">
-            <h2 class="category-title">Ready to Build (Not Just Talk)</h2>
+            <h2 class="category-title" data-i18n="cat.ready">Ready to Build (Not Just Talk)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">How do I start?</h3>
@@ -986,7 +1020,7 @@
 
         <!-- FINAL WORD -->
         <div class="faq-category">
-            <h2 class="category-title">The Bottom Line</h2>
+            <h2 class="category-title" data-i18n="cat.bottomline">The Bottom Line</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">What's the actual vision here?</h3>
@@ -1013,12 +1047,12 @@
     </div>
 
     <footer>
-        <p style="font-size: 18px; margin-bottom: 8px;">Built by builders who survived 3 cycles.</p>
-        <p style="color: var(--gray); margin-bottom: 24px;">No VC money. No promises. Just code and receipts.</p>
+        <p style="font-size: 18px; margin-bottom: 8px;" data-i18n="footer.built">Built by builders who survived 3 cycles.</p>
+        <p style="color: var(--gray); margin-bottom: 24px;" data-i18n="footer.novc">No VC money. No promises. Just code and receipts.</p>
         <p style="color: var(--gray);">
-            <a href="index.html">Home</a> ·
-            <a href="features.html">Features</a> ·
-            <a href="privacy.html">Privacy</a> ·
+            <a href="index.html" data-i18n="footer.home">Home</a> ·
+            <a href="features.html" data-i18n="footer.features">Features</a> ·
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy</a> ·
             <a href="https://github.com/Siah-kin/community-bot">GitHub</a> ·
             <a href="https://x.com/bonzi_vista">@bonzi_vista</a>
         </p>
@@ -1041,7 +1075,135 @@
     </style>
 
     <script>
-        // Resume Moby from homepage
+        // =====================
+        // i18n TRANSLATIONS
+        // =====================
+        const translations = {
+            en: {
+                "nav.home": "home", "nav.features": "features", "nav.manifesto": "manifesto", "nav.source": "source",
+                "hero.warning": "Not for the Faint of Heart", "hero.title": "The Manifesto",
+                "hero.intro": "If you're an anti-AI person, hear me out. If you're a 2-year \"expert\" who calls memes a fad while you were limping with celebrity tokens pretending to be a philanthropist - <strong>this is your wake-up call</strong>.<br><br>The OGs went through the most sour piss on their necks. We watched the footprint of printed debt in fiat AND the % losses by sheer pop size of participants in crypto. We're not here to sugar coat anything. We're here to build something that isn't a ponzi.",
+                "slap.title": "The Receipts",
+                "slap.text": "You got comfortable. While you were chasing <em>the next 100x</em>, the degens saw it clearly: the sugar-coating evolved from transvestites to realdolls - they got you by the balls, quite literally. The influencers, the celebrities, the \"thought leaders\" - <strong>they farmed you</strong>.<br><br>MrBeast allegedly <em>dumped tokens on his followers</em>. Andrew Tate's DADDY token had <span class=\"stat-callout\">30% insider holdings</span> - $45 million before you even clicked buy. Drake, Metallica, Sydney Sweeney's accounts got hijacked to pump and dump - <span class=\"stat-callout\">$10-13M losses</span> each time.<br><br>The sentiment on CT? <strong>\"Poisonous.\"</strong> Fear & Greed Index in fear territory for over 30% of 2025. Everyone's exhausted from rug pulls, Pump.fun spam, and the narrative shift from \"memecoin supercycle\" to \"memecoin winter\" <em>in a matter of weeks</em>.",
+                "stats.projects": "Projects Failed in 2025", "stats.memecoins": "Were Meme Coins", "stats.wiped": "Meme Cap Wiped", "stats.rugs": "of CT Lost to Rugs",
+                "cat.problems": "The Real Problems (Let's Not Pretend)", "cat.aihype": "What About Claude Code? (The AI Hype Check)",
+                "cat.market": "Market Validation (The Numbers)", "cat.kols": "For Small KOLs (Under 50k Followers)",
+                "cat.skeptics": "For the Skeptics (Good, You Should Be)", "cat.systems": "Addressable & Accountable Systems",
+                "cat.ready": "Ready to Build (Not Just Talk)", "cat.bottomline": "The Bottom Line",
+                "quote.integrity": "\"Integrity beats all traits on long timelines. Reputation is hard to build, easy to lose.\"",
+                "quote.cite": " -  The only truth that survived 3 cycles",
+                "footer.built": "Built by builders who survived 3 cycles.", "footer.novc": "No VC money. No promises. Just code and receipts.",
+                "footer.home": "Home", "footer.features": "Features", "footer.privacy": "Privacy"
+            },
+            pt: {
+                "nav.home": "inicio", "nav.features": "recursos", "nav.manifesto": "manifesto", "nav.source": "codigo",
+                "hero.warning": "Nao e para os Fracos", "hero.title": "O Manifesto",
+                "hero.intro": "Se voce e uma pessoa anti-IA, me ouca. Se voce e um \"especialista\" de 2 anos que chama memes de modinha enquanto mancava com tokens de celebridades fingindo ser filantropo - <strong>este e seu alerta</strong>.<br><br>Os OGs passaram pelo pior. Vimos a pegada da divida impressa em fiat E as % de perdas pelo tamanho da populacao de participantes em cripto. Nao estamos aqui para dourar a pilula. Estamos aqui para construir algo que nao e um ponzi.",
+                "slap.title": "Os Recibos",
+                "slap.text": "Voce ficou confortavel. Enquanto voce corria atras do <em>proximo 100x</em>, os degens viram claramente: a maquiagem evoluiu - te pegaram de jeito. Os influenciadores, as celebridades, os \"lideres de pensamento\" - <strong>eles te farmaram</strong>.<br><br>MrBeast supostamente <em>despejou tokens nos seguidores</em>. O token DADDY do Andrew Tate tinha <span class=\"stat-callout\">30% em maos de insiders</span> - $45 milhoes antes de voce clicar em comprar. Contas de Drake, Metallica, Sydney Sweeney foram hackeadas para pump and dump - <span class=\"stat-callout\">$10-13M de perdas</span> cada vez.<br><br>O sentimento no CT? <strong>\"Venenoso.\"</strong> Indice de Medo e Ganancia em territorio de medo por mais de 30% de 2025. Todos exaustos de rug pulls, spam do Pump.fun, e a mudanca de narrativa de \"superciclo de memecoins\" para \"inverno de memecoins\" <em>em questao de semanas</em>.",
+                "stats.projects": "Projetos Falharam em 2025", "stats.memecoins": "Eram Meme Coins", "stats.wiped": "Cap de Memes Perdido", "stats.rugs": "do CT Perdido para Rugs",
+                "cat.problems": "Os Problemas Reais (Sem Fingimento)", "cat.aihype": "E o Claude Code? (Checagem do Hype de IA)",
+                "cat.market": "Validacao de Mercado (Os Numeros)", "cat.kols": "Para Pequenos KOLs (Menos de 50k Seguidores)",
+                "cat.skeptics": "Para os Ceticos (Bom, Voce Deveria Ser)", "cat.systems": "Sistemas Enderecaveis e Responsaveis",
+                "cat.ready": "Pronto para Construir (Nao Apenas Falar)", "cat.bottomline": "A Linha Final",
+                "quote.integrity": "\"Integridade supera todas as caracteristicas em longos prazos. Reputacao e dificil de construir, facil de perder.\"",
+                "quote.cite": " -  A unica verdade que sobreviveu 3 ciclos",
+                "footer.built": "Construido por construtores que sobreviveram 3 ciclos.", "footer.novc": "Sem dinheiro de VC. Sem promessas. Apenas codigo e recibos.",
+                "footer.home": "Inicio", "footer.features": "Recursos", "footer.privacy": "Privacidade"
+            },
+            zh: {
+                "nav.home": "首页", "nav.features": "功能", "nav.manifesto": "宣言", "nav.source": "源码",
+                "hero.warning": "非胆小者勿入", "hero.title": "宣言",
+                "hero.intro": "如果你是反AI人士，听我说。如果你是一个2年的"专家"，在追逐名人代币假装慈善家的同时，却称meme是过眼云烟 - <strong>这是你的警钟</strong>。<br><br>OG们经历了最糟糕的时期。我们见证了法币债务印刷的足迹，以及加密参与者的巨大损失比例。我们不是来粉饰太平的。我们是来建造一个不是庞氏骗局的东西。",
+                "slap.title": "证据",
+                "slap.text": "你变得舒适了。当你追逐<em>下一个100倍</em>时，老手们看得很清楚：糖衣炮弹进化了 - 他们抓住了你。网红、名人、"思想领袖" - <strong>他们在割你</strong>。<br><br>MrBeast据说<em>向粉丝倾销代币</em>。Andrew Tate的DADDY代币有<span class=\"stat-callout\">30%内部人持有</span> - 在你点击购买之前就有4500万美元。Drake、Metallica、Sydney Sweeney的账户被黑客攻击用于拉高出货 - 每次<span class=\"stat-callout\">1000-1300万美元损失</span>。<br><br>CT上的情绪？<strong>"有毒。"</strong> 恐惧与贪婪指数在2025年超过30%的时间处于恐惧区域。每个人都对rug pulls、Pump.fun垃圾邮件感到疲惫，叙事从"meme币超级周期"转变为"meme币寒冬"<em>仅在几周内</em>。",
+                "stats.projects": "2025年失败项目", "stats.memecoins": "是Meme币", "stats.wiped": "Meme市值蒸发", "stats.rugs": "CT损失于Rug",
+                "cat.problems": "真正的问题（别装了）", "cat.aihype": "Claude Code怎么样？（AI炒作检查）",
+                "cat.market": "市场验证（数据）", "cat.kols": "给小KOL（5万粉以下）",
+                "cat.skeptics": "给怀疑者（好，你应该怀疑）", "cat.systems": "可问责系统",
+                "cat.ready": "准备建设（不只是说说）", "cat.bottomline": "底线",
+                "quote.integrity": ""在长期时间线上，诚信战胜所有特质。声誉难以建立，容易失去。"",
+                "quote.cite": " - 经历3个周期后唯一的真理",
+                "footer.built": "由经历3个周期的建设者构建。", "footer.novc": "没有VC资金。没有承诺。只有代码和收据。",
+                "footer.home": "首页", "footer.features": "功能", "footer.privacy": "隐私"
+            },
+            tr: {
+                "nav.home": "ana sayfa", "nav.features": "ozellikler", "nav.manifesto": "manifesto", "nav.source": "kaynak",
+                "hero.warning": "Korkaklar Icin Degil", "hero.title": "Manifesto",
+                "hero.intro": "Eger yapay zeka karsiti biriyseniz, beni dinleyin. Hayirsever gibi davranan unlu tokenleriyle aksayarak gezen 2 yillik bir \"uzman\"saniz - <strong>bu sizin uyanis cagriniz</strong>.<br><br>OG'ler en kotu donemlerden gecti. Fiat'taki basili borc ayak izini VE kripto katilimcilarinin buyukluguyle kayip oranlarini izledik. Burada tatli konusmak icin degiliz. Ponzi olmayan bir sey insa etmek icin buradayiz.",
+                "slap.title": "Kanitlar",
+                "slap.text": "Rahatladin. Sen <em>bir sonraki 100x'i</em> kovalarken, degenler acikca gordu: seker kaplama evrimlesti - seni yakaladi. Influencer'lar, unluler, \"dusunce liderleri\" - <strong>seni farm'ladilar</strong>.<br><br>MrBeast'in iddiaya gore <em>takipcilerine token bosadigini</em>. Andrew Tate'in DADDY tokeni <span class=\"stat-callout\">%30 iceriden</span> - satin al'a tiklamadan once 45 milyon dolar. Drake, Metallica, Sydney Sweeney hesaplari pump and dump icin hacklendi - her seferinde <span class=\"stat-callout\">10-13M$ kayip</span>.<br><br>CT'deki duygu? <strong>\"Zehirli.\"</strong> Korku ve Acilik Endeksi 2025'in %30'undan fazlasindan korku bolgesinde. Herkes rug pull'lardan, Pump.fun spam'inden ve \"memecoin supercycle\"dan \"memecoin kis\"a <em>haftalar icinde</em> degisen narratiften bunalmiş.",
+                "stats.projects": "2025'te Basarisiz Projeler", "stats.memecoins": "Meme Coin'lerdi", "stats.wiped": "Meme Cap Silindi", "stats.rugs": "CT Rug'lara Kayip",
+                "cat.problems": "Gercek Problemler (Numarayi Birak)", "cat.aihype": "Ya Claude Code? (Yapay Zeka Hype Kontrolu)",
+                "cat.market": "Piyasa Dogrulamasi (Rakamlar)", "cat.kols": "Kucuk KOL'ler Icin (50k Alti Takipci)",
+                "cat.skeptics": "Supheciler Icin (Iyi, Oyle Olmalisin)", "cat.systems": "Adreslenebilir ve Hesap Verebilir Sistemler",
+                "cat.ready": "Insa Etmeye Hazir (Sadece Konusmak Degil)", "cat.bottomline": "Sonuc",
+                "quote.integrity": "\"Butunluk uzun vadede tum ozellikleri yener. Itibar insa etmek zor, kaybetmek kolay.\"",
+                "quote.cite": " - 3 donguyu atlatan tek gercek",
+                "footer.built": "3 donguyu atlatan insaatcilar tarafindan insa edildi.", "footer.novc": "VC parasi yok. Soz yok. Sadece kod ve makbuzlar.",
+                "footer.home": "Ana Sayfa", "footer.features": "Ozellikler", "footer.privacy": "Gizlilik"
+            },
+            ru: {
+                "nav.home": "главная", "nav.features": "функции", "nav.manifesto": "манифест", "nav.source": "исходник",
+                "hero.warning": "Не для Слабонервных", "hero.title": "Манифест",
+                "hero.intro": "Если вы анти-AI человек, выслушайте меня. Если вы 2-летний \"эксперт\", который называет мемы модой, пока вы хромали с токенами знаменитостей, притворяясь филантропом - <strong>это ваш звонок-будильник</strong>.<br><br>OG прошли через худшее. Мы видели следы напечатанного долга в фиате И % потерь по размеру популяции участников в крипте. Мы здесь не чтобы подслащивать. Мы здесь чтобы построить что-то, что не является понци.",
+                "slap.title": "Квитанции",
+                "slap.text": "Вы расслабились. Пока вы гонялись за <em>следующим 100x</em>, дегены видели ясно: сахарная глазурь эволюционировала - они поймали вас. Инфлюенсеры, знаменитости, \"лидеры мнений\" - <strong>они фармили вас</strong>.<br><br>MrBeast предположительно <em>сливал токены на подписчиков</em>. Токен DADDY Эндрю Тейта имел <span class=\"stat-callout\">30% у инсайдеров</span> - $45 миллионов до того, как вы нажали купить. Аккаунты Drake, Metallica, Sydney Sweeney были взломаны для pump and dump - <span class=\"stat-callout\">$10-13M потерь</span> каждый раз.<br><br>Настроение на CT? <strong>\"Ядовитое.\"</strong> Индекс Страха и Жадности в зоне страха более 30% 2025 года. Все измотаны rug pulls, спамом Pump.fun и сменой нарратива с \"суперцикла мемкоинов\" на \"зиму мемкоинов\" <em>за несколько недель</em>.",
+                "stats.projects": "Проектов Провалилось в 2025", "stats.memecoins": "Были Мем Коины", "stats.wiped": "Капитализация Мемов Стерта", "stats.rugs": "CT Потеряно на Ругах",
+                "cat.problems": "Реальные Проблемы (Не Притворяйтесь)", "cat.aihype": "А Что Насчет Claude Code? (Проверка AI Хайпа)",
+                "cat.market": "Валидация Рынка (Цифры)", "cat.kols": "Для Маленьких KOL (Меньше 50к Подписчиков)",
+                "cat.skeptics": "Для Скептиков (Хорошо, Так и Должно Быть)", "cat.systems": "Адресуемые и Подотчетные Системы",
+                "cat.ready": "Готовы Строить (Не Просто Говорить)", "cat.bottomline": "Суть",
+                "quote.integrity": "\"Честность побеждает все качества на длинных временных горизонтах. Репутацию трудно построить, легко потерять.\"",
+                "quote.cite": " - Единственная правда, пережившая 3 цикла",
+                "footer.built": "Построено строителями, пережившими 3 цикла.", "footer.novc": "Без денег VC. Без обещаний. Только код и квитанции.",
+                "footer.home": "Главная", "footer.features": "Функции", "footer.privacy": "Конфиденциальность"
+            },
+            fr: {
+                "nav.home": "accueil", "nav.features": "fonctions", "nav.manifesto": "manifeste", "nav.source": "source",
+                "hero.warning": "Pas pour les Ames Sensibles", "hero.title": "Le Manifeste",
+                "hero.intro": "Si vous etes anti-IA, ecoutez-moi. Si vous etes un \"expert\" de 2 ans qui appelle les memes une mode pendant que vous boitiez avec des tokens de celebrites en pretendant etre philanthrope - <strong>c'est votre reveil</strong>.<br><br>Les OGs ont traverse le pire. Nous avons vu l'empreinte de la dette imprimee en fiat ET les % de pertes par la taille de la population des participants en crypto. Nous ne sommes pas la pour enjoliver. Nous sommes la pour construire quelque chose qui n'est pas un ponzi.",
+                "slap.title": "Les Preuves",
+                "slap.text": "Vous vous etes installe confortablement. Pendant que vous chassiez <em>le prochain 100x</em>, les degens voyaient clairement : l'enrobage sucre a evolue - ils vous ont eu. Les influenceurs, les celebrites, les \"leaders d'opinion\" - <strong>ils vous ont farme</strong>.<br><br>MrBeast aurait <em>dump des tokens sur ses followers</em>. Le token DADDY d'Andrew Tate avait <span class=\"stat-callout\">30% d'insiders</span> - $45 millions avant que vous cliquiez acheter. Les comptes de Drake, Metallica, Sydney Sweeney ont ete pirates pour pump and dump - <span class=\"stat-callout\">$10-13M de pertes</span> a chaque fois.<br><br>Le sentiment sur CT ? <strong>\"Toxique.\"</strong> L'indice Fear & Greed en territoire de peur pendant plus de 30% de 2025. Tout le monde est epuise par les rug pulls, le spam Pump.fun, et le changement de narratif de \"supercycle memecoin\" a \"hiver memecoin\" <em>en quelques semaines</em>.",
+                "stats.projects": "Projets Echoues en 2025", "stats.memecoins": "Etaient des Meme Coins", "stats.wiped": "Cap Meme Efface", "stats.rugs": "de CT Perdu aux Rugs",
+                "cat.problems": "Les Vrais Problemes (Arretez de Pretendre)", "cat.aihype": "Et Claude Code ? (Verification du Hype IA)",
+                "cat.market": "Validation du Marche (Les Chiffres)", "cat.kols": "Pour les Petits KOLs (Moins de 50k Followers)",
+                "cat.skeptics": "Pour les Sceptiques (Bien, Vous Devriez l'Etre)", "cat.systems": "Systemes Adressables et Responsables",
+                "cat.ready": "Pret a Construire (Pas Juste Parler)", "cat.bottomline": "Le Bilan",
+                "quote.integrity": "\"L'integrite bat tous les traits sur les longs horizons. La reputation est difficile a construire, facile a perdre.\"",
+                "quote.cite": " - La seule verite qui a survecu 3 cycles",
+                "footer.built": "Construit par des batisseurs qui ont survecu 3 cycles.", "footer.novc": "Pas d'argent VC. Pas de promesses. Juste du code et des recus.",
+                "footer.home": "Accueil", "footer.features": "Fonctions", "footer.privacy": "Confidentialite"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key];
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('bonzi-lang', lang);
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        // Load saved language on page load
+        const savedLang = localStorage.getItem('bonzi-lang');
+        if (savedLang && translations[savedLang]) setLanguage(savedLang);
+
+        // =====================
+        // AUDIO (Resume Moby from homepage)
+        // =====================
         const bgMusic = document.getElementById('bg-music');
         const soundToggle = document.getElementById('sound-toggle');
         let isMuted = true;

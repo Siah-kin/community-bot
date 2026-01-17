@@ -127,6 +127,55 @@
         .sound-toggle.muted .sound-on { display: none; }
         .sound-toggle.muted .sound-off { display: block; }
 
+        /* Click hint - iykyk */
+        .sound-hint {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            width: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 999;
+            animation: hint-pulse 2s ease-in-out infinite;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .sound-hint.hidden {
+            opacity: 0;
+        }
+
+        .sound-hint .emoji {
+            font-size: 18px;
+            line-height: 1.2;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .sound-hint .arrow {
+            font-size: 12px;
+            color: var(--purple);
+            margin-top: 4px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            animation: arrow-bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes hint-pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes arrow-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
         /* Language switcher - integrated in nav */
         .lang-switcher {
             display: flex;
@@ -698,6 +747,9 @@
         .features-header { text-align: center; margin-bottom: 64px; }
         .features-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
         .features-header p { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; color: var(--white); }
+        .features-link { display: inline-block; margin-top: 20px; color: var(--white); font-size: 15px; font-weight: 500; text-decoration: none; padding: 10px 20px; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; transition: all 0.3s ease; }
+        .features-link:hover { background: var(--white); color: var(--purple); border-color: var(--white); }
+        .features-link strong { font-weight: 700; }
         .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .feature-card { background: var(--white); border: none; border-radius: 16px; padding: 32px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
         .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
@@ -1389,10 +1441,8 @@
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
 
-<!-- Background music - Children of the Grave by Black Sabbath -->
-<audio id="bg-music" loop preload="auto">
-    <source src="children-of-the-grave.mp3" type="audio/mpeg">
-</audio>
+<!-- Background music -->
+<audio id="bg-music" preload="auto"></audio>
 
 <!-- Sound toggle button -->
 <button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle sound">
@@ -1403,6 +1453,13 @@
         <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
     </svg>
 </button>
+
+<!-- Click hint - iykyk -->
+<div class="sound-hint" id="sound-hint">
+    <span class="emoji">💜</span>
+    <span class="emoji">🤫</span>
+    <span class="arrow">▼</span>
+</div>
 
 <nav>
     <a href="#" class="nav-logo">bonzi</a>
@@ -1575,9 +1632,9 @@
 <section class="features-section" id="features">
     <div class="features-container">
         <div class="features-header">
-            <h2 data-i18n="features.label">actual features</h2>
-            <p data-i18n="features.title">not abstractions. real functions.</p>
-            <a href="features.html" style="display: inline-block; margin-top: 16px; color: var(--purple); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--purple);">See why we built each one &rarr;</a>
+            <h2 data-i18n="features.label">adaptive features</h2>
+            <p data-i18n="features.title">AI that learns from every interaction. Not static bots.</p>
+            <a href="features.html" class="features-link">See <strong>how</strong> they learn and adapt →</a>
         </div>
         <div class="features-grid">
             <div class="feature-card">
@@ -2326,44 +2383,171 @@ document.querySelectorAll('.suggestion').forEach(btn => {
     });
 });
 
-// Background music - Children of the Grave
+// ===========================================
+// SECTION-BASED SOUNDTRACK
+// ===========================================
 // "Every generation hates something about the current generation. It was our punk song." - Ozzy
+//
+// MUSIC ZONES:
+// 1. pain-section     → Sabbath OR RATM (random) - angry
+// 2. solutions-section → Moby "All That I Need" - hopeful
+// 3. features-section → Moby "God Moving" - mellow, loops to end
+//
+// SILENT ZONES:
+// - Opening/intro (before pain)
+// - comparison-section (after solutions, before features)
+//
+// SECTION LIST:
+// .opening → .history → .reveal → .statement → .pain-section →
+// .solutions-section → .comparison-section → .features-section →
+// .demo-section → .pricing-section → .mission-section → .links-section
+
+// ===========================================
+// SPATIAL AUDIO - TWO ROOMS (v3)
+// ===========================================
+// Music is SPATIAL, not triggered. Like rooms in a house.
+// Walk into room = hear music. Walk out = fades. Walk back = still playing.
+//
+// ROOM 1 (dark):   sections [3-4] .reveal → .statement
+//                  Track: RATM - Killing in the Name
+//
+// ROOM 2 (mellow): sections [9-10, 12-13] .features → .demo, .mission → .links
+//                  Track: Moby - God Moving Over the Face of the Waters
+//
+// SILENCE ZONES:  [1-2] intro, [5-8] pain/comparison, [11] pricing
+// ===========================================
+
 const bgMusic = document.getElementById('bg-music');
 const soundToggle = document.getElementById('sound-toggle');
+const soundHint = document.getElementById('sound-hint');
+const solutionsSection = document.querySelector('.solutions-section');
+const comparisonSection = document.querySelector('.comparison-section');
 let isMuted = true;
-let userMaxVolume = 0.4; // Starting volume when unmuted
+let maxVolume = 0.5;
+let mobyVolume = 0.3;
+let currentTrack = 'ratm';
+let targetVolume = 0;
 
-// Start muted by default - user must click to enable
+// Start muted
 bgMusic.volume = 0;
+bgMusic.src = 'killing-in-the-name.mp3';
+bgMusic.loop = true;
 
-// Toggle sound on button click
-soundToggle.addEventListener('click', () => {
-    isMuted = !isMuted;
-    soundToggle.classList.toggle('muted', isMuted);
-
-    if (isMuted) {
-        bgMusic.volume = 0;
+// Smooth volume transition (called every frame when needed)
+function smoothVolume() {
+    if (isMuted) return;
+    const diff = targetVolume - bgMusic.volume;
+    if (Math.abs(diff) > 0.01) {
+        bgMusic.volume += diff * 0.1; // Smooth easing
+        requestAnimationFrame(smoothVolume);
     } else {
-        // Start playing on first unmute
-        if (bgMusic.paused) {
-            bgMusic.play().catch(e => console.log('Audio autoplay blocked:', e));
-        }
-        // Apply scroll-adjusted volume
-        updateVolumeByScroll();
+        bgMusic.volume = targetVolume;
     }
-});
+}
 
-// Scroll-based volume fade: full volume at top, fades as you scroll
+// Scroll-based volume with track switching
 function updateVolumeByScroll() {
     if (isMuted) return;
 
     const scrollY = window.pageYOffset;
     const viewportHeight = window.innerHeight;
-    // Fade out over first 2 viewport heights
-    const fadeDistance = viewportHeight * 2;
-    const volumeRatio = Math.max(0, 1 - (scrollY / fadeDistance));
-    bgMusic.volume = userMaxVolume * volumeRatio;
+    const scrollCenter = scrollY + (viewportHeight * 0.5);
+
+    // Get section positions
+    const solRect = solutionsSection.getBoundingClientRect();
+    const solTop = solRect.top + scrollY;
+    const compRect = comparisonSection.getBoundingClientRect();
+    const compTop = compRect.top + scrollY;
+
+    // ZONE 1: Top of page → solutions section = RATM fading to silence
+    // ZONE 2: Solutions section = SILENCE (gap between tracks)
+    // ZONE 3: Comparison section onward = Moby ambient
+
+    if (scrollCenter < solTop) {
+        // ZONE 1: RATM zone - fade towards silence as approaching solutions
+        if (currentTrack !== 'ratm') {
+            bgMusic.src = 'killing-in-the-name.mp3';
+            bgMusic.loop = true;
+            bgMusic.play().catch(e => {});
+            currentTrack = 'ratm';
+        }
+        // Fade over distance from top to solutions
+        const fadeProgress = scrollCenter / solTop;
+        targetVolume = maxVolume * (1 - fadeProgress);
+        smoothVolume();
+    } else if (scrollCenter < compTop) {
+        // ZONE 2: Silence gap (solutions section)
+        targetVolume = 0;
+        smoothVolume();
+    } else {
+        // ZONE 3: Moby zone (comparison and beyond)
+        if (currentTrack !== 'moby') {
+            bgMusic.src = 'moby-god-moving.mp3';
+            bgMusic.loop = true;
+            bgMusic.play().catch(e => {});
+            currentTrack = 'moby';
+        }
+        // Fade IN at start of comparison, then stay as background
+        const distIntoMoby = scrollCenter - compTop;
+        const fadeInDistance = viewportHeight * 0.5; // Fade in over half viewport
+        if (distIntoMoby < fadeInDistance) {
+            targetVolume = mobyVolume * (distIntoMoby / fadeInDistance);
+        } else {
+            targetVolume = mobyVolume;
+        }
+        smoothVolume();
+    }
 }
+
+// Save audio state before leaving page
+window.addEventListener('beforeunload', () => {
+    if (!isMuted && currentTrack === 'moby') {
+        localStorage.setItem('bonzi_audio', JSON.stringify({
+            track: 'moby',
+            time: bgMusic.currentTime,
+            volume: bgMusic.volume
+        }));
+    }
+});
+
+// Check if we should resume Moby from another page
+function checkResumeAudio() {
+    const saved = localStorage.getItem('bonzi_audio');
+    if (saved) {
+        const state = JSON.parse(saved);
+        if (state.track === 'moby') {
+            bgMusic.src = 'moby-god-moving.mp3';
+            bgMusic.currentTime = state.time;
+            bgMusic.loop = true;
+            bgMusic.volume = state.volume;
+            currentTrack = 'moby';
+            isMuted = false;
+            soundToggle.classList.remove('muted');
+            bgMusic.play().catch(e => {});
+        }
+        localStorage.removeItem('bonzi_audio');
+    }
+}
+checkResumeAudio();
+
+// Toggle sound
+soundToggle.addEventListener('click', () => {
+    isMuted = !isMuted;
+    soundToggle.classList.toggle('muted', isMuted);
+
+    // Hide the hint forever once clicked
+    soundHint.classList.add('hidden');
+
+    if (isMuted) {
+        bgMusic.volume = 0;
+    } else {
+        // Start playing
+        if (bgMusic.paused) {
+            bgMusic.play().catch(e => console.log('Audio autoplay blocked:', e));
+        }
+        updateVolumeByScroll();
+    }
+});
 
 // Nav collapse on scroll + volume fade
 let lastScroll = 0;

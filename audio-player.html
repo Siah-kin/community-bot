@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bonzi Audio</title>
+</head>
+<body>
+<audio id="bgMusic" loop></audio>
+<script>
+const bgMusic = document.getElementById('bgMusic');
+let currentTrack = null;
+
+// Listen for commands from parent pages
+window.addEventListener('message', (e) => {
+    const cmd = e.data;
+    if (!cmd || !cmd.action) return;
+
+    switch(cmd.action) {
+        case 'play':
+            if (cmd.track && cmd.track !== currentTrack) {
+                bgMusic.src = cmd.track;
+                currentTrack = cmd.track;
+            }
+            if (cmd.time) bgMusic.currentTime = cmd.time;
+            bgMusic.play().catch(err => {});
+            break;
+        case 'pause':
+            bgMusic.pause();
+            break;
+        case 'volume':
+            bgMusic.volume = Math.max(0, Math.min(1, cmd.value));
+            break;
+        case 'getState':
+            e.source.postMessage({
+                action: 'state',
+                playing: !bgMusic.paused,
+                track: currentTrack,
+                time: bgMusic.currentTime,
+                volume: bgMusic.volume
+            }, '*');
+            break;
+    }
+});
+
+// Report ready
+window.parent.postMessage({ action: 'ready' }, '*');
+</script>
+</body>
+</html>

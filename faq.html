@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Bonzi AI Community Management</title>
-    <meta name="description" content="Frequently asked questions about Bonzi. Built for crypto communities by builders who survived 3 cycles.">
+    <title>The Manifesto - Bonzi AI Community Management</title>
+    <meta name="description" content="A confrontational FAQ for those tired of being rugged. Built by OGs who survived the slaughter. No sugar coating.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/faq.html">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
 
@@ -18,6 +18,10 @@
             --black: #0A0A0A;
             --gray: #71717A;
             --gray-light: #F4F4F5;
+            --red: #DC2626;
+            --red-light: #FEE2E2;
+            --green: #10B981;
+            --green-light: #D1FAE5;
         }
         html { scroll-behavior: smooth; }
         body {
@@ -61,63 +65,176 @@
         }
         .nav-links a:hover { color: var(--purple); }
 
-        /* Hero */
-        .hero {
-            padding: 160px 40px 80px;
+        /* Manifesto Hero */
+        .manifesto-hero {
+            padding: 160px 40px 60px;
             max-width: 900px;
             margin: 0 auto;
         }
-        .hero-label {
-            color: var(--purple);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-        }
-        .hero h1 {
-            font-size: 48px;
+        .warning-label {
+            color: var(--red);
+            font-size: 11px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             margin-bottom: 24px;
-            line-height: 1.1;
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--red-light);
+            border-radius: 4px;
         }
-        .hero p {
+        .manifesto-hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 32px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+        .manifesto-intro {
             font-size: 20px;
             color: var(--gray);
-            max-width: 600px;
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        .manifesto-intro strong {
+            color: var(--black);
+        }
+
+        /* The Slap */
+        .slap-section {
+            background: var(--black);
+            color: var(--white);
+            padding: 80px 40px;
+            margin: 40px 0;
+        }
+        .slap-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .slap-section h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+            margin-bottom: 32px;
+        }
+        .slap-text {
+            font-size: 24px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .slap-text em {
+            color: var(--purple-light);
+            font-style: normal;
+            font-weight: 500;
+        }
+        .slap-text strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+        .stat-callout {
+            display: inline-block;
+            background: var(--purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 4px;
+        }
+
+        /* Stats Grid */
+        .carnage-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .carnage-stat {
+            text-align: center;
+        }
+        .carnage-stat .number {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--red);
+            display: block;
+        }
+        .carnage-stat .label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+        .carnage-stat .source {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            margin-top: 4px;
+        }
+
+        /* Corpus Section */
+        .corpus-section {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 80px 40px;
+            margin: 0;
+        }
+        .corpus-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .corpus-quote {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid var(--purple);
+            padding: 24px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 24px;
+        }
+        .corpus-quote p {
+            font-size: 20px;
+            color: var(--white);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .corpus-quote span {
+            font-size: 12px;
+            color: var(--gray);
         }
 
         /* FAQ Sections */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 40px 120px;
+            padding: 80px 40px 120px;
         }
 
         .faq-category {
-            margin-bottom: 64px;
+            margin-bottom: 80px;
         }
 
         .category-title {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--purple);
-            margin-bottom: 32px;
+            margin-bottom: 40px;
             padding-bottom: 16px;
             border-bottom: 2px solid var(--purple);
         }
 
         .faq-item {
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
         .faq-question {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
             color: var(--black);
+            line-height: 1.3;
         }
 
         .faq-answer {
@@ -136,51 +253,175 @@
             font-weight: 500;
         }
 
+        .brutal-box {
+            background: var(--black);
+            color: var(--white);
+            padding: 24px 28px;
+            margin: 20px 0;
+            font-size: 15px;
+            line-height: 1.7;
+            border-left: 4px solid var(--red);
+        }
+        .brutal-box em {
+            color: var(--purple-light);
+        }
+
+        .solution-box {
+            background: #ECFDF5;
+            border-left: 4px solid #10B981;
+            padding: 24px 28px;
+            margin: 20px 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .solution-box strong {
+            color: #065F46;
+        }
+        .solution-box .accountability {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 13px;
+            color: #047857;
+        }
+
         .highlight-box {
             background: var(--gray-light);
             border-left: 3px solid var(--purple);
-            padding: 16px 20px;
-            margin: 16px 0;
+            padding: 20px 24px;
+            margin: 20px 0;
             font-size: 15px;
         }
 
-        .highlight-box.quote {
-            background: var(--black);
-            color: var(--white);
-            border-left-color: var(--purple-light);
-        }
-
-        .comparison-mini {
+        .comparison-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 16px 0;
+            gap: 20px;
+            margin: 24px 0;
         }
 
-        .comparison-mini div {
-            padding: 16px;
+        .comparison-grid .problem {
+            background: #FEE2E2;
+            color: #991B1B;
+            padding: 20px;
             border-radius: 8px;
             font-size: 14px;
         }
 
-        .comparison-mini .generic {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .comparison-mini .bonzi {
+        .comparison-grid .solution {
             background: #D1FAE5;
             color: #065F46;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .comparison-grid .problem strong,
+        .comparison-grid .solution strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .stat-highlight {
             display: inline-block;
             background: var(--purple);
             color: white;
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 4px;
             font-size: 14px;
+            font-weight: 700;
+        }
+
+        .list-brutal {
+            margin: 16px 0 16px 24px;
+        }
+        .list-brutal li {
+            margin-bottom: 12px;
+            color: var(--gray);
+        }
+        .list-brutal li strong {
+            color: var(--black);
+        }
+
+        /* Market Data Box */
+        .market-box {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+            color: var(--white);
+            padding: 32px;
+            margin: 24px 0;
+            border-radius: 12px;
+        }
+        .market-box h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .market-stat {
+            text-align: center;
+        }
+        .market-stat .value {
+            font-size: 28px;
+            font-weight: 800;
+            display: block;
+        }
+        .market-stat .label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* Quote Block */
+        .manifesto-quote {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+            color: var(--white);
+            padding: 48px;
+            margin: 60px 0;
+            text-align: center;
+            border-radius: 12px;
+        }
+        .manifesto-quote blockquote {
+            font-size: 28px;
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+        .manifesto-quote cite {
+            font-size: 14px;
+            opacity: 0.8;
+            font-style: normal;
+        }
+
+        /* Competitor Table */
+        .competitor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        .competitor-table th {
+            background: var(--black);
+            color: var(--white);
+            padding: 12px 16px;
+            text-align: left;
             font-weight: 600;
+        }
+        .competitor-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .competitor-table tr:nth-child(even) {
+            background: var(--gray-light);
         }
 
         /* Footer */
@@ -204,10 +445,18 @@
         @media (max-width: 768px) {
             nav { padding: 16px 24px; }
             .nav-links { display: none; }
-            .hero { padding: 120px 24px 60px; }
-            .hero h1 { font-size: 32px; }
-            .faq-container { padding: 0 24px 80px; }
-            .comparison-mini { grid-template-columns: 1fr; }
+            .manifesto-hero { padding: 120px 24px 40px; }
+            .manifesto-hero h1 { font-size: 36px; }
+            .slap-section { padding: 60px 24px; }
+            .slap-text { font-size: 18px; }
+            .carnage-stats { grid-template-columns: repeat(2, 1fr); }
+            .corpus-section { padding: 60px 24px; }
+            .faq-container { padding: 60px 24px 80px; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .market-stats { grid-template-columns: 1fr; gap: 16px; }
+            .manifesto-quote { padding: 32px 24px; }
+            .manifesto-quote blockquote { font-size: 20px; }
+            .competitor-table { font-size: 12px; }
         }
     </style>
 </head>
@@ -220,287 +469,599 @@
         <div class="nav-links">
             <a href="index.html">home</a>
             <a href="features.html">features</a>
-            <a href="faq.html" style="color: var(--purple);">faq</a>
+            <a href="faq.html" style="color: var(--purple);">manifesto</a>
             <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-label">Straight Answers</div>
-        <h1>FAQ</h1>
-        <p>Questions from CT grinders and small KOLs who've seen too many "AI" tools that are just glorified prompts.</p>
+    <!-- MANIFESTO HERO -->
+    <section class="manifesto-hero">
+        <span class="warning-label">Not for the Faint of Heart</span>
+        <h1>The Manifesto</h1>
+        <p class="manifesto-intro">
+            If you're an anti-AI person, hear me out. If you're a 2-year "expert" who calls memes a fad while you were limping with celebrity tokens pretending to be a philanthropist—<strong>this is your wake-up call</strong>.
+            <br><br>
+            The OGs went through the most sour piss on their necks. We watched the footprint of printed debt in fiat AND the % losses by sheer pop size of participants in crypto. We're not here to sugar coat anything. We're here to build something that isn't a ponzi.
+        </p>
+    </section>
+
+    <!-- THE SLAP -->
+    <section class="slap-section">
+        <div class="slap-content">
+            <h2>The Receipts</h2>
+            <p class="slap-text">
+                You got comfortable. While you were chasing <em>the next 100x</em>, the degens saw it clearly: the sugar-coating evolved from transvestites to realdolls—they got you by the balls, quite literally. The influencers, the celebrities, the "thought leaders"—<strong>they farmed you</strong>.
+                <br><br>
+                MrBeast allegedly <em>dumped tokens on his followers</em>. Andrew Tate's DADDY token had <span class="stat-callout">30% insider holdings</span>—$45 million before you even clicked buy. Drake, Metallica, Sydney Sweeney's accounts got hijacked to pump and dump—<span class="stat-callout">$10-13M losses</span> each time.
+                <br><br>
+                The sentiment on CT? <strong>"Poisonous."</strong> Fear & Greed Index in fear territory for over 30% of 2025. Everyone's exhausted from rug pulls, Pump.fun spam, and the narrative shift from "memecoin supercycle" to "memecoin winter" <em>in a matter of weeks</em>.
+            </p>
+
+            <div class="carnage-stats">
+                <div class="carnage-stat">
+                    <span class="number">11.6M</span>
+                    <span class="label">Projects Failed in 2025</span>
+                    <span class="source">CryptoNews</span>
+                </div>
+                <div class="carnage-stat">
+                    <span class="number">86%</span>
+                    <span class="label">Were Meme Coins</span>
+                    <span class="source">CoinGecko Data</span>
+                </div>
+                <div class="carnage-stat">
+                    <span class="number">$103B</span>
+                    <span class="label">Meme Cap Wiped</span>
+                    <span class="source">$150.6B to $47.2B</span>
+                </div>
+                <div class="carnage-stat">
+                    <span class="number">62%</span>
+                    <span class="label">of CT Lost to Rugs</span>
+                    <span class="source">Kook Capital Satire</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE RECEIPTS FROM 6 YEARS -->
+    <section class="corpus-section">
+        <div class="corpus-content">
+            <h2 style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: var(--purple-light); margin-bottom: 40px;">From Our Actual Corpus: 96,361 Messages, Oct 2018 – Oct 2024</h2>
+
+            <div class="corpus-quote">
+                <p>"This bear market is very daunting... we need successful projects to be sure to survive beyond the bubble."</p>
+                <span>— Gino, 2018 (when it was actually daunting)</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"And now that the bear market is here, they are realizing it's not an easy job, and to make money, you have to be good at what you do."</p>
+                <span>— Isaac, 2018</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"Every mistake is a gift to improve."</p>
+                <span>— Gino, 2018</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"Information can flow through networks and create reputation through the process of resonance, a form of amplification without extracting from the original value."</p>
+                <span>— Gino, Oct 2018 (the thesis, before anyone was listening)</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"They really want a long term, involved community. Sheer numbers are less important... they really care about having a good image and building reputation."</p>
+                <span>— On evaluating projects, 2018</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"Best thing about our business is that we don't risk getting bankrupt... what I heard so far is that Bitcoin Cash forked, and this impacted a dump by whales."</p>
+                <span>— Real-time analysis during BCH drama, Nov 2018</span>
+            </div>
+
+            <div class="corpus-quote">
+                <p>"Bear market has made people lazy about community."</p>
+                <span>— Isaac, 2018 (still true in 2025)</span>
+            </div>
+
+            <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 8px;">This isn't curated marketing copy. It's timestamped Telegram history.</p>
+                <p style="color: var(--purple-light); font-size: 16px; font-weight: 500;">6 years of building. 96,361 messages. Every cycle survived.</p>
+            </div>
+        </div>
     </section>
 
     <div class="faq-container">
 
-        <!-- BASICS -->
+        <!-- THE REAL PROBLEMS -->
         <div class="faq-category">
-            <h2 class="category-title">The Basics</h2>
+            <h2 class="category-title">The Real Problems (Let's Not Pretend)</h2>
 
             <div class="faq-item">
-                <h3 class="faq-question">What is Bonzi?</h3>
+                <h3 class="faq-question">What's the main issue with social media?</h3>
                 <p class="faq-answer">
-                    AI bot for Telegram/Discord trained on <strong>15,613 real crypto conversations</strong>. Manages communities, answers questions, spots farmers, rewards OGs. Lives in your chat. No dashboard.
+                    Two things. Both weaponized against you:
                 </p>
-            </div>
-
-            <div class="faq-item">
-                <h3 class="faq-question">How is this different from ChatGPT or Claude?</h3>
-                <p class="faq-answer">
-                    Generic LLMs read about crypto. Bonzi <em>survived 3 cycles</em>.
-                </p>
-                <div class="comparison-mini">
-                    <div class="generic">
-                        <strong>Generic AI:</strong><br>
-                        "Always DYOR before investing"
-                    </div>
-                    <div class="bonzi">
-                        <strong>Bonzi:</strong><br>
-                        "Chart's weak. Whale wallet moved 40% to CEX, same pattern as [specific example]. Here's why that matters..."
+                <div class="brutal-box">
+                    <strong>1. The Dopamine Cycle</strong><br>
+                    <span class="stat-callout">210 million people</span> globally exhibit addictive social media behaviors. TikTok is called a "dopamine slot machine"—6-second videos creating rapid-fire addiction. Your brain can't predict when the next reward comes, so it stays locked in <em>anticipation and craving</em>. "Dopamine-scrolling" is now officially recognized as a public health challenge (2025 study).
+                    <br><br>
+                    <strong>2. The Data Harvesting</strong><br>
+                    Every click, pause, and scroll creates a <em>detailed psychological profile</em> sold to advertisers who use it to influence your buying decisions and emotional states. Since Facebook, TikTok, Instagram, X are free—<strong>you are the product</strong>. The more time you spend engaging, the more ads in your face, the more data harvested, the worse your mental and social health.
+                </div>
+                <div class="solution-box">
+                    <strong>The Bonzi Approach:</strong><br>
+                    We don't harvest your data. We don't run ads. We don't optimize for engagement addiction. Open source means you can <em>audit everything</em>. Self-host option means you control your own data. On-chain transparency for rewards—no black box algorithms deciding who gets what.
+                    <div class="accountability">
+                        <strong>Accountability:</strong> GitHub audit trail. No tracking pixels. No analytics beyond what you explicitly enable. Verify it yourself.
                     </div>
                 </div>
-                <p class="faq-answer">
-                    We clone <em>judgment</em>, not just information. 9 years of trading, DeFi mechanics, macro analysis, investor psychology. Hand-curated, not scraped.
-                </p>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">What about Claude Code hype?</h3>
+                <h3 class="faq-question">Why should I trust crypto at all after this carnage?</h3>
                 <p class="faq-answer">
-                    Different category. <strong>Claude Code = general coding agent</strong>. Bonzi = crypto expertise clone.
+                    You shouldn't trust "crypto." You should trust <strong>systems</strong>. There's a difference.
                 </p>
-                <div class="highlight-box">
-                    Claude Code might scaffold a DeFi app. Bonzi tells you if that app's tokenomics are a trap.
+                <div class="brutal-box">
+                    The crash revealed what we already knew: meme coins are fragile, celebrity tokens are extraction vehicles, and 95% of founders are PVP—player vs player, taking your money while pretending to build.
+                    <br><br>
+                    CT culture became "suicide, not algorithm"—Nikita Bier (X Head of Product) said it himself. The community ate itself. Coordinated buys, rug pulls, FUD campaigns from influential accounts causing rapid crashes. Engagement doesn't reflect agreement—<em>bot networks and engagement farming make unpopular views seem mainstream</em>.
                 </div>
-                <p class="faq-answer">
-                    CT calls general AI tools "bubble froth" for domain depth. Not competitors. We're the <em>specialized fork</em> for crypto.
-                </p>
-            </div>
-        </div>
-
-        <!-- TRUST -->
-        <div class="faq-category">
-            <h2 class="category-title">Trust & Credibility</h2>
-
-            <div class="faq-item">
-                <h3 class="faq-question">Why should I trust another AI tool?</h3>
-                <p class="faq-answer">
-                    <strong>Verifiable lineage:</strong>
-                </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li><span class="stat-highlight">600+ days</span> of on-chain reward distribution</li>
-                    <li>Git commits through the bear market (not just bull hype)</li>
-                    <li>Real partnerships: Ethervista, Defiants (relationships, not announcements)</li>
-                    <li>Open source: audit the code yourself</li>
-                </ul>
-                <div class="highlight-box quote">
-                    "Integrity beats all traits on long timelines. Reputation is hard to build, easy to lose."<br>
-                    <small style="color: var(--gray);">— CT sentiment on builder trust</small>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <h3 class="faq-question">How do you prove you're better than generic AI?</h3>
-                <p class="faq-answer">
-                    <strong>"Point at the mistake" demos.</strong> Generic AI hallucinates DeFi yields and misreads whale patterns. Bonzi's corpus catches what they miss.
-                </p>
-                <p class="faq-answer" style="margin-top: 12px;">
-                    The validation method that works in crypto: side-by-side comparisons where generics fail and specialized clones succeed. Not benchmarks—<em>real calls</em>.
-                </p>
-            </div>
-
-            <div class="faq-item">
-                <h3 class="faq-question">Do OGs actually respect "lineage" as a trust signal?</h3>
-                <p class="faq-answer">
-                    Yes. In a space where <em>95% of founders are seen as PVP</em> (player-vs-player, self-serving), bear market survival is proof of integrity.
-                </p>
-                <div class="highlight-box">
-                    OGs bet on builders who "wrote the spec, not chased the meta." Organic growth over hype builds trust. Consistency and genuine interaction trump attention farming.
+                <div class="solution-box">
+                    <strong>What We're Building Instead:</strong><br>
+                    A DeFi economy based on <em>cooperation, not extraction</em>. Merit-based rewards over wealth-based influence. Community pools where 75% goes to LP hardlock—meaning liquidity can't be pulled. On-chain proof of every transaction. No promises—<strong>code and receipts</strong>.
+                    <div class="accountability">
+                        <strong>Accountability:</strong> 600+ days of on-chain reward distribution. Git commits through the bear market—not just bull hype. Real partnerships with Ethervista, Defiants (relationships, not announcements).
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- TECHNICAL -->
+        <!-- CLAUDE CODE DIFFERENTIATION -->
         <div class="faq-category">
-            <h2 class="category-title">Technical</h2>
+            <h2 class="category-title">What About Claude Code? (The AI Hype Check)</h2>
 
             <div class="faq-item">
-                <h3 class="faq-question">Is this just a ChatGPT wrapper?</h3>
+                <h3 class="faq-question">Isn't this just another ChatGPT/Claude wrapper?</h3>
                 <p class="faq-answer">
-                    No. Moat isn't the model. It's the <em>corpus</em>:
+                    Let's address the plastic parade directly:
                 </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li>15,613 messages of real crypto conversations</li>
-                    <li>Decision-making style captured (not just facts)</li>
-                    <li>Fine-tuned for DeFi mechanics, macro analysis, investor psychology</li>
-                    <li>Few-shot examples of judgment calls, not generic prompts</li>
-                </ul>
+                <div class="brutal-box">
+                    The next wave of "AI projects" will be curated by nutjobs with no XP and their Claude Code copilot—shipping half-baked wrappers, calling it innovation, raising seed rounds while you hold the bag.
+                    <br><br>
+                    Generic AI tools hallucinate DeFi yields. They misread whale patterns. They give you "always DYOR" platitudes while you're getting rugged in real-time. <em>They read about crypto. They didn't survive it.</em>
+                </div>
+                <div class="comparison-grid">
+                    <div class="problem">
+                        <strong>Generic AI (The Plastic):</strong>
+                        "Cryptocurrency investments carry risk. Always do your own research before investing. Consider consulting a financial advisor."
+                    </div>
+                    <div class="solution">
+                        <strong>Bonzi (Calibrated Intuition):</strong>
+                        "Chart's weak. Whale wallet moved 40% to CEX—same pattern as [specific historical example]. Dev wallet unlocks in 3 days. Here's why that matters for your position..."
+                    </div>
+                </div>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">Is it open source? Doesn't that kill your business?</h3>
+                <h3 class="faq-question">How is Bonzi different from Claude Code specifically?</h3>
                 <p class="faq-answer">
-                    <strong>Code is open. Moat is not.</strong>
+                    <strong>Different category entirely.</strong> Claude Code is a general coding agent—"terrifyingly powerful" for prototyping apps, debugging, vibe-coding startups. CT calls it "lights out" for general dev.
+                </p>
+                <div class="highlight-box">
+                    <strong>Claude Code:</strong> Might scaffold a DeFi app in hours. Automates coding workflows. Great for non-devs building products.<br><br>
+                    <strong>Bonzi:</strong> Tells you if that DeFi app's tokenomics are a trap. Spots the whale pattern. Knows why the chart looks weak because it's seen that pattern through 3 cycles.
+                </div>
+                <p class="faq-answer" style="margin-top: 16px;">
+                    CT small KOLs say generics like Claude "hallucinate yields or ignore cycle scars." We're not competing with Claude Code—we're the <em>specialized fork</em> for crypto judgment. Claude Code reads about bear markets. Bonzi lived them.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What's the actual technical moat?</h3>
+                <p class="faq-answer">
+                    Our moat isn't the model. It's the <em>corpus</em>:
+                </p>
+                <ul class="list-brutal">
+                    <li><strong>96,361 messages</strong> of real crypto conversations spanning October 2018 to October 2024</li>
+                    <li><strong>Decision-making style captured</strong>—not just facts, but judgment calls</li>
+                    <li><strong>Fine-tuned for:</strong> DeFi mechanics, macro analysis, investor psychology, community management</li>
+                    <li><strong>Few-shot examples</strong> of actual calls that worked (and ones that didn't)</li>
+                </ul>
+                <div class="solution-box">
+                    <strong>The Technical Stack:</strong><br>
+                    <strong>Fine-tuning:</strong> Embeds judgment permanently (10-20% accuracy boost over base models)<br>
+                    <strong>RAG:</strong> Adds real-time on-chain data for fresh context<br>
+                    <strong>Hybrid Search:</strong> Combines semantic (conceptual) + keyword (exact matches like token tickers)<br>
+                    <strong>Prompt engineering alone doesn't cut it for crypto.</strong>
+                    <div class="accountability">
+                        <strong>Validation:</strong> "Point at the mistake" demos. Side-by-side where generic AI fails crypto nuance, but Bonzi nails it via real convos. Not benchmarks—real calls.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MARKET VALIDATION -->
+        <div class="faq-category">
+            <h2 class="category-title">Market Validation (The Numbers)</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What's the market size for "Brain as a Service"?</h3>
+                <p class="faq-answer">
+                    The crypto-specific BaaS market (domain-expert AI clones) is a subset of blockchain AI:
+                </p>
+                <div class="market-box">
+                    <h4>Crypto BaaS Market Projections</h4>
+                    <div class="market-stats">
+                        <div class="market-stat">
+                            <span class="value">$680M</span>
+                            <span class="label">2025 Market Size</span>
+                        </div>
+                        <div class="market-stat">
+                            <span class="value">$4.3B</span>
+                            <span class="label">2034 Projection</span>
+                        </div>
+                        <div class="market-stat">
+                            <span class="value">22.93%</span>
+                            <span class="label">CAGR Growth</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="faq-answer">
+                    Web3 AI agents alone hit <strong>$1.39B funding in 2025</strong>. AI-crypto startups raised $565M. The overall Web3 market grows to $257B by 2033 (CAGR 50.2%), driven by DeFi/trading clones. AI agent tokens exceed <strong>$10B+ market cap</strong> (FET, TAO, etc.).
                 </p>
                 <p class="faq-answer" style="margin-top: 12px;">
-                    Projects like LangChain and Bittensor prove this works. They open-source frameworks while gating:
-                </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li>Training data (our 15k message corpus)</li>
-                    <li>Trust network and relationships</li>
-                    <li>Lineage proving consistency</li>
-                    <li>The "calibrated intuition" generics can't replicate</li>
-                </ul>
-                <p class="faq-answer" style="margin-top: 12px;">
-                    Open source = peer review. No spyware like old Bonzi. <em>Provenance > secrecy in Web3.</em>
+                    The niche: <em>"Talk to someone who's survived 3 cycles, not an AI that scraped them."</em>
                 </p>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">What's the tech stack?</h3>
+                <h3 class="faq-question">Who are the closest competitors?</h3>
                 <p class="faq-answer">
-                    <strong>Fine-tuning + RAG</strong>. Fine-tuning embeds judgment permanently (10-20% accuracy boost). RAG adds real-time on-chain data. Prompt engineering alone doesn't cut it for crypto.
+                    Crypto-native competitors with 2+ years track record:
+                </p>
+                <table class="competitor-table">
+                    <tr>
+                        <th>Project</th>
+                        <th>Founded</th>
+                        <th>Focus</th>
+                        <th>Moat</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Fetch.ai (FET)</strong></td>
+                        <td>2017</td>
+                        <td>Autonomous trading agents</td>
+                        <td>Decentralized compute, RLHF for styles</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bittensor (TAO)</strong></td>
+                        <td>2021</td>
+                        <td>Subnet specialization</td>
+                        <td>Tokenized rewards, distributed ML</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SingularityNET (AGIX)</strong></td>
+                        <td>2017</td>
+                        <td>AI marketplace</td>
+                        <td>ASI token governance, DAO archiving</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Virtuals Protocol</strong></td>
+                        <td>2024</td>
+                        <td>Tokenized agent ownership</td>
+                        <td>ERC-8004 provenance, flywheels</td>
+                    </tr>
+                </table>
+                <p class="faq-answer" style="margin-top: 16px;">
+                    <strong>Bonzi differentiates via:</strong> "Calibrated intuition" from real cycles (not just facts), plus community management focus. We're <em>niche sovereign</em>: not a broad marketplace, but the crypto judgment clone for communities.
                 </p>
             </div>
+        </div>
+
+        <div class="manifesto-quote">
+            <blockquote>
+                "Integrity beats all traits on long timelines. Reputation is hard to build, easy to lose."
+            </blockquote>
+            <cite>— The only truth that survived 3 cycles</cite>
         </div>
 
         <!-- FOR SMALL KOLS -->
         <div class="faq-category">
-            <h2 class="category-title">For Small KOLs</h2>
+            <h2 class="category-title">For Small KOLs (Under 50k Followers)</h2>
 
             <div class="faq-item">
-                <h3 class="faq-question">How does this help me with <50k followers?</h3>
+                <h3 class="faq-question">What is Bonzi, and why should a small KOL like me care?</h3>
                 <p class="faq-answer">
-                    <strong>Frees you from 24/7 moderation</strong> so you can focus on alpha:
+                    Bonzi is an AI bot that lives in your Telegram/Discord, trained on real crypto convos (96k+ messages) to manage communities, answer noob questions, spot farmers, and reward OGs.
                 </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li>Auto-verifies raids (no manual checking)</li>
-                    <li>Spots sybils farming your community</li>
-                    <li>Answers noob questions endlessly</li>
-                    <li>Rewards your real OGs, not grinders</li>
-                </ul>
                 <p class="faq-answer" style="margin-top: 12px;">
-                    Like a co-founder who doesn't sleep. No more drowning in raids or FUD.
+                    For us with &lt;50k followers, it's a game-changer: <strong>frees up time from 24/7 moderation</strong> so we can focus on alpha hunting. No more drowning in raids or FUD. It's like having a co-founder who doesn't sleep.
                 </p>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">Can I clone my own expertise?</h3>
+                <h3 class="faq-question">How does Bonzi help with sybils and farmers?</h3>
                 <p class="faq-answer">
-                    Yes. <strong>"Brain as a Service"</strong> model:
+                    As small KOLs, our groups get farmed by bots chasing airdrops—wasting our budgets.
                 </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li>Free tier: 100 interactions</li>
-                    <li>Paid tiers via Stripe or Base chain</li>
-                    <li>Your convos → your judgment → monetized</li>
+                <ul class="list-brutal">
+                    <li><strong>AI FUD patrol:</strong> Counters misinformation with accurate info from your docs</li>
+                    <li><strong>Raid verification:</strong> Checks real tweets, originality, account age</li>
+                    <li><strong>Pattern detection:</strong> Spots sybils across wallets and communities</li>
+                    <li><strong>Quality tracking:</strong> +1 points for helpful reacts, quality questions, onboarding</li>
+                    <li><strong>Auto-leaderboards:</strong> ETH claims at 100 pts (bonus for token holders)</li>
                 </ul>
                 <p class="faq-answer" style="margin-top: 12px;">
-                    Market size: <span class="stat-highlight">$680M in 2025</span> → $4.3B by 2034. The niche: "talk to someone who's survived 3 cycles, not an AI that scraped them."
+                    No more manual reviews. Free forever for self-host, which aligns with our anti-VC ethos.
                 </p>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">What's the "flywheel" model?</h3>
+                <h3 class="faq-question">What's the monetization angle for cloning my expertise?</h3>
                 <p class="faq-answer">
-                    <strong>Attention → Trust → Generosity → More Attention</strong>
+                    We're not big enough for sponsorships, so cloning our brain for "Brain as a Service" is alpha:
                 </p>
-                <p class="faq-answer" style="margin-top: 12px;">
-                    Give free value first. Build trust in CT. Then monetize relationships, not attention. Same playbook as Fetch.ai and Virtuals: free demos → trust → paid access.
-                </p>
+                <ul class="list-brutal">
+                    <li><strong>Free tier:</strong> 100 interactions</li>
+                    <li><strong>Paid tiers:</strong> Via Stripe or Base chain (Starter/Pro/Enterprise)</li>
+                    <li><strong>Flywheel:</strong> Give free value in CT, build trust, then monetize relationships</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>The Flywheel Model (Since 2018):</strong><br>
+                    Attention → Trust → Generosity → More Attention<br><br>
+                    Free value first (helped communities, volunteered skills). Monetize <em>relationships</em>, not attention. "Microclimates" of trust built over years.
+                </div>
             </div>
         </div>
 
-        <!-- PRICING -->
+        <!-- TRUST & CREDIBILITY -->
         <div class="faq-category">
-            <h2 class="category-title">Pricing & Business</h2>
+            <h2 class="category-title">For the Skeptics (Good, You Should Be)</h2>
 
             <div class="faq-item">
-                <h3 class="faq-question">How much does it cost?</h3>
+                <h3 class="faq-question">How defensible is "lineage" as a trust signal?</h3>
                 <p class="faq-answer">
-                    <strong>Free: $0 forever</strong> (self-hosted, full features)<br>
-                    <strong>Social Impact: $60/year</strong> (nonprofits, requires proof)
+                    <strong>Highly defensible in crypto.</strong> In a space where 95% of founders are seen as PVP (self-serving), bear market survival is proof of integrity.
+                </p>
+                <div class="highlight-box">
+                    <strong>On-chain proof:</strong> Tools like ERC-8004 track build history, making replication hard.<br>
+                    <strong>Community perception:</strong> OGs like Vitalik are trusted for "writing the spec, not chasing meta."<br>
+                    <strong>Reputation:</strong> "Hard to build, easy to lose"—weekly, founders lose trust via unverified claims.<br>
+                    <strong>OG respect:</strong> "Proven expertise" is the key bet. Organic growth over hype builds "family" communities.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Why should I trust you specifically?</h3>
+                <p class="faq-answer">
+                    <strong>You shouldn't trust. You should verify.</strong>
+                </p>
+                <ul class="list-brutal">
+                    <li><span class="stat-highlight">600+ days</span> of on-chain reward distribution—verifiable</li>
+                    <li>Git commits through the bear market—check the timestamps</li>
+                    <li>Real partnerships with Ethervista, Defiants—ask them directly</li>
+                    <li>Open source—audit the code yourself or pay someone to</li>
+                    <li>No VC money—no one to dump on you at TGE</li>
+                    <li>No ads, no data selling—revenue from actual product usage</li>
+                </ul>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Is the code open source? Doesn't that kill your business?</h3>
+                <p class="faq-answer">
+                    <strong>Code is open. Moat is not.</strong>
                 </p>
                 <p class="faq-answer" style="margin-top: 12px;">
-                    No VC money. No ads. No data selling. Dual billing rails: Stripe for fiat, Base chain for crypto-native.
+                    Projects like LangChain, Bittensor, and Fetch.ai prove this works. They open-source frameworks while gating:
+                </p>
+                <ul class="list-brutal">
+                    <li><strong>Training data:</strong> Our 96k message corpus</li>
+                    <li><strong>Trust network:</strong> Relationships built over years</li>
+                    <li><strong>Lineage:</strong> Provable consistency through cycles</li>
+                    <li><strong>Calibrated intuition:</strong> The judgment generics can't replicate</li>
+                </ul>
+                <p class="faq-answer" style="margin-top: 12px;">
+                    Open source = peer review. No spyware like old Bonzi. <em>Provenance beats secrecy in Web3.</em>
                 </p>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">Where does the money go?</h3>
+                <h3 class="faq-question">What if this is just another exit scam with better marketing?</h3>
                 <p class="faq-answer">
-                    <strong>95%</strong> to social impact (Unidos Projects, refugee resilience)<br>
-                    <strong>5%</strong> real yield to $BONZI stakers
+                    Valid question. Here's the structural answer:
                 </p>
-                <p class="faq-answer" style="margin-top: 12px;">
-                    Decentralized philanthropy. Community growth funds refugee-led initiatives. Not extractive. <em>Generative</em>.
-                </p>
+                <div class="solution-box">
+                    <strong>1. No Pre-mine:</strong> We didn't allocate ourselves 30% at launch like DADDY.<br><br>
+                    <strong>2. LP Hardlocked:</strong> 75% of community pool goes to liquidity that physically cannot be withdrawn. Code enforced, not promise enforced.<br><br>
+                    <strong>3. Revenue-Based, Not Inflation-Based:</strong> Staker rewards come from actual Stripe/Base payments, not token printing.<br><br>
+                    <strong>4. Open Source:</strong> You can fork it tomorrow if we turn evil. The code works without us.<br><br>
+                    <strong>5. Bear Market Proof:</strong> We built through 2018-2023 when there was no hype to extract. That's the receipts.
+                    <div class="accountability">
+                        <strong>The Real Test:</strong> Watch our actions over the next year. Not our words. This FAQ means nothing if we don't execute. Bookmark it and hold us accountable.
+                    </div>
+                </div>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">Who are your competitors?</h3>
+                <h3 class="faq-question">Is this like the old Bonzi (the spyware)?</h3>
                 <p class="faq-answer">
-                    <strong>Not ChatGPT/Claude</strong>. General tools.<br>
-                    <strong>Not Galxe/Zealy</strong>. Dashboards. We live in chat.
+                    The 1999 Bonzi got bundled with spyware by third parties. That's exactly why we're <strong>open source</strong>:
                 </p>
-                <p class="faq-answer" style="margin-top: 12px;">
-                    Closest: Fetch.ai (autonomous trading), Bittensor (subnet specialization), Virtuals (tokenized agents). But they're broad platforms. We're <em>niche sovereign</em>: community management + expertise cloning for crypto specifically.
-                </p>
-            </div>
-        </div>
-
-        <!-- SECURITY -->
-        <div class="faq-category">
-            <h2 class="category-title">Security & Privacy</h2>
-
-            <div class="faq-item">
-                <h3 class="faq-question">Is this like the old Bonzi (spyware)?</h3>
-                <p class="faq-answer">
-                    No. That's why we're <strong>open source</strong>. Audit everything. The 1999 Bonzi got bundled with spyware by third parties. We rebuilt clean.
-                </p>
-                <ul class="faq-answer" style="margin-left: 24px; margin-top: 12px;">
-                    <li>No tracking</li>
-                    <li>No ads</li>
+                <ul class="list-brutal">
+                    <li>No tracking pixels</li>
+                    <li>No ads or ad networks</li>
                     <li>Self-hosted option = you control everything</li>
-                    <li>On-chain transparency for rewards</li>
+                    <li>On-chain transparency for all rewards</li>
+                    <li>Data encrypted, never sold, never shared</li>
                 </ul>
+                <p class="faq-answer" style="margin-top: 16px;">
+                    We reclaimed the name <em>because</em> it forces the conversation. You remember Bonzi as spyware. We're proving software can be built differently. The purple monkey is rehabilitation, not repetition.
+                </p>
+            </div>
+        </div>
+
+        <!-- SYSTEMS -->
+        <div class="faq-category">
+            <h2 class="category-title">Addressable & Accountable Systems</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How do you prevent becoming another ponzi?</h3>
+                <p class="faq-answer">
+                    By building systems that make extraction <em>structurally impossible</em>:
+                </p>
+                <ul class="list-brutal">
+                    <li><strong>Merit > Wealth:</strong> Karma system rewards genuine contribution, not bag size. You can't buy your way to influence—you earn it through consistent, valuable participation.</li>
+                    <li><strong>75% LP Hardlock:</strong> Community pool tips go to liquidity that <em>cannot be pulled</em>. Not "trust us"—code enforced.</li>
+                    <li><strong>Real Yield Only:</strong> 5% to stakers from actual revenue (Stripe + Base chain payments). No inflationary rewards. No "stake to earn more tokens we printed."</li>
+                    <li><strong>95% to Impact:</strong> Revenue goes to Unidos Projects, refugee resilience. Decentralized philanthropy—community growth funds real initiatives, not founder lambos.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>The Test:</strong> If we disappear tomorrow, does the system still work? Yes. Open source code. Decentralized rewards. Community-owned data. We built to be <em>replaceable</em>—that's the integrity check.
+                </div>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">What data do you collect?</h3>
+                <h3 class="faq-question">How is this different from Galxe, Zealy, or other "community tools"?</h3>
                 <p class="faq-answer">
-                    Only what's needed for features: messages for scoring, wallet for claims. See <a href="privacy.html" style="color: var(--purple);">privacy policy</a>. Self-host = you control everything. Data encrypted, never sold.
+                    They're dashboards. We're <em>in the chat</em>.
                 </p>
+                <table class="competitor-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Bonzi</th>
+                        <th>Galxe</th>
+                        <th>Zealy</th>
+                        <th>Mava</th>
+                    </tr>
+                    <tr>
+                        <td>Lives in chat</td>
+                        <td><strong>Native</strong></td>
+                        <td>Dashboard</td>
+                        <td>Dashboard</td>
+                        <td>Dashboard</td>
+                    </tr>
+                    <tr>
+                        <td>AI raid review</td>
+                        <td><strong>Automatic</strong></td>
+                        <td>Manual</td>
+                        <td>Manual</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>AI answers questions</td>
+                        <td><strong>Learns docs</strong></td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Human</td>
+                    </tr>
+                    <tr>
+                        <td>Auto-moderation</td>
+                        <td><strong>24/7</strong></td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Manual</td>
+                    </tr>
+                    <tr>
+                        <td>Farmer detection</td>
+                        <td><strong>Pattern-based</strong></td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Open source</td>
+                        <td><strong>Yes</strong></td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Funding model</td>
+                        <td><strong>Not-for-profit</strong></td>
+                        <td>VC-backed</td>
+                        <td>VC-backed</td>
+                        <td>VC-backed</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td><strong>$0 forever</strong></td>
+                        <td>Freemium</td>
+                        <td>Freemium</td>
+                        <td>$500+/mo</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
         <!-- GETTING STARTED -->
         <div class="faq-category">
-            <h2 class="category-title">Getting Started</h2>
+            <h2 class="category-title">Ready to Build (Not Just Talk)</h2>
 
             <div class="faq-item">
                 <h3 class="faq-question">How do I start?</h3>
                 <p class="faq-answer">
-                    <strong>Option 1:</strong> Self-host from <a href="https://github.com/Siah-kin/community-bot" target="_blank" style="color: var(--purple);">GitHub</a> (free forever)<br>
-                    <strong>Option 2:</strong> Try the <a href="index.html#demo" style="color: var(--purple);">demo</a> on the main page<br>
-                    <strong>Option 3:</strong> DM <a href="https://x.com/bonzi_vista" target="_blank" style="color: var(--purple);">@bonzi_vista</a> for setup help
+                    Three paths. All lead to the same place:
                 </p>
+                <ul class="list-brutal">
+                    <li><strong>Self-Host (Free Forever):</strong> Clone from <a href="https://github.com/Siah-kin/community-bot" target="_blank" style="color: var(--purple);">GitHub</a>. Full features. You control everything. We recommend this.</li>
+                    <li><strong>Try the Demo:</strong> <a href="index.html#demo" style="color: var(--purple);">Main page demo</a> shows the judgment quality without commitment.</li>
+                    <li><strong>Get Setup Help:</strong> DM <a href="https://x.com/bonzi_vista" target="_blank" style="color: var(--purple);">@bonzi_vista</a>. No sales pitch. Just configuration help.</li>
+                </ul>
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">What platforms are supported?</h3>
+                <h3 class="faq-question">What does it cost?</h3>
                 <p class="faq-answer">
-                    <strong>Telegram</strong> (native, full features)<br>
-                    <strong>Discord</strong> (coming soon)<br>
+                    <strong>Free: $0 forever</strong> (self-hosted, full features)<br>
+                    <strong>Social Impact: $60/year</strong> (nonprofits, requires proof)<br>
+                    <strong>Premium Features:</strong> Pay-as-you-go via Stripe or Base chain
+                </p>
+                <div class="highlight-box">
+                    No VC subsidies that disappear after Series B. No "free tier" that's actually a funnel to expensive enterprise. The free version <em>is</em> the full version. Premium is for advanced features, not basic functionality.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What platforms?</h3>
+                <p class="faq-answer">
+                    <strong>Telegram:</strong> Native, full features, live now<br>
+                    <strong>Discord:</strong> Coming soon<br>
                     <strong>Languages:</strong> EN, PT, 中文, TR, RU, FR
                 </p>
+            </div>
+        </div>
+
+        <!-- FINAL WORD -->
+        <div class="faq-category">
+            <h2 class="category-title">The Bottom Line</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What's the actual vision here?</h3>
+                <p class="faq-answer">
+                    A DeFi economy where:
+                </p>
+                <ul class="list-brutal">
+                    <li><strong>Merit beats money</strong>—contribution determines influence, not bag size</li>
+                    <li><strong>Data stays yours</strong>—no harvesting, no selling, no algorithmic manipulation</li>
+                    <li><strong>Value flows to impact</strong>—not founders, not VCs, not insiders</li>
+                    <li><strong>Code enforces promises</strong>—not trust, not reputation, not "we're the good guys"</li>
+                    <li><strong>Expertise is cloneable</strong>—your judgment becomes an asset you can monetize without selling your soul to platforms</li>
+                </ul>
+                <div class="brutal-box">
+                    We're not here to make you rich. We're here to build systems that can't rug you. That's a lower bar than it should be—but in this industry, it's revolutionary.
+                    <br><br>
+                    The skeptic who reads this and still doubts? <em>Good.</em> Verify everything. Watch for a year. Then decide.
+                    <br><br>
+                    The degen who's tired of being farmed? <em>Welcome.</em> Let's build something that doesn't require you to trust us—just audit us.
+                </div>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>Built by builders who survived 3 cycles.</p>
-        <p style="margin-top: 16px; color: var(--gray);">
+        <p style="font-size: 18px; margin-bottom: 8px;">Built by builders who survived 3 cycles.</p>
+        <p style="color: var(--gray); margin-bottom: 24px;">No VC money. No promises. Just code and receipts.</p>
+        <p style="color: var(--gray);">
             <a href="index.html">Home</a> ·
             <a href="features.html">Features</a> ·
             <a href="privacy.html">Privacy</a> ·
@@ -508,5 +1069,73 @@
             <a href="https://x.com/bonzi_vista">@bonzi_vista</a>
         </p>
     </footer>
+
+    <!-- Background music (continues from homepage) -->
+    <audio id="bg-music" preload="auto"></audio>
+    <button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle sound" style="position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:#7C3AED;border:none;border-radius:50%;cursor:pointer;z-index:1000;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,0.4);">
+        <svg class="sound-on" viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;display:block;">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg class="sound-off" viewBox="0 0 24 24" style="width:24px;height:24px;fill:white;display:none;">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </button>
+    <style>
+        .sound-toggle.muted { background: #71717A; box-shadow: 0 4px 20px rgba(113,113,122,0.3); }
+        .sound-toggle.muted .sound-on { display: none; }
+        .sound-toggle.muted .sound-off { display: block; }
+    </style>
+
+    <script>
+        // Resume Moby from homepage
+        const bgMusic = document.getElementById('bg-music');
+        const soundToggle = document.getElementById('sound-toggle');
+        let isMuted = true;
+        const mobyVolume = 0.3;
+
+        function checkResumeAudio() {
+            const saved = localStorage.getItem('bonzi_audio');
+            if (saved) {
+                const state = JSON.parse(saved);
+                if (state.track === 'moby') {
+                    bgMusic.src = 'moby-god-moving.mp3';
+                    bgMusic.currentTime = state.time || 0;
+                    bgMusic.loop = true;
+                    bgMusic.volume = state.volume || mobyVolume;
+                    isMuted = false;
+                    soundToggle.classList.remove('muted');
+                    bgMusic.play().catch(e => {});
+                }
+                localStorage.removeItem('bonzi_audio');
+            }
+        }
+        checkResumeAudio();
+
+        soundToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            soundToggle.classList.toggle('muted', isMuted);
+            if (isMuted) {
+                bgMusic.volume = 0;
+            } else {
+                if (!bgMusic.src || bgMusic.src === '') {
+                    bgMusic.src = 'moby-god-moving.mp3';
+                    bgMusic.loop = true;
+                }
+                bgMusic.volume = mobyVolume;
+                bgMusic.play().catch(e => {});
+            }
+        });
+
+        // Save state before leaving
+        window.addEventListener('beforeunload', () => {
+            if (!isMuted) {
+                localStorage.setItem('bonzi_audio', JSON.stringify({
+                    track: 'moby',
+                    time: bgMusic.currentTime,
+                    volume: bgMusic.volume
+                }));
+            }
+        });
+    </script>
 </body>
 </html>

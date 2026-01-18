@@ -2415,13 +2415,8 @@ document.querySelectorAll('.suggestion').forEach(btn => {
 // Music is SPATIAL, not triggered. Like rooms in a house.
 // Walk into room = hear music. Walk out = fades. Walk back = still playing.
 //
-// ROOM 1 (dark):   sections [3-4] .reveal → .statement
-//                  Track: RATM - Killing in the Name
-//
-// ROOM 2 (mellow): sections [9-10, 12-13] .features → .demo, .mission → .links
-//                  Track: Moby - God Moving Over the Face of the Waters
-//
-// SILENCE ZONES:  [1-2] intro, [5-8] pain/comparison, [11] pricing
+// ===========================================
+// REVOLUTION PLAYLIST - Click to cycle tracks
 // ===========================================
 
 const bgMusic = document.getElementById('bg-music');
@@ -2429,30 +2424,42 @@ const soundToggle = document.getElementById('sound-toggle');
 const soundHint = document.getElementById('sound-hint');
 const solutionsSection = document.querySelector('.solutions-section');
 const comparisonSection = document.querySelector('.comparison-section');
+
+// Revolution playlist - cycles on button click (top section only)
+const revolutionPlaylist = [
+    { src: 'killing-in-the-name.mp3', name: 'RATM - Killing in the Name' },
+    { src: 'children-of-the-grave.mp3', name: 'Black Sabbath - Children of the Grave' },
+    { src: 'moby-all-that-i-need.mp3', name: 'Moby - All That I Need Is To Be Loved' }
+];
+
+// The magical song - only plays after "why bonzi is different"
+const magicalTrack = { src: 'moby-god-moving.mp3', name: 'Moby - God Moving Over the Face of the Waters' };
+
 let isMuted = true;
 let maxVolume = 0.5;
-let mobyVolume = 0.3;
-let currentTrack = 'ratm';
+let magicalVolume = 0.3;
+let currentTrackIndex = 0;
 let targetVolume = 0;
+let inMagicalZone = false;
 
 // Start muted
 bgMusic.volume = 0;
-bgMusic.src = 'killing-in-the-name.mp3';
+bgMusic.src = revolutionPlaylist[0].src;
 bgMusic.loop = true;
 
-// Smooth volume transition (called every frame when needed)
+// Smooth volume transition
 function smoothVolume() {
     if (isMuted) return;
     const diff = targetVolume - bgMusic.volume;
     if (Math.abs(diff) > 0.01) {
-        bgMusic.volume += diff * 0.1; // Smooth easing
+        bgMusic.volume += diff * 0.08; // Smooth easing
         requestAnimationFrame(smoothVolume);
     } else {
         bgMusic.volume = targetVolume;
     }
 }
 
-// Scroll-based volume with track switching
+// Scroll-based zones: revolution tracks fade to silence, then magical track appears
 function updateVolumeByScroll() {
     if (isMuted) return;
 
@@ -2466,94 +2473,121 @@ function updateVolumeByScroll() {
     const compRect = comparisonSection.getBoundingClientRect();
     const compTop = compRect.top + scrollY;
 
-    // ZONE 1: Top of page → solutions section = RATM fading to silence
-    // ZONE 2: Solutions section = SILENCE (gap between tracks)
-    // ZONE 3: Comparison section onward = Moby ambient
-
+    // ZONE 1: Top → solutions = Revolution playlist fades to silence
     if (scrollCenter < solTop) {
-        // ZONE 1: RATM zone - fade towards silence as approaching solutions
-        if (currentTrack !== 'ratm') {
-            bgMusic.src = 'killing-in-the-name.mp3';
+        if (inMagicalZone) {
+            // Switching back from magical zone to revolution
+            inMagicalZone = false;
+            bgMusic.src = revolutionPlaylist[currentTrackIndex].src;
             bgMusic.loop = true;
             bgMusic.play().catch(e => {});
-            currentTrack = 'ratm';
+            console.log('🎸 Back to:', revolutionPlaylist[currentTrackIndex].name);
         }
-        // Fade over distance from top to solutions
+        // Fade from full volume to silence as approaching solutions
         const fadeProgress = scrollCenter / solTop;
         targetVolume = maxVolume * (1 - fadeProgress);
         smoothVolume();
-    } else if (scrollCenter < compTop) {
-        // ZONE 2: Silence gap (solutions section)
+    }
+    // ZONE 2: Solutions section = SILENCE gap
+    else if (scrollCenter < compTop) {
         targetVolume = 0;
         smoothVolume();
-    } else {
-        // ZONE 3: Moby zone (comparison and beyond)
-        if (currentTrack !== 'moby') {
-            bgMusic.src = 'moby-god-moving.mp3';
+    }
+    // ZONE 3: Comparison ("why bonzi is different") onward = Magical track
+    else {
+        if (!inMagicalZone) {
+            // Enter magical zone - switch to Moby God Moving
+            inMagicalZone = true;
+            bgMusic.src = magicalTrack.src;
             bgMusic.loop = true;
+            bgMusic.volume = 0;
             bgMusic.play().catch(e => {});
-            currentTrack = 'moby';
+            console.log('✨ Magical zone:', magicalTrack.name);
         }
-        // Fade IN at start of comparison, then stay as background
-        const distIntoMoby = scrollCenter - compTop;
-        const fadeInDistance = viewportHeight * 0.5; // Fade in over half viewport
-        if (distIntoMoby < fadeInDistance) {
-            targetVolume = mobyVolume * (distIntoMoby / fadeInDistance);
+        // Fade in the magical track
+        const distIntoMagical = scrollCenter - compTop;
+        const fadeInDistance = viewportHeight * 0.5;
+        if (distIntoMagical < fadeInDistance) {
+            targetVolume = magicalVolume * (distIntoMagical / fadeInDistance);
         } else {
-            targetVolume = mobyVolume;
+            targetVolume = magicalVolume;
         }
         smoothVolume();
     }
 }
 
-// Save audio state before leaving page
+// Save audio state before leaving page (only if in magical zone)
 window.addEventListener('beforeunload', () => {
-    if (!isMuted && currentTrack === 'moby') {
+    if (!isMuted && inMagicalZone) {
         localStorage.setItem('bonzi_audio', JSON.stringify({
-            track: 'moby',
+            magical: true,
             time: bgMusic.currentTime,
             volume: bgMusic.volume
         }));
     }
 });
 
-// Check if we should resume Moby from another page
+// Check if we should resume magical track from another page
 function checkResumeAudio() {
     const saved = localStorage.getItem('bonzi_audio');
     if (saved) {
         const state = JSON.parse(saved);
-        if (state.track === 'moby') {
-            bgMusic.src = 'moby-god-moving.mp3';
-            bgMusic.currentTime = state.time;
+        if (state.magical) {
+            bgMusic.src = magicalTrack.src;
+            bgMusic.currentTime = state.time || 0;
             bgMusic.loop = true;
-            bgMusic.volume = state.volume;
-            currentTrack = 'moby';
+            bgMusic.volume = state.volume || magicalVolume;
+            inMagicalZone = true;
             isMuted = false;
             soundToggle.classList.remove('muted');
             bgMusic.play().catch(e => {});
+            console.log('✨ Resumed:', magicalTrack.name);
         }
         localStorage.removeItem('bonzi_audio');
     }
 }
 checkResumeAudio();
 
-// Toggle sound
-soundToggle.addEventListener('click', () => {
-    isMuted = !isMuted;
-    soundToggle.classList.toggle('muted', isMuted);
+// Play revolution track (only in top zone)
+function playRevolutionTrack(index) {
+    if (inMagicalZone) return; // Don't interrupt magical zone
+    currentTrackIndex = index;
+    bgMusic.src = revolutionPlaylist[index].src;
+    bgMusic.loop = true;
+    bgMusic.volume = maxVolume; // Set volume!
+    bgMusic.play().catch(e => console.log('Play blocked:', e));
+    console.log('🎸 Now playing:', revolutionPlaylist[index].name);
+}
 
-    // Hide the hint forever once clicked
+// Toggle sound - cycles through revolution playlist on each click
+soundToggle.addEventListener('click', () => {
     soundHint.classList.add('hidden');
 
     if (isMuted) {
-        bgMusic.volume = 0;
-    } else {
-        // Start playing
-        if (bgMusic.paused) {
-            bgMusic.play().catch(e => console.log('Audio autoplay blocked:', e));
+        // First click: unmute
+        isMuted = false;
+        soundToggle.classList.remove('muted');
+        if (!inMagicalZone) {
+            playRevolutionTrack(currentTrackIndex);
+        } else {
+            bgMusic.play().catch(e => {});
         }
         updateVolumeByScroll();
+    } else if (!inMagicalZone) {
+        // Subsequent clicks: cycle revolution playlist (only if not in magical zone)
+        currentTrackIndex = (currentTrackIndex + 1) % revolutionPlaylist.length;
+        playRevolutionTrack(currentTrackIndex);
+        updateVolumeByScroll();
     }
+    // In magical zone, clicks don't change the track - it's sacred
+});
+
+// Double-click to mute
+soundToggle.addEventListener('dblclick', () => {
+    isMuted = true;
+    soundToggle.classList.add('muted');
+    bgMusic.volume = 0;
+    console.log('🔇 Muted');
 });
 
 // Nav collapse on scroll + volume fade

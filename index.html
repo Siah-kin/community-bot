@@ -391,14 +391,13 @@
            4 icons: ⚙️ practical, 📖 theory, ⚖️ welfare, 🌐 lang
            ===================================================== */
 
-        /* Hide old top nav on desktop */
-        /* Top Navigation Bar */
+        /* Compact Top Navigation Bar - Icon Style */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 20px 40px;
+            padding: 10px 24px;
             background: rgba(10,10,10,0.95);
             backdrop-filter: blur(10px);
             z-index: 100;
@@ -409,47 +408,93 @@
         }
         .nav-logo {
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;
             color: #fff;
             text-decoration: none;
+        }
+
+        /* Center: 4 icon navigation */
+        .nav-icons-center { display: flex; gap: 8px; align-items: center; }
+        .nav-icon-wrap { position: relative; }
+        .nav-icon-btn {
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--purple);
+            transition: all 0.2s;
         }
-        .nav-logo img {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
+        .nav-icon-btn:hover { background: rgba(124, 58, 237, 0.15); }
+        .nav-icon-btn svg { width: 20px; height: 20px; }
+
+        /* Dropdown on hover */
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 100px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            margin-top: 4px;
         }
-        .nav-logo span { display: none; }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-primary, .nav-secondary { display: flex; align-items: center; gap: 24px; }
-        .nav-primary a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: lowercase;
-        }
-        .nav-secondary a {
-            color: var(--gray);
+        .nav-icon-wrap:hover .nav-dropdown { display: flex; }
+        .nav-dropdown a {
+            display: block;
+            padding: 8px 12px;
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
             font-size: 12px;
-            text-transform: lowercase;
+            border-radius: 6px;
+            white-space: nowrap;
         }
-        .nav-links a:hover { color: var(--purple); }
-        .nav-divider { color: rgba(255,255,255,0.2); font-size: 16px; margin: 0 8px; }
-        .nav-links a.active { color: var(--purple); }
+        .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
-        @media (max-width: 768px) {
-            nav { padding: 16px 20px; }
-            .nav-links { gap: 12px; }
-            .nav-primary, .nav-secondary { gap: 12px; }
-            .nav-primary a, .nav-secondary a { font-size: 12px; }
-            .nav-divider { display: none; }
+        /* Language dropdown */
+        .nav-lang-dropdown {
+            display: none;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 120px;
+            padding: 8px;
+            gap: 4px;
         }
+        .nav-icon-wrap:hover .nav-lang-dropdown { display: flex; }
+        .nav-lang-flag {
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .nav-lang-flag:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .nav-lang-flag.active { background: rgba(124, 58, 237, 0.25); color: var(--purple); }
+
+        /* Right: theme + connect */
+        .nav-right { display: flex; gap: 8px; align-items: center; }
+        .theme-toggle .icon-sun { display: none; }
+        body.light-mode .theme-toggle .icon-moon { display: none; }
+        body.light-mode .theme-toggle .icon-sun { display: block; }
+        .nav-connect-btn { background: linear-gradient(135deg, #d4c084 0%, #a89050 100%); color: #1a1a1a; }
+        .nav-connect-btn:hover { transform: scale(1.05); }
+
         @media (max-width: 600px) {
-            .nav-secondary { display: none; }
+            nav { padding: 8px 12px; }
+            .nav-icon-btn { width: 32px; height: 32px; }
+            .nav-icon-btn svg { width: 18px; height: 18px; }
         }
 
         .nav-connect {
@@ -790,16 +835,6 @@
             color: var(--white);
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
-        }
-
-        .poison-line {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: 500;
-            color: var(--purple-light);
-            font-style: italic;
-            letter-spacing: 0.02em;
-            text-align: center;
         }
 
         /* Pain points section - Domino Stack with purple accent bg */
@@ -1981,19 +2016,64 @@
 
 <nav>
     <a href="./" class="nav-logo">bonzi</a>
-    <div class="nav-links">
-        <div class="nav-primary">
-            <a href="features.html">features</a>
-            <a href="manual/">manual</a>
-            <a href="research/">research</a>
+
+    <!-- 4 Icon Navigation -->
+    <div class="nav-icons-center">
+        <!-- Gear: features, dao -->
+        <div class="nav-icon-wrap">
+            <button class="nav-icon-btn" aria-label="Practical">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <div class="nav-dropdown">
+                <a href="features.html">features</a>
+                <a href="dao/">dao</a>
+            </div>
         </div>
-        <span class="nav-divider">|</span>
-        <div class="nav-secondary">
-            <a href="economics/">economics</a>
-            <a href="faq.html">manifesto</a>
-            <a href="dao/">dao</a>
-            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source ↗</a>
+        <!-- Book: manifesto, manual -->
+        <div class="nav-icon-wrap">
+            <button class="nav-icon-btn" aria-label="Theory">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </button>
+            <div class="nav-dropdown">
+                <a href="faq.html">manifesto</a>
+                <a href="manual/">manual</a>
+            </div>
         </div>
+        <!-- Scale: economics, research -->
+        <div class="nav-icon-wrap">
+            <button class="nav-icon-btn" aria-label="Data">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
+            </button>
+            <div class="nav-dropdown">
+                <a href="economics/">economics</a>
+                <a href="research/">research</a>
+            </div>
+        </div>
+        <!-- Globe: languages -->
+        <div class="nav-icon-wrap">
+            <button class="nav-icon-btn" aria-label="Language">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </button>
+            <div class="nav-dropdown nav-lang-dropdown">
+                <span class="nav-lang-flag" data-lang="en">EN</span>
+                <span class="nav-lang-flag" data-lang="pt">PT</span>
+                <span class="nav-lang-flag" data-lang="zh">ZH</span>
+                <span class="nav-lang-flag" data-lang="tr">TR</span>
+                <span class="nav-lang-flag" data-lang="ru">RU</span>
+                <span class="nav-lang-flag" data-lang="fr">FR</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Theme + Connect -->
+    <div class="nav-right">
+        <button class="nav-icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button class="nav-icon-btn nav-connect-btn" id="nav-connect-btn" aria-label="Connect wallet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
     </div>
 </nav>
 
@@ -2030,7 +2110,6 @@
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">an AI that <span class="highlight">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class="highlight">their worst nightmare.</span></p>
     <a href="faq.html#why-purple" class="manifesto-btn" data-i18n="statement.manifesto">why purple?</a>
-    <p class="poison-line" data-i18n="statement.poison">we're the poison that attacks the poison.</p>
 </section>
 
 <section class="pain-section">
@@ -2446,8 +2525,7 @@ const translations = {
         "reveal.line1": "communities don't need", "reveal.line2": "another dashboard.", "reveal.line3": "they need a", "reveal.line4": "friend.",
         "statement.text": "an AI that <span class=\"highlight\">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class=\"highlight\">their worst nightmare.</span>",
         "statement.manifesto": "why purple?",
-        "statement.poison": "we're the poison that attacks the poison.",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "what do they all have in common?", "pain.question": "Who reviews the reviewers?", "pain.subtitle": "5 ways the entire web3 ambassador rails failed",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "what do they all have in common?", "pain.question": "Who reviews the reviewers?", "pain.subtitle": "5 ways the entire web3 ambassador rails failed",
         "pain.item1.title": "reviewers drown", "pain.item1.desc": "Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.",
         "pain.item2.title": "funders get farmed", "pain.item2.desc": "Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.",
         "pain.item3.title": "OGs are neglected", "pain.item3.desc": "Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.",
@@ -2490,8 +2568,7 @@ const translations = {
         "reveal.line1": "comunidades nao precisam", "reveal.line2": "de outro dashboard.", "reveal.line3": "elas precisam de um", "reveal.line4": "amigo.",
         "statement.text": "uma IA que <span class=\"highlight\">realmente vive</span> no seu telegram. aprende seus docs. responde perguntas as 3h da manha. chuta farmers e fudders enquanto voce dorme. <span class=\"highlight\">o pior pesadelo deles.</span>",
         "statement.manifesto": "por que roxo?",
-        "statement.poison": "somos o veneno que ataca o veneno.",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "o que todos tem em comum?", "pain.question": "Quem revisa os revisores?", "pain.subtitle": "5 formas que a infraestrutura de embaixadores web3 falhou",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "o que todos tem em comum?", "pain.question": "Quem revisa os revisores?", "pain.subtitle": "5 formas que a infraestrutura de embaixadores web3 falhou",
         "pain.item1.title": "revisores afogam", "pain.item1.desc": "Sua equipe passa horas verificando raids. Metade e lixo copiado. A outra metade e gerada por bots. Voce nao consegue mais distinguir. Burnout e real.",
         "pain.item2.title": "investidores sao farmados", "pain.item2.desc": "Seu orcamento de airdrop vai para exercitos de sybils. Farmers profissionais com 50 carteiras extraem valor enquanto sua comunidade real e diluida a nada. O snapshot e uma piada.",
         "pain.item3.title": "OGs sao negligenciados", "pain.item3.desc": "Seus day-ones que acreditaram antes de todos? Eles nao grindam tarefas. Nao farmam pontos. O sistema os ignora enquanto mercenarios sobem no ranking.",
@@ -2534,8 +2611,7 @@ const translations = {
         "reveal.line1": "社区不需要", "reveal.line2": "另一个仪表板。", "reveal.line3": "他们需要一个", "reveal.line4": "朋友。",
         "statement.text": "一个<span class=\"highlight\">真正住在</span>你Telegram里的AI。学习你的文档。凌晨3点回答问题。在你睡觉时踢走刷子和喷子。<span class=\"highlight\">他们最大的噩梦。</span>",
         "statement.manifesto": "为什么是紫色？",
-        "statement.poison": "我们是攻击毒素的毒素。",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "他们有什么共同点？", "pain.question": "谁来审核审核员？", "pain.subtitle": "Web3大使基础设施失败的5种方式",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "他们有什么共同点？", "pain.question": "谁来审核审核员？", "pain.subtitle": "Web3大使基础设施失败的5种方式",
         "pain.item1.title": "审核员淹没", "pain.item1.desc": "你的团队花数小时验证raid提交。一半是复制粘贴垃圾。另一半是机器人生成的。你已经分不清了。倦怠是真实的。",
         "pain.item2.title": "投资者被收割", "pain.item2.desc": "你的空投预算流向女巫大军。拥有50个钱包的专业农民榨取价值，而你真正的社区被稀释殆尽。快照成了笑话。",
         "pain.item3.title": "OG被忽视", "pain.item3.desc": "那些最早相信你的人？他们不刷任务。不刷积分。所以系统忽视他们，而雇佣兵爬上排行榜。",
@@ -2578,8 +2654,7 @@ const translations = {
         "reveal.line1": "topluluklar baska bir", "reveal.line2": "panoya ihtiyac duymuyor.", "reveal.line3": "bir", "reveal.line4": "arkadasa ihtiyaclari var.",
         "statement.text": "telegram'inizda <span class=\"highlight\">gercekten yasayan</span> bir yapay zeka. dokumanlarinizi ogrenir. gece 3'te sorulari yanitlar. siz uyurken farmer'lari ve fud'cilari tekmeler. <span class=\"highlight\">onlarin en kotu kabusu.</span>",
         "statement.manifesto": "neden mor?",
-        "statement.poison": "zehiri saldiran zehiriz.",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "hepsinin ortak noktasi ne?", "pain.question": "Incelemecileri kim inceliyor?", "pain.subtitle": "Web3 elci altyapisinin basarisiz oldugu 5 yol",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "hepsinin ortak noktasi ne?", "pain.question": "Incelemecileri kim inceliyor?", "pain.subtitle": "Web3 elci altyapisinin basarisiz oldugu 5 yol",
         "pain.item1.title": "incelemeciler boguluyor", "pain.item1.desc": "Ekibiniz raid gonderilerini dogrulamak icin saatler harciyor. Yarisi kopyala-yapistir cop. Diger yarisi bot uretimi. Artik ayirt edemiyorsunuz. Tukenmislik gercek.",
         "pain.item2.title": "yatirimcilar farmlaniyor", "pain.item2.desc": "Airdrop butceniz sybil ordularina gidiyor. 50 cuzdanli profesyonel farmer'lar deger cikarirken gercek toplulugunuz sifira seyreltiliyor. Snapshot bir saka.",
         "pain.item3.title": "OG'ler ihmal ediliyor", "pain.item3.desc": "Herkesten once inanan ilk gunculer? Gorev grindlamiyorlar. Puan farmlamiyorlar. Sistem onlari gormezden gelirken parali askerler siralama tablosuna tirmaniyor.",
@@ -2622,8 +2697,7 @@ const translations = {
         "reveal.line1": "сообществам не нужна", "reveal.line2": "еще одна панель управления.", "reveal.line3": "им нужен", "reveal.line4": "друг.",
         "statement.text": "ИИ, который <span class=\"highlight\">реально живет</span> в вашем телеграме. учит ваши доки. отвечает на вопросы в 3 ночи. выгоняет фармеров и фудеров пока вы спите. <span class=\"highlight\">их худший кошмар.</span>",
         "statement.manifesto": "почему фиолетовый?",
-        "statement.poison": "мы яд, который атакует яд.",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "что у них общего?", "pain.question": "Кто проверяет проверяющих?", "pain.subtitle": "5 способов, которыми web3 амбассадорская инфраструктура провалилась",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "что у них общего?", "pain.question": "Кто проверяет проверяющих?", "pain.subtitle": "5 способов, которыми web3 амбассадорская инфраструктура провалилась",
         "pain.item1.title": "ревьюеры тонут", "pain.item1.desc": "Ваша команда часами проверяет заявки на рейды. Половина - копипаста. Другая половина - сгенерирована ботами. Вы уже не различаете. Выгорание реально.",
         "pain.item2.title": "инвесторов фармят", "pain.item2.desc": "Ваш бюджет аирдропа уходит армиям сибилов. Профессиональные фармеры с 50 кошельками выкачивают ценность, пока ваше реальное сообщество размывается до нуля. Снэпшот - это шутка.",
         "pain.item3.title": "OG игнорируются", "pain.item3.desc": "Те, кто поверил раньше всех? Они не гриндят задания. Не фармят очки. Система их игнорирует, пока наемники поднимаются в рейтинге.",
@@ -2666,8 +2740,7 @@ const translations = {
         "reveal.line1": "les communautes n'ont pas besoin", "reveal.line2": "d'un autre tableau de bord.", "reveal.line3": "elles ont besoin d'un", "reveal.line4": "ami.",
         "statement.text": "une IA qui <span class=\"highlight\">vit vraiment</span> dans votre telegram. apprend vos docs. repond aux questions a 3h du mat. vire les farmers et les fudders pendant que vous dormez. <span class=\"highlight\">leur pire cauchemar.</span>",
         "statement.manifesto": "pourquoi violet?",
-        "statement.poison": "nous sommes le poison qui attaque le poison.",
-        "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "qu'ont-ils tous en commun?", "pain.question": "Qui review les reviewers?", "pain.subtitle": "5 facons dont l'infrastructure ambassadeur web3 a echoue",
+                "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "qu'ont-ils tous en commun?", "pain.question": "Qui review les reviewers?", "pain.subtitle": "5 facons dont l'infrastructure ambassadeur web3 a echoue",
         "pain.item1.title": "les reviewers se noient", "pain.item1.desc": "Votre equipe passe des heures a verifier les soumissions de raid. La moitie est du copier-coller. L'autre moitie est generee par des bots. Vous ne faites plus la difference. Le burnout est reel.",
         "pain.item2.title": "les investisseurs se font farmer", "pain.item2.desc": "Votre budget airdrop va aux armees de sybils. Des farmers pro avec 50 wallets extraient la valeur pendant que votre vraie communaute est diluee a zero. Le snapshot est une blague.",
         "pain.item3.title": "les OG sont negliges", "pain.item3.desc": "Vos day-ones qui ont cru avant tout le monde? Ils ne grindent pas les taches. Ils ne farment pas les points. Le systeme les ignore pendant que les mercenaires grimpent le classement.",
@@ -3361,6 +3434,16 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
 });
 
+// Nav Language Flags
+document.querySelectorAll('.nav-lang-flag').forEach(flag => {
+    flag.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = flag.dataset.lang;
+        document.querySelectorAll('.nav-lang-flag').forEach(f => f.classList.remove('active'));
+        flag.classList.add('active');
+        if (typeof setLanguage === 'function') setLanguage(lang);
+    });
+});
 
 // Contact Form
 const contactModal = document.getElementById('contact-modal');

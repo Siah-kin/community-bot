@@ -46,15 +46,21 @@ def extract_nav_links(html_content: str) -> list:
 
     nav_html = nav_match.group(1)
 
-    # Extract link text (lowercase)
-    links = re.findall(r'<a[^>]*>([^<]+)</a>', nav_html)
+    # Extract full link content (including nested elements)
+    links = re.findall(r'<a[^>]*>(.*?)</a>', nav_html, re.DOTALL)
 
-    # Normalize: lowercase, strip whitespace, remove arrows
+    # Normalize: strip HTML tags, lowercase, remove arrows/emojis
     normalized = []
     for link in links:
-        text = link.lower().strip().replace('↗', '').replace('→', '').strip()
+        # Remove HTML tags
+        text = re.sub(r'<[^>]+>', '', link)
+        # Clean up
+        text = text.lower().strip()
+        text = text.replace('↗', '').replace('→', '').strip()
+        # Remove common emoji patterns
+        text = re.sub(r'[^\w\s-]', '', text).strip()
         # Skip logo link
-        if text in ['bonzi', 'home']:
+        if text in ['bonzi', 'home', '']:
             continue
         normalized.append(text)
 

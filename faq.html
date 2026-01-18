@@ -31,13 +31,13 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
+        /* Compact Top Navigation Bar - Icon Style */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 20px 40px;
+            padding: 10px 24px;
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
             z-index: 100;
@@ -46,34 +46,149 @@
             align-items: center;
             border-bottom: 1px solid var(--gray-light);
         }
-        .logo {
+        .nav-logo {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        /* Center: 4 icon navigation */
+        .nav-icons-center { display: flex; gap: 8px; align-items: center; }
+        .nav-icon-wrap { position: relative; }
+        .nav-icon-btn {
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--black);
-            font-weight: 700;
-            font-size: 18px;
+            justify-content: center;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--purple);
+            transition: all 0.2s;
         }
-        .logo img { width: 32px; height: 32px; border-radius: 8px; }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-primary, .nav-secondary { display: flex; align-items: center; gap: 24px; }
-        .nav-primary a {
-            color: var(--black);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: lowercase;
+        .nav-icon-btn:hover { background: rgba(124, 58, 237, 0.1); }
+        .nav-icon-btn svg { width: 20px; height: 20px; }
+
+        /* Dropdown on hover */
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 100px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            margin-top: 4px;
         }
-        .nav-secondary a {
+        .nav-icon-wrap:hover .nav-dropdown { display: flex; }
+        .nav-dropdown a {
+            display: block;
+            padding: 8px 12px;
             color: var(--gray);
             text-decoration: none;
             font-size: 12px;
-            text-transform: lowercase;
+            border-radius: 6px;
+            white-space: nowrap;
         }
-        .nav-links a:hover { color: var(--purple); }
-        .nav-divider { color: var(--gray-light); font-size: 16px; margin: 0 8px; }
-        .nav-links a.active { color: var(--purple); }
+        .nav-dropdown a:hover { background: var(--gray-light); color: var(--black); }
+
+        /* Language dropdown */
+        .nav-lang-dropdown {
+            display: none;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 120px;
+            padding: 8px;
+            gap: 4px;
+        }
+        .nav-icon-wrap:hover .nav-lang-dropdown { display: flex; }
+        .nav-lang-flag {
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .nav-lang-flag:hover { background: var(--gray-light); color: var(--black); }
+        .nav-lang-flag.active { background: rgba(124, 58, 237, 0.15); color: var(--purple); }
+
+        /* Right: theme + connect */
+        .nav-right { display: flex; gap: 8px; align-items: center; }
+        .theme-toggle .icon-sun { display: none; }
+        body.dark-mode .theme-toggle .icon-moon { display: none; }
+        body.dark-mode .theme-toggle .icon-sun { display: block; }
+        .nav-connect-btn { background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); color: #fff; }
+        .nav-connect-btn:hover { transform: scale(1.05); }
+
+        @media (max-width: 600px) {
+            nav { padding: 8px 12px; }
+            .nav-icon-btn { width: 32px; height: 32px; }
+            .nav-icon-btn svg { width: 18px; height: 18px; }
+        }
+
+        /* =====================================================
+           DARK MODE THEME (faq.html is light by default)
+           ===================================================== */
+        body.dark-mode {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+        body.dark-mode nav {
+            background: rgba(10,10,10,0.95);
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+        body.dark-mode .nav-logo { color: #fff; }
+        body.dark-mode .nav-dropdown {
+            background: #1a1a1a;
+            border-color: rgba(255,255,255,0.1);
+        }
+        body.dark-mode .nav-dropdown a { color: rgba(255,255,255,0.8); }
+        body.dark-mode .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        body.dark-mode .nav-lang-flag { color: rgba(255,255,255,0.7); }
+        body.dark-mode .nav-lang-flag:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        body.dark-mode .nav-icon-btn:hover { background: rgba(124, 58, 237, 0.15); }
+
+        body.dark-mode .manifesto-hero { background: #0A0A0A; }
+        body.dark-mode .manifesto-hero h1 { color: #fff; }
+        body.dark-mode .manifesto-intro { color: #A1A1AA; }
+        body.dark-mode .manifesto-intro strong { color: #fff; }
+        body.dark-mode .warning-label { background: rgba(220, 38, 38, 0.2); }
+
+        body.dark-mode .toc-container { background: #0A0A0A; }
+        body.dark-mode .toc-list a { color: #fff; border-bottom-color: transparent; }
+        body.dark-mode .toc-list a:hover { color: var(--purple-light); border-bottom-color: var(--purple-light); }
+
+        body.dark-mode .faq-container { background: #0A0A0A; }
+        body.dark-mode .faq-question { color: #fff; }
+        body.dark-mode .faq-answer { color: #A1A1AA; }
+        body.dark-mode .faq-answer strong { color: #fff; }
+        body.dark-mode .category-title { color: var(--purple-light); border-bottom-color: var(--purple-light); }
+
+        body.dark-mode .highlight-box { background: #1a1a1a; border-left-color: var(--purple); }
+        body.dark-mode .highlight-box strong { color: #fff; }
+        body.dark-mode .solution-box { background: rgba(16, 185, 129, 0.1); }
+        body.dark-mode .solution-box strong { color: #10B981; }
+        body.dark-mode .solution-box .accountability { border-top-color: rgba(16, 185, 129, 0.2); color: #10B981; }
+
+        body.dark-mode .list-brutal li { color: #A1A1AA; }
+        body.dark-mode .list-brutal li strong { color: #fff; }
+
+        body.dark-mode .competitor-table th { background: var(--purple-dark); }
+        body.dark-mode .competitor-table td { border-bottom-color: #27272A; color: #A1A1AA; }
+        body.dark-mode .competitor-table tr:nth-child(even) { background: #1a1a1a; }
+
+        body.dark-mode .manifesto-quote { background: linear-gradient(135deg, var(--purple-dark), var(--purple)); }
 
         /* Manifesto Hero */
         .manifesto-hero {
@@ -552,36 +667,9 @@
             text-decoration: underline;
         }
 
-        /* Language switcher */
-        .lang-switcher {
-            display: flex;
-            gap: 6px;
-            margin-left: 24px;
-        }
-
-        .lang-btn {
-            padding: 4px 8px;
-            background: transparent;
-            border: 1px solid var(--gray-light);
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 500;
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .lang-btn:hover, .lang-btn.active {
-            background: var(--purple);
-            border-color: var(--purple);
-            color: var(--white);
-        }
-
         /* Mobile */
         @media (max-width: 768px) {
-            nav { padding: 16px 24px; }
-            .nav-links { display: none; }
-            .lang-switcher { margin-left: auto; }
+            nav { padding: 8px 12px; }
             .manifesto-hero { padding: 120px 24px 40px; }
             .manifesto-hero h1 { font-size: 36px; }
             .slap-section { padding: 60px 24px; }
@@ -599,31 +687,64 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo">
-            <img src="bonzi-logo.png" alt="Bonzi">
-            <span>bonzi</span>
-        </a>
-        <div class="nav-links">
-            <div class="nav-primary">
-                <a href="features.html" data-i18n="nav.features">features</a>
-                <a href="manual/" data-i18n="nav.manual">manual</a>
-                <a href="research/" data-i18n="nav.research">research</a>
+        <a href="./" class="nav-logo">bonzi</a>
+
+        <div class="nav-icons-center">
+            <!-- Gear: features, dao -->
+            <div class="nav-icon-wrap">
+                <button class="nav-icon-btn" aria-label="Practical">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <a href="features.html">features</a>
+                    <a href="dao/">dao</a>
+                </div>
             </div>
-            <span class="nav-divider">|</span>
-            <div class="nav-secondary">
-                <a href="economics/" data-i18n="nav.economics">economics</a>
-                <a href="faq.html" class="active" data-i18n="nav.manifesto">manifesto</a>
-                <a href="dao/" data-i18n="nav.dao">dao</a>
-                <a href="https://github.com/Siah-kin/community-bot" target="_blank" data-i18n="nav.source">source ↗</a>
+            <!-- Book: manifesto, manual -->
+            <div class="nav-icon-wrap">
+                <button class="nav-icon-btn" aria-label="Theory">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <a href="faq.html">manifesto</a>
+                    <a href="manual/">manual</a>
+                </div>
+            </div>
+            <!-- Scale: economics, research -->
+            <div class="nav-icon-wrap">
+                <button class="nav-icon-btn" aria-label="Data">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
+                </button>
+                <div class="nav-dropdown">
+                    <a href="economics/">economics</a>
+                    <a href="research/">research</a>
+                </div>
+            </div>
+            <!-- Globe: languages -->
+            <div class="nav-icon-wrap">
+                <button class="nav-icon-btn" aria-label="Language">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </button>
+                <div class="nav-dropdown nav-lang-dropdown">
+                    <span class="nav-lang-flag active" data-lang="en">EN</span>
+                    <span class="nav-lang-flag" data-lang="pt">PT</span>
+                    <span class="nav-lang-flag" data-lang="zh">ZH</span>
+                    <span class="nav-lang-flag" data-lang="tr">TR</span>
+                    <span class="nav-lang-flag" data-lang="ru">RU</span>
+                    <span class="nav-lang-flag" data-lang="fr">FR</span>
+                </div>
             </div>
         </div>
-        <div class="lang-switcher">
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="pt">PT</button>
-            <button class="lang-btn" data-lang="zh">中文</button>
-            <button class="lang-btn" data-lang="tr">TR</button>
-            <button class="lang-btn" data-lang="ru">RU</button>
-            <button class="lang-btn" data-lang="fr">FR</button>
+
+        <!-- Right: Theme + Connect -->
+        <div class="nav-right">
+            <button class="nav-icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="nav-icon-btn nav-connect-btn" id="nav-connect-btn" aria-label="Connect wallet">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </button>
         </div>
     </nav>
 
@@ -1341,20 +1462,37 @@
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
             });
-            document.querySelectorAll('.lang-btn').forEach(btn => {
+            document.querySelectorAll('.nav-lang-flag').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
             document.documentElement.lang = lang;
             localStorage.setItem('bonzi-lang', lang);
         }
 
-        document.querySelectorAll('.lang-btn').forEach(btn => {
+        document.querySelectorAll('.nav-lang-flag').forEach(btn => {
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
 
         // Load saved language on page load
         const savedLang = localStorage.getItem('bonzi-lang');
         if (savedLang && translations[savedLang]) setLanguage(savedLang);
+
+        // =====================
+        // THEME TOGGLE (dark/light mode)
+        // =====================
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('bonzi_theme');
+
+        // faq.html is light by default, so dark mode = dark-mode class
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
+        });
 
         // =====================
         // AUDIO - "Room effect" (lower volume like hearing from another room)

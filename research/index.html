@@ -45,13 +45,22 @@
             text-decoration: none;
         }
         .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a {
-            color: var(--gray);
+        .nav-primary, .nav-secondary { display: flex; align-items: center; gap: 24px; }
+        .nav-primary a {
+            color: var(--black);
             text-decoration: none;
             font-size: 14px;
-            transition: color 0.2s;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+        .nav-secondary a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: lowercase;
         }
         .nav-links a:hover { color: var(--purple); }
+        .nav-divider { color: var(--gray-light); font-size: 16px; margin: 0 8px; }
         .nav-links a.active { color: var(--purple); }
 
         .hero {
@@ -171,13 +180,18 @@
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
         <div class="nav-links">
-            <a href="../features.html">features</a>
-            <a href="./" class="active">research</a>
-            <a href="../dao/">dao</a>
-            <a href="../economics/">economics</a>
-            <a href="../manual/">manual</a>
-            <a href="../faq.html">faq</a>
-            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+            <div class="nav-primary">
+                <a href="../features.html">features</a>
+                <a href="../manual/">manual</a>
+                <a href="./" class="active">research</a>
+            </div>
+            <span class="nav-divider">|</span>
+            <div class="nav-secondary">
+                <a href="../economics/">economics</a>
+                <a href="../faq.html">manifesto</a>
+                <a href="../dao/">dao</a>
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank">source ↗</a>
+            </div>
         </div>
     </nav>
 

@@ -13,12 +13,13 @@ import sys
 from pathlib import Path
 
 # Expected nav structure (source of truth from index.html)
+# Note: faq.html contains the Manifesto, nav label should be "manifesto"
 EXPECTED_NAV_LINKS = [
     "features",
     "manual",
     "research",
     "economics",
-    "faq",
+    "manifesto",
     "contact",
     "dao",
     "source"
@@ -107,7 +108,7 @@ def validate_all_pages(root_dir: Path) -> tuple:
         errors.extend(style_issues)
 
         # Check for minimum required links
-        required = ['features', 'manual', 'faq']
+        required = ['features', 'manual', 'manifesto']
         for req in required:
             if req not in links:
                 errors.append(f"{page_path}: Missing required nav link '{req}'")

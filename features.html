@@ -53,14 +53,24 @@
             font-size: 18px;
         }
         .logo img { width: 32px; height: 32px; border-radius: 8px; }
-        .nav-links { display: flex; gap: 32px; }
-        .nav-links a {
-            color: var(--gray);
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-primary, .nav-secondary { display: flex; align-items: center; gap: 24px; }
+        .nav-primary a {
+            color: var(--black);
             text-decoration: none;
             font-size: 14px;
-            transition: color 0.2s;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+        .nav-secondary a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: lowercase;
         }
         .nav-links a:hover { color: var(--purple); }
+        .nav-divider { color: var(--gray-light); font-size: 16px; margin: 0 8px; }
+        .nav-links a.active { color: var(--purple); }
 
         /* Hero */
         .hero {
@@ -360,13 +370,18 @@
             <span></span>
         </div>
         <div class="nav-links">
-            <a href="index.html" onclick="closeMenu()">Home</a>
-            <a href="research/" onclick="closeMenu()">Research</a>
-            <a href="dao/" onclick="closeMenu()">DAO</a>
-            <a href="economics/" onclick="closeMenu()">Economics</a>
-            <a href="manual/" onclick="closeMenu()">Manual</a>
-            <a href="faq.html" onclick="closeMenu()">FAQ</a>
-            <a href="https://github.com/Siah-kin/community-bot" onclick="closeMenu()">GitHub</a>
+            <div class="nav-primary">
+                <a href="features.html" class="active" onclick="closeMenu()">features</a>
+                <a href="manual/" onclick="closeMenu()">manual</a>
+                <a href="research/" onclick="closeMenu()">research</a>
+            </div>
+            <span class="nav-divider">|</span>
+            <div class="nav-secondary">
+                <a href="economics/" onclick="closeMenu()">economics</a>
+                <a href="faq.html" onclick="closeMenu()">manifesto</a>
+                <a href="dao/" onclick="closeMenu()">dao</a>
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank" onclick="closeMenu()">source ↗</a>
+            </div>
         </div>
     </nav>
 

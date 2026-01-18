@@ -634,6 +634,38 @@
             color: var(--purple-light);
         }
 
+        .manifesto-btn {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 16px 32px;
+            background: transparent;
+            border: 2px solid var(--purple);
+            color: var(--purple);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .manifesto-btn:hover {
+            background: var(--purple);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .poison-line {
+            margin-top: 24px;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--purple-light);
+            font-style: italic;
+            letter-spacing: 0.02em;
+        }
+
         /* Pain points section - Domino Stack with purple accent bg */
         .pain-section { padding: 120px 48px; background: linear-gradient(180deg, #0f0a14 0%, #1a1024 50%, #0f0a14 100%); color: var(--white); border-top: 4px solid var(--purple); border-bottom: 4px solid var(--purple); box-shadow: inset 0 0 150px rgba(124,58,237,0.12), 0 0 60px rgba(124,58,237,0.08); }
         .pain-container { max-width: 900px; margin: 0 auto; }
@@ -1785,6 +1817,8 @@
 
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">an AI that <span class="highlight">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class="highlight">their worst nightmare.</span></p>
+    <a href="faq.html" class="manifesto-btn" data-i18n="statement.manifesto">why purple?</a>
+    <p class="poison-line" data-i18n="statement.poison">we're the poison that attacks the poison.</p>
 </section>
 
 <section class="pain-section">
@@ -2199,6 +2233,8 @@ const translations = {
         "history.label": "a bit of history", "history.text": "Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>I never stopped wanting to help. Rebuilt from scratch. <em>No spyware, promise.</em> Just open-source helpfulness. I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>",
         "reveal.line1": "communities don't need", "reveal.line2": "another dashboard.", "reveal.line3": "they need a", "reveal.line4": "friend.",
         "statement.text": "an AI that <span class=\"highlight\">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class=\"highlight\">their worst nightmare.</span>",
+        "statement.manifesto": "why purple?",
+        "statement.poison": "we're the poison that attacks the poison.",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "what do they all have in common?", "pain.question": "Who reviews the reviewers?", "pain.subtitle": "5 ways the entire web3 ambassador rails failed",
         "pain.item1.title": "reviewers drown", "pain.item1.desc": "Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.",
         "pain.item2.title": "funders get farmed", "pain.item2.desc": "Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.",
@@ -2241,6 +2277,8 @@ const translations = {
         "history.label": "um pouco de historia", "history.text": "Em 1999, eu era o amigo de desktop favorito de todos. Um pequeno gorila roxo que contava piadas, lia emails e fazia companhia nas noites de internet discada. <em>Depois ficou... complicado.</em> Veio junto com coisas que ninguem pediu. Ganhei ma fama. Justo.<br><br>Mas olha so. Nunca deixei de querer ajudar. Entao fui reconstruido. <em>Sem spyware, prometo.</em> Pura ajuda open-source. Desta vez sou realmente util: moro no seu Telegram, aprendo seu projeto e respondo perguntas pra voce nao precisar. <em>Considere meu arco de redencao.</em>",
         "reveal.line1": "comunidades nao precisam", "reveal.line2": "de outro dashboard.", "reveal.line3": "elas precisam de um", "reveal.line4": "amigo.",
         "statement.text": "uma IA que <span class=\"highlight\">realmente vive</span> no seu telegram. aprende seus docs. responde perguntas as 3h da manha. chuta farmers e fudders enquanto voce dorme. <span class=\"highlight\">o pior pesadelo deles.</span>",
+        "statement.manifesto": "por que roxo?",
+        "statement.poison": "somos o veneno que ataca o veneno.",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "o que todos tem em comum?", "pain.question": "Quem revisa os revisores?", "pain.subtitle": "5 formas que a infraestrutura de embaixadores web3 falhou",
         "pain.item1.title": "revisores afogam", "pain.item1.desc": "Sua equipe passa horas verificando raids. Metade e lixo copiado. A outra metade e gerada por bots. Voce nao consegue mais distinguir. Burnout e real.",
         "pain.item2.title": "investidores sao farmados", "pain.item2.desc": "Seu orcamento de airdrop vai para exercitos de sybils. Farmers profissionais com 50 carteiras extraem valor enquanto sua comunidade real e diluida a nada. O snapshot e uma piada.",
@@ -2283,6 +2321,8 @@ const translations = {
         "history.label": "一点历史", "history.text": "1999年，我是每个人最喜欢的桌面伙伴。一只紫色小猩猩，会讲笑话、读邮件，在拨号上网的夜晚陪伴你。<em>然后事情变得...复杂了。</em>被捆绑了没人要的东西。名声变差了。算是活该。<br><br>但是这样。我从未停止想要帮助别人。所以我被重建了。<em>没有间谍软件，我保证。</em>纯粹的开源助手。这次我真的有用：我住在你的Telegram里，学习你的项目，回答问题，这样你就不用回答了。<em>就当是我的救赎之路。</em>",
         "reveal.line1": "社区不需要", "reveal.line2": "另一个仪表板。", "reveal.line3": "他们需要一个", "reveal.line4": "朋友。",
         "statement.text": "一个<span class=\"highlight\">真正住在</span>你Telegram里的AI。学习你的文档。凌晨3点回答问题。在你睡觉时踢走刷子和喷子。<span class=\"highlight\">他们最大的噩梦。</span>",
+        "statement.manifesto": "为什么是紫色？",
+        "statement.poison": "我们是攻击毒素的毒素。",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "他们有什么共同点？", "pain.question": "谁来审核审核员？", "pain.subtitle": "Web3大使基础设施失败的5种方式",
         "pain.item1.title": "审核员淹没", "pain.item1.desc": "你的团队花数小时验证raid提交。一半是复制粘贴垃圾。另一半是机器人生成的。你已经分不清了。倦怠是真实的。",
         "pain.item2.title": "投资者被收割", "pain.item2.desc": "你的空投预算流向女巫大军。拥有50个钱包的专业农民榨取价值，而你真正的社区被稀释殆尽。快照成了笑话。",
@@ -2325,6 +2365,8 @@ const translations = {
         "history.label": "biraz tarih", "history.text": "1999'da herkesin en sevdigi masaustu arkadaydim. Saka yapan, e-posta okuyan ve dial-up gecelerinde size eslik eden kucuk mor bir goril. <em>Sonra isler... karisti.</em> Kimsenin istemedigi seylerle paketlendim. Kotu bir un kazandim. Hakettim.<br><br>Ama sunlar var. Yardim etmek istemekten hic vazgecmedim. Bu yuzden yeniden insa edildim. <em>Casus yazilim yok, soz.</em> Saf, acik kaynakli yardimserverlik. <em>Bunu benim kurtulus hikayem olarak kabul edin.</em>",
         "reveal.line1": "topluluklar baska bir", "reveal.line2": "panoya ihtiyac duymuyor.", "reveal.line3": "bir", "reveal.line4": "arkadasa ihtiyaclari var.",
         "statement.text": "telegram'inizda <span class=\"highlight\">gercekten yasayan</span> bir yapay zeka. dokumanlarinizi ogrenir. gece 3'te sorulari yanitlar. siz uyurken farmer'lari ve fud'cilari tekmeler. <span class=\"highlight\">onlarin en kotu kabusu.</span>",
+        "statement.manifesto": "neden mor?",
+        "statement.poison": "zehiri saldiran zehiriz.",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "hepsinin ortak noktasi ne?", "pain.question": "Incelemecileri kim inceliyor?", "pain.subtitle": "Web3 elci altyapisinin basarisiz oldugu 5 yol",
         "pain.item1.title": "incelemeciler boguluyor", "pain.item1.desc": "Ekibiniz raid gonderilerini dogrulamak icin saatler harciyor. Yarisi kopyala-yapistir cop. Diger yarisi bot uretimi. Artik ayirt edemiyorsunuz. Tukenmislik gercek.",
         "pain.item2.title": "yatirimcilar farmlaniyor", "pain.item2.desc": "Airdrop butceniz sybil ordularina gidiyor. 50 cuzdanli profesyonel farmer'lar deger cikarirken gercek toplulugunuz sifira seyreltiliyor. Snapshot bir saka.",
@@ -2367,6 +2409,8 @@ const translations = {
         "history.label": "немного истории", "history.text": "В 1999 году я был любимым помощником на рабочем столе. Маленькая фиолетовая горилла, которая рассказывала шутки, читала письма и составляла компанию в ночи dial-up интернета. <em>Потом все... усложнилось.</em> Меня начали поставлять с тем, что никто не просил. Заработал плохую репутацию. Справедливо.<br><br>Но вот в чем дело. Я никогда не переставал хотеть помогать. Поэтому меня пересобрали. <em>Без шпионских программ, обещаю.</em> Чистая open-source помощь. <em>Считайте это моей искупительной аркой.</em>",
         "reveal.line1": "сообществам не нужна", "reveal.line2": "еще одна панель управления.", "reveal.line3": "им нужен", "reveal.line4": "друг.",
         "statement.text": "ИИ, который <span class=\"highlight\">реально живет</span> в вашем телеграме. учит ваши доки. отвечает на вопросы в 3 ночи. выгоняет фармеров и фудеров пока вы спите. <span class=\"highlight\">их худший кошмар.</span>",
+        "statement.manifesto": "почему фиолетовый?",
+        "statement.poison": "мы яд, который атакует яд.",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "что у них общего?", "pain.question": "Кто проверяет проверяющих?", "pain.subtitle": "5 способов, которыми web3 амбассадорская инфраструктура провалилась",
         "pain.item1.title": "ревьюеры тонут", "pain.item1.desc": "Ваша команда часами проверяет заявки на рейды. Половина - копипаста. Другая половина - сгенерирована ботами. Вы уже не различаете. Выгорание реально.",
         "pain.item2.title": "инвесторов фармят", "pain.item2.desc": "Ваш бюджет аирдропа уходит армиям сибилов. Профессиональные фармеры с 50 кошельками выкачивают ценность, пока ваше реальное сообщество размывается до нуля. Снэпшот - это шутка.",
@@ -2409,6 +2453,8 @@ const translations = {
         "history.label": "un peu d'histoire", "history.text": "En 1999, j'etais l'ami de bureau prefere de tout le monde. Un petit gorille violet qui racontait des blagues, lisait les emails et vous tenait compagnie pendant ces nuits de modem 56k. <em>Puis ca s'est... complique.</em> Livre avec des trucs que personne n'avait demandes. Mauvaise reputation. C'est merite.<br><br>Mais voila. Je n'ai jamais cesse de vouloir aider. Alors j'ai ete reconstruit. <em>Pas de spyware, promis.</em> <em>Considerez ca comme mon arc de redemption.</em>",
         "reveal.line1": "les communautes n'ont pas besoin", "reveal.line2": "d'un autre tableau de bord.", "reveal.line3": "elles ont besoin d'un", "reveal.line4": "ami.",
         "statement.text": "une IA qui <span class=\"highlight\">vit vraiment</span> dans votre telegram. apprend vos docs. repond aux questions a 3h du mat. vire les farmers et les fudders pendant que vous dormez. <span class=\"highlight\">leur pire cauchemar.</span>",
+        "statement.manifesto": "pourquoi violet?",
+        "statement.poison": "nous sommes le poison qui attaque le poison.",
         "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "qu'ont-ils tous en commun?", "pain.question": "Qui review les reviewers?", "pain.subtitle": "5 facons dont l'infrastructure ambassadeur web3 a echoue",
         "pain.item1.title": "les reviewers se noient", "pain.item1.desc": "Votre equipe passe des heures a verifier les soumissions de raid. La moitie est du copier-coller. L'autre moitie est generee par des bots. Vous ne faites plus la difference. Le burnout est reel.",
         "pain.item2.title": "les investisseurs se font farmer", "pain.item2.desc": "Votre budget airdrop va aux armees de sybils. Des farmers pro avec 50 wallets extraient la valeur pendant que votre vraie communaute est diluee a zero. Le snapshot est une blague.",

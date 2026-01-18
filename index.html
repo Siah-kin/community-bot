@@ -434,17 +434,20 @@
             justify-content: center;
             background: none;
             border: none;
-            font-size: 24px;
-            color: rgba(255,255,255,0.6);
+            color: #7C3AED;
             border-radius: 12px;
             cursor: pointer;
             position: relative;
             transition: all 0.2s;
         }
 
+        .sidebar-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
         .sidebar-btn:hover {
-            color: #7C3AED;
-            background: rgba(124, 58, 237, 0.1);
+            background: rgba(124, 58, 237, 0.15);
         }
 
         /* Hover menu (flyout to the right) */
@@ -520,8 +523,13 @@
             border: none;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 20px;
             transition: transform 0.2s;
+        }
+
+        .sidebar-connect svg {
+            width: 22px;
+            height: 22px;
+            stroke: #1a1a1a;
         }
 
         .sidebar-connect:hover {
@@ -591,17 +599,22 @@
             align-items: center;
             background: none;
             border: none;
-            color: rgba(255,255,255,0.6);
-            font-size: 28px;
+            color: #7C3AED;
             padding: 8px 16px;
             cursor: pointer;
             position: relative;
-            transition: color 0.2s;
+            transition: all 0.2s;
+        }
+
+        .dock-btn svg {
+            width: 28px;
+            height: 28px;
         }
 
         .dock-btn:hover,
         .dock-btn.active {
-            color: #7C3AED;
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         /* Drop-up menu */
@@ -2208,51 +2221,53 @@
     <a href="/"><img src="bonzi-logo.png" alt="Bonzi" class="sidebar-logo"></a>
 
     <div class="sidebar-icons">
-        <!-- ⚙️ PRACTICAL: features, dao -->
+        <!-- Gear: features, dao -->
         <button class="sidebar-btn">
-            ⚙️
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <div class="sidebar-menu">
                 <a href="features.html">features</a>
                 <a href="dao/">dao</a>
             </div>
         </button>
 
-        <!-- 📖 THEORY: manifesto, manual -->
+        <!-- Book: manifesto, manual -->
         <button class="sidebar-btn">
-            📖
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             <div class="sidebar-menu">
                 <a href="faq.html">manifesto</a>
                 <a href="manual/">manual</a>
             </div>
         </button>
 
-        <!-- ⚖️ WELFARE: economics, research -->
+        <!-- Scale: economics, research -->
         <button class="sidebar-btn">
-            ⚖️
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
             <div class="sidebar-menu">
                 <a href="economics/">economics</a>
                 <a href="research/">research</a>
             </div>
         </button>
 
-        <!-- 🌐 LANGUAGES -->
+        <!-- Globe: languages -->
         <button class="sidebar-btn">
-            🌐
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             <div class="sidebar-menu">
                 <div class="sidebar-lang-grid">
-                    <span class="sidebar-lang-flag active" data-lang="en">🇺🇸</span>
-                    <span class="sidebar-lang-flag" data-lang="pt">🇧🇷</span>
-                    <span class="sidebar-lang-flag" data-lang="zh">🇨🇳</span>
-                    <span class="sidebar-lang-flag" data-lang="tr">🇹🇷</span>
-                    <span class="sidebar-lang-flag" data-lang="ru">🇷🇺</span>
-                    <span class="sidebar-lang-flag" data-lang="fr">🇫🇷</span>
+                    <span class="sidebar-lang-flag active" data-lang="en">EN</span>
+                    <span class="sidebar-lang-flag" data-lang="pt">PT</span>
+                    <span class="sidebar-lang-flag" data-lang="zh">ZH</span>
+                    <span class="sidebar-lang-flag" data-lang="tr">TR</span>
+                    <span class="sidebar-lang-flag" data-lang="ru">RU</span>
+                    <span class="sidebar-lang-flag" data-lang="fr">FR</span>
                 </div>
             </div>
         </button>
     </div>
 
     <!-- Connect wallet button -->
-    <button class="sidebar-connect" id="sidebar-connect-btn">🔗</button>
+    <button class="sidebar-connect" id="sidebar-connect-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
 </div>
 
 <!-- Old nav kept for validator compatibility but hidden -->
@@ -2279,44 +2294,40 @@
 <!-- Mobile Bottom Dock - 4 Icons -->
 <div class="mobile-dock">
     <div class="mobile-dock-inner">
-        <!-- ⚙️ PRACTICAL: features, dao -->
         <button class="dock-btn" data-dock="practical">
-            ⚙️
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <div class="dock-dropup" id="dropup-practical">
                 <a href="features.html">features</a>
                 <a href="dao/">dao</a>
             </div>
         </button>
 
-        <!-- 📖 THEORY: manifesto, manual -->
         <button class="dock-btn" data-dock="theory">
-            📖
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             <div class="dock-dropup" id="dropup-theory">
                 <a href="faq.html">manifesto</a>
                 <a href="manual/">manual</a>
             </div>
         </button>
 
-        <!-- ⚖️ DATA: economics, research -->
         <button class="dock-btn" data-dock="data">
-            ⚖️
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
             <div class="dock-dropup" id="dropup-data">
                 <a href="economics/">economics</a>
                 <a href="research/">research</a>
             </div>
         </button>
 
-        <!-- 🌐 LANGUAGES -->
         <button class="dock-btn" data-dock="lang">
-            🌐
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             <div class="dock-dropup" id="dropup-lang">
                 <div class="dock-lang-grid">
-                    <span class="dock-lang-flag active" data-lang="en">🇺🇸</span>
-                    <span class="dock-lang-flag" data-lang="pt">🇧🇷</span>
-                    <span class="dock-lang-flag" data-lang="zh">🇨🇳</span>
-                    <span class="dock-lang-flag" data-lang="tr">🇹🇷</span>
-                    <span class="dock-lang-flag" data-lang="ru">🇷🇺</span>
-                    <span class="dock-lang-flag" data-lang="fr">🇫🇷</span>
+                    <span class="dock-lang-flag active" data-lang="en">EN</span>
+                    <span class="dock-lang-flag" data-lang="pt">PT</span>
+                    <span class="dock-lang-flag" data-lang="zh">ZH</span>
+                    <span class="dock-lang-flag" data-lang="tr">TR</span>
+                    <span class="dock-lang-flag" data-lang="ru">RU</span>
+                    <span class="dock-lang-flag" data-lang="fr">FR</span>
                 </div>
             </div>
         </button>

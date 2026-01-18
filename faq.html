@@ -390,6 +390,55 @@
             margin-top: 4px;
         }
 
+        /* Table of Contents */
+        .toc-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+        .toc-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        .toc-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 32px;
+        }
+        .toc-list a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .toc-list a:hover {
+            color: var(--purple);
+            border-bottom-color: var(--purple);
+        }
+        .toc-list a::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--purple);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .toc-container { padding: 0 24px 40px; }
+            .toc-list { grid-template-columns: 1fr; }
+        }
+
         /* Why Purple Section */
         .why-purple-section {
             background: var(--black);
@@ -579,7 +628,7 @@
     </nav>
 
     <!-- MANIFESTO HERO -->
-    <section class="manifesto-hero">
+    <section class="manifesto-hero" id="hero">
         <span class="warning-label" data-i18n="hero.warning">Not for the Faint of Heart</span>
         <h1 data-i18n="hero.title">The Manifesto</h1>
         <p class="manifesto-intro" data-i18n="hero.intro">
@@ -589,8 +638,25 @@
         </p>
     </section>
 
+    <!-- TABLE OF CONTENTS -->
+    <nav class="toc-container">
+        <h2 class="toc-title">Contents</h2>
+        <ul class="toc-list">
+            <li><a href="#receipts">The Receipts</a></li>
+            <li><a href="#why-purple">Why Purple?</a></li>
+            <li><a href="#problems">The Real Problems</a></li>
+            <li><a href="#ai-hype">Claude Code / AI Hype</a></li>
+            <li><a href="#market">Market Validation</a></li>
+            <li><a href="#kols">For Small KOLs</a></li>
+            <li><a href="#skeptics">For the Skeptics</a></li>
+            <li><a href="#systems">Addressable Systems</a></li>
+            <li><a href="#ready">Ready to Build</a></li>
+            <li><a href="#bottomline">The Bottom Line</a></li>
+        </ul>
+    </nav>
+
     <!-- THE SLAP -->
-    <section class="slap-section">
+    <section class="slap-section" id="receipts">
         <div class="slap-content">
             <h2 data-i18n="slap.title">The Receipts</h2>
             <p class="slap-text" data-i18n="slap.text">
@@ -650,7 +716,7 @@
     <div class="faq-container">
 
         <!-- THE REAL PROBLEMS -->
-        <div class="faq-category">
+        <div class="faq-category" id="problems">
             <h2 class="category-title" data-i18n="cat.problems">The Real Problems (Let's Not Pretend)</h2>
 
             <div class="faq-item">
@@ -695,7 +761,7 @@
         </div>
 
         <!-- CLAUDE CODE DIFFERENTIATION -->
-        <div class="faq-category">
+        <div class="faq-category" id="ai-hype">
             <h2 class="category-title" data-i18n="cat.aihype">What About Claude Code? (The AI Hype Check)</h2>
 
             <div class="faq-item">
@@ -759,7 +825,7 @@
         </div>
 
         <!-- MARKET VALIDATION -->
-        <div class="faq-category">
+        <div class="faq-category" id="market">
             <h2 class="category-title" data-i18n="cat.market">Market Validation (The Numbers)</h2>
 
             <div class="faq-item">
@@ -843,7 +909,7 @@
         </div>
 
         <!-- FOR SMALL KOLS -->
-        <div class="faq-category">
+        <div class="faq-category" id="kols">
             <h2 class="category-title" data-i18n="cat.kols">For Small KOLs (Under 50k Followers)</h2>
 
             <div class="faq-item">
@@ -892,7 +958,7 @@
         </div>
 
         <!-- TRUST & CREDIBILITY -->
-        <div class="faq-category">
+        <div class="faq-category" id="skeptics">
             <h2 class="category-title" data-i18n="cat.skeptics">For the Skeptics (Good, You Should Be)</h2>
 
             <div class="faq-item">
@@ -978,7 +1044,7 @@
         </div>
 
         <!-- SYSTEMS -->
-        <div class="faq-category">
+        <div class="faq-category" id="systems">
             <h2 class="category-title" data-i18n="cat.systems">Addressable & Accountable Systems</h2>
 
             <div class="faq-item">
@@ -1070,7 +1136,7 @@
         </div>
 
         <!-- GETTING STARTED -->
-        <div class="faq-category">
+        <div class="faq-category" id="ready">
             <h2 class="category-title" data-i18n="cat.ready">Ready to Build (Not Just Talk)</h2>
 
             <div class="faq-item">
@@ -1108,7 +1174,7 @@
         </div>
 
         <!-- FINAL WORD -->
-        <div class="faq-category">
+        <div class="faq-category" id="bottomline">
             <h2 class="category-title" data-i18n="cat.bottomline">The Bottom Line</h2>
 
             <div class="faq-item">

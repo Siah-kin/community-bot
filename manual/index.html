@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual - Bonzi Bot Documentation</title>
+    <meta name="description" content="Complete documentation for Bonzi bot - commands, features, staking guide, and troubleshooting.">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #A1A1AA;
+            --sidebar-bg: #111118;
+            --content-bg: #0A0A0A;
+            --border: rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--content-bg);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar - GitBook style */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .sidebar-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+        .sidebar-logo span {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .sidebar-nav {
+            padding: 0 12px;
+        }
+        .nav-section {
+            margin-bottom: 24px;
+        }
+        .nav-section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+        .nav-item {
+            display: block;
+            padding: 10px 12px;
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: #fff;
+        }
+        .nav-item.active {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--purple-light);
+        }
+        .nav-item.indent {
+            padding-left: 28px;
+            font-size: 0.85rem;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 48px 64px;
+            max-width: 900px;
+        }
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+        .breadcrumb a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .intro-text {
+            font-size: 1.25rem;
+            color: var(--gray-light);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 48px 0 24px;
+            color: #fff;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        h3 {
+            font-size: 1.2rem;
+            margin: 32px 0 16px;
+            color: var(--purple-light);
+        }
+
+        p {
+            color: var(--gray-light);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .doc-card {
+            background: rgba(30, 30, 40, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .doc-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-2px);
+        }
+        .doc-card .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+        .doc-card h4 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .doc-card p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        code {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--purple-light);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: rgba(30, 30, 40, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--gray-light);
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .command-table th,
+        .command-table td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .command-table th {
+            color: var(--gray);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .command-table td:first-child {
+            font-family: 'Monaco', 'Menlo', monospace;
+            color: var(--purple-light);
+        }
+        .command-table td {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+        }
+
+        .callout {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--purple);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: #F59E0B;
+        }
+        .callout-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .callout p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--sidebar-bg);
+            padding: 16px 24px;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 200;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content {
+                margin-left: 0;
+                padding: 80px 24px 48px;
+            }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile header -->
+    <div class="mobile-header">
+        <a href="../" class="sidebar-logo">
+            <img src="../bonzi-logo.png" alt="Bonzi">
+            <span>bonzi manual</span>
+        </a>
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="../" class="sidebar-logo">
+                <img src="../bonzi-logo.png" alt="Bonzi">
+                <span>bonzi manual</span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Getting Started</div>
+                <a href="#" class="nav-item active">Introduction</a>
+                <a href="#quick-start" class="nav-item indent">Quick Start</a>
+                <a href="#commands" class="nav-item indent">Commands</a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Features</div>
+                <a href="#ask" class="nav-item">Ask Questions</a>
+                <a href="#leaderboard" class="nav-item">Leaderboard</a>
+                <a href="#thanks" class="nav-item">Thanks System</a>
+                <a href="#settings" class="nav-item">Settings</a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Advanced</div>
+                <a href="#staking" class="nav-item">Staking Guide</a>
+                <a href="#personality" class="nav-item">Personality Modes</a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Help</div>
+                <a href="#troubleshooting" class="nav-item">Troubleshooting</a>
+                <a href="../faq.html" class="nav-item">FAQ</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="../">Home</a> / Manual
+        </div>
+
+        <h1>Bonzi Bot Manual</h1>
+        <p class="intro-text">
+            Everything you need to know about interacting with Bonzi - from basic commands to advanced features like staking and rewards.
+        </p>
+
+        <div class="card-grid">
+            <a href="#quick-start" class="doc-card">
+                <div class="icon">🚀</div>
+                <h4>Quick Start</h4>
+                <p>Get up and running in 2 minutes</p>
+            </a>
+            <a href="#commands" class="doc-card">
+                <div class="icon">⌨️</div>
+                <h4>Commands</h4>
+                <p>Full list of available commands</p>
+            </a>
+            <a href="#staking" class="doc-card">
+                <div class="icon">💰</div>
+                <h4>Staking Guide</h4>
+                <p>Earn ETH rewards by staking</p>
+            </a>
+            <a href="#troubleshooting" class="doc-card">
+                <div class="icon">🔧</div>
+                <h4>Troubleshooting</h4>
+                <p>Common issues and solutions</p>
+            </a>
+        </div>
+
+        <h2 id="quick-start">Quick Start</h2>
+        <p>Getting started with Bonzi takes just a few steps:</p>
+        <ol style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Open Telegram and search for <code>@BonziVistaBot</code></li>
+            <li>Send <code>/start</code> to open the dashboard</li>
+            <li>Ask any question about DeFi, staking, or Ethervista</li>
+            <li>Link your wallet via Settings to track rewards</li>
+        </ol>
+
+        <div class="callout">
+            <div class="callout-title">Pro Tip</div>
+            <p>Bonzi remembers your conversations and adapts to your level. The more you interact, the more personalized responses become.</p>
+        </div>
+
+        <h2 id="commands">Commands</h2>
+        <p>Here are all available commands:</p>
+
+        <table class="command-table">
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/start</td>
+                    <td>Open the main dashboard</td>
+                </tr>
+                <tr>
+                    <td>/help</td>
+                    <td>Show available features</td>
+                </tr>
+                <tr>
+                    <td>/settings</td>
+                    <td>Configure your preferences</td>
+                </tr>
+                <tr>
+                    <td>/balance</td>
+                    <td>Check your token balance</td>
+                </tr>
+                <tr>
+                    <td>/leaderboard</td>
+                    <td>View community rankings</td>
+                </tr>
+                <tr>
+                    <td>/ticket</td>
+                    <td>Submit a support ticket</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="ask">Ask Questions</h2>
+        <p>Bonzi can answer questions about:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li><strong>Tokenomics</strong> - Supply, distribution, staking mechanics</li>
+            <li><strong>APR/Yields</strong> - Live rates, historical performance</li>
+            <li><strong>Euler Model</strong> - Fee distribution math explained</li>
+            <li><strong>Ethervista</strong> - Platform features, Etherfun launches</li>
+            <li><strong>General DeFi</strong> - Liquidity, impermanent loss, etc.</li>
+        </ul>
+
+        <h3>Response Depth</h3>
+        <p>Bonzi adapts response length based on your questions:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li><strong>First ask</strong> - Concise 2-3 sentence answer</li>
+            <li><strong>Follow-up</strong> - Explains the mechanism</li>
+            <li><strong>Deep dive</strong> - Full breakdown with numbers</li>
+        </ul>
+
+        <h2 id="leaderboard">Leaderboard</h2>
+        <p>Earn points by asking quality questions. The leaderboard tracks:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Question quality score (not quantity)</li>
+            <li>Weekly and all-time rankings</li>
+            <li>Top contributors get recognition</li>
+        </ul>
+
+        <div class="callout warning">
+            <div class="callout-title">Anti-Gaming</div>
+            <p>Bonzi detects spam and low-effort questions. Quality over quantity - genuine learning earns 10x more points than farming.</p>
+        </div>
+
+        <h2 id="thanks">Thanks System</h2>
+        <p>The Thanks system lets community members reward helpful answers:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Reply to a helpful message with <code>/thanks</code></li>
+            <li>Thanks are recorded on-chain</li>
+            <li>Top thanked users earn recognition</li>
+        </ul>
+
+        <h2 id="settings">Settings</h2>
+        <p>Customize your Bonzi experience via <code>/settings</code>:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li><strong>Wallet Link</strong> - Connect your wallet for rewards</li>
+            <li><strong>Personality</strong> - Choose Bonzi or Professional mode</li>
+            <li><strong>Notifications</strong> - Configure alerts</li>
+            <li><strong>Language</strong> - Supports 14 languages</li>
+        </ul>
+
+        <h2 id="staking">Staking Guide</h2>
+        <p>Stake $BONZI to earn ETH rewards from swap fees:</p>
+
+        <h3>How to Stake</h3>
+        <ol style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Go to <a href="https://ethervista.app" style="color: var(--purple-light);">ethervista.app</a></li>
+            <li>Connect your wallet</li>
+            <li>Navigate to Staking → $BONZI</li>
+            <li>Enter amount and confirm transaction</li>
+            <li>Claim rewards via the Claim button</li>
+        </ol>
+
+        <div class="callout">
+            <div class="callout-title">Important</div>
+            <p>You must claim rewards before unstaking. Unclaimed rewards are forfeited if you unstake first.</p>
+        </div>
+
+        <h3>APR Expectations</h3>
+        <p>APR varies with trading volume. Historical range: 30-80% annually.</p>
+        <pre><code>Real Example (April 2025):
+- 27.2M $BONZI staked (~$4,216)
+- 87 trades over 30 days
+- Earned $9.56/day = ~82.7% APR</code></pre>
+
+        <h2 id="personality">Personality Modes</h2>
+        <p>Bonzi supports different response styles:</p>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li><strong>Bonzi Mode</strong> - Purple monkey energy, slang, emojis 💜</li>
+            <li><strong>Professional Mode</strong> - Clean, data-driven responses</li>
+        </ul>
+        <p>Groups use admin-configured personality. DMs use your personal preference.</p>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+
+        <h3>Bot not responding?</h3>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Check if the bot is online (green dot in profile)</li>
+            <li>In groups, make sure to tag <code>@BonziVistaBot</code></li>
+            <li>Try <code>/start</code> to reset the session</li>
+        </ul>
+
+        <h3>Wrong balance showing?</h3>
+        <ul style="color: var(--gray-light); margin-left: 24px; line-height: 2;">
+            <li>Use <code>/balance</code> to refresh</li>
+            <li>Make sure correct wallet is linked in Settings</li>
+            <li>Wait a few minutes for blockchain sync</li>
+        </ul>
+
+        <h3>Still stuck?</h3>
+        <p>Use <code>/ticket</code> to submit a support request. Include screenshots if possible.</p>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Update active state
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

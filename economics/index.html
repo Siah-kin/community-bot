@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics - Bonzi Tokenomics</title>
+    <meta name="description" content="Bonzi economics - Self-compounding tokenomics, Euler model distribution, and sustainable yield mechanics.">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --green: #10B981;
+            --blue: #3B82F6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            min-height: 100vh;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            background: rgba(10,10,10,0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .nav-links a:hover { opacity: 1; }
+        .nav-links a.active { color: var(--purple); opacity: 1; }
+
+        main {
+            padding: 120px 48px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .intro {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 48px;
+            max-width: 700px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+        }
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: var(--purple-light);
+        }
+
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .stat-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .stat-card .value.green { color: var(--green); }
+        .stat-card .value.purple { color: var(--purple-light); }
+        .stat-card .detail {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        .flow-diagram {
+            background: rgba(30, 30, 40, 0.5);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        .flow-diagram .highlight { color: var(--purple-light); }
+        .flow-diagram .green { color: var(--green); }
+        .flow-diagram .blue { color: var(--blue); }
+
+        .mechanism-list {
+            list-style: none;
+        }
+        .mechanism-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .mechanism-list li:last-child { border-bottom: none; }
+        .mechanism-list .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .mechanism-list h4 {
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .mechanism-list p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--gray);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            main { padding: 100px 24px 24px; }
+            h1 { font-size: 2rem; }
+            .flow-diagram { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../" class="nav-logo">bonzi</a>
+        <div class="nav-links">
+            <a href="../features.html">features</a>
+            <a href="../research/">research</a>
+            <a href="../dao/">dao</a>
+            <a href="../" class="active">economics</a>
+            <a href="../manual/">manual</a>
+            <a href="../faq.html">faq</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Economics</h1>
+        <p class="intro">
+            Self-compounding tokenomics powered by Euler math. Every swap generates yield for stakers - no emissions, no inflation, just pure fee distribution.
+        </p>
+
+        <div class="section">
+            <h2>Key Metrics</h2>
+            <div class="tokenomics-grid">
+                <div class="stat-card">
+                    <div class="label">Total ETH Distributed</div>
+                    <div class="value green">$1.6M+</div>
+                    <div class="detail">Since Sept 2024, zero emissions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Average APR Range</div>
+                    <div class="value purple">30-80%</div>
+                    <div class="detail">Varies with trading volume</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Capital Efficiency</div>
+                    <div class="value">20x</div>
+                    <div class="detail">vs comparable yield protocols</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Fee Split</div>
+                    <div class="value">$5 / $5</div>
+                    <div class="detail">Creator + LP per swap</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Fee Flow</h2>
+            <div class="flow-diagram">
+<span class="blue">USER SWAPS</span>
+     |
+     v
++------------+
+|  <span class="highlight">SWAP FEE</span>  |
++------------+
+     |
+     +-------> <span class="green">$5 to LP Providers</span> (Euler distribution)
+     |
+     +-------> <span class="green">$5 to Token Creator</span> (Passive income)
+     |
+     v
++------------------+
+|  <span class="highlight">EULER MODEL</span>     |
+|  e^(rt) math     |
++------------------+
+     |
+     v
+<span class="green">COMPOUNDING REWARDS</span> --> Claimable in ETH
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>How It Works</h2>
+            <ul class="mechanism-list">
+                <li>
+                    <span class="icon">🔄</span>
+                    <div>
+                        <h4>Self-Compounding</h4>
+                        <p>Staked tokens automatically accumulate rewards. No manual restaking required - Euler's formula handles continuous compounding.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="icon">📊</span>
+                    <div>
+                        <h4>Euler Distribution</h4>
+                        <p>Based on Euler's number (e = 2.718...), the same math banks have used since 1873. Now on-chain, transparent, and permissionless.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="icon">🔒</span>
+                    <div>
+                        <h4>Hardstake Mechanism</h4>
+                        <p>Lock tokens to earn ETH. Must claim rewards before unstaking. Aligns incentives for long-term holding.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="icon">💰</span>
+                    <div>
+                        <h4>Real Yield</h4>
+                        <p>Rewards paid in ETH, not inflationary tokens. Revenue comes from actual trading activity, not emissions.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Real Example</h2>
+            <div class="stat-card" style="max-width: 500px;">
+                <div class="label">Benchmark Study (April 2025)</div>
+                <div class="value purple">30.66% APR</div>
+                <div class="detail" style="margin-top: 16px; line-height: 1.8;">
+                    87 DEX trades over 30 days<br>
+                    2.67 trades/day average<br>
+                    27.2M $BONZI staked (~$4,216)<br>
+                    Earned $9.56/day in ETH
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        bonzi economics - euler math meets defi
+    </footer>
+</body>
+</html>

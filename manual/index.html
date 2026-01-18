@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual - Bonzi Bot Documentation</title>
+    <meta name="description" content="Complete guide to using the Bonzi AI community bot.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/manual/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --sidebar-width: 280px;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Top Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .nav-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--black);
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--purple); }
+        .nav-links a.active { color: var(--purple); }
+
+        /* GitBook-style Layout */
+        .docs-layout {
+            display: flex;
+            padding-top: 73px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--gray-light);
+            padding: 32px 24px;
+            position: fixed;
+            top: 73px;
+            bottom: 0;
+            overflow-y: auto;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+        .sidebar-section h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+        .sidebar-section a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--black);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .sidebar-section a:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .sidebar-section a.active {
+            background: var(--purple);
+            color: white;
+        }
+
+        /* Main Content */
+        .docs-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 48px 64px;
+            max-width: 900px;
+        }
+        .docs-content h1 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        .docs-content h2 {
+            font-size: 24px;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .docs-content h3 {
+            font-size: 18px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        .docs-content p {
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+        .docs-content code {
+            background: var(--gray-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .docs-content pre {
+            background: var(--black);
+            color: var(--white);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        .docs-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* Command Table */
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        .command-table th,
+        .command-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .command-table th {
+            font-weight: 600;
+            color: var(--black);
+        }
+        .command-table td {
+            color: var(--gray);
+        }
+        .command-table code {
+            color: var(--purple);
+        }
+
+        /* Mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .docs-content {
+                margin-left: 0;
+                padding: 32px 24px;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../" class="nav-logo">bonzi</a>
+        <div class="nav-links">
+            <a href="../features.html">features</a>
+            <a href="../research/">research</a>
+            <a href="../dao/">dao</a>
+            <a href="../economics/">economics</a>
+            <a href="./" class="active">manual</a>
+            <a href="../faq.html">faq</a>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <h4>Getting Started</h4>
+                <a href="#intro" class="active">What is Bonzi?</a>
+                <a href="#quickstart">Quick Start</a>
+                <a href="#commands">Commands</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Features</h4>
+                <a href="#ask">Ask Questions</a>
+                <a href="#leaderboard">Leaderboard</a>
+                <a href="#thanks">Thanks System</a>
+                <a href="#settings">Settings</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Advanced</h4>
+                <a href="#staking">Staking Guide</a>
+                <a href="#admin">Admin Tools</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Help</h4>
+                <a href="#troubleshooting">Troubleshooting</a>
+                <a href="#support">Get Support</a>
+            </div>
+        </aside>
+
+        <main class="docs-content">
+            <h1 id="intro">What is Bonzi?</h1>
+            <p>Bonzi is an AI-powered community assistant that lives in your Telegram group. It answers questions, tracks contributions, and rewards helpful members - all without requiring moderator intervention.</p>
+            <p>Unlike generic chatbots, Bonzi learns your project's specific knowledge base and speaks in a voice that matches your community culture.</p>
+
+            <h2 id="quickstart">Quick Start</h2>
+            <p>Getting Bonzi running in your group takes about 2 minutes:</p>
+            <ol style="color: var(--gray); margin-left: 24px;">
+                <li>Add <code>@BonziAIBot</code> to your Telegram group</li>
+                <li>Make Bonzi an admin (needed to read messages)</li>
+                <li>Send <code>/start</code> to open the dashboard</li>
+                <li>That's it - Bonzi is now active</li>
+            </ol>
+
+            <h2 id="commands">Commands</h2>
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/start</code></td>
+                        <td>Open the main dashboard</td>
+                    </tr>
+                    <tr>
+                        <td><code>/ask [question]</code></td>
+                        <td>Ask Bonzi a question directly</td>
+                    </tr>
+                    <tr>
+                        <td><code>/board</code></td>
+                        <td>View the contribution leaderboard</td>
+                    </tr>
+                    <tr>
+                        <td><code>/thanks @user</code></td>
+                        <td>Thank someone for helping</td>
+                    </tr>
+                    <tr>
+                        <td><code>/settings</code></td>
+                        <td>Configure your preferences</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="ask">Ask Questions</h2>
+            <p>You can ask Bonzi questions in two ways:</p>
+            <ul style="color: var(--gray); margin-left: 24px;">
+                <li><strong>Mention:</strong> Tag @BonziAIBot followed by your question</li>
+                <li><strong>Command:</strong> Use <code>/ask</code> followed by your question</li>
+            </ul>
+            <p>Bonzi searches its knowledge base and generates a contextual answer. If it doesn't know something, it will say so rather than hallucinate.</p>
+
+            <h2 id="leaderboard">Leaderboard</h2>
+            <p>The leaderboard tracks community contributions. Points are earned by:</p>
+            <ul style="color: var(--gray); margin-left: 24px;">
+                <li>Asking quality questions (helps others learn)</li>
+                <li>Receiving thanks from other members</li>
+                <li>Providing helpful answers</li>
+            </ul>
+
+            <h2 id="thanks">Thanks System</h2>
+            <p>The thanks system lets you recognize helpful community members. When you thank someone, they receive points that contribute to their leaderboard position.</p>
+            <pre><code>/thanks @helpful_user Great explanation of staking!</code></pre>
+
+            <h2 id="settings">Settings</h2>
+            <p>Use <code>/settings</code> to configure:</p>
+            <ul style="color: var(--gray); margin-left: 24px;">
+                <li><strong>Language:</strong> 14 languages supported</li>
+                <li><strong>Notifications:</strong> Control DM frequency</li>
+                <li><strong>Response style:</strong> Concise vs detailed answers</li>
+            </ul>
+
+            <h2 id="staking">Staking Guide</h2>
+            <p>Stakers get premium features and elevated privileges. To stake:</p>
+            <ol style="color: var(--gray); margin-left: 24px;">
+                <li>Visit <a href="https://ethervista.com" target="_blank" style="color: var(--purple);">ethervista.com</a></li>
+                <li>Connect your wallet</li>
+                <li>Choose Hardstake or LP provision</li>
+                <li>Link your wallet in Bonzi settings</li>
+            </ol>
+
+            <h2 id="admin">Admin Tools</h2>
+            <p>Group admins have access to additional controls:</p>
+            <ul style="color: var(--gray); margin-left: 24px;">
+                <li>Configure knowledge sources</li>
+                <li>Set response parameters</li>
+                <li>View analytics dashboard</li>
+                <li>Manage moderation settings</li>
+            </ul>
+
+            <h2 id="troubleshooting">Troubleshooting</h2>
+            <h3>Bonzi isn't responding</h3>
+            <p>Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages.</p>
+
+            <h3>Wrong information in answers</h3>
+            <p>Use the feedback buttons to report incorrect answers. This helps improve the knowledge base.</p>
+
+            <h2 id="support">Get Support</h2>
+            <p>Need help? Join the community:</p>
+            <ul style="color: var(--gray); margin-left: 24px;">
+                <li>Telegram: <a href="https://t.me/ethervista" style="color: var(--purple);">t.me/ethervista</a></li>
+                <li>GitHub: <a href="https://github.com/Siah-kin/community-bot" style="color: var(--purple);">Issues</a></li>
+            </ul>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Highlight active section on scroll
+        const sections = document.querySelectorAll('h1[id], h2[id]');
+        const navLinks = document.querySelectorAll('.sidebar-section a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

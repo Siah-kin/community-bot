@@ -1771,7 +1771,10 @@
     <a href="#" class="nav-logo">bonzi</a>
     <div class="nav-links">
         <a href="features.html" data-i18n="nav.features">features</a>
-        <a href="#demo" data-i18n="nav.tryit">try it</a>
+        <a href="research/" data-i18n="nav.research">research</a>
+        <a href="dao/" data-i18n="nav.dao">dao</a>
+        <a href="economics/" data-i18n="nav.economics">economics</a>
+        <a href="manual/" data-i18n="nav.manual">manual</a>
         <a href="faq.html" data-i18n="nav.faq">faq</a>
         <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" data-i18n="nav.source">source</a>
         <div class="lang-switcher">
@@ -2758,7 +2761,7 @@ let inMagicalZone = false;
 // Start muted
 bgMusic.volume = 0;
 bgMusic.src = revolutionPlaylist[0].src;
-bgMusic.loop = true;
+bgMusic.loop = false;
 
 // Smooth volume transition
 function smoothVolume() {
@@ -2792,7 +2795,7 @@ function updateVolumeByScroll() {
             // Switching back from magical zone to revolution
             inMagicalZone = false;
             bgMusic.src = revolutionPlaylist[currentTrackIndex].src;
-            bgMusic.loop = true;
+            bgMusic.loop = false;
             bgMusic.play().catch(e => {});
             console.log('🎸 Back to:', revolutionPlaylist[currentTrackIndex].name);
         }
@@ -2812,7 +2815,7 @@ function updateVolumeByScroll() {
             // Enter magical zone - switch to Moby God Moving
             inMagicalZone = true;
             bgMusic.src = magicalTrack.src;
-            bgMusic.loop = true;
+            bgMusic.loop = false;
             bgMusic.volume = 0;
             bgMusic.play().catch(e => {});
             console.log('✨ Magical zone:', magicalTrack.name);
@@ -2848,7 +2851,7 @@ function checkResumeAudio() {
         if (state.magical) {
             bgMusic.src = magicalTrack.src;
             bgMusic.currentTime = state.time || 0;
-            bgMusic.loop = true;
+            bgMusic.loop = false;
             bgMusic.volume = state.volume || magicalVolume;
             inMagicalZone = true;
             isMuted = false;
@@ -2866,7 +2869,7 @@ function playRevolutionTrack(index) {
     if (inMagicalZone) return; // Don't interrupt magical zone
     currentTrackIndex = index;
     bgMusic.src = revolutionPlaylist[index].src;
-    bgMusic.loop = true;
+    bgMusic.loop = false;
     bgMusic.volume = maxVolume; // Set volume!
     bgMusic.play().catch(e => console.log('Play blocked:', e));
     console.log('🎸 Now playing:', revolutionPlaylist[index].name);
@@ -2917,7 +2920,7 @@ const shuffleBtn = document.getElementById('shuffle-btn');
 const playlistSection = document.getElementById('playlist-section');
 
 let isPanelOpen = false;
-let isShuffleOn = false;
+let isShuffleOn = true; // Shuffle on by default
 
 // Build playlist UI
 function buildPlaylistUI() {
@@ -3061,14 +3064,20 @@ shuffleBtn.addEventListener('click', () => {
     console.log(isShuffleOn ? '🔀 Shuffle ON' : '🔀 Shuffle OFF');
 });
 
-// Auto-advance on track end (when shuffle is on)
+// Auto-advance on track end - always advances to next track
 bgMusic.addEventListener('ended', () => {
-    if (!inMagicalZone && isShuffleOn && !isMuted) {
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * revolutionPlaylist.length);
-        } while (newIndex === currentTrackIndex && revolutionPlaylist.length > 1);
-        currentTrackIndex = newIndex;
+    if (!inMagicalZone && !isMuted) {
+        if (isShuffleOn) {
+            // Random next track
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * revolutionPlaylist.length);
+            } while (newIndex === currentTrackIndex && revolutionPlaylist.length > 1);
+            currentTrackIndex = newIndex;
+        } else {
+            // Sequential next track
+            currentTrackIndex = (currentTrackIndex + 1) % revolutionPlaylist.length;
+        }
         playRevolutionTrack(currentTrackIndex);
         updatePlayerUI();
     }

@@ -2,22 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://siah-kin.github.io/community-bot/</loc>
-    <lastmod>2026-01-16</lastmod>
+    <lastmod>2026-01-18</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://siah-kin.github.io/community-bot/faq.html</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://siah-kin.github.io/community-bot/features.html</loc>
+    <lastmod>2026-01-18</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://siah-kin.github.io/community-bot/features.html</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://siah-kin.github.io/community-bot/research/</loc>
+    <lastmod>2026-01-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://siah-kin.github.io/community-bot/dao/</loc>
+    <lastmod>2026-01-18</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siah-kin.github.io/community-bot/economics/</loc>
+    <lastmod>2026-01-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://siah-kin.github.io/community-bot/manual/</loc>
+    <lastmod>2026-01-18</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://siah-kin.github.io/community-bot/faq.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://siah-kin.github.io/community-bot/privacy.html</loc>
     <lastmod>2026-01-16</lastmod>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
 </urlset>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAO - Bonzi Governance</title>
+    <meta name="description" content="Bonzi DAO governance - coming soon.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/dao/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--purple-light); }
+        .nav-links a.active { color: var(--purple-light); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+        .construction-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 500px;
+            margin-bottom: 48px;
+        }
+
+        .coming-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+        }
+        .feature-preview {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+        .feature-preview h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--purple-light);
+        }
+        .feature-preview p {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .coming-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../" class="nav-logo">bonzi</a>
+        <div class="nav-links">
+            <a href="../features.html">features</a>
+            <a href="../research/">research</a>
+            <a href="./" class="active">dao</a>
+            <a href="../economics/">economics</a>
+            <a href="../manual/">manual</a>
+            <a href="../faq.html">faq</a>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="construction-icon">🏗️</div>
+        <h1>Under Construction</h1>
+        <p>The Bonzi DAO is being built. Token holders will govern system parameters, vote on proposals, and shape the future of community AI.</p>
+
+        <div class="coming-features">
+            <div class="feature-preview">
+                <h3>Parameter Voting</h3>
+                <p>Adjust token budgets, rate limits, and system behavior through on-chain governance.</p>
+            </div>
+            <div class="feature-preview">
+                <h3>Proposal System</h3>
+                <p>Submit and vote on feature requests, integrations, and protocol upgrades.</p>
+            </div>
+            <div class="feature-preview">
+                <h3>Loyalty Tiers</h3>
+                <p>Long-term stakers earn elevated voting power and exclusive access.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

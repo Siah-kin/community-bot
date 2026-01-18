@@ -3010,12 +3010,12 @@ function playRevolutionTrack(index) {
     console.log('🎸 Now playing:', revolutionPlaylist[index].name);
 }
 
-// Toggle sound - cycles through revolution playlist on each click
+// Toggle sound - simple on/off toggle
 soundToggle.addEventListener('click', () => {
     soundHint.classList.add('hidden');
 
     if (isMuted) {
-        // First click: unmute
+        // Unmute - start/resume playing
         isMuted = false;
         soundToggle.classList.remove('muted');
         if (!inMagicalZone) {
@@ -3024,22 +3024,15 @@ soundToggle.addEventListener('click', () => {
             bgMusic.play().catch(e => {});
         }
         updateVolumeByScroll();
-    } else if (!inMagicalZone) {
-        // Subsequent clicks: cycle revolution playlist (only if not in magical zone)
-        currentTrackIndex = (currentTrackIndex + 1) % revolutionPlaylist.length;
-        playRevolutionTrack(currentTrackIndex);
-        updateVolumeByScroll();
+    } else {
+        // Mute - stop playing
+        isMuted = true;
+        soundToggle.classList.add('muted');
+        bgMusic.pause();
+        bgMusic.volume = 0;
     }
-    // In magical zone, clicks don't change the track - it's sacred
-});
-
-// Double-click to mute
-soundToggle.addEventListener('dblclick', () => {
-    isMuted = true;
-    soundToggle.classList.add('muted');
-    bgMusic.volume = 0;
     updatePlayerUI();
-    console.log('🔇 Muted');
+    console.log(isMuted ? '🔇 Muted' : '🔊 Playing');
 });
 
 // =====================================================

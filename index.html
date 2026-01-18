@@ -391,110 +391,143 @@
            4 icons: ⚙️ practical, 📖 theory, ⚖️ welfare, 🌐 lang
            ===================================================== */
 
-        /* Compact Top Navigation Bar - Icon Style */
+        /* =====================================================
+           ETHERVISTA-STYLE NAVIGATION
+           Dark, minimal, clean text links
+           ===================================================== */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            padding: 10px 24px;
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(10px);
+            height: 56px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .nav-logo {
-            font-weight: 700;
-            font-size: 16px;
-            color: #fff;
-            text-decoration: none;
+            padding: 0 24px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
-        /* Center: 4 icon navigation */
-        .nav-icons-center { display: flex; gap: 8px; align-items: center; }
-        .nav-icon-wrap { position: relative; }
-        .nav-icon-btn {
-            width: 36px;
-            height: 36px;
+        .nav-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        /* Center nav links */
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        /* Divider - subtle vertical line */
+        .nav-divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Gated links - lock icon */
+        .nav-link.gated::after {
+            content: ' \1F512';
+            font-size: 10px;
+            opacity: 0.5;
+        }
+
+        /* Right side controls */
+        .nav-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* Language selector - minimal */
+        .nav-lang-select {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            outline: none;
+        }
+        .nav-lang-select:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .nav-lang-select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: none;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--purple);
-            transition: all 0.2s;
-        }
-        .nav-icon-btn:hover { background: rgba(124, 58, 237, 0.15); }
-        .nav-icon-btn svg { width: 20px; height: 20px; }
-
-        /* Dropdown on hover */
-        .nav-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 6px;
-            display: none;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 100px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            margin-top: 4px;
-        }
-        .nav-icon-wrap:hover .nav-dropdown { display: flex; }
-        .nav-dropdown a {
-            display: block;
-            padding: 8px 12px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            font-size: 12px;
             border-radius: 6px;
-            white-space: nowrap;
+            transition: background 0.2s;
         }
-        .nav-dropdown a:hover { background: rgba(255,255,255,0.1); color: #fff; }
-
-        /* Language dropdown */
-        .nav-lang-dropdown {
-            display: none;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 120px;
-            padding: 8px;
-            gap: 4px;
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
-        .nav-icon-wrap:hover .nav-lang-dropdown { display: flex; }
-        .nav-lang-flag {
-            padding: 6px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.7);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .nav-lang-flag:hover { background: rgba(255,255,255,0.1); color: #fff; }
-        .nav-lang-flag.active { background: rgba(124, 58, 237, 0.25); color: var(--purple); }
-
-        /* Right: theme + connect */
-        .nav-right { display: flex; gap: 8px; align-items: center; }
+        .theme-toggle svg { width: 18px; height: 18px; stroke: rgba(255, 255, 255, 0.7); }
         .theme-toggle .icon-sun { display: none; }
         body.light-mode .theme-toggle .icon-moon { display: none; }
         body.light-mode .theme-toggle .icon-sun { display: block; }
-        .nav-connect-btn { background: linear-gradient(135deg, #d4c084 0%, #a89050 100%); color: #1a1a1a; }
-        .nav-connect-btn:hover { transform: scale(1.05); }
 
+        /* Connect button - primary CTA */
+        .nav-connect-btn {
+            background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a0a0a;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav-connect-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 16px; }
+            .nav-links { gap: 16px; }
+            .nav-link { font-size: 13px; }
+            .nav-connect-btn { padding: 8px 14px; font-size: 13px; }
+        }
         @media (max-width: 600px) {
-            nav { padding: 8px 12px; }
-            .nav-icon-btn { width: 32px; height: 32px; }
-            .nav-icon-btn svg { width: 18px; height: 18px; }
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 12px; }
+            .nav-logo { font-size: 16px; }
+            .nav-lang-select { display: none; }
         }
 
         .nav-connect {
@@ -598,22 +631,35 @@
             color: #0A0A0A;
         }
 
+        /* Light mode nav */
         body.light-mode nav {
-            background: rgba(255,255,255,0.95);
-            border-bottom-color: rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: rgba(0, 0, 0, 0.08);
         }
 
-        body.light-mode .nav-logo,
-        body.light-mode .nav-primary a {
-            color: #0A0A0A;
+        body.light-mode .nav-logo {
+            color: #0a0a0a;
         }
 
-        body.light-mode .nav-primary a {
-            color: rgba(0,0,0,0.7);
+        body.light-mode .nav-link {
+            color: rgba(0, 0, 0, 0.6);
         }
 
-        body.light-mode .nav-primary a:hover {
-            color: #0A0A0A;
+        body.light-mode .nav-link:hover {
+            color: #0a0a0a;
+        }
+
+        body.light-mode .nav-divider {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-mode .nav-lang-select {
+            border-color: rgba(0, 0, 0, 0.15);
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        body.light-mode .theme-toggle svg {
+            stroke: rgba(0, 0, 0, 0.7);
             background: rgba(0,0,0,0.05);
         }
 
@@ -2017,63 +2063,34 @@
 <nav>
     <a href="./" class="nav-logo">bonzi</a>
 
-    <!-- 4 Icon Navigation -->
-    <div class="nav-icons-center">
-        <!-- Gear: features, dao -->
-        <div class="nav-icon-wrap">
-            <button class="nav-icon-btn" aria-label="Practical">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-            <div class="nav-dropdown">
-                <a href="features.html">features</a>
-                <a href="dao/">dao</a>
-            </div>
-        </div>
-        <!-- Book: manifesto, manual -->
-        <div class="nav-icon-wrap">
-            <button class="nav-icon-btn" aria-label="Theory">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            </button>
-            <div class="nav-dropdown">
-                <a href="faq.html">manifesto</a>
-                <a href="manual/">manual</a>
-            </div>
-        </div>
-        <!-- Scale: economics, research -->
-        <div class="nav-icon-wrap">
-            <button class="nav-icon-btn" aria-label="Data">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
-            </button>
-            <div class="nav-dropdown">
-                <a href="economics/">economics</a>
-                <a href="research/">research</a>
-            </div>
-        </div>
-        <!-- Globe: languages -->
-        <div class="nav-icon-wrap">
-            <button class="nav-icon-btn" aria-label="Language">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </button>
-            <div class="nav-dropdown nav-lang-dropdown">
-                <span class="nav-lang-flag" data-lang="en">EN</span>
-                <span class="nav-lang-flag" data-lang="pt">PT</span>
-                <span class="nav-lang-flag" data-lang="zh">ZH</span>
-                <span class="nav-lang-flag" data-lang="tr">TR</span>
-                <span class="nav-lang-flag" data-lang="ru">RU</span>
-                <span class="nav-lang-flag" data-lang="fr">FR</span>
-            </div>
-        </div>
+    <!-- Ethervista-style Nav Links -->
+    <div class="nav-links">
+        <a href="features.html" class="nav-link">features</a>
+        <a href="manual/" class="nav-link">manual</a>
+        <a href="faq.html" class="nav-link">manifesto</a>
+        <a href="economics/" class="nav-link">economics</a>
+        <div class="nav-divider"></div>
+        <a href="research/" class="nav-link gated">metrics</a>
+        <a href="dao/" class="nav-link gated">dao</a>
+        <div class="nav-divider"></div>
+        <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact">contact</a>
     </div>
 
-    <!-- Right: Theme + Connect -->
+    <!-- Right: Lang, Theme, Connect -->
     <div class="nav-right">
-        <button class="nav-icon-btn theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <select class="nav-lang-select" id="lang-select" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="pt">PT</option>
+            <option value="zh">ZH</option>
+            <option value="tr">TR</option>
+            <option value="ru">RU</option>
+            <option value="fr">FR</option>
+        </select>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
             <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         </button>
-        <button class="nav-icon-btn nav-connect-btn" id="nav-connect-btn" aria-label="Connect wallet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        </button>
+        <button class="nav-connect-btn" id="nav-connect-btn">connect</button>
     </div>
 </nav>
 
@@ -2795,6 +2812,9 @@ function setLanguage(lang) {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
+    // Sync Win98 language select dropdown
+    const langSelect = document.getElementById('lang-select');
+    if (langSelect) langSelect.value = lang;
     document.documentElement.lang = lang;
     localStorage.setItem('bonzi-lang', lang);
 }
@@ -3434,16 +3454,18 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
 });
 
-// Nav Language Flags
-document.querySelectorAll('.nav-lang-flag').forEach(flag => {
-    flag.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = flag.dataset.lang;
-        document.querySelectorAll('.nav-lang-flag').forEach(f => f.classList.remove('active'));
-        flag.classList.add('active');
+// Nav Language Select (Win98 dropdown style)
+const langSelect = document.getElementById('lang-select');
+if (langSelect) {
+    // Set initial value from saved preference
+    const savedLang = localStorage.getItem('bonzi-lang');
+    if (savedLang) langSelect.value = savedLang;
+
+    langSelect.addEventListener('change', (e) => {
+        const lang = e.target.value;
         if (typeof setLanguage === 'function') setLanguage(lang);
     });
-});
+}
 
 // Contact Form
 const contactModal = document.getElementById('contact-modal');

@@ -377,29 +377,17 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo">
-            <img src="bonzi-logo.png" alt="Bonzi">
-            <span>Bonzi</span>
-        </a>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <a href="./" class="nav-logo">bonzi</a>
         <div class="nav-links">
-            <div class="nav-primary">
-                <a href="features.html" class="active" onclick="closeMenu()">features</a>
-                <a href="manual/" onclick="closeMenu()">manual</a>
-                <a href="research/" onclick="closeMenu()">research</a>
-            </div>
+            <a href="features.html" class="nav-link active">features</a>
+            <a href="manual/" class="nav-link">manual</a>
+            <a href="faq.html" class="nav-link">manifesto</a>
+            <a href="economics/" class="nav-link">economics</a>
             <span class="nav-divider">|</span>
-            <div class="nav-secondary">
-                <a href="economics/" onclick="closeMenu()">economics</a>
-                <a href="faq.html" onclick="closeMenu()">manifesto</a>
-                <a href="dao/" onclick="closeMenu()">dao</a>
-                <a href="https://github.com/Siah-kin/community-bot" target="_blank" onclick="closeMenu()">source ↗</a>
-            </div>
+            <a href="research/" class="nav-link gated">metrics</a>
+            <a href="dao/" class="nav-link gated">dao</a>
         </div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </nav>
 
     <section class="hero">

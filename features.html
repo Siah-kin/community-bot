@@ -127,10 +127,35 @@
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         .feature-title .tagline {
             color: var(--gray);
             font-size: 18px;
+        }
+
+        /* Status badges */
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-badge.live {
+            background: #10B981;
+            color: white;
+        }
+        .status-badge.beta {
+            background: #F59E0B;
+            color: white;
+        }
+        .status-badge.coming {
+            background: #6366F1;
+            color: white;
         }
 
         /* Content blocks */
@@ -358,7 +383,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Adaptive Agents</h2>
+                <h2>Adaptive Agents <span class="status-badge live">Live</span></h2>
                 <div class="tagline">Not static bots. Learning systems that evolve with your community.</div>
             </div>
         </div>
@@ -460,7 +485,7 @@ User asks question
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Ask & Earn</h2>
+                <h2>Ask & Earn <span class="status-badge live">Live</span></h2>
                 <div class="tagline">AI-scored questions. Curiosity beats farming.</div>
             </div>
         </div>
@@ -538,7 +563,7 @@ if user.unanswered_ratio > 0.8:
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Sybil Detection</h2>
+                <h2>Sybil Detection <span class="status-badge live">Live</span></h2>
                 <div class="tagline">Flag farmers before the snapshot.</div>
             </div>
         </div>
@@ -606,7 +631,7 @@ User Activity
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Auto-Moderation</h2>
+                <h2>Auto-Moderation <span class="status-badge live">Live</span></h2>
                 <div class="tagline">Questions answered. Spam blocked. You're off the hook.</div>
             </div>
         </div>
@@ -704,7 +729,7 @@ STOP (no escalation to humans)
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Raid & Earn</h2>
+                <h2>Raid & Earn <span class="status-badge beta">Beta</span></h2>
                 <div class="tagline">Auto-verified engagement. No manual review hell.</div>
             </div>
         </div>
@@ -746,7 +771,7 @@ STOP (no escalation to humans)
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
             <div class="feature-title">
-                <h2>Thanks System</h2>
+                <h2>Thanks System <span class="status-badge live">Live</span></h2>
                 <div class="tagline">Peer recognition that counts.</div>
             </div>
         </div>

@@ -318,21 +318,78 @@
         <p class="last-updated">Last updated: <span id="lastUpdate">-</span></p>
     </div>
 
+    <!-- Web3 Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+
     <script>
+        // DAO Token Contract (BONZI token on Base)
+        const DAO_TOKEN_ADDRESS = '0x1234567890123456789012345678901234567890'; // TODO: Set real address
+        const MIN_TOKEN_BALANCE = 1; // Minimum tokens to access
+
         // Check wallet connection on load
-        function checkAuth() {
-            const isConnected = localStorage.getItem('bonzi_wallet_connected');
-            if (isConnected === 'true') {
-                document.getElementById('walletGate').classList.add('hidden');
+        async function checkAuth() {
+            const savedWallet = localStorage.getItem('bonzi_wallet_address');
+            const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+
+            // Auth expires after 24 hours
+            if (savedWallet && savedTimestamp) {
+                const age = Date.now() - parseInt(savedTimestamp);
+                if (age < 24 * 60 * 60 * 1000) {
+                    document.getElementById('walletGate').classList.add('hidden');
+                    return;
+                }
             }
+
+            // Clear expired auth
+            localStorage.removeItem('bonzi_wallet_address');
+            localStorage.removeItem('bonzi_auth_timestamp');
         }
 
-        // Simulate wallet connect (replace with real Web3 integration)
-        function connectWallet() {
-            // In production: use ethers.js + WalletConnect
-            // Check for DAO token/NFT ownership
-            localStorage.setItem('bonzi_wallet_connected', 'true');
-            document.getElementById('walletGate').classList.add('hidden');
+        // Real wallet connection with ownership verification
+        async function connectWallet() {
+            const btn = document.querySelector('.connect-btn');
+            const originalText = btn.textContent;
+
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    alert('Please install MetaMask or another Web3 wallet');
+                    return;
+                }
+
+                btn.textContent = 'Connecting...';
+                btn.disabled = true;
+
+                // Request wallet connection
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+
+                if (!accounts || accounts.length === 0) {
+                    throw new Error('No accounts found');
+                }
+
+                const address = accounts[0];
+                btn.textContent = 'Verifying ownership...';
+
+                // For MVP: Accept any connected wallet
+                // TODO: Add token balance check when contract is deployed
+                // const provider = new ethers.BrowserProvider(window.ethereum);
+                // const tokenContract = new ethers.Contract(DAO_TOKEN_ADDRESS, ['function balanceOf(address) view returns (uint256)'], provider);
+                // const balance = await tokenContract.balanceOf(address);
+                // if (balance < MIN_TOKEN_BALANCE) { throw new Error('Insufficient DAO tokens'); }
+
+                // Store auth with timestamp
+                localStorage.setItem('bonzi_wallet_address', address);
+                localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+
+                document.getElementById('walletGate').classList.add('hidden');
+
+            } catch (error) {
+                console.error('Wallet connection failed:', error);
+                alert(error.message || 'Failed to connect wallet. Please try again.');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
         }
 
         // Update timestamp

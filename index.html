@@ -459,9 +459,6 @@
             background: rgba(201, 162, 39, 0.08);
         }
 
-        .nav-primary a .icon {
-            font-size: 16px;
-        }
 
         /* Secondary links (smaller, no pills) */
         .nav-secondary {
@@ -529,7 +526,11 @@
         }
 
         /* =====================================================
-           MOBILE BOTTOM DOCK (Rainbow Wallet style)
+           LEAN MOBILE DOCK - 4 Icons with Drop-Up Menus
+           ⚙️ gear (features, dao)
+           📖 book (manifesto, manual)
+           ⚖️ scale (economics, research)
+           🌐 globe (languages)
            ===================================================== */
         .mobile-dock {
             display: none;
@@ -540,149 +541,102 @@
             z-index: 100;
             background: #0d0d0d;
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 16px 24px;
+            padding: 12px 0 28px;
         }
 
         .mobile-dock-inner {
             display: flex;
             justify-content: space-around;
             align-items: center;
-            max-width: 400px;
+            max-width: 320px;
             margin: 0 auto;
         }
 
-        .mobile-dock a {
+        /* Each dock button */
+        .dock-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            font-size: 10px;
-            padding: 8px 12px;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .mobile-dock a .dock-icon {
-            font-size: 20px;
-        }
-
-        .mobile-dock a:hover,
-        .mobile-dock a.active {
-            color: #c9a227;
-            background: rgba(201, 162, 39, 0.1);
-        }
-
-        /* Mobile More button (triggers vertical drop-UP menu) */
-        .mobile-more-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: rgba(255,255,255,0.5);
             background: none;
             border: none;
-            font-size: 10px;
-            padding: 8px 12px;
-            border-radius: 12px;
+            color: rgba(255,255,255,0.6);
+            font-size: 28px;
+            padding: 8px 16px;
             cursor: pointer;
-            transition: all 0.2s;
             position: relative;
+            transition: color 0.2s;
         }
 
-        .mobile-more-btn .dock-icon {
-            font-size: 20px;
-        }
-
-        .mobile-more-btn:hover,
-        .mobile-more-btn.active {
+        .dock-btn:hover,
+        .dock-btn.active {
             color: #c9a227;
-            background: rgba(201, 162, 39, 0.1);
         }
 
-        /* Vertical drop-UP menu (secondary items) */
-        .mobile-dropup {
+        /* Drop-up menu */
+        .dock-dropup {
             position: absolute;
-            bottom: 70px;
-            right: 8px;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
             background: #1a1a1a;
             border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 16px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 8px;
             display: none;
             flex-direction: column;
-            gap: 8px;
-            min-width: 140px;
-            box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
+            gap: 4px;
+            min-width: 120px;
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.5);
         }
 
-        .mobile-dropup.open {
+        .dock-dropup.open {
             display: flex;
-            animation: slideUp 0.2s ease;
+            animation: slideUp 0.15s ease;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        .mobile-dropup a,
-        .mobile-dropup button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            color: rgba(255,255,255,0.8);
+        .dock-dropup a {
+            display: block;
+            padding: 10px 16px;
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
             font-size: 14px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-            width: 100%;
-            text-align: left;
+            border-radius: 8px;
+            transition: background 0.15s;
+            white-space: nowrap;
         }
 
-        .mobile-dropup a:hover,
-        .mobile-dropup button:hover {
-            background: rgba(255,255,255,0.08);
-        }
-
-        .mobile-dropup .dropup-icon {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .mobile-dropup-divider {
-            height: 1px;
+        .dock-dropup a:hover {
             background: rgba(255,255,255,0.1);
-            margin: 4px 0;
         }
 
-        /* Language sub-menu in dropup */
-        .mobile-lang-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
+        /* Language flags grid */
+        .dock-lang-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 4px;
         }
 
-        .mobile-lang-flag {
+        .dock-lang-flag {
             font-size: 24px;
             padding: 8px;
+            text-align: center;
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.15s;
         }
 
-        .mobile-lang-flag:hover {
+        .dock-lang-flag:hover {
             background: rgba(255,255,255,0.1);
         }
 
-        .mobile-lang-flag.active {
-            background: rgba(201, 162, 39, 0.2);
+        .dock-lang-flag.active {
+            background: rgba(201, 162, 39, 0.25);
         }
 
         /* Hide desktop nav on mobile, show dock */
@@ -690,7 +644,7 @@
             nav .nav-links { display: none; }
             nav .nav-actions { display: none; }
             .mobile-dock { display: block; }
-            body { padding-bottom: 80px; }
+            body { padding-bottom: 90px; }
         }
 
         /* Lang switcher styling */
@@ -2224,10 +2178,10 @@
     </a>
     <div class="nav-links">
         <div class="nav-primary">
-            <a href="features.html" class="active" data-i18n="nav.features"><span class="icon">⚡</span>features</a>
-            <a href="manual/" data-i18n="nav.manual"><span class="icon">📖</span>manual</a>
-            <a href="research/" data-i18n="nav.research"><span class="icon">📊</span>research</a>
-            <a href="economics/" data-i18n="nav.economics"><span class="icon">💰</span>economics</a>
+            <a href="features.html" class="active" data-i18n="nav.features">features</a>
+            <a href="manual/" data-i18n="nav.manual">manual</a>
+            <a href="research/" data-i18n="nav.research">research</a>
+            <a href="economics/" data-i18n="nav.economics">economics</a>
         </div>
         <div class="nav-secondary">
             <a href="faq.html" data-i18n="nav.manifesto">manifesto</a>
@@ -2245,60 +2199,50 @@
     </div>
 </nav>
 
-<!-- Mobile Bottom Dock -->
+<!-- Mobile Bottom Dock - 4 Icons -->
 <div class="mobile-dock">
     <div class="mobile-dock-inner">
-        <!-- Primary nav (horizontal) -->
-        <a href="features.html" class="active">
-            <span class="dock-icon">⚡</span>
-            <span>features</span>
-        </a>
-        <a href="manual/">
-            <span class="dock-icon">📖</span>
-            <span>manual</span>
-        </a>
-        <a href="research/">
-            <span class="dock-icon">📊</span>
-            <span>research</span>
-        </a>
-        <a href="economics/">
-            <span class="dock-icon">💰</span>
-            <span>economics</span>
-        </a>
-        <!-- More button (triggers vertical drop-UP) -->
-        <button class="mobile-more-btn" id="mobile-more-btn">
-            <span class="dock-icon">•••</span>
-            <span>more</span>
+        <!-- ⚙️ PRACTICAL: features, dao -->
+        <button class="dock-btn" data-dock="practical">
+            ⚙️
+            <div class="dock-dropup" id="dropup-practical">
+                <a href="features.html">features</a>
+                <a href="dao/">dao</a>
+            </div>
         </button>
-    </div>
-    <!-- Vertical drop-UP menu (secondary items) -->
-    <div class="mobile-dropup" id="mobile-dropup">
-        <a href="faq.html">
-            <span class="dropup-icon">📜</span>
-            <span>manifesto</span>
-        </a>
-        <a href="dao/">
-            <span class="dropup-icon">🏛️</span>
-            <span>dao</span>
-        </a>
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank">
-            <span class="dropup-icon">💻</span>
-            <span>source</span>
-        </a>
-        <div class="mobile-dropup-divider"></div>
-        <button id="mobile-connect-btn">
-            <span class="dropup-icon">🔗</span>
-            <span>connect wallet</span>
+
+        <!-- 📖 THEORY: manifesto, manual -->
+        <button class="dock-btn" data-dock="theory">
+            📖
+            <div class="dock-dropup" id="dropup-theory">
+                <a href="faq.html">manifesto</a>
+                <a href="manual/">manual</a>
+            </div>
         </button>
-        <div class="mobile-dropup-divider"></div>
-        <div class="mobile-lang-row">
-            <span class="mobile-lang-flag active" data-lang="en">🇺🇸</span>
-            <span class="mobile-lang-flag" data-lang="pt">🇧🇷</span>
-            <span class="mobile-lang-flag" data-lang="zh">🇨🇳</span>
-            <span class="mobile-lang-flag" data-lang="tr">🇹🇷</span>
-            <span class="mobile-lang-flag" data-lang="ru">🇷🇺</span>
-            <span class="mobile-lang-flag" data-lang="fr">🇫🇷</span>
-        </div>
+
+        <!-- ⚖️ DATA: economics, research -->
+        <button class="dock-btn" data-dock="data">
+            ⚖️
+            <div class="dock-dropup" id="dropup-data">
+                <a href="economics/">economics</a>
+                <a href="research/">research</a>
+            </div>
+        </button>
+
+        <!-- 🌐 LANGUAGES -->
+        <button class="dock-btn" data-dock="lang">
+            🌐
+            <div class="dock-dropup" id="dropup-lang">
+                <div class="dock-lang-grid">
+                    <span class="dock-lang-flag active" data-lang="en">🇺🇸</span>
+                    <span class="dock-lang-flag" data-lang="pt">🇧🇷</span>
+                    <span class="dock-lang-flag" data-lang="zh">🇨🇳</span>
+                    <span class="dock-lang-flag" data-lang="tr">🇹🇷</span>
+                    <span class="dock-lang-flag" data-lang="ru">🇷🇺</span>
+                    <span class="dock-lang-flag" data-lang="fr">🇫🇷</span>
+                </div>
+            </div>
+        </button>
     </div>
 </div>
 
@@ -3664,37 +3608,45 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
 });
 
-// Mobile Drop-UP Menu
-const mobileMoreBtn = document.getElementById('mobile-more-btn');
-const mobileDropup = document.getElementById('mobile-dropup');
-const mobileLangFlags = document.querySelectorAll('.mobile-lang-flag');
+// Mobile Dock - 4 Icons with Drop-Ups
+const dockBtns = document.querySelectorAll('.dock-btn');
+const dockLangFlags = document.querySelectorAll('.dock-lang-flag');
 
-mobileMoreBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    mobileDropup.classList.toggle('open');
-    mobileMoreBtn.classList.toggle('active');
+dockBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropup = btn.querySelector('.dock-dropup');
+        const isOpen = dropup.classList.contains('open');
+
+        // Close all dropups first
+        document.querySelectorAll('.dock-dropup').forEach(d => d.classList.remove('open'));
+        dockBtns.forEach(b => b.classList.remove('active'));
+
+        // Toggle this one
+        if (!isOpen) {
+            dropup.classList.add('open');
+            btn.classList.add('active');
+        }
+    });
 });
 
-// Language flags in dropup
-mobileLangFlags.forEach(flag => {
-    flag.addEventListener('click', () => {
+// Language flags
+dockLangFlags.forEach(flag => {
+    flag.addEventListener('click', (e) => {
+        e.stopPropagation();
         const lang = flag.dataset.lang;
-        // Update active state
-        mobileLangFlags.forEach(f => f.classList.remove('active'));
+        dockLangFlags.forEach(f => f.classList.remove('active'));
         flag.classList.add('active');
-        // Use existing setLanguage function
         if (typeof setLanguage === 'function') {
             setLanguage(lang);
         }
     });
 });
 
-// Close dropup when clicking outside
-document.addEventListener('click', (e) => {
-    if (!mobileMoreBtn.contains(e.target) && !mobileDropup.contains(e.target)) {
-        mobileDropup.classList.remove('open');
-        mobileMoreBtn.classList.remove('active');
-    }
+// Close dropups when clicking outside
+document.addEventListener('click', () => {
+    document.querySelectorAll('.dock-dropup').forEach(d => d.classList.remove('open'));
+    dockBtns.forEach(b => b.classList.remove('active'));
 });
 
 // Contact Form

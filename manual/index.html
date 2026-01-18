@@ -180,6 +180,24 @@
             color: var(--purple);
         }
 
+        /* Feature cross-link */
+        .feature-link {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        .feature-link a {
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .feature-link a:hover {
+            text-decoration: underline;
+        }
+
         /* Mobile */
         .mobile-menu-btn {
             display: none;
@@ -306,6 +324,7 @@
                 <li><strong>Command:</strong> Use <code>/ask</code> followed by your question</li>
             </ul>
             <p>Bonzi searches its knowledge base and generates a contextual answer. If it doesn't know something, it will say so rather than hallucinate.</p>
+            <p class="feature-link">⚙️ <a href="../features.html#ask-earn">Why we built it this way →</a></p>
 
             <h2 id="leaderboard">Leaderboard</h2>
             <p>The leaderboard tracks community contributions. Points are earned by:</p>
@@ -318,6 +337,7 @@
             <h2 id="thanks">Thanks System</h2>
             <p>The thanks system lets you recognize helpful community members. When you thank someone, they receive points that contribute to their leaderboard position.</p>
             <pre><code>/thanks @helpful_user Great explanation of staking!</code></pre>
+            <p class="feature-link">⚙️ <a href="../features.html#thanks">Why we built it this way →</a></p>
 
             <h2 id="settings">Settings</h2>
             <p>Use <code>/settings</code> to configure:</p>

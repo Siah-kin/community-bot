@@ -574,6 +574,117 @@
             background: rgba(201, 162, 39, 0.1);
         }
 
+        /* Mobile More button (triggers vertical drop-UP menu) */
+        .mobile-more-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255,255,255,0.5);
+            background: none;
+            border: none;
+            font-size: 10px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .mobile-more-btn .dock-icon {
+            font-size: 20px;
+        }
+
+        .mobile-more-btn:hover,
+        .mobile-more-btn.active {
+            color: #c9a227;
+            background: rgba(201, 162, 39, 0.1);
+        }
+
+        /* Vertical drop-UP menu (secondary items) */
+        .mobile-dropup {
+            position: absolute;
+            bottom: 70px;
+            right: 8px;
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 140px;
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
+        }
+
+        .mobile-dropup.open {
+            display: flex;
+            animation: slideUp 0.2s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-dropup a,
+        .mobile-dropup button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .mobile-dropup a:hover,
+        .mobile-dropup button:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .mobile-dropup .dropup-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .mobile-dropup-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 4px 0;
+        }
+
+        /* Language sub-menu in dropup */
+        .mobile-lang-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+
+        .mobile-lang-flag {
+            font-size: 24px;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .mobile-lang-flag:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .mobile-lang-flag.active {
+            background: rgba(201, 162, 39, 0.2);
+        }
+
         /* Hide desktop nav on mobile, show dock */
         @media (max-width: 900px) {
             nav .nav-links { display: none; }
@@ -2137,6 +2248,7 @@
 <!-- Mobile Bottom Dock -->
 <div class="mobile-dock">
     <div class="mobile-dock-inner">
+        <!-- Primary nav (horizontal) -->
         <a href="features.html" class="active">
             <span class="dock-icon">⚡</span>
             <span>features</span>
@@ -2153,10 +2265,40 @@
             <span class="dock-icon">💰</span>
             <span>economics</span>
         </a>
-        <a href="#" id="mobile-connect-btn">
-            <span class="dock-icon">🔗</span>
-            <span>connect</span>
+        <!-- More button (triggers vertical drop-UP) -->
+        <button class="mobile-more-btn" id="mobile-more-btn">
+            <span class="dock-icon">•••</span>
+            <span>more</span>
+        </button>
+    </div>
+    <!-- Vertical drop-UP menu (secondary items) -->
+    <div class="mobile-dropup" id="mobile-dropup">
+        <a href="faq.html">
+            <span class="dropup-icon">📜</span>
+            <span>manifesto</span>
         </a>
+        <a href="dao/">
+            <span class="dropup-icon">🏛️</span>
+            <span>dao</span>
+        </a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank">
+            <span class="dropup-icon">💻</span>
+            <span>source</span>
+        </a>
+        <div class="mobile-dropup-divider"></div>
+        <button id="mobile-connect-btn">
+            <span class="dropup-icon">🔗</span>
+            <span>connect wallet</span>
+        </button>
+        <div class="mobile-dropup-divider"></div>
+        <div class="mobile-lang-row">
+            <span class="mobile-lang-flag active" data-lang="en">🇺🇸</span>
+            <span class="mobile-lang-flag" data-lang="pt">🇧🇷</span>
+            <span class="mobile-lang-flag" data-lang="zh">🇨🇳</span>
+            <span class="mobile-lang-flag" data-lang="tr">🇹🇷</span>
+            <span class="mobile-lang-flag" data-lang="ru">🇷🇺</span>
+            <span class="mobile-lang-flag" data-lang="fr">🇫🇷</span>
+        </div>
     </div>
 </div>
 
@@ -3520,6 +3662,39 @@ themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
     const isLight = document.body.classList.contains('light-mode');
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
+});
+
+// Mobile Drop-UP Menu
+const mobileMoreBtn = document.getElementById('mobile-more-btn');
+const mobileDropup = document.getElementById('mobile-dropup');
+const mobileLangFlags = document.querySelectorAll('.mobile-lang-flag');
+
+mobileMoreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileDropup.classList.toggle('open');
+    mobileMoreBtn.classList.toggle('active');
+});
+
+// Language flags in dropup
+mobileLangFlags.forEach(flag => {
+    flag.addEventListener('click', () => {
+        const lang = flag.dataset.lang;
+        // Update active state
+        mobileLangFlags.forEach(f => f.classList.remove('active'));
+        flag.classList.add('active');
+        // Use existing setLanguage function
+        if (typeof setLanguage === 'function') {
+            setLanguage(lang);
+        }
+    });
+});
+
+// Close dropup when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileMoreBtn.contains(e.target) && !mobileDropup.contains(e.target)) {
+        mobileDropup.classList.remove('open');
+        mobileMoreBtn.classList.remove('active');
+    }
 });
 
 // Contact Form

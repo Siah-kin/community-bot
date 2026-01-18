@@ -1298,12 +1298,29 @@
         if (savedLang && translations[savedLang]) setLanguage(savedLang);
 
         // =====================
-        // AUDIO (Resume Moby from homepage)
+        // AUDIO - "Room effect" (lower volume like hearing from another room)
         // =====================
         const bgMusic = document.getElementById('bg-music');
         const soundToggle = document.getElementById('sound-toggle');
         let isMuted = true;
-        const mobyVolume = 0.3;
+        const roomVolume = 0.12; // Distant room effect - quieter than main page
+
+        // Smooth volume transitions
+        function fadeToVolume(target, duration = 800) {
+            const startVol = bgMusic.volume;
+            const diff = target - startVol;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic for smooth fade
+                const eased = 1 - Math.pow(1 - progress, 3);
+                bgMusic.volume = startVol + (diff * eased);
+                if (progress < 1) requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
 
         function checkResumeAudio() {
             const saved = localStorage.getItem('bonzi_audio');
@@ -1313,10 +1330,12 @@
                     bgMusic.src = 'moby-god-moving.mp3';
                     bgMusic.currentTime = state.time || 0;
                     bgMusic.loop = true;
-                    bgMusic.volume = state.volume || mobyVolume;
+                    bgMusic.volume = 0;
                     isMuted = false;
                     soundToggle.classList.remove('muted');
                     bgMusic.play().catch(e => {});
+                    // Fade down to room volume (coming from louder main page)
+                    fadeToVolume(roomVolume, 1200);
                 }
                 localStorage.removeItem('bonzi_audio');
             }
@@ -1327,24 +1346,25 @@
             isMuted = !isMuted;
             soundToggle.classList.toggle('muted', isMuted);
             if (isMuted) {
-                bgMusic.volume = 0;
+                fadeToVolume(0, 400);
             } else {
                 if (!bgMusic.src || bgMusic.src === '') {
                     bgMusic.src = 'moby-god-moving.mp3';
                     bgMusic.loop = true;
+                    bgMusic.volume = 0;
                 }
-                bgMusic.volume = mobyVolume;
                 bgMusic.play().catch(e => {});
+                fadeToVolume(roomVolume, 600);
             }
         });
 
-        // Save state before leaving
+        // Save state before leaving (save full volume so main page knows to fade up)
         window.addEventListener('beforeunload', () => {
             if (!isMuted) {
                 localStorage.setItem('bonzi_audio', JSON.stringify({
                     track: 'moby',
                     time: bgMusic.currentTime,
-                    volume: bgMusic.volume
+                    volume: 0.3 // Store the "main room" volume for return trip
                 }));
             }
         });

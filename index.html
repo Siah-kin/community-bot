@@ -392,160 +392,64 @@
            ===================================================== */
 
         /* Hide old top nav on desktop */
+        /* Top Navigation Bar */
         nav {
-            display: none;
-        }
-
-        /* Desktop Sidebar */
-        .desktop-sidebar {
             position: fixed;
+            top: 0;
             left: 0;
-            top: 0;
-            bottom: 0;
-            width: 64px;
-            background: #0d0d0d;
-            border-right: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
+            right: 0;
+            padding: 20px 40px;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(10px);
             z-index: 100;
-        }
-
-        .sidebar-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            margin-bottom: 32px;
-        }
-
-        .sidebar-icons {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-
-        .sidebar-btn {
-            width: 48px;
-            height: 48px;
+        .nav-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: none;
-            border: none;
-            color: #7C3AED;
-            border-radius: 12px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
+            gap: 8px;
         }
-
-        .sidebar-btn svg {
-            width: 24px;
-            height: 24px;
+        .nav-logo img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
         }
-
-        .sidebar-btn:hover {
-            background: rgba(124, 58, 237, 0.15);
-        }
-
-        /* Hover menu (flyout to the right) */
-        .sidebar-menu {
-            position: absolute;
-            left: 56px;
-            top: 0;
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 12px;
-            padding: 8px;
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 140px;
-            box-shadow: 4px 4px 20px rgba(0,0,0,0.4);
-        }
-
-        .sidebar-btn:hover .sidebar-menu {
-            display: flex;
-        }
-
-        .sidebar-menu a {
-            display: block;
-            padding: 10px 16px;
-            color: rgba(255,255,255,0.85);
+        .nav-logo span { display: none; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-primary, .nav-secondary { display: flex; align-items: center; gap: 24px; }
+        .nav-primary a {
+            color: #fff;
             text-decoration: none;
             font-size: 14px;
-            border-radius: 8px;
-            transition: background 0.15s;
-            white-space: nowrap;
+            font-weight: 600;
+            text-transform: lowercase;
         }
+        .nav-secondary a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: lowercase;
+        }
+        .nav-links a:hover { color: var(--purple); }
+        .nav-divider { color: rgba(255,255,255,0.2); font-size: 16px; margin: 0 8px; }
+        .nav-links a.active { color: var(--purple); }
 
-        .sidebar-menu a:hover {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-links { gap: 12px; }
+            .nav-primary, .nav-secondary { gap: 12px; }
+            .nav-primary a, .nav-secondary a { font-size: 12px; }
+            .nav-divider { display: none; }
         }
-
-        /* Language grid in sidebar */
-        .sidebar-lang-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            padding: 4px;
-        }
-
-        .sidebar-lang-flag {
-            font-size: 22px;
-            padding: 8px;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .sidebar-lang-flag:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .sidebar-lang-flag.active {
-            background: rgba(124, 58, 237, 0.25);
-        }
-
-        /* Connect button at bottom of sidebar */
-        .sidebar-connect {
-            margin-top: auto;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .sidebar-connect svg {
-            width: 22px;
-            height: 22px;
-            stroke: #1a1a1a;
-        }
-
-        .sidebar-connect:hover {
-            transform: scale(1.05);
-        }
-
-        /* Adjust body for sidebar */
-        body {
-            padding-left: 64px;
-        }
-
-        /* Hide sidebar on mobile */
-        @media (max-width: 900px) {
-            .desktop-sidebar { display: none; }
-            body { padding-left: 0; }
-        }
+        @media (max-width: 600px) {
+            .nav-secondary { display: none; }
         }
 
         .nav-connect {
@@ -565,132 +469,6 @@
             box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
         }
 
-        /* =====================================================
-           LEAN MOBILE DOCK - 4 Icons with Drop-Up Menus
-           ⚙️ gear (features, dao)
-           📖 book (manifesto, manual)
-           ⚖️ scale (economics, research)
-           🌐 globe (languages)
-           ===================================================== */
-        .mobile-dock {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: #0d0d0d;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 12px 0 28px;
-        }
-
-        .mobile-dock-inner {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-
-        /* Each dock button */
-        .dock-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: none;
-            border: none;
-            color: #7C3AED;
-            padding: 8px 16px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .dock-btn svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        .dock-btn:hover,
-        .dock-btn.active {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* Drop-up menu */
-        .dock-dropup {
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 8px;
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            min-width: 120px;
-            box-shadow: 0 -8px 24px rgba(0,0,0,0.5);
-        }
-
-        .dock-dropup.open {
-            display: flex;
-            animation: slideUp 0.15s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        .dock-dropup a {
-            display: block;
-            padding: 10px 16px;
-            color: rgba(255,255,255,0.85);
-            text-decoration: none;
-            font-size: 14px;
-            border-radius: 8px;
-            transition: background 0.15s;
-            white-space: nowrap;
-        }
-
-        .dock-dropup a:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Language flags grid */
-        .dock-lang-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            padding: 4px;
-        }
-
-        .dock-lang-flag {
-            font-size: 24px;
-            padding: 8px;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .dock-lang-flag:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .dock-lang-flag.active {
-            background: rgba(124, 58, 237, 0.25);
-        }
-
-        /* Hide desktop nav on mobile, show dock */
-        @media (max-width: 900px) {
-            nav .nav-links { display: none; }
-            nav .nav-actions { display: none; }
-            .mobile-dock { display: block; }
-            body { padding-bottom: 90px; }
-        }
 
         /* Lang switcher styling */
         .lang-switcher {
@@ -825,21 +603,6 @@
         body.light-mode .nav-connect {
             background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
             color: #FFFFFF;
-        }
-
-        body.light-mode .mobile-dock {
-            background: #FFFFFF;
-            border-top-color: rgba(0,0,0,0.1);
-        }
-
-        body.light-mode .mobile-dock a {
-            color: rgba(0,0,0,0.5);
-        }
-
-        body.light-mode .mobile-dock a:hover,
-        body.light-mode .mobile-dock a.active {
-            color: #7C3AED;
-            background: rgba(124, 58, 237, 0.1);
         }
 
         /* Opening - just bonzi */
@@ -2216,123 +1979,23 @@
     <span class="arrow">▼</span>
 </div>
 
-<!-- Desktop Sidebar -->
-<div class="desktop-sidebar">
-    <a href="/"><img src="bonzi-logo.png" alt="Bonzi" class="sidebar-logo"></a>
-
-    <div class="sidebar-icons">
-        <!-- Gear: features, dao -->
-        <button class="sidebar-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <div class="sidebar-menu">
-                <a href="features.html">features</a>
-                <a href="dao/">dao</a>
-            </div>
-        </button>
-
-        <!-- Book: manifesto, manual -->
-        <button class="sidebar-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <div class="sidebar-menu">
-                <a href="faq.html">manifesto</a>
-                <a href="manual/">manual</a>
-            </div>
-        </button>
-
-        <!-- Scale: economics, research -->
-        <button class="sidebar-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
-            <div class="sidebar-menu">
-                <a href="economics/">economics</a>
-                <a href="research/">research</a>
-            </div>
-        </button>
-
-        <!-- Globe: languages -->
-        <button class="sidebar-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <div class="sidebar-menu">
-                <div class="sidebar-lang-grid">
-                    <span class="sidebar-lang-flag active" data-lang="en">EN</span>
-                    <span class="sidebar-lang-flag" data-lang="pt">PT</span>
-                    <span class="sidebar-lang-flag" data-lang="zh">ZH</span>
-                    <span class="sidebar-lang-flag" data-lang="tr">TR</span>
-                    <span class="sidebar-lang-flag" data-lang="ru">RU</span>
-                    <span class="sidebar-lang-flag" data-lang="fr">FR</span>
-                </div>
-            </div>
-        </button>
-    </div>
-
-    <!-- Connect wallet button -->
-    <button class="sidebar-connect" id="sidebar-connect-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-    </button>
-</div>
-
-<!-- Old nav kept for validator compatibility but hidden -->
 <nav>
-    <a href="#" class="nav-logo">
-        <img src="bonzi-logo.png" alt="Bonzi">
-        <span>Bonzi</span>
-    </a>
+    <a href="./" class="nav-logo">bonzi</a>
     <div class="nav-links">
         <div class="nav-primary">
-            <a href="features.html" class="active" data-i18n="nav.features">features</a>
-            <a href="manual/" data-i18n="nav.manual">manual</a>
-            <a href="research/" data-i18n="nav.research">research</a>
-            <a href="economics/" data-i18n="nav.economics">economics</a>
+            <a href="features.html">features</a>
+            <a href="manual/">manual</a>
+            <a href="research/">research</a>
         </div>
+        <span class="nav-divider">|</span>
         <div class="nav-secondary">
-            <a href="faq.html" data-i18n="nav.manifesto">manifesto</a>
-            <a href="dao/" data-i18n="nav.dao">dao</a>
-            <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" data-i18n="nav.source">source ↗</a>
+            <a href="economics/">economics</a>
+            <a href="faq.html">manifesto</a>
+            <a href="dao/">dao</a>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank">source ↗</a>
         </div>
     </div>
 </nav>
-
-<!-- Mobile Bottom Dock - 4 Icons -->
-<div class="mobile-dock">
-    <div class="mobile-dock-inner">
-        <button class="dock-btn" data-dock="practical">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <div class="dock-dropup" id="dropup-practical">
-                <a href="features.html">features</a>
-                <a href="dao/">dao</a>
-            </div>
-        </button>
-
-        <button class="dock-btn" data-dock="theory">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <div class="dock-dropup" id="dropup-theory">
-                <a href="faq.html">manifesto</a>
-                <a href="manual/">manual</a>
-            </div>
-        </button>
-
-        <button class="dock-btn" data-dock="data">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
-            <div class="dock-dropup" id="dropup-data">
-                <a href="economics/">economics</a>
-                <a href="research/">research</a>
-            </div>
-        </button>
-
-        <button class="dock-btn" data-dock="lang">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <div class="dock-dropup" id="dropup-lang">
-                <div class="dock-lang-grid">
-                    <span class="dock-lang-flag active" data-lang="en">EN</span>
-                    <span class="dock-lang-flag" data-lang="pt">PT</span>
-                    <span class="dock-lang-flag" data-lang="zh">ZH</span>
-                    <span class="dock-lang-flag" data-lang="tr">TR</span>
-                    <span class="dock-lang-flag" data-lang="ru">RU</span>
-                    <span class="dock-lang-flag" data-lang="fr">FR</span>
-                </div>
-            </div>
-        </button>
-    </div>
-</div>
 
 <section class="opening">
     <img src="bonzi-logo.png" alt="bonzi" class="opening-bonzi">
@@ -3291,7 +2954,9 @@ const comparisonSection = document.querySelector('.comparison-section');
 const revolutionPlaylist = [
     { src: 'killing-in-the-name.mp3', name: 'RATM - Killing in the Name' },
     { src: 'children-of-the-grave.mp3', name: 'Black Sabbath - Children of the Grave' },
-    { src: 'moby-all-that-i-need.mp3', name: 'Moby - All That I Need Is To Be Loved' }
+    { src: 'moby-all-that-i-need.mp3', name: 'Moby - All That I Need Is To Be Loved' },
+    { src: 'electric-wizard-we-hate-you.mp3', name: 'Electric Wizard - We Hate You' },
+    { src: 'david-bowie-space-oddity.mp3', name: 'David Bowie - Space Oddity' }
 ];
 
 // The magical song - only plays after "why bonzi is different"
@@ -3696,62 +3361,6 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
 });
 
-// Mobile Dock - 4 Icons with Drop-Ups
-const dockBtns = document.querySelectorAll('.dock-btn');
-const dockLangFlags = document.querySelectorAll('.dock-lang-flag');
-
-dockBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const dropup = btn.querySelector('.dock-dropup');
-        const isOpen = dropup.classList.contains('open');
-
-        // Close all dropups first
-        document.querySelectorAll('.dock-dropup').forEach(d => d.classList.remove('open'));
-        dockBtns.forEach(b => b.classList.remove('active'));
-
-        // Toggle this one
-        if (!isOpen) {
-            dropup.classList.add('open');
-            btn.classList.add('active');
-        }
-    });
-});
-
-// Language flags (mobile dock)
-dockLangFlags.forEach(flag => {
-    flag.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = flag.dataset.lang;
-        // Update both mobile and sidebar flags
-        document.querySelectorAll('.dock-lang-flag, .sidebar-lang-flag').forEach(f => f.classList.remove('active'));
-        document.querySelectorAll(`[data-lang="${lang}"]`).forEach(f => f.classList.add('active'));
-        if (typeof setLanguage === 'function') {
-            setLanguage(lang);
-        }
-    });
-});
-
-// Sidebar language flags (desktop)
-const sidebarLangFlags = document.querySelectorAll('.sidebar-lang-flag');
-sidebarLangFlags.forEach(flag => {
-    flag.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = flag.dataset.lang;
-        // Update both mobile and sidebar flags
-        document.querySelectorAll('.dock-lang-flag, .sidebar-lang-flag').forEach(f => f.classList.remove('active'));
-        document.querySelectorAll(`[data-lang="${lang}"]`).forEach(f => f.classList.add('active'));
-        if (typeof setLanguage === 'function') {
-            setLanguage(lang);
-        }
-    });
-});
-
-// Close dropups when clicking outside
-document.addEventListener('click', () => {
-    document.querySelectorAll('.dock-dropup').forEach(d => d.classList.remove('open'));
-    dockBtns.forEach(b => b.classList.remove('active'));
-});
 
 // Contact Form
 const contactModal = document.getElementById('contact-modal');

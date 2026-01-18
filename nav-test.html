@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav Bar Options - Bonzi</title>
+    <style>
+        :root {
+            --purple: #7C3AED;
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --gray: #71717A;
+            --gray-light: #A1A1AA;
+            --win-gray: #c0c0c0;
+            --win-dark: #808080;
+            --win-light: #ffffff;
+            --xp-blue: #0A246A;
+            --xp-blue-light: #A6CAF0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+        }
+
+        h2 {
+            margin: 40px 0 20px;
+            color: var(--purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-container {
+            margin-bottom: 60px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* ========================================
+           OPTION 1: Current (Purple Icons + Dropdowns)
+           ======================================== */
+        .nav-1 {
+            background: rgba(10,10,10,0.95);
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-1 .logo { font-weight: 700; font-size: 16px; color: #fff; text-decoration: none; }
+        .nav-1 .icons { display: flex; gap: 8px; }
+        .nav-1 .icon-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: none; border: none; border-radius: 8px;
+            cursor: pointer; color: var(--purple);
+        }
+        .nav-1 .icon-btn:hover { background: rgba(124, 58, 237, 0.15); }
+        .nav-1 .icon-btn svg { width: 20px; height: 20px; }
+        .nav-1 .right { display: flex; gap: 8px; align-items: center; }
+        .nav-1 .connect {
+            background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
+            color: #1a1a1a; font-weight: 600; font-size: 12px;
+            padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;
+        }
+
+        /* ========================================
+           OPTION 2: Text Links (Ethervista style)
+           ======================================== */
+        .nav-2 {
+            background: rgba(10,10,10,0.95);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-2 .logo { font-weight: 700; font-size: 16px; color: #fff; text-decoration: none; }
+        .nav-2 .links { display: flex; gap: 32px; }
+        .nav-2 .links a {
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+        }
+        .nav-2 .links a:hover { color: #fff; }
+        .nav-2 .links a.active { color: var(--purple); }
+        .nav-2 .right { display: flex; gap: 12px; align-items: center; }
+        .nav-2 .connect {
+            background: var(--purple); color: #fff;
+            font-weight: 600; font-size: 12px;
+            padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;
+        }
+
+        /* ========================================
+           OPTION 3: Windows XP Tabs
+           ======================================== */
+        .nav-3 {
+            background: linear-gradient(180deg, #0A246A 0%, #A6CAF0 100%);
+            padding: 4px 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .nav-3 .logo {
+            font-weight: 700; font-size: 14px; color: #fff;
+            text-decoration: none; padding: 8px 12px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .nav-3 .tabs { display: flex; gap: 2px; }
+        .nav-3 .tab {
+            background: #d4d0c8;
+            border: 1px solid #808080;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            padding: 6px 16px;
+            font-size: 12px;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .nav-3 .tab:hover { background: #ece9d8; }
+        .nav-3 .tab.active {
+            background: #ece9d8;
+            border-bottom: 1px solid #ece9d8;
+            margin-bottom: -1px;
+            font-weight: 600;
+        }
+        .nav-3 .right { display: flex; gap: 4px; padding-bottom: 4px; }
+        .nav-3 .xp-btn {
+            background: #d4d0c8;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            padding: 4px 12px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .nav-3 .xp-btn:active {
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+        }
+
+        /* ========================================
+           OPTION 4: Win98 Gray (Match music bar)
+           ======================================== */
+        .nav-4 {
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-bottom: 2px solid #808080;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-4 .logo {
+            font-weight: 700; font-size: 14px; color: #000;
+            text-decoration: none;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .nav-4 .links { display: flex; gap: 2px; }
+        .nav-4 .win-btn {
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #808080;
+            border-bottom: 2px solid #808080;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .nav-4 .win-btn:hover { background: #d4d4d4; }
+        .nav-4 .win-btn:active, .nav-4 .win-btn.active {
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            background: #a0a0a0;
+        }
+        .nav-4 .right { display: flex; gap: 4px; }
+
+        /* ========================================
+           OPTION 5: Minimal Dark (No purple icons)
+           ======================================== */
+        .nav-5 {
+            background: #0A0A0A;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+        .nav-5 .logo { font-weight: 700; font-size: 18px; color: #fff; text-decoration: none; }
+        .nav-5 .center { display: flex; gap: 8px; }
+        .nav-5 .link {
+            color: #666; text-decoration: none;
+            font-size: 13px; padding: 8px 12px;
+            border-radius: 4px; transition: all 0.15s;
+        }
+        .nav-5 .link:hover { color: #fff; background: #1a1a1a; }
+        .nav-5 .link.active { color: #fff; background: #222; }
+        .nav-5 .divider { color: #333; margin: 0 8px; }
+        .nav-5 .right { display: flex; gap: 8px; align-items: center; }
+        .nav-5 .icon-btn {
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            background: none; border: 1px solid #333; border-radius: 6px;
+            cursor: pointer; color: #666;
+        }
+        .nav-5 .icon-btn:hover { color: #fff; border-color: #444; }
+        .nav-5 .icon-btn svg { width: 16px; height: 16px; }
+        .nav-5 .connect {
+            background: #fff; color: #000;
+            font-weight: 600; font-size: 12px;
+            padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;
+        }
+
+        /* Demo content area */
+        .demo-content {
+            background: #0a0a0a;
+            padding: 60px 24px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Option 1: Current (Purple Icons + Dropdowns)</h2>
+<div class="nav-container">
+    <nav class="nav-1">
+        <a href="#" class="logo">bonzi</a>
+        <div class="icons">
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </button>
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5 8l7-5 7 5M5 8v8l7 5 7-5V8"/></svg>
+            </button>
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </button>
+        </div>
+        <div class="right">
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="connect">connect</button>
+        </div>
+    </nav>
+    <div class="demo-content">Page content here</div>
+</div>
+
+<h2>Option 2: Text Links (Ethervista style)</h2>
+<div class="nav-container">
+    <nav class="nav-2">
+        <a href="#" class="logo">bonzi</a>
+        <div class="links">
+            <a href="#" class="active">features</a>
+            <a href="#">manual</a>
+            <a href="#">manifesto</a>
+            <a href="#">metrics</a>
+            <a href="#">dao</a>
+            <a href="#">source</a>
+        </div>
+        <div class="right">
+            <button class="connect">connect wallet</button>
+        </div>
+    </nav>
+    <div class="demo-content">Page content here</div>
+</div>
+
+<h2>Option 3: Windows XP Tabs (Luna blue)</h2>
+<div class="nav-container">
+    <nav class="nav-3">
+        <a href="#" class="logo">bonzi</a>
+        <div class="tabs">
+            <a href="#" class="tab active">features</a>
+            <a href="#" class="tab">manual</a>
+            <a href="#" class="tab">manifesto</a>
+            <a href="#" class="tab">metrics</a>
+            <a href="#" class="tab">dao</a>
+        </div>
+        <div class="right">
+            <button class="xp-btn">connect</button>
+        </div>
+    </nav>
+    <div class="demo-content" style="background: #ece9d8; color: #000;">Page content here</div>
+</div>
+
+<h2>Option 4: Win98 Gray (Match music bar)</h2>
+<div class="nav-container">
+    <nav class="nav-4">
+        <a href="#" class="logo">bonzi</a>
+        <div class="links">
+            <a href="#" class="win-btn active">features</a>
+            <a href="#" class="win-btn">manual</a>
+            <a href="#" class="win-btn">manifesto</a>
+            <a href="#" class="win-btn">metrics</a>
+            <a href="#" class="win-btn">dao</a>
+        </div>
+        <div class="right">
+            <button class="win-btn">connect</button>
+        </div>
+    </nav>
+    <div class="demo-content">Page content here</div>
+</div>
+
+<h2>Option 5: Minimal Dark (No purple, white accents)</h2>
+<div class="nav-container">
+    <nav class="nav-5">
+        <a href="#" class="logo">bonzi</a>
+        <div class="center">
+            <a href="#" class="link active">features</a>
+            <a href="#" class="link">manual</a>
+            <a href="#" class="link">manifesto</a>
+            <span class="divider">|</span>
+            <a href="#" class="link">metrics</a>
+            <a href="#" class="link">dao</a>
+        </div>
+        <div class="right">
+            <button class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="connect">connect</button>
+        </div>
+    </nav>
+    <div class="demo-content">Page content here</div>
+</div>
+
+</body>
+</html>

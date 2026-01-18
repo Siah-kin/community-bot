@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economics - Bonzi Tokenomics</title>
-    <meta name="description" content="How Bonzi tokenomics work - real yield, no inflation, pure value capture.">
+    <title>Economics - How Bonzi Works</title>
+    <meta name="description" content="Bonzi tokenomics explained - flat ETH fees, auto-burn, Euler distribution. No inflation tokens.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/economics/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <style>
@@ -55,7 +55,7 @@
         .nav-links a.active { color: var(--purple); }
 
         .hero {
-            padding: 140px 40px 60px;
+            padding: 140px 40px 40px;
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
@@ -67,31 +67,6 @@
         .hero p {
             font-size: 18px;
             color: var(--gray);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            max-width: 1000px;
-            margin: 0 auto 60px;
-            padding: 0 40px;
-        }
-        .stat-card {
-            background: var(--gray-light);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--purple);
-        }
-        .stat-label {
-            font-size: 14px;
-            color: var(--gray);
-            margin-top: 8px;
         }
 
         .content {
@@ -110,6 +85,25 @@
         .section p {
             color: var(--gray);
             margin-bottom: 16px;
+        }
+        .section ul {
+            color: var(--gray);
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .callout {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        .callout p {
+            margin: 0;
+            font-size: 15px;
         }
 
         .flow-diagram {
@@ -146,8 +140,35 @@
             margin: 0;
         }
 
+        .question {
+            background: var(--gray-light);
+            border-left: 4px solid var(--purple);
+            padding: 20px 24px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .question strong {
+            display: block;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+        .question p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .source-link {
+            font-size: 13px;
+            color: var(--purple);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
-            .stats { grid-template-columns: repeat(2, 1fr); }
             .mechanism-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -167,81 +188,111 @@
     </nav>
 
     <section class="hero">
-        <h1>Economics</h1>
-        <p>Real yield from real activity. No inflation. No emissions. Pure value capture.</p>
+        <h1>How It Works</h1>
+        <p>Bonzi is the first memecoin on Ethervista. Here's the underlying mechanism.</p>
     </section>
-
-    <div class="stats">
-        <div class="stat-card">
-            <div class="stat-value">$1.6M+</div>
-            <div class="stat-label">Total Distributed</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">30-80%</div>
-            <div class="stat-label">APR Range</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">20x</div>
-            <div class="stat-label">Capital Efficiency</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">0%</div>
-            <div class="stat-label">Inflation</div>
-        </div>
-    </div>
 
     <div class="content">
         <div class="section">
-            <h2>Fee Flow</h2>
-            <p>Every swap generates fees. Those fees flow to stakers - not to the team, not to VCs, not to emissions schedules.</p>
+            <h2>What is Ethervista?</h2>
+            <p>Ethervista is a DEX on Ethereum - similar to Uniswap, but with a different fee model. Instead of taking a percentage of each swap in tokens, Ethervista charges a <strong>flat fee in ETH</strong> (typically $5-$15 per transaction).</p>
+            <p>This matters because:</p>
+            <ul>
+                <li>Rewards are paid in ETH, not inflationary tokens</li>
+                <li>Liquidity providers benefit from transaction <em>count</em>, not token price speculation</li>
+                <li>No sell pressure from people dumping reward tokens</li>
+            </ul>
+            <a href="https://www.blocmates.com/articles/what-is-ethervista-" target="_blank" class="source-link">→ Detailed Ethervista explainer (blocmates)</a>
+        </div>
+
+        <div class="section">
+            <h2>Where Bonzi Fits</h2>
+            <p>Bonzi ($BONZI) was the first memecoin launched on Ethervista - essentially the platform's mascot token. It uses the same fee mechanics as other Ethervista pools, plus an additional burn mechanism.</p>
 
             <div class="flow-diagram">
-User Swap (0.5% fee)
-       |
-       v
-+------+------+
-|             |
-v             v
-LP Pool     Protocol
-(0.3%)      (0.2%)
-  |             |
-  v             v
-Euler       Hardstake
-Model       Pool
-  |             |
-  +------+------+
-         |
-         v
-    STAKERS
+Someone swaps BONZI
+        |
+        v
+  Flat ETH fee taken
+   (e.g. $10 worth)
+        |
+   +----+----+
+   |         |
+   v         v
+  LPs     Protocol
+   |         |
+   |         v
+   |    Auto-buy BONZI
+   |    from market
+   |         |
+   |         v
+   |    Burn it (gone
+   |    forever)
+   |
+   v
+Paid out in ETH
+to liquidity providers
+            </div>
+
+            <p>The burn is automatic and on-chain. Each transaction reduces circulating supply slightly. This has burned ~2.17% of total supply since launch.</p>
+        </div>
+
+        <div class="section">
+            <h2>The Euler Model</h2>
+            <p>How does the contract track who gets what share of fees? It uses something called the "Euler model" - a mathematical trick to avoid recalculating every user's balance on every transaction.</p>
+
+            <div class="callout">
+                <p><strong>Simplified:</strong> When you stake LP tokens, the contract records the current "Euler value" (say, 1.2). Later, fees raise it to 1.5. Your reward = your LP tokens × (1.5 - 1.2). This avoids expensive loops through all stakers, cutting gas costs ~99%.</p>
+            </div>
+
+            <p>This isn't unique to Ethervista - similar math exists in other DeFi protocols - but it enables efficient fee distribution without the contract running out of gas.</p>
+        </div>
+
+        <div class="section">
+            <h2>Hardstake / Hardlock</h2>
+            <p>Optional feature: lock your tokens or LP position for ≥14 days to earn a larger share of the fee pool. The tradeoff is obvious - you can't withdraw during the lock period.</p>
+            <p>This exists to reward committed capital over mercenary liquidity that farms and dumps.</p>
+        </div>
+
+        <div class="section">
+            <h2>Anti-Rug Measures</h2>
+            <p>Ethervista enforces a <strong>5-day liquidity lock</strong> on new token launches. Creators cannot pull liquidity for 5 days after launch.</p>
+            <p>Why 5 days? According to the team, most rug pulls happen within 2-4 days of launch. This doesn't prevent all scams, but raises the bar.</p>
+            <a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank" class="source-link">→ More on Ethervista security features (Gate.io)</a>
+        </div>
+
+        <div class="section">
+            <h2>Common Questions</h2>
+
+            <div class="question">
+                <strong>If fees are flat (not percentage), doesn't that hurt small traders?</strong>
+                <p>Yes. A $10 flat fee on a $50 swap is 20%. On a $5000 swap, it's 0.2%. This model favors larger transactions. Whether that's good or bad depends on your perspective - it discourages wash trading and bot spam, but makes the DEX less accessible for small amounts.</p>
+            </div>
+
+            <div class="question">
+                <strong>What if trading volume drops?</strong>
+                <p>Rewards drop proportionally. ETH rewards come from trading activity - no trades, no fees, no rewards. This is more honest than emission-based models that promise fixed APYs until the treasury empties.</p>
+            </div>
+
+            <div class="question">
+                <strong>What are the risks?</strong>
+                <p>Smart contract risk (all DeFi). Impermanent loss for LPs. Volume dependency for yield. Token price can still go to zero for market reasons. The 5-day lock helps but doesn't eliminate scam risk for new tokens. DYOR.</p>
+            </div>
+
+            <div class="question">
+                <strong>Where can I verify this?</strong>
+                <p>Ethervista contracts are on Etherscan. BONZI contract: <code>0xd6175692026bcd7cb12a515e39cf0256ef35cb86</code>. The burn events are visible on-chain.</p>
             </div>
         </div>
 
         <div class="section">
-            <h2>Core Mechanisms</h2>
-            <div class="mechanism-grid">
-                <div class="mechanism">
-                    <h3>Self-Compounding</h3>
-                    <p>Rewards auto-compound without manual claiming. Your position grows every block.</p>
-                </div>
-                <div class="mechanism">
-                    <h3>Euler Distribution</h3>
-                    <p>Mathematical model ensuring fair distribution proportional to stake and time.</p>
-                </div>
-                <div class="mechanism">
-                    <h3>Hardstake</h3>
-                    <p>Lock tokens for elevated rewards. Longer locks = higher yield multiplier.</p>
-                </div>
-                <div class="mechanism">
-                    <h3>Real Yield</h3>
-                    <p>Yield comes from actual protocol revenue, not token printing.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Why This Matters</h2>
-            <p>Most DeFi yields are ponzinomics - early entrants paid by later entrants through token emissions. When emissions end, yields collapse.</p>
-            <p>Ethervista's model is different. Yields come from swap fees - actual economic activity. As long as people trade, stakers earn. No emissions cliff. No dilution. Pure value capture.</p>
+            <h2>Sources</h2>
+            <ul>
+                <li><a href="https://www.blocmates.com/articles/what-is-ethervista-" target="_blank">blocmates - What Is Ethervista?</a></li>
+                <li><a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank">Gate.io - Ethervista Overview</a></li>
+                <li><a href="https://99bitcoins.com/news/bonzi-the-first-meme-coin-on-ethervista-can-it-save-ethereum/" target="_blank">99Bitcoins - Bonzi, First Meme Coin on Ethervista</a></li>
+                <li><a href="https://www.coingecko.com/en/coins/bonzi" target="_blank">CoinGecko - BONZI</a></li>
+            </ul>
         </div>
     </div>
 </body>

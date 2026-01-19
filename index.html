@@ -53,8 +53,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #FFFFFF;
-            color: var(--black);
+            background: #0A0A0A;
+            color: #FAFAFA;
             overflow-x: hidden;
             cursor: none;
         }
@@ -763,6 +763,90 @@
             color: #FFFFFF;
         }
 
+        /* Light mode section overrides */
+        body.light-mode .opening {
+            background: #FFFFFF;
+        }
+
+        body.light-mode .history {
+            background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);
+        }
+
+        body.light-mode .history-text {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .solutions-section {
+            background: #FAFAFA;
+        }
+
+        body.light-mode .solution-content h4 {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .solution-content p {
+            color: #52525B;
+        }
+
+        body.light-mode .comparison-section {
+            background: #FFFFFF;
+        }
+
+        body.light-mode .comparison-table td:first-child {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .flow-step {
+            background: #FFFFFF;
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        }
+
+        body.light-mode .flow-text {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .flow-sub {
+            color: #666;
+        }
+
+        body.light-mode .feature-card {
+            background: #FFFFFF;
+            border-color: rgba(0,0,0,0.08);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        body.light-mode .feature-card h4 {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .demo-section {
+            background: #FFFFFF;
+        }
+
+        body.light-mode .demo-intro p {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .link-card {
+            background: #FFFFFF;
+            border-color: rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        body.light-mode .link-card:hover {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+            border-color: rgba(124,58,237,0.3);
+        }
+
+        body.light-mode .link-card h3 {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .link-card p {
+            color: #52525B;
+        }
+
         /* Opening - just bonzi */
         .opening {
             height: 100vh;
@@ -772,7 +856,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: #FFFFFF;
+            background: #0A0A0A;
         }
 
         .opening-bonzi {
@@ -838,7 +922,7 @@
         /* History section */
         .history {
             padding: 120px 48px;
-            background: linear-gradient(180deg, var(--white) 0%, #F5F5F5 100%);
+            background: linear-gradient(180deg, #0A0A0A 0%, #141414 100%);
         }
 
         .history-inner {
@@ -862,7 +946,7 @@
         .history-text {
             font-size: 20px;
             line-height: 1.8;
-            color: var(--black);
+            color: #FAFAFA;
         }
 
         .history-text em {
@@ -971,7 +1055,7 @@
         /* Solutions section */
         .solutions-section {
             padding: 120px 48px;
-            background: #FAFAFA;
+            background: #0A0A0A;
         }
 
         .solutions-container {
@@ -1003,18 +1087,19 @@
             font-weight: 600;
             margin-bottom: 8px;
             letter-spacing: -0.02em;
+            color: #FAFAFA;
         }
 
         .solution-content p {
             font-size: 15px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
             line-height: 1.6;
         }
 
         /* Comparison section */
         .comparison-section {
             padding: 120px 48px;
-            background: var(--white);
+            background: #0A0A0A;
         }
 
         .comparison-container {
@@ -1053,7 +1138,7 @@
 
         .comparison-table td:first-child {
             font-weight: 500;
-            color: var(--black);
+            color: #FAFAFA;
         }
 
         .comparison-table .check {
@@ -1190,10 +1275,11 @@
         .flow-step {
             text-align: center;
             position: relative;
-            background: white;
+            background: #1a1a1a;
             border-radius: 16px;
             padding: 28px 16px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .flow-step::after {
@@ -1230,14 +1316,14 @@
 
         .flow-text {
             font-size: 14px;
-            color: var(--black);
+            color: #FAFAFA;
             font-weight: 600;
             line-height: 1.4;
         }
 
         .flow-sub {
             font-size: 12px;
-            color: #666;
+            color: rgba(255,255,255,0.5);
             margin-top: 4px;
         }
 
@@ -1305,11 +1391,11 @@
         .features-link:hover { background: var(--white); color: var(--purple); border-color: var(--white); }
         .features-link strong { font-weight: 700; }
         .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .feature-card { background: var(--white); border: none; border-radius: 16px; padding: 32px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .feature-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
         .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
         .feature-icon { width: 48px; height: 48px; background: rgba(124,58,237,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; color: #7C3AED; }
         .feature-icon svg { width: 24px; height: 24px; stroke: #7C3AED; }
-        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--black); }
+        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: #FAFAFA; }
         .feature-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
         .feature-card .feature-detail { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-light); font-size: 13px; color: var(--purple); font-weight: 500; }
         @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -1318,7 +1404,7 @@
         .demo-section {
             min-height: 100vh;
             padding: 120px 48px;
-            background: var(--white);
+            background: #0A0A0A;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1343,6 +1429,7 @@
             font-weight: 600;
             letter-spacing: -0.02em;
             line-height: 1.3;
+            color: #FAFAFA;
         }
 
         /* Telegram-style chat widget */
@@ -1829,33 +1916,34 @@
 
         .link-card {
             padding: 48px 32px;
-            background: var(--white);
-            border: none;
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
             text-decoration: none;
-            color: var(--black);
+            color: #FAFAFA;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             gap: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .link-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+            border-color: rgba(124,58,237,0.3);
         }
 
         .link-card h3 {
             font-size: 20px;
             font-weight: 600;
             letter-spacing: -0.02em;
-            color: var(--black);
+            color: #FAFAFA;
         }
 
         .link-card p {
             font-size: 14px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
             line-height: 1.6;
         }
 

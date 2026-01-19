@@ -24,7 +24,7 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
 
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://bonzi.onrender.com; media-src 'self'; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://bonzi-v5.onrender.com; media-src 'self'; frame-ancestors 'none';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -452,6 +452,73 @@
             content: ' \1F512';
             font-size: 10px;
             opacity: 0.5;
+        }
+
+        /* Nav dropdown styles */
+        .nav-dropdown {
+            position: relative;
+        }
+        .nav-dropdown > .nav-link {
+            cursor: pointer;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 200;
+            margin-top: 8px;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown.active .nav-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        .nav-dropdown-menu a {
+            display: block;
+            padding: 8px 16px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.15s, color 0.15s, transform 0.2s ease-out, opacity 0.2s ease-out;
+            transform: translateY(-8px);
+            opacity: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu a,
+        .nav-dropdown.active .nav-dropdown-menu a {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        /* Staggered wave animation - piano effect */
+        .nav-dropdown-menu a:nth-child(1) { transition-delay: 0s; }
+        .nav-dropdown-menu a:nth-child(2) { transition-delay: 0.03s; }
+        .nav-dropdown-menu a:nth-child(3) { transition-delay: 0.06s; }
+        .nav-dropdown-menu a:nth-child(4) { transition-delay: 0.09s; }
+        .nav-dropdown-menu a:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            transform: translateX(4px);
+        }
+        body.light-mode .nav-dropdown-menu {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .nav-dropdown-menu a {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        body.light-mode .nav-dropdown-menu a:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #000;
+            transform: translateX(4px);
         }
 
         /* Right side controls */
@@ -2065,10 +2132,42 @@
 
     <!-- Ethervista-style Nav Links -->
     <div class="nav-links">
-        <a href="features.html" class="nav-link" data-i18n="nav.features">features</a>
-        <a href="manual/" class="nav-link" data-i18n="nav.manual">manual</a>
-        <a href="faq.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
-        <a href="economics/" class="nav-link" data-i18n="nav.economics">economics</a>
+        <div class="nav-dropdown">
+            <a href="features.html" class="nav-link" data-i18n="nav.features">features</a>
+            <div class="nav-dropdown-menu">
+                <a href="features.html#adaptive-agents">Adaptive Agents</a>
+                <a href="features.html#ask-earn">Ask & Earn</a>
+                <a href="features.html#sybil">Sybil Detection</a>
+                <a href="features.html#raid">Raid & Earn</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="manual/" class="nav-link" data-i18n="nav.manual">manual</a>
+            <div class="nav-dropdown-menu">
+                <a href="manual/#quickstart">Quick Start</a>
+                <a href="manual/#commands">Commands</a>
+                <a href="manual/#staking">Staking Guide</a>
+                <a href="manual/#admin">Admin Tools</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="faq.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
+            <div class="nav-dropdown-menu">
+                <a href="faq.html#why-purple">Why Purple?</a>
+                <a href="faq.html#market">Market Validation</a>
+                <a href="faq.html#ai-hype">AI Hype Check</a>
+                <a href="faq.html#skeptics">For Skeptics</a>
+            </div>
+        </div>
+        <div class="nav-dropdown">
+            <a href="economics/" class="nav-link" data-i18n="nav.economics">economics</a>
+            <div class="nav-dropdown-menu">
+                <a href="economics/#ethervista">Ethervista</a>
+                <a href="economics/#euler-model">Euler Model</a>
+                <a href="economics/#hardstake">Hardstake</a>
+                <a href="economics/#anti-rug">Anti-Rug</a>
+            </div>
+        </div>
         <div class="nav-divider"></div>
         <a href="research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
         <a href="dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
@@ -2117,15 +2216,15 @@
 
 <section class="reveal">
     <div class="reveal-content">
-        <div class="reveal-line"><span data-i18n="reveal.line1">communities don't need</span></div>
-        <div class="reveal-line"><span data-i18n="reveal.line2">another dashboard.</span></div>
-        <div class="reveal-line"><span data-i18n="reveal.line3">they need a</span></div>
-        <div class="reveal-line"><span class="purple" data-i18n="reveal.line4">friend.</span></div>
+        <div class="reveal-line"><span data-i18n="reveal.line1">launch your brand</span></div>
+        <div class="reveal-line"><span data-i18n="reveal.line2">with a token</span></div>
+        <div class="reveal-line"><span data-i18n="reveal.line3">and an ambassador</span></div>
+        <div class="reveal-line"><span class="purple" data-i18n="reveal.line4">engine.</span></div>
     </div>
 </section>
 
 <section class="statement">
-    <p class="statement-text" data-i18n="statement.text">an AI that <span class="highlight">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class="highlight">their worst nightmare.</span></p>
+    <p class="statement-text" data-i18n="statement.text">free token launch. AI-verified raids. <span class="highlight">real ETH payouts.</span> every submission checked by vision AI trained on 6 months of raid data. farming doesn't scale here. <span class="highlight">do real work, get real money.</span></p>
     <a href="faq.html#why-purple" class="manifesto-btn" data-i18n="statement.manifesto">why purple?</a>
 </section>
 
@@ -2540,8 +2639,8 @@ const translations = {
         "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.metrics": "metrics", "nav.dao": "dao", "nav.contact": "contact", "nav.connect": "connect",
         "opening.tagline": "est. 1999 · reborn for web3", "opening.scroll": "scroll",
         "history.label": "a bit of history", "history.text": "Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>I never stopped wanting to help. Rebuilt from scratch. <em>No spyware, promise.</em> Just open-source helpfulness. I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>",
-        "reveal.line1": "communities don't need", "reveal.line2": "another dashboard.", "reveal.line3": "they need a", "reveal.line4": "friend.",
-        "statement.text": "an AI that <span class=\"highlight\">actually lives</span> in your telegram. learns your docs. answers questions at 3am. kicks farmers and fudders while you sleep. <span class=\"highlight\">their worst nightmare.</span>",
+        "reveal.line1": "launch your brand", "reveal.line2": "with a token", "reveal.line3": "and an ambassador", "reveal.line4": "engine.",
+        "statement.text": "free token launch. AI-verified raids. <span class=\"highlight\">real ETH payouts.</span> every submission checked by vision AI trained on 6 months of raid data. farming doesn't scale here. <span class=\"highlight\">do real work, get real money.</span>",
         "statement.manifesto": "why purple?",
                 "pain.label": "Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN", "pain.title": "what do they all have in common?", "pain.question": "Who reviews the reviewers?", "pain.subtitle": "5 ways the entire web3 ambassador rails failed",
         "pain.item1.title": "reviewers drown", "pain.item1.desc": "Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.",
@@ -3518,6 +3617,31 @@ themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
     const isLight = document.body.classList.contains('light-mode');
     localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
+});
+
+// Mobile dropdown touch support
+const navDropdowns = document.querySelectorAll('.nav-dropdown');
+navDropdowns.forEach(dropdown => {
+    const link = dropdown.querySelector('.nav-link');
+    link.addEventListener('click', (e) => {
+        // On mobile (touch devices), toggle dropdown on first tap
+        if (window.matchMedia('(hover: none)').matches) {
+            if (!dropdown.classList.contains('active')) {
+                e.preventDefault();
+                // Close other dropdowns
+                navDropdowns.forEach(d => d.classList.remove('active'));
+                dropdown.classList.add('active');
+            }
+            // Second tap navigates to the page
+        }
+    });
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown')) {
+        navDropdowns.forEach(d => d.classList.remove('active'));
+    }
 });
 
 // Nav Language Select (Win98 dropdown style)

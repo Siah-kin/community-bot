@@ -71,6 +71,45 @@
             font-size: 10px;
             opacity: 0.5;
         }
+        /* Nav dropdown styles */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > .nav-link { cursor: pointer; }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 200;
+            margin-top: 8px;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown.active .nav-dropdown-menu { opacity: 1; visibility: visible; }
+        .nav-dropdown-menu a {
+            display: block;
+            padding: 8px 16px;
+            color: rgba(0, 0, 0, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.15s, color 0.15s, transform 0.2s ease-out, opacity 0.2s ease-out;
+            transform: translateY(-8px);
+            opacity: 0;
+        }
+        .nav-dropdown:hover .nav-dropdown-menu a,
+        .nav-dropdown.active .nav-dropdown-menu a { transform: translateY(0); opacity: 1; }
+        .nav-dropdown-menu a:nth-child(1) { transition-delay: 0s; }
+        .nav-dropdown-menu a:nth-child(2) { transition-delay: 0.03s; }
+        .nav-dropdown-menu a:nth-child(3) { transition-delay: 0.06s; }
+        .nav-dropdown-menu a:nth-child(4) { transition-delay: 0.09s; }
+        .nav-dropdown-menu a:hover { background: rgba(0, 0, 0, 0.05); color: #000; transform: translateX(4px); }
         .nav-right {
             display: flex;
             gap: 16px;
@@ -249,10 +288,42 @@
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
         <div class="nav-links">
-            <a href="../features.html" class="nav-link">features</a>
-            <a href="../manual/" class="nav-link">manual</a>
-            <a href="../faq.html" class="nav-link">manifesto</a>
-            <a href="./" class="nav-link active">economics</a>
+            <div class="nav-dropdown">
+                <a href="../features.html" class="nav-link">features</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../features.html#adaptive-agents">Adaptive Agents</a>
+                    <a href="../features.html#ask-earn">Ask & Earn</a>
+                    <a href="../features.html#sybil">Sybil Detection</a>
+                    <a href="../features.html#raid">Raid & Earn</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="../manual/" class="nav-link">manual</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../manual/#quickstart">Quick Start</a>
+                    <a href="../manual/#commands">Commands</a>
+                    <a href="../manual/#staking">Staking Guide</a>
+                    <a href="../manual/#admin">Admin Tools</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="../faq.html" class="nav-link">manifesto</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../faq.html#why-purple">Why Purple?</a>
+                    <a href="../faq.html#market">Market Validation</a>
+                    <a href="../faq.html#ai-hype">AI Hype Check</a>
+                    <a href="../faq.html#skeptics">For Skeptics</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="./" class="nav-link active">economics</a>
+                <div class="nav-dropdown-menu">
+                    <a href="./#ethervista">Ethervista</a>
+                    <a href="./#euler-model">Euler Model</a>
+                    <a href="./#hardstake">Hardstake</a>
+                    <a href="./#anti-rug">Anti-Rug</a>
+                </div>
+            </div>
             <div class="nav-divider"></div>
             <a href="../research/" class="nav-link gated">metrics</a>
             <a href="../dao/" class="nav-link gated">dao</a>
@@ -280,7 +351,7 @@
     </section>
 
     <div class="content">
-        <div class="section">
+        <div class="section" id="ethervista">
             <h2>What is Ethervista?</h2>
             <p>Ethervista is a DEX on Ethereum - similar to Uniswap, but with a different fee model. Instead of taking a percentage of each swap in tokens, Ethervista charges a <strong>flat fee in ETH</strong> (typically $5-$15 per transaction).</p>
             <p>This matters because:</p>
@@ -324,7 +395,7 @@ to liquidity providers
             <p>The burn is automatic and on-chain. Each transaction reduces circulating supply slightly. This has burned ~2.17% of total supply since launch.</p>
         </div>
 
-        <div class="section">
+        <div class="section" id="euler-model">
             <h2>The Euler Model</h2>
             <p>How does the contract track who gets what share of fees? It uses something called the "Euler model" - a mathematical trick to avoid recalculating every user's balance on every transaction.</p>
 
@@ -335,13 +406,13 @@ to liquidity providers
             <p>This isn't unique to Ethervista - similar math exists in other DeFi protocols - but it enables efficient fee distribution without the contract running out of gas.</p>
         </div>
 
-        <div class="section">
+        <div class="section" id="hardstake">
             <h2>Hardstake / Hardlock</h2>
             <p>Optional feature: lock your tokens or LP position for ≥14 days to earn a larger share of the fee pool. The tradeoff is obvious - you can't withdraw during the lock period.</p>
             <p>This exists to reward committed capital over mercenary liquidity that farms and dumps.</p>
         </div>
 
-        <div class="section">
+        <div class="section" id="anti-rug">
             <h2>Anti-Rug Measures</h2>
             <p>Ethervista enforces a <strong>5-day liquidity lock</strong> on new token launches. Creators cannot pull liquidity for 5 days after launch.</p>
             <p>Why 5 days? According to the team, most rug pulls happen within 2-4 days of launch. This doesn't prevent all scams, but raises the bar.</p>

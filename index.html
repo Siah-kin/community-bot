@@ -3304,6 +3304,7 @@ const bgMusic = document.getElementById('bg-music');
 const soundToggle = document.getElementById('sound-toggle');
 const soundHint = document.getElementById('sound-hint');
 const solutionsSection = document.querySelector('.solutions-section');
+const comparisonSection = document.querySelector('.comparison-section');
 
 // Revolution playlist - cycles on button click (top section only)
 const revolutionPlaylist = [
@@ -3314,8 +3315,7 @@ const revolutionPlaylist = [
     { src: 'david-bowie-space-oddity.mp3', name: 'David Bowie - Space Oddity' }
 ];
 
-// The magical song - plays at solutions section (emotional payoff)
-// PROTECTED: Do not move this trigger point - see .claude/PROTECTED_SYSTEMS.md
+// The magical song - only plays after "why bonzi is different"
 const magicalTrack = { src: 'moby-god-moving.mp3', name: 'Moby - God Moving Over the Face of the Waters' };
 
 let isMuted = true;
@@ -3353,10 +3353,10 @@ function updateVolumeByScroll() {
     // Get section positions
     const solRect = solutionsSection.getBoundingClientRect();
     const solTop = solRect.top + scrollY;
+    const compRect = comparisonSection.getBoundingClientRect();
+    const compTop = compRect.top + scrollY;
 
-    // ZONE 1: Top → before solutions = Revolution playlist
-    // ZONE 2: Solutions section onward = Moby God Moving (emotional payoff)
-    // PROTECTED: This trigger point is intentional - see .claude/PROTECTED_SYSTEMS.md
+    // ZONE 1: Top → solutions = Revolution playlist fades to silence
     if (scrollCenter < solTop) {
         if (inMagicalZone) {
             // Switching back from magical zone to revolution
@@ -3366,11 +3366,17 @@ function updateVolumeByScroll() {
             bgMusic.play().catch(e => {});
             console.log('🎸 Back to:', revolutionPlaylist[currentTrackIndex].name);
         }
-        // Full volume in revolution zone
-        targetVolume = maxVolume;
+        // Fade from full volume to silence as approaching solutions
+        const fadeProgress = scrollCenter / solTop;
+        targetVolume = maxVolume * (1 - fadeProgress);
         smoothVolume();
     }
-    // ZONE 2: Solutions section onward = Magical track (Moby God Moving)
+    // ZONE 2: Solutions section = SILENCE gap
+    else if (scrollCenter < compTop) {
+        targetVolume = 0;
+        smoothVolume();
+    }
+    // ZONE 3: Comparison ("why bonzi is different") onward = Magical track
     else {
         if (!inMagicalZone) {
             // Enter magical zone - switch to Moby God Moving
@@ -3382,7 +3388,7 @@ function updateVolumeByScroll() {
             console.log('✨ Magical zone:', magicalTrack.name);
         }
         // Fade in the magical track
-        const distIntoMagical = scrollCenter - solTop;
+        const distIntoMagical = scrollCenter - compTop;
         const fadeInDistance = viewportHeight * 0.5;
         if (distIntoMagical < fadeInDistance) {
             targetVolume = magicalVolume * (distIntoMagical / fadeInDistance);

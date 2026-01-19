@@ -3305,6 +3305,9 @@ const soundToggle = document.getElementById('sound-toggle');
 const soundHint = document.getElementById('sound-hint');
 const solutionsSection = document.querySelector('.solutions-section');
 const comparisonSection = document.querySelector('.comparison-section');
+const featuresSection = document.querySelector('.features-section');
+const pricingSection = document.querySelector('.pricing-section');
+const missionSection = document.querySelector('.mission-section');
 
 // Revolution playlist - cycles on button click (top section only)
 const revolutionPlaylist = [
@@ -3321,6 +3324,7 @@ const magicalTrack = { src: 'moby-god-moving.mp3', name: 'Moby - God Moving Over
 let isMuted = true;
 let maxVolume = 0.5;
 let magicalVolume = 0.3;
+let backgroundVolume = 0.1; // Lower background level when scrolling further
 let currentTrackIndex = 0;
 let targetVolume = 0;
 let inMagicalZone = false;
@@ -3376,7 +3380,8 @@ function updateVolumeByScroll() {
         targetVolume = 0;
         smoothVolume();
     }
-    // ZONE 3: Comparison ("why bonzi is different") onward = Magical track
+    // ZONE 3: Comparison onward = Magical track (Moby God Moving)
+    // Fades in at comparison, then fades down to background as you scroll further
     else {
         if (!inMagicalZone) {
             // Enter magical zone - switch to Moby God Moving
@@ -3387,13 +3392,30 @@ function updateVolumeByScroll() {
             bgMusic.play().catch(e => {});
             console.log('✨ Magical zone:', magicalTrack.name);
         }
-        // Fade in the magical track
+
+        // Get additional section positions for fade curve
+        const featRect = featuresSection.getBoundingClientRect();
+        const featTop = featRect.top + scrollY;
+        const pricingRect = pricingSection.getBoundingClientRect();
+        const pricingTop = pricingRect.top + scrollY;
+
+        // Fade in at comparison
         const distIntoMagical = scrollCenter - compTop;
         const fadeInDistance = viewportHeight * 0.5;
+
         if (distIntoMagical < fadeInDistance) {
+            // Fading IN
             targetVolume = magicalVolume * (distIntoMagical / fadeInDistance);
-        } else {
+        } else if (scrollCenter < featTop) {
+            // Full volume between comparison and features
             targetVolume = magicalVolume;
+        } else if (scrollCenter < pricingTop) {
+            // Fade DOWN to background between features and pricing
+            const fadeProgress = (scrollCenter - featTop) / (pricingTop - featTop);
+            targetVolume = magicalVolume - (fadeProgress * (magicalVolume - backgroundVolume));
+        } else {
+            // Stay at background level from pricing onward
+            targetVolume = backgroundVolume;
         }
         smoothVolume();
     }

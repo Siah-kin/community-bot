@@ -78,8 +78,11 @@ def check_nav_style(html_content: str, filename: str) -> list:
 
     nav_html = nav_match.group(1)
 
-    # Check for capitalized links (should be lowercase)
-    cap_links = re.findall(r'<a[^>]*>([A-Z][a-z]+)</a>', nav_html)
+    # Remove dropdown menus before checking - their items can be capitalized (proper nouns)
+    nav_without_dropdowns = re.sub(r'<div class="nav-dropdown-menu">.*?</div>', '', nav_html, flags=re.DOTALL)
+
+    # Check for capitalized links in main nav only (should be lowercase)
+    cap_links = re.findall(r'<a[^>]*>([A-Z][a-z]+)</a>', nav_without_dropdowns)
     if cap_links:
         issues.append(f"{filename}: Capitalized nav links found: {cap_links} (should be lowercase)")
 

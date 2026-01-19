@@ -584,6 +584,9 @@
             box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
         }
 
+        /* Contact icon - hidden by default, shown on tablet */
+        .contact-icon { display: none; }
+
         /* Tablet - iPad landscape and smaller desktops */
         @media (max-width: 1024px) {
             nav { padding: 0 20px; }
@@ -597,8 +600,9 @@
             .nav-links { gap: 14px; }
             .nav-link { font-size: 12px; }
             .nav-dropdown-menu { display: none !important; }
-            #contact-nav-btn { display: none; }
             .nav-lang-select { display: none; }
+            #contact-nav-btn .contact-text { display: none; }
+            #contact-nav-btn .contact-icon { display: inline; }
         }
         @media (max-width: 768px) {
             nav { padding: 0 16px; }
@@ -2282,7 +2286,7 @@
         <a href="research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
         <a href="dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
         <div class="nav-divider"></div>
-        <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact">contact</a>
+        <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact"><span class="contact-text">contact</span><span class="contact-icon">✉</span></a>
     </div>
 
     <!-- Right: Lang, Theme, Connect -->

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BONZI - Variant B: Zealy Killer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 48px; }
+        .hero-strike { font-size: 24px; color: rgba(255,255,255,0.3); text-decoration: line-through; margin-bottom: 16px; }
+        .hero h1 { font-size: clamp(48px, 10vw, 96px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 32px; }
+        .hero h1 span { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 22px; color: rgba(255,255,255,0.6); max-width: 500px; line-height: 1.5; margin-bottom: 48px; }
+        .cta-big { background: #7c3aed; color: #fff; padding: 20px 48px; border-radius: 16px; font-weight: 700; text-decoration: none; font-size: 18px; display: inline-block; }
+        .cta-big:hover { background: #6d28d9; }
+
+        /* PROBLEM STATEMENT */
+        .problem { padding: 120px 48px; background: #111; }
+        .problem-container { max-width: 800px; margin: 0 auto; }
+        .problem h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; color: #ef4444; margin-bottom: 24px; }
+        .problem h3 { font-size: 48px; font-weight: 700; margin-bottom: 48px; line-height: 1.2; }
+        .problem-list { display: grid; gap: 24px; }
+        .problem-item { display: flex; gap: 16px; align-items: flex-start; }
+        .problem-icon { width: 48px; height: 48px; background: rgba(239,68,68,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; }
+        .problem-text h4 { font-size: 18px; margin-bottom: 4px; }
+        .problem-text p { color: rgba(255,255,255,0.6); font-size: 15px; }
+
+        /* SOLUTION */
+        .solution { padding: 120px 48px; }
+        .solution-container { max-width: 800px; margin: 0 auto; }
+        .solution h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.2em; color: #22c55e; margin-bottom: 24px; }
+        .solution h3 { font-size: 48px; font-weight: 700; margin-bottom: 48px; line-height: 1.2; }
+        .solution-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .solution-card { background: #1a1a1a; border: 1px solid rgba(34,197,94,0.2); border-radius: 16px; padding: 32px; }
+        .solution-card h4 { font-size: 20px; margin-bottom: 12px; color: #22c55e; }
+        .solution-card p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.6; }
+
+        /* PROOF */
+        .proof { padding: 120px 48px; background: #111; text-align: center; }
+        .proof h2 { font-size: 40px; font-weight: 700; margin-bottom: 64px; }
+        .proof-stats { display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
+        .proof-stat { }
+        .proof-stat .value { font-size: 64px; font-weight: 800; color: #7c3aed; }
+        .proof-stat .label { font-size: 16px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+        /* CTA */
+        .final-cta { padding: 120px 48px; text-align: center; }
+        .final-cta h2 { font-size: 56px; font-weight: 800; margin-bottom: 24px; }
+        .final-cta p { font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 48px; }
+    </style>
+</head>
+<body>
+
+<!-- HERO: ZEALY KILLER -->
+<section class="hero">
+    <div class="hero-strike">Zealy points</div>
+    <h1>Earn <span>real ETH.</span></h1>
+    <p>Do real work. Get real money. No farming. No worthless points. No bullshit.</p>
+    <a href="#" class="cta-big">Start Earning →</a>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+    <div class="problem-container">
+        <h2>The Problem</h2>
+        <h3>Quest platforms are broken</h3>
+        <div class="problem-list">
+            <div class="problem-item">
+                <div class="problem-icon">💀</div>
+                <div class="problem-text">
+                    <h4>Points are worthless</h4>
+                    <p>Grind for weeks, get a $2 airdrop. The platform keeps the rest.</p>
+                </div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">🤖</div>
+                <div class="problem-text">
+                    <h4>Farmers win, you lose</h4>
+                    <p>Bot armies with 50 wallets extract all the value. Real contributors get diluted.</p>
+                </div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">😴</div>
+                <div class="problem-text">
+                    <h4>Tasks are meaningless</h4>
+                    <p>"Follow our Twitter" isn't work. It's extraction theatre.</p>
+                </div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">💸</div>
+                <div class="problem-text">
+                    <h4>Projects pay $500/month</h4>
+                    <p>For fake engagement from farmers. Nobody wins except the platform.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution">
+    <div class="solution-container">
+        <h2>The Fix</h2>
+        <h3>Points backed by real money</h3>
+        <div class="solution-grid">
+            <div class="solution-card">
+                <h4>Free Token Launch</h4>
+                <p>Projects launch tokens for free on EtherFun. No upfront cost. Just gas (~$0.05).</p>
+            </div>
+            <div class="solution-card">
+                <h4>Fees → Community</h4>
+                <p>Every trade generates fees. Fees flow directly to the community tip pool. Automatic.</p>
+            </div>
+            <div class="solution-card">
+                <h4>AI Verification</h4>
+                <p>Bonzi checks if work is real. Screenshots verified. Bots detected. Farmers blocked.</p>
+            </div>
+            <div class="solution-card">
+                <h4>ETH Payouts</h4>
+                <p>100 points = claim ETH. Not tokens. Not promises. Actual money in your wallet.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof">
+    <h2>Already happening</h2>
+    <div class="proof-stats">
+        <div class="proof-stat">
+            <div class="value">$47K</div>
+            <div class="label">ETH paid to contributors</div>
+        </div>
+        <div class="proof-stat">
+            <div class="value">12K</div>
+            <div class="label">verified humans</div>
+        </div>
+        <div class="proof-stat">
+            <div class="value">0</div>
+            <div class="label">platform fees</div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+    <h2>Fuck Zealy.</h2>
+    <p>Start earning real money for real work.</p>
+    <a href="#" class="cta-big">Join Bonzi →</a>
+</section>
+
+</body>
+</html>

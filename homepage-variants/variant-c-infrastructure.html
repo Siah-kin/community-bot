@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BONZI - Variant C: Infrastructure Play</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+
+        /* NAV */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.9); backdrop-filter: blur(10px); }
+        .logo { font-size: 20px; font-weight: 700; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+        .nav-cta { background: #7c3aed; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+        .hero-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.2em; color: #7c3aed; margin-bottom: 24px; }
+        .hero h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 24px; max-width: 800px; }
+        .hero p { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 600px; line-height: 1.7; margin-bottom: 40px; }
+        .hero-ctas { display: flex; gap: 16px; }
+        .btn-primary { background: #7c3aed; color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+        .btn-secondary { border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 500; }
+
+        /* LOGOS */
+        .logos { padding: 80px 48px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .logos-container { max-width: 1200px; margin: 0 auto; }
+        .logos p { font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 32px; text-align: center; }
+        .logos-grid { display: flex; justify-content: center; gap: 64px; align-items: center; opacity: 0.5; }
+        .logos-grid span { font-size: 20px; font-weight: 600; }
+
+        /* FEATURES */
+        .features { padding: 120px 48px; }
+        .features-container { max-width: 1200px; margin: 0 auto; }
+        .features h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+        .features h3 { font-size: 40px; font-weight: 700; margin-bottom: 64px; max-width: 600px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .feature-card { }
+        .feature-card .icon { width: 48px; height: 48px; background: rgba(124,58,237,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 24px; }
+        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+        .feature-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+        /* HOW IT WORKS */
+        .how { padding: 120px 48px; background: #111; }
+        .how-container { max-width: 1000px; margin: 0 auto; }
+        .how h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); margin-bottom: 16px; text-align: center; }
+        .how h3 { font-size: 40px; font-weight: 700; margin-bottom: 64px; text-align: center; }
+        .how-steps { display: flex; justify-content: space-between; position: relative; }
+        .how-steps::before { content: ''; position: absolute; top: 30px; left: 60px; right: 60px; height: 2px; background: rgba(124,58,237,0.3); }
+        .how-step { text-align: center; flex: 1; position: relative; z-index: 1; }
+        .how-step .number { width: 60px; height: 60px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 24px; font-weight: 700; }
+        .how-step h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .how-step p { font-size: 14px; color: rgba(255,255,255,0.5); max-width: 150px; margin: 0 auto; }
+
+        /* FOR PROJECTS */
+        .for-projects { padding: 120px 48px; }
+        .for-projects-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .for-projects h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: #7c3aed; margin-bottom: 16px; }
+        .for-projects h3 { font-size: 40px; font-weight: 700; margin-bottom: 24px; }
+        .for-projects p { font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 32px; }
+        .for-projects ul { list-style: none; margin-bottom: 32px; }
+        .for-projects li { padding: 12px 0; font-size: 16px; color: rgba(255,255,255,0.8); }
+        .for-projects li::before { content: "✓ "; color: #22c55e; font-weight: bold; }
+        .code-block { background: #1a1a1a; border-radius: 16px; padding: 32px; font-family: 'SF Mono', monospace; font-size: 14px; }
+        .code-block .comment { color: rgba(255,255,255,0.4); }
+        .code-block .keyword { color: #7c3aed; }
+        .code-block .string { color: #22c55e; }
+
+        /* CTA */
+        .final-cta { padding: 120px 48px; text-align: center; background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 100%); }
+        .final-cta h2 { font-size: 48px; font-weight: 700; margin-bottom: 24px; }
+        .final-cta p { font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="logo">bonzi</div>
+    <div class="nav-links">
+        <a href="#">Features</a>
+        <a href="#">For Projects</a>
+        <a href="#">Docs</a>
+        <a href="#">Pricing</a>
+    </div>
+    <a href="#" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO: INFRASTRUCTURE -->
+<section class="hero">
+    <div class="hero-label">Community Infrastructure</div>
+    <h1>Self-sustaining treasury for token communities</h1>
+    <p>Launch tokens on EtherFun. Trading fees automatically fund community rewards. AI verifies real contributors. Bots get nothing.</p>
+    <div class="hero-ctas">
+        <a href="#" class="btn-primary">Deploy Now</a>
+        <a href="#" class="btn-secondary">Read Docs</a>
+    </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos">
+    <div class="logos-container">
+        <p>Powered by</p>
+        <div class="logos-grid">
+            <span>EtherVista</span>
+            <span>EtherFun</span>
+            <span>Base</span>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+    <div class="features-container">
+        <h2>Platform</h2>
+        <h3>Everything you need for community-driven tokenomics</h3>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">🚀</div>
+                <h4>Free Token Launch</h4>
+                <p>Deploy on EtherFun with just gas costs (~$0.05). No platform fees. No upfront investment.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💰</div>
+                <h4>Auto-Funded Treasury</h4>
+                <p>Trading fees flow directly to your community pool. No manual funding required.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🤖</div>
+                <h4>AI Verification</h4>
+                <p>Bonzi verifies raid screenshots, detects farmers, and ensures only real humans earn.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💸</div>
+                <h4>Instant Tips</h4>
+                <p>Community members tip each other in ETH. On-chain, instant, no middleman.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h4>Contribution Tracking</h4>
+                <p>Quality-weighted scoring. Not task counts. Who's actually helping your community?</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🛡️</div>
+                <h4>Sybil Protection</h4>
+                <p>Pattern-based detection flags farmers before your snapshot. Protect your airdrop.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+    <div class="how-container">
+        <h2>How it works</h2>
+        <h3>The Self-Funding Loop</h3>
+        <div class="how-steps">
+            <div class="how-step">
+                <div class="number">1</div>
+                <h4>Launch</h4>
+                <p>Deploy token on EtherFun</p>
+            </div>
+            <div class="how-step">
+                <div class="number">2</div>
+                <h4>Trade</h4>
+                <p>Community buys and sells</p>
+            </div>
+            <div class="how-step">
+                <div class="number">3</div>
+                <h4>Collect</h4>
+                <p>Fees flow to tip pool</p>
+            </div>
+            <div class="how-step">
+                <div class="number">4</div>
+                <h4>Reward</h4>
+                <p>Contributors earn ETH</p>
+            </div>
+            <div class="how-step">
+                <div class="number">5</div>
+                <h4>Grow</h4>
+                <p>More activity = more fees</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOR PROJECTS -->
+<section class="for-projects">
+    <div class="for-projects-container">
+        <div>
+            <h2>For Projects</h2>
+            <h3>Stop paying for fake engagement</h3>
+            <p>Zealy charges $500/month for farmers to extract your airdrop budget. Bonzi is free, and only real humans earn.</p>
+            <ul>
+                <li>Free token launch via EtherVista API</li>
+                <li>Trading fees fund community automatically</li>
+                <li>AI verifies every raid submission</li>
+                <li>$BONZI holders earn 5% of platform fees</li>
+            </ul>
+            <a href="#" class="btn-primary">Launch Your Token</a>
+        </div>
+        <div class="code-block">
+            <span class="comment">// The flywheel</span><br><br>
+            <span class="keyword">const</span> token = <span class="keyword">await</span> etherfun.launch({<br>
+            &nbsp;&nbsp;name: <span class="string">"YourToken"</span>,<br>
+            &nbsp;&nbsp;creator: tippingAgent.address<br>
+            });<br><br>
+            <span class="comment">// Every trade funds tips</span><br>
+            token.on(<span class="string">'swap'</span>, (fee) => {<br>
+            &nbsp;&nbsp;communityPool.add(fee);<br>
+            });<br><br>
+            <span class="comment">// Only verified humans earn</span><br>
+            bonzi.verify(contributor) && <br>
+            &nbsp;&nbsp;communityPool.tip(contributor);
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+    <h2>Ready to build?</h2>
+    <p>Deploy your self-sustaining community treasury in minutes.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+        <a href="#" class="btn-primary">Get Started</a>
+        <a href="#" class="btn-secondary">Talk to Us</a>
+    </div>
+</section>
+
+</body>
+</html>

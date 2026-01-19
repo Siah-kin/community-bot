@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BONZI - Variant D: Community First</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+
+        /* HERO - SPLIT */
+        .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+        .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px; background: #0a0a0a; }
+        .hero-right { background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%); display: flex; align-items: center; justify-content: center; padding: 80px; }
+        .hero-left h1 { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+        .hero-left p { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 40px; max-width: 450px; }
+        .hero-ctas { display: flex; gap: 16px; }
+        .btn-white { background: #fff; color: #0a0a0a; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; }
+        .btn-outline { border: 2px solid rgba(255,255,255,0.3); color: #fff; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 500; font-size: 16px; }
+
+        /* DASHBOARD PREVIEW */
+        .dashboard-preview { background: #1a1a1a; border-radius: 24px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+        .dashboard-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .dashboard-avatar { width: 48px; height: 48px; background: #7c3aed; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+        .dashboard-user h4 { font-size: 16px; }
+        .dashboard-user p { font-size: 13px; color: rgba(255,255,255,0.5); }
+        .dashboard-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+        .dashboard-stat { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; }
+        .dashboard-stat .value { font-size: 24px; font-weight: 700; color: #7c3aed; }
+        .dashboard-stat .label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+        .dashboard-activity h5 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+        .activity-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .activity-item:last-child { border: none; }
+        .activity-item span { font-size: 14px; color: rgba(255,255,255,0.7); }
+        .activity-item .amount { color: #22c55e; font-weight: 600; }
+
+        /* SOCIAL PROOF */
+        .social-proof { padding: 80px 48px; background: #111; }
+        .social-proof-container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .social-proof p { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 40px; }
+        .proof-numbers { display: flex; justify-content: center; gap: 80px; }
+        .proof-number .value { font-size: 48px; font-weight: 800; }
+        .proof-number .label { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+
+        /* TESTIMONIALS */
+        .testimonials { padding: 120px 48px; }
+        .testimonials-container { max-width: 1200px; margin: 0 auto; }
+        .testimonials h2 { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonial-card { background: #1a1a1a; border-radius: 16px; padding: 32px; }
+        .testimonial-card p { font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-avatar { width: 40px; height: 40px; background: #7c3aed; border-radius: 50%; }
+        .testimonial-name { font-size: 14px; font-weight: 600; }
+        .testimonial-role { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+        /* HOW */
+        .how { padding: 120px 48px; background: #111; }
+        .how-container { max-width: 900px; margin: 0 auto; }
+        .how h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 16px; }
+        .how h3 { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+        .how-list { display: flex; flex-direction: column; gap: 32px; }
+        .how-item { display: flex; gap: 24px; align-items: flex-start; }
+        .how-number { width: 48px; height: 48px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; flex-shrink: 0; }
+        .how-content h4 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+        .how-content p { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+        /* CTA */
+        .final-cta { padding: 120px 48px; text-align: center; }
+        .final-cta h2 { font-size: 48px; font-weight: 700; margin-bottom: 24px; }
+        .final-cta p { font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 40px; }
+
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <h1>Your community earns from every trade</h1>
+        <p>Launch tokens for free. Trading fees fund a community tip pool. AI verifies real contributors. Only humans earn ETH.</p>
+        <div class="hero-ctas">
+            <a href="#" class="btn-white">Start Earning</a>
+            <a href="#" class="btn-outline">For Projects</a>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="dashboard-preview">
+            <div class="dashboard-header">
+                <div class="dashboard-avatar">A</div>
+                <div class="dashboard-user">
+                    <h4>alice.eth</h4>
+                    <p>Verified Contributor</p>
+                </div>
+            </div>
+            <div class="dashboard-stats">
+                <div class="dashboard-stat">
+                    <div class="value">847</div>
+                    <div class="label">Points</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="value">0.42</div>
+                    <div class="label">ETH Earned</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="value">23</div>
+                    <div class="label">Raids</div>
+                </div>
+                <div class="dashboard-stat">
+                    <div class="value">156</div>
+                    <div class="label">Tips Sent</div>
+                </div>
+            </div>
+            <div class="dashboard-activity">
+                <h5>Recent Earnings</h5>
+                <div class="activity-item">
+                    <span>Raid verified</span>
+                    <span class="amount">+15 pts</span>
+                </div>
+                <div class="activity-item">
+                    <span>Helped @bob</span>
+                    <span class="amount">+0.005 ETH</span>
+                </div>
+                <div class="activity-item">
+                    <span>Question answered</span>
+                    <span class="amount">+8 pts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social-proof">
+    <div class="social-proof-container">
+        <p>Already trusted by</p>
+        <div class="proof-numbers">
+            <div class="proof-number">
+                <div class="value">12,847</div>
+                <div class="label">Contributors</div>
+            </div>
+            <div class="proof-number">
+                <div class="value">$47K</div>
+                <div class="label">ETH Distributed</div>
+            </div>
+            <div class="proof-number">
+                <div class="value">156</div>
+                <div class="label">Communities</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <div class="testimonials-container">
+        <h2>Real people, real earnings</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p>"Finally a platform where my contributions actually matter. Earned 0.3 ETH just by helping newcomers in the Telegram."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar"></div>
+                    <div>
+                        <div class="testimonial-name">cryptodev.eth</div>
+                        <div class="testimonial-role">Community Helper</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Zealy had me grinding for months. Got $2. With Bonzi I earned more in a week just by being genuinely helpful."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar"></div>
+                    <div>
+                        <div class="testimonial-name">sarah_builds</div>
+                        <div class="testimonial-role">Content Creator</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"We launched our token and the community started earning the same day. No setup, no funding pool manually. Just works."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar"></div>
+                    <div>
+                        <div class="testimonial-name">founder_anon</div>
+                        <div class="testimonial-role">Project Lead</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW -->
+<section class="how">
+    <div class="how-container">
+        <h2>How you earn</h2>
+        <h3>Four ways to make ETH</h3>
+        <div class="how-list">
+            <div class="how-item">
+                <div class="how-number">1</div>
+                <div class="how-content">
+                    <h4>Answer questions</h4>
+                    <p>Help newcomers in the community. Bonzi tracks who's actually useful. Earn 1-10 points per helpful answer.</p>
+                </div>
+            </div>
+            <div class="how-item">
+                <div class="how-number">2</div>
+                <div class="how-content">
+                    <h4>Complete raids</h4>
+                    <p>Post on X, submit screenshot. AI verifies it's real - not copied, not botted. Verified raids = instant points.</p>
+                </div>
+            </div>
+            <div class="how-item">
+                <div class="how-number">3</div>
+                <div class="how-content">
+                    <h4>Get tipped</h4>
+                    <p>Be helpful. Other community members can tip you ETH directly. No middleman. Instant to your wallet.</p>
+                </div>
+            </div>
+            <div class="how-item">
+                <div class="how-number">4</div>
+                <div class="how-content">
+                    <h4>Claim rewards</h4>
+                    <p>Hit 100 points, claim ETH from the community pool. Pool is funded by trading fees - automatically.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+    <h2>Ready to earn?</h2>
+    <p>Join a community where your contributions actually pay.</p>
+    <div class="hero-ctas" style="justify-content: center;">
+        <a href="#" class="btn-white">Start Now</a>
+        <a href="#" class="btn-outline">Learn More</a>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonzivista - V1: Infrastructure</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+
+        /* NAV */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.9); backdrop-filter: blur(10px); }
+        .logo { font-size: 20px; font-weight: 700; color: #7c3aed; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+        .nav-cta { background: #7c3aed; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; max-width: 1200px; margin: 0 auto; }
+        .hero-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.2em; color: #7c3aed; margin-bottom: 24px; }
+        .hero h1 { font-size: clamp(40px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 span { color: #7c3aed; }
+        .hero p { font-size: 20px; color: rgba(255,255,255,0.6); max-width: 600px; line-height: 1.6; margin-bottom: 40px; }
+        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-primary { background: #7c3aed; color: #fff; padding: 16px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+        .btn-secondary { border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 32px; border-radius: 10px; text-decoration: none; }
+
+        /* POWERED BY */
+        .powered { padding: 60px 48px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .powered-container { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .powered p { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+        .powered-logos { display: flex; justify-content: center; gap: 48px; opacity: 0.6; }
+        .powered-logos span { font-size: 18px; font-weight: 600; }
+
+        /* PROBLEM SECTION - KEEP EXACT */
+        .pain { padding: 100px 48px; background: #111; }
+        .pain-container { max-width: 1000px; margin: 0 auto; }
+        .pain-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); margin-bottom: 16px; text-align: center; }
+        .pain-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; }
+        .pain-question { font-size: 18px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 48px; }
+        .pain-subtitle { font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 48px; color: #ef4444; }
+
+        .domino-stack { display: flex; flex-direction: column; gap: 16px; }
+        .domino-card { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 24px; display: flex; gap: 20px; align-items: flex-start; }
+        .domino-number { width: 36px; height: 36px; background: #ef4444; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .domino-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .domino-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+        .pain-statement { text-align: center; margin-top: 48px; font-size: 24px; font-weight: 700; color: #ef4444; }
+
+        /* THE LOOP - NEW */
+        .loop { padding: 100px 48px; }
+        .loop-container { max-width: 1000px; margin: 0 auto; }
+        .loop-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: #22c55e; margin-bottom: 16px; text-align: center; }
+        .loop-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+
+        .loop-steps { display: flex; justify-content: space-between; align-items: center; position: relative; flex-wrap: wrap; gap: 20px; }
+        .loop-steps::before { content: ''; position: absolute; top: 50%; left: 10%; right: 10%; height: 2px; background: rgba(124,58,237,0.3); z-index: 0; }
+        .loop-step { text-align: center; flex: 1; min-width: 120px; position: relative; z-index: 1; }
+        .loop-step .number { width: 60px; height: 60px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 20px; font-weight: 700; }
+        .loop-step h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .loop-step p { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+        .loop-note { text-align: center; margin-top: 48px; padding: 24px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; }
+        .loop-note p { font-size: 16px; color: rgba(255,255,255,0.8); }
+        .loop-note strong { color: #22c55e; }
+
+        /* FEATURES */
+        .features { padding: 100px 48px; background: #111; }
+        .features-container { max-width: 1200px; margin: 0 auto; }
+        .features-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .feature-card { background: #1a1a1a; border-radius: 16px; padding: 32px; }
+        .feature-card .icon { font-size: 32px; margin-bottom: 16px; }
+        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+        .feature-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+        /* CTA */
+        .final-cta { padding: 100px 48px; text-align: center; background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 100%); }
+        .final-cta h2 { font-size: 48px; font-weight: 700; margin-bottom: 24px; }
+        .final-cta p { font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 40px; }
+        .final-cta .hero-ctas { justify-content: center; }
+
+        @media (max-width: 768px) {
+            .hero, .pain, .loop, .features, .final-cta { padding-left: 24px; padding-right: 24px; }
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .loop-steps::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">bonzivista</div>
+    <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#features">Features</a>
+        <a href="https://docs.ethervista.app" target="_blank">Docs</a>
+    </div>
+    <a href="https://t.me/bonzi_raider_bot" class="nav-cta">Launch App</a>
+</nav>
+
+<!-- HERO: INFRASTRUCTURE POSITIONING -->
+<section class="hero">
+    <div class="hero-label">Community Infrastructure</div>
+    <h1>Self-sustaining treasury for <span>token communities</span></h1>
+    <p>Launch tokens free on EtherFun. Trading fees automatically fund community rewards. AI verifies real contributors. Bots get nothing.</p>
+    <div class="hero-ctas">
+        <a href="https://t.me/bonzi_raider_bot" class="btn-primary">Deploy Now</a>
+        <a href="https://docs.ethervista.app" class="btn-secondary">Read Docs</a>
+    </div>
+</section>
+
+<!-- POWERED BY -->
+<section class="powered">
+    <div class="powered-container">
+        <p>Powered by</p>
+        <div class="powered-logos">
+            <span>EtherVista</span>
+            <span>EtherFun</span>
+            <span>Ethereum</span>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEM: THE 5 DOMINOES (UNCHANGED) -->
+<section class="pain" id="problem">
+    <div class="pain-container">
+        <p class="pain-label">Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN</p>
+        <h2 class="pain-title">what do they all have in common?</h2>
+        <p class="pain-question">Who reviews the reviewers?</p>
+        <h3 class="pain-subtitle">5 ways the entire web3 ambassador rails failed</h3>
+
+        <div class="domino-stack">
+            <div class="domino-card">
+                <span class="domino-number">1</span>
+                <div>
+                    <h4>reviewers drown</h4>
+                    <p>Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">2</span>
+                <div>
+                    <h4>funders get farmed</h4>
+                    <p>Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">3</span>
+                <div>
+                    <h4>OGs are neglected</h4>
+                    <p>Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">4</span>
+                <div>
+                    <h4>normies are ignored</h4>
+                    <p>New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">5</span>
+                <div>
+                    <h4>KOLs get spammed</h4>
+                    <p>Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your "engagement" is actually hurting your reach.</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="pain-statement">Extraction theatre on steroids.</p>
+    </div>
+</section>
+
+<!-- SOLUTION: THE LOOP -->
+<section class="loop" id="solution">
+    <div class="loop-container">
+        <p class="loop-label">The Solution</p>
+        <h2 class="loop-title">The Self-Funding Loop</h2>
+
+        <div class="loop-steps">
+            <div class="loop-step">
+                <div class="number">1</div>
+                <h4>Launch</h4>
+                <p>Free on EtherFun</p>
+            </div>
+            <div class="loop-step">
+                <div class="number">2</div>
+                <h4>Trade</h4>
+                <p>Community buys/sells</p>
+            </div>
+            <div class="loop-step">
+                <div class="number">3</div>
+                <h4>Collect</h4>
+                <p>Flat fees to pool</p>
+            </div>
+            <div class="loop-step">
+                <div class="number">4</div>
+                <h4>Reward</h4>
+                <p>Tips to contributors</p>
+            </div>
+            <div class="loop-step">
+                <div class="number">5</div>
+                <h4>Grow</h4>
+                <p>More builds, more launches</p>
+            </div>
+        </div>
+
+        <div class="loop-note">
+            <p><strong>The flywheel:</strong> Trading fees fund tips. Tips reward builders. Builders create more. More creation = more trading = more fees. Repeat.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="features-container">
+        <h2 class="features-title">Everything included</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">🚀</div>
+                <h4>Free Token Launch</h4>
+                <p>Deploy via EtherFun. First buyer pays gas, gets $100 reward. You pay nothing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💰</div>
+                <h4>Auto-Funded Treasury</h4>
+                <p>Flat USD fees per trade flow directly to community pool. No manual funding.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🤖</div>
+                <h4>AI Verification</h4>
+                <p>Vision AI trained on 6 months of raid data. Detects copy-paste, bots, farmers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💸</div>
+                <h4>ETH Tips</h4>
+                <p>Real contributors earn real ETH. Not points. Not promises. Direct payouts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🛡️</div>
+                <h4>Sybil Protection</h4>
+                <p>Pattern detection flags farmers before snapshot. Protect your airdrop budget.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h4>Quality Scoring</h4>
+                <p>Merit-based, not task-count. Who's actually helping? Who's creating value?</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+    <h2>Ready to build?</h2>
+    <p>Deploy your self-sustaining community treasury in minutes.</p>
+    <div class="hero-ctas">
+        <a href="https://t.me/bonzi_raider_bot" class="btn-primary">Get Started</a>
+        <a href="https://t.me/bonzi_raider" class="btn-secondary">Join Community</a>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonzivista - V3: RWA + Brand Tokenization</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.9); backdrop-filter: blur(10px); }
+        .logo { font-size: 20px; font-weight: 700; color: #7c3aed; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+        .nav-cta { background: #7c3aed; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .hero-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.2em; color: #7c3aed; margin-bottom: 24px; }
+        .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 span { color: #7c3aed; }
+        .hero p { font-size: 20px; color: rgba(255,255,255,0.6); max-width: 700px; margin: 0 auto 40px; line-height: 1.6; }
+        .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: #7c3aed; color: #fff; padding: 16px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+        .btn-secondary { border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 32px; border-radius: 10px; text-decoration: none; }
+
+        /* THESIS */
+        .thesis { padding: 80px 48px; background: #111; }
+        .thesis-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .thesis-quote { font-size: 28px; font-weight: 500; line-height: 1.5; margin-bottom: 24px; }
+        .thesis-quote span { color: #7c3aed; font-weight: 700; }
+        .thesis-author { font-size: 14px; color: rgba(255,255,255,0.4); }
+
+        /* DUAL YIELD VISUAL */
+        .dual-yield { padding: 100px 48px; }
+        .dual-yield-container { max-width: 1000px; margin: 0 auto; }
+        .dual-yield-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; }
+        .dual-yield-sub { font-size: 18px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 64px; }
+
+        .yield-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .yield-card { background: #1a1a1a; border-radius: 20px; padding: 40px; position: relative; overflow: hidden; }
+        .yield-card.risk-on { border: 2px solid #7c3aed; }
+        .yield-card.risk-off { border: 2px solid #22c55e; }
+        .yield-card .badge { position: absolute; top: 20px; right: 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 12px; border-radius: 100px; }
+        .yield-card.risk-on .badge { background: rgba(124,58,237,0.2); color: #a78bfa; }
+        .yield-card.risk-off .badge { background: rgba(34,197,94,0.2); color: #4ade80; }
+        .yield-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+        .yield-card p { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 24px; }
+        .yield-card ul { list-style: none; }
+        .yield-card li { padding: 8px 0; font-size: 15px; color: rgba(255,255,255,0.8); }
+        .yield-card.risk-on li::before { content: "▸ "; color: #7c3aed; }
+        .yield-card.risk-off li::before { content: "▸ "; color: #22c55e; }
+
+        .yield-combine { text-align: center; margin-top: 32px; padding: 24px; background: rgba(124,58,237,0.1); border-radius: 12px; }
+        .yield-combine p { font-size: 18px; }
+        .yield-combine strong { color: #7c3aed; }
+
+        /* PROBLEM SECTION */
+        .pain { padding: 100px 48px; background: #111; }
+        .pain-container { max-width: 1000px; margin: 0 auto; }
+        .pain-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); margin-bottom: 16px; text-align: center; }
+        .pain-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; }
+        .pain-question { font-size: 18px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 48px; }
+        .pain-subtitle { font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 48px; color: #ef4444; }
+
+        .domino-stack { display: flex; flex-direction: column; gap: 16px; }
+        .domino-card { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 24px; display: flex; gap: 20px; align-items: flex-start; }
+        .domino-number { width: 36px; height: 36px; background: #ef4444; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .domino-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .domino-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+        .pain-statement { text-align: center; margin-top: 48px; font-size: 24px; font-weight: 700; color: #ef4444; }
+
+        /* USE CASES */
+        .use-cases { padding: 100px 48px; }
+        .use-cases-container { max-width: 1000px; margin: 0 auto; }
+        .use-cases-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+        .use-cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .use-case-card { background: #1a1a1a; border-radius: 16px; padding: 32px; }
+        .use-case-card .icon { font-size: 40px; margin-bottom: 20px; }
+        .use-case-card h4 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .use-case-card p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 16px; }
+        .use-case-card .yield { font-size: 13px; color: #7c3aed; font-weight: 500; }
+
+        /* COMPARISON */
+        .compare { padding: 100px 48px; background: #111; }
+        .compare-container { max-width: 800px; margin: 0 auto; }
+        .compare-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 64px; }
+
+        .compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+        .compare-cell { background: #1a1a1a; padding: 20px; font-size: 15px; }
+        .compare-cell.header { background: #222; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .compare-cell.label { font-weight: 500; }
+        .compare-cell.bad { color: #ef4444; }
+        .compare-cell.good { color: #22c55e; }
+
+        /* CTA */
+        .final-cta { padding: 100px 48px; text-align: center; background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 100%); }
+        .final-cta h2 { font-size: 48px; font-weight: 700; margin-bottom: 24px; }
+        .final-cta p { font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .final-cta .hero-ctas { justify-content: center; }
+
+        @media (max-width: 768px) {
+            .yield-grid { grid-template-columns: 1fr; }
+            .compare-row { grid-template-columns: 1fr; }
+            .compare-cell.header:not(:first-child) { display: none; }
+            .hero, .thesis, .dual-yield, .pain, .use-cases, .compare, .final-cta { padding-left: 24px; padding-right: 24px; }
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">bonzivista</div>
+    <div class="nav-links">
+        <a href="#yield">Dual Yield</a>
+        <a href="#problem">Problem</a>
+        <a href="#use-cases">Use Cases</a>
+    </div>
+    <a href="https://t.me/bonzi_raider_bot" class="nav-cta">Launch App</a>
+</nav>
+
+<!-- HERO: RWA POSITIONING -->
+<section class="hero">
+    <div class="hero-label">RWA & Brand Tokenization</div>
+    <h1>Tokenize your brand. Fees fund your <span>community.</span></h1>
+    <p>VISTA-20 tokens with dual yield: trading fees + external revenue. Self-sustaining treasury. Permissionless launch. AI-verified rewards.</p>
+    <div class="hero-ctas">
+        <a href="https://t.me/bonzi_raider_bot" class="btn-primary">Launch Token</a>
+        <a href="#yield" class="btn-secondary">How Dual Yield Works</a>
+    </div>
+</section>
+
+<!-- THESIS -->
+<section class="thesis">
+    <div class="thesis-container">
+        <p class="thesis-quote">"BlackRock proved tokenized yield works. <span>We remove BlackRock from the equation.</span>"</p>
+        <p class="thesis-author">— The Bonzi Thesis</p>
+    </div>
+</section>
+
+<!-- DUAL YIELD VISUAL -->
+<section class="dual-yield" id="yield">
+    <div class="dual-yield-container">
+        <h2 class="dual-yield-title">Two income streams. One token.</h2>
+        <p class="dual-yield-sub">Bear market floor + bull market upside</p>
+
+        <div class="yield-grid">
+            <div class="yield-card risk-on">
+                <span class="badge">Risk-On</span>
+                <h3>Trading Fees</h3>
+                <p>Every buy/sell generates flat USD fees. Fees flow to LP stakers via Euler model.</p>
+                <ul>
+                    <li>$5-$20 per trade (configurable)</li>
+                    <li>Bull market = volume explodes</li>
+                    <li>Automatic, trustless distribution</li>
+                </ul>
+            </div>
+            <div class="yield-card risk-off">
+                <span class="badge">Risk-Off</span>
+                <h3>External Revenue</h3>
+                <p>Real-world income feeds the treasury: rent, royalties, sales, subscriptions.</p>
+                <ul>
+                    <li>Bear market floor</li>
+                    <li>Stable, predictable income</li>
+                    <li>RWA-backed fundamentals</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="yield-combine">
+            <p><strong>RealT gives you rent. VISTA-20 gives you rent + a cut of everyone trading the asset.</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEM: THE 5 DOMINOES -->
+<section class="pain" id="problem">
+    <div class="pain-container">
+        <p class="pain-label">Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN</p>
+        <h2 class="pain-title">what do they all have in common?</h2>
+        <p class="pain-question">Who reviews the reviewers?</p>
+        <h3 class="pain-subtitle">5 ways the entire web3 ambassador rails failed</h3>
+
+        <div class="domino-stack">
+            <div class="domino-card">
+                <span class="domino-number">1</span>
+                <div>
+                    <h4>reviewers drown</h4>
+                    <p>Your team spends hours verifying raid submissions. Half are copy-paste garbage. The other half are bot-generated. You can't tell the difference anymore. Burnout is real.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">2</span>
+                <div>
+                    <h4>funders get farmed</h4>
+                    <p>Your airdrop budget goes to sybil armies. Professional farmers with 50 wallets extract value while your actual community gets diluted to nothing. The snapshot is a joke.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">3</span>
+                <div>
+                    <h4>OGs are neglected</h4>
+                    <p>Your day-ones who believed before anyone else? They don't grind tasks. They don't farm points. So the system ignores them while mercenaries climb the leaderboard.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">4</span>
+                <div>
+                    <h4>normies are ignored</h4>
+                    <p>New members ask genuine questions. Nobody answers. The docs exist but nobody reads them. They leave confused. Your funnel leaks at every stage.</p>
+                </div>
+            </div>
+            <div class="domino-card">
+                <span class="domino-number">5</span>
+                <div>
+                    <h4>KOLs get spammed</h4>
+                    <p>Your raid tasks create a flood of low-effort mentions. KOLs mute your hashtag. The algorithm penalizes spam. Your "engagement" is actually hurting your reach.</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="pain-statement">Extraction theatre on steroids.</p>
+    </div>
+</section>
+
+<!-- USE CASES -->
+<section class="use-cases" id="use-cases">
+    <div class="use-cases-container">
+        <h2 class="use-cases-title">What can you tokenize?</h2>
+        <div class="use-cases-grid">
+            <div class="use-case-card">
+                <div class="icon">🏠</div>
+                <h4>Real Estate</h4>
+                <p>Tokenize rental properties. Holders earn rent share + trading fees. LP hardlocked = no rug.</p>
+                <span class="yield">Yield: Rent + Euler fees</span>
+            </div>
+            <div class="use-case-card">
+                <div class="icon">👤</div>
+                <h4>Creator Brand</h4>
+                <p>Your audience holds your token. Revenue share + community upside. Aligned incentives.</p>
+                <span class="yield">Yield: Revenue + Trading fees</span>
+            </div>
+            <div class="use-case-card">
+                <div class="icon">💎</div>
+                <h4>Luxury Goods</h4>
+                <p>Jewelry, art, collectibles. Low velocity, external revenue. VISTA-20 perfect fit.</p>
+                <span class="yield">Yield: Royalties + Trading fees</span>
+            </div>
+            <div class="use-case-card">
+                <div class="icon">🏪</div>
+                <h4>Small Business</h4>
+                <p>Ice cream stand → token. Community owns a piece. Trading fees fund tips to helpers.</p>
+                <span class="yield">Yield: Revenue share + Fees</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="compare">
+    <div class="compare-container">
+        <h2 class="compare-title">IPO vs VISTA-20</h2>
+        <div class="compare-row">
+            <div class="compare-cell header"></div>
+            <div class="compare-cell header">Traditional IPO</div>
+            <div class="compare-cell header">VISTA-20</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Cost</div>
+            <div class="compare-cell bad">$500K - $2M+</div>
+            <div class="compare-cell good">$1-2</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Time</div>
+            <div class="compare-cell bad">6-18 months</div>
+            <div class="compare-cell good">5 minutes</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Access</div>
+            <div class="compare-cell bad">Accredited only</div>
+            <div class="compare-cell good">Anyone with wallet</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Liquidity</div>
+            <div class="compare-cell bad">Market hours, T+2</div>
+            <div class="compare-cell good">24/7, instant</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Yield</div>
+            <div class="compare-cell bad">Dividends (maybe)</div>
+            <div class="compare-cell good">Real-time via Euler</div>
+        </div>
+        <div class="compare-row">
+            <div class="compare-cell label">Rug risk</div>
+            <div class="compare-cell bad">Depends on management</div>
+            <div class="compare-cell good">LP hardlocked</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="final-cta">
+    <h2>Same rails as BlackRock.<br>No BlackRock required.</h2>
+    <p>Tokenize your brand or asset. Trading fees auto-fund community rewards. AI verifies real contributors. Only humans earn.</p>
+    <div class="hero-ctas">
+        <a href="https://t.me/bonzi_raider_bot" class="btn-primary">Get Started</a>
+        <a href="https://t.me/bonzi_raider" class="btn-secondary">Join Community</a>
+    </div>
+</section>
+
+</body>
+</html>

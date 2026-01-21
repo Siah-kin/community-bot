@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variant G Visual Mockup - Oracle Thesis</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            color: #FAFAFA;
+            line-height: 1.6;
+        }
+
+        /* Header bar */
+        .mockup-header {
+            background: var(--purple);
+            padding: 12px 24px;
+            text-align: center;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .mockup-header strong { color: #fff; }
+
+        /* Section labels */
+        .section-tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--purple);
+            padding: 4px 12px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--purple-light);
+            margin-bottom: 16px;
+        }
+
+        /* Hero */
+        section { padding: 80px 24px; max-width: 900px; margin: 0 auto; }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 .purple { color: var(--purple); font-weight: 600; }
+        .hero .subline {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: var(--purple); color: white; border: none; }
+        .btn-primary:hover { background: var(--purple-light); }
+        .btn-secondary { background: transparent; color: white; border: 1px solid var(--gray); }
+        .btn-secondary:hover { border-color: white; }
+
+        /* Statement */
+        .statement {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            border-left: 3px solid var(--purple);
+            padding-left: 32px;
+        }
+        .statement .highlight { color: var(--purple-light); }
+
+        /* Pain section */
+        .pain { background: rgba(124, 58, 237, 0.05); border-radius: 16px; }
+        .pain h2 { font-size: 2rem; margin-bottom: 24px; }
+        .pain p { font-size: 1.1rem; color: #ccc; margin-bottom: 16px; }
+        .pain p:last-child { margin-bottom: 0; }
+        .pain strong { color: white; }
+
+        /* Feature box */
+        .feature-box {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 40px 0;
+        }
+        .feature-box h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+            margin-bottom: 24px;
+        }
+        .loop-diagram {
+            font-family: monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #ccc;
+            white-space: pre-wrap;
+        }
+        .feature-box .tagline {
+            margin-top: 24px;
+            color: white;
+            font-style: italic;
+        }
+
+        /* Trust section */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0;
+        }
+        .trust-col h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .trust-col ul {
+            list-style: none;
+            color: #ccc;
+        }
+        .trust-col ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .trust-col.control ul li::before { content: "✓ "; color: var(--purple); }
+        .trust-col.no-control ul li::before { content: "⊘ "; color: var(--gray); }
+        .trust-result {
+            text-align: center;
+            padding: 24px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 8px;
+            margin-top: 24px;
+            font-size: 1.1rem;
+        }
+
+        /* CTA section */
+        .cta-section { text-align: center; padding: 120px 24px; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 16px; }
+        .cta-section p { color: var(--gray); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Divider */
+        hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 0; }
+
+        /* Prose styling */
+        .prose { font-size: 1.1rem; color: #ccc; }
+        .prose p { margin-bottom: 20px; }
+        .prose strong { color: white; }
+
+        /* Section titles */
+        .section-title { font-size: 1.75rem; margin-bottom: 24px; }
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .trust-grid { grid-template-columns: 1fr; }
+            section { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="mockup-header">
+    <strong>VARIANT G VISUAL MOCKUP</strong> — Text changes only. Layout/colors/fonts unchanged from current site.
+</div>
+
+<!-- HERO (ALL PROSE) -->
+<section class="hero">
+    <span class="section-tag">Attention</span>
+    <h1>
+        democratisation<br>
+        of liquidity<br>
+        curated by<br>
+        <span class="purple">an oracle.</span>
+    </h1>
+    <p class="subline">Closed loop value. How democracies thrive.</p>
+    <div class="cta-group">
+        <a href="#" class="btn btn-primary">Join the Loop</a>
+        <a href="#" class="btn btn-secondary">See How It Works</a>
+    </div>
+</section>
+
+<hr>
+
+<!-- STATEMENT (PROSE) -->
+<section>
+    <span class="section-tag">Interest</span>
+    <div class="statement">
+        <p>Liquidity flows to verified contributors. <span class="highlight">Not VCs. Not farmers. Not us.</span></p>
+        <p>SIAH is the oracle that makes this possible. It verifies real humans, detects extractive patterns, and curates who deserves what. Code distributes. Humans can't corrupt it.</p>
+        <p><span class="highlight">Value created here stays here.</span> That's the loop.</p>
+    </div>
+</section>
+
+<hr>
+
+<!-- PAIN (PROSE) -->
+<section class="pain">
+    <span class="section-tag">Interest</span>
+    <p class="section-label">why open systems fail</p>
+    <h2 class="section-title">democracy without curation is chaos</h2>
+    <div class="prose">
+        <p>Open rewards sound fair. In practice, they get gamed.</p>
+        <p>Bot armies show up with 50 wallets. Real contributors get diluted to nothing. Platforms take fees, VCs take profit, and the community funds everyone's exit. <strong>Trust erodes. Genuine users leave.</strong></p>
+        <p>Every new platform promises fairness. Same extractors arrive. Same outcome.</p>
+        <p><strong>Open doesn't mean fair. Democracy needs curation.</strong></p>
+    </div>
+</section>
+
+<hr>
+
+<!-- SOLUTION (PROSE + 1 FEATURE BOX) -->
+<section>
+    <span class="section-tag">Desire</span>
+    <p class="section-label">the oracle solution</p>
+    <h2 class="section-title">curation without gatekeepers</h2>
+    <div class="prose">
+        <p>SIAH changes the equation. An AI oracle that verifies contribution before distribution.</p>
+        <p>No human decides who gets paid. The Euler algorithm distributes based on verified work. Farmers get filtered. Bots get blocked. <strong>Only real humans earn.</strong></p>
+        <p>The result is a closed loop. Trading fees flow to the tip pool. Contributors earn ETH. They create more value. More fees. <strong>The loop compounds.</strong></p>
+        <p>Nothing exits. Value created here stays here.</p>
+    </div>
+
+    <div class="feature-box">
+        <h3>The Loop</h3>
+        <div class="loop-diagram">Trading fees → Tip pool → Verified contributors → More value → More fees
+                              ↑                                    │
+                              └────────────────────────────────────┘</div>
+        <p class="tagline">Oracle curates. Code distributes. Loop closes.</p>
+    </div>
+</section>
+
+<hr>
+
+<!-- TRUST (PROSE + 1 FEATURE BOX) -->
+<section>
+    <span class="section-tag">Desire</span>
+    <p class="section-label">why trust bonzi</p>
+    <h2 class="section-title">we can't extract even if we wanted to</h2>
+    <div class="prose">
+        <p>Here's what we control: bot infrastructure, community direction, platform development.</p>
+        <p>Here's what we don't control: LP is hardlocked and immutable. Euler fee revenue is distributed by the protocol, not us. bonzivista.app is an independent oracle.</p>
+        <p><strong>We built it this way on purpose.</strong> Can't rug by design. Not-for-profit by structure. DAO by definition.</p>
+    </div>
+
+    <div class="feature-box">
+        <h3>Not-for-Profit Model</h3>
+        <div class="trust-grid">
+            <div class="trust-col control">
+                <h4>What we control</h4>
+                <ul>
+                    <li>Bot infrastructure</li>
+                    <li>Community direction</li>
+                    <li>Platform development</li>
+                </ul>
+            </div>
+            <div class="trust-col no-control">
+                <h4>What we don't</h4>
+                <ul>
+                    <li>LP (hardlocked)</li>
+                    <li>Euler fees (protocol)</li>
+                    <li>bonzivista.app (independent)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="trust-result">
+            <strong>Result:</strong> Can't extract. Won't extract. Build and ship.
+        </div>
+    </div>
+</section>
+
+<hr>
+
+<!-- CTA (PROSE) -->
+<section class="cta-section">
+    <span class="section-tag">Action</span>
+    <h2>infrastructure, not revolution</h2>
+    <p>We're not promising to change the world tomorrow. We're building tools that work. SIAH oracle is live. Tipping agent is live. Token launcher is ready. The loop exists.</p>
+    <p>What we need is people who want to be part of it. Contributors who earn. Projects who launch. Communities that compound.</p>
+    <div class="cta-group">
+        <a href="#" class="btn btn-primary">Join the Loop</a>
+        <a href="#" class="btn btn-secondary">Read the Thesis</a>
+        <a href="#" class="btn btn-secondary">See the Oracle</a>
+    </div>
+</section>
+
+</body>
+</html>

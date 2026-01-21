@@ -7,402 +7,404 @@
     <meta name="description" content="Help test Bonzi, earn DAO points, unlock governance rights. Bug bounty program for token holders.">
     <link rel="canonical" href="https://bonzivista.org/dao/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --purple: #7C3AED;
-            --purple-light: #A78BFA;
-            --purple-dark: #5B21B6;
-            --white: #FFFFFF;
-            --black: #0A0A0A;
-            --gray: #71717A;
-            --green: #22C55E;
-            --orange: #F97316;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--black);
-            color: var(--white);
-            line-height: 1.6;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 40px;
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .nav-logo {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--white);
-            text-decoration: none;
-        }
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 14px;
-            text-transform: lowercase;
-        }
-        .nav-links a:hover { color: var(--purple-light); }
-        .nav-links a.active { color: var(--purple-light); font-weight: 600; }
-        .nav-divider { color: rgba(255,255,255,0.2); }
-
-        .container {
+        /* Page-specific styles */
+        .dao-hero {
+            padding: 160px 40px 60px;
+            text-align: center;
             max-width: 900px;
             margin: 0 auto;
-            padding: 120px 24px 60px;
         }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 48px;
+        .dao-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
-        .hero-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-        .hero h1 {
-            font-size: 36px;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--white), var(--purple-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 16px;
+
+        .dao-intro {
+            font-size: 18px;
             color: var(--gray);
-            max-width: 500px;
+            line-height: 1.8;
+            max-width: 600px;
             margin: 0 auto;
         }
 
+        body.dark-mode .dao-intro {
+            color: #A1A1AA;
+        }
+
+        /* Stats row */
         .stats-row {
             display: flex;
             justify-content: center;
-            gap: 32px;
-            margin-bottom: 48px;
+            gap: 48px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 40px auto;
         }
+
+        body.dark-mode .stats-row {
+            border-color: rgba(255,255,255,0.08);
+        }
+
         .stat {
             text-align: center;
         }
+
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--purple-light);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--purple);
         }
+
         .stat-label {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--gray);
+            margin-top: 4px;
         }
 
-        .token-gate {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .token-gate h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-        .token-gate p {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-        .token-requirements {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .token-req {
-            background: rgba(255,255,255,0.05);
-            padding: 12px 20px;
-            border-radius: 8px;
-        }
-        .token-req .amount {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--purple-light);
-        }
-        .token-req .name {
-            font-size: 12px;
-            color: var(--gray);
-        }
-        .or-divider {
-            display: flex;
-            align-items: center;
-            color: var(--gray);
-            font-size: 12px;
-        }
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-            color: var(--white);
-            padding: 12px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: transform 0.2s;
-        }
-        .cta-button:hover {
-            transform: translateY(-2px);
+        body.dark-mode .stat-label {
+            color: #A1A1AA;
         }
 
-        .section-title {
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
-        .section-subtitle {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-        .step {
-            text-align: center;
-            padding: 16px;
-        }
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            margin: 0 auto 12px;
-        }
-        .step h4 {
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        .step p {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
+        /* Test cards grid */
         .test-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            margin-bottom: 48px;
+            margin: 24px 0 48px;
         }
+
         .test-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.08);
             border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: all 0.2s;
         }
+
+        body.dark-mode .test-card {
+            background: #1F1F23;
+            border-color: rgba(255,255,255,0.08);
+        }
+
         .test-card:hover {
-            transform: translateY(-2px);
             border-color: var(--purple);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
         }
+
         .test-card-image {
-            height: 120px;
-            background: rgba(0,0,0,0.3);
+            height: 100px;
+            background: var(--gray-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 40px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
+
+        body.dark-mode .test-card-image {
+            background: #0A0A0A;
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
         .test-card-content {
-            padding: 16px;
+            padding: 20px;
         }
-        .test-card-status {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
+
+        .test-card h3 {
+            font-size: 16px;
+            font-weight: 700;
             margin-bottom: 8px;
         }
-        .status-active {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--green);
-        }
-        .status-coming {
-            background: rgba(249, 115, 22, 0.2);
-            color: var(--orange);
-        }
-        .test-card h3 {
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
+
         .test-card p {
-            font-size: 12px;
+            font-size: 14px;
             color: var(--gray);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
+
+        body.dark-mode .test-card p {
+            color: #A1A1AA;
+        }
+
+        .test-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .test-card-reward {
-            font-size: 12px;
-            color: var(--purple-light);
+            font-size: 13px;
+            color: var(--purple);
             font-weight: 600;
         }
+
         .test-card-link {
             display: inline-block;
-            margin-top: 12px;
             padding: 8px 16px;
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid var(--purple);
-            border-radius: 6px;
-            color: var(--purple-light);
+            background: var(--purple);
+            color: var(--white);
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .test-card-link:hover {
-            background: rgba(124, 58, 237, 0.4);
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
 
-        .perks {
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 48px;
+        .test-card-link:hover {
+            background: var(--purple-dark);
         }
-        .perks-grid {
+
+        .test-card-link.coming {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+        }
+
+        body.dark-mode .test-card-link.coming {
+            background: #27272A;
+            color: #71717A;
+        }
+
+        /* Steps flow */
+        .steps-flow {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 24px;
+            margin: 24px 0;
         }
-        .perk {
+
+        .step {
             text-align: center;
-            padding: 16px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
+            position: relative;
         }
-        .perk-points {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--purple-light);
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            right: -12px;
+            width: 24px;
+            height: 2px;
+            background: var(--purple);
+            opacity: 0.3;
         }
-        .perk-name {
-            font-size: 12px;
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--purple);
             color: var(--white);
-            margin-top: 4px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 auto 12px;
         }
-        .perk-desc {
-            font-size: 11px;
+
+        .step h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step p {
+            font-size: 13px;
             color: var(--gray);
         }
 
-        .footer-cta {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(180deg, transparent 0%, rgba(124, 58, 237, 0.1) 100%);
-            border-radius: 16px;
+        body.dark-mode .step p {
+            color: #A1A1AA;
         }
-        .footer-cta h2 {
-            font-size: 24px;
+
+        /* CTA section */
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 12px;
         }
-        .footer-cta p {
+
+        .cta-section p {
             color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 24px;
         }
 
+        body.dark-mode .cta-section p {
+            color: #A1A1AA;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .container { padding: 100px 16px 40px; }
-            .hero h1 { font-size: 28px; }
-            .stats-row { flex-wrap: wrap; gap: 16px; }
-            .token-requirements { flex-direction: column; gap: 12px; }
-            .or-divider { display: none; }
-            .test-cards { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: repeat(2, 1fr); }
-            .perks-grid { grid-template-columns: repeat(2, 1fr); }
-            nav { padding: 16px 20px; }
-            .nav-links { gap: 16px; font-size: 12px; }
+            .dao-hero {
+                padding: 120px 24px 40px;
+            }
+            .dao-hero h1 {
+                font-size: 32px;
+            }
+            .stats-row {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+            .test-cards {
+                grid-template-columns: 1fr;
+            }
+            .steps-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .step::after {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
+
         <div class="nav-links">
-            <a href="../features.html">features</a>
-            <a href="../manual/">manual</a>
-            <a href="../faq.html">manifesto</a>
-            <span class="nav-divider">|</span>
-            <a href="./" class="active">dao</a>
+            <div class="nav-dropdown">
+                <a href="../features.html" class="nav-link">features</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../features.html#adaptive-agents">Adaptive Agents</a>
+                    <a href="../features.html#ask-earn">Ask & Earn</a>
+                    <a href="../features.html#sybil">Sybil Detection</a>
+                    <a href="../features.html#raid">Raid & Earn</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="../manual/" class="nav-link">manual</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../manual/#quickstart">Quick Start</a>
+                    <a href="../manual/#commands">Commands</a>
+                    <a href="../manual/#staking">Staking Guide</a>
+                    <a href="../manual/#admin">Admin Tools</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="../faq.html" class="nav-link">manifesto</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../faq.html#why-purple">Why Purple?</a>
+                    <a href="../faq.html#market">Market Validation</a>
+                    <a href="../faq.html#ai-hype">AI Hype Check</a>
+                    <a href="../faq.html#skeptics">For Skeptics</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="../economics/" class="nav-link">economics</a>
+                <div class="nav-dropdown-menu">
+                    <a href="../economics/#ethervista">Ethervista</a>
+                    <a href="../economics/#euler-model">Euler Model</a>
+                    <a href="../economics/#hardstake">Hardstake</a>
+                    <a href="../economics/#anti-rug">Anti-Rug</a>
+                </div>
+            </div>
+            <div class="nav-divider"></div>
+            <a href="../research/" class="nav-link gated">metrics</a>
+            <a href="./" class="nav-link gated active">dao</a>
+        </div>
+
+        <div class="nav-right">
+            <select class="nav-lang-select" id="lang-select" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="pt">PT</option>
+                <option value="zh">ZH</option>
+                <option value="tr">TR</option>
+                <option value="ru">RU</option>
+                <option value="fr">FR</option>
+            </select>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button class="nav-connect-btn" id="nav-connect-btn">connect</button>
         </div>
     </nav>
 
-    <div class="container">
-        <section class="hero">
-            <span class="hero-badge">Tester Program Live</span>
-            <h1>Help Build Bonzi. Earn DAO Rights.</h1>
-            <p>Find bugs, report issues, earn DAO points. Shape the future of community AI through active contribution.</p>
-        </section>
+    <!-- HERO -->
+    <section class="dao-hero">
+        <span class="warning-label">Tester Program Live</span>
+        <h1>Help Build Bonzi. Earn DAO Rights.</h1>
+        <p class="dao-intro">
+            We're not asking you to trust us. We're asking you to <strong>test us</strong>. Find bugs, report issues, earn points that unlock real governance rights. No empty promises. Just code and receipts.
+        </p>
+    </section>
 
-        <div class="stats-row">
-            <div class="stat">
-                <div class="stat-value">10</div>
-                <div class="stat-label">pts per valid bug</div>
+    <!-- STATS -->
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-value">10</div>
+            <div class="stat-label">pts per valid bug</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">5</div>
+            <div class="stat-label">active tests</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">24h</div>
+            <div class="stat-label">review time</div>
+        </div>
+    </div>
+
+    <div class="content-container">
+
+        <!-- TOKEN GATE SECTION -->
+        <div class="faq-category" id="access">
+            <h2 class="category-title">Tester Access</h2>
+
+            <p class="faq-answer">
+                Bug reporting is limited to token holders. This prevents spam and ensures testers have skin in the game. If you're holding tokens, you're invested in making Bonzi better.
+            </p>
+
+            <div class="technical-box" style="margin-top: 24px;">
+                <strong>Requirements (pick one):</strong>
+                <ul style="margin-top: 12px; margin-left: 20px;">
+                    <li><strong>100 VISTA</strong> staked, OR</li>
+                    <li><strong>1,000,000 BONZI</strong> staked</li>
+                </ul>
+                <p style="margin-top: 16px; font-size: 13px; opacity: 0.8;">
+                    Already have tokens? Use <code>/link_wallet</code> in the bot, then <code>/bug</code> to report.
+                </p>
             </div>
-            <div class="stat">
-                <div class="stat-value">5</div>
-                <div class="stat-label">active tests</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">24h</div>
-                <div class="stat-label">review time</div>
+
+            <div style="text-align: center; margin-top: 24px;">
+                <a href="https://t.me/Bonzi_Community_bot" class="btn-primary">Open Bonzi Bot</a>
             </div>
         </div>
 
-        <section class="token-gate">
-            <h3>Tester Access Requirements</h3>
-            <p>Hold tokens to participate. Proves skin in the game.</p>
-            <div class="token-requirements">
-                <div class="token-req">
-                    <div class="amount">100</div>
-                    <div class="name">$VISTA staked</div>
-                </div>
-                <div class="or-divider">OR</div>
-                <div class="token-req">
-                    <div class="amount">1M</div>
-                    <div class="name">$BONZI staked</div>
-                </div>
-            </div>
-            <a href="https://t.me/Bonzi_Community_bot" class="cta-button">Open Bonzi Bot</a>
-        </section>
+        <!-- HOW IT WORKS -->
+        <div class="faq-category" id="how">
+            <h2 class="category-title">How It Works</h2>
 
-        <section>
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">Four steps to earning DAO points</p>
-            <div class="steps">
+            <p class="faq-answer">
+                Four steps. Pick a test, find issues, report with a screenshot, earn points. Your bugs get reviewed within 24 hours. Valid bugs earn 10 DAO points each.
+            </p>
+
+            <div class="steps-flow">
                 <div class="step">
                     <div class="step-number">1</div>
                     <h4>Pick a Test</h4>
@@ -424,112 +426,247 @@
                     <p>Valid bugs = 10 pts each</p>
                 </div>
             </div>
-        </section>
 
-        <section>
-            <h2 class="section-title">Active Tests</h2>
-            <p class="section-subtitle">Click to start testing</p>
+            <div class="highlight-box">
+                <strong>Bonus points:</strong> Critical bugs (security, data loss) earn 25 pts. Bugs that help us fix long-standing issues earn 15 pts. We reward impact, not volume.
+            </div>
+        </div>
+
+        <!-- ACTIVE TESTS -->
+        <div class="faq-category" id="tests">
+            <h2 class="category-title">Active Tests</h2>
+
+            <p class="faq-answer">
+                Each test card below represents a specific feature area. Click to open the bot and start testing. Take screenshots of anything broken, confusing, or just... weird.
+            </p>
 
             <div class="test-cards">
                 <div class="test-card">
                     <div class="test-card-image">🎯</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-active">Active</span>
                         <h3>Raid Submission</h3>
-                        <p>Test raid lifecycle: submit, verify, earn points.</p>
-                        <div class="test-card-reward">+10 pts per bug</div>
-                        <a href="https://t.me/Bonzi_Community_bot?start=raid" class="test-card-link">Start Test</a>
+                        <p>Test raid lifecycle: submit X links, verify tweets, earn raid points.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="https://t.me/Bonzi_Community_bot?start=raid" class="test-card-link">Start Test</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="test-card">
                     <div class="test-card-image">💰</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-active">Active</span>
                         <h3>ETH Claim Flow</h3>
-                        <p>Link wallet, check balance, claim rewards.</p>
-                        <div class="test-card-reward">+10 pts per bug</div>
-                        <a href="https://t.me/Bonzi_Community_bot?start=claim" class="test-card-link">Start Test</a>
+                        <p>Link wallet, check your balance, try claiming rewards.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="https://t.me/Bonzi_Community_bot?start=claim" class="test-card-link">Start Test</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="test-card">
                     <div class="test-card-image">👛</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-active">Active</span>
                         <h3>Wallet Connection</h3>
-                        <p>Test /link_wallet, verify holdings display.</p>
-                        <div class="test-card-reward">+10 pts per bug</div>
-                        <a href="https://t.me/Bonzi_Community_bot?start=wallet" class="test-card-link">Start Test</a>
+                        <p>Test /link_wallet command, verify holdings display correctly.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="https://t.me/Bonzi_Community_bot?start=wallet" class="test-card-link">Start Test</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="test-card">
                     <div class="test-card-image">🤖</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-active">Active</span>
                         <h3>AI Response Quality</h3>
-                        <p>Ask questions, report wrong answers or loops.</p>
-                        <div class="test-card-reward">+10 pts per bug</div>
-                        <a href="https://t.me/Bonzi_Community_bot" class="test-card-link">Start Test</a>
+                        <p>Ask questions. Report wrong answers, loops, or dumb responses.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="https://t.me/Bonzi_Community_bot" class="test-card-link">Start Test</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="test-card">
                     <div class="test-card-image">📊</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-active">Active</span>
                         <h3>Dashboard Navigation</h3>
-                        <p>Click through all buttons, find dead ends.</p>
-                        <div class="test-card-reward">+10 pts per bug</div>
-                        <a href="https://t.me/Bonzi_Community_bot?start=dashboard" class="test-card-link">Start Test</a>
+                        <p>Click through all buttons. Find dead ends, broken flows.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="https://t.me/Bonzi_Community_bot?start=dashboard" class="test-card-link">Start Test</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="test-card">
                     <div class="test-card-image">🔮</div>
                     <div class="test-card-content">
-                        <span class="test-card-status status-coming">Coming Soon</span>
                         <h3>Etherfun Launchpad</h3>
-                        <p>Test new token launch integration.</p>
-                        <div class="test-card-reward">+15 pts per bug</div>
+                        <p>New token launch integration. Testing soon.</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+15 pts per bug</span>
+                            <span class="test-card-link coming">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="perks">
-            <h2 class="section-title">DAO Point Perks</h2>
-            <p class="section-subtitle">Unlock governance rights as you contribute</p>
+        <!-- DAO POINT PERKS -->
+        <div class="faq-category" id="perks">
+            <h2 class="category-title">DAO Point Perks</h2>
+
+            <p class="faq-answer">
+                DAO points aren't just vanity metrics. They unlock real governance rights. More contribution = more influence. This is merit over money in action.
+            </p>
+
             <div class="perks-grid">
-                <div class="perk">
-                    <div class="perk-points">50</div>
-                    <div class="perk-name">Beta Badge</div>
-                    <div class="perk-desc">Early feature access</div>
+                <div class="perk-card">
+                    <div class="perk-points">50 pts</div>
+                    <div class="perk-title">Beta Tester Badge</div>
+                    <div class="perk-desc">Early access to new features before public release</div>
                 </div>
-                <div class="perk">
-                    <div class="perk-points">100</div>
-                    <div class="perk-name">Voting</div>
-                    <div class="perk-desc">Vote on priorities</div>
+                <div class="perk-card">
+                    <div class="perk-points">100 pts</div>
+                    <div class="perk-title">Voting Rights</div>
+                    <div class="perk-desc">Vote on feature priorities and roadmap decisions</div>
                 </div>
-                <div class="perk">
-                    <div class="perk-points">250</div>
-                    <div class="perk-name">Proposals</div>
-                    <div class="perk-desc">Submit features</div>
+                <div class="perk-card">
+                    <div class="perk-points">250 pts</div>
+                    <div class="perk-title">Proposal Rights</div>
+                    <div class="perk-desc">Submit new feature proposals for community vote</div>
                 </div>
-                <div class="perk">
-                    <div class="perk-points">500</div>
-                    <div class="perk-name">Revenue</div>
-                    <div class="perk-desc">Share eligibility</div>
+                <div class="perk-card">
+                    <div class="perk-points">500 pts</div>
+                    <div class="perk-title">Revenue Share</div>
+                    <div class="perk-desc">Eligible for revenue sharing from premium features</div>
                 </div>
             </div>
-        </section>
 
-        <section class="footer-cta">
-            <h2>Ready to Help Build Bonzi?</h2>
-            <p>Open the bot, find bugs, earn DAO points.</p>
-            <a href="https://t.me/Bonzi_Community_bot" class="cta-button">Start Testing Now</a>
-        </section>
+            <div class="solution-box" style="margin-top: 24px;">
+                <strong>Why separate from Thanks Points?</strong><br>
+                Thanks points reward engagement (asking questions, raids). DAO points reward <em>contribution</em> (making Bonzi better). Different value, different perks.
+                <div class="accountability">
+                    <strong>Check your balance:</strong> Use <code>/dao</code> in the bot to see your current DAO points and perk level.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-category" id="faq">
+            <h2 class="category-title">Questions</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What makes a valid bug?</h3>
+                <p class="faq-answer">
+                    Something that's <strong>broken</strong> (doesn't work as expected), <strong>confusing</strong> (unclear UX), or <strong>wrong</strong> (AI gives bad info). Screenshots help. Description of what you expected vs what happened helps more.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How do I report a bug?</h3>
+                <p class="faq-answer">
+                    In the bot, use the <code>/bug</code> command. Pick a category, upload a screenshot, describe the issue. You'll get a bug ID and notification when it's reviewed.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Can I lose DAO points?</h3>
+                <p class="faq-answer">
+                    No. Points only go up. Spam reports don't earn points, but they don't cost you either. We want honest testing, not point gaming.
+                </p>
+            </div>
+        </div>
+
     </div>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section">
+        <h2>Ready to Help Build Bonzi?</h2>
+        <p>Open the bot. Find bugs. Earn governance rights.</p>
+        <a href="https://t.me/Bonzi_Community_bot" class="btn-primary">Start Testing Now</a>
+    </section>
+
+    <footer>
+        <p style="font-size: 18px; margin-bottom: 8px;">Built by testers who care about quality.</p>
+        <p style="color: var(--gray); margin-bottom: 24px;">Your bugs make Bonzi better for everyone.</p>
+        <p style="color: var(--gray);">
+            <a href="../">Home</a> ·
+            <a href="../features.html">Features</a> ·
+            <a href="../faq.html">Manifesto</a> ·
+            <a href="https://github.com/Siah-kin/community-bot">GitHub</a> ·
+            <a href="https://x.com/bonzi_vista">@bonzi_vista</a>
+        </p>
+    </footer>
+
+    <!-- Win98 popup for bug submission success (easter egg) -->
+    <div class="win98-overlay" id="win98-overlay" style="display: none;"></div>
+    <div class="win98-popup" id="win98-popup" style="display: none;">
+        <div class="title-bar">
+            <span class="title">Bonzi Assistant</span>
+            <button class="close-btn" onclick="closeWin98Popup()">×</button>
+        </div>
+        <div class="content">
+            <p><strong>Bug Report Received!</strong></p>
+            <p>Thanks for helping make Bonzi better. Your contribution has been logged.</p>
+            <div class="win98-progress">
+                <div class="win98-progress-bar" id="progress-bar"></div>
+            </div>
+            <p style="font-size: 11px; color: #666;">Processing your report...</p>
+        </div>
+        <div class="buttons">
+            <button class="btn-98 primary" onclick="closeWin98Popup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('bonzi_theme');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
+        });
+
+        // Win98 popup functions (easter egg - triggered by URL param)
+        function showWin98Popup() {
+            document.getElementById('win98-overlay').style.display = 'block';
+            document.getElementById('win98-popup').style.display = 'block';
+
+            // Animate progress bar
+            let progress = 0;
+            const progressBar = document.getElementById('progress-bar');
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+        }
+
+        function closeWin98Popup() {
+            document.getElementById('win98-overlay').style.display = 'none';
+            document.getElementById('win98-popup').style.display = 'none';
+        }
+
+        // Show popup if coming from bug submission
+        if (window.location.search.includes('submitted=true')) {
+            setTimeout(showWin98Popup, 500);
+        }
+
+        // Close on overlay click
+        document.getElementById('win98-overlay').addEventListener('click', closeWin98Popup);
+    </script>
 </body>
 </html>

@@ -332,7 +332,7 @@
     <!-- Wallet Gate -->
     <div class="wallet-gate" id="walletGate">
         <h2>DAO Members Only</h2>
-        <p>Connect your wallet to verify token ownership and access the DAO Tester Program.</p>
+        <p>Requires 1,000,000 $BONZI or 100 $VISTA to access the Tester Program.</p>
         <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
     </div>
 
@@ -789,12 +789,25 @@
         }
 
         // === WALLET GATE ===
+        // Load ethers.js dynamically
+        const ethersScript = document.createElement('script');
+        ethersScript.src = 'https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js';
+        document.head.appendChild(ethersScript);
+
+        // Token Contracts (Ethereum mainnet)
+        const BONZI_TOKEN = '0xcf4c91ecafc43c9f382db723ba20b82efa852821';
+        const VISTA_TOKEN = '0xC8c0e590304F1bF3e99A709026E4D59556A03cFf';
+        const MIN_BONZI = 1000000; // 1M $BONZI required
+        const MIN_VISTA = 100;     // OR 100 $VISTA required
+        const ETHEREUM_CHAIN_ID = '0x1'; // Mainnet
+
         async function checkAuth() {
             const savedWallet = localStorage.getItem('bonzi_wallet_address');
             const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+            const savedVerified = localStorage.getItem('bonzi_token_verified');
 
             // Auth expires after 24 hours
-            if (savedWallet && savedTimestamp) {
+            if (savedWallet && savedTimestamp && savedVerified === 'true') {
                 const age = Date.now() - parseInt(savedTimestamp);
                 if (age < 24 * 60 * 60 * 1000) {
                     document.getElementById('walletGate').classList.add('hidden');
@@ -805,6 +818,7 @@
             // Clear expired auth
             localStorage.removeItem('bonzi_wallet_address');
             localStorage.removeItem('bonzi_auth_timestamp');
+            localStorage.removeItem('bonzi_token_verified');
         }
 
         async function connectWallet() {
@@ -828,14 +842,55 @@
                     throw new Error('No accounts found');
                 }
 
+                // Check if on Ethereum mainnet
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== ETHEREUM_CHAIN_ID) {
+                    btn.textContent = 'Switch to Ethereum...';
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: ETHEREUM_CHAIN_ID }]
+                        });
+                    } catch (switchError) {
+                        throw new Error('Please switch to Ethereum mainnet');
+                    }
+                }
+
                 const address = accounts[0];
-                btn.textContent = 'Verifying...';
+                btn.textContent = 'Checking tokens...';
+
+                // Verify token balances (BONZI OR VISTA)
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const erc20Abi = ['function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)'];
+
+                const bonziContract = new ethers.Contract(BONZI_TOKEN, erc20Abi, provider);
+                const vistaContract = new ethers.Contract(VISTA_TOKEN, erc20Abi, provider);
+
+                const [bonziRaw, bonziDecimals, vistaRaw, vistaDecimals] = await Promise.all([
+                    bonziContract.balanceOf(address),
+                    bonziContract.decimals(),
+                    vistaContract.balanceOf(address),
+                    vistaContract.decimals()
+                ]);
+
+                const bonziBalance = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
+                const vistaBalance = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+
+                const hasBonzi = bonziBalance >= MIN_BONZI;
+                const hasVista = vistaBalance >= MIN_VISTA;
+
+                if (!hasBonzi && !hasVista) {
+                    throw new Error(
+                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziBalance.toLocaleString()})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaBalance.toFixed(2)})`
+                    );
+                }
 
                 // Store auth with timestamp
                 localStorage.setItem('bonzi_wallet_address', address);
                 localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+                localStorage.setItem('bonzi_token_verified', 'true');
 
-                btn.textContent = 'Connected ✓';
+                btn.textContent = 'Verified ✓';
                 setTimeout(() => {
                     document.getElementById('walletGate').classList.add('hidden');
                 }, 500);

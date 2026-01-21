@@ -5,169 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual - Bonzi Bot Documentation</title>
     <meta name="description" content="Complete guide to using the Bonzi AI community bot.">
-    <link rel="canonical" href="https://siah-kin.github.io/community-bot/manual/">
+    <link rel="canonical" href="https://bonzivista.org/manual/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Documentation-specific: Sidebar Layout */
         :root {
-            --purple: #7C3AED;
-            --purple-light: #A78BFA;
-            --purple-dark: #5B21B6;
-            --white: #FFFFFF;
-            --black: #0A0A0A;
-            --gray: #71717A;
-            --gray-light: #F4F4F5;
-            --sidebar-width: 280px;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--white);
-            color: var(--black);
-            line-height: 1.6;
+            --sidebar-width: 260px;
         }
 
-        /* Ethervista-style Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 56px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 24px;
-        }
-        .nav-logo {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--black);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-        .nav-link {
-            color: rgba(0, 0, 0, 0.6);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-link:hover { color: var(--black); }
-        .nav-link.active { color: var(--black); font-weight: 600; }
-        .nav-divider {
-            width: 1px;
-            height: 16px;
-            background: rgba(0, 0, 0, 0.15);
-        }
-        .nav-link.gated::after {
-            content: ' \1F512';
-            font-size: 10px;
-            opacity: 0.5;
-        }
-        /* Nav dropdown styles */
-        .nav-dropdown { position: relative; }
-        .nav-dropdown > .nav-link { cursor: pointer; }
-        .nav-dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 8px 0;
-            min-width: 160px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s, visibility 0.2s;
-            z-index: 200;
-            margin-top: 8px;
-        }
-        .nav-dropdown:hover .nav-dropdown-menu,
-        .nav-dropdown.active .nav-dropdown-menu { opacity: 1; visibility: visible; }
-        .nav-dropdown-menu a {
-            display: block;
-            padding: 8px 16px;
-            color: rgba(0, 0, 0, 0.7);
-            text-decoration: none;
-            font-size: 13px;
-            transition: background 0.15s, color 0.15s, transform 0.2s ease-out, opacity 0.2s ease-out;
-            transform: translateY(-8px);
-            opacity: 0;
-        }
-        .nav-dropdown:hover .nav-dropdown-menu a,
-        .nav-dropdown.active .nav-dropdown-menu a { transform: translateY(0); opacity: 1; }
-        .nav-dropdown-menu a:nth-child(1) { transition-delay: 0s; }
-        .nav-dropdown-menu a:nth-child(2) { transition-delay: 0.03s; }
-        .nav-dropdown-menu a:nth-child(3) { transition-delay: 0.06s; }
-        .nav-dropdown-menu a:nth-child(4) { transition-delay: 0.09s; }
-        .nav-dropdown-menu a:hover { background: rgba(0, 0, 0, 0.05); color: #000; transform: translateX(4px); }
-        .nav-right {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-        .nav-lang-select {
-            background: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.7);
-            cursor: pointer;
-        }
-        .theme-toggle {
-            background: transparent;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            border-radius: 6px;
-        }
-        .theme-toggle:hover { background: rgba(0, 0, 0, 0.05); }
-        .theme-toggle svg { width: 18px; height: 18px; stroke: rgba(0, 0, 0, 0.7); }
-        .theme-toggle .icon-sun { display: none; }
-        body.dark-mode .theme-toggle .icon-moon { display: none; }
-        body.dark-mode .theme-toggle .icon-sun { display: block; }
-        .nav-connect-btn {
-            background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #0a0a0a;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .nav-connect-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
-        }
-        @media (max-width: 768px) {
-            nav { padding: 0 16px; }
-            .nav-links { gap: 16px; }
-            .nav-link { font-size: 13px; }
-        }
-        @media (max-width: 600px) {
-            .nav-links { gap: 12px; }
-            .nav-link { font-size: 12px; }
-            .nav-logo { font-size: 16px; }
-            .nav-lang-select { display: none; }
-        }
-
-        /* GitBook-style Layout */
         .docs-layout {
             display: flex;
             padding-top: 56px;
@@ -185,16 +34,29 @@
             overflow-y: auto;
             border-right: 1px solid rgba(0,0,0,0.05);
         }
-        .sidebar-section {
-            margin-bottom: 24px;
+
+        body.dark-mode .sidebar {
+            background: #1F1F23;
+            border-right-color: rgba(255,255,255,0.05);
         }
+
+        .sidebar-section {
+            margin-bottom: 28px;
+        }
+
         .sidebar-section h4 {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: var(--gray);
             margin-bottom: 12px;
+            font-weight: 700;
         }
+
+        body.dark-mode .sidebar-section h4 {
+            color: #71717A;
+        }
+
         .sidebar-section a {
             display: block;
             padding: 8px 12px;
@@ -202,11 +64,24 @@
             text-decoration: none;
             font-size: 14px;
             border-radius: 6px;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            margin-bottom: 2px;
         }
+
+        body.dark-mode .sidebar-section a {
+            color: #A1A1AA;
+        }
+
         .sidebar-section a:hover {
             background: rgba(124, 58, 237, 0.1);
+            color: var(--purple);
         }
+
+        body.dark-mode .sidebar-section a:hover {
+            background: rgba(124, 58, 237, 0.15);
+            color: var(--purple-light);
+        }
+
         .sidebar-section a.active {
             background: var(--purple);
             color: white;
@@ -219,43 +94,119 @@
             padding: 48px 64px;
             max-width: 900px;
         }
+
         .docs-content h1 {
-            font-size: 36px;
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1px;
             margin-bottom: 16px;
         }
+
         .docs-content h2 {
             font-size: 24px;
-            margin-top: 48px;
+            font-weight: 700;
+            margin-top: 56px;
             margin-bottom: 16px;
-            padding-top: 24px;
-            border-top: 1px solid var(--gray-light);
+            padding-top: 32px;
+            border-top: 1px solid rgba(0,0,0,0.08);
         }
+
+        body.dark-mode .docs-content h2 {
+            border-top-color: rgba(255,255,255,0.08);
+        }
+
         .docs-content h3 {
             font-size: 18px;
+            font-weight: 700;
             margin-top: 32px;
             margin-bottom: 12px;
         }
+
         .docs-content p {
             color: var(--gray);
             margin-bottom: 16px;
+            line-height: 1.8;
         }
+
+        body.dark-mode .docs-content p {
+            color: #A1A1AA;
+        }
+
+        .docs-content p strong {
+            color: var(--black);
+        }
+
+        body.dark-mode .docs-content p strong {
+            color: var(--white);
+        }
+
         .docs-content code {
             background: var(--gray-light);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
             font-size: 14px;
+            color: var(--purple);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
         }
+
+        body.dark-mode .docs-content code {
+            background: #27272A;
+            color: var(--purple-light);
+        }
+
         .docs-content pre {
             background: var(--black);
             color: var(--white);
-            padding: 16px;
+            padding: 20px 24px;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 16px 0;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
         }
+
         .docs-content pre code {
             background: none;
             padding: 0;
+            color: inherit;
+        }
+
+        .docs-content ol,
+        .docs-content ul {
+            color: var(--gray);
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        body.dark-mode .docs-content ol,
+        body.dark-mode .docs-content ul {
+            color: #A1A1AA;
+        }
+
+        .docs-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .docs-content li strong {
+            color: var(--black);
+        }
+
+        body.dark-mode .docs-content li strong {
+            color: var(--white);
+        }
+
+        .docs-content a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+
+        .docs-content a:hover {
+            text-decoration: underline;
+        }
+
+        body.dark-mode .docs-content a {
+            color: var(--purple-light);
         }
 
         /* Command Table */
@@ -263,40 +214,79 @@
             width: 100%;
             border-collapse: collapse;
             margin: 24px 0;
-        }
-        .command-table th,
-        .command-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-light);
-        }
-        .command-table th {
-            font-weight: 600;
-            color: var(--black);
-        }
-        .command-table td {
-            color: var(--gray);
-        }
-        .command-table code {
-            color: var(--purple);
+            font-size: 14px;
         }
 
-        /* Feature cross-link */
+        .command-table th {
+            background: var(--black);
+            color: var(--white);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .command-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-light);
+            color: var(--gray);
+        }
+
+        body.dark-mode .command-table td {
+            border-bottom-color: #27272A;
+            color: #A1A1AA;
+        }
+
+        .command-table tr:nth-child(even) {
+            background: var(--gray-light);
+        }
+
+        body.dark-mode .command-table tr:nth-child(even) {
+            background: #1F1F23;
+        }
+
+        .command-table code {
+            color: var(--purple);
+            background: transparent;
+        }
+
+        /* Feature cross-link box */
         .feature-link {
             margin-top: 16px;
-            padding: 12px 16px;
+            padding: 16px 20px;
             background: rgba(124, 58, 237, 0.08);
             border-left: 3px solid var(--purple);
             border-radius: 0 8px 8px 0;
             font-size: 14px;
         }
+
+        body.dark-mode .feature-link {
+            background: rgba(124, 58, 237, 0.15);
+        }
+
         .feature-link a {
             color: var(--purple);
             text-decoration: none;
             font-weight: 600;
         }
+
         .feature-link a:hover {
             text-decoration: underline;
+        }
+
+        body.dark-mode .feature-link a {
+            color: var(--purple-light);
+        }
+
+        /* Intro section */
+        .docs-intro {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        body.dark-mode .docs-intro {
+            color: #A1A1AA;
         }
 
         /* Mobile */
@@ -306,21 +296,31 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
+            padding: 8px;
         }
+
         @media (max-width: 900px) {
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s;
+                z-index: 50;
             }
+
             .sidebar.open {
                 transform: translateX(0);
             }
+
             .docs-content {
                 margin-left: 0;
                 padding: 32px 24px;
             }
+
             .mobile-menu-btn {
                 display: block;
+            }
+
+            .docs-content h1 {
+                font-size: 32px;
             }
         }
     </style>
@@ -328,6 +328,7 @@
 <body>
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
+
         <div class="nav-links">
             <div class="nav-dropdown">
                 <a href="../features.html" class="nav-link">features</a>
@@ -341,10 +342,10 @@
             <div class="nav-dropdown">
                 <a href="./" class="nav-link active">manual</a>
                 <div class="nav-dropdown-menu">
-                    <a href="./#quickstart">Quick Start</a>
-                    <a href="./#commands">Commands</a>
-                    <a href="./#staking">Staking Guide</a>
-                    <a href="./#admin">Admin Tools</a>
+                    <a href="#quickstart">Quick Start</a>
+                    <a href="#commands">Commands</a>
+                    <a href="#staking">Staking Guide</a>
+                    <a href="#admin">Admin Tools</a>
                 </div>
             </div>
             <div class="nav-dropdown">
@@ -369,6 +370,7 @@
             <a href="../research/" class="nav-link gated">metrics</a>
             <a href="../dao/" class="nav-link gated">dao</a>
         </div>
+
         <div class="nav-right">
             <select class="nav-lang-select" id="lang-select" aria-label="Language">
                 <option value="en">EN</option>
@@ -415,19 +417,34 @@
 
         <main class="docs-content">
             <h1 id="intro">What is Bonzi?</h1>
-            <p>Bonzi is an AI-powered community assistant that lives in your Telegram group. It answers questions, tracks contributions, and rewards helpful members - all without requiring moderator intervention.</p>
-            <p>Unlike generic chatbots, Bonzi learns your project's specific knowledge base and speaks in a voice that matches your community culture.</p>
+            <p class="docs-intro">
+                Bonzi is an AI-powered community assistant that lives in your Telegram group. It answers questions, tracks contributions, and rewards helpful members - all without requiring moderator intervention.
+            </p>
+            <p>
+                Unlike generic chatbots, Bonzi learns your project's specific knowledge base and speaks in a voice that matches your community culture. It's not just a FAQ bot. It has <strong>judgment</strong> - trained on real crypto conversations spanning 3 market cycles.
+            </p>
+
+            <div class="highlight-box">
+                <strong>Open Source:</strong> Bonzi is MIT-licensed. Self-host for free, forever. No tracking, no ads, no data harvesting. <a href="https://github.com/Siah-kin/community-bot">View source →</a>
+            </div>
 
             <h2 id="quickstart">Quick Start</h2>
-            <p>Getting Bonzi running in your group takes about 2 minutes:</p>
-            <ol style="color: var(--gray); margin-left: 24px;">
-                <li>Add <code>@BonziAIBot</code> to your Telegram group</li>
-                <li>Make Bonzi an admin (needed to read messages)</li>
-                <li>Send <code>/start</code> to open the dashboard</li>
-                <li>That's it - Bonzi is now active</li>
+            <p>Getting Bonzi running in your group takes about 2 minutes. No coding required.</p>
+
+            <ol>
+                <li><strong>Add the bot:</strong> Search for <code>@Bonzi_Community_bot</code> in Telegram</li>
+                <li><strong>Make it admin:</strong> Bonzi needs admin permissions to read messages</li>
+                <li><strong>Send /start:</strong> Opens the dashboard in DM</li>
+                <li><strong>Done:</strong> Bonzi is now active and learning your community</li>
             </ol>
 
+            <div class="technical-box" style="margin-top: 24px;">
+                <strong>Self-hosting?</strong> Clone from GitHub, set your <code>TELEGRAM_BOT_TOKEN</code>, and deploy. Full setup guide in the repo README.
+            </div>
+
             <h2 id="commands">Commands</h2>
+            <p>All commands work in group chats and DMs. Some commands have button equivalents in the dashboard.</p>
+
             <table class="command-table">
                 <thead>
                     <tr>
@@ -450,7 +467,19 @@
                     </tr>
                     <tr>
                         <td><code>/thanks @user</code></td>
-                        <td>Thank someone for helping</td>
+                        <td>Thank someone for helping (+1 point to them)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/claim</code></td>
+                        <td>Claim ETH rewards (requires 100+ points)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/link_wallet [addr]</code></td>
+                        <td>Link your wallet for claims</td>
+                    </tr>
+                    <tr>
+                        <td><code>/bug</code></td>
+                        <td>Report a bug (earn DAO points)</td>
                     </tr>
                     <tr>
                         <td><code>/settings</code></td>
@@ -460,70 +489,155 @@
             </table>
 
             <h2 id="ask">Ask Questions</h2>
-            <p>You can ask Bonzi questions in two ways:</p>
-            <ul style="color: var(--gray); margin-left: 24px;">
-                <li><strong>Mention:</strong> Tag @BonziAIBot followed by your question</li>
+            <p>You can ask Bonzi questions in three ways. Pick whichever feels natural.</p>
+
+            <ul>
+                <li><strong>Mention:</strong> Tag @Bonzi_Community_bot followed by your question</li>
+                <li><strong>Reply:</strong> Reply to any Bonzi message with a follow-up</li>
                 <li><strong>Command:</strong> Use <code>/ask</code> followed by your question</li>
             </ul>
-            <p>Bonzi searches its knowledge base and generates a contextual answer. If it doesn't know something, it will say so rather than hallucinate.</p>
-            <p class="feature-link">⚙️ <a href="../features.html#ask-earn">Why we built it this way →</a></p>
+
+            <p>
+                Bonzi searches its knowledge base and generates a contextual answer. If it doesn't know something, it says so rather than hallucinate. Every answer earns you +1 point.
+            </p>
+
+            <div class="feature-link">
+                Learn more: <a href="../features.html#ask-earn">Ask & Earn - Why we pay you to ask questions →</a>
+            </div>
 
             <h2 id="leaderboard">Leaderboard</h2>
-            <p>The leaderboard tracks community contributions. Points are earned by:</p>
-            <ul style="color: var(--gray); margin-left: 24px;">
-                <li>Asking quality questions (helps others learn)</li>
-                <li>Receiving thanks from other members</li>
-                <li>Providing helpful answers</li>
+            <p>The leaderboard tracks community contributions. It's not just vanity - top contributors earn ETH claims and governance rights.</p>
+
+            <p><strong>Points are earned by:</strong></p>
+            <ul>
+                <li>Asking quality questions (+1 per question)</li>
+                <li>Receiving thanks from other members (+1 per thanks)</li>
+                <li>Getting helpful reactions on your messages</li>
+                <li>Submitting valid bug reports (+10 DAO points)</li>
             </ul>
 
+            <div class="highlight-box">
+                <strong>ETH Claims:</strong> Once you hit 100 points, you can claim ETH rewards. The amount varies based on the community pool. Use <code>/claim</code> to check eligibility.
+            </div>
+
             <h2 id="thanks">Thanks System</h2>
-            <p>The thanks system lets you recognize helpful community members. When you thank someone, they receive points that contribute to their leaderboard position.</p>
+            <p>The thanks system lets you recognize helpful community members. When you thank someone, they receive a point that contributes to their leaderboard position.</p>
+
             <pre><code>/thanks @helpful_user Great explanation of staking!</code></pre>
-            <p class="feature-link">⚙️ <a href="../features.html#thanks">Why we built it this way →</a></p>
+
+            <p>
+                Thanks is limited to prevent gaming. You can thank the same person once per day. The message after <code>@user</code> is optional but appreciated.
+            </p>
+
+            <div class="feature-link">
+                Learn more: <a href="../features.html#thanks">Thanks Protocol - Merit over money →</a>
+            </div>
 
             <h2 id="settings">Settings</h2>
-            <p>Use <code>/settings</code> to configure:</p>
-            <ul style="color: var(--gray); margin-left: 24px;">
-                <li><strong>Language:</strong> 14 languages supported</li>
+            <p>Use <code>/settings</code> or the dashboard to configure your experience.</p>
+
+            <ul>
+                <li><strong>Language:</strong> 6 languages supported (EN, PT, ZH, TR, RU, FR)</li>
                 <li><strong>Notifications:</strong> Control DM frequency</li>
                 <li><strong>Response style:</strong> Concise vs detailed answers</li>
+                <li><strong>Wallet:</strong> Link/unlink your wallet for claims</li>
             </ul>
 
             <h2 id="staking">Staking Guide</h2>
-            <p>Stakers get premium features and elevated privileges. To stake:</p>
-            <ol style="color: var(--gray); margin-left: 24px;">
-                <li>Visit <a href="https://ethervista.com" target="_blank" style="color: var(--purple);">ethervista.com</a></li>
+            <p>Stakers get premium features and elevated privileges. Staking also increases your claim multiplier.</p>
+
+            <ol>
+                <li>Visit <a href="https://ethervista.com">ethervista.com</a></li>
                 <li>Connect your wallet</li>
-                <li>Choose Hardstake or LP provision</li>
-                <li>Link your wallet in Bonzi settings</li>
+                <li>Choose Hardstake (locked) or LP provision (liquid)</li>
+                <li>Link your wallet in Bonzi: <code>/link_wallet 0x...</code></li>
             </ol>
 
+            <div class="solution-box">
+                <strong>Staker Benefits:</strong>
+                <ul style="margin-top: 12px; margin-left: 20px;">
+                    <li>Higher claim multiplier (up to 2x)</li>
+                    <li>Priority raid verification</li>
+                    <li>Access to premium features</li>
+                    <li>DAO voting rights (coming soon)</li>
+                </ul>
+            </div>
+
             <h2 id="admin">Admin Tools</h2>
-            <p>Group admins have access to additional controls:</p>
-            <ul style="color: var(--gray); margin-left: 24px;">
-                <li>Configure knowledge sources</li>
-                <li>Set response parameters</li>
-                <li>View analytics dashboard</li>
-                <li>Manage moderation settings</li>
+            <p>Group admins have access to additional controls via the <code>/admin</code> command or dashboard.</p>
+
+            <ul>
+                <li><strong>Knowledge sources:</strong> Add docs, FAQs, or custom content</li>
+                <li><strong>Response parameters:</strong> Tune creativity, length, tone</li>
+                <li><strong>Analytics:</strong> View question patterns, engagement stats</li>
+                <li><strong>Moderation:</strong> Configure auto-responses, filter settings</li>
+                <li><strong>Raids:</strong> Create and manage X raids for your community</li>
             </ul>
 
             <h2 id="troubleshooting">Troubleshooting</h2>
+
             <h3>Bonzi isn't responding</h3>
-            <p>Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages.</p>
+            <p>
+                Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages. Also check that the bot isn't muted or restricted.
+            </p>
 
             <h3>Wrong information in answers</h3>
-            <p>Use the feedback buttons to report incorrect answers. This helps improve the knowledge base.</p>
+            <p>
+                Use the feedback buttons (👍/👎) to report incorrect answers. This helps improve the knowledge base. For persistent issues, use <code>/bug</code> to submit a formal report.
+            </p>
+
+            <h3>Claim not working</h3>
+            <p>
+                Check: (1) You have 100+ points, (2) Your wallet is linked, (3) You haven't claimed in the last 7 days, (4) The community pool has funds.
+            </p>
 
             <h2 id="support">Get Support</h2>
-            <p>Need help? Join the community:</p>
-            <ul style="color: var(--gray); margin-left: 24px;">
-                <li>Telegram: <a href="https://t.me/ethervista" style="color: var(--purple);">t.me/ethervista</a></li>
-                <li>GitHub: <a href="https://github.com/Siah-kin/community-bot" style="color: var(--purple);">Issues</a></li>
+            <p>Need help? Multiple channels available:</p>
+
+            <ul>
+                <li><strong>Telegram:</strong> <a href="https://t.me/ethervista">t.me/ethervista</a> (fastest)</li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/Siah-kin/community-bot/issues">Open an issue</a></li>
+                <li><strong>X/Twitter:</strong> <a href="https://x.com/bonzi_vista">@bonzi_vista</a></li>
             </ul>
+
+            <div class="highlight-box" style="margin-top: 32px;">
+                <strong>Found a bug?</strong> Use <code>/bug</code> in the bot to report issues and earn DAO points. Valid bugs = 10 pts each. <a href="../dao/">Learn more →</a>
+            </div>
         </main>
     </div>
 
+    <!-- Sound Toggle + Hint -->
+    <div class="sound-hint" id="sound-hint">
+        <span class="emoji">💜</span>
+        <span class="emoji">🤫</span>
+        <span class="arrow">▼</span>
+    </div>
+    <button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle sound">
+        <svg class="sound-on" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg class="sound-off" viewBox="0 0 24 24">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </button>
+    <audio id="bg-music" preload="auto"></audio>
+
     <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('bonzi_theme');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
+        });
+
+        // Mobile sidebar toggle
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
         }
@@ -547,6 +661,75 @@
                     link.classList.add('active');
                 }
             });
+        });
+
+        // Sound toggle - continues music from homepage
+        const bgMusic = document.getElementById('bg-music');
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundHint = document.getElementById('sound-hint');
+        let isMuted = true;
+        const roomVolume = 0.12;
+
+        function fadeToVolume(target, duration = 800) {
+            const startVol = bgMusic.volume;
+            const diff = target - startVol;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                bgMusic.volume = startVol + (diff * eased);
+                if (progress < 1) requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function checkResumeAudio() {
+            const saved = localStorage.getItem('bonzi_audio');
+            if (saved) {
+                const state = JSON.parse(saved);
+                if (state.track === 'moby') {
+                    bgMusic.src = '../moby-god-moving.mp3';
+                    bgMusic.currentTime = state.time || 0;
+                    bgMusic.loop = true;
+                    bgMusic.volume = 0;
+                    isMuted = false;
+                    soundToggle.classList.remove('muted');
+                    soundHint.classList.add('hidden');
+                    bgMusic.play().catch(e => {});
+                    fadeToVolume(roomVolume, 1200);
+                }
+                localStorage.removeItem('bonzi_audio');
+            }
+        }
+        checkResumeAudio();
+
+        soundToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            soundToggle.classList.toggle('muted', isMuted);
+            soundHint.classList.add('hidden');
+            if (isMuted) {
+                fadeToVolume(0, 400);
+            } else {
+                if (!bgMusic.src || bgMusic.src === '') {
+                    bgMusic.src = '../moby-god-moving.mp3';
+                    bgMusic.loop = true;
+                    bgMusic.volume = 0;
+                }
+                bgMusic.play().catch(e => {});
+                fadeToVolume(roomVolume, 600);
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (!isMuted) {
+                localStorage.setItem('bonzi_audio', JSON.stringify({
+                    track: 'moby',
+                    time: bgMusic.currentTime,
+                    volume: 0.3
+                }));
+            }
         });
     </script>
 </body>

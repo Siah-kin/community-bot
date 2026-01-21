@@ -1255,6 +1255,91 @@ body.dark-mode .perk-desc {
 }
 
 /* ========================================
+   SOUND TOGGLE (Bottom Right)
+   ======================================== */
+.sound-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: var(--purple);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.sound-toggle:hover {
+    background: var(--purple-dark);
+    box-shadow: 0 6px 24px rgba(124, 58, 237, 0.5);
+}
+
+.sound-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.sound-toggle.muted {
+    background: #71717A;
+    box-shadow: 0 4px 20px rgba(113, 113, 122, 0.3);
+}
+
+.sound-toggle .sound-on { display: block; }
+.sound-toggle .sound-off { display: none; }
+.sound-toggle.muted .sound-on { display: none; }
+.sound-toggle.muted .sound-off { display: block; }
+
+/* Sound hint emojis above toggle */
+.sound-hint {
+    position: fixed;
+    bottom: 80px;
+    right: 24px;
+    width: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 999;
+    animation: hint-pulse 2s ease-in-out infinite;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.sound-hint.hidden {
+    opacity: 0;
+}
+
+.sound-hint .emoji {
+    font-size: 18px;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.sound-hint .arrow {
+    font-size: 12px;
+    color: var(--purple);
+    margin-top: 4px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+@keyframes hint-pulse {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-4px); opacity: 0.8; }
+}
+
+/* ========================================
    RESPONSIVE
    ======================================== */
 @media (max-width: 768px) {

@@ -850,6 +850,32 @@
 
         // Check auth on page load
         checkAuth();
+
+        // Nav Connect Button Handler
+        (function() {
+            const navBtn = document.getElementById('nav-connect-btn');
+            if (!navBtn) return;
+            function truncateAddress(addr) { return addr.slice(0, 6) + '...' + addr.slice(-4); }
+            function updateNavButton() {
+                const savedWallet = localStorage.getItem('bonzi_wallet_address');
+                const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+                if (savedWallet && savedTimestamp) {
+                    const age = Date.now() - parseInt(savedTimestamp);
+                    if (age < 24 * 60 * 60 * 1000) {
+                        navBtn.textContent = truncateAddress(savedWallet);
+                        navBtn.classList.add('connected');
+                        return true;
+                    }
+                }
+                return false;
+            }
+            navBtn.addEventListener('click', async () => {
+                if (updateNavButton()) { window.location.href = '../research/'; return; }
+                // Trigger the main connect flow
+                connectWallet();
+            });
+            updateNavButton();
+        })();
     </script>
 </body>
 </html>

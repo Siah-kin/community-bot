@@ -534,6 +534,48 @@ to liquidity providers
                 setTimeout(() => soundHint.style.display = 'none', 500);
             }, 5000);
         }
+
+        // Nav Connect Button Handler
+        (function() {
+            const navBtn = document.getElementById('nav-connect-btn');
+            if (!navBtn) return;
+            function truncateAddress(addr) { return addr.slice(0, 6) + '...' + addr.slice(-4); }
+            function updateButtonState() {
+                const savedWallet = localStorage.getItem('bonzi_wallet_address');
+                const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+                if (savedWallet && savedTimestamp) {
+                    const age = Date.now() - parseInt(savedTimestamp);
+                    if (age < 24 * 60 * 60 * 1000) {
+                        navBtn.textContent = truncateAddress(savedWallet);
+                        navBtn.classList.add('connected');
+                        return true;
+                    }
+                }
+                return false;
+            }
+            async function handleConnect() {
+                if (updateButtonState()) { window.location.href = '../research/'; return; }
+                if (typeof window.ethereum === 'undefined') { alert('Please install MetaMask or another Web3 wallet'); return; }
+                const originalText = navBtn.textContent;
+                navBtn.textContent = 'Connecting...';
+                navBtn.disabled = true;
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    if (accounts && accounts.length > 0) {
+                        localStorage.setItem('bonzi_wallet_address', accounts[0]);
+                        localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+                        navBtn.textContent = truncateAddress(accounts[0]);
+                        navBtn.classList.add('connected');
+                    }
+                } catch (err) {
+                    console.error('Wallet connection failed:', err);
+                    navBtn.textContent = originalText;
+                    navBtn.disabled = false;
+                }
+            }
+            updateButtonState();
+            navBtn.addEventListener('click', handleConnect);
+        })();
     </script>
 </body>
 </html>

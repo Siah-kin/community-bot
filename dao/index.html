@@ -280,9 +280,62 @@
                 display: none;
             }
         }
+
+        /* Wallet Gate Overlay */
+        .wallet-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .wallet-gate.hidden { display: none; }
+        .wallet-gate h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .wallet-gate p {
+            color: #999;
+            margin-bottom: 32px;
+            max-width: 400px;
+            text-align: center;
+        }
+        .connect-btn {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .connect-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
+    <!-- Wallet Gate -->
+    <div class="wallet-gate" id="walletGate">
+        <h2>DAO Members Only</h2>
+        <p>Connect your wallet to verify token ownership and access the DAO Tester Program.</p>
+        <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+    </div>
+
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
 
@@ -734,6 +787,69 @@
                 setTimeout(() => soundHint.style.display = 'none', 500);
             }, 5000);
         }
+
+        // === WALLET GATE ===
+        async function checkAuth() {
+            const savedWallet = localStorage.getItem('bonzi_wallet_address');
+            const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+
+            // Auth expires after 24 hours
+            if (savedWallet && savedTimestamp) {
+                const age = Date.now() - parseInt(savedTimestamp);
+                if (age < 24 * 60 * 60 * 1000) {
+                    document.getElementById('walletGate').classList.add('hidden');
+                    return;
+                }
+            }
+
+            // Clear expired auth
+            localStorage.removeItem('bonzi_wallet_address');
+            localStorage.removeItem('bonzi_auth_timestamp');
+        }
+
+        async function connectWallet() {
+            const btn = document.querySelector('.connect-btn');
+            const originalText = btn.textContent;
+
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    alert('Please install MetaMask or another Web3 wallet');
+                    return;
+                }
+
+                btn.textContent = 'Connecting...';
+                btn.disabled = true;
+
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+
+                if (!accounts || accounts.length === 0) {
+                    throw new Error('No accounts found');
+                }
+
+                const address = accounts[0];
+                btn.textContent = 'Verifying...';
+
+                // Store auth with timestamp
+                localStorage.setItem('bonzi_wallet_address', address);
+                localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+
+                btn.textContent = 'Connected ✓';
+                setTimeout(() => {
+                    document.getElementById('walletGate').classList.add('hidden');
+                }, 500);
+
+            } catch (error) {
+                console.error('Wallet connection failed:', error);
+                alert(error.message || 'Failed to connect wallet. Please try again.');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Check auth on page load
+        checkAuth();
     </script>
 </body>
 </html>

@@ -391,7 +391,10 @@
                 localStorage.setItem('bonzi_wallet_address', address);
                 localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
 
-                document.getElementById('walletGate').classList.add('hidden');
+                btn.textContent = 'Connected ✓';
+                setTimeout(() => {
+                    document.getElementById('walletGate').classList.add('hidden');
+                }, 500);
 
             } catch (error) {
                 console.error('Wallet connection failed:', error);

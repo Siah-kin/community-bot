@@ -339,9 +339,10 @@
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
 
+        <!-- Ethervista-style Nav Links -->
         <div class="nav-links">
             <div class="nav-dropdown">
-                <a href="../features.html" class="nav-link">features</a>
+                <a href="../features.html" class="nav-link" data-i18n="nav.features">features</a>
                 <div class="nav-dropdown-menu">
                     <a href="../features.html#adaptive-agents">Adaptive Agents</a>
                     <a href="../features.html#ask-earn">Ask & Earn</a>
@@ -350,7 +351,7 @@
                 </div>
             </div>
             <div class="nav-dropdown">
-                <a href="../manual/" class="nav-link">manual</a>
+                <a href="../manual/" class="nav-link" data-i18n="nav.manual">manual</a>
                 <div class="nav-dropdown-menu">
                     <a href="../manual/#quickstart">Quick Start</a>
                     <a href="../manual/#commands">Commands</a>
@@ -359,7 +360,7 @@
                 </div>
             </div>
             <div class="nav-dropdown">
-                <a href="../faq.html" class="nav-link">manifesto</a>
+                <a href="../faq.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
                 <div class="nav-dropdown-menu">
                     <a href="../faq.html#why-purple">Why Purple?</a>
                     <a href="../faq.html#market">Market Validation</a>
@@ -368,7 +369,7 @@
                 </div>
             </div>
             <div class="nav-dropdown">
-                <a href="../economics/" class="nav-link">economics</a>
+                <a href="../economics/" class="nav-link" data-i18n="nav.economics">economics</a>
                 <div class="nav-dropdown-menu">
                     <a href="../economics/#ethervista">Ethervista</a>
                     <a href="../economics/#euler-model">Euler Model</a>
@@ -377,10 +378,13 @@
                 </div>
             </div>
             <div class="nav-divider"></div>
-            <a href="../research/" class="nav-link gated">metrics</a>
-            <a href="./" class="nav-link gated active">dao</a>
+            <a href="../research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
+            <a href="./" class="nav-link gated active" data-i18n="nav.dao">dao</a>
+            <div class="nav-divider"></div>
+            <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact"><span class="contact-text">contact</span><span class="contact-icon">✉</span></a>
         </div>
 
+        <!-- Right: Lang, Theme, Connect -->
         <div class="nav-right">
             <select class="nav-lang-select" id="lang-select" aria-label="Language">
                 <option value="en">EN</option>
@@ -394,7 +398,7 @@
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
             </button>
-            <button class="nav-connect-btn" id="nav-connect-btn">connect</button>
+            <button class="nav-connect-btn" id="nav-connect-btn" data-i18n="nav.connect">connect</button>
         </div>
     </nav>
 
@@ -644,6 +648,18 @@
                         <div class="test-card-footer">
                             <span class="test-card-reward">+10 pts per bug</span>
                             <a href="../" class="test-card-link">Test Homepage</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-card-image">🗳️</div>
+                    <div class="test-card-content">
+                        <h3>Vote Page i18n</h3>
+                        <p>Test the variant voting page. Switch languages (EN/ES/TR/RU/FR) - does all text update? Vote and check results display in selected language. Refresh - does language persist?</p>
+                        <div class="test-card-footer">
+                            <span class="test-card-reward">+10 pts per bug</span>
+                            <a href="../vote.html" class="test-card-link">Test Voting</a>
                         </div>
                     </div>
                 </div>

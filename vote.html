@@ -228,6 +228,43 @@
             color: var(--white);
         }
 
+        /* === LANGUAGE SELECTOR === */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        .lang-select {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: var(--white);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .lang-select:hover {
+            border-color: var(--purple);
+        }
+
+        .lang-select option {
+            background: #1a1a1a;
+            color: white;
+        }
+
         /* === WIN98 POPUP (Easter Egg) === */
         .win98-overlay {
             position: fixed;
@@ -320,16 +357,27 @@
 </head>
 <body>
     <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-link" data-i18n="back">← bonzi</a>
+            <select class="lang-select" id="lang-select" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+                <option value="tr">TR</option>
+                <option value="ru">RU</option>
+                <option value="fr">FR</option>
+            </select>
+        </div>
+
         <header>
-            <h1>Which Story Resonates?</h1>
-            <p class="subtitle">
+            <h1 data-i18n="title">Which Story Resonates?</h1>
+            <p class="subtitle" data-i18n="subtitle">
                 We're testing different ways to explain Bonzi. Your vote helps us speak your language.
                 No signup. One click. Real impact.
             </p>
         </header>
 
         <div class="how-it-works">
-            <p>Each card below represents a different homepage approach. Some focus on outcomes, others on pain points, and a few take bold creative swings. Click any card to select it, preview the full version, then submit your vote. Results update live.</p>
+            <p data-i18n="howItWorks">Each card below represents a different homepage approach. Some focus on outcomes, others on pain points, and a few take bold creative swings. Click any card to select it, preview the full version, then submit your vote. Results update live.</p>
         </div>
 
         <div class="variants-grid">
@@ -412,20 +460,20 @@
         </div>
 
         <div class="vote-section">
-            <p id="vote-prompt">Click a card above to select your favorite, then submit.</p>
-            <button class="vote-btn" id="vote-btn" disabled>Vote</button>
+            <p id="vote-prompt" data-i18n="votePrompt">Click a card above to select your favorite, then submit.</p>
+            <button class="vote-btn" id="vote-btn" disabled data-i18n="voteBtn">Vote</button>
 
             <div class="results hidden" id="results">
-                <h3 style="margin-bottom: 1rem;">Live Results</h3>
+                <h3 style="margin-bottom: 1rem;" data-i18n="resultsTitle">Live Results</h3>
                 <div id="results-bars"></div>
                 <p class="total-votes" id="total-votes"></p>
             </div>
         </div>
 
         <footer>
-            <p>Your vote is stored locally and aggregated anonymously.</p>
+            <p data-i18n="footerPrivacy">Your vote is stored locally and aggregated anonymously.</p>
             <p style="margin-top: 0.5rem;">
-                <a href="index.html">← Back to Bonzi</a>
+                <a href="index.html" data-i18n="footerBack">← Back to Bonzi</a>
             </p>
         </footer>
     </div>
@@ -434,12 +482,12 @@
     <div class="win98-overlay" id="win98-popup">
         <div class="win98-popup">
             <div class="title-bar">
-                <span>Bonzi Assistant</span>
+                <span data-i18n="popupTitle">Bonzi Assistant</span>
                 <button class="close-btn" onclick="closePopup()">×</button>
             </div>
             <div class="content">
                 <img src="bonzi-logo.png" alt="Bonzi" onerror="this.style.display='none'">
-                <p><strong>Vote recorded!</strong></p>
+                <p><strong data-i18n="popupRecorded">Vote recorded!</strong></p>
                 <p id="popup-message">Thanks for helping shape Bonzi's story.</p>
                 <button class="ok-btn" onclick="closePopup()">OK</button>
             </div>
@@ -447,6 +495,212 @@
     </div>
 
     <script>
+        // === i18n TRANSLATIONS ===
+        const translations = {
+            en: {
+                back: "← bonzi",
+                title: "Which Story Resonates?",
+                subtitle: "We're testing different ways to explain Bonzi. Your vote helps us speak your language. No signup. One click. Real impact.",
+                howItWorks: "Each card below represents a different homepage approach. Some focus on outcomes, others on pain points, and a few take bold creative swings. Click any card to select it, preview the full version, then submit your vote. Results update live.",
+                variant: "Variant",
+                preview: "Preview →",
+                previewMd: "Preview (MD) →",
+                votePrompt: "Click a card above to select your favorite, then submit.",
+                votePromptThanks: "Thanks! You voted for Variant {variant}.",
+                voteBtn: "Vote",
+                voteBtnDone: "Voted ✓",
+                resultsTitle: "Live Results",
+                totalVotes: "{count} vote{s} total",
+                you: "← you",
+                footerPrivacy: "Your vote is stored locally and aggregated anonymously.",
+                footerBack: "← Back to Bonzi",
+                popupTitle: "Bonzi Assistant",
+                popupRecorded: "Vote recorded!",
+                popupMessage: "You picked \"{name}\". Thanks for helping shape Bonzi's story!",
+                variantA: { title: "Outcome-First", pitch: "\"Launch a token. Build a treasury. Pay your community.\"<br><br>Focuses on what you GET, not how it works." },
+                variantB: { title: "Zealy Killer", pitch: "\"Tired of quest platforms that pay in points?\"<br><br>Speaks to users burned by fake rewards." },
+                variantC: { title: "Infrastructure", pitch: "\"Community management infrastructure for Web3.\"<br><br>Technical. For projects and developers." },
+                variantD: { title: "Community-First", pitch: "\"Real work. Real ETH. No middlemen.\"<br><br>Speaks to contributors who want to earn." },
+                variantE: { title: "Bold & Minimal", pitch: "\"AI that pays humans.\"<br><br>Maximum impact, minimum words." },
+                variantF: { title: "User Journeys", pitch: "\"I'm a founder...\" / \"I'm a raider...\"<br><br>Different paths for different users." },
+                variantG: { title: "Oracle Thesis", pitch: "\"The AI that learns what your community values.\"<br><br>Positions Bonzi as evolving intelligence." }
+            },
+            es: {
+                back: "← bonzi",
+                title: "¿Cuál Historia Resuena?",
+                subtitle: "Estamos probando diferentes formas de explicar Bonzi. Tu voto nos ayuda a hablar tu idioma. Sin registro. Un clic. Impacto real.",
+                howItWorks: "Cada tarjeta representa un enfoque diferente de la página de inicio. Algunas se centran en resultados, otras en puntos de dolor, y algunas hacen apuestas creativas audaces. Haz clic en cualquier tarjeta para seleccionarla, previsualiza la versión completa y luego envía tu voto. Los resultados se actualizan en vivo.",
+                variant: "Variante",
+                preview: "Vista previa →",
+                previewMd: "Vista previa (MD) →",
+                votePrompt: "Haz clic en una tarjeta arriba para seleccionar tu favorita, luego envía.",
+                votePromptThanks: "¡Gracias! Votaste por la Variante {variant}.",
+                voteBtn: "Votar",
+                voteBtnDone: "Votado ✓",
+                resultsTitle: "Resultados en Vivo",
+                totalVotes: "{count} voto{s} en total",
+                you: "← tú",
+                footerPrivacy: "Tu voto se almacena localmente y se agrega de forma anónima.",
+                footerBack: "← Volver a Bonzi",
+                popupTitle: "Asistente Bonzi",
+                popupRecorded: "¡Voto registrado!",
+                popupMessage: "Elegiste \"{name}\". ¡Gracias por ayudar a dar forma a la historia de Bonzi!",
+                variantA: { title: "Resultado Primero", pitch: "\"Lanza un token. Construye una tesorería. Paga a tu comunidad.\"<br><br>Se enfoca en lo que OBTIENES, no en cómo funciona." },
+                variantB: { title: "Zealy Killer", pitch: "\"¿Cansado de plataformas de misiones que pagan en puntos?\"<br><br>Habla a usuarios quemados por recompensas falsas." },
+                variantC: { title: "Infraestructura", pitch: "\"Infraestructura de gestión de comunidades para Web3.\"<br><br>Técnico. Para proyectos y desarrolladores." },
+                variantD: { title: "Comunidad Primero", pitch: "\"Trabajo real. ETH real. Sin intermediarios.\"<br><br>Habla a contribuidores que quieren ganar." },
+                variantE: { title: "Audaz y Mínimo", pitch: "\"IA que paga a humanos.\"<br><br>Máximo impacto, mínimas palabras." },
+                variantF: { title: "Recorridos de Usuario", pitch: "\"Soy un fundador...\" / \"Soy un raider...\"<br><br>Diferentes caminos para diferentes usuarios." },
+                variantG: { title: "Tesis Oracle", pitch: "\"La IA que aprende lo que tu comunidad valora.\"<br><br>Posiciona a Bonzi como inteligencia evolutiva." }
+            },
+            tr: {
+                back: "← bonzi",
+                title: "Hangi Hikaye Yankı Buluyor?",
+                subtitle: "Bonzi'yi açıklamanın farklı yollarını test ediyoruz. Oyunuz dilinizi konuşmamıza yardımcı oluyor. Kayıt yok. Tek tık. Gerçek etki.",
+                howItWorks: "Aşağıdaki her kart farklı bir ana sayfa yaklaşımını temsil ediyor. Bazıları sonuçlara, diğerleri sorunlara odaklanıyor ve birkaçı cesur yaratıcı hamleler yapıyor. Seçmek için herhangi bir karta tıklayın, tam sürümü önizleyin, ardından oyunuzu gönderin. Sonuçlar canlı güncellenir.",
+                variant: "Varyant",
+                preview: "Önizleme →",
+                previewMd: "Önizleme (MD) →",
+                votePrompt: "Favorinizi seçmek için yukarıdaki bir karta tıklayın, ardından gönderin.",
+                votePromptThanks: "Teşekkürler! Varyant {variant} için oy verdiniz.",
+                voteBtn: "Oy Ver",
+                voteBtnDone: "Oy Verildi ✓",
+                resultsTitle: "Canlı Sonuçlar",
+                totalVotes: "toplam {count} oy",
+                you: "← sen",
+                footerPrivacy: "Oyunuz yerel olarak saklanır ve anonim olarak toplanır.",
+                footerBack: "← Bonzi'ye Dön",
+                popupTitle: "Bonzi Asistanı",
+                popupRecorded: "Oy kaydedildi!",
+                popupMessage: "\"{name}\" seçtiniz. Bonzi'nin hikayesini şekillendirmeye yardımcı olduğunuz için teşekkürler!",
+                variantA: { title: "Sonuç Odaklı", pitch: "\"Bir token başlat. Bir hazine oluştur. Topluluğuna öde.\"<br><br>Nasıl çalıştığına değil, ne ALDIĞINA odaklanır." },
+                variantB: { title: "Zealy Katili", pitch: "\"Puanla ödeme yapan görev platformlarından bıktınız mı?\"<br><br>Sahte ödüllerden yanan kullanıcılara hitap eder." },
+                variantC: { title: "Altyapı", pitch: "\"Web3 için topluluk yönetim altyapısı.\"<br><br>Teknik. Projeler ve geliştiriciler için." },
+                variantD: { title: "Topluluk Önce", pitch: "\"Gerçek iş. Gerçek ETH. Aracı yok.\"<br><br>Kazanmak isteyen katkıda bulunanlara hitap eder." },
+                variantE: { title: "Cesur ve Minimal", pitch: "\"İnsanlara ödeme yapan yapay zeka.\"<br><br>Maksimum etki, minimum kelime." },
+                variantF: { title: "Kullanıcı Yolculukları", pitch: "\"Ben bir kurucuyum...\" / \"Ben bir raider'ım...\"<br><br>Farklı kullanıcılar için farklı yollar." },
+                variantG: { title: "Oracle Tezi", pitch: "\"Topluluğunuzun neye değer verdiğini öğrenen yapay zeka.\"<br><br>Bonzi'yi gelişen zeka olarak konumlandırır." }
+            },
+            ru: {
+                back: "← bonzi",
+                title: "Какая История Резонирует?",
+                subtitle: "Мы тестируем разные способы объяснения Bonzi. Ваш голос помогает нам говорить на вашем языке. Без регистрации. Один клик. Реальное влияние.",
+                howItWorks: "Каждая карточка ниже представляет разный подход к главной странице. Некоторые фокусируются на результатах, другие на болевых точках, а некоторые делают смелые творческие ходы. Нажмите на любую карточку, чтобы выбрать её, просмотрите полную версию, затем отправьте свой голос. Результаты обновляются в реальном времени.",
+                variant: "Вариант",
+                preview: "Превью →",
+                previewMd: "Превью (MD) →",
+                votePrompt: "Нажмите на карточку выше, чтобы выбрать избранную, затем отправьте.",
+                votePromptThanks: "Спасибо! Вы проголосовали за Вариант {variant}.",
+                voteBtn: "Голосовать",
+                voteBtnDone: "Проголосовано ✓",
+                resultsTitle: "Результаты в Реальном Времени",
+                totalVotes: "всего {count} голос{s}",
+                you: "← вы",
+                footerPrivacy: "Ваш голос хранится локально и агрегируется анонимно.",
+                footerBack: "← Назад к Bonzi",
+                popupTitle: "Помощник Bonzi",
+                popupRecorded: "Голос записан!",
+                popupMessage: "Вы выбрали \"{name}\". Спасибо за помощь в формировании истории Bonzi!",
+                variantA: { title: "Результат Первым", pitch: "\"Запусти токен. Построй казну. Плати своему сообществу.\"<br><br>Фокус на том, что вы ПОЛУЧАЕТЕ, а не как это работает." },
+                variantB: { title: "Убийца Zealy", pitch: "\"Устали от квест-платформ, которые платят баллами?\"<br><br>Говорит с пользователями, обожжёнными фейковыми наградами." },
+                variantC: { title: "Инфраструктура", pitch: "\"Инфраструктура управления сообществом для Web3.\"<br><br>Техническое. Для проектов и разработчиков." },
+                variantD: { title: "Сообщество Первым", pitch: "\"Реальная работа. Реальный ETH. Без посредников.\"<br><br>Говорит с контрибьюторами, которые хотят зарабатывать." },
+                variantE: { title: "Смелый и Минимальный", pitch: "\"ИИ, который платит людям.\"<br><br>Максимальное влияние, минимум слов." },
+                variantF: { title: "Пользовательские Пути", pitch: "\"Я основатель...\" / \"Я рейдер...\"<br><br>Разные пути для разных пользователей." },
+                variantG: { title: "Тезис Оракула", pitch: "\"ИИ, который учится тому, что ценит ваше сообщество.\"<br><br>Позиционирует Bonzi как развивающийся интеллект." }
+            },
+            fr: {
+                back: "← bonzi",
+                title: "Quelle Histoire Résonne?",
+                subtitle: "Nous testons différentes façons d'expliquer Bonzi. Votre vote nous aide à parler votre langue. Pas d'inscription. Un clic. Impact réel.",
+                howItWorks: "Chaque carte ci-dessous représente une approche différente de la page d'accueil. Certaines se concentrent sur les résultats, d'autres sur les points douloureux, et quelques-unes font des paris créatifs audacieux. Cliquez sur n'importe quelle carte pour la sélectionner, prévisualisez la version complète, puis soumettez votre vote. Les résultats se mettent à jour en direct.",
+                variant: "Variante",
+                preview: "Aperçu →",
+                previewMd: "Aperçu (MD) →",
+                votePrompt: "Cliquez sur une carte ci-dessus pour sélectionner votre préférée, puis soumettez.",
+                votePromptThanks: "Merci! Vous avez voté pour la Variante {variant}.",
+                voteBtn: "Voter",
+                voteBtnDone: "Voté ✓",
+                resultsTitle: "Résultats en Direct",
+                totalVotes: "{count} vote{s} au total",
+                you: "← vous",
+                footerPrivacy: "Votre vote est stocké localement et agrégé anonymement.",
+                footerBack: "← Retour à Bonzi",
+                popupTitle: "Assistant Bonzi",
+                popupRecorded: "Vote enregistré!",
+                popupMessage: "Vous avez choisi \"{name}\". Merci d'aider à façonner l'histoire de Bonzi!",
+                variantA: { title: "Résultat D'abord", pitch: "\"Lance un token. Construis une trésorerie. Paie ta communauté.\"<br><br>Se concentre sur ce que vous OBTENEZ, pas comment ça marche." },
+                variantB: { title: "Tueur de Zealy", pitch: "\"Fatigué des plateformes de quêtes qui paient en points?\"<br><br>Parle aux utilisateurs brûlés par les fausses récompenses." },
+                variantC: { title: "Infrastructure", pitch: "\"Infrastructure de gestion de communauté pour Web3.\"<br><br>Technique. Pour les projets et développeurs." },
+                variantD: { title: "Communauté D'abord", pitch: "\"Vrai travail. Vrai ETH. Pas d'intermédiaires.\"<br><br>Parle aux contributeurs qui veulent gagner." },
+                variantE: { title: "Audacieux et Minimal", pitch: "\"IA qui paie les humains.\"<br><br>Impact maximum, mots minimum." },
+                variantF: { title: "Parcours Utilisateur", pitch: "\"Je suis un fondateur...\" / \"Je suis un raider...\"<br><br>Différents chemins pour différents utilisateurs." },
+                variantG: { title: "Thèse Oracle", pitch: "\"L'IA qui apprend ce que votre communauté valorise.\"<br><br>Positionne Bonzi comme intelligence évolutive." }
+            }
+        };
+
+        let currentLang = 'en';
+
+        function t(key, replacements = {}) {
+            let text = translations[currentLang]?.[key] || translations.en[key] || key;
+            for (const [k, v] of Object.entries(replacements)) {
+                text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+            }
+            return text;
+        }
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            // Update static elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const text = translations[lang][key];
+                if (text && typeof text === 'string') {
+                    el.innerHTML = text;
+                }
+            });
+
+            // Update variant cards
+            const variantKeys = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            variantKeys.forEach(v => {
+                const card = document.querySelector(`[data-variant="${v}"]`);
+                if (card) {
+                    const variantData = translations[lang][`variant${v}`];
+                    if (variantData) {
+                        card.querySelector('.variant-label').textContent = `${t('variant')} ${v}`;
+                        card.querySelector('.variant-title').textContent = variantData.title;
+                        card.querySelector('.variant-pitch').innerHTML = variantData.pitch;
+                    }
+                    const previewLink = card.querySelector('.variant-preview');
+                    if (previewLink) {
+                        previewLink.textContent = v === 'F' ? t('previewMd') : t('preview');
+                    }
+                }
+            });
+
+            // Update vote prompt if not voted
+            if (!hasVoted()) {
+                votePrompt.textContent = t('votePrompt');
+                voteBtn.textContent = t('voteBtn');
+            } else {
+                votePrompt.textContent = t('votePromptThanks', { variant: localStorage.getItem(USER_VOTE_KEY) });
+                voteBtn.textContent = t('voteBtnDone');
+            }
+
+            // Update results if showing
+            if (!resultsDiv.classList.contains('hidden')) {
+                showResults();
+            }
+
+            // Update lang selector
+            document.getElementById('lang-select').value = lang;
+            localStorage.setItem('bonzi-lang', lang);
+        }
+
+        // === VOTING LOGIC ===
         const STORAGE_KEY = 'bonzi_variant_votes';
         const USER_VOTE_KEY = 'bonzi_user_voted';
 
@@ -493,16 +747,9 @@
         function showWin98Popup(variant) {
             const popup = document.getElementById('win98-popup');
             const message = document.getElementById('popup-message');
-            const names = {
-                A: 'Outcome-First',
-                B: 'Zealy Killer',
-                C: 'Infrastructure',
-                D: 'Community-First',
-                E: 'Bold & Minimal',
-                F: 'User Journeys',
-                G: 'Oracle Thesis'
-            };
-            message.textContent = `You picked "${names[variant]}". Thanks for helping shape Bonzi's story!`;
+            const variantData = translations[currentLang][`variant${variant}`];
+            const name = variantData ? variantData.title : variant;
+            message.textContent = t('popupMessage', { name: name });
             popup.classList.add('visible');
         }
 
@@ -540,34 +787,29 @@
         function showResults() {
             const votes = getVotes();
             const total = Object.values(votes).reduce((a, b) => a + b, 0);
+            const userVote = localStorage.getItem(USER_VOTE_KEY);
 
             votePrompt.textContent = hasVoted()
-                ? `Thanks! You voted for Variant ${localStorage.getItem(USER_VOTE_KEY)}.`
-                : 'Select a variant to vote.';
+                ? t('votePromptThanks', { variant: userVote })
+                : t('votePrompt');
 
             voteBtn.disabled = true;
-            voteBtn.textContent = hasVoted() ? 'Voted ✓' : 'Vote';
+            voteBtn.textContent = hasVoted() ? t('voteBtnDone') : t('voteBtn');
 
             resultsDiv.classList.remove('hidden');
 
             const variants = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-            const names = {
-                A: 'Outcome-First',
-                B: 'Zealy Killer',
-                C: 'Infrastructure',
-                D: 'Community-First',
-                E: 'Bold & Minimal',
-                F: 'User Journeys',
-                G: 'Oracle Thesis'
-            };
 
             resultsBars.innerHTML = variants.map(v => {
                 const pct = total > 0 ? Math.round((votes[v] / total) * 100) : 0;
-                const isUserVote = localStorage.getItem(USER_VOTE_KEY) === v;
+                const isUserVote = userVote === v;
+                const variantData = translations[currentLang][`variant${v}`];
+                const name = variantData ? variantData.title : v;
+                const youLabel = isUserVote ? ` ${t('you')}` : '';
                 return `
                     <div class="result-bar">
                         <div class="result-label">
-                            <span>${v}: ${names[v]} ${isUserVote ? '← you' : ''}</span>
+                            <span>${v}: ${name}${youLabel}</span>
                             <span>${pct}%</span>
                         </div>
                         <div class="result-track">
@@ -577,7 +819,8 @@
                 `;
             }).join('');
 
-            totalVotesEl.textContent = `${total} vote${total !== 1 ? 's' : ''} total`;
+            const plural = total !== 1 ? 's' : '';
+            totalVotesEl.textContent = t('totalVotes', { count: total, s: plural });
         }
 
         // Show results if already voted
@@ -586,6 +829,17 @@
             const card = document.querySelector(`[data-variant="${userVote}"]`);
             if (card) card.classList.add('selected');
             showResults();
+        }
+
+        // Language selector
+        document.getElementById('lang-select').addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+
+        // Initialize language from localStorage (shared with main site)
+        const savedLang = localStorage.getItem('bonzi-lang');
+        if (savedLang && translations[savedLang]) {
+            setLanguage(savedLang);
         }
     </script>
 </body>

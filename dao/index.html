@@ -11,7 +11,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* Purple icon styling */
+        .test-card-image i[data-lucide] {
+            width: 48px;
+            height: 48px;
+            color: #7C3AED;
+        }
+        body.dark-mode .test-card-image i[data-lucide] {
+            color: #A78BFA;
+        }
         /* Page-specific styles */
         .dao-hero {
             padding: 160px 40px 60px;
@@ -458,7 +468,7 @@
             <h2 class="category-title">How It Works</h2>
 
             <p class="faq-answer">
-                Four steps. Pick a test, find issues, report with a screenshot, earn points. Your bugs get reviewed within 24 hours. Valid bugs earn 10 DAO points each.
+                Four steps. Pick a test, find issues, report with a screenshot, earn points. Your bugs get reviewed within 24 hours. Valid bugs earn 5 DAO points each.
             </p>
 
             <div class="steps-flow">
@@ -480,12 +490,12 @@
                 <div class="step">
                     <div class="step-number">4</div>
                     <h4>Earn</h4>
-                    <p>Valid bugs = 10 pts each</p>
+                    <p>Valid bugs = 5 pts each</p>
                 </div>
             </div>
 
             <div class="highlight-box">
-                <strong>Bonus points:</strong> Critical bugs (security, data loss) earn 25 pts. Bugs that help us fix long-standing issues earn 15 pts. We reward impact, not volume.
+                <strong>Bonus points:</strong> Critical bugs (security, data loss) earn 15 pts. Bugs that help us fix long-standing issues earn 10 pts. We reward impact, not volume.
             </div>
         </div>
 
@@ -500,67 +510,67 @@
             <h3 style="font-size: 16px; color: var(--purple); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">Bot Testing</h3>
             <div class="test-cards">
                 <div class="test-card">
-                    <div class="test-card-image">🎯</div>
+                    <div class="test-card-image"><i data-lucide="target"></i></div>
                     <div class="test-card-content">
                         <h3>Raid Submission</h3>
                         <p>Test raid lifecycle: submit X links, verify tweets, earn raid points.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="https://t.me/Bonzi_Community_bot?start=raid" class="test-card-link">Start Test</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">💰</div>
+                    <div class="test-card-image"><i data-lucide="coins"></i></div>
                     <div class="test-card-content">
                         <h3>ETH Claim Flow</h3>
                         <p>Link wallet, check your balance, try claiming rewards.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="https://t.me/Bonzi_Community_bot?start=claim" class="test-card-link">Start Test</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">👛</div>
+                    <div class="test-card-image"><i data-lucide="wallet"></i></div>
                     <div class="test-card-content">
                         <h3>Wallet Connection</h3>
                         <p>Test /link_wallet command, verify holdings display correctly.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="https://t.me/Bonzi_Community_bot?start=wallet" class="test-card-link">Start Test</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🤖</div>
+                    <div class="test-card-image"><i data-lucide="bot"></i></div>
                     <div class="test-card-content">
                         <h3>AI Response Quality</h3>
                         <p>Ask questions. Report wrong answers, loops, or dumb responses.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="https://t.me/Bonzi_Community_bot" class="test-card-link">Start Test</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">📊</div>
+                    <div class="test-card-image"><i data-lucide="layout-dashboard"></i></div>
                     <div class="test-card-content">
                         <h3>Dashboard Navigation</h3>
                         <p>Click through all buttons. Find dead ends, broken flows.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="https://t.me/Bonzi_Community_bot?start=dashboard" class="test-card-link">Start Test</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🔮</div>
+                    <div class="test-card-image"><i data-lucide="rocket"></i></div>
                     <div class="test-card-content">
                         <h3>Etherfun Launchpad</h3>
                         <p>New token launch integration. Testing soon.</p>
@@ -581,84 +591,84 @@
             </div>
             <div class="test-cards">
                 <div class="test-card">
-                    <div class="test-card-image">🔗</div>
+                    <div class="test-card-image"><i data-lucide="link"></i></div>
                     <div class="test-card-content">
                         <h3>Navigation & Links</h3>
                         <p>Test every nav dropdown on every page. Look for: dead links, wrong destinations, anchors that don't scroll to the right section.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../" class="test-card-link">Start from Home</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">⬅️</div>
+                    <div class="test-card-image"><i data-lucide="arrow-left"></i></div>
                     <div class="test-card-content">
                         <h3>Back Button Test</h3>
                         <p>Go: Home → Features → Manual → Economics. Then hit back 4x. Do you end up at Home? Report any loops or wrong destinations.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../features.html" class="test-card-link">Start Journey</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🌙</div>
+                    <div class="test-card-image"><i data-lucide="moon"></i></div>
                     <div class="test-card-content">
                         <h3>Dark/Light Mode</h3>
                         <p>Toggle theme, visit 5 pages, check: text readable? boxes have contrast? tables visible? Report invisible or unreadable elements.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../manual/" class="test-card-link">Test Manual</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">📱</div>
+                    <div class="test-card-image"><i data-lucide="smartphone"></i></div>
                     <div class="test-card-content">
                         <h3>Mobile Testing</h3>
                         <p>On your phone: Does hamburger menu work? Can you tap all buttons? Any sideways scroll? Text too small? Report device + browser.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../" class="test-card-link">Open on Mobile</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🔒</div>
+                    <div class="test-card-image"><i data-lucide="lock"></i></div>
                     <div class="test-card-content">
                         <h3>Wallet Gate</h3>
                         <p>Connect wallet on Metrics page. Then visit DAO and Whitepaper - are they unlocked? Refresh browser - still unlocked? Clear localStorage - gates return?</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../research/" class="test-card-link">Test Metrics</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🖱️</div>
+                    <div class="test-card-image"><i data-lucide="mouse-pointer"></i></div>
                     <div class="test-card-content">
                         <h3>Cursor & Interactions</h3>
                         <p>On desktop: Does custom cursor appear? Does it disappear anywhere? Hover effects on all buttons? Report any interaction weirdness.</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../" class="test-card-link">Test Homepage</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-card">
-                    <div class="test-card-image">🗳️</div>
+                    <div class="test-card-image"><i data-lucide="vote"></i></div>
                     <div class="test-card-content">
                         <h3>Vote Page i18n</h3>
                         <p>Test the variant voting page. Switch languages (EN/ES/TR/RU/FR) - does all text update? Vote and check results display in selected language. Refresh - does language persist?</p>
                         <div class="test-card-footer">
-                            <span class="test-card-reward">+10 pts per bug</span>
+                            <span class="test-card-reward">+5 pts per bug</span>
                             <a href="../vote.html" class="test-card-link">Test Voting</a>
                         </div>
                     </div>
@@ -1065,6 +1075,9 @@
             });
             updateNavButton();
         })();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
     </script>
 </body>
 </html>

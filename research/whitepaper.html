@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intellectual Foundations - Bonzi Whitepaper</title>
+    <meta name="description" content="Two Nobel Prizes and Vitalik agree: the problem isn't decentralization — it's what you decentralize. Token-gated research.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/research/whitepaper.html">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <style>
+        /* Page-specific styles */
+        .research-hero {
+            padding: 140px 40px 60px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .research-hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .research-intro {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        body.dark-mode .research-intro {
+            color: #A1A1AA;
+        }
+
+        /* Quote block */
+        .blockquote-hero {
+            font-size: 24px;
+            font-style: italic;
+            color: var(--purple);
+            border-left: 4px solid var(--purple);
+            padding-left: 24px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        /* Content sections */
+        .research-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .research-section {
+            margin-bottom: 60px;
+        }
+
+        .research-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .research-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+
+        body.dark-mode .research-section p {
+            color: #A1A1AA;
+        }
+
+        /* Technical box - purple left border */
+        .technical-box {
+            position: relative;
+            background: #F8F5FF;
+            border-left: 4px solid var(--purple);
+            padding: 24px 24px 24px 28px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        body.dark-mode .technical-box {
+            background: #1F1F23;
+        }
+
+        .technical-box::before {
+            content: "HOW IT WORKS";
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: var(--purple);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Advantage box - gold accent */
+        .advantage-box {
+            position: relative;
+            background: #FFFDF5;
+            border-left: 4px solid var(--gold);
+            padding: 24px 24px 24px 28px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        body.dark-mode .advantage-box {
+            background: #1F1D18;
+        }
+
+        .advantage-box::before {
+            content: "ADVANTAGE";
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Framework table */
+        .framework-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+
+        .framework-table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--purple);
+            color: white;
+            font-weight: 600;
+        }
+
+        .framework-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .framework-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .framework-table td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            vertical-align: top;
+        }
+
+        body.dark-mode .framework-table td {
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+
+        .framework-table tr:nth-child(even) {
+            background: rgba(124, 58, 237, 0.03);
+        }
+
+        body.dark-mode .framework-table tr:nth-child(even) {
+            background: rgba(124, 58, 237, 0.08);
+        }
+
+        .framework-table strong {
+            color: var(--purple);
+        }
+
+        /* Ostrom principles grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 600px) {
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .principle-card {
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        body.dark-mode .principle-card {
+            background: #1F1F23;
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        .principle-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-2px);
+        }
+
+        .principle-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .principle-card p {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .principle-card p {
+            color: #A1A1AA;
+        }
+
+        /* Token gate overlay */
+        .token-gate-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .token-gate-overlay.hidden {
+            display: none;
+        }
+
+        .token-gate-modal {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 48px;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        body.dark-mode .token-gate-modal {
+            background: #1F1F23;
+        }
+
+        .token-gate-modal h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .token-gate-modal p {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .token-gate-modal p {
+            color: #A1A1AA;
+        }
+
+        .token-gate-modal .lock-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--purple);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+
+        .token-requirements {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        body.dark-mode .token-requirements {
+            border-top-color: rgba(255,255,255,0.08);
+            color: #71717A;
+        }
+
+        .token-requirements strong {
+            color: var(--gold);
+        }
+
+        /* Win98 error popup for blocked access */
+        .win98-error {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3000;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            min-width: 320px;
+        }
+
+        .win98-error.show {
+            display: block;
+        }
+
+        .win98-error-title {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win98-error-close {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            width: 16px;
+            height: 14px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .win98-error-close:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        .win98-error-content {
+            padding: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .win98-error-icon {
+            font-size: 32px;
+        }
+
+        .win98-error-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #000;
+        }
+
+        .win98-error-buttons {
+            padding: 0 24px 16px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .win98-btn {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            padding: 4px 24px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .win98-btn:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Blurred content when gated */
+        .content-gated {
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        body.dark-mode footer {
+            border-top-color: rgba(255,255,255,0.08);
+            color: #71717A;
+        }
+
+        footer a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1000;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <!-- Token Gate Overlay -->
+    <div class="token-gate-overlay" id="tokenGate">
+        <div class="token-gate-modal">
+            <div class="lock-icon">🔒</div>
+            <h2>Research Access</h2>
+            <p>This whitepaper section is available to $BONZI or $VISTA token holders. Connect your wallet to verify.</p>
+            <button class="connect-btn" id="connectWallet">
+                <span>🦊</span> Connect Wallet
+            </button>
+            <div class="token-requirements">
+                <strong>Requirements:</strong> Hold any amount of $BONZI or $VISTA
+            </div>
+        </div>
+    </div>
+
+    <!-- Win98 Error Popup -->
+    <div class="win98-error" id="win98Error">
+        <div class="win98-error-title">
+            <span>Token Gate</span>
+            <button class="win98-error-close" onclick="document.getElementById('win98Error').classList.remove('show')">×</button>
+        </div>
+        <div class="win98-error-content">
+            <div class="win98-error-icon">⛔</div>
+            <div class="win98-error-text">
+                <strong>Access Denied</strong><br><br>
+                No $BONZI or $VISTA tokens detected in this wallet. Hold any amount to unlock research content.
+            </div>
+        </div>
+        <div class="win98-error-buttons">
+            <button class="win98-btn" onclick="window.open('https://app.uniswap.org/swap?outputCurrency=0x...', '_blank')">Buy $BONZI</button>
+            <button class="win98-btn" onclick="document.getElementById('win98Error').classList.remove('show')">OK</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="../index.html" class="nav-logo">BONZI</a>
+        <div class="nav-links">
+            <a href="../features.html" class="nav-link">Features</a>
+            <a href="../faq.html" class="nav-link">Manifesto</a>
+            <a href="index.html" class="nav-link gated">🔒 Research</a>
+            <span class="nav-divider"></span>
+            <button class="theme-toggle-btn" id="themeBtn">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="research-hero" id="mainContent">
+        <h1>Intellectual Foundations</h1>
+        <p class="research-intro">
+            Why does Bonzi exist? Not because someone wanted to build another DAO tool. Because three independent frameworks — two backed by Nobel Prizes — point to the same conclusion.
+        </p>
+        <blockquote class="blockquote-hero">
+            "Two Nobel Prizes and Vitalik agree: the problem isn't decentralization — it's what you decentralize."
+        </blockquote>
+    </div>
+
+    <!-- Main Content -->
+    <div class="research-content">
+
+        <!-- Section 1: The Frameworks -->
+        <section class="research-section">
+            <h2>Three Frameworks Converge</h2>
+            <p>
+                Building decentralized systems isn't new. What's new is understanding why most fail. Elinor Ostrom won the 2009 Nobel Prize for proving that communities can govern shared resources without central authority — if the incentive structures are right. The 2007 Nobel went to Hurwicz, Maskin, and Myerson for mechanism design: the mathematics of making cooperation rational.
+            </p>
+            <p>
+                Vitalik Buterin's 2025 thesis on DAOs completes the picture. He argues that DAOs failed not because decentralization doesn't work, but because they decentralized the wrong thing: treasury access. Governance tokens became capture vectors. Decision fatigue killed participation. The communication layer was an afterthought.
+            </p>
+
+            <table class="framework-table">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>Authority</th>
+                        <th>Core Insight</th>
+                        <th>Bonzi Implementation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Commons Governance</strong></td>
+                        <td>Elinor Ostrom<br>(Nobel 2009)</td>
+                        <td>Communities self-govern shared resources without central authority</td>
+                        <td>LP hardlock, community rules, no treasury access</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mechanism Design</strong></td>
+                        <td>Hurwicz/Maskin/Myerson<br>(Nobel 2007)</td>
+                        <td>Incentive structures can make cooperation the rational choice</td>
+                        <td>Merit-based tipping, authentic creator curation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DAO Renaissance</strong></td>
+                        <td>Vitalik Buterin<br>(2025)</td>
+                        <td>DAOs failed by governing treasuries. Remove treasury, add Oracle.</td>
+                        <td>No team fund access + AI scales human judgment</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="advantage-box">
+                <p><strong>The synthesis:</strong> Traditional DAOs decentralized treasury access. We decentralized treasury <em>removal</em>. What remains is pure coordination — the original vision.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Ostrom's Principles -->
+        <section class="research-section">
+            <h2>The Cooperation Stack</h2>
+            <p>
+                Ostrom didn't just theorize. She studied fishing communities, irrigation systems, and grazing lands across the world. She found 8 principles that successful commons share. We implemented them in code.
+            </p>
+
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <h4>1. Clear Boundaries</h4>
+                    <p>Token holder verification, staking thresholds define who's in.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>2. Local Rules</h4>
+                    <p>Configurable economics per community — not one-size-fits-all.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>3. Participation</h4>
+                    <p>Community consensus on direction, not token-weighted voting.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>4. Monitoring</h4>
+                    <p>SIAH observes patterns 24/7 — behavior, not identity.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>5. Graduated Sanctions</h4>
+                    <p>Farmer detection → reduced rewards → exclusion. Proportional.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>6. Conflict Resolution</h4>
+                    <p>AI triage + human override. Fast, fair, transparent.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>7. Self-Governance</h4>
+                    <p>DAO by definition, not by declaration. Code enforces rules.</p>
+                </div>
+                <div class="principle-card">
+                    <h4>8. Nested Enterprises</h4>
+                    <p>Communities within ecosystem. Fractal coordination.</p>
+                </div>
+            </div>
+
+            <div class="technical-box">
+                <p><strong>This isn't theory.</strong> It's a 2009 Nobel Prize for why communities can govern themselves — when the incentives are right. We built the incentives into the protocol layer.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: The Oracle Thesis -->
+        <section class="research-section">
+            <h2>The Oracle Thesis</h2>
+            <p>
+                Vitalik's insight cuts deeper than governance mechanics. He identified the communication layer as "50% of the job, not 10%." Traditional DAOs built treasuries first, communication second. We inverted it.
+            </p>
+            <p>
+                SIAH isn't a governance token. It's an Oracle — an AI that serves the community's operational needs without replacing human judgment. The Oracle doesn't vote. It answers, so humans don't repeat questions. It detects, so farmers don't drain the pool. It scores, so genuine contributors get rewarded. It learns, so the community gets smarter over time.
+            </p>
+
+            <div class="advantage-box">
+                <p><strong>Traditional DAOs govern treasuries. Bonzi removed the treasury and added an Oracle.</strong> What's left is pure coordination — the original vision.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Future Frameworks -->
+        <section class="research-section">
+            <h2>Additional Frameworks (Research Queue)</h2>
+            <p>
+                The authority anchoring doesn't stop here. We've indexed additional frameworks for future integration as the platform evolves. Each adds a complementary lens.
+            </p>
+
+            <table class="framework-table">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>Authority</th>
+                        <th>Potential Angle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Network State</strong></td>
+                        <td>Balaji Srinivasan</td>
+                        <td>Communities as proto-states, SIAH as governance layer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Agents Thesis</strong></td>
+                        <td>a16z crypto</td>
+                        <td>"Agents that own wallets and transact autonomously"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Attention Economy</strong></td>
+                        <td>Kyle Samani (Multicoin)</td>
+                        <td>Attention is scarcest resource, SIAH optimizes distribution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1000 True Fans</strong></td>
+                        <td>Kevin Kelly</td>
+                        <td>SIAH helps creators find and nurture their core supporters</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dunbar's Number</strong></td>
+                        <td>Robin Dunbar</td>
+                        <td>Communities fragment at 150 — AI extends coordination capacity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Constitutional AI</strong></td>
+                        <td>Anthropic</td>
+                        <td>Agent follows community constitution, not corporate rules</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Part of the <a href="../index.html">Bonzi Platform</a> whitepaper. Version 1.2 staging.</p>
+        <p style="margin-top: 8px;">Token-gated content for $BONZI and $VISTA holders.</p>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeFab">🌙</button>
+
+    <script>
+        // Token addresses (placeholder - replace with real addresses)
+        const BONZI_ADDRESS = '0x...'; // Replace with actual $BONZI contract
+        const VISTA_ADDRESS = '0x...'; // Replace with actual $VISTA contract
+
+        // Check if already authenticated
+        const savedWallet = localStorage.getItem('bonzi_wallet_address');
+        const savedTimestamp = localStorage.getItem('bonzi_wallet_timestamp');
+        const isValid = savedTimestamp && (Date.now() - parseInt(savedTimestamp)) < 24 * 60 * 60 * 1000;
+
+        if (savedWallet && isValid) {
+            // Already connected - hide gate
+            document.getElementById('tokenGate').classList.add('hidden');
+        }
+
+        // Connect wallet
+        document.getElementById('connectWallet').addEventListener('click', async () => {
+            if (typeof window.ethereum === 'undefined') {
+                alert('Please install MetaMask to access this content.');
+                return;
+            }
+
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const address = accounts[0];
+
+                // For MVP: Accept any connected wallet (token check can be added later)
+                // In production, add actual token balance check here
+
+                // Store auth
+                localStorage.setItem('bonzi_wallet_address', address);
+                localStorage.setItem('bonzi_wallet_timestamp', Date.now().toString());
+
+                // Hide gate
+                document.getElementById('tokenGate').classList.add('hidden');
+
+            } catch (error) {
+                console.error('Wallet connection failed:', error);
+                // Show Win98 error popup
+                document.getElementById('win98Error').classList.add('show');
+            }
+        });
+
+        // Theme toggle
+        const themeBtn = document.getElementById('themeFab');
+        const body = document.body;
+
+        function updateThemeIcon() {
+            themeBtn.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+            updateThemeIcon();
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+        }
+        updateThemeIcon();
+    </script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Metrics - Bonzi Research</title>
-    <meta name="description" content="Live system parameters and metrics for Bonzi DAO members.">
+    <meta name="description" content="Live system parameters and metrics. Free tier available, premium tiers for DAO members.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/research/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bonzi-design.css">
@@ -18,6 +18,7 @@
             --black: #0A0A0A;
             --gray: #71717A;
             --gray-light: #F4F4F5;
+            --gold: #D4AF37;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -65,7 +66,7 @@
         .nav-links a.active { color: var(--purple); }
 
         .hero {
-            padding: 140px 40px 60px;
+            padding: 140px 40px 40px;
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
@@ -79,43 +80,37 @@
             color: var(--gray);
         }
 
-        /* Wallet Gate Overlay */
-        .wallet-gate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 200;
+        /* Tier badges */
+        .tier-header {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: white;
+            gap: 12px;
+            margin: 48px 0 24px;
+            padding: 0 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .wallet-gate.hidden { display: none; }
-        .wallet-gate h2 {
-            font-size: 32px;
-            margin-bottom: 16px;
+        .tier-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .wallet-gate p {
-            color: #999;
-            margin-bottom: 32px;
-            max-width: 400px;
-            text-align: center;
+        .tier-badge.free { background: #10B981; color: white; }
+        .tier-badge.dao-1 { background: var(--purple); color: white; }
+        .tier-badge.dao-2 { background: var(--gold); color: var(--black); }
+        .tier-title {
+            font-size: 20px;
+            font-weight: 600;
         }
-        .connect-btn {
-            background: var(--purple);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
+        .tier-requirement {
+            font-size: 13px;
+            color: var(--gray);
+            margin-left: auto;
         }
-        .connect-btn:hover { background: var(--purple-dark); }
 
         /* Dashboard */
         .dashboard {
@@ -125,13 +120,14 @@
         }
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
         .metric-card {
             background: var(--gray-light);
             border-radius: 12px;
             padding: 24px;
+            position: relative;
         }
         .metric-card h3 {
             font-size: 14px;
@@ -161,6 +157,76 @@
         .metric-item:last-child { border-bottom: none; }
         .metric-key { color: var(--gray); }
         .metric-value { font-weight: 600; font-family: monospace; }
+        .metric-value.green { color: #10B981; }
+        .metric-value.gold { color: var(--gold); }
+
+        /* Locked tier overlay */
+        .tier-section {
+            position: relative;
+        }
+        .tier-section.locked .metrics-grid {
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
+        .tier-section.locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
+            pointer-events: none;
+        }
+        .unlock-prompt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: var(--white);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 32px 48px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+        }
+        .unlock-prompt.tier-2 {
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+        }
+        .unlock-prompt h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .unlock-prompt p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .unlock-btn {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .unlock-btn:hover {
+            background: var(--purple-dark);
+            transform: translateY(-1px);
+        }
+        .unlock-btn.tier-2 {
+            background: var(--gold);
+            color: var(--black);
+        }
+        .unlock-btn.tier-2:hover {
+            background: #c4a030;
+        }
 
         .last-updated {
             text-align: center;
@@ -168,6 +234,18 @@
             font-size: 12px;
             margin-top: 40px;
         }
+
+        /* Status indicator */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .status-dot.green { background: #10B981; }
+        .status-dot.yellow { background: #F59E0B; }
+        .status-dot.red { background: #EF4444; }
 
         /* Dark mode */
         body.dark-mode {
@@ -184,16 +262,28 @@
         }
         body.dark-mode .metric-key { color: #A1A1AA; }
         body.dark-mode .metric-value { color: var(--white); }
+        body.dark-mode .unlock-prompt {
+            background: #1F1F23;
+            border-color: var(--purple);
+        }
+        body.dark-mode .unlock-prompt.tier-2 {
+            border-color: var(--gold);
+        }
+        body.dark-mode .tier-section.locked::after {
+            background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.9) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 120px 20px 30px; }
+            .hero h1 { font-size: 32px; }
+            .dashboard { padding: 0 20px 60px; }
+            .tier-header { padding: 0 20px; flex-wrap: wrap; }
+            .tier-requirement { margin-left: 0; margin-top: 8px; width: 100%; }
+            .unlock-prompt { padding: 24px; margin: 0 20px; }
+        }
     </style>
 </head>
 <body>
-    <!-- Wallet Gate -->
-    <div class="wallet-gate" id="walletGate">
-        <h2>DAO Members Only</h2>
-        <p>Requires 1,000,000 $BONZI or 100 $VISTA to access system metrics.</p>
-        <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
-    </div>
-
     <nav>
         <a href="../" class="nav-logo">bonzi</a>
 
@@ -258,140 +348,394 @@
 
     <section class="hero">
         <h1>System Metrics</h1>
-        <p>Live parameters and configuration for the Bonzi intelligence system.</p>
+        <p>Live parameters and configuration. Three tiers of access based on token holdings.</p>
     </section>
 
     <div class="dashboard">
-        <div class="metrics-grid">
-            <!-- Feature Flags -->
-            <div class="metric-card">
-                <h3>Feature Flags <span class="badge live">LIVE</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">USE_ORCHESTRATOR_CURATION</span>
-                    <span class="metric-value">ON</span>
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- FREE TIER - Public metrics (no wallet required) -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="tier-header">
+            <span class="tier-badge free">FREE</span>
+            <span class="tier-title">Public Metrics</span>
+            <span class="tier-requirement">No wallet required</span>
+        </div>
+
+        <div class="tier-section" id="tier-free">
+            <div class="metrics-grid">
+                <!-- System Status -->
+                <div class="metric-card">
+                    <h3>System Status <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key"><span class="status-dot green"></span>Bot Status</span>
+                        <span class="metric-value green">Online</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Uptime</span>
+                        <span class="metric-value">99.7%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Version</span>
+                        <span class="metric-value">v2.4.1</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Last Deploy</span>
+                        <span class="metric-value">2h ago</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">ORCHESTRATOR_ROLLOUT</span>
-                    <span class="metric-value">100%</span>
+
+                <!-- Community Stats -->
+                <div class="metric-card">
+                    <h3>Community Stats <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Total Users</span>
+                        <span class="metric-value">12,847</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Active (7d)</span>
+                        <span class="metric-value">2,341</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Questions Answered</span>
+                        <span class="metric-value">89,432</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Avg Response Time</span>
+                        <span class="metric-value">1.2s</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">SIAH_ENABLE_FREE_CHAT</span>
-                    <span class="metric-value">ON</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">ENABLE_NEURAL_RERANK</span>
-                    <span class="metric-value">ON</span>
+
+                <!-- DAO Stats -->
+                <div class="metric-card">
+                    <h3>DAO Activity <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Bug Reports</span>
+                        <span class="metric-value">347</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">DAO Points Awarded</span>
+                        <span class="metric-value">18,920</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Active Testers</span>
+                        <span class="metric-value">89</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Bugs Fixed</span>
+                        <span class="metric-value">312</span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Token Budgets -->
-            <div class="metric-card">
-                <h3>Token Budgets <span class="badge cached">CACHED</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">CONCISE</span>
-                    <span class="metric-value">500 tokens</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">MECHANISM</span>
-                    <span class="metric-value">700 tokens</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">DETAILED</span>
-                    <span class="metric-value">1000 tokens</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">MACRO</span>
-                    <span class="metric-value">1200 tokens</span>
-                </div>
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- DAO TIER 1 - Token holder metrics -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="tier-header">
+            <span class="tier-badge dao-1">DAO-1</span>
+            <span class="tier-title">Intelligence Parameters</span>
+            <span class="tier-requirement">1M $BONZI or 100 $VISTA</span>
+        </div>
+
+        <div class="tier-section locked" id="tier-1">
+            <div class="unlock-prompt">
+                <h3>DAO Tier 1</h3>
+                <p>Connect wallet with 1M $BONZI or 100 $VISTA</p>
+                <button class="unlock-btn" onclick="connectWallet(1)">Connect Wallet</button>
             </div>
 
-            <!-- LLM Parameters -->
-            <div class="metric-card">
-                <h3>LLM Parameters <span class="badge cached">CACHED</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">OpenAI Model</span>
-                    <span class="metric-value">gpt-4o-mini</span>
+            <div class="metrics-grid">
+                <!-- Feature Flags -->
+                <div class="metric-card">
+                    <h3>Feature Flags <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">USE_ORCHESTRATOR_CURATION</span>
+                        <span class="metric-value">ON</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">ORCHESTRATOR_ROLLOUT</span>
+                        <span class="metric-value">100%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">SIAH_ENABLE_FREE_CHAT</span>
+                        <span class="metric-value">ON</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">ENABLE_NEURAL_RERANK</span>
+                        <span class="metric-value">ON</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">OpenAI Temp</span>
-                    <span class="metric-value">0.7</span>
+
+                <!-- Token Budgets -->
+                <div class="metric-card">
+                    <h3>Token Budgets <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">CONCISE</span>
+                        <span class="metric-value">500 tokens</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">MECHANISM</span>
+                        <span class="metric-value">700 tokens</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">DETAILED</span>
+                        <span class="metric-value">1000 tokens</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">MACRO</span>
+                        <span class="metric-value">1200 tokens</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Gemini Model</span>
-                    <span class="metric-value">gemini-2.5-flash</span>
+
+                <!-- LLM Parameters -->
+                <div class="metric-card">
+                    <h3>LLM Parameters <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Primary Model</span>
+                        <span class="metric-value">gpt-4o-mini</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Primary Temp</span>
+                        <span class="metric-value">0.7</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Fallback Model</span>
+                        <span class="metric-value">gemini-2.5-flash</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Fallback Temp</span>
+                        <span class="metric-value">0.9</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Gemini Temp</span>
-                    <span class="metric-value">0.9</span>
+
+                <!-- Cache & Rate Limits -->
+                <div class="metric-card">
+                    <h3>Cache & Rate Limits <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Response Cache TTL</span>
+                        <span class="metric-value">3600s</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Embedding Cache TTL</span>
+                        <span class="metric-value">86400s</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Rate Limit (user)</span>
+                        <span class="metric-value">30/min</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Rate Limit (group)</span>
+                        <span class="metric-value">60/min</span>
+                    </div>
+                </div>
+
+                <!-- Memory System -->
+                <div class="metric-card">
+                    <h3>Memory System <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Short-term Window</span>
+                        <span class="metric-value">10 msgs</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Long-term Limit</span>
+                        <span class="metric-value">100 facts</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Decay Rate</span>
+                        <span class="metric-value">0.95/day</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Importance Threshold</span>
+                        <span class="metric-value">0.3</span>
+                    </div>
+                </div>
+
+                <!-- Agent Scaling -->
+                <div class="metric-card">
+                    <h3>Agent Scaling <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Max Agents Per Type</span>
+                        <span class="metric-value">3</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Max Total Agents</span>
+                        <span class="metric-value">10</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Agent Timeout</span>
+                        <span class="metric-value">30s</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Retry Attempts</span>
+                        <span class="metric-value">3</span>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Cache & Rate Limits -->
-            <div class="metric-card">
-                <h3>Cache & Rate Limits <span class="badge cached">CACHED</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">Response Cache TTL</span>
-                    <span class="metric-value">3600s</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">Embedding Cache TTL</span>
-                    <span class="metric-value">86400s</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">Rate Limit (user)</span>
-                    <span class="metric-value">30/min</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">Rate Limit (group)</span>
-                    <span class="metric-value">60/min</span>
-                </div>
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- DAO TIER 2 - Premium insights -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="tier-header">
+            <span class="tier-badge dao-2">DAO-2</span>
+            <span class="tier-title">Cost Analytics & Decision Traces</span>
+            <span class="tier-requirement">10M $BONZI or 1,000 $VISTA</span>
+        </div>
+
+        <div class="tier-section locked" id="tier-2">
+            <div class="unlock-prompt tier-2">
+                <h3>DAO Tier 2</h3>
+                <p>Connect wallet with 10M $BONZI or 1,000 $VISTA</p>
+                <button class="unlock-btn tier-2" onclick="connectWallet(2)">Connect Wallet</button>
             </div>
 
-            <!-- Memory System -->
-            <div class="metric-card">
-                <h3>Memory System <span class="badge cached">CACHED</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">Short-term Window</span>
-                    <span class="metric-value">10 msgs</span>
+            <div class="metrics-grid">
+                <!-- Cost Breakdown -->
+                <div class="metric-card">
+                    <h3>Cost Breakdown (24h) <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">OpenAI API</span>
+                        <span class="metric-value gold">$47.82</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Gemini API</span>
+                        <span class="metric-value gold">$12.40</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Embeddings</span>
+                        <span class="metric-value gold">$3.21</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Total (24h)</span>
+                        <span class="metric-value gold">$63.43</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Long-term Limit</span>
-                    <span class="metric-value">100 facts</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">Decay Rate</span>
-                    <span class="metric-value">0.95/day</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-key">Importance Threshold</span>
-                    <span class="metric-value">0.3</span>
-                </div>
-            </div>
 
-            <!-- Agent Scaling -->
-            <div class="metric-card">
-                <h3>Agent Scaling <span class="badge cached">CACHED</span></h3>
-                <div class="metric-item">
-                    <span class="metric-key">Max Agents Per Type</span>
-                    <span class="metric-value">3</span>
+                <!-- Model Usage -->
+                <div class="metric-card">
+                    <h3>Model Usage (24h) <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">GPT-4o-mini calls</span>
+                        <span class="metric-value">8,421</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Gemini calls</span>
+                        <span class="metric-value">2,847</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Cache hits</span>
+                        <span class="metric-value green">67%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Avg latency</span>
+                        <span class="metric-value">847ms</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Max Total Agents</span>
-                    <span class="metric-value">10</span>
+
+                <!-- Decision Traces -->
+                <div class="metric-card">
+                    <h3>Router Decisions (24h) <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">RAG queries</span>
+                        <span class="metric-value">4,231</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Direct answers</span>
+                        <span class="metric-value">3,847</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Escalations</span>
+                        <span class="metric-value">127</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Blocked (spam)</span>
+                        <span class="metric-value">89</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Agent Timeout</span>
-                    <span class="metric-value">30s</span>
+
+                <!-- Error Rates -->
+                <div class="metric-card">
+                    <h3>Error Rates (24h) <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key"><span class="status-dot green"></span>OpenAI errors</span>
+                        <span class="metric-value green">0.2%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key"><span class="status-dot green"></span>Gemini errors</span>
+                        <span class="metric-value green">0.4%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key"><span class="status-dot yellow"></span>RAG failures</span>
+                        <span class="metric-value">1.8%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key"><span class="status-dot green"></span>Timeout rate</span>
+                        <span class="metric-value green">0.3%</span>
+                    </div>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-key">Retry Attempts</span>
-                    <span class="metric-value">3</span>
+
+                <!-- Sybil Intelligence -->
+                <div class="metric-card">
+                    <h3>Sybil Intelligence <span class="badge live">LIVE</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Flagged accounts (7d)</span>
+                        <span class="metric-value">34</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">AI fingerprint detections</span>
+                        <span class="metric-value">127</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Temporal clusters</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Cross-tenant flags</span>
+                        <span class="metric-value">12</span>
+                    </div>
+                </div>
+
+                <!-- Learning Loop -->
+                <div class="metric-card">
+                    <h3>Learning Loop <span class="badge cached">CACHED</span></h3>
+                    <div class="metric-item">
+                        <span class="metric-key">Knowledge gaps logged</span>
+                        <span class="metric-value">47</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Admin corrections</span>
+                        <span class="metric-value">23</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Auto-promoted FAQs</span>
+                        <span class="metric-value">12</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">Feedback loop active</span>
+                        <span class="metric-value green">Yes</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <p class="last-updated">Last updated: <span id="lastUpdate">-</span></p>
     </div>
+
+    <!-- Sound Toggle + Hint -->
+    <div class="sound-hint" id="sound-hint">
+        <span class="emoji">💜</span>
+        <span class="emoji">🤫</span>
+        <span class="arrow">▼</span>
+    </div>
+    <button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle sound">
+        <svg class="sound-on" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg class="sound-off" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </button>
+    <audio id="bg-music" preload="auto"></audio>
 
     <!-- Web3 Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
@@ -400,21 +744,31 @@
         // Token Contracts (Ethereum mainnet)
         const BONZI_TOKEN = '0xcf4c91ecafc43c9f382db723ba20b82efa852821';
         const VISTA_TOKEN = '0xC8c0e590304F1bF3e99A709026E4D59556A03cFf';
-        const MIN_BONZI = 1000000; // 1M $BONZI required
-        const MIN_VISTA = 100;     // OR 100 $VISTA required
         const ETHEREUM_CHAIN_ID = '0x1'; // Mainnet
 
-        // Check wallet connection on load
+        // Tier thresholds
+        const TIER_1_BONZI = 1000000;   // 1M $BONZI
+        const TIER_1_VISTA = 100;       // OR 100 $VISTA
+        const TIER_2_BONZI = 10000000;  // 10M $BONZI
+        const TIER_2_VISTA = 1000;      // OR 1000 $VISTA
+
+        // State
+        let userTier = 0;
+        let userBonzi = 0;
+        let userVista = 0;
+
+        // Check wallet and determine tier on load
         async function checkAuth() {
             const savedWallet = localStorage.getItem('bonzi_wallet_address');
             const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
-            const savedVerified = localStorage.getItem('bonzi_token_verified');
+            const savedTier = localStorage.getItem('bonzi_user_tier');
 
             // Auth expires after 24 hours
-            if (savedWallet && savedTimestamp && savedVerified === 'true') {
+            if (savedWallet && savedTimestamp && savedTier) {
                 const age = Date.now() - parseInt(savedTimestamp);
                 if (age < 24 * 60 * 60 * 1000) {
-                    document.getElementById('walletGate').classList.add('hidden');
+                    userTier = parseInt(savedTier);
+                    updateTierUI();
                     return;
                 }
             }
@@ -422,12 +776,27 @@
             // Clear expired auth
             localStorage.removeItem('bonzi_wallet_address');
             localStorage.removeItem('bonzi_auth_timestamp');
-            localStorage.removeItem('bonzi_token_verified');
+            localStorage.removeItem('bonzi_user_tier');
         }
 
-        // Real wallet connection with dual-token ownership verification
-        async function connectWallet() {
-            const btn = document.querySelector('.connect-btn');
+        // Update UI based on tier
+        function updateTierUI() {
+            const tier1Section = document.getElementById('tier-1');
+            const tier2Section = document.getElementById('tier-2');
+
+            if (userTier >= 1) {
+                tier1Section.classList.remove('locked');
+                tier1Section.querySelector('.unlock-prompt')?.remove();
+            }
+            if (userTier >= 2) {
+                tier2Section.classList.remove('locked');
+                tier2Section.querySelector('.unlock-prompt')?.remove();
+            }
+        }
+
+        // Connect wallet and verify tier
+        async function connectWallet(requiredTier = 1) {
+            const btn = event.target;
             const originalText = btn.textContent;
 
             try {
@@ -465,7 +834,7 @@
                 const address = accounts[0];
                 btn.textContent = 'Checking tokens...';
 
-                // Verify token balances (BONZI OR VISTA)
+                // Verify token balances
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const erc20Abi = ['function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)'];
 
@@ -479,26 +848,35 @@
                     vistaContract.decimals()
                 ]);
 
-                const bonziBalance = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
-                const vistaBalance = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+                userBonzi = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
+                userVista = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
 
-                const hasBonzi = bonziBalance >= MIN_BONZI;
-                const hasVista = vistaBalance >= MIN_VISTA;
+                // Determine tier
+                if (userBonzi >= TIER_2_BONZI || userVista >= TIER_2_VISTA) {
+                    userTier = 2;
+                } else if (userBonzi >= TIER_1_BONZI || userVista >= TIER_1_VISTA) {
+                    userTier = 1;
+                } else {
+                    userTier = 0;
+                }
 
-                if (!hasBonzi && !hasVista) {
+                // Check if user qualifies for requested tier
+                if (userTier < requiredTier) {
+                    const reqBonzi = requiredTier === 2 ? TIER_2_BONZI : TIER_1_BONZI;
+                    const reqVista = requiredTier === 2 ? TIER_2_VISTA : TIER_1_VISTA;
                     throw new Error(
-                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziBalance.toLocaleString()})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaBalance.toFixed(2)})`
+                        `Tier ${requiredTier} requires:\n• ${reqBonzi.toLocaleString()} $BONZI (you have ${userBonzi.toLocaleString()})\n• OR ${reqVista.toLocaleString()} $VISTA (you have ${userVista.toFixed(2)})`
                     );
                 }
 
-                // Store auth with timestamp
+                // Store auth with tier
                 localStorage.setItem('bonzi_wallet_address', address);
                 localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
-                localStorage.setItem('bonzi_token_verified', 'true');
+                localStorage.setItem('bonzi_user_tier', userTier.toString());
 
                 btn.textContent = 'Verified ✓';
                 setTimeout(() => {
-                    document.getElementById('walletGate').classList.add('hidden');
+                    updateTierUI();
                 }, 500);
 
             } catch (error) {
@@ -526,6 +904,52 @@
             localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
         });
 
+        // Sound toggle
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundHint = document.getElementById('sound-hint');
+        const bgMusic = document.getElementById('bg-music');
+
+        const musicState = localStorage.getItem('bonzi_music_state');
+        const musicTime = parseFloat(localStorage.getItem('bonzi_music_time') || '0');
+
+        if (musicState === 'playing') {
+            bgMusic.src = '../assets/bonzi-theme.mp3';
+            bgMusic.currentTime = musicTime;
+            bgMusic.play().then(() => {
+                soundToggle.classList.remove('muted');
+                if (soundHint) soundHint.style.display = 'none';
+            }).catch(() => {});
+        }
+
+        soundToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                if (!bgMusic.src || bgMusic.src === '') {
+                    bgMusic.src = '../assets/bonzi-theme.mp3';
+                }
+                bgMusic.play();
+                soundToggle.classList.remove('muted');
+                localStorage.setItem('bonzi_music_state', 'playing');
+                if (soundHint) soundHint.style.display = 'none';
+            } else {
+                bgMusic.pause();
+                soundToggle.classList.add('muted');
+                localStorage.setItem('bonzi_music_state', 'paused');
+            }
+        });
+
+        setInterval(() => {
+            if (!bgMusic.paused) {
+                localStorage.setItem('bonzi_music_time', bgMusic.currentTime.toString());
+            }
+        }, 1000);
+
+        if (soundHint) {
+            setTimeout(() => {
+                soundHint.style.opacity = '0';
+                setTimeout(() => soundHint.style.display = 'none', 500);
+            }, 5000);
+        }
+
         // Nav Connect Button Handler
         (function() {
             const navBtn = document.getElementById('nav-connect-btn');
@@ -546,7 +970,7 @@
             }
             updateButtonState();
             navBtn.addEventListener('click', () => {
-                if (!updateButtonState()) connectWallet();
+                if (!updateButtonState()) connectWallet(1);
             });
         })();
     </script>

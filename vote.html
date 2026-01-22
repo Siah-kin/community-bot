@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote - Help Shape Bonzi's Story</title>
+    <meta name="description" content="Which narrative resonates? Help us decide by voting on homepage variants.">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            color: #FAFAFA;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .variants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .variant-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .variant-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .variant-card.selected {
+            border-color: var(--purple);
+            background: rgba(124, 58, 237, 0.15);
+        }
+
+        .variant-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--purple);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .variant-label {
+            font-size: 0.75rem;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .variant-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .variant-pitch {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .variant-preview {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--purple-light);
+        }
+
+        .variant-preview:hover {
+            color: var(--white);
+        }
+
+        .vote-section {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .vote-btn {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .vote-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .vote-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            margin-top: 2rem;
+        }
+
+        .result-bar {
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .result-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .result-fill {
+            background: linear-gradient(90deg, var(--purple), var(--purple-light));
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .total-votes {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .hidden { display: none; }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--purple-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Which Story Resonates?</h1>
+            <p class="subtitle">
+                We're testing different ways to explain Bonzi. Your vote helps us speak your language.
+                No signup. One click. Real impact.
+            </p>
+        </header>
+
+        <div class="variants-grid">
+            <div class="variant-card" data-variant="A">
+                <div class="variant-label">Variant A</div>
+                <div class="variant-title">Outcome-First</div>
+                <p class="variant-pitch">
+                    "Launch a token. Build a treasury. Pay your community."
+                    <br><br>
+                    Focuses on what you GET, not how it works.
+                </p>
+                <a href="homepage-variants/variant-a-outcome.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+
+            <div class="variant-card" data-variant="B">
+                <div class="variant-label">Variant B</div>
+                <div class="variant-title">Zealy Killer</div>
+                <p class="variant-pitch">
+                    "Tired of quest platforms that pay in points?"
+                    <br><br>
+                    Speaks to users burned by fake rewards.
+                </p>
+                <a href="homepage-variants/variant-b-zealy-killer.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+
+            <div class="variant-card" data-variant="C">
+                <div class="variant-label">Variant C</div>
+                <div class="variant-title">Infrastructure</div>
+                <p class="variant-pitch">
+                    "Community management infrastructure for Web3."
+                    <br><br>
+                    Technical. For projects and developers.
+                </p>
+                <a href="homepage-variants/variant-c-infrastructure.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+
+            <div class="variant-card" data-variant="D">
+                <div class="variant-label">Variant D</div>
+                <div class="variant-title">Community-First</div>
+                <p class="variant-pitch">
+                    "Real work. Real ETH. No middlemen."
+                    <br><br>
+                    Speaks to contributors who want to earn.
+                </p>
+                <a href="homepage-variants/variant-d-community-first.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+
+            <div class="variant-card" data-variant="E">
+                <div class="variant-label">Variant E</div>
+                <div class="variant-title">Bold & Minimal</div>
+                <p class="variant-pitch">
+                    "AI that pays humans."
+                    <br><br>
+                    Maximum impact, minimum words.
+                </p>
+                <a href="homepage-variants/variant-e-bold.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+
+            <div class="variant-card" data-variant="F">
+                <div class="variant-label">Variant F</div>
+                <div class="variant-title">User Journeys</div>
+                <p class="variant-pitch">
+                    "I'm a founder..." / "I'm a raider..."
+                    <br><br>
+                    Different paths for different users.
+                </p>
+                <a href="homepage-variants/variant-f-user-journeys.md" target="_blank" class="variant-preview">Preview (MD) →</a>
+            </div>
+
+            <div class="variant-card" data-variant="G">
+                <div class="variant-label">Variant G</div>
+                <div class="variant-title">Oracle Thesis</div>
+                <p class="variant-pitch">
+                    "The AI that learns what your community values."
+                    <br><br>
+                    Positions Bonzi as evolving intelligence.
+                </p>
+                <a href="homepage-variants/variant-g-visual-mockup.html" target="_blank" class="variant-preview">Preview →</a>
+            </div>
+        </div>
+
+        <div class="vote-section">
+            <p id="vote-prompt">Click a card above to select your favorite, then submit.</p>
+            <button class="vote-btn" id="vote-btn" disabled>Vote</button>
+
+            <div class="results hidden" id="results">
+                <h3 style="margin-bottom: 1rem;">Live Results</h3>
+                <div id="results-bars"></div>
+                <p class="total-votes" id="total-votes"></p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Your vote is stored locally and aggregated anonymously.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="index.html">← Back to Bonzi</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'bonzi_variant_votes';
+        const USER_VOTE_KEY = 'bonzi_user_voted';
+
+        let selectedVariant = null;
+        const cards = document.querySelectorAll('.variant-card');
+        const voteBtn = document.getElementById('vote-btn');
+        const resultsDiv = document.getElementById('results');
+        const resultsBars = document.getElementById('results-bars');
+        const totalVotesEl = document.getElementById('total-votes');
+        const votePrompt = document.getElementById('vote-prompt');
+
+        // Initialize votes from localStorage
+        function getVotes() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
+        }
+
+        function saveVotes(votes) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(votes));
+        }
+
+        function hasVoted() {
+            return localStorage.getItem(USER_VOTE_KEY) !== null;
+        }
+
+        function markVoted(variant) {
+            localStorage.setItem(USER_VOTE_KEY, variant);
+        }
+
+        // Card selection
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('variant-preview')) return;
+                if (hasVoted()) return;
+
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedVariant = card.dataset.variant;
+                voteBtn.disabled = false;
+            });
+        });
+
+        // Vote submission
+        voteBtn.addEventListener('click', () => {
+            if (!selectedVariant || hasVoted()) return;
+
+            const votes = getVotes();
+            votes[selectedVariant]++;
+            saveVotes(votes);
+            markVoted(selectedVariant);
+
+            // Log for analytics collection
+            console.log('[BONZI_VOTE]', {
+                variant: selectedVariant,
+                timestamp: new Date().toISOString(),
+                votes: votes
+            });
+
+            showResults();
+        });
+
+        function showResults() {
+            const votes = getVotes();
+            const total = Object.values(votes).reduce((a, b) => a + b, 0);
+
+            votePrompt.textContent = hasVoted()
+                ? `Thanks! You voted for Variant ${localStorage.getItem(USER_VOTE_KEY)}.`
+                : 'Select a variant to vote.';
+
+            voteBtn.disabled = true;
+            voteBtn.textContent = hasVoted() ? 'Voted ✓' : 'Vote';
+
+            resultsDiv.classList.remove('hidden');
+
+            const variants = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            const names = {
+                A: 'Outcome-First',
+                B: 'Zealy Killer',
+                C: 'Infrastructure',
+                D: 'Community-First',
+                E: 'Bold & Minimal',
+                F: 'User Journeys',
+                G: 'Oracle Thesis'
+            };
+
+            resultsBars.innerHTML = variants.map(v => {
+                const pct = total > 0 ? Math.round((votes[v] / total) * 100) : 0;
+                const isUserVote = localStorage.getItem(USER_VOTE_KEY) === v;
+                return `
+                    <div class="result-bar">
+                        <div class="result-label">
+                            <span>${v}: ${names[v]} ${isUserVote ? '← you' : ''}</span>
+                            <span>${pct}%</span>
+                        </div>
+                        <div class="result-track">
+                            <div class="result-fill" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalVotesEl.textContent = `${total} vote${total !== 1 ? 's' : ''} total`;
+        }
+
+        // Show results if already voted
+        if (hasVoted()) {
+            const userVote = localStorage.getItem(USER_VOTE_KEY);
+            const card = document.querySelector(`[data-variant="${userVote}"]`);
+            if (card) card.classList.add('selected');
+            showResults();
+        }
+    </script>
+</body>
+</html>

@@ -17,6 +17,7 @@
             --white: #FFFFFF;
             --black: #0A0A0A;
             --gray: #71717A;
+            --gold: #d4af37;
         }
 
         body {
@@ -50,6 +51,22 @@
             font-size: 1.1rem;
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        .how-it-works {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 1rem 1.5rem;
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .how-it-works p {
+            margin: 0;
         }
 
         .variants-grid {
@@ -118,14 +135,15 @@
 
         .variant-preview {
             display: inline-block;
-            color: var(--purple-light);
+            color: var(--gold);
             font-size: 0.85rem;
             text-decoration: none;
-            border-bottom: 1px dashed var(--purple-light);
+            border-bottom: 1px dashed var(--gold);
         }
 
         .variant-preview:hover {
             color: var(--white);
+            border-bottom-color: var(--white);
         }
 
         .vote-section {
@@ -203,7 +221,100 @@
         }
 
         footer a {
-            color: var(--purple-light);
+            color: var(--gold);
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* === WIN98 POPUP (Easter Egg) === */
+        .win98-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .win98-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .win98-popup {
+            background: #c0c0c0;
+            border: 2px outset #ffffff;
+            box-shadow: 2px 2px 0 #808080;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            min-width: 300px;
+            max-width: 400px;
+        }
+
+        .win98-popup .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win98-popup .close-btn {
+            background: #c0c0c0;
+            border: 2px outset #ffffff;
+            width: 16px;
+            height: 14px;
+            font-size: 10px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .win98-popup .close-btn:active {
+            border-style: inset;
+        }
+
+        .win98-popup .content {
+            padding: 20px;
+            color: #000;
+            text-align: center;
+        }
+
+        .win98-popup .content img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .win98-popup .content p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .win98-popup .ok-btn {
+            background: #c0c0c0;
+            border: 2px outset #ffffff;
+            padding: 4px 24px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .win98-popup .ok-btn:active {
+            border-style: inset;
         }
     </style>
 </head>
@@ -216,6 +327,10 @@
                 No signup. One click. Real impact.
             </p>
         </header>
+
+        <div class="how-it-works">
+            <p>Each card below represents a different homepage approach. Some focus on outcomes, others on pain points, and a few take bold creative swings. Click any card to select it, preview the full version, then submit your vote. Results update live.</p>
+        </div>
 
         <div class="variants-grid">
             <div class="variant-card" data-variant="A">
@@ -315,6 +430,22 @@
         </footer>
     </div>
 
+    <!-- Win98 Vote Confirmation Popup -->
+    <div class="win98-overlay" id="win98-popup">
+        <div class="win98-popup">
+            <div class="title-bar">
+                <span>Bonzi Assistant</span>
+                <button class="close-btn" onclick="closePopup()">×</button>
+            </div>
+            <div class="content">
+                <img src="bonzi-logo.png" alt="Bonzi" onerror="this.style.display='none'">
+                <p><strong>Vote recorded!</strong></p>
+                <p id="popup-message">Thanks for helping shape Bonzi's story.</p>
+                <button class="ok-btn" onclick="closePopup()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const STORAGE_KEY = 'bonzi_variant_votes';
         const USER_VOTE_KEY = 'bonzi_user_voted';
@@ -358,6 +489,34 @@
             });
         });
 
+        // Win98 popup functions
+        function showWin98Popup(variant) {
+            const popup = document.getElementById('win98-popup');
+            const message = document.getElementById('popup-message');
+            const names = {
+                A: 'Outcome-First',
+                B: 'Zealy Killer',
+                C: 'Infrastructure',
+                D: 'Community-First',
+                E: 'Bold & Minimal',
+                F: 'User Journeys',
+                G: 'Oracle Thesis'
+            };
+            message.textContent = `You picked "${names[variant]}". Thanks for helping shape Bonzi's story!`;
+            popup.classList.add('visible');
+        }
+
+        function closePopup() {
+            document.getElementById('win98-popup').classList.remove('visible');
+        }
+
+        // Close on overlay click
+        document.getElementById('win98-popup').addEventListener('click', (e) => {
+            if (e.target.classList.contains('win98-overlay')) {
+                closePopup();
+            }
+        });
+
         // Vote submission
         voteBtn.addEventListener('click', () => {
             if (!selectedVariant || hasVoted()) return;
@@ -375,6 +534,7 @@
             });
 
             showResults();
+            showWin98Popup(selectedVariant);
         });
 
         function showResults() {

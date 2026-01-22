@@ -916,6 +916,7 @@
 
         const MIN_BONZI = 1000000; // 1M $BONZI required (wallet + staked + LP)
         const MIN_VISTA = 100;     // OR 100 $VISTA required (wallet + staked + LP)
+        const MIN_LP = 0.001;      // Minimum LP token balance (prevents dust attacks)
         const ETHEREUM_CHAIN_ID = '0x1'; // Mainnet
 
         async function checkAuth() {
@@ -1009,13 +1010,15 @@
                 const bonziWallet = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
                 const bonziStaked = parseFloat(ethers.formatUnits(bonziStakeInfo[0], bonziDecimals));
                 const bonziBalance = bonziWallet + bonziStaked;
-                const hasBonziLp = bonziLpRaw > 0n;
+                const bonziLpBalance = parseFloat(ethers.formatUnits(bonziLpRaw, 18));
+                const hasBonziLp = bonziLpBalance >= MIN_LP;
 
                 // Calculate total VISTA (wallet + staked)
                 const vistaWallet = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
                 const vistaStaked = parseFloat(ethers.formatUnits(vistaStakeInfo[0], vistaDecimals));
                 const vistaBalance = vistaWallet + vistaStaked;
-                const hasVistaLp = vistaLpRaw > 0n;
+                const vistaLpBalance = parseFloat(ethers.formatUnits(vistaLpRaw, 18));
+                const hasVistaLp = vistaLpBalance >= MIN_LP;
 
                 // Qualify if: meets token threshold OR has LP position
                 const hasBonzi = bonziBalance >= MIN_BONZI || hasBonziLp;
@@ -1025,7 +1028,7 @@
                     const bonziInfo = bonziStaked > 0 ? `${bonziWallet.toLocaleString()} + ${bonziStaked.toLocaleString()} staked` : bonziBalance.toLocaleString();
                     const vistaInfo = vistaStaked > 0 ? `${vistaWallet.toLocaleString()} + ${vistaStaked.toLocaleString()} staked` : vistaBalance.toFixed(2);
                     throw new Error(
-                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziInfo})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaInfo})\n• OR any LP position`
+                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziInfo})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaInfo})\n• OR ${MIN_LP}+ LP tokens`
                     );
                 }
 

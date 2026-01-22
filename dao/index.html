@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="../css/bonzi-design.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Purple icon styling */
-        .test-card-image i[data-lucide] {
+        /* Purple icon styling - Lucide replaces <i> with <svg> */
+        .test-card-image svg {
             width: 48px;
             height: 48px;
-            color: #7C3AED;
+            stroke: #7C3AED !important;
         }
-        body.dark-mode .test-card-image i[data-lucide] {
-            color: #A78BFA;
+        body.dark-mode .test-card-image svg {
+            stroke: #A78BFA !important;
         }
         /* Page-specific styles */
         .dao-hero {

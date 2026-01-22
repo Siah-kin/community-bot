@@ -750,7 +750,15 @@
         const VISTA_TOKEN = '0xc9bca88b04581699fab5aa276ccaff7df957cbbf';  // VERIFIED
         const ETHEREUM_CHAIN_ID = '0x1'; // Mainnet
 
-        // Tier thresholds
+        // Hardstake Pools (for staked tokens)
+        const BONZI_HARDSTAKE = '0x3618158bb8d07111e476f4de28676dff050d1a53';
+        const VISTA_HARDSTAKE = '0xee5a6f8a55b02689138c195031d09bafdc7d278f';
+
+        // LP Pairs (for liquidity providers)
+        const BONZI_LP = '0x970cf9b7346fbaea0588f03356a104100eb675e2';
+        const VISTA_LP = '0xfdd05552f1377aa488afed744c8024358af02041';
+
+        // Tier thresholds (wallet + staked counts, LP = auto Tier 1)
         const TIER_1_BONZI = 1000000;   // 1M $BONZI
         const TIER_1_VISTA = 500;       // OR 500 $VISTA
         const TIER_2_BONZI = 10000000;  // 10M $BONZI
@@ -838,27 +846,49 @@
                 const address = accounts[0];
                 btn.textContent = 'Checking tokens...';
 
-                // Verify token balances
+                // Verify token balances (wallet + staked + LP)
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const erc20Abi = ['function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)'];
+                const hardstakeAbi = ['function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeLeftToUnlock, uint256 currentShare)'];
 
                 const bonziContract = new ethers.Contract(BONZI_TOKEN, erc20Abi, provider);
                 const vistaContract = new ethers.Contract(VISTA_TOKEN, erc20Abi, provider);
+                const bonziHardstake = new ethers.Contract(BONZI_HARDSTAKE, hardstakeAbi, provider);
+                const vistaHardstake = new ethers.Contract(VISTA_HARDSTAKE, hardstakeAbi, provider);
+                const bonziLp = new ethers.Contract(BONZI_LP, erc20Abi, provider);
+                const vistaLp = new ethers.Contract(VISTA_LP, erc20Abi, provider);
 
-                const [bonziRaw, bonziDecimals, vistaRaw, vistaDecimals] = await Promise.all([
+                const [
+                    bonziRaw, bonziDecimals,
+                    vistaRaw, vistaDecimals,
+                    bonziStakeInfo, vistaStakeInfo,
+                    bonziLpRaw, vistaLpRaw
+                ] = await Promise.all([
                     bonziContract.balanceOf(address),
                     bonziContract.decimals(),
                     vistaContract.balanceOf(address),
-                    vistaContract.decimals()
+                    vistaContract.decimals(),
+                    bonziHardstake.getStakerInfo(address).catch(() => [0n, 0n, 0n]),
+                    vistaHardstake.getStakerInfo(address).catch(() => [0n, 0n, 0n]),
+                    bonziLp.balanceOf(address).catch(() => 0n),
+                    vistaLp.balanceOf(address).catch(() => 0n)
                 ]);
 
-                userBonzi = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
-                userVista = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+                // Calculate total holdings (wallet + staked)
+                const bonziWallet = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
+                const bonziStaked = parseFloat(ethers.formatUnits(bonziStakeInfo[0], bonziDecimals));
+                userBonzi = bonziWallet + bonziStaked;
 
-                // Determine tier
+                const vistaWallet = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+                const vistaStaked = parseFloat(ethers.formatUnits(vistaStakeInfo[0], vistaDecimals));
+                userVista = vistaWallet + vistaStaked;
+
+                const hasLp = bonziLpRaw > 0n || vistaLpRaw > 0n;
+
+                // Determine tier (LP holders get Tier 1 minimum)
                 if (userBonzi >= TIER_2_BONZI || userVista >= TIER_2_VISTA) {
                     userTier = 2;
-                } else if (userBonzi >= TIER_1_BONZI || userVista >= TIER_1_VISTA) {
+                } else if (userBonzi >= TIER_1_BONZI || userVista >= TIER_1_VISTA || hasLp) {
                     userTier = 1;
                 } else {
                     userTier = 0;

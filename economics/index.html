@@ -139,6 +139,38 @@
         .theme-toggle .icon-sun { display: none; }
         body.dark-mode .theme-toggle .icon-moon { display: none; }
         body.dark-mode .theme-toggle .icon-sun { display: block; }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+        body.dark-mode nav {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+        body.dark-mode .nav-logo { color: #FFFFFF; }
+        body.dark-mode .nav-link { color: rgba(255, 255, 255, 0.6); }
+        body.dark-mode .nav-link:hover { color: #FFFFFF; }
+        body.dark-mode .nav-divider { background: rgba(255, 255, 255, 0.15); }
+        body.dark-mode .nav-dropdown-menu {
+            background: rgba(20, 20, 20, 0.98);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .nav-dropdown-menu a { color: rgba(255, 255, 255, 0.7); }
+        body.dark-mode .nav-dropdown-menu a:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.05); }
+        body.dark-mode .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); }
+        body.dark-mode .theme-toggle svg { stroke: rgba(255, 255, 255, 0.7); }
+        body.dark-mode .hero p { color: #A1A1AA; }
+        body.dark-mode .section h2 { color: #A78BFA; }
+        body.dark-mode .section p, body.dark-mode .section ul { color: #A1A1AA; }
+        body.dark-mode .callout { background: #1F1F23; }
+        body.dark-mode .callout p { color: #E4E4E7; }
+        body.dark-mode .mechanism { background: #1F1F23; }
+        body.dark-mode .mechanism h3 { color: #A78BFA; }
+        body.dark-mode .mechanism p { color: #A1A1AA; }
+        body.dark-mode .nav-lang-select { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+
         .nav-connect-btn {
             background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
             border: none;
@@ -331,7 +363,7 @@
             <a href="../research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
             <a href="../dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
-            <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact"><span class="contact-text">contact</span><span class="contact-icon">✉</span></a>
+            <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
         </div>
 
         <!-- Right: Lang, Theme, Connect -->

@@ -144,6 +144,49 @@
         .theme-toggle .icon-sun { display: none; }
         body.dark-mode .theme-toggle .icon-moon { display: none; }
         body.dark-mode .theme-toggle .icon-sun { display: block; }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+        body.dark-mode nav {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+        body.dark-mode .nav-logo { color: #FFFFFF; }
+        body.dark-mode .nav-link { color: rgba(255, 255, 255, 0.6); }
+        body.dark-mode .nav-link:hover { color: #FFFFFF; }
+        body.dark-mode .nav-divider { background: rgba(255, 255, 255, 0.15); }
+        body.dark-mode .nav-dropdown-menu {
+            background: rgba(20, 20, 20, 0.98);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .nav-dropdown-menu a { color: rgba(255, 255, 255, 0.7); }
+        body.dark-mode .nav-dropdown-menu a:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.05); }
+        body.dark-mode .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); }
+        body.dark-mode .theme-toggle svg { stroke: rgba(255, 255, 255, 0.7); }
+        body.dark-mode .hero p { color: #A1A1AA; }
+        body.dark-mode .feature-section { border-top-color: #27272A; }
+        body.dark-mode .feature-section:nth-child(even) { background: #1F1F23; }
+        body.dark-mode .tagline { color: #A1A1AA; }
+        body.dark-mode .problem-block { background: #2D1F1F; border-left-color: #EF4444; }
+        body.dark-mode .problem-block p { color: #FCA5A5; }
+        body.dark-mode .solution-block { background: #1F2D1F; border-left-color: #10B981; }
+        body.dark-mode .solution-block p { color: #6EE7B7; }
+        body.dark-mode .tech-section { background: #1F1F23; }
+        body.dark-mode .flow-diagram { background: #18181B; border-color: #27272A; }
+        body.dark-mode .flow-step { background: #27272A; color: #FFFFFF; }
+        body.dark-mode .metrics-section { background: #1F1F23; }
+        body.dark-mode .stat-block { background: #27272A; }
+        body.dark-mode .stat-label { color: #A1A1AA; }
+        body.dark-mode .stat-detail { color: #71717A; }
+        body.dark-mode .edge-case { background: #27272A; }
+        body.dark-mode .edge-case .case-trigger { color: #A78BFA; }
+        body.dark-mode .code-sample { background: #18181B; color: #E4E4E7; }
+        body.dark-mode .block-label { color: #A1A1AA; }
+        body.dark-mode .nav-lang-select { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+
         .nav-connect-btn {
             background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
             border: none;
@@ -521,7 +564,7 @@
             <a href="research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
             <a href="dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
-            <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact"><span class="contact-text">contact</span><span class="contact-icon">✉</span></a>
+            <a href="index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
         </div>
 
         <!-- Right: Lang, Theme, Connect -->
@@ -1003,6 +1046,18 @@ STOP (no escalation to humans)
     <audio id="bg-music" preload="auto"></audio>
 
     <script>
+        // Theme toggle - persist night mode across pages
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('bonzi_theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
+        });
+
         function toggleMenu() {
             document.querySelector('.hamburger').classList.toggle('active');
             document.querySelector('.nav-links').classList.toggle('active');

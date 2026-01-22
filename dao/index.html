@@ -381,7 +381,7 @@
             <a href="../research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
             <a href="./" class="nav-link gated active" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
-            <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact"><span class="contact-text">contact</span><span class="contact-icon">✉</span></a>
+            <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
         </div>
 
         <!-- Right: Lang, Theme, Connect -->
@@ -895,8 +895,17 @@
         // Token Contracts (Ethereum mainnet) - VERIFIED on Etherscan
         const BONZI_TOKEN = '0xd6175692026bcd7cb12a515e39cf0256ef35cb86';
         const VISTA_TOKEN = '0xc9bca88b04581699fab5aa276ccaff7df957cbbf';
-        const MIN_BONZI = 1000000; // 1M $BONZI required
-        const MIN_VISTA = 100;     // OR 100 $VISTA required
+
+        // Hardstake Pools (for staked tokens)
+        const BONZI_HARDSTAKE = '0x3618158bb8d07111e476f4de28676dff050d1a53';
+        const VISTA_HARDSTAKE = '0xee5a6f8a55b02689138c195031d09bafdc7d278f';
+
+        // LP Pairs (for liquidity providers)
+        const BONZI_LP = '0x970cf9b7346fbaea0588f03356a104100eb675e2';
+        const VISTA_LP = '0xfdd05552f1377aa488afed744c8024358af02041';
+
+        const MIN_BONZI = 1000000; // 1M $BONZI required (wallet + staked + LP)
+        const MIN_VISTA = 100;     // OR 100 $VISTA required (wallet + staked + LP)
         const ETHEREUM_CHAIN_ID = '0x1'; // Mainnet
 
         async function checkAuth() {
@@ -957,29 +966,56 @@
                 const address = accounts[0];
                 btn.textContent = 'Checking tokens...';
 
-                // Verify token balances (BONZI OR VISTA)
+                // Verify token balances (wallet + staked + LP)
                 const provider = new ethers.BrowserProvider(window.ethereum);
                 const erc20Abi = ['function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)'];
+                const hardstakeAbi = ['function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeLeftToUnlock, uint256 currentShare)'];
 
                 const bonziContract = new ethers.Contract(BONZI_TOKEN, erc20Abi, provider);
                 const vistaContract = new ethers.Contract(VISTA_TOKEN, erc20Abi, provider);
+                const bonziHardstake = new ethers.Contract(BONZI_HARDSTAKE, hardstakeAbi, provider);
+                const vistaHardstake = new ethers.Contract(VISTA_HARDSTAKE, hardstakeAbi, provider);
+                const bonziLp = new ethers.Contract(BONZI_LP, erc20Abi, provider);
+                const vistaLp = new ethers.Contract(VISTA_LP, erc20Abi, provider);
 
-                const [bonziRaw, bonziDecimals, vistaRaw, vistaDecimals] = await Promise.all([
+                // Fetch all balances in parallel
+                const [
+                    bonziRaw, bonziDecimals,
+                    vistaRaw, vistaDecimals,
+                    bonziStakeInfo, vistaStakeInfo,
+                    bonziLpRaw, vistaLpRaw
+                ] = await Promise.all([
                     bonziContract.balanceOf(address),
                     bonziContract.decimals(),
                     vistaContract.balanceOf(address),
-                    vistaContract.decimals()
+                    vistaContract.decimals(),
+                    bonziHardstake.getStakerInfo(address).catch(() => [0n, 0n, 0n]),
+                    vistaHardstake.getStakerInfo(address).catch(() => [0n, 0n, 0n]),
+                    bonziLp.balanceOf(address).catch(() => 0n),
+                    vistaLp.balanceOf(address).catch(() => 0n)
                 ]);
 
-                const bonziBalance = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
-                const vistaBalance = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+                // Calculate total BONZI (wallet + staked)
+                const bonziWallet = parseFloat(ethers.formatUnits(bonziRaw, bonziDecimals));
+                const bonziStaked = parseFloat(ethers.formatUnits(bonziStakeInfo[0], bonziDecimals));
+                const bonziBalance = bonziWallet + bonziStaked;
+                const hasBonziLp = bonziLpRaw > 0n;
 
-                const hasBonzi = bonziBalance >= MIN_BONZI;
-                const hasVista = vistaBalance >= MIN_VISTA;
+                // Calculate total VISTA (wallet + staked)
+                const vistaWallet = parseFloat(ethers.formatUnits(vistaRaw, vistaDecimals));
+                const vistaStaked = parseFloat(ethers.formatUnits(vistaStakeInfo[0], vistaDecimals));
+                const vistaBalance = vistaWallet + vistaStaked;
+                const hasVistaLp = vistaLpRaw > 0n;
+
+                // Qualify if: meets token threshold OR has LP position
+                const hasBonzi = bonziBalance >= MIN_BONZI || hasBonziLp;
+                const hasVista = vistaBalance >= MIN_VISTA || hasVistaLp;
 
                 if (!hasBonzi && !hasVista) {
+                    const bonziInfo = bonziStaked > 0 ? `${bonziWallet.toLocaleString()} + ${bonziStaked.toLocaleString()} staked` : bonziBalance.toLocaleString();
+                    const vistaInfo = vistaStaked > 0 ? `${vistaWallet.toLocaleString()} + ${vistaStaked.toLocaleString()} staked` : vistaBalance.toFixed(2);
                     throw new Error(
-                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziBalance.toLocaleString()})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaBalance.toFixed(2)})`
+                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziInfo})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaInfo})\n• OR any LP position`
                     );
                 }
 

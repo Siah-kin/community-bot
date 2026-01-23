@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Token - Bonzi Widget</title>
+    <link rel="stylesheet" href="brand-widget.css">
+</head>
+<body>
+    <!--
+    Bonzi Brand Widget
+    Powered by Coinbase CDP + Base
+
+    Usage: Embed this widget on any website to let users buy tokens
+    without managing wallets or seed phrases.
+    -->
+
+    <div id="bonzi-widget" class="bonzi-widget">
+        <!-- Header -->
+        <div class="widget-header">
+            <div class="widget-logo">
+                <span class="logo-icon">🦍</span>
+                <span class="logo-text">Bonzi</span>
+            </div>
+            <div class="widget-network">
+                <span class="network-dot"></span>
+                <span class="network-name">Base</span>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="widget-content">
+            <!-- State: Not Connected -->
+            <div id="state-login" class="widget-state active">
+                <h2 class="widget-title">Buy <span id="token-symbol">$TOKEN</span></h2>
+                <p class="widget-subtitle">No wallet needed. Just email.</p>
+
+                <div class="login-buttons">
+                    <button id="btn-email" class="btn btn-primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Continue with Email
+                    </button>
+
+                    <button id="btn-google" class="btn btn-secondary">
+                        <svg class="btn-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continue with Google
+                    </button>
+
+                    <button id="btn-apple" class="btn btn-secondary">
+                        <svg class="btn-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                        </svg>
+                        Continue with Apple
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <button id="btn-wallet" class="btn btn-outline">
+                    Connect Existing Wallet
+                </button>
+            </div>
+
+            <!-- State: Email Input -->
+            <div id="state-email" class="widget-state">
+                <button class="btn-back" id="btn-back-email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <h2 class="widget-title">Enter your email</h2>
+                <p class="widget-subtitle">We'll create a wallet for you</p>
+
+                <form id="email-form" class="email-form">
+                    <input type="email" id="email-input" placeholder="you@example.com" required>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </form>
+            </div>
+
+            <!-- State: Loading -->
+            <div id="state-loading" class="widget-state">
+                <div class="loading-spinner"></div>
+                <p class="loading-text" id="loading-text">Creating your wallet...</p>
+            </div>
+
+            <!-- State: Connected - Ready to Fund -->
+            <div id="state-fund" class="widget-state">
+                <h2 class="widget-title">Add Funds</h2>
+                <p class="widget-subtitle">Fund your wallet to buy <span class="token-symbol-inline">$TOKEN</span></p>
+
+                <div class="wallet-info">
+                    <div class="wallet-address" id="wallet-address">0x...abc</div>
+                    <div class="wallet-balance">
+                        <span class="balance-label">Balance:</span>
+                        <span class="balance-value" id="balance-value">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="amount-input">
+                    <label for="fund-amount">Amount (USD)</label>
+                    <div class="input-group">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="fund-amount" value="50" min="10" max="10000" step="10">
+                    </div>
+                    <div class="amount-presets">
+                        <button class="preset-btn" data-amount="25">$25</button>
+                        <button class="preset-btn active" data-amount="50">$50</button>
+                        <button class="preset-btn" data-amount="100">$100</button>
+                        <button class="preset-btn" data-amount="250">$250</button>
+                    </div>
+                </div>
+
+                <button id="btn-fund" class="btn btn-primary btn-large">
+                    Add Funds with Card
+                </button>
+
+                <p class="powered-by">
+                    Powered by <a href="https://www.coinbase.com" target="_blank">Coinbase</a>
+                </p>
+            </div>
+
+            <!-- State: Swap -->
+            <div id="state-swap" class="widget-state">
+                <h2 class="widget-title">Buy <span class="token-symbol-inline">$TOKEN</span></h2>
+
+                <div class="swap-preview">
+                    <div class="swap-from">
+                        <span class="swap-label">You pay</span>
+                        <div class="swap-amount">
+                            <span id="swap-from-amount">$50.00</span>
+                            <span class="swap-token">USDC</span>
+                        </div>
+                    </div>
+                    <div class="swap-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M19 12l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="swap-to">
+                        <span class="swap-label">You receive (estimated)</span>
+                        <div class="swap-amount">
+                            <span id="swap-to-amount">~1,000,000</span>
+                            <span class="swap-token" id="swap-token-symbol">$TOKEN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-swap" class="btn btn-primary btn-large">
+                    Confirm Purchase
+                </button>
+            </div>
+
+            <!-- State: Success -->
+            <div id="state-success" class="widget-state">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h2 class="widget-title">Success!</h2>
+                <p class="widget-subtitle">You now own <span class="token-symbol-inline">$TOKEN</span></p>
+
+                <div class="final-balance">
+                    <span class="balance-amount" id="final-balance">1,000,000</span>
+                    <span class="balance-token" id="final-token">$TOKEN</span>
+                </div>
+
+                <div class="success-actions">
+                    <button id="btn-buy-more" class="btn btn-secondary">Buy More</button>
+                    <button id="btn-view-tx" class="btn btn-outline">View Transaction</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="widget-footer">
+            <span class="footer-security">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lock-icon">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                Secured by Coinbase
+            </span>
+        </div>
+    </div>
+
+    <!-- CDP SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@4/dist/index.min.js"></script>
+
+    <script>
+    /**
+     * Bonzi Brand Widget
+     * Coinbase CDP + Base Integration
+     *
+     * Configuration is passed via data attributes or URL params
+     */
+    (function() {
+        'use strict';
+
+        // Configuration
+        const CONFIG = {
+            // Token to purchase (set via data-token attribute or URL param)
+            tokenAddress: null,
+            tokenSymbol: '$TOKEN',
+            tokenDecimals: 18,
+
+            // Chain config (Base)
+            chainId: 8453, // Base mainnet
+            chainName: 'Base',
+            rpcUrl: 'https://mainnet.base.org',
+
+            // CDP config
+            cdpAppId: 'bonzi-widget',
+
+            // Onramp config
+            onrampAppId: 'bonzi',
+
+            // Testnet mode
+            testnet: false
+        };
+
+        // State
+        let wallet = null;
+        let address = null;
+        let provider = null;
+
+        // DOM Elements
+        const states = {
+            login: document.getElementById('state-login'),
+            email: document.getElementById('state-email'),
+            loading: document.getElementById('state-loading'),
+            fund: document.getElementById('state-fund'),
+            swap: document.getElementById('state-swap'),
+            success: document.getElementById('state-success')
+        };
+
+        // Initialize
+        function init() {
+            parseConfig();
+            updateTokenSymbols();
+            bindEvents();
+            checkExistingSession();
+        }
+
+        // Parse configuration from data attributes or URL
+        function parseConfig() {
+            const widget = document.getElementById('bonzi-widget');
+            const urlParams = new URLSearchParams(window.location.search);
+
+            CONFIG.tokenAddress = widget.dataset.token || urlParams.get('token') || CONFIG.tokenAddress;
+            CONFIG.tokenSymbol = widget.dataset.symbol || urlParams.get('symbol') || CONFIG.tokenSymbol;
+            CONFIG.testnet = widget.dataset.testnet === 'true' || urlParams.get('testnet') === 'true';
+
+            if (CONFIG.testnet) {
+                CONFIG.chainId = 84532; // Base Sepolia
+                CONFIG.chainName = 'Base Sepolia';
+                CONFIG.rpcUrl = 'https://sepolia.base.org';
+            }
+        }
+
+        // Update all token symbol displays
+        function updateTokenSymbols() {
+            document.querySelectorAll('#token-symbol, .token-symbol-inline, #swap-token-symbol, #final-token').forEach(el => {
+                el.textContent = CONFIG.tokenSymbol;
+            });
+        }
+
+        // Show specific state
+        function showState(stateName, loadingText = null) {
+            Object.values(states).forEach(s => s.classList.remove('active'));
+            states[stateName].classList.add('active');
+
+            if (stateName === 'loading' && loadingText) {
+                document.getElementById('loading-text').textContent = loadingText;
+            }
+        }
+
+        // Bind event listeners
+        function bindEvents() {
+            // Login buttons
+            document.getElementById('btn-email').addEventListener('click', () => showState('email'));
+            document.getElementById('btn-google').addEventListener('click', () => loginWithProvider('google'));
+            document.getElementById('btn-apple').addEventListener('click', () => loginWithProvider('apple'));
+            document.getElementById('btn-wallet').addEventListener('click', connectExternalWallet);
+
+            // Email form
+            document.getElementById('btn-back-email').addEventListener('click', () => showState('login'));
+            document.getElementById('email-form').addEventListener('submit', handleEmailSubmit);
+
+            // Fund screen
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('fund-amount').value = btn.dataset.amount;
+                });
+            });
+            document.getElementById('btn-fund').addEventListener('click', openOnramp);
+
+            // Swap screen
+            document.getElementById('btn-swap').addEventListener('click', executeSwap);
+
+            // Success screen
+            document.getElementById('btn-buy-more').addEventListener('click', () => showState('fund'));
+            document.getElementById('btn-view-tx').addEventListener('click', viewTransaction);
+        }
+
+        // Check for existing session
+        async function checkExistingSession() {
+            // Check localStorage for existing wallet session
+            const savedAddress = localStorage.getItem('bonzi_wallet_address');
+            if (savedAddress) {
+                address = savedAddress;
+                showState('fund');
+                updateWalletInfo();
+            }
+        }
+
+        // Login with social provider (Google/Apple)
+        async function loginWithProvider(provider) {
+            showState('loading', `Connecting with ${provider}...`);
+
+            try {
+                // Initialize Coinbase Wallet SDK
+                const sdk = new CoinbaseWalletSDK({
+                    appName: 'Bonzi',
+                    appLogoUrl: 'https://bonzi.bot/logo.png',
+                    darkMode: false
+                });
+
+                wallet = sdk.makeWeb3Provider(CONFIG.rpcUrl, CONFIG.chainId);
+
+                // Request accounts (triggers login)
+                const accounts = await wallet.request({ method: 'eth_requestAccounts' });
+                address = accounts[0];
+
+                // Save session
+                localStorage.setItem('bonzi_wallet_address', address);
+
+                showState('fund');
+                updateWalletInfo();
+
+            } catch (error) {
+                console.error('Login failed:', error);
+                showState('login');
+                alert('Login failed. Please try again.');
+            }
+        }
+
+        // Handle email login
+        async function handleEmailSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+
+            showState('loading', 'Creating your wallet...');
+
+            try {
+                // For email login, we use CDP's embedded wallet
+                // This creates a wallet tied to the email address
+                const sdk = new CoinbaseWalletSDK({
+                    appName: 'Bonzi',
+                    appLogoUrl: 'https://bonzi.bot/logo.png'
+                });
+
+                wallet = sdk.makeWeb3Provider(CONFIG.rpcUrl, CONFIG.chainId);
+
+                // Request accounts
+                const accounts = await wallet.request({ method: 'eth_requestAccounts' });
+                address = accounts[0];
+
+                localStorage.setItem('bonzi_wallet_address', address);
+                localStorage.setItem('bonzi_wallet_email', email);
+
+                showState('fund');
+                updateWalletInfo();
+
+            } catch (error) {
+                console.error('Wallet creation failed:', error);
+                showState('email');
+                alert('Could not create wallet. Please try again.');
+            }
+        }
+
+        // Connect external wallet (MetaMask, etc.)
+        async function connectExternalWallet() {
+            showState('loading', 'Connecting wallet...');
+
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    address = accounts[0];
+                    wallet = window.ethereum;
+
+                    // Switch to Base if needed
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x' + CONFIG.chainId.toString(16) }]
+                        });
+                    } catch (switchError) {
+                        // Chain not added, add it
+                        if (switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [{
+                                    chainId: '0x' + CONFIG.chainId.toString(16),
+                                    chainName: CONFIG.chainName,
+                                    rpcUrls: [CONFIG.rpcUrl],
+                                    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 }
+                                }]
+                            });
+                        }
+                    }
+
+                    localStorage.setItem('bonzi_wallet_address', address);
+
+                    showState('fund');
+                    updateWalletInfo();
+                } else {
+                    alert('No wallet detected. Please install MetaMask or use email login.');
+                    showState('login');
+                }
+            } catch (error) {
+                console.error('Wallet connection failed:', error);
+                showState('login');
+                alert('Could not connect wallet. Please try again.');
+            }
+        }
+
+        // Update wallet info display
+        async function updateWalletInfo() {
+            if (!address) return;
+
+            // Format address
+            const shortAddress = address.slice(0, 6) + '...' + address.slice(-4);
+            document.getElementById('wallet-address').textContent = shortAddress;
+
+            // Get balance (placeholder - would use actual balance check)
+            try {
+                const balance = await getBalance();
+                document.getElementById('balance-value').textContent = '$' + balance.toFixed(2);
+            } catch (e) {
+                document.getElementById('balance-value').textContent = '$0.00';
+            }
+        }
+
+        // Get wallet balance
+        async function getBalance() {
+            // Placeholder - would query actual balance
+            return 0;
+        }
+
+        // Open Coinbase Onramp
+        function openOnramp() {
+            const amount = document.getElementById('fund-amount').value;
+
+            // Coinbase Onramp URL
+            const onrampUrl = new URL('https://pay.coinbase.com/buy/select-asset');
+            onrampUrl.searchParams.set('appId', CONFIG.onrampAppId);
+            onrampUrl.searchParams.set('destinationWallets', JSON.stringify([{
+                address: address,
+                blockchains: ['base'],
+                assets: ['USDC']
+            }]));
+            onrampUrl.searchParams.set('presetFiatAmount', amount);
+            onrampUrl.searchParams.set('fiatCurrency', 'USD');
+
+            // Open in popup
+            const popup = window.open(
+                onrampUrl.toString(),
+                'coinbase-onramp',
+                'width=460,height=660,left=100,top=100'
+            );
+
+            // Poll for completion
+            const pollTimer = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(pollTimer);
+                    // Check if balance increased
+                    updateWalletInfo();
+                    showState('swap');
+                    updateSwapPreview(amount);
+                }
+            }, 1000);
+        }
+
+        // Update swap preview
+        function updateSwapPreview(usdAmount) {
+            document.getElementById('swap-from-amount').textContent = '$' + parseFloat(usdAmount).toFixed(2);
+            // Placeholder token amount - would get actual quote
+            const estimatedTokens = parseFloat(usdAmount) * 20000; // Example rate
+            document.getElementById('swap-to-amount').textContent = '~' + estimatedTokens.toLocaleString();
+        }
+
+        // Execute swap
+        async function executeSwap() {
+            showState('loading', 'Swapping to ' + CONFIG.tokenSymbol + '...');
+
+            try {
+                // In production, this would:
+                // 1. Get swap quote from DEX aggregator
+                // 2. Build swap transaction
+                // 3. Sign and submit transaction
+                // 4. Wait for confirmation
+
+                // Placeholder success
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                document.getElementById('final-balance').textContent = '1,000,000';
+                showState('success');
+
+            } catch (error) {
+                console.error('Swap failed:', error);
+                showState('swap');
+                alert('Swap failed. Please try again.');
+            }
+        }
+
+        // View transaction
+        function viewTransaction() {
+            const explorerUrl = CONFIG.testnet
+                ? 'https://sepolia.basescan.org/address/'
+                : 'https://basescan.org/address/';
+            window.open(explorerUrl + address, '_blank');
+        }
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+</body>
+</html>

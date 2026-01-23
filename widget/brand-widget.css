@@ -1,0 +1,564 @@
+/**
+ * Bonzi Brand Widget Styles
+ * Design: Black/White/Purple palette (Bonzi branding)
+ */
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Widget Container */
+.bonzi-widget {
+    --color-purple: #7B2D8E;
+    --color-purple-dark: #5a1f69;
+    --color-purple-light: #9b4db0;
+    --color-black: #1a1a1a;
+    --color-white: #ffffff;
+    --color-gray-50: #fafafa;
+    --color-gray-100: #f5f5f5;
+    --color-gray-200: #e5e5e5;
+    --color-gray-300: #d4d4d4;
+    --color-gray-500: #737373;
+    --color-gray-700: #404040;
+    --color-success: #22c55e;
+    --color-error: #ef4444;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    max-width: 400px;
+    min-height: 500px;
+    background: var(--color-white);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.widget-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-purple);
+}
+
+.widget-network {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--color-gray-100);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--color-gray-700);
+}
+
+.network-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-success);
+    border-radius: 50%;
+}
+
+/* Content Area */
+.widget-content {
+    flex: 1;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* States */
+.widget-state {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+}
+
+.widget-state.active {
+    display: flex;
+}
+
+/* Titles */
+.widget-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-black);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.widget-subtitle {
+    font-size: 14px;
+    color: var(--color-gray-500);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Buttons */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-primary {
+    background: var(--color-purple);
+    color: var(--color-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-purple-dark);
+}
+
+.btn-secondary {
+    background: var(--color-gray-100);
+    color: var(--color-black);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--color-gray-200);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-purple);
+    border: 2px solid var(--color-purple);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: var(--color-purple);
+    color: var(--color-white);
+}
+
+.btn-large {
+    padding: 16px 24px;
+    font-size: 16px;
+}
+
+/* Login Buttons */
+.login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0 20px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-gray-200);
+}
+
+.divider span {
+    font-size: 13px;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+/* Back Button */
+.btn-back {
+    position: absolute;
+    top: 24px;
+    left: 20px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: var(--color-gray-100);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-back svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-gray-700);
+}
+
+.btn-back:hover {
+    background: var(--color-gray-200);
+}
+
+#state-email {
+    position: relative;
+    padding-top: 48px;
+}
+
+/* Email Form */
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.email-form input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 2px solid var(--color-gray-200);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.email-form input:focus {
+    border-color: var(--color-purple);
+}
+
+/* Loading State */
+#state-loading {
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--color-gray-200);
+    border-top-color: var(--color-purple);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 16px;
+    color: var(--color-gray-500);
+}
+
+/* Fund State */
+.wallet-info {
+    background: var(--color-gray-50);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.wallet-address {
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--color-gray-500);
+    margin-bottom: 8px;
+}
+
+.wallet-balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance-label {
+    font-size: 14px;
+    color: var(--color-gray-500);
+}
+
+.balance-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+/* Amount Input */
+.amount-input {
+    margin-bottom: 20px;
+}
+
+.amount-input label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 8px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--color-gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.input-group:focus-within {
+    border-color: var(--color-purple);
+}
+
+.input-prefix {
+    padding: 14px 0 14px 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+}
+
+.input-group input {
+    flex: 1;
+    padding: 14px 16px 14px 4px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+}
+
+.amount-presets {
+    display: flex;
+    gap: 8px;
+}
+
+.preset-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--color-gray-100);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover {
+    background: var(--color-gray-200);
+}
+
+.preset-btn.active {
+    background: var(--color-purple-light);
+    color: var(--color-white);
+    border-color: var(--color-purple);
+}
+
+/* Swap State */
+.swap-preview {
+    background: var(--color-gray-50);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.swap-from,
+.swap-to {
+    text-align: center;
+}
+
+.swap-label {
+    display: block;
+    font-size: 13px;
+    color: var(--color-gray-500);
+    margin-bottom: 8px;
+}
+
+.swap-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+}
+
+.swap-amount span:first-child {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.swap-token {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+}
+
+.swap-arrow {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.swap-arrow svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-gray-300);
+}
+
+/* Success State */
+#state-success {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--color-success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.success-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--color-white);
+}
+
+.final-balance {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+    margin: 24px 0;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-purple);
+}
+
+.balance-token {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+}
+
+.success-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: auto;
+}
+
+.success-actions .btn {
+    flex: 1;
+}
+
+/* Footer */
+.widget-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--color-gray-200);
+    text-align: center;
+}
+
+.footer-security {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-gray-500);
+}
+
+.lock-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* Powered By */
+.powered-by {
+    font-size: 12px;
+    color: var(--color-gray-500);
+    text-align: center;
+    margin-top: 16px;
+}
+
+.powered-by a {
+    color: var(--color-purple);
+    text-decoration: none;
+}
+
+.powered-by a:hover {
+    text-decoration: underline;
+}
+
+/* Token Symbol Inline */
+.token-symbol-inline {
+    color: var(--color-purple);
+    font-weight: 700;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .bonzi-widget.dark-mode {
+        --color-black: #ffffff;
+        --color-white: #1a1a1a;
+        --color-gray-50: #262626;
+        --color-gray-100: #333333;
+        --color-gray-200: #404040;
+        --color-gray-300: #525252;
+        --color-gray-500: #a3a3a3;
+        --color-gray-700: #d4d4d4;
+    }
+}
+
+/* Responsive */
+@media (max-width: 440px) {
+    .bonzi-widget {
+        border-radius: 0;
+        min-height: 100vh;
+        max-width: none;
+    }
+}
+
+/* Iframe Embed Styles */
+.bonzi-widget.embedded {
+    border-radius: 12px;
+    box-shadow: none;
+}

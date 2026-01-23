@@ -1344,21 +1344,23 @@
             }
             const originalText = btn.textContent;
 
-            // Timeout helper - 45 second max wait
-            const withTimeout = (promise, ms = 45000) => {
+            // Timeout helper - 10 second max wait
+            const withTimeout = (promise, ms = 10000) => {
                 return Promise.race([
                     promise,
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Connection timed out. Please try again.')), ms))
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Wallet not responding. Check if popup is blocked or wallet is locked.')), ms))
                 ]);
             };
 
             try {
+                console.log('[DAO] Checking for wallet...');
                 if (typeof window.ethereum === 'undefined') {
-                    alert('Please install MetaMask, Rabby, or another EVM wallet');
+                    alert('No wallet detected. Please install MetaMask or Rabby.');
                     btn.textContent = originalText;
                     btn.disabled = false;
                     return;
                 }
+                console.log('[DAO] Wallet found:', window.ethereum.isMetaMask ? 'MetaMask' : window.ethereum.isRabby ? 'Rabby' : 'Unknown');
 
                 btn.textContent = 'Connecting...';
                 btn.disabled = true;

@@ -97,93 +97,82 @@
 
         /* === THREE-BOX SYSTEM === */
 
-        /* Technical Box - "HOW IT WORKS" */
+        /* Technical Box - "HOW IT WORKS" - IMOBX-style sharp 8pt border */
         .technical-box {
-            background-color: var(--gray-light);
-            border-left: 4px solid var(--purple);
-            padding: 24px 24px 24px 28px;
-            margin: 24px 0;
+            background-color: #e8f4f8;
+            border-left: 8pt solid var(--purple);
+            padding: 15pt 15pt 15pt 25pt;
+            margin: 15pt 0;
             position: relative;
-            border-radius: 0 8px 8px 0;
         }
 
         body.dark-mode .technical-box {
-            background-color: #1f1f23;
+            background-color: #1a2a30;
         }
 
         .technical-box::before {
             content: "HOW IT WORKS";
             position: absolute;
-            top: -10px;
-            left: 16px;
+            top: -10pt;
+            left: 15pt;
             background: var(--purple);
             color: white;
-            padding: 4px 12px;
-            font-weight: 700;
-            font-size: 10px;
-            letter-spacing: 1px;
-            border-radius: 4px;
+            padding: 4pt 12pt;
+            font-weight: bold;
+            font-size: 8pt;
+            letter-spacing: 0.8pt;
         }
 
-        /* Feature Box - "KEY FEATURE" */
+        /* Feature Box - "KEY FEATURE" - IMOBX-style sharp 8pt border */
         .feature-box {
-            background-color: #f5eef8;
-            border-left: 4px solid var(--purple);
-            padding: 24px 24px 24px 28px;
-            margin: 24px 0;
+            background-color: #fff4e6;
+            border-left: 8pt solid var(--purple);
+            padding: 15pt 15pt 15pt 25pt;
+            margin: 15pt 0;
             position: relative;
-            border-radius: 0 8px 8px 0;
         }
 
         body.dark-mode .feature-box {
-            background-color: rgba(124, 58, 237, 0.15);
+            background-color: #2a2520;
         }
 
         .feature-box::before {
             content: "KEY FEATURE";
             position: absolute;
-            top: -10px;
-            left: 16px;
+            top: -10pt;
+            left: 15pt;
             background: var(--purple);
             color: white;
-            padding: 4px 12px;
-            font-weight: 700;
-            font-size: 10px;
-            letter-spacing: 1px;
-            border-radius: 4px;
+            padding: 4pt 12pt;
+            font-weight: bold;
+            font-size: 8pt;
+            letter-spacing: 0.8pt;
         }
 
-        /* Advantage Box - "ADVANTAGE" (RARE) */
+        /* Advantage Box - "ADVANTAGE" (RARE) - IMOBX-style sharp 8pt border */
         .advantage-box {
-            background-color: #fafafa;
-            border-left: 4px solid var(--gold);
-            padding: 24px 24px 24px 28px;
-            margin: 24px 0;
+            background-color: #fffaf5;
+            border-left: 8pt solid var(--gold);
+            padding: 15pt 15pt 15pt 25pt;
+            margin: 15pt 0;
             position: relative;
-            border-radius: 0 8px 8px 0;
         }
 
         body.dark-mode .advantage-box {
-            background-color: #1f1f23;
+            background-color: #252018;
         }
 
         .advantage-box::before {
             content: "ADVANTAGE";
             position: absolute;
-            top: -10px;
-            left: 16px;
-            background: var(--black);
-            color: var(--gold);
-            padding: 4px 12px;
-            font-weight: 700;
-            font-size: 10px;
-            letter-spacing: 1px;
-            border-radius: 4px;
-        }
-
-        body.dark-mode .advantage-box::before {
+            top: -10pt;
+            left: 15pt;
             background: var(--gold);
             color: var(--black);
+            padding: 4pt 12pt;
+            font-weight: bold;
+            font-size: 8pt;
+            letter-spacing: 0.8pt;
         }
 
         /* Box content styling */
@@ -413,7 +402,7 @@
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
 
     <!-- Navigation -->
     <nav>
@@ -594,10 +583,10 @@
         if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
         themeFab.addEventListener('click', toggleTheme);
 
-        // Load saved theme
+        // Load saved theme (default to light)
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            body.classList.remove('dark-mode');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
         }
         updateThemeIcon();
     </script>

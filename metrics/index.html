@@ -1355,6 +1355,16 @@
             try {
                 if (typeof window.ethereum === 'undefined') {
                     alert('Please install MetaMask or another Web3 wallet');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Check for EVM compatibility (TronLink provides window.ethereum but hangs on ETH calls)
+                if (window.ethereum.isTronLink && !window.ethereum.isMetaMask) {
+                    alert('TronLink detected but this requires an Ethereum wallet (MetaMask, Rabby, etc.)');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
                     return;
                 }
 

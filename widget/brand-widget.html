@@ -220,6 +220,16 @@
             chainName: 'Base',
             rpcUrl: 'https://mainnet.base.org',
 
+            // Contract addresses (Base Mainnet)
+            usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+            usdcDecimals: 6,
+
+            // Testnet contract addresses (Base Sepolia)
+            testnetUsdc: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+
+            // 0x API for swaps
+            zeroExApi: 'https://api.0x.org',
+
             // CDP config
             cdpAppId: 'bonzi-widget',
 
@@ -229,6 +239,10 @@
             // Testnet mode
             testnet: false
         };
+
+        // Last swap quote (stored for execution)
+        let lastQuote = null;
+        let lastTxHash = null;
 
         // State
         let wallet = null;
@@ -266,6 +280,7 @@
                 CONFIG.chainId = 84532; // Base Sepolia
                 CONFIG.chainName = 'Base Sepolia';
                 CONFIG.rpcUrl = 'https://sepolia.base.org';
+                CONFIG.usdc = CONFIG.testnetUsdc; // Use testnet USDC
             }
         }
 
@@ -446,24 +461,53 @@
             const shortAddress = address.slice(0, 6) + '...' + address.slice(-4);
             document.getElementById('wallet-address').textContent = shortAddress;
 
-            // Get balance (placeholder - would use actual balance check)
+            // Get USDC balance
             try {
                 const balance = await getBalance();
-                document.getElementById('balance-value').textContent = '$' + balance.toFixed(2);
+                document.getElementById('balance-value').textContent = '$' + balance.toFixed(2) + ' USDC';
+
+                // Update fund button if balance exists
+                if (balance > 0) {
+                    document.getElementById('btn-fund').textContent = 'Add More Funds';
+                }
             } catch (e) {
-                document.getElementById('balance-value').textContent = '$0.00';
+                document.getElementById('balance-value').textContent = '$0.00 USDC';
             }
         }
 
-        // Get wallet balance
+        // Get USDC balance
         async function getBalance() {
-            // Placeholder - would query actual balance
-            return 0;
+            if (!address) return 0;
+
+            const usdcAddress = CONFIG.testnet ? CONFIG.testnetUsdc : CONFIG.usdc;
+
+            // ERC20 balanceOf call
+            const data = '0x70a08231' + address.slice(2).padStart(64, '0');
+
+            try {
+                const result = await (wallet || window.ethereum).request({
+                    method: 'eth_call',
+                    params: [{
+                        to: usdcAddress,
+                        data: data
+                    }, 'latest']
+                });
+
+                // Parse result (USDC has 6 decimals)
+                const balance = parseInt(result, 16) / Math.pow(10, CONFIG.usdcDecimals);
+                return balance;
+            } catch (e) {
+                console.error('Balance check failed:', e);
+                return 0;
+            }
         }
 
         // Open Coinbase Onramp
-        function openOnramp() {
+        async function openOnramp() {
             const amount = document.getElementById('fund-amount').value;
+
+            // Get initial balance to detect changes
+            const initialBalance = await getBalance();
 
             // Coinbase Onramp URL
             const onrampUrl = new URL('https://pay.coinbase.com/buy/select-asset');
@@ -483,56 +527,271 @@
                 'width=460,height=660,left=100,top=100'
             );
 
-            // Poll for completion
-            const pollTimer = setInterval(() => {
+            showState('loading', 'Complete payment in popup...');
+
+            // Poll for popup close and balance change
+            const pollTimer = setInterval(async () => {
                 if (popup.closed) {
                     clearInterval(pollTimer);
-                    // Check if balance increased
-                    updateWalletInfo();
-                    showState('swap');
-                    updateSwapPreview(amount);
+
+                    showState('loading', 'Checking for funds...');
+
+                    // Poll for balance change (onramp can take a moment)
+                    let attempts = 0;
+                    const maxAttempts = 30; // 60 seconds max
+
+                    const balanceCheck = setInterval(async () => {
+                        attempts++;
+                        const newBalance = await getBalance();
+
+                        if (newBalance > initialBalance) {
+                            clearInterval(balanceCheck);
+                            await updateWalletInfo();
+                            showState('swap');
+                            updateSwapPreview(newBalance);
+                        } else if (attempts >= maxAttempts) {
+                            clearInterval(balanceCheck);
+                            // Check one more time then show swap anyway
+                            await updateWalletInfo();
+                            const finalCheck = await getBalance();
+                            if (finalCheck > 0) {
+                                showState('swap');
+                                updateSwapPreview(finalCheck);
+                            } else {
+                                showState('fund');
+                                alert('No funds detected. If you completed payment, please wait a moment and try again.');
+                            }
+                        }
+                    }, 2000);
                 }
             }, 1000);
         }
 
-        // Update swap preview
-        function updateSwapPreview(usdAmount) {
+        // Update swap preview with real quote
+        async function updateSwapPreview(usdAmount) {
             document.getElementById('swap-from-amount').textContent = '$' + parseFloat(usdAmount).toFixed(2);
-            // Placeholder token amount - would get actual quote
-            const estimatedTokens = parseFloat(usdAmount) * 20000; // Example rate
-            document.getElementById('swap-to-amount').textContent = '~' + estimatedTokens.toLocaleString();
+            document.getElementById('swap-to-amount').textContent = 'Loading...';
+
+            if (!CONFIG.tokenAddress) {
+                document.getElementById('swap-to-amount').textContent = 'Token not configured';
+                return;
+            }
+
+            try {
+                // Get real quote from 0x API
+                const quote = await getSwapQuote(usdAmount);
+                if (quote && quote.buyAmount) {
+                    const tokenAmount = parseInt(quote.buyAmount) / Math.pow(10, CONFIG.tokenDecimals);
+                    document.getElementById('swap-to-amount').textContent = '~' + tokenAmount.toLocaleString(undefined, {maximumFractionDigits: 0});
+                    lastQuote = quote;
+                } else {
+                    document.getElementById('swap-to-amount').textContent = 'Quote unavailable';
+                }
+            } catch (e) {
+                console.error('Quote failed:', e);
+                document.getElementById('swap-to-amount').textContent = 'Quote error';
+            }
+        }
+
+        // Get swap quote from 0x API
+        async function getSwapQuote(usdAmount) {
+            const usdcAddress = CONFIG.testnet ? CONFIG.testnetUsdc : CONFIG.usdc;
+            const sellAmount = Math.floor(parseFloat(usdAmount) * Math.pow(10, CONFIG.usdcDecimals));
+
+            const params = new URLSearchParams({
+                chainId: CONFIG.chainId,
+                sellToken: usdcAddress,
+                buyToken: CONFIG.tokenAddress,
+                sellAmount: sellAmount.toString(),
+                taker: address
+            });
+
+            const response = await fetch(`${CONFIG.zeroExApi}/swap/permit2/quote?${params}`, {
+                headers: {
+                    '0x-api-key': '', // Public tier - rate limited but works
+                    '0x-version': 'v2'
+                }
+            });
+
+            if (!response.ok) {
+                // Try v1 API as fallback
+                const v1Params = new URLSearchParams({
+                    chainId: CONFIG.chainId,
+                    sellToken: usdcAddress,
+                    buyToken: CONFIG.tokenAddress,
+                    sellAmount: sellAmount.toString(),
+                    takerAddress: address
+                });
+
+                const v1Response = await fetch(`${CONFIG.zeroExApi}/swap/v1/quote?${v1Params}`);
+                if (!v1Response.ok) throw new Error('Quote failed');
+                return await v1Response.json();
+            }
+
+            return await response.json();
         }
 
         // Execute swap
         async function executeSwap() {
-            showState('loading', 'Swapping to ' + CONFIG.tokenSymbol + '...');
+            if (!lastQuote) {
+                alert('No quote available. Please try again.');
+                return;
+            }
+
+            const provider = wallet || window.ethereum;
+            if (!provider) {
+                alert('Wallet not connected');
+                return;
+            }
+
+            showState('loading', 'Checking approval...');
 
             try {
-                // In production, this would:
-                // 1. Get swap quote from DEX aggregator
-                // 2. Build swap transaction
-                // 3. Sign and submit transaction
-                // 4. Wait for confirmation
+                const usdcAddress = CONFIG.testnet ? CONFIG.testnetUsdc : CONFIG.usdc;
+                const sellAmount = lastQuote.sellAmount || lastQuote.sellTokenAmount;
 
-                // Placeholder success
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Check if we need to approve USDC spending
+                const spender = lastQuote.allowanceTarget || lastQuote.to;
+                const allowance = await checkAllowance(usdcAddress, spender);
 
-                document.getElementById('final-balance').textContent = '1,000,000';
+                if (BigInt(allowance) < BigInt(sellAmount)) {
+                    showState('loading', 'Approving USDC...');
+
+                    // Request approval
+                    const approveTx = await approveToken(usdcAddress, spender, sellAmount);
+                    showState('loading', 'Waiting for approval...');
+
+                    // Wait for approval confirmation
+                    await waitForTransaction(approveTx);
+                }
+
+                showState('loading', 'Swapping to ' + CONFIG.tokenSymbol + '...');
+
+                // Execute the swap
+                const swapTx = await provider.request({
+                    method: 'eth_sendTransaction',
+                    params: [{
+                        from: address,
+                        to: lastQuote.to,
+                        data: lastQuote.data,
+                        value: lastQuote.value || '0x0',
+                        gas: lastQuote.gas ? '0x' + parseInt(lastQuote.gas).toString(16) : undefined
+                    }]
+                });
+
+                lastTxHash = swapTx;
+                showState('loading', 'Confirming transaction...');
+
+                // Wait for transaction confirmation
+                await waitForTransaction(swapTx);
+
+                // Get final token balance
+                const finalBalance = await getTokenBalance();
+                document.getElementById('final-balance').textContent = finalBalance.toLocaleString(undefined, {maximumFractionDigits: 0});
+
                 showState('success');
 
             } catch (error) {
                 console.error('Swap failed:', error);
                 showState('swap');
-                alert('Swap failed. Please try again.');
+
+                if (error.code === 4001) {
+                    alert('Transaction cancelled by user.');
+                } else if (error.message?.includes('insufficient')) {
+                    alert('Insufficient USDC balance. Please add more funds.');
+                } else {
+                    alert('Swap failed: ' + (error.message || 'Unknown error'));
+                }
+            }
+        }
+
+        // Check ERC20 allowance
+        async function checkAllowance(tokenAddress, spender) {
+            const data = '0xdd62ed3e' +
+                address.slice(2).padStart(64, '0') +
+                spender.slice(2).padStart(64, '0');
+
+            const result = await (wallet || window.ethereum).request({
+                method: 'eth_call',
+                params: [{ to: tokenAddress, data: data }, 'latest']
+            });
+
+            return result;
+        }
+
+        // Approve ERC20 token spending
+        async function approveToken(tokenAddress, spender, amount) {
+            // Max approval for convenience (can be exact amount for more security)
+            const maxApproval = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+
+            const data = '0x095ea7b3' +
+                spender.slice(2).padStart(64, '0') +
+                maxApproval.slice(2);
+
+            return await (wallet || window.ethereum).request({
+                method: 'eth_sendTransaction',
+                params: [{
+                    from: address,
+                    to: tokenAddress,
+                    data: data
+                }]
+            });
+        }
+
+        // Wait for transaction confirmation
+        async function waitForTransaction(txHash, maxAttempts = 60) {
+            const provider = wallet || window.ethereum;
+
+            for (let i = 0; i < maxAttempts; i++) {
+                const receipt = await provider.request({
+                    method: 'eth_getTransactionReceipt',
+                    params: [txHash]
+                });
+
+                if (receipt) {
+                    if (receipt.status === '0x1') {
+                        return receipt;
+                    } else {
+                        throw new Error('Transaction failed');
+                    }
+                }
+
+                await new Promise(r => setTimeout(r, 2000));
+            }
+
+            throw new Error('Transaction timeout');
+        }
+
+        // Get target token balance
+        async function getTokenBalance() {
+            if (!CONFIG.tokenAddress || !address) return 0;
+
+            const data = '0x70a08231' + address.slice(2).padStart(64, '0');
+
+            try {
+                const result = await (wallet || window.ethereum).request({
+                    method: 'eth_call',
+                    params: [{ to: CONFIG.tokenAddress, data: data }, 'latest']
+                });
+
+                return parseInt(result, 16) / Math.pow(10, CONFIG.tokenDecimals);
+            } catch (e) {
+                console.error('Token balance check failed:', e);
+                return 0;
             }
         }
 
         // View transaction
         function viewTransaction() {
-            const explorerUrl = CONFIG.testnet
-                ? 'https://sepolia.basescan.org/address/'
-                : 'https://basescan.org/address/';
-            window.open(explorerUrl + address, '_blank');
+            const baseUrl = CONFIG.testnet
+                ? 'https://sepolia.basescan.org'
+                : 'https://basescan.org';
+
+            if (lastTxHash) {
+                window.open(baseUrl + '/tx/' + lastTxHash, '_blank');
+            } else {
+                window.open(baseUrl + '/address/' + address, '_blank');
+            }
         }
 
         // Initialize on DOM ready

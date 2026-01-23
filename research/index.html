@@ -807,9 +807,22 @@
         }
 
         // Connect wallet and verify tier
-        async function connectWallet(requiredTier = 1) {
-            const btn = event.target;
+        async function connectWallet(requiredTier = 1, buttonEl = null) {
+            // Get button from parameter, event, or fallback to nav button
+            const btn = buttonEl || (typeof event !== 'undefined' ? event.target : document.getElementById('nav-connect-btn'));
+            if (!btn) {
+                console.error('No button element found');
+                return;
+            }
             const originalText = btn.textContent;
+
+            // Timeout helper - 45 second max wait
+            const withTimeout = (promise, ms = 45000) => {
+                return Promise.race([
+                    promise,
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Connection timed out. Please try again.')), ms))
+                ]);
+            };
 
             try {
                 if (typeof window.ethereum === 'undefined') {
@@ -820,10 +833,10 @@
                 btn.textContent = 'Connecting...';
                 btn.disabled = true;
 
-                // Request wallet connection
-                const accounts = await window.ethereum.request({
+                // Request wallet connection with timeout
+                const accounts = await withTimeout(window.ethereum.request({
                     method: 'eth_requestAccounts'
-                });
+                }));
 
                 if (!accounts || accounts.length === 0) {
                     throw new Error('No accounts found');
@@ -947,7 +960,7 @@
         const musicTime = parseFloat(localStorage.getItem('bonzi_music_time') || '0');
 
         if (musicState === 'playing') {
-            bgMusic.src = '../assets/bonzi-theme.mp3';
+            bgMusic.src = '../moby-god-moving.mp3';
             bgMusic.currentTime = musicTime;
             bgMusic.play().then(() => {
                 soundToggle.classList.remove('muted');
@@ -958,7 +971,7 @@
         soundToggle.addEventListener('click', () => {
             if (bgMusic.paused) {
                 if (!bgMusic.src || bgMusic.src === '') {
-                    bgMusic.src = '../assets/bonzi-theme.mp3';
+                    bgMusic.src = '../moby-god-moving.mp3';
                 }
                 bgMusic.play();
                 soundToggle.classList.remove('muted');
@@ -1004,7 +1017,7 @@
             }
             updateButtonState();
             navBtn.addEventListener('click', () => {
-                if (!updateButtonState()) connectWallet(1);
+                if (!updateButtonState()) connectWallet(1, navBtn);
             });
         })();
     </script>

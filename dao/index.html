@@ -855,7 +855,7 @@
         const musicTime = parseFloat(localStorage.getItem('bonzi_music_time') || '0');
 
         if (musicState === 'playing') {
-            bgMusic.src = '../assets/bonzi-theme.mp3';
+            bgMusic.src = '../moby-god-moving.mp3';
             bgMusic.currentTime = musicTime;
             bgMusic.play().then(() => {
                 soundToggle.classList.remove('muted');
@@ -868,7 +868,7 @@
         soundToggle.addEventListener('click', () => {
             if (bgMusic.paused) {
                 if (!bgMusic.src || bgMusic.src === '') {
-                    bgMusic.src = '../assets/bonzi-theme.mp3';
+                    bgMusic.src = '../moby-god-moving.mp3';
                 }
                 bgMusic.play();
                 soundToggle.classList.remove('muted');

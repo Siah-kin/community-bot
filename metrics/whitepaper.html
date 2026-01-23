@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intellectual Foundations - Bonzi Whitepaper</title>
-    <meta name="description" content="Two Nobel Prizes and Vitalik agree: the problem isn't decentralization — it's what you decentralize. Token-gated research.">
+    <title>Full Whitepaper - Bonzi Platform</title>
+    <meta name="description" content="Complete 40+ page whitepaper covering intellectual foundations, platform architecture, economics, and regulatory positioning. Request access.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/metrics/whitepaper.html">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -503,21 +503,125 @@
         <div class="nav-links">
             <a href="../features.html" class="nav-link">Features</a>
             <a href="../faq.html" class="nav-link">Manifesto</a>
-            <a href="index.html" class="nav-link gated">🔒 Research</a>
+            <div class="nav-dropdown">
+                <span class="nav-link active">Whitepaper</span>
+                <div class="nav-dropdown-menu">
+                    <a href="whitepaper-lite.html">LITE (Public)</a>
+                    <a href="whitepaper-builder.html">BUILDER (DAO)</a>
+                    <a href="whitepaper.html">FULL (Request)</a>
+                </div>
+            </div>
             <span class="nav-divider"></span>
             <button class="theme-toggle-btn" id="themeBtn">🌙</button>
         </div>
     </nav>
 
+    <!-- Version Indicator -->
+    <div style="position: fixed; bottom: 20px; left: 20px; background: #DC2626; color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; z-index: 1000;">FULL VERSION</div>
+
+    <!-- Nav dropdown styles -->
+    <style>
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > .nav-link { cursor: pointer; }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 200;
+            margin-top: 8px;
+        }
+        body.dark-mode .nav-dropdown-menu {
+            background: rgba(26, 26, 26, 0.98);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+        .nav-dropdown-menu a {
+            display: block;
+            padding: 8px 16px;
+            color: rgba(0, 0, 0, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: background 0.15s;
+        }
+        body.dark-mode .nav-dropdown-menu a { color: rgba(255, 255, 255, 0.7); }
+        .nav-dropdown-menu a:hover { background: rgba(0, 0, 0, 0.05); }
+        body.dark-mode .nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.08); }
+    </style>
+
     <!-- Hero -->
     <div class="research-hero" id="mainContent">
-        <h1>Intellectual Foundations</h1>
+        <p style="display: inline-block; background: rgba(220, 38, 38, 0.15); color: #DC2626; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 24px;">Full Whitepaper (40+ Pages)</p>
+        <h1>Democratisation of Liquidity, Curated by an Oracle</h1>
         <p class="research-intro">
-            Why does Bonzi exist? Not because someone wanted to build another DAO tool. Because three independent frameworks — two backed by Nobel Prizes — point to the same conclusion.
+            Complete documentation covering intellectual foundations, platform architecture, economics, regulatory positioning, and technical implementation. Request access for due diligence.
         </p>
         <blockquote class="blockquote-hero">
             "Two Nobel Prizes and Vitalik agree: the problem isn't decentralization — it's what you decentralize."
         </blockquote>
+    </div>
+
+    <!-- Request Access Box -->
+    <div style="max-width: 600px; margin: 0 auto 60px; padding: 0 40px;">
+        <div style="background: linear-gradient(135deg, #5B21B6, #7C3AED); color: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 16px;">Request Full Access</h3>
+            <p style="font-size: 15px; opacity: 0.9; margin-bottom: 24px; line-height: 1.6;">
+                The complete whitepaper is available for investors, partners, and regulators. Includes legal architecture, regulatory analysis, and full technical specifications.
+            </p>
+            <a href="mailto:contact@bonzi.app?subject=Whitepaper%20Request&body=I%20would%20like%20to%20request%20access%20to%20the%20full%20Bonzi%20whitepaper%20for%20due%20diligence%20purposes." style="display: inline-block; background: white; color: #7C3AED; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; transition: all 0.2s;">
+                Request Access
+            </a>
+            <p style="font-size: 12px; opacity: 0.7; margin-top: 20px;">
+                Or join our <a href="https://t.me/bonzisiah" target="_blank" style="color: white; text-decoration: underline;">Telegram</a> to discuss directly
+            </p>
+        </div>
+    </div>
+
+    <!-- Table of Contents Preview -->
+    <div style="max-width: 800px; margin: 0 auto 40px; padding: 0 40px;">
+        <h2 style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--purple); margin-bottom: 24px;">What's Inside (44 Pages)</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 0: WHY</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Intellectual Foundations (8 pages)</p>
+            </div>
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 1: WHAT</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Platform Architecture (10 pages)</p>
+            </div>
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 2: HOW</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Implementation Guide (8 pages)</p>
+            </div>
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 3: PROOF</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Evidence & Competition (6 pages)</p>
+            </div>
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 4: TRUST</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Regulatory & Governance (8 pages)</p>
+            </div>
+            <div style="padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <strong style="color: var(--purple);">Part 5: FUTURE</strong>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Roadmap & Vision (4 pages)</p>
+            </div>
+        </div>
+    </div>
+
+    <hr style="max-width: 800px; margin: 60px auto; border: none; border-top: 1px solid rgba(0,0,0,0.1);">
+
+    <!-- Original Content Preview -->
+    <div style="max-width: 800px; margin: 0 auto; padding: 0 40px 40px;">
+        <p style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--gray); margin-bottom: 16px;">Preview: Part 0 - Intellectual Foundations</p>
     </div>
 
     <!-- Main Content -->
@@ -685,8 +789,13 @@
 
     <!-- Footer -->
     <footer>
-        <p>Part of the <a href="../index.html">Bonzi Platform</a> whitepaper. Version 1.2 staging.</p>
-        <p style="margin-top: 8px;">Token-gated content for $BONZI and $VISTA holders.</p>
+        <p>Part of the <a href="../index.html">Bonzi Platform</a> whitepaper. Version FULL (Request Access).</p>
+        <p style="margin-top: 8px;">
+            <a href="whitepaper-lite.html">LITE</a> (Public) |
+            <a href="whitepaper-builder.html">BUILDER</a> (DAO) |
+            <strong>FULL</strong> (Request)
+        </p>
+        <p style="margin-top: 8px;">~15,000 words, 44 pages. Request access for due diligence.</p>
     </footer>
 
     <!-- Theme Toggle Button -->

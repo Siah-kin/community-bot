@@ -1345,13 +1345,336 @@
             to { transform: scale(1.03); box-shadow: 0 0 20px #fff; }
         }
 
+        /* =====================================================
+           LAUNCH TRIGGER BUTTON - Accentuated CTA
+           ===================================================== */
+        .launch-trigger {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 48px;
+            margin-top: 48px;
+            background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+            border: 3px solid #A78BFA;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: trigger-pulse 2s ease-in-out infinite;
+        }
+
+        .launch-trigger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.6);
+        }
+
+        .trigger-text {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .trigger-word {
+            font-size: clamp(24px, 5vw, 42px);
+            font-weight: 800;
+            color: #fff;
+            margin-top: 4px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        @keyframes trigger-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.8); }
+        }
+
+        /* =====================================================
+           SLOT PANEL - 5 Entry Animations
+           ===================================================== */
+        .slot-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            border: 3px solid #7C3AED;
+            border-radius: 16px;
+            padding: 24px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* 5 Entry Animations */
+        .slot-panel.entry-zoom { transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s; }
+        .slot-panel.entry-zoom.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+
+        .slot-panel.entry-slide-up { transform: translate(-50%, 100vh); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s; }
+        .slot-panel.entry-slide-up.open { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
+
+        .slot-panel.entry-slide-down { transform: translate(-50%, -100vh); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s; }
+        .slot-panel.entry-slide-down.open { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
+
+        .slot-panel.entry-flip { transform: translate(-50%, -50%) rotateX(90deg); transition: transform 0.6s ease-out, opacity 0.3s; perspective: 1000px; }
+        .slot-panel.entry-flip.open { transform: translate(-50%, -50%) rotateX(0deg); opacity: 1; pointer-events: auto; }
+
+        .slot-panel.entry-bounce { transform: translate(-50%, -50%) scale(0); transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s; }
+        .slot-panel.entry-bounce.open { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+
+        .slot-panel-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .slot-panel-close:hover { background: rgba(255,255,255,0.2); }
+
+        /* =====================================================
+           SLOT MACHINE - Clean Win98 Easter Egg
+           Classic gray, beveled borders, functional
+           ===================================================== */
+        .slot-machine-wrapper { display: flex; justify-content: center; }
+
+        .slot-machine {
+            width: 340px;
+            max-width: 100%;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            box-shadow: 1px 1px 0 #000;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        /* Win98 Title Bar */
+        .win98-titlebar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            padding: 3px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win98-title {
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        }
+
+        .win98-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .win98-btn {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            font-size: 10px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            color: #000;
+        }
+
+        .win98-btn:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Main Content */
+        .win98-content {
+            padding: 12px;
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        /* LCD Panel */
+        .lcd-panel {
+            flex: 1;
+            background: #000;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 8px;
+        }
+
+        .lcd-label {
+            display: block;
+            color: #7c3aed;
+            font-size: 10px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .lcd-screen {
+            height: 32px;
+            overflow: hidden;
+            background: #0a0a1a;
+            border: 1px solid #333;
+        }
+
+        .slot-reel {
+            display: flex;
+            flex-direction: column;
+            will-change: transform;
+        }
+
+        .slot-reel .word {
+            height: 32px;
+            line-height: 32px;
+            padding: 0 8px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #22c55e;
+            white-space: nowrap;
+        }
+
+        /* Lever */
+        .lever-container {
+            width: 50px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .lever-container:active {
+            border-color: #ffffff #808080 #808080 #ffffff;
+        }
+
+        .lever-track {
+            width: 12px;
+            height: 60px;
+            background: #000;
+            border: 1px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            border-radius: 6px;
+        }
+
+        .lever-handle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.15s;
+        }
+
+        .lever-container:active .lever-handle {
+            transform: translateY(8px);
+        }
+
+        .lever-grip {
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(90deg, #808080, #c0c0c0, #e0e0e0, #c0c0c0, #808080);
+            border-radius: 4px;
+        }
+
+        .lever-ball {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #fff, #a78bfa, #7c3aed);
+            border: 1px solid #5b21b6;
+            border-radius: 50%;
+            margin-top: 2px;
+        }
+
+        /* Status Bar */
+        .win98-statusbar {
+            background: #c0c0c0;
+            border-top: 1px solid #808080;
+            padding: 4px 8px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid #404040;
+        }
+
+        .status-led.ready { background: #22c55e; }
+        .slot-machine.jackpot .status-led.ready { background: #7c3aed; animation: led-blink 0.3s infinite; }
+        .slot-machine.white-jackpot .status-led.ready { background: #d4af37; animation: led-blink 0.3s infinite; }
+
+        @keyframes led-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .status-text { color: #000; }
+        .status-divider { color: #808080; }
+
+        .jackpot-msg {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        .slot-machine.white-jackpot .jackpot-msg { color: #b8860b; }
+
+        /* CTA Button */
+        .win98-cta {
+            display: block;
+            margin: 8px 12px 12px;
+            padding: 8px 16px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .win98-cta:hover {
+            background: #d4d4d4;
+        }
+
+        .win98-cta:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Overlay */
+        .slot-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .slot-overlay.open { opacity: 1; pointer-events: auto; }
+
         @media (max-width: 768px) {
-            .slot-machine {
-                padding: 12px 16px;
-            }
-            .slot-window {
-                min-width: 140px;
-            }
+            .slot-machine { width: 300px; }
+            .lcd-screen { height: 28px; }
+            .slot-reel .word { height: 28px; line-height: 28px; font-size: 14px; }
         }
 
         /* Pain points section - Domino Stack with purple accent bg */
@@ -2654,24 +2977,66 @@
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">Trading fees fund the tip pool. AI verifies who's real. <span class="highlight">verified humans earn ETH.</span> bots get nothing. farmers get filtered. value created here stays here. <span class="highlight">that's the loop.</span></p>
 
-    <!-- Win98 Slot Machine Easter Egg -->
-    <div class="slot-machine" id="slot-machine">
-        <div class="slot-machine-title">
-            <span>🎰 Launch Generator</span>
-            <span style="font-size: 10px;">━ ☐ ✕</span>
-        </div>
-        <div class="slot-row">
-            <div class="slot-display">
-                <span class="slot-label">Launch Your</span>
-                <span class="slot-window"><span class="slot-reel" id="slot-reel"></span></span>
+    <!-- Launch Trigger Button -->
+    <button class="launch-trigger" id="launch-trigger">
+        <span class="trigger-text">🚀 LAUNCH YOUR</span>
+        <span class="trigger-word" id="trigger-word">FUTURE</span>
+    </button>
+
+    <!-- Slot Overlay (click to close) -->
+    <div class="slot-overlay" id="slot-overlay"></div>
+
+    <!-- Slot Machine Panel -->
+    <div class="slot-panel" id="slot-panel">
+        <button class="slot-panel-close" id="slot-panel-close">✕</button>
+
+        <!-- Slot Machine Container - Clean Win98 Easter Egg -->
+        <div class="slot-machine-wrapper" id="slot-wrapper">
+            <div class="slot-machine win98" id="slot-machine">
+                <!-- Win98 Title Bar -->
+                <div class="win98-titlebar">
+                    <span class="win98-title">🎰 Launch Generator</span>
+                    <span class="win98-controls">
+                        <button class="win98-btn min">_</button>
+                        <button class="win98-btn max">□</button>
+                        <button class="win98-btn close" id="slot-panel-close-inner">×</button>
+                    </span>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="win98-content">
+                    <!-- LCD Display -->
+                    <div class="lcd-panel">
+                        <span class="lcd-label">LAUNCH YOUR</span>
+                        <div class="lcd-screen">
+                            <div class="slot-reel" id="slot-reel"></div>
+                        </div>
+                    </div>
+
+                    <!-- Lever -->
+                    <button class="lever-container" id="slot-lever">
+                        <div class="lever-track"></div>
+                        <div class="lever-handle">
+                            <div class="lever-grip"></div>
+                            <div class="lever-ball"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="win98-statusbar">
+                    <span class="status-led ready"></span>
+                    <span class="status-text">Ready</span>
+                    <span class="status-divider">|</span>
+                    <span class="jackpot-msg" id="jackpot-msg"></span>
+                </div>
+
+                <!-- CTA -->
+                <a href="https://t.me/Bonzivista_bot" target="_blank" class="win98-cta">
+                    🚀 Launch Now
+                </a>
             </div>
-            <button class="slot-lever" id="slot-lever" title="Pull me!">
-                <span class="lever-handle"></span>
-            </button>
         </div>
-        <a href="https://etherfun.ethervista.com" target="_blank" class="slot-btn" id="launch-btn">🚀 LAUNCH NOW</a>
-        <div class="jackpot-message">🎉 JACKPOT! You found Bonzi! 🐵💜</div>
-        <div class="white-jackpot-message">✨ ULTRA RARE! White Bonzi discovered! 🤍🐵 ???</div>
     </div>
 </section>
 
@@ -3504,11 +3869,13 @@ const slotWords = [
 const slotReel = document.getElementById('slot-reel');
 const slotLever = document.getElementById('slot-lever');
 const slotMachine = document.getElementById('slot-machine');
+const jackpotMsg = document.getElementById('jackpot-msg');
 let isSpinning = false;
-let currentIndex = 0;
+let currentPosition = 0;
 
 if (slotReel && slotLever) {
-    // Build the reel with all words
+    // Build the reel with all words (GPU-optimized)
+    slotReel.style.willChange = 'transform';
     slotWords.forEach((word, i) => {
         const span = document.createElement('span');
         span.className = 'word';
@@ -3519,57 +3886,153 @@ if (slotReel && slotLever) {
 
     // Get word height for positioning
     const wordHeight = slotReel.querySelector('.word').offsetHeight || 26;
+    const totalHeight = slotWords.length * wordHeight;
 
-    // Pull lever to spin
+    // Easing function: fast start, gradual slowdown
+    function easeOutQuint(t) {
+        return 1 - Math.pow(1 - t, 5);
+    }
+
+    // Pull lever to spin with requestAnimationFrame
     slotLever.addEventListener('click', () => {
         if (isSpinning) return;
         isSpinning = true;
 
         // Reset jackpot state
         slotMachine.classList.remove('jackpot', 'white-jackpot');
+        if (jackpotMsg) jackpotMsg.textContent = '';
 
         // Lever pull animation
         slotLever.classList.add('pulled');
         setTimeout(() => slotLever.classList.remove('pulled'), 200);
 
-        // Fast spin phase
-        let spinCount = 0;
-        const totalSpins = 30 + Math.floor(Math.random() * 20); // 30-50 spins
+        // Pick random target
         const targetIndex = Math.floor(Math.random() * slotWords.length);
+        const targetPosition = targetIndex * wordHeight;
 
-        slotReel.classList.remove('landing');
+        // Calculate spin distance (multiple full rotations + final position)
+        const rotations = 3 + Math.floor(Math.random() * 2); // 3-4 full rotations
+        const totalDistance = (rotations * totalHeight) + targetPosition - (currentPosition % totalHeight);
 
-        const spinInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % slotWords.length;
-            slotReel.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
-            spinCount++;
+        const startPosition = currentPosition;
+        const duration = 3000; // 3 seconds total
+        let startTime = null;
 
-            if (spinCount >= totalSpins) {
-                clearInterval(spinInterval);
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
 
-                // Land on target
-                slotReel.classList.add('landing');
-                currentIndex = targetIndex;
-                slotReel.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
+            // Apply easing - fast at start, slow at end
+            const easedProgress = easeOutQuint(progress);
+            currentPosition = startPosition + (totalDistance * easedProgress);
+
+            // Apply transform (GPU-accelerated)
+            slotReel.style.transform = `translateY(-${currentPosition % totalHeight}px)`;
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                // Landed - snap to exact position
+                currentPosition = targetPosition;
+                slotReel.style.transform = `translateY(-${targetPosition}px)`;
 
                 // Check for jackpot
-                setTimeout(() => {
-                    const landed = slotWords[currentIndex];
-                    if (landed === '🐵 Bonzi') {
-                        slotMachine.classList.add('jackpot');
-                    } else if (landed === '🤍 White Bonzi') {
-                        slotMachine.classList.add('white-jackpot');
-                    }
-                    isSpinning = false;
-                }, 600);
+                const landed = slotWords[targetIndex];
+                if (landed === '🐵 Bonzi') {
+                    slotMachine.classList.add('jackpot');
+                    if (jackpotMsg) jackpotMsg.textContent = '🎉 BONZI JACKPOT! You found a hidden Bonzi!';
+                } else if (landed === '🤍 White Bonzi') {
+                    slotMachine.classList.add('white-jackpot');
+                    if (jackpotMsg) jackpotMsg.textContent = '✨ ULTRA RARE WHITE BONZI! Mystery prize unlocked!';
+                }
+
+                isSpinning = false;
             }
-        }, 50);
+        }
+
+        requestAnimationFrame(animate);
     });
 
-    // Auto-spin on load for preview
-    setTimeout(() => {
-        if (slotLever) slotLever.click();
-    }, 1500);
+    // Auto-spin on panel open (not page load)
+    const slotPanelForObserver = document.getElementById('slot-panel');
+    if (slotPanelForObserver) {
+        const panelObserver = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.target.classList.contains('open') && !isSpinning) {
+                    setTimeout(() => slotLever.click(), 300);
+                }
+            });
+        });
+        panelObserver.observe(slotPanelForObserver, { attributes: true, attributeFilter: ['class'] });
+    }
+}
+
+// =====================================================
+// SLOT PANEL - Win98 Easter Egg
+// =====================================================
+const launchTrigger = document.getElementById('launch-trigger');
+const slotPanel = document.getElementById('slot-panel');
+const slotPanelClose = document.getElementById('slot-panel-close');
+const slotPanelCloseInner = document.getElementById('slot-panel-close-inner');
+const slotOverlay = document.getElementById('slot-overlay');
+const triggerWord = document.getElementById('trigger-word');
+
+// Entry animations - randomly selected on open
+const entryAnimations = ['entry-zoom', 'entry-slide-up', 'entry-slide-down', 'entry-flip', 'entry-bounce'];
+
+// Trigger word cycling (fast flicker)
+const triggerWords = ['FUTURE', 'BRAND', 'TOKEN', 'DAO', 'EMPIRE', 'LEGACY', 'VISION', 'DREAM', 'PROTOCOL', 'COMMUNITY'];
+let triggerIndex = 0;
+
+if (triggerWord) {
+    setInterval(() => {
+        triggerIndex = (triggerIndex + 1) % triggerWords.length;
+        triggerWord.style.opacity = '0';
+        triggerWord.style.transform = 'translateY(-100%)';
+        setTimeout(() => {
+            triggerWord.textContent = triggerWords[triggerIndex];
+            triggerWord.style.opacity = '1';
+            triggerWord.style.transform = 'translateY(0)';
+        }, 80);
+    }, 120);
+}
+
+// Open/close functions
+function openSlotPanel() {
+    // Remove any previous animation class
+    entryAnimations.forEach(anim => slotPanel.classList.remove(anim));
+
+    // Pick random entry animation
+    const randomEntry = entryAnimations[Math.floor(Math.random() * entryAnimations.length)];
+    slotPanel.classList.add(randomEntry);
+    slotPanel.classList.add('open');
+    if (slotOverlay) slotOverlay.classList.add('open');
+}
+
+function closeSlotPanel() {
+    slotPanel.classList.remove('open');
+    if (slotOverlay) slotOverlay.classList.remove('open');
+}
+
+// Open panel
+if (launchTrigger && slotPanel) {
+    launchTrigger.addEventListener('click', openSlotPanel);
+}
+
+// Close panel (outer X button)
+if (slotPanelClose && slotPanel) {
+    slotPanelClose.addEventListener('click', closeSlotPanel);
+}
+
+// Close panel (Win98 X button)
+if (slotPanelCloseInner) {
+    slotPanelCloseInner.addEventListener('click', closeSlotPanel);
+}
+
+// Close panel (overlay click)
+if (slotOverlay) {
+    slotOverlay.addEventListener('click', closeSlotPanel);
 }
 
 const chatMessages = document.getElementById('chat-messages');

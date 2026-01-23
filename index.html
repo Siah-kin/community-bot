@@ -1089,8 +1089,7 @@
             border-bottom: 3px solid #808080;
             padding: 16px 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            opacity: 0;
-            transform: translateY(30px);
+            margin-top: 48px;
         }
 
         .slot-machine-title {
@@ -2579,7 +2578,7 @@
             </div>
         </div>
         <div class="nav-divider"></div>
-        <a href="research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
+        <a href="metrics/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
         <a href="dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
         <div class="nav-divider"></div>
         <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact">contact</a>
@@ -2612,28 +2611,6 @@
     <div class="scroll-hint">
         <span data-i18n="opening.scroll">scroll</span>
         <div class="scroll-line"></div>
-    </div>
-</section>
-
-<!-- Launch CTA - Win98 Slot Machine Easter Egg -->
-<section class="launch-cta">
-    <div class="slot-machine" id="slot-machine">
-        <div class="slot-machine-title">
-            <span>🎰 Launch Generator</span>
-            <span style="font-size: 10px;">━ ☐ ✕</span>
-        </div>
-        <div class="slot-row">
-            <div class="slot-display">
-                <span class="slot-label">Launch Your</span>
-                <span class="slot-window"><span class="slot-reel" id="slot-reel"></span></span>
-            </div>
-            <button class="slot-lever" id="slot-lever" title="Pull me!">
-                <span class="lever-handle"></span>
-            </button>
-        </div>
-        <a href="https://etherfun.ethervista.com" target="_blank" class="slot-btn" id="launch-btn">🚀 LAUNCH NOW</a>
-        <div class="jackpot-message">🎉 JACKPOT! You found Bonzi! 🐵💜</div>
-        <div class="white-jackpot-message">✨ ULTRA RARE! White Bonzi discovered! 🤍🐵 ???</div>
     </div>
 </section>
 
@@ -2676,7 +2653,26 @@
 
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">Trading fees fund the tip pool. AI verifies who's real. <span class="highlight">verified humans earn ETH.</span> bots get nothing. farmers get filtered. value created here stays here. <span class="highlight">that's the loop.</span></p>
-    <a href="faq.html#why-purple" class="manifesto-btn" data-i18n="statement.manifesto">But Why Fucking Purple?</a>
+
+    <!-- Win98 Slot Machine Easter Egg -->
+    <div class="slot-machine" id="slot-machine">
+        <div class="slot-machine-title">
+            <span>🎰 Launch Generator</span>
+            <span style="font-size: 10px;">━ ☐ ✕</span>
+        </div>
+        <div class="slot-row">
+            <div class="slot-display">
+                <span class="slot-label">Launch Your</span>
+                <span class="slot-window"><span class="slot-reel" id="slot-reel"></span></span>
+            </div>
+            <button class="slot-lever" id="slot-lever" title="Pull me!">
+                <span class="lever-handle"></span>
+            </button>
+        </div>
+        <a href="https://etherfun.ethervista.com" target="_blank" class="slot-btn" id="launch-btn">🚀 LAUNCH NOW</a>
+        <div class="jackpot-message">🎉 JACKPOT! You found Bonzi! 🐵💜</div>
+        <div class="white-jackpot-message">✨ ULTRA RARE! White Bonzi discovered! 🤍🐵 ???</div>
+    </div>
 </section>
 
 <section class="pain-section">
@@ -3463,7 +3459,6 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.to('.opening-bonzi', { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)', delay: 0.3 });
 gsap.to('.opening-text', { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
 gsap.to('.scroll-hint', { opacity: 1, duration: 0.6, delay: 1.2 });
-gsap.to('.launch-btn', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: '.launch-cta', start: 'top 70%', toggleActions: 'play none none reverse' }});
 gsap.to('.history-content', { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '.history', start: 'top 70%', toggleActions: 'play none none reverse' }});
 gsap.utils.toArray('.reveal-line span').forEach((line, i) => {
     gsap.to(line, { y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: line, start: 'top 80%', toggleActions: 'play none none reverse' }, delay: i * 0.1 });
@@ -4342,7 +4337,7 @@ contactForm.addEventListener('submit', async (e) => {
     async function handleConnect() {
         if (updateButtonState()) {
             // Already connected - go to metrics
-            window.location.href = 'research/';
+            window.location.href = 'metrics/';
             return;
         }
 

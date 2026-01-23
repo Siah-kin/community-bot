@@ -370,7 +370,7 @@
                 </div>
             </div>
             <div class="nav-divider"></div>
-            <a href="../research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
+            <a href="../metrics/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
             <a href="../dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
             <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
@@ -604,7 +604,7 @@ to liquidity providers
             async function handleConnect() {
                 // If already connected, clicking takes user to research (gated content)
                 if (updateButtonState()) {
-                    window.location.href = '../research/';
+                    window.location.href = '../metrics/';
                     return;
                 }
                 if (typeof window.ethereum === 'undefined') {

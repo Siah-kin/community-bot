@@ -388,7 +388,7 @@
                 </div>
             </div>
             <div class="nav-divider"></div>
-            <a href="../research/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
+            <a href="../metrics/" class="nav-link gated" data-i18n="nav.metrics">metrics</a>
             <a href="./" class="nav-link gated active" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
             <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
@@ -645,7 +645,7 @@
                         <p>Connect wallet on Metrics page. Then visit DAO and Whitepaper - are they unlocked? Refresh browser - still unlocked? Clear localStorage - gates return?</p>
                         <div class="test-card-footer">
                             <span class="test-card-reward">+5 pts per bug</span>
-                            <a href="../research/" class="test-card-link">Test Metrics</a>
+                            <a href="../metrics/" class="test-card-link">Test Metrics</a>
                         </div>
                     </div>
                 </div>
@@ -1085,7 +1085,7 @@
                 return false;
             }
             navBtn.addEventListener('click', async () => {
-                if (updateNavButton()) { window.location.href = '../research/'; return; }
+                if (updateNavButton()) { window.location.href = '../metrics/'; return; }
                 // Trigger the main connect flow
                 connectWallet();
             });

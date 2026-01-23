@@ -281,6 +281,258 @@
             .tier-requirement { margin-left: 0; margin-top: 8px; width: 100%; }
             .unlock-prompt { padding: 24px; margin: 0 20px; }
         }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* TRADING VOLUME PROOF SECTION                                    */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .proof-section {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            padding: 0 40px;
+        }
+        .proof-section .section-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .proof-section h2 {
+            font-size: 32px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        .proof-section .prose {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 32px;
+            max-width: 720px;
+        }
+        .proof-section .prose strong {
+            color: var(--black);
+        }
+        body.dark-mode .proof-section .prose strong {
+            color: var(--white);
+        }
+        .proof-section .prose .define {
+            color: var(--purple);
+            font-style: italic;
+        }
+        .proof-section .manifesto-link {
+            color: var(--purple);
+            text-decoration: none;
+            border-bottom: 1px solid var(--purple-light);
+        }
+        .proof-section .manifesto-link:hover {
+            border-bottom-color: var(--purple);
+        }
+
+        /* Volume Charts */
+        .volume-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        @media (max-width: 768px) {
+            .volume-charts { grid-template-columns: 1fr; }
+        }
+        .chart-card {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        body.dark-mode .chart-card {
+            background: #1F1F23;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .chart-card h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-card .chart-subtitle {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        .chart-card .chart-highlight {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 4px;
+        }
+        .chart-card .chart-highlight.purple { color: var(--purple); }
+        .chart-card .chart-highlight.gold { color: var(--gold); }
+
+        /* CSS-only Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 120px;
+            margin-bottom: 16px;
+            padding-top: 8px;
+        }
+        .bar-chart .bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--purple) 0%, var(--purple-dark) 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: height 0.3s ease;
+            min-height: 4px;
+        }
+        .bar-chart .bar:hover {
+            background: var(--purple-light);
+        }
+        .bar-chart .bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+        .bar-chart .bar.highlight {
+            background: linear-gradient(180deg, var(--gold) 0%, #c4a030 100%);
+        }
+
+        /* Distribution Correlation Line */
+        .correlation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 13px;
+        }
+        body.dark-mode .correlation-row {
+            border-top-color: rgba(255,255,255,0.05);
+        }
+        .correlation-row .label { color: var(--gray); }
+        .correlation-row .value {
+            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+        }
+        .correlation-row .value.green { color: #10B981; }
+
+        /* Three-Box Regulatory System */
+        .three-box-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        @media (max-width: 900px) {
+            .three-box-grid { grid-template-columns: 1fr; }
+        }
+        .three-box {
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+        .three-box.technical {
+            background: rgba(59, 130, 246, 0.08);
+            border-left-color: #3B82F6;
+        }
+        .three-box.feature {
+            background: rgba(124, 58, 237, 0.08);
+            border-left-color: var(--purple);
+        }
+        .three-box.advantage {
+            background: rgba(16, 185, 129, 0.08);
+            border-left-color: #10B981;
+        }
+        body.dark-mode .three-box.technical { background: rgba(59, 130, 246, 0.12); }
+        body.dark-mode .three-box.feature { background: rgba(124, 58, 237, 0.12); }
+        body.dark-mode .three-box.advantage { background: rgba(16, 185, 129, 0.12); }
+        .three-box .box-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .three-box.technical .box-label { color: #3B82F6; }
+        .three-box.feature .box-label { color: var(--purple); }
+        .three-box.advantage .box-label { color: #10B981; }
+        .three-box h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .three-box p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Comparison Stats Row */
+        .stats-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--gray-light);
+            border-radius: 12px;
+        }
+        body.dark-mode .stats-comparison {
+            background: #1F1F23;
+        }
+        @media (max-width: 768px) {
+            .stats-comparison { grid-template-columns: 1fr; }
+        }
+        .stats-comparison .stat {
+            text-align: center;
+        }
+        .stats-comparison .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            color: var(--purple);
+        }
+        .stats-comparison .stat-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* Contract Links */
+        .contract-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+        .contract-link {
+            font-size: 12px;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            font-family: 'Space Mono', monospace;
+            transition: all 0.2s;
+        }
+        .contract-link:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+        }
+        body.dark-mode .contract-link {
+            border-color: rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 <body>
@@ -353,6 +605,157 @@
     <section class="hero">
         <h1>System Metrics</h1>
         <p>Live parameters and configuration. Three tiers of access based on token holdings.</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- TRADING VOLUME AS PROOF - Bridge from Manifesto                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="proof-section">
+        <span class="section-number">01 • Proof of Mechanics</span>
+        <h2>Volume → Fees → Stakers. That's the loop.</h2>
+
+        <p class="prose">
+            In the <a href="../faq.html#why-purple" class="manifesto-link">manifesto</a>, we said "staking how it should be." Here's what that means in numbers. The <span class="define">Euler model</span> <span class="define">(a fee accumulator that distributes trading fees to stakers in ETH, not tokens)</span> creates a flywheel: trading volume generates fees, fees flow to stakers, stakers have reason to hold, holding supports liquidity, liquidity enables more trading. <strong>This isn't speculation — it's math.</strong>
+        </p>
+
+        <p class="prose">
+            Volume dropped 70% in the bear market. Distributions continued. That's the difference between narrative and mechanics. Below: 12 months of trading data from both tokens. The correlation is the proof.
+        </p>
+
+        <!-- Volume Charts -->
+        <div class="volume-charts">
+            <!-- BONZI Chart -->
+            <div class="chart-card">
+                <h3>$BONZI Monthly Volume <span class="badge live">LIVE</span></h3>
+                <p class="chart-subtitle">Ethervista DEX • Contract: 0xd617...cbb86</p>
+                <div class="chart-highlight purple">$1.6M+ distributed</div>
+                <p class="chart-subtitle">to stakers over 600+ days</p>
+
+                <div class="bar-chart">
+                    <div class="bar" style="height: 45%;" data-label="Feb"></div>
+                    <div class="bar" style="height: 35%;" data-label="Mar"></div>
+                    <div class="bar" style="height: 25%;" data-label="Apr"></div>
+                    <div class="bar" style="height: 20%;" data-label="May"></div>
+                    <div class="bar" style="height: 15%;" data-label="Jun"></div>
+                    <div class="bar" style="height: 18%;" data-label="Jul"></div>
+                    <div class="bar" style="height: 22%;" data-label="Aug"></div>
+                    <div class="bar" style="height: 40%;" data-label="Sep"></div>
+                    <div class="bar highlight" style="height: 95%;" data-label="Oct"></div>
+                    <div class="bar highlight" style="height: 100%;" data-label="Nov"></div>
+                    <div class="bar" style="height: 65%;" data-label="Dec"></div>
+                    <div class="bar" style="height: 55%;" data-label="Jan"></div>
+                </div>
+
+                <div class="correlation-row">
+                    <span class="label">Fee rate to stakers</span>
+                    <span class="value">~3%</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">Bear market (lowest)</span>
+                    <span class="value">$50k/day</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">Bull periods (peak)</span>
+                    <span class="value">$1M+/day</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">Distributions during bear</span>
+                    <span class="value green">Continued ✓</span>
+                </div>
+            </div>
+
+            <!-- VISTA Chart -->
+            <div class="chart-card">
+                <h3>$VISTA Monthly Volume <span class="badge live">LIVE</span></h3>
+                <p class="chart-subtitle">Ethervista DEX • Contract: 0xc9bc...cbbf</p>
+                <div class="chart-highlight gold">Same mechanics</div>
+                <p class="chart-subtitle">pattern holds across Euler tokens</p>
+
+                <div class="bar-chart">
+                    <div class="bar" style="height: 55%;" data-label="Feb"></div>
+                    <div class="bar" style="height: 40%;" data-label="Mar"></div>
+                    <div class="bar" style="height: 30%;" data-label="Apr"></div>
+                    <div class="bar" style="height: 25%;" data-label="May"></div>
+                    <div class="bar" style="height: 20%;" data-label="Jun"></div>
+                    <div class="bar" style="height: 22%;" data-label="Jul"></div>
+                    <div class="bar" style="height: 28%;" data-label="Aug"></div>
+                    <div class="bar highlight" style="height: 85%;" data-label="Sep"></div>
+                    <div class="bar highlight" style="height: 100%;" data-label="Oct"></div>
+                    <div class="bar highlight" style="height: 90%;" data-label="Nov"></div>
+                    <div class="bar" style="height: 60%;" data-label="Dec"></div>
+                    <div class="bar" style="height: 50%;" data-label="Jan"></div>
+                </div>
+
+                <div class="correlation-row">
+                    <span class="label">Fee rate to stakers</span>
+                    <span class="value">~5%</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">LP hardlock</span>
+                    <span class="value">75%</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">Team allocation</span>
+                    <span class="value green">0%</span>
+                </div>
+                <div class="correlation-row">
+                    <span class="label">Inflation events</span>
+                    <span class="value green">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Stats -->
+        <div class="stats-comparison">
+            <div class="stat">
+                <div class="stat-value">~3-5%</div>
+                <div class="stat-label">Volume → Stakers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0%</div>
+                <div class="stat-label">Token Inflation</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">ETH</div>
+                <div class="stat-label">Reward Currency</div>
+            </div>
+        </div>
+
+        <!-- Regulatory Framing Prose -->
+        <p class="prose">
+            <strong>Why this matters beyond yield.</strong> The structure has regulatory implications. The <span class="define">Howey test</span> <span class="define">(the SEC's framework for determining if something is a security)</span> asks: "Do profits come from the efforts of others?" Our answer: What others? The code runs. The team can't touch it. Distributions are mathematical, not discretionary.
+        </p>
+
+        <!-- Three-Box Regulatory System -->
+        <div class="three-box-grid">
+            <div class="three-box technical">
+                <span class="box-label">Technical • HOW</span>
+                <h4>Euler Accumulator</h4>
+                <p>Fees are tracked per token via an on-chain accumulator. When you claim, you receive your proportional share of all fees since your last claim. No human decides. No approval needed. Math distributes.</p>
+            </div>
+            <div class="three-box feature">
+                <span class="box-label">Feature • WHAT</span>
+                <h4>ETH Rewards, Not Tokens</h4>
+                <p>Stakers receive ETH — a commodity, not a project token. No inflation schedule. No emission curve. No dilution. The token is your membership card. The ETH is your share of activity.</p>
+            </div>
+            <div class="three-box advantage">
+                <span class="box-label">Advantage • WHY</span>
+                <h4>Utility, Not Security</h4>
+                <p>Howey's "efforts of others" prong fails when code distributes and team is absent from the reward mechanism. The token grants access and governance. The ETH comes from trading activity, not team promises.</p>
+            </div>
+        </div>
+
+        <p class="prose">
+            Self-compounding mechanics allow for more creative token ecosystems in a regulatory-sound manner. The reward is ETH. The token possesses utility as an anchor of decision and values — not as a security-behaving money machine. <strong>Verify, don't trust.</strong>
+        </p>
+
+        <!-- Contract Links -->
+        <div class="contract-links">
+            <a href="https://etherscan.io/address/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank" class="contract-link">$BONZI: 0xd617...cb86</a>
+            <a href="https://etherscan.io/address/0xc9bca88b04581699fab5aa276ccaff7df957cbbf" target="_blank" class="contract-link">$VISTA: 0xc9bc...cbbf</a>
+            <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" class="contract-link">BONZI Hardstake: 0x3618...1a53</a>
+            <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank" class="contract-link">VISTA Hardstake: 0xee5a...278f</a>
+        </div>
     </section>
 
     <div class="dashboard">

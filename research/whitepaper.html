@@ -709,13 +709,27 @@
 
         // Connect wallet
         document.getElementById('connectWallet').addEventListener('click', async () => {
+            const btn = document.getElementById('connectWallet');
+            const originalText = btn.textContent;
+
+            // Timeout helper - 45 second max wait
+            const withTimeout = (promise, ms = 45000) => {
+                return Promise.race([
+                    promise,
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Connection timed out. Please try again.')), ms))
+                ]);
+            };
+
             if (typeof window.ethereum === 'undefined') {
                 alert('Please install MetaMask to access this content.');
                 return;
             }
 
             try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                btn.textContent = 'Connecting...';
+                btn.disabled = true;
+
+                const accounts = await withTimeout(window.ethereum.request({ method: 'eth_requestAccounts' }));
                 const address = accounts[0];
 
                 // For MVP: Accept any connected wallet (token check can be added later)
@@ -725,11 +739,17 @@
                 localStorage.setItem('bonzi_wallet_address', address);
                 localStorage.setItem('bonzi_wallet_timestamp', Date.now().toString());
 
+                btn.textContent = 'Verified ✓';
+
                 // Hide gate
-                document.getElementById('tokenGate').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('tokenGate').classList.add('hidden');
+                }, 500);
 
             } catch (error) {
                 console.error('Wallet connection failed:', error);
+                btn.textContent = originalText;
+                btn.disabled = false;
                 // Show Win98 error popup
                 document.getElementById('win98Error').classList.add('show');
             }

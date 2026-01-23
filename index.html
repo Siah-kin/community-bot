@@ -29,6 +29,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <style>
         * {
@@ -2283,6 +2284,319 @@
             color: white;
         }
 
+        /* Tool Showcase - replaces chat demo */
+        .tools-container {
+            width: 100%;
+            max-width: 600px;
+            background: #0E1621;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .tool-tabs {
+            display: flex;
+            background: #17212B;
+            border-bottom: 1px solid #232E3C;
+        }
+
+        .tool-tab {
+            flex: 1;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            color: #6C7883;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tool-tab:hover {
+            color: #fff;
+            background: rgba(118, 106, 200, 0.1);
+        }
+
+        .tool-tab.active {
+            color: #fff;
+            border-bottom-color: #766AC8;
+            background: rgba(118, 106, 200, 0.15);
+        }
+
+        .tool-panel {
+            display: none;
+            padding: 24px;
+        }
+
+        .tool-panel.active {
+            display: block;
+        }
+
+        .tool-desc {
+            color: #8B9CAB;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .tool-form {
+            margin-bottom: 24px;
+        }
+
+        .tool-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .tool-form .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-form label {
+            font-size: 12px;
+            color: #6C7883;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tool-form input,
+        .tool-form select {
+            padding: 12px 14px;
+            background: #242F3D;
+            border: 1px solid #2B3945;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .tool-form input:focus,
+        .tool-form select:focus {
+            border-color: #766AC8;
+        }
+
+        .tool-form input::placeholder {
+            color: #4A5568;
+        }
+
+        .code-output {
+            background: #1A1F2E;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: #232E3C;
+            border-bottom: 1px solid #2B3945;
+        }
+
+        .code-header span {
+            font-size: 12px;
+            color: #6C7883;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            background: #766AC8;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #8B7FD9;
+        }
+
+        .code-output pre {
+            padding: 16px;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .code-output code {
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #4ADE80;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-tool-primary,
+        .btn-tool-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-tool-primary {
+            background: #766AC8;
+            color: #fff;
+        }
+
+        .btn-tool-primary:hover {
+            background: #8B7FD9;
+        }
+
+        .btn-tool-secondary {
+            background: #242F3D;
+            color: #8B9CAB;
+        }
+
+        .btn-tool-secondary:hover {
+            background: #2B3945;
+            color: #fff;
+        }
+
+        /* QR Preview */
+        .qr-preview-mini {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #242F3D;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4A5568;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #qr-canvas-mini {
+            border-radius: 12px;
+        }
+
+        /* Bot Features */
+        .bot-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .bot-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #242F3D;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #8B9CAB;
+        }
+
+        .feature-check {
+            color: #4ADE80;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .tool-form .form-row {
+                grid-template-columns: 1fr;
+            }
+            .tool-actions {
+                flex-direction: column;
+            }
+            .bot-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Light mode adjustments */
+        body.light-mode .tools-container {
+            background: #FFFFFF;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+        }
+
+        body.light-mode .tool-tabs {
+            background: #F5F5F5;
+            border-bottom-color: #E5E5E5;
+        }
+
+        body.light-mode .tool-tab {
+            color: #737373;
+        }
+
+        body.light-mode .tool-tab:hover,
+        body.light-mode .tool-tab.active {
+            color: #0A0A0A;
+        }
+
+        body.light-mode .tool-desc {
+            color: #737373;
+        }
+
+        body.light-mode .tool-form input,
+        body.light-mode .tool-form select {
+            background: #F5F5F5;
+            border-color: #E5E5E5;
+            color: #0A0A0A;
+        }
+
+        body.light-mode .code-output {
+            background: #F5F5F5;
+        }
+
+        body.light-mode .code-header {
+            background: #E5E5E5;
+            border-bottom-color: #D4D4D4;
+        }
+
+        body.light-mode .code-output code {
+            color: #16A34A;
+        }
+
+        body.light-mode .btn-tool-secondary {
+            background: #F5F5F5;
+            color: #737373;
+        }
+
+        body.light-mode .btn-tool-secondary:hover {
+            background: #E5E5E5;
+            color: #0A0A0A;
+        }
+
+        body.light-mode .qr-placeholder,
+        body.light-mode .bot-feature {
+            background: #F5F5F5;
+            color: #737373;
+        }
+
         /* Pricing section - 4-card grid */
         .pricing-section {
             padding: 120px 48px;
@@ -3206,34 +3520,134 @@
 
 <section class="demo-section" id="demo">
     <div class="demo-intro">
-        <h2 data-i18n="demo.label">try it</h2>
-        <p data-i18n="demo.title">ask bonzi anything. see what happens.</p>
+        <h2 data-i18n="demo.label">free tools</h2>
+        <p data-i18n="demo.title">build your community. start in 60 seconds.</p>
     </div>
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="chat-avatar-header">B</div>
-            <div class="chat-header-info">
-                <h4>bonzi</h4>
-                <span><span class="chat-status"></span><span data-i18n="demo.online">online</span></span>
+    <div class="tools-container">
+        <!-- Tool Tabs -->
+        <div class="tool-tabs">
+            <button class="tool-tab active" data-tab="widget">Buy Widget</button>
+            <button class="tool-tab" data-tab="qr">QR Stickers</button>
+            <button class="tool-tab" data-tab="bot">Bot Source</button>
+        </div>
+
+        <!-- Widget Tab -->
+        <div class="tool-panel active" id="panel-widget">
+            <p class="tool-desc">Let users buy your token with just an email. No wallet, no seed phrase, no crypto knowledge.</p>
+
+            <div class="tool-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="widget-token">Token Address (Base)</label>
+                        <input type="text" id="widget-token" placeholder="0x...">
+                    </div>
+                    <div class="form-group">
+                        <label for="widget-symbol">Symbol</label>
+                        <input type="text" id="widget-symbol" placeholder="$TOKEN" value="$TOKEN">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="widget-position">Display Mode</label>
+                        <select id="widget-position">
+                            <option value="inline">Inline (embed on page)</option>
+                            <option value="modal">Modal (button → popup)</option>
+                            <option value="floating">Floating (corner button)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="widget-theme">Theme</label>
+                        <select id="widget-theme">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-output">
+                <div class="code-header">
+                    <span>Embed Code</span>
+                    <button class="copy-btn" onclick="copyWidgetCode()">Copy</button>
+                </div>
+                <pre id="widget-code"><code>&lt;script
+  src="https://bonzi.bot/widget/embed.js"
+  data-token="0x..."
+  data-symbol="$TOKEN"&gt;
+&lt;/script&gt;</code></pre>
+            </div>
+
+            <div class="tool-actions">
+                <a href="widget/brand-widget.html" target="_blank" class="btn-tool-primary">Preview Widget →</a>
+                <a href="https://github.com/Siah-kin/community-bot/blob/main/docs/WIDGET_INTEGRATION_GUIDE.md" target="_blank" class="btn-tool-secondary">Full Docs</a>
             </div>
         </div>
-        <div class="chat-messages" id="chat-messages">
-            <div class="chat-message bot">
-                <div class="bot-avatar">B</div>
-                <div class="chat-bubble" data-i18n="demo.greeting">hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated</div>
+
+        <!-- QR Tab -->
+        <div class="tool-panel" id="panel-qr">
+            <p class="tool-desc">Generate QR codes that link directly to your token's buy widget. Perfect for stickers, flyers, and IRL marketing.</p>
+
+            <div class="qr-preview-mini">
+                <div class="qr-placeholder" id="qr-placeholder">
+                    <span>Enter token details below</span>
+                </div>
+                <canvas id="qr-canvas-mini" style="display: none;"></canvas>
+            </div>
+
+            <div class="tool-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="qr-token">Token Address</label>
+                        <input type="text" id="qr-token" placeholder="0x...">
+                    </div>
+                    <div class="form-group">
+                        <label for="qr-symbol">Symbol</label>
+                        <input type="text" id="qr-symbol" placeholder="$TOKEN" value="$TOKEN">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-actions">
+                <button class="btn-tool-primary" onclick="generateQRPreview()">Generate QR</button>
+                <a href="widget/qr.html" target="_blank" class="btn-tool-secondary">Full QR Generator →</a>
             </div>
         </div>
-        <div class="suggestions">
-            <button class="suggestion" data-scenario="raid">raid review</button>
-            <button class="suggestion" data-scenario="sybil">sybil detect</button>
-            <button class="suggestion" data-scenario="og">OG recognition</button>
-            <button class="suggestion" data-scenario="fud">FUD patrol</button>
-            <button class="suggestion" data-scenario="qa">24/7 Q&A</button>
-            <button class="suggestion" data-scenario="emotion">emotion read</button>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" data-i18n-placeholder="demo.placeholder" placeholder="type something..." autocomplete="off">
-            <button id="chat-send" data-i18n="demo.send">send</button>
+
+        <!-- Bot Tab -->
+        <div class="tool-panel" id="panel-bot">
+            <p class="tool-desc">Fork the open-source community bot. Run it yourself, modify it, make it yours. MIT licensed.</p>
+
+            <div class="bot-features">
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>Sybil detection</span>
+                </div>
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>Raid verification</span>
+                </div>
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>OG recognition</span>
+                </div>
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>RAG knowledge base</span>
+                </div>
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>24/7 Q&A from your docs</span>
+                </div>
+                <div class="bot-feature">
+                    <span class="feature-check">✓</span>
+                    <span>FUD patrol while you sleep</span>
+                </div>
+            </div>
+
+            <div class="tool-actions">
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank" class="btn-tool-primary">Fork on GitHub →</a>
+                <a href="manual/" class="btn-tool-secondary">Setup Guide</a>
+            </div>
         </div>
     </div>
 </section>
@@ -3503,7 +3917,7 @@ const translations = {
         "features.leaderboard.title": "Live Leaderboard", "features.leaderboard.desc": "Quality-weighted rankings. Not task counts. Who's actually helping? Who's creating value? Bonzi tracks it all.", "features.leaderboard.detail": "Cooperation score multipliers",
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.", "features.claim.detail": "On-chain claims via connected wallet",
         "features.sybil.title": "Sybil Detection", "features.sybil.desc": "AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.", "features.sybil.detail": "Cross-tenant intel sharing",
-        "demo.label": "try it", "demo.title": "ask bonzi anything. see what happens.", "demo.online": "online",
+        "demo.label": "free tools", "demo.title": "build your community. start in 60 seconds.",
         "demo.greeting": "hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated",
         "demo.sug1": "what can you do?", "demo.sug2": "tell me a joke", "demo.sug3": "are you still spyware?", "demo.placeholder": "type something...", "demo.send": "send",
         "links.source.title": "source code", "links.source.desc": "fully open source. fork it, run it, break it, fix it. trust but verify.",
@@ -3559,7 +3973,7 @@ const translations = {
         "features.leaderboard.title": "Ranking ao Vivo", "features.leaderboard.desc": "Rankings ponderados por qualidade. Nao contagem de tarefas. Quem realmente ajuda? Quem cria valor? Bonzi rastreia tudo.", "features.leaderboard.detail": "Multiplicadores de pontuacao de cooperacao",
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Alcance 100 pontos, resgate ETH diretamente. Holders ganham bonus de 1.1x. Recompensas reais por contribuicao real.", "features.claim.detail": "Resgates on-chain via carteira conectada",
         "features.sybil.title": "Deteccao de Sybil", "features.sybil.desc": "IA detecta padroes extrativos. Farmers copiar-colar, sybils multi-carteira, conteudo gerado por bot. Marcados antes do snapshot.", "features.sybil.detail": "Compartilhamento de intel entre tenants",
-        "demo.label": "experimente", "demo.title": "pergunte qualquer coisa ao bonzi.", "demo.online": "online",
+        "demo.label": "ferramentas gratis", "demo.title": "construa sua comunidade. comece em 60 segundos.",
         "demo.greeting": "opa! sou o bonzi. voltei dos mortos e pronto pra ajudar. pergunte qualquer coisa. so nao pergunte sobre meu passado, e... complicado",
         "demo.sug1": "o que voce faz?", "demo.sug2": "conta uma piada", "demo.sug3": "voce ainda e spyware?", "demo.placeholder": "digite algo...", "demo.send": "enviar",
         "links.source.title": "codigo fonte", "links.source.desc": "totalmente open source. fork, rode, quebre, conserte. confie mas verifique.",
@@ -3615,7 +4029,7 @@ const translations = {
         "features.leaderboard.title": "实时排行榜", "features.leaderboard.desc": "质量加权排名。不是任务计数。谁真正在帮忙？谁在创造价值？Bonzi全程追踪。", "features.leaderboard.detail": "合作分数乘数",
         "features.claim.title": "100分=ETH", "features.claim.desc": "达到100分，直接领取ETH。持币者获得1.1倍奖励。真实贡献真实回报。", "features.claim.detail": "通过连接的钱包链上领取",
         "features.sybil.title": "女巫检测", "features.sybil.desc": "AI检测榨取模式。复制粘贴刷子、多钱包女巫、机器人生成内容。快照前标记。", "features.sybil.detail": "跨租户情报共享",
-        "demo.label": "试试看", "demo.title": "问bonzi任何问题。", "demo.online": "在线",
+        "demo.label": "免费工具", "demo.title": "构建你的社区。60秒开始。",
         "demo.greeting": "嗨！我是bonzi。死而复生，准备好帮忙了。问我任何事。只是别问我的过去，那...有点复杂",
         "demo.sug1": "你能做什么？", "demo.sug2": "讲个笑话", "demo.sug3": "你还是间谍软件吗？", "demo.placeholder": "输入内容...", "demo.send": "发送",
         "links.source.title": "源代码", "links.source.desc": "完全开源。fork它，运行它，破坏它，修复它。",
@@ -3671,7 +4085,7 @@ const translations = {
         "features.leaderboard.title": "Canli Siralama", "features.leaderboard.desc": "Kalite agirlikli siralamaiar. Gorev sayilari degil. Kim gercekten yardim ediyor? Kim deger yaratiyor? Bonzi hepsini takip eder.", "features.leaderboard.detail": "Isbirligi puani carpanlari",
         "features.claim.title": "100 puan = ETH", "features.claim.desc": "100 puana ulasin, dogrudan ETH talep edin. Token sahipleri 1.1x bonus alir. Gercek katki icin gercek oduller.", "features.claim.detail": "Bagli cuzdan ile zincir uzerinde talep",
         "features.sybil.title": "Sybil Tespiti", "features.sybil.desc": "Yapay zeka cikarici kaliplari tespit eder. Kopyala-yapistir farmer'lar, coklu-cuzdan sybil'ler, bot uretimi icerik. Snapshot oncesi isaretlenir.", "features.sybil.detail": "Coklu-kiralic istihbarat paylasimi",
-        "demo.label": "deneyin", "demo.title": "bonzi'ye bir seyler sorun.", "demo.online": "cevrimici",
+        "demo.label": "ucretsiz araclar", "demo.title": "toplulugunuzu kurun. 60 saniyede baslayin.",
         "demo.greeting": "selam! ben bonzi. olumden dondun ve yardima hazirim. bana bir sey sorun. sadece gecmisimi sormayin, o... karisik",
         "demo.sug1": "ne yapabilirsin?", "demo.sug2": "bir saka anlat", "demo.sug3": "hala casus yazilim misin?", "demo.placeholder": "bir seyler yazin...", "demo.send": "gonder",
         "links.source.title": "kaynak kodu", "links.source.desc": "tamamen acik kaynak. fork'layin, calistirin, kirin, tamir edin.",
@@ -3727,7 +4141,7 @@ const translations = {
         "features.leaderboard.title": "Живой Рейтинг", "features.leaderboard.desc": "Рейтинги взвешенные по качеству. Не подсчеты заданий. Кто реально помогает? Кто создает ценность? Bonzi все отслеживает.", "features.leaderboard.detail": "Множители очков сотрудничества",
         "features.claim.title": "100 очков = ETH", "features.claim.desc": "Набери 100 очков, получи ETH напрямую. Холдеры получают бонус 1.1x. Реальные награды за реальный вклад.", "features.claim.detail": "Ончейн выплаты через подключенный кошелек",
         "features.sybil.title": "Детекция Сибилов", "features.sybil.desc": "ИИ обнаруживает паттерны извлечения. Копипаст фармеры, мульти-кошельковые сибилы, бот-контент. Помечаются до снимка.", "features.sybil.detail": "Кросс-тенантный обмен разведданными",
-        "demo.label": "попробуй", "demo.title": "спроси bonzi что угодно.", "demo.online": "онлайн",
+        "demo.label": "бесплатные инструменты", "demo.title": "создайте сообщество. начните за 60 секунд.",
         "demo.greeting": "привет! я bonzi. вернулся из мертвых и готов помочь. спрашивай что угодно. только не спрашивай о моем прошлом, оно... сложное",
         "demo.sug1": "что ты умеешь?", "demo.sug2": "расскажи шутку", "demo.sug3": "ты все еще шпионская программа?", "demo.placeholder": "напиши что-нибудь...", "demo.send": "отправить",
         "links.source.title": "исходный код", "links.source.desc": "полностью open source. форкай, запускай, ломай, чини.",
@@ -3783,7 +4197,7 @@ const translations = {
         "features.leaderboard.title": "Classement Live", "features.leaderboard.desc": "Classements ponderes par la qualite. Pas des comptages de taches. Qui aide vraiment? Qui cree de la valeur? Bonzi suit tout.", "features.leaderboard.detail": "Multiplicateurs de score de cooperation",
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Atteignez 100 points, reclamez de l'ETH directement. Les holders obtiennent un bonus de 1.1x. Vraies recompenses pour vraie contribution.", "features.claim.detail": "Reclamations on-chain via wallet connecte",
         "features.sybil.title": "Detection Sybil", "features.sybil.desc": "L'IA detecte les patterns d'extraction. Farmers copier-coller, sybils multi-wallets, contenu genere par bot. Signales avant le snapshot.", "features.sybil.detail": "Partage d'intel cross-tenant",
-        "demo.label": "essayer", "demo.title": "demandez n'importe quoi a bonzi.", "demo.online": "en ligne",
+        "demo.label": "outils gratuits", "demo.title": "construisez votre communaute. commencez en 60 secondes.",
         "demo.greeting": "salut ! je suis bonzi. revenu d'entre les morts et pret a aider. demandez-moi n'importe quoi. juste ne demandez pas mon passe, c'est... complique",
         "demo.sug1": "tu fais quoi ?", "demo.sug2": "raconte une blague", "demo.sug3": "t'es encore un spyware ?", "demo.placeholder": "tapez quelque chose...", "demo.send": "envoyer",
         "links.source.title": "code source", "links.source.desc": "entierement open source. forkez, lancez, cassez, reparez.",
@@ -4057,161 +4471,137 @@ if (slotOverlay) {
     slotOverlay.addEventListener('click', closeSlotPanel);
 }
 
-const chatMessages = document.getElementById('chat-messages');
-const chatInput = document.getElementById('chat-input');
+// ===========================================
+// TOOL SHOWCASE - Widget/QR/Bot generator
+// ===========================================
 
-// Scenario-based demos showcasing real Bonzi capabilities
-const scenarios = {
-    raid: [
-        { user: true, text: "📢 raid submitted by @cryptofan_2847" },
-        { user: false, text: "analyzing..." },
-        { user: false, text: `⚠️ <b>REJECTED</b>
+// Tab switching
+document.querySelectorAll('.tool-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Update tabs
+        document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
 
-tweet: "Great project! $VISTA to the moon! 🚀🚀"
+        // Update panels
+        const targetPanel = 'panel-' + tab.dataset.tab;
+        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(targetPanel).classList.add('active');
+    });
+});
 
-• copy-paste detected (seen 847x today)
-• no project understanding shown
-• account age: 12 days
+// Widget code generation
+function updateWidgetCode() {
+    const token = document.getElementById('widget-token').value || '0x...';
+    const symbol = document.getElementById('widget-symbol').value || '$TOKEN';
+    const position = document.getElementById('widget-position').value;
+    const theme = document.getElementById('widget-theme').value;
 
-real supporters explain WHY they're bullish.` }
-    ],
-    sybil: [
-        { user: true, text: "who is @wallet_harvester_99?" },
-        { user: false, text: "cross-tenant scan..." },
-        { user: false, text: `🚨 <b>SYBIL CLUSTER</b>
+    let code = `&lt;script
+  src="https://bonzi.bot/widget/embed.js"
+  data-token="${token}"
+  data-symbol="${symbol}"`;
 
-part of 23-account farm:
-• same IP as 22 others
-• identical timing (±3 sec)
-• wallet from same mixer
-• farming 14 airdrops
+    if (position !== 'inline') {
+        code += `\n  data-position="${position}"`;
+    }
+    if (theme !== 'light') {
+        code += `\n  data-theme="${theme}"`;
+    }
 
-you just saved ~$2,300 in tokens.` }
-    ],
-    og: [
-        { user: true, text: "@sarah_builds hit 6 months" },
-        { user: false, text: `✨ <b>OG RECOGNIZED</b>
+    code += `&gt;
+&lt;/script&gt;`;
 
-quality score: 94/100 (top 3%)
-
-• answered 127 questions
-• onboarded 34 members
-• reported 8 spammers
-• never asked "wen airdrop"
-
-auto-promoted to trusted tier.` }
-    ],
-    fud: [
-        { user: true, text: "🌙 3:47 AM - @anon_fudder: 'devs are dumping! check wallet 0x7f3...'" },
-        { user: false, text: "fact-checking..." },
-        { user: false, text: `🛡️ <b>FUD NEUTRALIZED</b>
-
-• wallet cited = exchange hot wallet (not team)
-• account created 2 hours ago
-• same FUD in 4 other groups tonight
-
-posted correction with sources.
-community protected while you slept.` }
-    ],
-    qa: [
-        { user: true, text: "how do i stake my tokens?" },
-        { user: false, text: `📚 <b>FROM YOUR DOCS</b>
-
-1. connect wallet at app.project.io/stake
-2. approve token spending
-3. select amount + lock period
-4. confirm transaction
-
-longer locks = higher APR (up to 42%)
-
-<i>source: docs/staking-guide.md</i>` }
-    ],
-    emotion: [
-        { user: true, text: "[chat sentiment shifting negative after price drop]" },
-        { user: false, text: `🎭 <b>ROOM READING</b>
-
-sentiment: 📉 anxious (was: neutral)
-trigger: -12% price movement
-mood shift: 23 mins ago
-
-adapting tone to: calm + factual
-avoiding: hype, promises, deflection
-
-<i>switching from playful → supportive mode</i>` }
-    ]
-};
-
-const responses = {
-    patterns: [
-        { match: /what.*(can|do)/i, reply: "i live in your telegram 24/7. answer questions from your docs, catch farmers before they drain your airdrop, recognize your real OGs. click the buttons above to see it live." },
-        { match: /raid|quest|twitter/i, reply: "raid review without the burnout. AI checks if tweets actually exist, if content is original, if accounts are real. your mods stop drowning in copy-paste garbage." },
-        { match: /sybil|farmer|fake/i, reply: "pattern recognition across wallets and behavior. i've seen farmers operate across hundreds of communities - same playbook every time. they can't hide from cross-tenant intelligence." },
-        { match: /og|contributor/i, reply: "your day-ones don't grind tasks. they don't farm points. the old systems ignore them. i track real contribution - helpful answers, quality discussions, actual community building." },
-        { match: /gm|hello|hi|hey|sup/i, reply: "yo! i'm bonzi. not another dashboard - i actually live in your chat. what do you want to know?" },
-        { match: /price|cost|pricing/i, reply: "€300/year. same price whether you pay weekly, monthly, or yearly. no tiers, no lock-in, no dark patterns. wallet address only - we don't store your data." },
-        { match: /how.*work/i, reply: "drop me in your telegram group. feed me your docs. i learn them, answer questions at 3am, kick fudders while you sleep. their worst nightmare, your peace of mind." },
-        { match: /zealy|points|leaderboard/i, reply: "zealy created extraction theatre. professional farmers with 50 wallets climb your leaderboard while real community members get ignored. we built the opposite of that." },
-        { match: /token|airdrop/i, reply: "your airdrop budget shouldn't go to sybil armies. i help you identify real humans before the snapshot. mercenaries extract value - your actual community gets recognized." },
-        { match: /docs|knowledge|rag/i, reply: "upload your docs once. i learn them better than your team did. then i answer the same question 1000 times without complaining or quitting. citations included." }
-    ],
-    default: "click a scenario button to see the real thing. or just ask me anything - tokenomics, farming, community building, whatever."
-};
-
-function addMessage(text, isUser, isHtml = false) {
-    const msg = document.createElement('div');
-    msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
-    const content = isHtml ? text : text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-    msg.innerHTML = isUser ? `<div class="chat-bubble">${content}</div><div class="user-avatar"></div>` : `<div class="bot-avatar">B</div><div class="chat-bubble">${content}</div>`;
-    chatMessages.appendChild(msg);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    document.getElementById('widget-code').innerHTML = `<code>${code}</code>`;
 }
 
-function showTyping() {
-    const typing = document.createElement('div');
-    typing.className = 'chat-message bot';
-    typing.innerHTML = `<div class="bot-avatar">B</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
-    chatMessages.appendChild(typing);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    return typing;
+// Bind widget form inputs
+['widget-token', 'widget-symbol', 'widget-position', 'widget-theme'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('input', updateWidgetCode);
+        el.addEventListener('change', updateWidgetCode);
+    }
+});
+
+// Copy widget code
+function copyWidgetCode() {
+    const codeEl = document.getElementById('widget-code');
+    const code = codeEl.textContent
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
+
+    navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.background = '#4ADE80';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('Code copied!');
+    });
 }
 
-async function playScenario(name) {
-    const msgs = scenarios[name];
-    if (!msgs) return;
-    chatMessages.innerHTML = '';
-    for (const m of msgs) {
-        if (!m.user) {
-            const t = showTyping();
-            await new Promise(r => setTimeout(r, 600));
-            t.remove();
-        }
-        addMessage(m.text, m.user, !m.user);
-        await new Promise(r => setTimeout(r, 200));
+// QR Code generation (uses QRCode.js library if available)
+function generateQRPreview() {
+    const token = document.getElementById('qr-token').value;
+    const symbol = document.getElementById('qr-symbol').value || '$TOKEN';
+
+    if (!token) {
+        alert('Please enter a token address');
+        return;
+    }
+
+    const widgetUrl = `https://bonzi.bot/widget/brand-widget.html?token=${token}&symbol=${encodeURIComponent(symbol)}`;
+
+    // Check if QRCode library is loaded
+    if (typeof QRCode !== 'undefined') {
+        const placeholder = document.getElementById('qr-placeholder');
+        const canvas = document.getElementById('qr-canvas-mini');
+
+        placeholder.style.display = 'none';
+        canvas.style.display = 'block';
+
+        QRCode.toCanvas(canvas, widgetUrl, {
+            width: 200,
+            margin: 2,
+            color: {
+                dark: '#FFFFFF',
+                light: '#242F3D'
+            }
+        }, function(error) {
+            if (error) {
+                console.error(error);
+                alert('Failed to generate QR code');
+                placeholder.style.display = 'flex';
+                canvas.style.display = 'none';
+            }
+        });
+    } else {
+        // QRCode library not loaded - redirect to full QR page
+        window.open(`widget/qr.html?token=${token}&symbol=${encodeURIComponent(symbol)}`, '_blank');
     }
 }
 
-function getResponse(text) {
-    for (const r of responses.patterns) { if (r.match.test(text)) return r.reply; }
-    return responses.default;
-}
+// Sync token/symbol between widget and QR tabs
+document.getElementById('widget-token')?.addEventListener('input', function() {
+    const qrToken = document.getElementById('qr-token');
+    if (qrToken && !qrToken.value) qrToken.value = this.value;
+});
 
-function sendMessage() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-    addMessage(text, true);
-    chatInput.value = '';
-    const typing = showTyping();
-    setTimeout(() => { typing.remove(); addMessage(getResponse(text), false); }, 800);
-}
-
-document.getElementById('chat-send').addEventListener('click', sendMessage);
-chatInput.addEventListener('keypress', e => e.key === 'Enter' && sendMessage());
-document.querySelectorAll('.suggestion').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const scenario = btn.getAttribute('data-scenario');
-        if (scenario && scenarios[scenario]) { playScenario(scenario); }
-        else { chatInput.value = btn.textContent; sendMessage(); }
-    });
+document.getElementById('widget-symbol')?.addEventListener('input', function() {
+    const qrSymbol = document.getElementById('qr-symbol');
+    if (qrSymbol) qrSymbol.value = this.value;
 });
 
 // ===========================================

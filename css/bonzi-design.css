@@ -273,6 +273,29 @@ body.dark-mode .icon-sun { display: block; }
     transform: translateY(-1px);
 }
 
+/* Connected state - wallet address shown */
+.nav-connect-btn.connected {
+    background: var(--purple);
+    color: var(--white);
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.nav-connect-btn.connected:hover {
+    background: var(--purple-dark);
+}
+
+/* Dark mode connected state */
+body.dark-mode .nav-connect-btn.connected {
+    background: var(--gold);
+    color: var(--black);
+}
+
+body.dark-mode .nav-connect-btn.connected:hover {
+    background: #c4a030;
+}
+
 /* Dropdown menus */
 .nav-dropdown {
     position: relative;

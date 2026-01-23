@@ -584,6 +584,16 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
         }
+        .nav-connect-btn.connected {
+            background: #7C3AED;
+            color: #FFFFFF;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        .nav-connect-btn.connected:hover {
+            background: #5B21B6;
+        }
 
         /* Contact icon - hidden by default, shown on tablet */
         .contact-icon { display: none; }
@@ -1059,6 +1069,290 @@
             color: var(--white);
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Launch CTA Section - Win98 Slot Machine Easter Egg */
+        .launch-cta {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            padding: 80px 24px;
+        }
+
+        .slot-machine {
+            background: #c0c0c0;
+            border-top: 3px solid #ffffff;
+            border-left: 3px solid #ffffff;
+            border-right: 3px solid #808080;
+            border-bottom: 3px solid #808080;
+            padding: 16px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .slot-machine-title {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 6px;
+            margin: -16px -20px 12px -20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slot-machine-title span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .slot-machine-title img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .slot-display {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: #000;
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            padding: 8px 12px;
+        }
+
+        .slot-label {
+            color: #7C3AED;
+            font-size: clamp(14px, 2.5vw, 20px);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .slot-window {
+            display: inline-block;
+            height: 1.3em;
+            min-width: 180px;
+            overflow: hidden;
+            position: relative;
+            vertical-align: bottom;
+            margin-left: 6px;
+            background: #000080;
+            border-top: 1px solid #404040;
+            border-left: 1px solid #404040;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+            padding: 0 8px;
+        }
+
+        .slot-reel {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.08s linear;
+        }
+
+        .slot-reel.landing {
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .slot-reel .word {
+            height: 1.3em;
+            line-height: 1.3em;
+            text-align: left;
+            white-space: nowrap;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: clamp(14px, 2.5vw, 20px);
+        }
+
+        .slot-btn {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #808080;
+            border-bottom: 2px solid #808080;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .slot-btn:active {
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+
+        .slot-btn:hover {
+            background: #d4d4d4;
+        }
+
+        /* Slot row with lever */
+        .slot-row {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .slot-display {
+            flex: 1;
+        }
+
+        /* Classic slot machine lever */
+        .slot-lever {
+            width: 40px;
+            background: linear-gradient(180deg, #ff4444 0%, #cc0000 50%, #990000 100%);
+            border: none;
+            border-radius: 8px 8px 4px 4px;
+            cursor: pointer;
+            position: relative;
+            border-top: 2px solid #ff6666;
+            border-left: 2px solid #ff6666;
+            border-right: 2px solid #660000;
+            border-bottom: 2px solid #660000;
+            transition: transform 0.1s;
+        }
+
+        .slot-lever:hover {
+            background: linear-gradient(180deg, #ff6666 0%, #dd2222 50%, #aa0000 100%);
+        }
+
+        .slot-lever:active, .slot-lever.pulled {
+            transform: scaleY(0.85);
+        }
+
+        .lever-handle {
+            display: block;
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #ffff00, #ffa500, #ff6600);
+            border-radius: 50%;
+            margin: 8px auto;
+            border: 2px solid #cc6600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Jackpot animation */
+        .slot-machine.jackpot {
+            animation: jackpot-shake 0.5s ease-in-out;
+        }
+
+        .slot-machine.jackpot .slot-display {
+            background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
+            animation: jackpot-glow 0.3s ease-in-out infinite alternate;
+        }
+
+        .slot-machine.jackpot .slot-reel .word {
+            color: #ffff00 !important;
+        }
+
+        @keyframes jackpot-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-1deg); }
+            75% { transform: translateX(5px) rotate(1deg); }
+        }
+
+        @keyframes jackpot-glow {
+            from { box-shadow: 0 0 10px #7C3AED, 0 0 20px #7C3AED; }
+            to { box-shadow: 0 0 20px #A78BFA, 0 0 40px #A78BFA; }
+        }
+
+        .jackpot-message {
+            display: none;
+            text-align: center;
+            padding: 8px;
+            background: linear-gradient(90deg, #7C3AED, #A78BFA);
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 8px;
+            animation: jackpot-pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        .slot-machine.jackpot .jackpot-message {
+            display: block;
+        }
+
+        @keyframes jackpot-pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
+        }
+
+        /* WHITE BONZI - Ultra rare mystery jackpot */
+        .slot-machine.white-jackpot {
+            animation: white-jackpot-shake 0.8s ease-in-out;
+        }
+
+        .slot-machine.white-jackpot .slot-display {
+            background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+            animation: white-jackpot-glow 0.2s ease-in-out infinite alternate;
+        }
+
+        .slot-machine.white-jackpot .slot-reel .word {
+            color: #000 !important;
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+        }
+
+        .slot-machine.white-jackpot .white-jackpot-message {
+            display: block;
+        }
+
+        .white-jackpot-message {
+            display: none;
+            text-align: center;
+            padding: 8px;
+            background: linear-gradient(90deg, #fff, #f0f0f0, #fff);
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 8px;
+            border: 2px solid #ccc;
+            animation: white-pulse 0.3s ease-in-out infinite alternate;
+        }
+
+        @keyframes white-jackpot-shake {
+            0%, 100% { transform: translateX(0) scale(1); }
+            10% { transform: translateX(-8px) rotate(-2deg) scale(1.02); }
+            30% { transform: translateX(8px) rotate(2deg) scale(1.02); }
+            50% { transform: translateX(-6px) rotate(-1deg) scale(1.01); }
+            70% { transform: translateX(6px) rotate(1deg) scale(1.01); }
+            90% { transform: translateX(-3px) scale(1); }
+        }
+
+        @keyframes white-jackpot-glow {
+            from { box-shadow: 0 0 20px #fff, 0 0 40px rgba(255,255,255,0.8); }
+            to { box-shadow: 0 0 40px #fff, 0 0 80px rgba(255,255,255,0.9); }
+        }
+
+        @keyframes white-pulse {
+            from { transform: scale(1); box-shadow: 0 0 10px #fff; }
+            to { transform: scale(1.03); box-shadow: 0 0 20px #fff; }
+        }
+
+        @media (max-width: 768px) {
+            .slot-machine {
+                padding: 12px 16px;
+            }
+            .slot-window {
+                min-width: 140px;
+            }
         }
 
         /* Pain points section - Domino Stack with purple accent bg */
@@ -2321,6 +2615,28 @@
     </div>
 </section>
 
+<!-- Launch CTA - Win98 Slot Machine Easter Egg -->
+<section class="launch-cta">
+    <div class="slot-machine" id="slot-machine">
+        <div class="slot-machine-title">
+            <span>🎰 Launch Generator</span>
+            <span style="font-size: 10px;">━ ☐ ✕</span>
+        </div>
+        <div class="slot-row">
+            <div class="slot-display">
+                <span class="slot-label">Launch Your</span>
+                <span class="slot-window"><span class="slot-reel" id="slot-reel"></span></span>
+            </div>
+            <button class="slot-lever" id="slot-lever" title="Pull me!">
+                <span class="lever-handle"></span>
+            </button>
+        </div>
+        <a href="https://etherfun.ethervista.com" target="_blank" class="slot-btn" id="launch-btn">🚀 LAUNCH NOW</a>
+        <div class="jackpot-message">🎉 JACKPOT! You found Bonzi! 🐵💜</div>
+        <div class="white-jackpot-message">✨ ULTRA RARE! White Bonzi discovered! 🤍🐵 ???</div>
+    </div>
+</section>
+
 <section class="history">
     <div class="history-inner">
         <div class="history-content">
@@ -3147,11 +3463,119 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.to('.opening-bonzi', { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)', delay: 0.3 });
 gsap.to('.opening-text', { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
 gsap.to('.scroll-hint', { opacity: 1, duration: 0.6, delay: 1.2 });
+gsap.to('.launch-btn', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: '.launch-cta', start: 'top 70%', toggleActions: 'play none none reverse' }});
 gsap.to('.history-content', { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '.history', start: 'top 70%', toggleActions: 'play none none reverse' }});
 gsap.utils.toArray('.reveal-line span').forEach((line, i) => {
     gsap.to(line, { y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: line, start: 'top 80%', toggleActions: 'play none none reverse' }, delay: i * 0.1 });
 });
 gsap.to('.statement-text', { y: -50, scrollTrigger: { trigger: '.statement', start: 'top bottom', end: 'bottom top', scrub: 1 }});
+
+// Win98 Slot Machine - 100+ things you can launch + hidden Bonzi jackpots
+const slotWords = [
+    // Brand & Business
+    'Brand', 'Startup', 'Agency', 'Studio', 'Label', 'Franchise', 'Collective', 'Syndicate', 'Venture', 'Empire',
+    // Hidden Bonzi #1
+    '🐵 Bonzi',
+    // Communities
+    'Community', 'Tribe', 'Guild', 'Club', 'Network', 'Movement', 'Alliance', 'Coalition', 'Federation', 'Legion',
+    // Finance
+    'Token', 'Fund', 'Treasury', 'Pool', 'Vault', 'Index', 'Hedge', 'Portfolio', 'Equity', 'DAO',
+    // Hidden Bonzi #2
+    '🐵 Bonzi',
+    // Creative
+    'Project', 'Idea', 'Vision', 'Dream', 'Mission', 'Legacy', 'Story', 'Narrative', 'Manifesto', 'Revolution',
+    // Tech
+    'Protocol', 'Platform', 'Infrastructure', 'Oracle', 'API', 'dApp', 'Layer', 'Chain', 'Bridge', 'Node',
+    // Hidden Bonzi #3
+    '🐵 Bonzi',
+    // Content
+    'Media', 'Channel', 'Podcast', 'Newsletter', 'Magazine', 'Journal', 'Archive', 'Library', 'Academy', 'Course',
+    // Physical
+    'Product', 'Merch', 'Collection', 'Gallery', 'Space', 'Venue', 'Festival', 'Event', 'Experience', 'Restaurant',
+    // Hidden Bonzi #4
+    '🐵 Bonzi',
+    // Services
+    'Service', 'Marketplace', 'Exchange', 'Launchpad', 'Incubator', 'Accelerator', 'Consultancy', 'Research', 'Lab', 'Institute',
+    // Gaming
+    'Game', 'World', 'Universe', 'Realm', 'Arena', 'Tournament', 'League', 'Team', 'Esports', 'Metaverse',
+    // Hidden Bonzi #5
+    '🐵 Bonzi',
+    // Impact
+    'Charity', 'Foundation', 'Cause', 'Initiative', 'Campaign', 'Cooperative', 'Union', 'Trust', 'Flywheel', 'Future',
+    // ULTRA RARE - White Bonzi (mystery prize TBD)
+    '🤍 White Bonzi'
+];
+
+const slotReel = document.getElementById('slot-reel');
+const slotLever = document.getElementById('slot-lever');
+const slotMachine = document.getElementById('slot-machine');
+let isSpinning = false;
+let currentIndex = 0;
+
+if (slotReel && slotLever) {
+    // Build the reel with all words
+    slotWords.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = word;
+        span.dataset.index = i;
+        slotReel.appendChild(span);
+    });
+
+    // Get word height for positioning
+    const wordHeight = slotReel.querySelector('.word').offsetHeight || 26;
+
+    // Pull lever to spin
+    slotLever.addEventListener('click', () => {
+        if (isSpinning) return;
+        isSpinning = true;
+
+        // Reset jackpot state
+        slotMachine.classList.remove('jackpot', 'white-jackpot');
+
+        // Lever pull animation
+        slotLever.classList.add('pulled');
+        setTimeout(() => slotLever.classList.remove('pulled'), 200);
+
+        // Fast spin phase
+        let spinCount = 0;
+        const totalSpins = 30 + Math.floor(Math.random() * 20); // 30-50 spins
+        const targetIndex = Math.floor(Math.random() * slotWords.length);
+
+        slotReel.classList.remove('landing');
+
+        const spinInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slotWords.length;
+            slotReel.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
+            spinCount++;
+
+            if (spinCount >= totalSpins) {
+                clearInterval(spinInterval);
+
+                // Land on target
+                slotReel.classList.add('landing');
+                currentIndex = targetIndex;
+                slotReel.style.transform = `translateY(-${currentIndex * wordHeight}px)`;
+
+                // Check for jackpot
+                setTimeout(() => {
+                    const landed = slotWords[currentIndex];
+                    if (landed === '🐵 Bonzi') {
+                        slotMachine.classList.add('jackpot');
+                    } else if (landed === '🤍 White Bonzi') {
+                        slotMachine.classList.add('white-jackpot');
+                    }
+                    isSpinning = false;
+                }, 600);
+            }
+        }, 50);
+    });
+
+    // Auto-spin on load for preview
+    setTimeout(() => {
+        if (slotLever) slotLever.click();
+    }, 1500);
+}
 
 const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');

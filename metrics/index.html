@@ -355,81 +355,98 @@
         }
         .chart-card {
             background: var(--gray-light);
-            border-radius: 4px;
-            padding: 16px 20px;
-            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 3px;
+            padding: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         body.dark-mode .chart-card {
             background: #18181B;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .chart-card h3 {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--gray);
-            margin-bottom: 4px;
+        .chart-header {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 500;
-        }
-        .chart-card .chart-subtitle {
-            font-size: 11px;
-            color: var(--gray);
+            justify-content: space-between;
+            align-items: baseline;
             margin-bottom: 12px;
-            opacity: 0.7;
         }
-        .chart-card .chart-highlight {
-            font-size: 18px;
+        .chart-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: inherit;
+        }
+        .chart-meta {
+            font-size: 10px;
+            color: var(--gray);
+            opacity: 0.6;
+        }
+        .chart-value {
+            font-size: 24px;
             font-weight: 600;
             font-family: 'Space Mono', monospace;
-            margin-bottom: 2px;
-            letter-spacing: -0.5px;
+            color: var(--purple);
+            letter-spacing: -1px;
+            line-height: 1;
         }
-        .chart-card .chart-highlight.purple { color: var(--purple); }
-        .chart-card .chart-highlight.gold { color: var(--gold); }
-
-        /* Refined Bar Chart */
-        .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 64px;
-            margin-bottom: 12px;
-            padding-top: 4px;
-            background: repeating-linear-gradient(
-                180deg,
-                transparent,
-                transparent 15px,
-                rgba(128,128,128,0.08) 15px,
-                rgba(128,128,128,0.08) 16px
-            );
-        }
-        .bar-chart .bar {
-            flex: 1;
-            background: var(--purple);
-            border-radius: 1px 1px 0 0;
-            position: relative;
-            min-height: 2px;
-            opacity: 0.85;
-        }
-        .bar-chart .bar::after {
-            content: attr(data-label);
-            position: absolute;
-            bottom: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 8px;
+        .chart-value.gold { color: var(--gold); }
+        .chart-value-label {
+            font-size: 11px;
             color: var(--gray);
-            white-space: nowrap;
-            opacity: 0.6;
-            letter-spacing: 0.3px;
+            margin-bottom: 16px;
+            opacity: 0.7;
         }
-        .bar-chart .bar.highlight {
-            background: var(--gold);
-            opacity: 1;
+
+        /* SVG Area Chart */
+        .area-chart {
+            margin-bottom: 16px;
         }
+        .area-chart svg {
+            width: 100%;
+            height: 80px;
+            display: block;
+        }
+        .chart-axis {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: var(--gray);
+            opacity: 0.5;
+            margin-top: 6px;
+            padding: 0 2px;
+        }
+
+        /* Chart Stats Row */
+        .chart-stats {
+            display: flex;
+            gap: 1px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        body.dark-mode .chart-stats {
+            background: rgba(255,255,255,0.05);
+        }
+        .chart-stat {
+            flex: 1;
+            padding: 8px 10px;
+            background: var(--gray-light);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        body.dark-mode .chart-stat {
+            background: #1a1a1e;
+        }
+        .chart-stat .stat-label {
+            font-size: 9px;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+        .chart-stat .stat-value {
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Space Mono', monospace;
+        }
+        .chart-stat .stat-value.green { color: #10B981; }
 
         /* Distribution Correlation Line */
         .correlation-row {
@@ -879,81 +896,99 @@
         <div class="volume-charts">
             <!-- BONZI Chart -->
             <div class="chart-card">
-                <h3>$BONZI Monthly Volume <span class="badge live">LIVE</span></h3>
-                <p class="chart-subtitle">Ethervista DEX • Contract: 0xd617...cbb86</p>
-                <div class="chart-highlight purple">$1.6M+ distributed</div>
-                <p class="chart-subtitle">to stakers over 600+ days</p>
+                <div class="chart-header">
+                    <div class="chart-title">$BONZI Monthly Volume</div>
+                    <div class="chart-meta">Ethervista DEX</div>
+                </div>
+                <div class="chart-value">$1.6M+</div>
+                <div class="chart-value-label">distributed to stakers</div>
 
-                <div class="bar-chart">
-                    <div class="bar" style="height: 45%;" data-label="Feb"></div>
-                    <div class="bar" style="height: 35%;" data-label="Mar"></div>
-                    <div class="bar" style="height: 25%;" data-label="Apr"></div>
-                    <div class="bar" style="height: 20%;" data-label="May"></div>
-                    <div class="bar" style="height: 15%;" data-label="Jun"></div>
-                    <div class="bar" style="height: 18%;" data-label="Jul"></div>
-                    <div class="bar" style="height: 22%;" data-label="Aug"></div>
-                    <div class="bar" style="height: 40%;" data-label="Sep"></div>
-                    <div class="bar highlight" style="height: 95%;" data-label="Oct"></div>
-                    <div class="bar highlight" style="height: 100%;" data-label="Nov"></div>
-                    <div class="bar" style="height: 65%;" data-label="Dec"></div>
-                    <div class="bar" style="height: 55%;" data-label="Jan"></div>
+                <div class="area-chart">
+                    <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="purpleGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="var(--purple)" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="var(--purple)" stop-opacity="0.02"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Grid lines -->
+                        <line x1="0" y1="20" x2="300" y2="20" stroke="currentColor" stroke-opacity="0.06"/>
+                        <line x1="0" y1="40" x2="300" y2="40" stroke="currentColor" stroke-opacity="0.06"/>
+                        <line x1="0" y1="60" x2="300" y2="60" stroke="currentColor" stroke-opacity="0.06"/>
+                        <!-- Area fill -->
+                        <path d="M0,44 L25,52 L50,60 L75,64 L100,68 L125,66 L150,62 L175,48 L200,8 L225,4 L250,28 L275,36 L300,36 L300,80 L0,80 Z" fill="url(#purpleGradient)"/>
+                        <!-- Line -->
+                        <path d="M0,44 L25,52 L50,60 L75,64 L100,68 L125,66 L150,62 L175,48 L200,8 L225,4 L250,28 L275,36" fill="none" stroke="var(--purple)" stroke-width="1.5"/>
+                        <!-- Peak dot -->
+                        <circle cx="225" cy="4" r="3" fill="var(--purple)"/>
+                    </svg>
+                    <div class="chart-axis">
+                        <span>Feb</span><span>Apr</span><span>Jun</span><span>Aug</span><span>Oct</span><span>Dec</span>
+                    </div>
                 </div>
 
-                <div class="correlation-row">
-                    <span class="label">Fee rate to stakers</span>
-                    <span class="value">~3%</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">Bear market (lowest)</span>
-                    <span class="value">$50k/day</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">Bull periods (peak)</span>
-                    <span class="value">$1M+/day</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">Distributions during bear</span>
-                    <span class="value green">Continued ✓</span>
+                <div class="chart-stats">
+                    <div class="chart-stat">
+                        <span class="stat-label">Fee rate</span>
+                        <span class="stat-value">~3%</span>
+                    </div>
+                    <div class="chart-stat">
+                        <span class="stat-label">Bear low</span>
+                        <span class="stat-value">$50k/d</span>
+                    </div>
+                    <div class="chart-stat">
+                        <span class="stat-label">Peak</span>
+                        <span class="stat-value">$1M+/d</span>
+                    </div>
                 </div>
             </div>
 
             <!-- VISTA Chart -->
             <div class="chart-card">
-                <h3>$VISTA Monthly Volume <span class="badge live">LIVE</span></h3>
-                <p class="chart-subtitle">Ethervista DEX • Contract: 0xc9bc...cbbf</p>
-                <div class="chart-highlight gold">Same mechanics</div>
-                <p class="chart-subtitle">pattern holds across Euler tokens</p>
+                <div class="chart-header">
+                    <div class="chart-title">$VISTA Monthly Volume</div>
+                    <div class="chart-meta">Ethervista DEX</div>
+                </div>
+                <div class="chart-value gold">Same mechanics</div>
+                <div class="chart-value-label">pattern holds across Euler tokens</div>
 
-                <div class="bar-chart">
-                    <div class="bar" style="height: 55%;" data-label="Feb"></div>
-                    <div class="bar" style="height: 40%;" data-label="Mar"></div>
-                    <div class="bar" style="height: 30%;" data-label="Apr"></div>
-                    <div class="bar" style="height: 25%;" data-label="May"></div>
-                    <div class="bar" style="height: 20%;" data-label="Jun"></div>
-                    <div class="bar" style="height: 22%;" data-label="Jul"></div>
-                    <div class="bar" style="height: 28%;" data-label="Aug"></div>
-                    <div class="bar highlight" style="height: 85%;" data-label="Sep"></div>
-                    <div class="bar highlight" style="height: 100%;" data-label="Oct"></div>
-                    <div class="bar highlight" style="height: 90%;" data-label="Nov"></div>
-                    <div class="bar" style="height: 60%;" data-label="Dec"></div>
-                    <div class="bar" style="height: 50%;" data-label="Jan"></div>
+                <div class="area-chart">
+                    <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="var(--gold)" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="var(--gold)" stop-opacity="0.02"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Grid lines -->
+                        <line x1="0" y1="20" x2="300" y2="20" stroke="currentColor" stroke-opacity="0.06"/>
+                        <line x1="0" y1="40" x2="300" y2="40" stroke="currentColor" stroke-opacity="0.06"/>
+                        <line x1="0" y1="60" x2="300" y2="60" stroke="currentColor" stroke-opacity="0.06"/>
+                        <!-- Area fill -->
+                        <path d="M0,36 L25,48 L50,56 L75,60 L100,64 L125,62 L150,58 L175,12 L200,4 L225,8 L250,32 L275,40 L300,40 L300,80 L0,80 Z" fill="url(#goldGradient)"/>
+                        <!-- Line -->
+                        <path d="M0,36 L25,48 L50,56 L75,60 L100,64 L125,62 L150,58 L175,12 L200,4 L225,8 L250,32 L275,40" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+                        <!-- Peak dot -->
+                        <circle cx="200" cy="4" r="3" fill="var(--gold)"/>
+                    </svg>
+                    <div class="chart-axis">
+                        <span>Feb</span><span>Apr</span><span>Jun</span><span>Aug</span><span>Oct</span><span>Dec</span>
+                    </div>
                 </div>
 
-                <div class="correlation-row">
-                    <span class="label">Fee rate to stakers</span>
-                    <span class="value">~5%</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">LP hardlock</span>
-                    <span class="value">75%</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">Team allocation</span>
-                    <span class="value green">0%</span>
-                </div>
-                <div class="correlation-row">
-                    <span class="label">Inflation events</span>
-                    <span class="value green">0</span>
+                <div class="chart-stats">
+                    <div class="chart-stat">
+                        <span class="stat-label">Fee rate</span>
+                        <span class="stat-value">~5%</span>
+                    </div>
+                    <div class="chart-stat">
+                        <span class="stat-label">Team alloc</span>
+                        <span class="stat-value green">0%</span>
+                    </div>
+                    <div class="chart-stat">
+                        <span class="stat-label">Inflation</span>
+                        <span class="stat-value green">0</span>
+                    </div>
                 </div>
             </div>
         </div>

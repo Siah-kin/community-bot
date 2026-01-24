@@ -5158,14 +5158,20 @@ function copyWidgetCode() {
 
 // Preview widget with user settings
 function previewWidget() {
-    const token = document.getElementById('widget-token').value;
-    const symbol = document.getElementById('widget-symbol').value || '$TOKEN';
+    // Use BONZI as demo token if nothing entered
+    const DEMO_TOKEN = '0xd6175692026bcd7cb12a515e39cf0256ef35cb86';
+    const DEMO_SYMBOL = '$BONZI';
+
+    const token = document.getElementById('widget-token').value || DEMO_TOKEN;
+    const symbol = document.getElementById('widget-symbol').value;
+    // Use user's symbol, or BONZI demo if they haven't customized it
+    const finalSymbol = (symbol && symbol !== '$TOKEN') ? symbol : DEMO_SYMBOL;
 
     const params = new URLSearchParams();
-    if (token) params.set('token', token);
-    if (symbol) params.set('symbol', symbol);
+    params.set('token', token);
+    params.set('symbol', finalSymbol);
 
-    const url = 'widget/brand-widget.html' + (params.toString() ? '?' + params.toString() : '');
+    const url = 'widget/brand-widget.html?' + params.toString();
     window.open(url, '_blank');
 }
 

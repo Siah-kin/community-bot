@@ -1370,7 +1370,6 @@
             width: 320px;
             text-align: left;
             color: #a78bfa;
-            transition: opacity 0.15s ease;
         }
 
         .tokenise-btn {
@@ -4527,18 +4526,14 @@ const triggerWord = document.getElementById('trigger-word');
 const entryAnimations = ['entry-zoom', 'entry-slide-up', 'entry-slide-down', 'entry-flip', 'entry-bounce'];
 
 // Trigger word cycling (fast flicker)
-const triggerWords = ['Future', 'Brand', 'Token', 'DAO', 'Empire', 'Legacy', 'Vision', 'Dream', 'Protocol', 'Community'];
+const triggerWords = ['Future', 'Brand', 'Token', 'DAO', 'Empire', 'Legacy', 'Vision', 'Dream', 'Protocol', 'Community', 'Startup', 'Agency', 'Guild', 'Network', 'Treasury', 'Vault', 'Project', 'Mission', 'Platform', 'Layer'];
 let triggerIndex = 0;
 
 if (triggerWord) {
     setInterval(() => {
         triggerIndex = (triggerIndex + 1) % triggerWords.length;
-        triggerWord.style.opacity = '0';
-        setTimeout(() => {
-            triggerWord.textContent = triggerWords[triggerIndex];
-            triggerWord.style.opacity = '1';
-        }, 150);
-    }, 2500);
+        triggerWord.textContent = triggerWords[triggerIndex];
+    }, 100);
 }
 
 // Win98 popup sound using Web Audio API

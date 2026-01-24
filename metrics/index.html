@@ -147,6 +147,15 @@
         }
         .badge.live { background: #10B981; color: white; }
         .badge.cached { background: #F59E0B; color: white; }
+        .badge.verified { background: #3B82F6; color: white; }
+        .badge.coming-soon { background: #6B7280; color: white; }
+        .verified-link {
+            color: #3B82F6;
+            text-decoration: none;
+            border-bottom: 1px dashed #3B82F6;
+        }
+        .verified-link:hover { border-bottom-style: solid; }
+        .metric-value.coming { color: #9CA3AF; font-style: italic; }
         .metric-item {
             display: flex;
             justify-content: space-between;
@@ -1100,45 +1109,45 @@ LIMIT 20</pre>
                     </div>
                 </div>
 
-                <!-- Community Stats -->
+                <!-- On-Chain Stats - Verifiable -->
                 <div class="metric-card">
-                    <h3>Community Stats <span class="badge live">LIVE</span></h3>
+                    <h3>On-Chain Data <span class="badge verified">VERIFIED</span></h3>
                     <div class="metric-item">
-                        <span class="metric-key">Total Users</span>
-                        <span class="metric-value">12,847</span>
+                        <span class="metric-key">Early Stakers</span>
+                        <span class="metric-value"><a href="https://dune.com/queries/4579721" target="_blank" class="verified-link">117</a></span>
                     </div>
                     <div class="metric-item">
-                        <span class="metric-key">Active (7d)</span>
-                        <span class="metric-value">2,341</span>
+                        <span class="metric-key">Earning ETH</span>
+                        <span class="metric-value"><a href="https://dune.com/queries/4579721" target="_blank" class="verified-link">57</a></span>
                     </div>
                     <div class="metric-item">
-                        <span class="metric-key">Questions Answered</span>
-                        <span class="metric-value">89,432</span>
+                        <span class="metric-key">Longest Stake</span>
+                        <span class="metric-value">113 days</span>
                     </div>
                     <div class="metric-item">
-                        <span class="metric-key">Avg Response Time</span>
-                        <span class="metric-value">1.2s</span>
+                        <span class="metric-key">Data Source</span>
+                        <span class="metric-value"><a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank" class="verified-link">Etherscan ↗</a></span>
                     </div>
                 </div>
 
-                <!-- DAO Stats -->
+                <!-- DAO Stats - Coming Soon -->
                 <div class="metric-card">
-                    <h3>DAO Activity <span class="badge live">LIVE</span></h3>
+                    <h3>DAO Activity <span class="badge coming-soon">Q1 2026</span></h3>
                     <div class="metric-item">
-                        <span class="metric-key">Bug Reports</span>
-                        <span class="metric-value">347</span>
+                        <span class="metric-key">Bug & Earn</span>
+                        <span class="metric-value coming">Launching Soon</span>
                     </div>
                     <div class="metric-item">
-                        <span class="metric-key">DAO Points Awarded</span>
-                        <span class="metric-value">18,920</span>
+                        <span class="metric-key">Ask & Earn</span>
+                        <span class="metric-value coming">Launching Soon</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-key">DAO Points</span>
+                        <span class="metric-value coming">Launching Soon</span>
                     </div>
                     <div class="metric-item">
                         <span class="metric-key">Active Testers</span>
-                        <span class="metric-value">89</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Bugs Fixed</span>
-                        <span class="metric-value">312</span>
+                        <span class="metric-value coming">Join Early →</span>
                     </div>
                 </div>
             </div>

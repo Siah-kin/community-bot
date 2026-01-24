@@ -870,12 +870,12 @@
         <!-- Right: Lang, Theme, Connect -->
         <div class="nav-right">
             <select class="nav-lang-select" id="lang-select" aria-label="Language">
-                <option value="en">EN</option>
-                <option value="pt">PT</option>
-                <option value="zh">ZH</option>
-                <option value="tr">TR</option>
-                <option value="ru">RU</option>
-                <option value="fr">FR</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="pt">🇧🇷 PT</option>
+                <option value="zh">🇨🇳 ZH</option>
+                <option value="tr">🇹🇷 TR</option>
+                <option value="ru">🇷🇺 RU</option>
+                <option value="fr">🇫🇷 FR</option>
             </select>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -886,16 +886,16 @@
     </nav>
 
     <section class="hero">
-        <h1>System Metrics</h1>
-        <p>Live parameters and configuration. Three tiers of access based on token holdings.</p>
+        <h1 data-i18n="hero.title">System Metrics</h1>
+        <p data-i18n="hero.subtitle">Live parameters and configuration. Three tiers of access based on token holdings.</p>
     </section>
 
     <div class="dashboard">
         <!-- FREE TIER -->
         <div class="tier-header">
-            <span class="tier-badge free">FREE</span>
-            <span class="tier-title">Trust Signals</span>
-            <span class="tier-requirement">Verify before you buy</span>
+            <span class="tier-badge free" data-i18n="tier.free">FREE</span>
+            <span class="tier-title" data-i18n="tier.free.title">Trust Signals</span>
+            <span class="tier-requirement" data-i18n="tier.free.req">Verify before you buy</span>
         </div>
 
         <div class="tier-section" id="tier-free">
@@ -995,16 +995,16 @@
 
         <!-- DAO TIER 1 - Community Health -->
         <div class="tier-header">
-            <span class="tier-badge dao-1">DAO-1</span>
-            <span class="tier-title">Community Health</span>
-            <span class="tier-requirement">Hold $BONZI or $VISTA</span>
+            <span class="tier-badge dao-1" data-i18n="tier.dao1">DAO-1</span>
+            <span class="tier-title" data-i18n="tier.dao1.title">Community Health</span>
+            <span class="tier-requirement" data-i18n="tier.dao1.req">Hold $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-1">
             <div class="unlock-prompt">
-                <h3>Community Health Metrics</h3>
-                <p>Connect wallet holding $BONZI or $VISTA</p>
-                <button class="unlock-btn" onclick="connectWallet(1)">Connect Wallet</button>
+                <h3 data-i18n="unlock.title">Community Health Metrics</h3>
+                <p data-i18n="unlock.desc">Connect wallet holding $BONZI or $VISTA</p>
+                <button class="unlock-btn" onclick="connectWallet(1)" data-i18n="btn.connect">Connect Wallet</button>
             </div>
 
             <!-- Staker Behavior -->
@@ -1084,16 +1084,16 @@
 
         <!-- DAO TIER 2 - Alpha Metrics -->
         <div class="tier-header">
-            <span class="tier-badge dao-2">DAO-2</span>
-            <span class="tier-title">Alpha Analytics</span>
-            <span class="tier-requirement">Stake $BONZI or $VISTA</span>
+            <span class="tier-badge dao-2" data-i18n="tier.dao2">DAO-2</span>
+            <span class="tier-title" data-i18n="tier.dao2.title">Alpha Analytics</span>
+            <span class="tier-requirement" data-i18n="tier.dao2.req">Stake $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-2">
             <div class="unlock-prompt tier-2">
-                <h3>Alpha Metrics</h3>
-                <p>Connect wallet staking $BONZI or $VISTA</p>
-                <button class="unlock-btn tier-2" onclick="connectWallet(2)">Connect Wallet</button>
+                <h3 data-i18n="unlock.title2">Alpha Metrics</h3>
+                <p data-i18n="unlock.desc2">Connect wallet staking $BONZI or $VISTA</p>
+                <button class="unlock-btn tier-2" onclick="connectWallet(2)" data-i18n="btn.connect">Connect Wallet</button>
             </div>
 
             <!-- Holder Distribution -->
@@ -1503,6 +1503,92 @@
                 if (!updateButtonState()) connectWallet(1, navBtn);
             });
         })();
+
+        // ═══════════════════════════════════════════════════════════════
+        // i18n TRANSLATIONS
+        // ═══════════════════════════════════════════════════════════════
+        const translations = {
+            en: {
+                "nav.features": "features",
+                "nav.manual": "manual",
+                "nav.manifesto": "manifesto",
+                "nav.economics": "economics",
+                "nav.metrics": "metrics",
+                "nav.dao": "dao",
+                "nav.contact": "contact",
+                "nav.connect": "connect",
+                "hero.title": "System Metrics",
+                "hero.subtitle": "Live parameters and configuration. Three tiers of access based on token holdings.",
+                "tier.free": "FREE",
+                "tier.free.title": "Trust Signals",
+                "tier.free.req": "Verify before you buy",
+                "tier.dao1": "DAO-1",
+                "tier.dao1.title": "Community Health",
+                "tier.dao1.req": "Hold $BONZI or $VISTA",
+                "tier.dao2": "DAO-2",
+                "tier.dao2.title": "Alpha Analytics",
+                "tier.dao2.req": "Stake $BONZI or $VISTA",
+                "unlock.title": "Community Health Metrics",
+                "unlock.desc": "Connect wallet holding $BONZI or $VISTA",
+                "unlock.title2": "Alpha Metrics",
+                "unlock.desc2": "Connect wallet staking $BONZI or $VISTA",
+                "btn.connect": "Connect Wallet",
+                "last.updated": "Last updated:"
+            },
+            pt: {
+                "nav.features": "recursos",
+                "nav.manual": "manual",
+                "nav.manifesto": "manifesto",
+                "nav.economics": "economia",
+                "nav.metrics": "metricas",
+                "nav.dao": "dao",
+                "nav.contact": "contato",
+                "nav.connect": "conectar",
+                "hero.title": "Metricas do Sistema",
+                "hero.subtitle": "Parametros ao vivo e configuracao. Tres niveis de acesso baseados em tokens.",
+                "tier.free": "GRATIS",
+                "tier.free.title": "Sinais de Confianca",
+                "tier.free.req": "Verifique antes de comprar",
+                "tier.dao1": "DAO-1",
+                "tier.dao1.title": "Saude da Comunidade",
+                "tier.dao1.req": "Tenha $BONZI ou $VISTA",
+                "tier.dao2": "DAO-2",
+                "tier.dao2.title": "Analises Alpha",
+                "tier.dao2.req": "Stake $BONZI ou $VISTA",
+                "unlock.title": "Metricas de Saude da Comunidade",
+                "unlock.desc": "Conecte carteira com $BONZI ou $VISTA",
+                "unlock.title2": "Metricas Alpha",
+                "unlock.desc2": "Conecte carteira com stake de $BONZI ou $VISTA",
+                "btn.connect": "Conectar Carteira",
+                "last.updated": "Ultima atualizacao:"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key];
+            });
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) langSelect.value = lang;
+            document.documentElement.lang = lang;
+            localStorage.setItem('bonzi-lang', lang);
+        }
+
+        // Dropdown listener
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) {
+            langSelect.addEventListener('change', (e) => setLanguage(e.target.value));
+        }
+
+        // Load saved language
+        const savedLang = localStorage.getItem('bonzi-lang');
+        if (savedLang && translations[savedLang]) setLanguage(savedLang);
     </script>
 </body>
 </html>

@@ -2870,106 +2870,136 @@
             color: #737373;
         }
 
-        /* Demo Cards Section */
-        .demo-cards-section {
-            margin-top: 60px;
-            text-align: center;
+        /* Widget Showcase - 2 column layout */
+        .widget-showcase {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid #232E3C;
         }
 
-        .demo-cards-section h3 {
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .showcase-header h3 {
             font-size: 1.5rem;
             color: #fff;
             margin-bottom: 8px;
         }
 
-        .demo-cards-section p {
-            color: #9CA3AF;
-            margin-bottom: 24px;
+        .showcase-header p {
+            color: #6C7883;
         }
 
-        .demo-cards-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 400px;
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 40px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .demo-card {
+        .showcase-preview {
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .showcase-preview iframe {
+            width: 100%;
+            height: 520px;
+            border: none;
+            display: block;
+        }
+
+        .showcase-tokens {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            align-content: start;
+        }
+
+        .token-card {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 16px 20px;
+            gap: 12px;
+            padding: 12px 16px;
             background: #17212B;
             border: 1px solid #232E3C;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
 
-        .demo-card:hover {
+        .token-card:hover {
             background: #1E2A36;
             border-color: #766AC8;
         }
 
-        .demo-card-icon {
-            width: 44px;
-            height: 44px;
+        .token-letter {
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #7B2D8E, #5a1f69);
             color: #fff;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        .demo-card-content {
-            flex: 1;
-            text-align: left;
-        }
-
-        .demo-card-content h4 {
+        .token-card strong {
             color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
+            font-size: 14px;
         }
 
-        .demo-card-type {
+        .token-card small {
             color: #6C7883;
-            font-size: 13px;
+            font-size: 11px;
         }
 
-        .demo-card-arrow {
-            color: #6C7883;
-            font-size: 20px;
-            transition: transform 0.2s;
+        body.light-mode .widget-showcase {
+            border-top-color: #e5e5e5;
         }
 
-        .demo-card:hover .demo-card-arrow {
-            transform: translateX(4px);
-            color: #766AC8;
-        }
-
-        body.light-mode .demo-cards-section h3 {
+        body.light-mode .showcase-header h3 {
             color: #1a1a1a;
         }
 
-        body.light-mode .demo-cards-section p {
+        body.light-mode .showcase-header p {
             color: #666;
         }
 
-        body.light-mode .demo-card {
+        body.light-mode .token-card {
             background: #f5f5f5;
             border-color: #e5e5e5;
         }
 
-        body.light-mode .demo-card:hover {
+        body.light-mode .token-card:hover {
             background: #eee;
         }
 
-        body.light-mode .demo-card-content h4 {
+        body.light-mode .token-card strong {
             color: #1a1a1a;
+        }
+
+        @media (max-width: 900px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+            }
+            .showcase-preview {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .showcase-tokens {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .showcase-tokens {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* Pricing section - 4-card grid */
@@ -4136,34 +4166,57 @@
         </div>
     </div>
 
-    <!-- Demo Cards Section -->
-    <div class="demo-cards-section">
-        <h3 data-i18n="demo.live.title">See it in action</h3>
-        <p data-i18n="demo.live.subtitle">Works with any ERC-20. Click to preview.</p>
-        <div class="demo-cards-grid">
-            <div class="demo-card" onclick="openDemoWidget('0xd6175692026bcd7cb12a515e39cf0256ef35cb86', '$BONZI')">
-                <div class="demo-card-icon">B</div>
-                <div class="demo-card-content">
-                    <h4>$BONZI</h4>
-                    <span class="demo-card-type">Community Token</span>
-                </div>
-                <span class="demo-card-arrow">→</span>
+    <!-- Widget Demo Showcase -->
+    <div class="widget-showcase">
+        <div class="showcase-header">
+            <h3>See it in action</h3>
+            <p>Works with any ERC-20 token. Click a card to preview.</p>
+        </div>
+        <div class="showcase-grid">
+            <div class="showcase-preview">
+                <iframe
+                    src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI"
+                    loading="lazy"
+                    title="Widget Preview">
+                </iframe>
             </div>
-            <div class="demo-card" onclick="openDemoWidget('0x6982508145454Ce325dDbE47a25d4ec3d2311933', '$PEPE')">
-                <div class="demo-card-icon">P</div>
-                <div class="demo-card-content">
-                    <h4>$PEPE</h4>
-                    <span class="demo-card-type">Meme Coin</span>
+            <div class="showcase-tokens">
+                <div class="token-card" onclick="openDemoWidget('0xd6175692026bcd7cb12a515e39cf0256ef35cb86', '$BONZI')">
+                    <span class="token-letter">B</span>
+                    <div><strong>$BONZI</strong><br><small>Community</small></div>
                 </div>
-                <span class="demo-card-arrow">→</span>
-            </div>
-            <div class="demo-card" onclick="openDemoWidget('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', '$UNI')">
-                <div class="demo-card-icon">U</div>
-                <div class="demo-card-content">
-                    <h4>$UNI</h4>
-                    <span class="demo-card-type">DeFi Governance</span>
+                <div class="token-card" onclick="openDemoWidget('0x6982508145454Ce325dDbE47a25d4ec3d2311933', '$PEPE')">
+                    <span class="token-letter">P</span>
+                    <div><strong>$PEPE</strong><br><small>Meme</small></div>
                 </div>
-                <span class="demo-card-arrow">→</span>
+                <div class="token-card" onclick="openDemoWidget('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', '$UNI')">
+                    <span class="token-letter">U</span>
+                    <div><strong>$UNI</strong><br><small>DeFi</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x514910771AF9Ca656af840dff83E8264EcF986CA', '$LINK')">
+                    <span class="token-letter">L</span>
+                    <div><strong>$LINK</strong><br><small>Oracle</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0', '$MATIC')">
+                    <span class="token-letter">M</span>
+                    <div><strong>$MATIC</strong><br><small>L2</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE', '$SHIB')">
+                    <span class="token-letter">S</span>
+                    <div><strong>$SHIB</strong><br><small>Meme</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', '$WBTC')">
+                    <span class="token-letter">W</span>
+                    <div><strong>$WBTC</strong><br><small>Wrapped</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9', '$AAVE')">
+                    <span class="token-letter">A</span>
+                    <div><strong>$AAVE</strong><br><small>Lending</small></div>
+                </div>
+                <div class="token-card" onclick="openDemoWidget('0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', '$MKR')">
+                    <span class="token-letter">M</span>
+                    <div><strong>$MKR</strong><br><small>DAO</small></div>
+                </div>
             </div>
         </div>
     </div>

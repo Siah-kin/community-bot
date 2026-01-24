@@ -1,12 +1,17 @@
 /**
  * Bonzi Brand Widget - Embed Script
  *
- * One-line integration for brand websites:
+ * DOCUMENTATION: https://github.com/Siah-kin/community-bot/blob/main/widget/README.md
+ * FULL MANUAL:   https://bonzi.bot/docs/brand-starter-kit
+ *
+ * Quick Start:
  * <script src="https://bonzi.bot/widget/embed.js" data-token="0x..." data-symbol="$TOKEN"></script>
  *
- * Or with explicit container:
+ * With container:
  * <div id="bonzi-buy-widget"></div>
  * <script src="https://bonzi.bot/widget/embed.js" data-token="0x..." data-container="bonzi-buy-widget"></script>
+ *
+ * Options: data-mode="inline|modal|floating", data-theme="light|dark", data-testnet="true"
  */
 (function() {
     'use strict';

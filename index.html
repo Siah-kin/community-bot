@@ -5661,9 +5661,8 @@ buildPlaylistUI();
 let lastScroll = 0;
 const nav = document.querySelector('nav');
 const tokeniseFixed = document.getElementById('tokenise-fixed');
-const launchTrigger = document.getElementById('launch-trigger');
 
-// Make fixed button trigger same action as main button
+// Make fixed button trigger same action as main button (launchTrigger already defined above)
 if (tokeniseFixed && launchTrigger) {
     tokeniseFixed.addEventListener('click', () => launchTrigger.click());
 }

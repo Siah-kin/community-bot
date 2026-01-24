@@ -1561,6 +1561,14 @@
             color: #d4af37;
             text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
         }
+        .slot-bonzi-img {
+            height: 48px;
+            width: auto;
+            vertical-align: middle;
+        }
+        .slot-bonzi-img.gold {
+            filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1);
+        }
 
         /* Lever */
         .lever-container {
@@ -4406,14 +4414,18 @@ if (slotReel && slotLever) {
     slotWords.forEach((word, i) => {
         const span = document.createElement('span');
         span.className = 'word';
-        // Add special classes for Bonzi jackpots
+        span.dataset.index = i;
+
+        // Show Bonzi logo images for jackpot entries
         if (word === 'Bonzi') {
             span.classList.add('bonzi-word');
+            span.innerHTML = '<img src="bonzi-logo.png" alt="Bonzi" class="slot-bonzi-img">';
         } else if (word === 'Gold Bonzi') {
             span.classList.add('gold-bonzi-word');
+            span.innerHTML = '<img src="bonzi-logo.png" alt="Gold Bonzi" class="slot-bonzi-img gold">';
+        } else {
+            span.textContent = word;
         }
-        span.textContent = word;
-        span.dataset.index = i;
         slotReel.appendChild(span);
     });
 

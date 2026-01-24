@@ -3901,7 +3901,7 @@
             </div>
 
             <div class="tool-actions">
-                <a href="widget/brand-widget.html" target="_blank" class="btn-tool-primary">Preview Widget →</a>
+                <button class="btn-tool-primary" onclick="previewWidget()">Preview Widget →</button>
                 <a href="https://github.com/Siah-kin/community-bot/blob/main/docs/WIDGET_INTEGRATION_GUIDE.md" target="_blank" class="btn-tool-secondary">Full Docs</a>
             </div>
         </div>
@@ -5151,6 +5151,19 @@ function copyWidgetCode() {
         document.body.removeChild(textarea);
         alert('Code copied!');
     });
+}
+
+// Preview widget with user settings
+function previewWidget() {
+    const token = document.getElementById('widget-token').value;
+    const symbol = document.getElementById('widget-symbol').value || '$TOKEN';
+
+    const params = new URLSearchParams();
+    if (token) params.set('token', token);
+    if (symbol) params.set('symbol', symbol);
+
+    const url = 'widget/brand-widget.html' + (params.toString() ? '?' + params.toString() : '');
+    window.open(url, '_blank');
 }
 
 // QR Code generation (uses QRCode.js library if available)

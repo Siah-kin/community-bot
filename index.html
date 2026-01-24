@@ -1553,6 +1553,14 @@
             white-space: nowrap;
             text-align: center;
         }
+        .slot-reel .word.bonzi-word {
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+        }
+        .slot-reel .word.gold-bonzi-word {
+            color: #d4af37;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+        }
 
         /* Lever */
         .lever-container {
@@ -4398,6 +4406,12 @@ if (slotReel && slotLever) {
     slotWords.forEach((word, i) => {
         const span = document.createElement('span');
         span.className = 'word';
+        // Add special classes for Bonzi jackpots
+        if (word === 'Bonzi') {
+            span.classList.add('bonzi-word');
+        } else if (word === 'Gold Bonzi') {
+            span.classList.add('gold-bonzi-word');
+        }
         span.textContent = word;
         span.dataset.index = i;
         slotReel.appendChild(span);
@@ -4455,19 +4469,23 @@ if (slotReel && slotLever) {
 
             // Update Bonzi radar - show proximity to Gold Bonzi
             const currentIndex = Math.floor((currentPosition % totalHeight) / wordHeight) % slotWords.length;
-            const distance = Math.abs(currentIndex - goldBonziIndex);
-            const normalizedDistance = Math.min(distance, slotWords.length - distance); // Handle wrap-around
+            const forwardDist = (goldBonziIndex - currentIndex + slotWords.length) % slotWords.length;
+            const backwardDist = (currentIndex - goldBonziIndex + slotWords.length) % slotWords.length;
+            const normalizedDistance = Math.min(forwardDist, backwardDist);
+            const goingForward = forwardDist <= backwardDist; // Which direction is closer?
 
             // Map distance to 5 positions (0=far left, 2=center, 4=far right)
-            // When very close (distance < 10), gold appears in center positions
+            // goingForward = true means Gold Bonzi is ahead (show right side: 3, 4)
+            // goingForward = false means Gold Bonzi is behind (show left side: 0, 1)
             if (normalizedDistance < 3) {
                 updateBonziRadar(2); // Center - very close!
-            } else if (normalizedDistance < 10) {
-                updateBonziRadar(currentIndex < goldBonziIndex ? 3 : 1);
-            } else if (normalizedDistance < 20) {
-                updateBonziRadar(currentIndex < goldBonziIndex ? 4 : 0);
+            } else if (normalizedDistance < 15) {
+                updateBonziRadar(goingForward ? 3 : 1); // Near: one step from center
+            } else if (normalizedDistance < 30) {
+                updateBonziRadar(goingForward ? 4 : 0); // Far: edge positions
             } else {
-                updateBonziRadar(2); // Default center when far
+                // Very far - pick random side for visual interest
+                updateBonziRadar(Math.random() > 0.5 ? 4 : 0);
             }
 
             if (progress < 1) {

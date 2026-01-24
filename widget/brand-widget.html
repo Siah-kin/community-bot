@@ -345,21 +345,21 @@
             }
         }
 
-        // Login with social provider (Google/Apple)
+        // Login with social provider (Google/Apple) or email
         async function loginWithProvider(provider) {
             showState('loading', `Connecting with ${provider}...`);
 
             try {
-                // Initialize Coinbase Wallet SDK
+                // Initialize Coinbase Wallet SDK v4 with Smart Wallet
                 const sdk = new CoinbaseWalletSDK({
                     appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzi.bot/logo.png',
-                    darkMode: false
+                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png'
                 });
 
-                wallet = sdk.makeWeb3Provider(CONFIG.rpcUrl, CONFIG.chainId);
+                // v4 API: use smartWalletOnly for email/social login
+                wallet = sdk.makeWeb3Provider({ options: 'smartWalletOnly' });
 
-                // Request accounts (triggers login)
+                // Request accounts (triggers Coinbase popup for login)
                 const accounts = await wallet.request({ method: 'eth_requestAccounts' });
                 address = accounts[0];
 
@@ -373,7 +373,7 @@
                 console.error('Login failed:', error);
                 showState('login');
                 // User cancelled or popup blocked - don't show error
-                if (error.code === 4001 || error.message?.includes('User rejected')) {
+                if (error.code === 4001 || error.message?.includes('User rejected') || error.message?.includes('User closed')) {
                     return;
                 }
                 alert('Could not connect. Please check your popup blocker and try again.');
@@ -388,16 +388,16 @@
             showState('loading', 'Creating your wallet...');
 
             try {
-                // For email login, we use CDP's embedded wallet
-                // This creates a wallet tied to the email address
+                // Initialize Coinbase Wallet SDK v4 with Smart Wallet
                 const sdk = new CoinbaseWalletSDK({
                     appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzi.bot/logo.png'
+                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png'
                 });
 
-                wallet = sdk.makeWeb3Provider(CONFIG.rpcUrl, CONFIG.chainId);
+                // v4 API: use smartWalletOnly for email login
+                wallet = sdk.makeWeb3Provider({ options: 'smartWalletOnly' });
 
-                // Request accounts
+                // Request accounts (triggers Coinbase popup)
                 const accounts = await wallet.request({ method: 'eth_requestAccounts' });
                 address = accounts[0];
 
@@ -410,6 +410,9 @@
             } catch (error) {
                 console.error('Wallet creation failed:', error);
                 showState('email');
+                if (error.code === 4001 || error.message?.includes('User rejected') || error.message?.includes('User closed')) {
+                    return;
+                }
                 alert('Could not create wallet. Please try again.');
             }
         }

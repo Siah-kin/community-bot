@@ -24,6 +24,30 @@ body {
     background-attachment: fixed;
 }
 
+/* Embed mode - clean, no decoration */
+html.embed-mode body,
+body.embed-mode {
+    background: #fff;
+    padding: 0;
+    min-height: auto;
+}
+
+html.embed-mode .preview-wrapper,
+body.embed-mode .preview-wrapper {
+    width: 100%;
+}
+
+html.embed-mode .preview-badge,
+body.embed-mode .preview-badge {
+    display: none;
+}
+
+html.embed-mode .bonzi-widget,
+body.embed-mode .bonzi-widget {
+    max-width: 100%;
+    box-shadow: none;
+}
+
 /* Preview Wrapper */
 .preview-wrapper {
     position: relative;

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy Token - Bonzi Widget</title>
     <link rel="stylesheet" href="brand-widget.css">
+    <script>
+        // Detect iframe embed and add class immediately
+        if (window !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true') {
+            document.documentElement.className = 'embed-mode';
+        }
+    </script>
 </head>
 <body>
     <!--

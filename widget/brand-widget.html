@@ -110,14 +110,15 @@
                     <label for="fund-amount">Amount (USD)</label>
                     <div class="input-group">
                         <span class="input-prefix">$</span>
-                        <input type="number" id="fund-amount" value="50" min="10" max="10000" step="10">
+                        <input type="number" id="fund-amount" value="100" min="50" max="10000" step="10">
                     </div>
                     <div class="amount-presets">
-                        <button class="preset-btn" data-amount="25">$25</button>
-                        <button class="preset-btn active" data-amount="50">$50</button>
-                        <button class="preset-btn" data-amount="100">$100</button>
+                        <button class="preset-btn" data-amount="50">$50</button>
+                        <button class="preset-btn active" data-amount="100">$100</button>
                         <button class="preset-btn" data-amount="250">$250</button>
+                        <button class="preset-btn" data-amount="500">$500</button>
                     </div>
+                    <p class="fee-note">Includes $20 protocol fee. <a href="terms.html" target="_blank">Learn why</a></p>
                 </div>
 
                 <button id="btn-fund" class="btn btn-primary btn-large">
@@ -192,71 +193,7 @@
                 </svg>
                 Secured by Coinbase
             </span>
-        </div>
-
-        <!-- Terms & Conditions Modal -->
-        <div id="terms-modal" class="terms-modal" style="display: none;">
-            <div class="terms-overlay"></div>
-            <div class="terms-content">
-                <h3>How Your Purchase Powers the Ecosystem</h3>
-
-                <div class="terms-explanation">
-                    <div class="euler-box">
-                        <div class="euler-header">
-                            <span class="euler-icon">&#9889;</span>
-                            <span class="euler-title">The Euler Model</span>
-                        </div>
-                        <p class="euler-desc">Every swap includes a <strong>fixed $20 protocol fee</strong> (paid in ETH). Unlike percentage fees that punish large trades, this flat fee treats everyone equally.</p>
-                    </div>
-
-                    <div class="fee-distribution">
-                        <p class="distribution-title">Where your $20 goes:</p>
-                        <div class="distribution-item">
-                            <span class="distribution-icon">&#128176;</span>
-                            <div>
-                                <strong>Liquidity Providers</strong>
-                                <span>Rewarded in ETH for supporting the pool</span>
-                            </div>
-                        </div>
-                        <div class="distribution-item">
-                            <span class="distribution-icon">&#127981;</span>
-                            <div>
-                                <strong>Protocol Treasury</strong>
-                                <span>Funds development &amp; ecosystem growth</span>
-                            </div>
-                        </div>
-                        <div class="distribution-item">
-                            <span class="distribution-icon">&#128293;</span>
-                            <div>
-                                <strong>Buyback &amp; Burn</strong>
-                                <span>Increases token scarcity over time</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="euler-benefit">
-                        <strong>Why this matters:</strong> Developers earn from trading volume, not token dumps. This aligns incentives and builds sustainable projects.
-                    </div>
-                </div>
-
-                <div class="other-fees">
-                    <p class="other-fees-title">Additional fees (standard for all crypto):</p>
-                    <span class="fee-tag">Coinbase ~2-4%</span>
-                    <span class="fee-tag">Network gas ~$5-20</span>
-                </div>
-
-                <div class="terms-checkbox">
-                    <label>
-                        <input type="checkbox" id="terms-accept">
-                        <span>I understand and agree to the <a href="terms.html" target="_blank">Terms & Conditions</a></span>
-                    </label>
-                </div>
-
-                <div class="terms-buttons">
-                    <button id="terms-cancel" class="btn btn-outline">Cancel</button>
-                    <button id="terms-continue" class="btn btn-primary" disabled>Continue</button>
-                </div>
-            </div>
+            <a href="terms.html" target="_blank" class="footer-terms">Terms</a>
         </div>
     </div>
 
@@ -314,8 +251,6 @@
         let wallet = null;
         let address = null;
         let provider = null;
-        let termsAccepted = false;
-        let pendingAction = null; // Stores the action to execute after terms accepted
 
         // DOM Elements
         const states = {
@@ -371,19 +306,11 @@
 
         // Bind event listeners
         function bindEvents() {
-            // Login buttons - show terms modal first
-            document.getElementById('btn-email').addEventListener('click', () => showTermsModal('email'));
-            document.getElementById('btn-google').addEventListener('click', () => showTermsModal('google'));
-            document.getElementById('btn-apple').addEventListener('click', () => showTermsModal('apple'));
-            document.getElementById('btn-wallet').addEventListener('click', () => showTermsModal('wallet'));
-
-            // Terms modal events
-            document.getElementById('terms-accept').addEventListener('change', (e) => {
-                document.getElementById('terms-continue').disabled = !e.target.checked;
-            });
-            document.getElementById('terms-cancel').addEventListener('click', hideTermsModal);
-            document.getElementById('terms-continue').addEventListener('click', proceedAfterTerms);
-            document.querySelector('.terms-overlay').addEventListener('click', hideTermsModal);
+            // Login buttons - direct action (terms via footer link)
+            document.getElementById('btn-email').addEventListener('click', () => showState('email'));
+            document.getElementById('btn-google').addEventListener('click', () => loginWithProvider('google'));
+            document.getElementById('btn-apple').addEventListener('click', () => loginWithProvider('apple'));
+            document.getElementById('btn-wallet').addEventListener('click', connectExternalWallet);
 
             // Email form
             document.getElementById('btn-back-email').addEventListener('click', () => showState('login'));
@@ -405,53 +332,6 @@
             // Success screen
             document.getElementById('btn-buy-more').addEventListener('click', () => showState('fund'));
             document.getElementById('btn-view-tx').addEventListener('click', viewTransaction);
-        }
-
-        // Show terms modal before proceeding
-        function showTermsModal(action) {
-            // If already accepted in this session, skip modal
-            if (termsAccepted) {
-                executePendingAction(action);
-                return;
-            }
-
-            pendingAction = action;
-            document.getElementById('terms-modal').style.display = 'block';
-            document.getElementById('terms-accept').checked = false;
-            document.getElementById('terms-continue').disabled = true;
-        }
-
-        // Hide terms modal
-        function hideTermsModal() {
-            document.getElementById('terms-modal').style.display = 'none';
-            pendingAction = null;
-        }
-
-        // Proceed after terms accepted
-        function proceedAfterTerms() {
-            termsAccepted = true;
-            hideTermsModal();
-            if (pendingAction) {
-                executePendingAction(pendingAction);
-            }
-        }
-
-        // Execute the pending action
-        function executePendingAction(action) {
-            switch(action) {
-                case 'email':
-                    showState('email');
-                    break;
-                case 'google':
-                    loginWithProvider('google');
-                    break;
-                case 'apple':
-                    loginWithProvider('apple');
-                    break;
-                case 'wallet':
-                    connectExternalWallet();
-                    break;
-            }
         }
 
         // Check for existing session

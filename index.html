@@ -1527,16 +1527,15 @@
             overflow: hidden;
             background: #0a0a1a;
             border: 1px solid #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative;
         }
 
         .slot-reel {
-            display: flex;
-            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             will-change: transform;
-            align-items: center;
         }
 
         .slot-reel .word {
@@ -4533,7 +4532,7 @@ if (triggerWord) {
     setInterval(() => {
         triggerIndex = (triggerIndex + 1) % triggerWords.length;
         triggerWord.textContent = triggerWords[triggerIndex];
-    }, 30);
+    }, 150);
 }
 
 // Win98 popup sound using Web Audio API

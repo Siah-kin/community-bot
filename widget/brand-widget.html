@@ -372,7 +372,11 @@
             } catch (error) {
                 console.error('Login failed:', error);
                 showState('login');
-                alert('Login failed. Please try again.');
+                // User cancelled or popup blocked - don't show error
+                if (error.code === 4001 || error.message?.includes('User rejected')) {
+                    return;
+                }
+                alert('Could not connect. Please check your popup blocker and try again.');
             }
         }
 

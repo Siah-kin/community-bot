@@ -1350,7 +1350,9 @@
            LAUNCH SENTENCE + TOKENISE CTA
            ===================================================== */
         .launch-sentence {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
             margin-top: 48px;
             margin-bottom: 32px;
@@ -1358,7 +1360,6 @@
             font-weight: 600;
             letter-spacing: -0.03em;
             line-height: 1.2;
-            white-space: nowrap;
         }
 
         .launch-sentence .trigger-text {
@@ -1366,9 +1367,8 @@
         }
 
         .launch-sentence .trigger-word {
-            display: inline-block;
-            width: 320px;
-            text-align: left;
+            display: block;
+            text-align: center;
             color: #a78bfa;
         }
 
@@ -3556,7 +3556,7 @@
             <img src="bonzi-logo.png" alt="Bonzi" class="prize-bonzi" id="prize-bonzi-img">
             <h3 class="prize-title" id="prize-title">BONZI JACKPOT!</h3>
         </div>
-        <p class="prize-desc">You won <strong>5 Thank Points</strong>!</p>
+        <p class="prize-desc">You won <strong id="prize-points">2 Thank Points</strong>!</p>
         <div class="prize-code-box">
             <span class="prize-code" id="prize-code">BONZI-XXXX</span>
             <button class="prize-copy" id="prize-copy">Copy</button>
@@ -4885,6 +4885,8 @@ function showPrizeModal(isGold) {
     if (!prizeModal) return;
 
     const code = generateClaimCode(isGold);
+    const prizePoints = document.getElementById('prize-points');
+    const points = isGold ? 5 : 2;
 
     if (isGold) {
         prizeTitle.textContent = 'GOLD BONZI JACKPOT!';
@@ -4896,6 +4898,7 @@ function showPrizeModal(isGold) {
         prizeBonziImg.classList.remove('gold');
     }
 
+    if (prizePoints) prizePoints.textContent = `${points} Thank Points`;
     prizeCode.textContent = code;
     prizeModal.classList.add('open');
 }

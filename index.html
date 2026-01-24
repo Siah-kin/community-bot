@@ -1448,7 +1448,9 @@
 
         .slot-machine {
             width: 340px;
-            max-width: 100%;
+            max-width: calc(100% - 32px);
+            box-sizing: border-box;
+            overflow: hidden;
             background: #d8cef0;
             border: 2px solid;
             border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
@@ -1523,26 +1525,24 @@
         }
 
         .lcd-screen {
+            position: relative;
             height: 60px;
             overflow: hidden;
             background: #0a0a1a;
             border: 1px solid #333;
-            position: relative;
         }
 
         .slot-reel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: relative;
             will-change: transform;
         }
 
         .slot-reel .word {
+            display: block;
             height: 60px;
             line-height: 60px;
             padding: 0 16px;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             font-family: 'Courier New', monospace;
             color: #22c55e;

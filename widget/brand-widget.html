@@ -9,7 +9,7 @@
 <body>
     <!--
     Bonzi Brand Widget
-    Powered by Coinbase CDP + Base
+    Powered by Coinbase CDP + Ethereum
 
     Usage: Embed this widget on any website to let users buy tokens
     without managing wallets or seed phrases.
@@ -24,7 +24,7 @@
             </div>
             <div class="widget-network">
                 <span class="network-dot"></span>
-                <span class="network-name">Base</span>
+                <span class="network-name">Ethereum</span>
             </div>
         </div>
 
@@ -201,7 +201,7 @@
     <script>
     /**
      * Bonzi Brand Widget
-     * Coinbase CDP + Base Integration
+     * Coinbase CDP + Ethereum Integration
      *
      * Configuration is passed via data attributes or URL params
      */
@@ -211,21 +211,22 @@
         // Configuration
         const CONFIG = {
             // Token to purchase (set via data-token attribute or URL param)
-            tokenAddress: null,
-            tokenSymbol: '$TOKEN',
+            // Default: $BONZI on Ethereum (Ethervista)
+            tokenAddress: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+            tokenSymbol: '$BONZI',
             tokenDecimals: 18,
 
-            // Chain config (Base)
-            chainId: 8453, // Base mainnet
-            chainName: 'Base',
-            rpcUrl: 'https://mainnet.base.org',
+            // Chain config (Ethereum - for $BONZI on Ethervista)
+            chainId: 1, // Ethereum mainnet
+            chainName: 'Ethereum',
+            rpcUrl: 'https://eth.llamarpc.com',
 
-            // Contract addresses (Base Mainnet)
-            usdc: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+            // Contract addresses (Ethereum Mainnet)
+            usdc: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
             usdcDecimals: 6,
 
-            // Testnet contract addresses (Base Sepolia)
-            testnetUsdc: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+            // Testnet contract addresses (Ethereum Sepolia)
+            testnetUsdc: '0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
 
             // 0x API for swaps
             zeroExApi: 'https://api.0x.org',
@@ -277,9 +278,9 @@
             CONFIG.testnet = widget.dataset.testnet === 'true' || urlParams.get('testnet') === 'true';
 
             if (CONFIG.testnet) {
-                CONFIG.chainId = 84532; // Base Sepolia
-                CONFIG.chainName = 'Base Sepolia';
-                CONFIG.rpcUrl = 'https://sepolia.base.org';
+                CONFIG.chainId = 11155111; // Ethereum Sepolia
+                CONFIG.chainName = 'Ethereum Sepolia';
+                CONFIG.rpcUrl = 'https://rpc.sepolia.org';
                 CONFIG.usdc = CONFIG.testnetUsdc; // Use testnet USDC
             }
         }
@@ -417,7 +418,7 @@
                     address = accounts[0];
                     wallet = window.ethereum;
 
-                    // Switch to Base if needed
+                    // Switch to Ethereum if needed
                     try {
                         await window.ethereum.request({
                             method: 'wallet_switchEthereumChain',
@@ -514,7 +515,7 @@
             onrampUrl.searchParams.set('appId', CONFIG.onrampAppId);
             onrampUrl.searchParams.set('destinationWallets', JSON.stringify([{
                 address: address,
-                blockchains: ['base'],
+                blockchains: ['ethereum'],
                 assets: ['USDC']
             }]));
             onrampUrl.searchParams.set('presetFiatAmount', amount);
@@ -783,14 +784,14 @@
 
         // View transaction
         function viewTransaction() {
-            const baseUrl = CONFIG.testnet
-                ? 'https://sepolia.basescan.org'
-                : 'https://basescan.org';
+            const explorerUrl = CONFIG.testnet
+                ? 'https://sepolia.etherscan.io'
+                : 'https://etherscan.io';
 
             if (lastTxHash) {
-                window.open(baseUrl + '/tx/' + lastTxHash, '_blank');
+                window.open(explorerUrl + '/tx/' + lastTxHash, '_blank');
             } else {
-                window.open(baseUrl + '/address/' + address, '_blank');
+                window.open(explorerUrl + '/address/' + address, '_blank');
             }
         }
 

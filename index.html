@@ -1722,6 +1722,102 @@
 
         .slot-machine.white-jackpot .jackpot-msg { color: #b8860b; }
 
+        /* Prize Claim Modal */
+        .prize-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .prize-modal.open { display: flex; }
+        .prize-content {
+            background: linear-gradient(135deg, #1a1025 0%, #2d1f3d 100%);
+            border: 3px solid #7c3aed;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            max-width: 360px;
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+        }
+        .prize-header { margin-bottom: 16px; }
+        .prize-bonzi {
+            width: 80px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+        .prize-bonzi.gold {
+            filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1);
+        }
+        .prize-title {
+            color: #a78bfa;
+            font-size: 24px;
+            margin: 0;
+        }
+        .prize-title.gold { color: #d4af37; }
+        .prize-desc {
+            color: #e0d4f7;
+            font-size: 16px;
+            margin: 16px 0;
+        }
+        .prize-code-box {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        .prize-code {
+            background: #0a0a1a;
+            color: #22c55e;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 8px;
+            letter-spacing: 2px;
+        }
+        .prize-copy {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .prize-copy:hover { background: #6d28d9; }
+        .prize-instructions {
+            color: #9ca3af;
+            font-size: 14px;
+            margin: 16px 0;
+            line-height: 1.6;
+        }
+        .prize-instructions a { color: #a78bfa; }
+        .prize-instructions code {
+            background: #1f1f2e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #22c55e;
+        }
+        .prize-close {
+            background: transparent;
+            border: 2px solid #7c3aed;
+            color: #a78bfa;
+            padding: 12px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        .prize-close:hover {
+            background: rgba(124, 58, 237, 0.2);
+        }
+
         /* CTA Button */
         .win98-cta {
             display: block;
@@ -3453,6 +3549,26 @@
     </div>
 </section>
 
+<!-- Prize Claim Modal -->
+<div class="prize-modal" id="prize-modal">
+    <div class="prize-content">
+        <div class="prize-header">
+            <img src="bonzi-logo.png" alt="Bonzi" class="prize-bonzi" id="prize-bonzi-img">
+            <h3 class="prize-title" id="prize-title">BONZI JACKPOT!</h3>
+        </div>
+        <p class="prize-desc">You won <strong>5 Thank Points</strong>!</p>
+        <div class="prize-code-box">
+            <span class="prize-code" id="prize-code">BONZI-XXXX</span>
+            <button class="prize-copy" id="prize-copy">Copy</button>
+        </div>
+        <p class="prize-instructions">
+            Open <a href="https://t.me/bonzi_bot" target="_blank">@bonzi_bot</a> on Telegram<br>
+            and send: <code>/claim [code]</code>
+        </p>
+        <button class="prize-close" id="prize-close">Got it!</button>
+    </div>
+</div>
+
 <section class="pain-section">
     <div class="pain-container">
         <p class="section-label" data-i18n="pain.label">Galxe, Zealy, Layer3, Crew3, TaskOn, QuestN</p>
@@ -4365,39 +4481,54 @@ gsap.utils.toArray('.reveal-line span').forEach((line, i) => {
 });
 gsap.to('.statement-text', { y: -50, scrollTrigger: { trigger: '.statement', start: 'top bottom', end: 'bottom top', scrub: 1 }});
 
-// Win98 Slot Machine - 100+ things you can launch + hidden Bonzi jackpots
+// Win98 Slot Machine - 100+ things you can launch + hidden Bonzi jackpots (15 purple + 1 gold)
 const slotWords = [
     // Brand & Business
-    'Brand', 'Startup', 'Agency', 'Studio', 'Label', 'Franchise', 'Collective', 'Syndicate', 'Venture', 'Empire',
-    // Hidden Bonzi #1
-    'Bonzi',
+    'Brand', 'Startup', 'Agency', 'Studio', 'Label',
+    'Bonzi', // #1
+    'Franchise', 'Collective', 'Syndicate', 'Venture', 'Empire',
+    'Bonzi', // #2
     // Communities
-    'Community', 'Tribe', 'Guild', 'Club', 'Network', 'Movement', 'Alliance', 'Coalition', 'Federation', 'Legion',
+    'Community', 'Tribe', 'Guild', 'Club', 'Network',
+    'Bonzi', // #3
+    'Movement', 'Alliance', 'Coalition', 'Federation', 'Legion',
     // Finance
-    'Token', 'Fund', 'Treasury', 'Pool', 'Vault', 'Index', 'Hedge', 'Portfolio', 'Equity', 'DAO',
-    // Hidden Bonzi #2
-    'Bonzi',
+    'Token', 'Fund', 'Treasury', 'Pool', 'Vault',
+    'Bonzi', // #4
+    'Index', 'Hedge', 'Portfolio', 'Equity', 'DAO',
+    'Bonzi', // #5
     // Creative
-    'Project', 'Idea', 'Vision', 'Dream', 'Mission', 'Legacy', 'Story', 'Narrative', 'Manifesto', 'Revolution',
+    'Project', 'Idea', 'Vision', 'Dream', 'Mission',
+    'Bonzi', // #6
+    'Legacy', 'Story', 'Narrative', 'Manifesto', 'Revolution',
     // Tech
-    'Protocol', 'Platform', 'Infrastructure', 'Oracle', 'API', 'dApp', 'Layer', 'Chain', 'Bridge', 'Node',
-    // Hidden Bonzi #3
-    'Bonzi',
+    'Protocol', 'Platform', 'Infrastructure', 'Oracle', 'API',
+    'Bonzi', // #7
+    'dApp', 'Layer', 'Chain', 'Bridge', 'Node',
+    'Bonzi', // #8
     // Content
-    'Media', 'Channel', 'Podcast', 'Newsletter', 'Magazine', 'Journal', 'Archive', 'Library', 'Academy', 'Course',
+    'Media', 'Channel', 'Podcast', 'Newsletter', 'Magazine',
+    'Bonzi', // #9
+    'Journal', 'Archive', 'Library', 'Academy', 'Course',
     // Physical
-    'Product', 'Merch', 'Collection', 'Gallery', 'Space', 'Venue', 'Festival', 'Event', 'Experience', 'Restaurant',
-    // Hidden Bonzi #4
-    'Bonzi',
+    'Product', 'Merch', 'Collection', 'Gallery', 'Space',
+    'Bonzi', // #10
+    'Venue', 'Festival', 'Event', 'Experience', 'Restaurant',
+    'Bonzi', // #11
     // Services
-    'Service', 'Marketplace', 'Exchange', 'Launchpad', 'Incubator', 'Accelerator', 'Consultancy', 'Research', 'Lab', 'Institute',
+    'Service', 'Marketplace', 'Exchange', 'Launchpad', 'Incubator',
+    'Bonzi', // #12
+    'Accelerator', 'Consultancy', 'Research', 'Lab', 'Institute',
     // Gaming
-    'Game', 'World', 'Universe', 'Realm', 'Arena', 'Tournament', 'League', 'Team', 'Esports', 'Metaverse',
-    // Hidden Bonzi #5
-    'Bonzi',
+    'Game', 'World', 'Universe', 'Realm', 'Arena',
+    'Bonzi', // #13
+    'Tournament', 'League', 'Team', 'Esports', 'Metaverse',
+    'Bonzi', // #14
     // Impact
-    'Charity', 'Foundation', 'Cause', 'Initiative', 'Campaign', 'Cooperative', 'Union', 'Trust', 'Flywheel', 'Future',
-    // ULTRA RARE - White Bonzi (mystery prize TBD)
+    'Charity', 'Foundation', 'Cause', 'Initiative', 'Campaign',
+    'Bonzi', // #15
+    'Cooperative', 'Union', 'Trust', 'Flywheel', 'Future',
+    // ULTRA RARE - Gold Bonzi (5 thank points prize!)
     'Gold Bonzi'
 ];
 
@@ -4514,11 +4645,15 @@ if (slotReel && slotLever) {
                     if (jackpotMsg) jackpotMsg.textContent = 'BONZI JACKPOT!';
                     // Purple Bonzi → gold shifts rapidly
                     startGoldFlux();
+                    // Show prize modal after animation
+                    setTimeout(() => showPrizeModal(false), 500);
                 } else if (landed === 'Gold Bonzi') {
                     slotMachine.classList.add('white-jackpot');
-                    if (jackpotMsg) jackpotMsg.textContent = 'GOLD BONZI JACKPOT! All Bonzis turn gold!';
+                    if (jackpotMsg) jackpotMsg.textContent = 'GOLD BONZI JACKPOT!';
                     // Gold Bonzi → ALL turn gold
                     turnAllBonzisGold();
+                    // Show prize modal (gold version) after animation
+                    setTimeout(() => showPrizeModal(true), 500);
                 } else {
                     // Normal result → reset Bonzis to default
                     resetBonzis();
@@ -4745,6 +4880,72 @@ if (slotPanelCloseInner) {
 // Close panel (overlay click)
 if (slotOverlay) {
     slotOverlay.addEventListener('click', closeSlotPanel);
+}
+
+// ===========================================
+// PRIZE CLAIM MODAL
+// ===========================================
+const prizeModal = document.getElementById('prize-modal');
+const prizeTitle = document.getElementById('prize-title');
+const prizeBonziImg = document.getElementById('prize-bonzi-img');
+const prizeCode = document.getElementById('prize-code');
+const prizeCopy = document.getElementById('prize-copy');
+const prizeClose = document.getElementById('prize-close');
+
+// Generate unique claim code (timestamp + random)
+function generateClaimCode(isGold) {
+    const prefix = isGold ? 'GOLD' : 'BONZI';
+    const timestamp = Date.now().toString(36).toUpperCase().slice(-4);
+    const random = Math.random().toString(36).toUpperCase().slice(2, 6);
+    return `${prefix}-${timestamp}${random}`;
+}
+
+// Show prize modal
+function showPrizeModal(isGold) {
+    if (!prizeModal) return;
+
+    const code = generateClaimCode(isGold);
+
+    if (isGold) {
+        prizeTitle.textContent = 'GOLD BONZI JACKPOT!';
+        prizeTitle.classList.add('gold');
+        prizeBonziImg.classList.add('gold');
+    } else {
+        prizeTitle.textContent = 'BONZI JACKPOT!';
+        prizeTitle.classList.remove('gold');
+        prizeBonziImg.classList.remove('gold');
+    }
+
+    prizeCode.textContent = code;
+    prizeModal.classList.add('open');
+}
+
+// Close prize modal
+function closePrizeModal() {
+    if (prizeModal) prizeModal.classList.remove('open');
+}
+
+// Copy code to clipboard
+if (prizeCopy) {
+    prizeCopy.addEventListener('click', () => {
+        const code = prizeCode.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            prizeCopy.textContent = 'Copied!';
+            setTimeout(() => prizeCopy.textContent = 'Copy', 2000);
+        });
+    });
+}
+
+// Close modal
+if (prizeClose) {
+    prizeClose.addEventListener('click', closePrizeModal);
+}
+
+// Close on backdrop click
+if (prizeModal) {
+    prizeModal.addEventListener('click', (e) => {
+        if (e.target === prizeModal) closePrizeModal();
+    });
 }
 
 // ===========================================

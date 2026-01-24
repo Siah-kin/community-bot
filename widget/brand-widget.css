@@ -596,52 +596,138 @@
 }
 
 .terms-content h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--color-black);
     margin-bottom: 16px;
     text-align: center;
 }
 
-.terms-fees {
-    background: #FEF3C7;
-    border-radius: 12px;
-    padding: 16px;
+/* Euler Model Explanation */
+.terms-explanation {
     margin-bottom: 16px;
 }
 
-.terms-intro {
-    font-size: 13px;
-    color: #92400E;
+.euler-box {
+    background: linear-gradient(135deg, #7B2D8E 0%, #5a1f69 100%);
+    border-radius: 12px;
+    padding: 16px;
     margin-bottom: 12px;
-    font-weight: 600;
+    color: white;
 }
 
-.terms-fee-table {
-    width: 100%;
+.euler-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.euler-icon {
+    font-size: 20px;
+}
+
+.euler-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.euler-desc {
     font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.95;
 }
 
-.terms-fee-table td {
-    padding: 6px 0;
-    color: #78350F;
+.euler-desc strong {
+    color: #FFD700;
 }
 
-.terms-fee-table td:first-child {
-    font-weight: 500;
+/* Fee Distribution */
+.fee-distribution {
+    background: var(--color-gray-50);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
 }
 
-.terms-fee-table td:last-child {
-    text-align: right;
-}
-
-.terms-example {
+.distribution-title {
     font-size: 12px;
-    color: #B45309;
-    margin-top: 12px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.distribution-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.distribution-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.distribution-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.distribution-item div {
+    flex: 1;
+}
+
+.distribution-item strong {
+    display: block;
+    font-size: 13px;
+    color: var(--color-black);
+    margin-bottom: 2px;
+}
+
+.distribution-item span {
+    font-size: 11px;
+    color: var(--color-gray-500);
+}
+
+/* Euler Benefit */
+.euler-benefit {
+    background: #ECFDF5;
+    border-left: 3px solid #10B981;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #065F46;
+    border-radius: 0 8px 8px 0;
+}
+
+.euler-benefit strong {
+    color: #047857;
+}
+
+/* Other Fees */
+.other-fees {
+    margin-bottom: 16px;
     padding-top: 12px;
-    border-top: 1px solid rgba(146, 64, 14, 0.2);
-    font-style: italic;
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.other-fees-title {
+    font-size: 11px;
+    color: var(--color-gray-500);
+    margin-bottom: 8px;
+}
+
+.fee-tag {
+    display: inline-block;
+    background: var(--color-gray-100);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: var(--color-gray-700);
+    margin-right: 6px;
 }
 
 .terms-checkbox {

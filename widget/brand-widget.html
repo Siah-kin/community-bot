@@ -346,18 +346,22 @@
         }
 
         // Login with social provider (Google/Apple) or email
-        async function loginWithProvider(provider) {
-            showState('loading', `Connecting with ${provider}...`);
+        async function loginWithProvider(providerType) {
+            showState('loading', `Connecting with ${providerType}...`);
 
             try {
                 // Initialize Coinbase Wallet SDK v4 with Smart Wallet
                 const sdk = new CoinbaseWalletSDK({
                     appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png'
+                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png',
+                    appChainIds: [CONFIG.chainId]
                 });
 
-                // v4 API: use smartWalletOnly for email/social login
-                wallet = sdk.makeWeb3Provider({ options: 'smartWalletOnly' });
+                // v4 API: smartWalletOnly for email/social login
+                wallet = sdk.makeWeb3Provider({
+                    options: 'smartWalletOnly',
+                    attribution: { auto: true }
+                });
 
                 // Request accounts (triggers Coinbase popup for login)
                 const accounts = await wallet.request({ method: 'eth_requestAccounts' });
@@ -391,11 +395,15 @@
                 // Initialize Coinbase Wallet SDK v4 with Smart Wallet
                 const sdk = new CoinbaseWalletSDK({
                     appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png'
+                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png',
+                    appChainIds: [CONFIG.chainId]
                 });
 
-                // v4 API: use smartWalletOnly for email login
-                wallet = sdk.makeWeb3Provider({ options: 'smartWalletOnly' });
+                // v4 API: smartWalletOnly for email login
+                wallet = sdk.makeWeb3Provider({
+                    options: 'smartWalletOnly',
+                    attribution: { auto: true }
+                });
 
                 // Request accounts (triggers Coinbase popup)
                 const accounts = await wallet.request({ method: 'eth_requestAccounts' });

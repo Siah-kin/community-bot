@@ -1353,12 +1353,13 @@
             display: flex;
             justify-content: center;
             align-items: baseline;
-            gap: 0;
+            gap: 0.3em;
             margin-top: 48px;
             margin-bottom: 32px;
-            font-size: clamp(28px, 6vw, 48px);
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
         }
 
         .launch-sentence .trigger-text {
@@ -1367,10 +1368,9 @@
 
         .launch-sentence .trigger-word {
             display: inline-block;
-            min-width: 280px;
+            min-width: 4em;
             text-align: left;
             color: #a78bfa;
-            font-weight: 800;
         }
 
         .tokenise-btn {
@@ -4414,16 +4414,7 @@ if (slotReel && slotLever) {
     slotLever.addEventListener('click', () => {
         if (isSpinning) return;
 
-        // Rate limiting check - once per 24h
-        if (!canSpin()) {
-            showRateLimitMessage();
-            return;
-        }
-
         isSpinning = true;
-
-        // Record this spin for rate limiting
-        recordSpin();
 
         // Reset jackpot state
         slotMachine.classList.remove('jackpot', 'white-jackpot');

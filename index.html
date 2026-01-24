@@ -1347,40 +1347,49 @@
         }
 
         /* =====================================================
-           LAUNCH TRIGGER BUTTON - Accentuated CTA
+           LAUNCH SENTENCE + TOKENISE CTA
            ===================================================== */
-        .launch-trigger {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 24px 48px;
+        .launch-sentence {
+            display: block;
+            text-align: center;
             margin-top: 48px;
+            margin-bottom: 24px;
+        }
+
+        .launch-sentence .trigger-text {
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2px;
+        }
+
+        .launch-sentence .trigger-word {
+            font-size: clamp(32px, 7vw, 56px);
+            font-weight: 800;
+            color: #a78bfa;
+            text-shadow: 0 0 30px rgba(167, 139, 250, 0.6);
+            display: inline;
+        }
+
+        .tokenise-btn {
+            display: inline-block;
             background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
             border: 3px solid #A78BFA;
-            border-radius: 16px;
+            border-radius: 12px;
+            padding: 16px 48px;
             cursor: pointer;
             transition: all 0.3s ease;
             animation: trigger-pulse 2s ease-in-out infinite;
-        }
-
-        .launch-trigger:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(124, 58, 237, 0.6);
-        }
-
-        .trigger-text {
-            font-size: 14px;
-            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
             letter-spacing: 3px;
             text-transform: uppercase;
         }
 
-        .trigger-word {
-            font-size: clamp(24px, 5vw, 42px);
-            font-weight: 800;
-            color: #fff;
-            margin-top: 4px;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        .tokenise-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.6);
         }
 
         @keyframes trigger-pulse {
@@ -3349,11 +3358,13 @@
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">Trading fees fund the tip pool. AI verifies who's real. <span class="highlight">verified humans earn ETH.</span> bots get nothing. farmers get filtered. value created here stays here. <span class="highlight">that's the loop.</span></p>
 
-    <!-- Launch Trigger Button -->
-    <button class="launch-trigger" id="launch-trigger">
-        <span class="trigger-text">🚀 LAUNCH YOUR</span>
-        <span class="trigger-word" id="trigger-word">FUTURE</span>
-    </button>
+    <!-- Launch Sentence (not a button) -->
+    <div class="launch-sentence">
+        <span class="trigger-text">🚀 Launch Your </span><span class="trigger-word" id="trigger-word">Future</span>
+    </div>
+
+    <!-- Tokenise CTA Button -->
+    <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
 
     <!-- Slot Overlay (click to close) -->
     <div class="slot-overlay" id="slot-overlay"></div>

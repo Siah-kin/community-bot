@@ -1295,7 +1295,7 @@
             to { transform: scale(1.02); }
         }
 
-        /* WHITE BONZI - Ultra rare mystery jackpot */
+        /* GOLD BONZI - Ultra rare mystery jackpot */
         .slot-machine.white-jackpot {
             animation: white-jackpot-shake 0.8s ease-in-out;
         }
@@ -1368,9 +1368,10 @@
 
         .launch-sentence .trigger-word {
             display: inline-block;
-            min-width: 4em;
+            min-width: 5em;
             text-align: left;
             color: #a78bfa;
+            transition: opacity 0.15s ease;
         }
 
         .tokenise-btn {
@@ -4380,7 +4381,7 @@ const slotWords = [
     // Impact
     'Charity', 'Foundation', 'Cause', 'Initiative', 'Campaign', 'Cooperative', 'Union', 'Trust', 'Flywheel', 'Future',
     // ULTRA RARE - White Bonzi (mystery prize TBD)
-    '🤍 White Bonzi'
+    '🥇 Gold Bonzi'
 ];
 
 const slotReel = document.getElementById('slot-reel');
@@ -4462,10 +4463,10 @@ if (slotReel && slotLever) {
                     if (jackpotMsg) jackpotMsg.textContent = '🎉 BONZI JACKPOT! You found a hidden Bonzi!';
                     // Purple Bonzi → gold shifts rapidly
                     startGoldFlux();
-                } else if (landed === '🤍 White Bonzi') {
+                } else if (landed === '🥇 Gold Bonzi') {
                     slotMachine.classList.add('white-jackpot');
-                    if (jackpotMsg) jackpotMsg.textContent = '✨ ULTRA RARE WHITE BONZI! Mystery prize unlocked!';
-                    // White Bonzi → ALL turn gold
+                    if (jackpotMsg) jackpotMsg.textContent = '🥇 ULTRA RARE GOLD BONZI! All Bonzis turn gold!';
+                    // Gold Bonzi → ALL turn gold
                     turnAllBonzisGold();
                 } else {
                     // Normal result → reset Bonzis to default
@@ -4507,20 +4508,18 @@ const triggerWord = document.getElementById('trigger-word');
 const entryAnimations = ['entry-zoom', 'entry-slide-up', 'entry-slide-down', 'entry-flip', 'entry-bounce'];
 
 // Trigger word cycling (fast flicker)
-const triggerWords = ['FUTURE', 'BRAND', 'TOKEN', 'DAO', 'EMPIRE', 'LEGACY', 'VISION', 'DREAM', 'PROTOCOL', 'COMMUNITY'];
+const triggerWords = ['Future', 'Brand', 'Token', 'DAO', 'Empire', 'Legacy', 'Vision', 'Dream', 'Protocol', 'Community'];
 let triggerIndex = 0;
 
 if (triggerWord) {
     setInterval(() => {
         triggerIndex = (triggerIndex + 1) % triggerWords.length;
         triggerWord.style.opacity = '0';
-        triggerWord.style.transform = 'translateY(-100%)';
         setTimeout(() => {
             triggerWord.textContent = triggerWords[triggerIndex];
             triggerWord.style.opacity = '1';
-            triggerWord.style.transform = 'translateY(0)';
-        }, 80);
-    }, 120);
+        }, 150);
+    }, 2500);
 }
 
 // Win98 popup sound using Web Audio API
@@ -4583,7 +4582,7 @@ function startGoldFlux() {
     }, 4000);
 }
 
-// White Bonzi jackpot → ALL turn gold
+// Gold Bonzi jackpot → ALL turn gold
 function turnAllBonzisGold() {
     if (!bonziLogos || bonziImages.length === 0) return;
 

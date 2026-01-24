@@ -1136,7 +1136,7 @@
             color: #7c3aed;
         }
 
-        /* Launch area - white section */
+        /* Launch area - white section with red curtains */
         .launch-area {
             width: 100%;
             background: #fff;
@@ -1145,6 +1145,41 @@
             align-items: center;
             justify-content: center;
             padding: 80px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .launch-area::before,
+        .launch-area::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .launch-area::before {
+            left: 0;
+            background: linear-gradient(90deg,
+                #8B0000 0%,
+                #a31515 20%,
+                #8B0000 40%,
+                #6B0000 60%,
+                #8B0000 80%,
+                transparent 100%);
+        }
+
+        .launch-area::after {
+            right: 0;
+            background: linear-gradient(-90deg,
+                #8B0000 0%,
+                #a31515 20%,
+                #8B0000 40%,
+                #6B0000 60%,
+                #8B0000 80%,
+                transparent 100%);
         }
 
         .manifesto-btn {

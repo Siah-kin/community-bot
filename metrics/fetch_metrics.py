@@ -41,6 +41,7 @@ QUERIES = {
     'vista_1k_holders': None,
     'vista_eth_distributed': '6591480',
     'vista_lp_distributed': '6591489',
+    'vista_all_distributions': '6591567',  # Comprehensive: LP + Hardlock LP + Hardstake
 
     # BONZI (new - ADD IDs after creating queries)
     'bonzi_lp_distributed': '6591492',

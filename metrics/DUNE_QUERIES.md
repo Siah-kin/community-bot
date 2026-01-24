@@ -286,6 +286,7 @@ QUERIES = {
     'vista_tenure': '6591332',
     'vista_eth_distributed': '6591480',
     'vista_lp_distributed': '6591489',
+    'vista_all_distributions': '6591567',  # Comprehensive breakdown
 
     # BONZI
     'bonzi_hhi': '6591469',

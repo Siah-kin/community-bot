@@ -1518,6 +1518,9 @@
             document.querySelectorAll('.nav-lang-flag').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
+            // Sync dropdown if it exists
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) langSelect.value = lang;
             document.documentElement.lang = lang;
             localStorage.setItem('bonzi-lang', lang);
         }
@@ -1525,6 +1528,14 @@
         document.querySelectorAll('.nav-lang-flag').forEach(btn => {
             btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
         });
+
+        // Handle Win98-style dropdown language select
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) {
+            langSelect.addEventListener('change', (e) => {
+                setLanguage(e.target.value);
+            });
+        }
 
         // Load saved language on page load
         const savedLang = localStorage.getItem('bonzi-lang');

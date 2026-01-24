@@ -385,6 +385,69 @@
             background: rgba(255,255,255,0.02);
         }
 
+        /* Section titles */
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin: 24px 0 12px;
+            color: var(--gray);
+        }
+
+        /* Table notes */
+        .table-note {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Source list */
+        .source-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .source-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            font-size: 12px;
+        }
+        .source-list a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .source-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dune embeds */
+        .dune-embed {
+            margin: 16px 0 24px;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .dune-embed iframe {
+            display: block;
+            background: #fafafa;
+        }
+        body.dark-mode .dune-embed iframe {
+            background: #1a1a1e;
+        }
+        .embed-source {
+            font-size: 10px;
+            color: var(--gray);
+            padding: 8px 12px;
+            margin: 0;
+            background: rgba(0,0,0,0.02);
+        }
+        body.dark-mode .embed-source {
+            background: rgba(255,255,255,0.02);
+        }
+        .embed-source a {
+            color: var(--purple);
+        }
+
         /* Remove unused chart stat styles */
         .chart-stat .stat-label {
             font-size: 9px;
@@ -827,562 +890,315 @@
         <p>Live parameters and configuration. Three tiers of access based on token holdings.</p>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════════════════════════ -->
-    <!-- TRADING VOLUME AS PROOF - Bridge from Manifesto                         -->
-    <!-- ═══════════════════════════════════════════════════════════════════════ -->
-    <section class="proof-section">
-        <span class="section-number">01 • Proof of Mechanics</span>
-        <h2>Volume → Fees → Stakers. That's the loop.</h2>
-
-        <p class="prose">
-            In the <a href="../faq.html#why-purple" class="manifesto-link">manifesto</a>, we said "staking how it should be." Numbers below. The <span class="define">Euler model</span> <span class="define">(fee accumulator, pays stakers in ETH)</span> works like this: trades generate fees, fees go to stakers, stakers hold, liquidity stays deep, more trades happen. <strong>Math. Not hype.</strong>
-        </p>
-
-        <p class="prose">
-            Volume dropped 70% in the bear. Distributions kept going. Narrative vs mechanics - 12 months of data below proves it.
-        </p>
-
-        <!-- Data Table -->
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Token</th>
-                    <th>Contract</th>
-                    <th>Stakers</th>
-                    <th>Earning ETH</th>
-                    <th>Source</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>VISTA</td>
-                    <td class="mono"><a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank">0xee5a...278f</a></td>
-                    <td>117</td>
-                    <td>57 (49%)</td>
-                    <td><a href="https://dune.com/queries/4579721" target="_blank">Dune</a></td>
-                </tr>
-                <tr>
-                    <td>BONZI</td>
-                    <td class="mono"><a href="https://etherscan.io/address/0xd617a21cec97b1e096d7bbc4614495b2f0f36cbb86" target="_blank">0xd617...b86</a></td>
-                    <td>—</td>
-                    <td>—</td>
-                    <td><a href="https://etherscan.io/address/0xd617a21cec97b1e096d7bbc4614495b2f0f36cbb86" target="_blank">Etherscan</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- Comparison Stats -->
-        <div class="stats-comparison">
-            <div class="stat">
-                <div class="stat-value">~3-5%</div>
-                <div class="stat-label">Volume → Stakers</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">0%</div>
-                <div class="stat-label">Token Inflation</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">ETH</div>
-                <div class="stat-label">Reward Currency</div>
-            </div>
-        </div>
-
-        <!-- ROI Proof - Verified On-Chain Data -->
-        <div class="roi-proof">
-            <span class="roi-label">On-Chain Verified</span>
-            <h3>Don't trust. Verify.</h3>
-
-            <div class="roi-highlight">49% of early stakers earning ETH</div>
-            <p class="roi-subtext">Without selling a single token</p>
-
-            <div class="roi-grid">
-                <div class="roi-stat">
-                    <div class="roi-stat-value">117</div>
-                    <div class="roi-stat-label">Early Stakers (Pre-Nov 2024)</div>
-                </div>
-                <div class="roi-stat">
-                    <div class="roi-stat-value">57</div>
-                    <div class="roi-stat-label">Receiving ETH Rewards</div>
-                </div>
-                <div class="roi-stat">
-                    <div class="roi-stat-value">0</div>
-                    <div class="roi-stat-label">Tokens Sold to Profit</div>
-                </div>
-            </div>
-
-            <!-- Case Study -->
-            <div class="case-study">
-                <h4>📊 Longest Staker Case Study</h4>
-                <div class="case-study-data">
-                    <div class="case-item">
-                        <span class="case-label">Wallet</span>
-                        <a href="https://etherscan.io/address/0xca90d843288e35beeadfce14e5f906e3f1afc7cb" target="_blank" class="case-value mono">0xca90...c7cb</a>
-                    </div>
-                    <div class="case-item">
-                        <span class="case-label">Staking Since</span>
-                        <span class="case-value">October 3, 2024</span>
-                    </div>
-                    <div class="case-item">
-                        <span class="case-label">Amount Staked</span>
-                        <span class="case-value">15 VISTA</span>
-                    </div>
-                    <div class="case-item">
-                        <span class="case-label">ETH Claimed</span>
-                        <span class="case-value green">0.086 ETH</span>
-                    </div>
-                    <div class="case-item">
-                        <span class="case-label">Still Holding?</span>
-                        <span class="case-value green">✓ 100%</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="roi-distinction">
-                <strong>The math:</strong> 15 VISTA staked → 0.086 ETH earned → Token still held. No exit needed. Investment returns in ETH while maintaining full position.
-            </p>
-            <p class="roi-distinction">
-                <strong>DAO vs Ponzi:</strong> In a Ponzi, early holders MUST exit before late holders. Here, early holders get paid AND stay. Value circulates. No one needs to be exit liquidity.
-            </p>
-        </div>
-
-        <!-- Verify It Yourself Widget -->
-        <div class="verify-widget">
-            <h3>🔍 Verify It Yourself</h3>
-            <p>Don't trust us. Check the chain.</p>
-
-            <div class="verify-steps">
-                <div class="verify-step">
-                    <span class="step-number">1</span>
-                    <div class="step-content">
-                        <strong>Check any staker's position</strong>
-                        <p>Go to <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f#readContract" target="_blank">VISTA Hardstake Contract</a> → Read → <code>getStakerInfo</code> → Enter wallet</p>
-                    </div>
-                </div>
-                <div class="verify-step">
-                    <span class="step-number">2</span>
-                    <div class="step-content">
-                        <strong>View all staker transactions</strong>
-                        <p>Check <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank">contract transactions</a> - every stake, claim, withdraw is public</p>
-                    </div>
-                </div>
-                <div class="verify-step">
-                    <span class="step-number">3</span>
-                    <div class="step-content">
-                        <strong>Run our Dune query</strong>
-                        <p>Copy this SQL into <a href="https://dune.com" target="_blank">Dune Analytics</a>:</p>
-                        <pre class="dune-query">SELECT "from" as wallet, MIN(block_time) as first_stake
-FROM ethereum.transactions
-WHERE "to" = 0xee5a6f8a55b02689138c195031d09bafdc7d278f
-GROUP BY "from"
-ORDER BY first_stake ASC
-LIMIT 20</pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Regulatory Framing Prose -->
-        <p class="prose">
-            <strong>Beyond yield: regulatory implications.</strong> The <span class="define">Howey test</span> <span class="define">(SEC's framework for determining if something is a security)</span> asks: "Do profits come from the efforts of others?" Our answer: What others? The code runs. Team can't touch it. Distributions are mathematical, not discretionary.
-        </p>
-
-        <!-- Three-Box Regulatory System -->
-        <div class="three-box-grid">
-            <div class="three-box technical">
-                <span class="box-label">Technical • HOW</span>
-                <h4>Euler Accumulator</h4>
-                <p>Fees are tracked per token via an on-chain accumulator. When you claim, you receive your proportional share of all fees since your last claim. No human decides. No approval needed. Math distributes.</p>
-            </div>
-            <div class="three-box feature">
-                <span class="box-label">Feature • WHAT</span>
-                <h4>ETH Rewards, Not Tokens</h4>
-                <p>Stakers receive ETH, a commodity, not a project token. No inflation schedule. No emission curve. No dilution. Token is your membership card. ETH is your share of activity.</p>
-            </div>
-            <div class="three-box advantage">
-                <span class="box-label">Advantage • WHY</span>
-                <h4>Utility, Not Security</h4>
-                <p>Howey's "efforts of others" prong fails when code distributes and team is absent from the reward mechanism. The token grants access and governance. The ETH comes from trading activity, not team promises.</p>
-            </div>
-        </div>
-
-        <p class="prose">
-            Self-compounding mechanics enable creative token ecosystems that stay regulatory-sound. Reward is ETH. Token has utility as anchor of decisions and values, not as a security-behaving money machine. <strong>Verify, don't trust.</strong>
-        </p>
-
-        <!-- Contract Links -->
-        <div class="contract-links">
-            <a href="https://etherscan.io/address/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank" class="contract-link">$BONZI: 0xd617...cb86</a>
-            <a href="https://etherscan.io/address/0xc9bca88b04581699fab5aa276ccaff7df957cbbf" target="_blank" class="contract-link">$VISTA: 0xc9bc...cbbf</a>
-            <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" class="contract-link">BONZI Hardstake: 0x3618...1a53</a>
-            <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank" class="contract-link">VISTA Hardstake: 0xee5a...278f</a>
-        </div>
-    </section>
-
     <div class="dashboard">
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- FREE TIER - Public metrics (no wallet required) -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- FREE TIER -->
         <div class="tier-header">
             <span class="tier-badge free">FREE</span>
-            <span class="tier-title">Public Metrics</span>
-            <span class="tier-requirement">No wallet required</span>
+            <span class="tier-title">Trust Signals</span>
+            <span class="tier-requirement">Verify before you buy</span>
         </div>
 
         <div class="tier-section" id="tier-free">
-            <div class="metrics-grid">
-                <!-- System Status -->
-                <div class="metric-card">
-                    <h3>System Status <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key"><span class="status-dot green"></span>Bot Status</span>
-                        <span class="metric-value green">Online</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Uptime</span>
-                        <span class="metric-value">99.7%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Version</span>
-                        <span class="metric-value">v2.4.1</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Last Deploy</span>
-                        <span class="metric-value">2h ago</span>
-                    </div>
-                </div>
+            <!-- Decentralization Metrics (Murad) -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>VISTA</th>
+                        <th>BONZI</th>
+                        <th>What it means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Token age</td>
+                        <td>6+ months</td>
+                        <td>6+ months</td>
+                        <td>Time-tested (Murad criterion)</td>
+                    </tr>
+                    <tr>
+                        <td>Top 10 holders</td>
+                        <td>—%</td>
+                        <td>—%</td>
+                        <td>Lower = less whale control</td>
+                    </tr>
+                    <tr>
+                        <td>HHI score</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>< 1500 = decentralized</td>
+                    </tr>
+                    <tr>
+                        <td>Total holders</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>Adoption proof</td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <!-- On-Chain Stats - Verifiable -->
-                <div class="metric-card">
-                    <h3>On-Chain Data <span class="badge verified">VERIFIED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Early Stakers</span>
-                        <span class="metric-value"><a href="https://dune.com/queries/4579721" target="_blank" class="verified-link">117</a></span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Earning ETH</span>
-                        <span class="metric-value"><a href="https://dune.com/queries/4579721" target="_blank" class="verified-link">57</a></span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Longest Stake</span>
-                        <span class="metric-value">113 days</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Data Source</span>
-                        <span class="metric-value"><a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank" class="verified-link">Etherscan ↗</a></span>
-                    </div>
-                </div>
+            <!-- Anti-Ponzi Proof -->
+            <h3 class="section-title">Longest Active Position</h3>
+            <table class="data-table">
+                <tbody>
+                    <tr>
+                        <td>Wallet</td>
+                        <td class="mono"><a href="https://etherscan.io/address/0xca90d843288e35beeadfce14e5f906e3f1afc7cb" target="_blank">0xca90...c7cb</a></td>
+                    </tr>
+                    <tr>
+                        <td>Staking since</td>
+                        <td>Oct 3, 2024</td>
+                    </tr>
+                    <tr>
+                        <td>Amount staked</td>
+                        <td>15 VISTA</td>
+                    </tr>
+                    <tr>
+                        <td>ETH claimed</td>
+                        <td>0.086 ETH</td>
+                    </tr>
+                    <tr>
+                        <td>Tokens sold</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="table-note">Staker earned ETH without selling. This is not Ponzi behavior.</p>
 
-                <!-- DAO Stats - Coming Soon -->
-                <div class="metric-card">
-                    <h3>DAO Activity <span class="badge coming-soon">Q1 2026</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Bug & Earn</span>
-                        <span class="metric-value coming">Launching Soon</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Ask & Earn</span>
-                        <span class="metric-value coming">Launching Soon</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">DAO Points</span>
-                        <span class="metric-value coming">Launching Soon</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Active Testers</span>
-                        <span class="metric-value coming">Join Early →</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Contracts -->
+            <h3 class="section-title">Verify Yourself</h3>
+            <table class="data-table">
+                <tbody>
+                    <tr>
+                        <td>VISTA Token</td>
+                        <td class="mono"><a href="https://etherscan.io/address/0xc9bca88b04581699fab5aa276ccaff7df957cbbf" target="_blank">0xc9bc...cbbf</a></td>
+                    </tr>
+                    <tr>
+                        <td>VISTA Staking</td>
+                        <td class="mono"><a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank">0xee5a...278f</a></td>
+                    </tr>
+                    <tr>
+                        <td>BONZI Token</td>
+                        <td class="mono"><a href="https://etherscan.io/address/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank">0xd617...cb86</a></td>
+                    </tr>
+                    <tr>
+                        <td>BONZI Staking</td>
+                        <td class="mono"><a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank">0x3618...1a53</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dune Query</td>
+                        <td class="mono"><a href="https://dune.com/queries/4579721" target="_blank">Early staker analysis</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- DAO TIER 1 - Token holder metrics -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- DAO TIER 1 - Community Health -->
         <div class="tier-header">
             <span class="tier-badge dao-1">DAO-1</span>
-            <span class="tier-title">Intelligence Parameters</span>
-            <span class="tier-requirement">1M $BONZI or 500 $VISTA</span>
+            <span class="tier-title">Community Health</span>
+            <span class="tier-requirement">Hold $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-1">
             <div class="unlock-prompt">
-                <h3>DAO Tier 1</h3>
-                <p>Connect wallet with 1M $BONZI or 500 $VISTA</p>
+                <h3>Community Health Metrics</h3>
+                <p>Connect wallet holding $BONZI or $VISTA</p>
                 <button class="unlock-btn" onclick="connectWallet(1)">Connect Wallet</button>
             </div>
 
-            <div class="metrics-grid">
-                <!-- Feature Flags -->
-                <div class="metric-card">
-                    <h3>Feature Flags <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">USE_ORCHESTRATOR_CURATION</span>
-                        <span class="metric-value">ON</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">ORCHESTRATOR_ROLLOUT</span>
-                        <span class="metric-value">100%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">SIAH_ENABLE_FREE_CHAT</span>
-                        <span class="metric-value">ON</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">ENABLE_NEURAL_RERANK</span>
-                        <span class="metric-value">ON</span>
-                    </div>
-                </div>
+            <!-- Staker Behavior -->
+            <h3 class="section-title">Staker Behavior</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>What it means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>$1K+ holders</td>
+                        <td>—</td>
+                        <td>Serious conviction (Murad)</td>
+                    </tr>
+                    <tr>
+                        <td>Staker retention</td>
+                        <td>—%</td>
+                        <td>Still staking vs unstaked</td>
+                    </tr>
+                    <tr>
+                        <td>Exit rate (7d)</td>
+                        <td>—%</td>
+                        <td>Unstake + sell = panic</td>
+                    </tr>
+                    <tr>
+                        <td>Diamond hands</td>
+                        <td>—%</td>
+                        <td>Claimed ETH, never sold</td>
+                    </tr>
+                    <tr>
+                        <td>Avg stake tenure</td>
+                        <td>— days</td>
+                        <td>Commitment level</td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <!-- Token Budgets -->
-                <div class="metric-card">
-                    <h3>Token Budgets <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">CONCISE</span>
-                        <span class="metric-value">500 tokens</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">MECHANISM</span>
-                        <span class="metric-value">700 tokens</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">DETAILED</span>
-                        <span class="metric-value">1000 tokens</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">MACRO</span>
-                        <span class="metric-value">1200 tokens</span>
-                    </div>
-                </div>
-
-                <!-- LLM Parameters -->
-                <div class="metric-card">
-                    <h3>LLM Parameters <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Primary Model</span>
-                        <span class="metric-value">gpt-4o-mini</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Primary Temp</span>
-                        <span class="metric-value">0.7</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Fallback Model</span>
-                        <span class="metric-value">gemini-2.5-flash</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Fallback Temp</span>
-                        <span class="metric-value">0.9</span>
-                    </div>
-                </div>
-
-                <!-- Cache & Rate Limits -->
-                <div class="metric-card">
-                    <h3>Cache & Rate Limits <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Response Cache TTL</span>
-                        <span class="metric-value">3600s</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Embedding Cache TTL</span>
-                        <span class="metric-value">86400s</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Rate Limit (user)</span>
-                        <span class="metric-value">30/min</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Rate Limit (group)</span>
-                        <span class="metric-value">60/min</span>
-                    </div>
-                </div>
-
-                <!-- Memory System -->
-                <div class="metric-card">
-                    <h3>Memory System <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Short-term Window</span>
-                        <span class="metric-value">10 msgs</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Long-term Limit</span>
-                        <span class="metric-value">100 facts</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Decay Rate</span>
-                        <span class="metric-value">0.95/day</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Importance Threshold</span>
-                        <span class="metric-value">0.3</span>
-                    </div>
-                </div>
-
-                <!-- Agent Scaling -->
-                <div class="metric-card">
-                    <h3>Agent Scaling <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Max Agents Per Type</span>
-                        <span class="metric-value">3</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Max Total Agents</span>
-                        <span class="metric-value">10</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Agent Timeout</span>
-                        <span class="metric-value">30s</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Retry Attempts</span>
-                        <span class="metric-value">3</span>
-                    </div>
-                </div>
+            <!-- Dune Embed: Staker Retention -->
+            <div class="dune-embed">
+                <iframe src="https://dune.com/embeds/4579721/7654321" width="100%" height="300" frameborder="0"></iframe>
+                <p class="embed-source">Source: <a href="https://dune.com/queries/4579721" target="_blank">Dune Analytics</a></p>
             </div>
+
+            <!-- Weekly Distribution -->
+            <h3 class="section-title">Weekly ETH Distribution</h3>
+            <div class="dune-embed">
+                <iframe src="https://dune.com/embeds/4579721/7654322" width="100%" height="250" frameborder="0"></iframe>
+            </div>
+
+            <!-- Your Position (requires wallet) -->
+            <h3 class="section-title">Your Position</h3>
+            <table class="data-table" id="your-position">
+                <tbody>
+                    <tr>
+                        <td>Your stake</td>
+                        <td id="your-stake">Connect wallet</td>
+                    </tr>
+                    <tr>
+                        <td>Your rank</td>
+                        <td id="your-rank">—</td>
+                    </tr>
+                    <tr>
+                        <td>Claimable ETH</td>
+                        <td id="your-claimable">—</td>
+                    </tr>
+                    <tr>
+                        <td>Total claimed</td>
+                        <td id="your-claimed">—</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- DAO TIER 2 - Premium insights -->
-        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- DAO TIER 2 - Alpha Metrics -->
         <div class="tier-header">
             <span class="tier-badge dao-2">DAO-2</span>
-            <span class="tier-title">Cost Analytics & Decision Traces</span>
-            <span class="tier-requirement">10M $BONZI or 1,000 $VISTA</span>
+            <span class="tier-title">Alpha Analytics</span>
+            <span class="tier-requirement">Stake $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-2">
             <div class="unlock-prompt tier-2">
-                <h3>DAO Tier 2</h3>
-                <p>Connect wallet with 10M $BONZI or 1,000 $VISTA</p>
+                <h3>Alpha Metrics</h3>
+                <p>Connect wallet staking $BONZI or $VISTA</p>
                 <button class="unlock-btn tier-2" onclick="connectWallet(2)">Connect Wallet</button>
             </div>
 
-            <div class="metrics-grid">
-                <!-- Cost Breakdown -->
-                <div class="metric-card">
-                    <h3>Cost Breakdown (24h) <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">OpenAI API</span>
-                        <span class="metric-value gold">$47.82</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Gemini API</span>
-                        <span class="metric-value gold">$12.40</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Embeddings</span>
-                        <span class="metric-value gold">$3.21</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Total (24h)</span>
-                        <span class="metric-value gold">$63.43</span>
-                    </div>
-                </div>
-
-                <!-- Model Usage -->
-                <div class="metric-card">
-                    <h3>Model Usage (24h) <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">GPT-4o-mini calls</span>
-                        <span class="metric-value">8,421</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Gemini calls</span>
-                        <span class="metric-value">2,847</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Cache hits</span>
-                        <span class="metric-value green">67%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Avg latency</span>
-                        <span class="metric-value">847ms</span>
-                    </div>
-                </div>
-
-                <!-- Decision Traces -->
-                <div class="metric-card">
-                    <h3>Router Decisions (24h) <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">RAG queries</span>
-                        <span class="metric-value">4,231</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Direct answers</span>
-                        <span class="metric-value">3,847</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Escalations</span>
-                        <span class="metric-value">127</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Blocked (spam)</span>
-                        <span class="metric-value">89</span>
-                    </div>
-                </div>
-
-                <!-- Error Rates -->
-                <div class="metric-card">
-                    <h3>Error Rates (24h) <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key"><span class="status-dot green"></span>OpenAI errors</span>
-                        <span class="metric-value green">0.2%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key"><span class="status-dot green"></span>Gemini errors</span>
-                        <span class="metric-value green">0.4%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key"><span class="status-dot yellow"></span>RAG failures</span>
-                        <span class="metric-value">1.8%</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key"><span class="status-dot green"></span>Timeout rate</span>
-                        <span class="metric-value green">0.3%</span>
-                    </div>
-                </div>
-
-                <!-- Sybil Intelligence -->
-                <div class="metric-card">
-                    <h3>Sybil Intelligence <span class="badge live">LIVE</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Flagged accounts (7d)</span>
-                        <span class="metric-value">34</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">AI fingerprint detections</span>
-                        <span class="metric-value">127</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Temporal clusters</span>
-                        <span class="metric-value">8</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Cross-tenant flags</span>
-                        <span class="metric-value">12</span>
-                    </div>
-                </div>
-
-                <!-- Learning Loop -->
-                <div class="metric-card">
-                    <h3>Learning Loop <span class="badge cached">CACHED</span></h3>
-                    <div class="metric-item">
-                        <span class="metric-key">Knowledge gaps logged</span>
-                        <span class="metric-value">47</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Admin corrections</span>
-                        <span class="metric-value">23</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Auto-promoted FAQs</span>
-                        <span class="metric-value">12</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-key">Feedback loop active</span>
-                        <span class="metric-value green">Yes</span>
-                    </div>
-                </div>
+            <!-- Holder Distribution -->
+            <h3 class="section-title">Holder Distribution</h3>
+            <div class="dune-embed">
+                <iframe src="https://dune.com/embeds/4579721/7654323" width="100%" height="300" frameborder="0"></iframe>
+                <p class="embed-source">Whale movements visible. Source: <a href="https://dune.com/queries/4579721" target="_blank">Dune</a></p>
             </div>
+
+            <!-- Momentum Signals -->
+            <h3 class="section-title">Momentum (7d)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Signal</th>
+                        <th>Value</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>New wallets</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Exiting wallets</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Net flow</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>Accumulation score</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Yield Comparison -->
+            <h3 class="section-title">Yield Comparison</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Protocol</th>
+                        <th>APY</th>
+                        <th>Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VISTA Staking</td>
+                        <td>—%</td>
+                        <td>Smart contract</td>
+                    </tr>
+                    <tr>
+                        <td>Lido (stETH)</td>
+                        <td>~3.5%</td>
+                        <td>Smart contract</td>
+                    </tr>
+                    <tr>
+                        <td>Aave (USDC)</td>
+                        <td>~4%</td>
+                        <td>Smart contract</td>
+                    </tr>
+                    <tr>
+                        <td>US Treasury</td>
+                        <td>~4.5%</td>
+                        <td>Sovereign</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Top Claimers -->
+            <h3 class="section-title">Top Claimers (All Time)</h3>
+            <div class="dune-embed">
+                <iframe src="https://dune.com/embeds/4579721/7654324" width="100%" height="250" frameborder="0"></iframe>
+            </div>
+
+            <!-- Claim Timing -->
+            <h3 class="section-title">Optimal Claim Timing</h3>
+            <table class="data-table">
+                <tbody>
+                    <tr>
+                        <td>Best day</td>
+                        <td>Sunday (low gas)</td>
+                    </tr>
+                    <tr>
+                        <td>Best hour (UTC)</td>
+                        <td>04:00-06:00</td>
+                    </tr>
+                    <tr>
+                        <td>Current gas</td>
+                        <td id="current-gas">— gwei</td>
+                    </tr>
+                    <tr>
+                        <td>Claim cost estimate</td>
+                        <td id="claim-cost">—</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <p class="last-updated">Last updated: <span id="lastUpdate">-</span></p>

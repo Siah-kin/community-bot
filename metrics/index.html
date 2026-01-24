@@ -599,6 +599,131 @@
             margin-top: 4px;
         }
 
+        /* Case Study */
+        .case-study {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+        }
+        .case-study h4 {
+            margin: 0 0 16px 0;
+            font-size: 16px;
+            color: var(--purple);
+        }
+        .case-study-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+        }
+        .case-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .case-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray);
+        }
+        .case-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .case-value.mono {
+            font-size: 12px;
+            color: var(--purple);
+            text-decoration: none;
+        }
+        .case-value.mono:hover {
+            text-decoration: underline;
+        }
+        .case-value.green {
+            color: #10B981;
+        }
+
+        /* Verify Widget */
+        .verify-widget {
+            margin-top: 32px;
+            padding: 32px;
+            background: rgba(0, 0, 0, 0.03);
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+        }
+        body.dark-mode .verify-widget {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .verify-widget h3 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+        .verify-widget > p {
+            margin: 0 0 24px 0;
+            color: var(--gray);
+        }
+        .verify-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .verify-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: var(--purple);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+        .step-content p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        .step-content a {
+            color: var(--purple);
+        }
+        .step-content code {
+            background: rgba(139, 92, 246, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+        }
+        .dune-query {
+            margin-top: 12px;
+            padding: 16px;
+            background: #1a1a2e;
+            color: #10B981;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
         /* Contract Links */
         .contract-links {
             display: flex;
@@ -811,22 +936,22 @@
             </div>
         </div>
 
-        <!-- ROI Proof - The Critical Distinction -->
+        <!-- ROI Proof - Verified On-Chain Data -->
         <div class="roi-proof">
-            <span class="roi-label">The Critical Distinction</span>
-            <h3>Day-1 stakers have been paid back. They still hold the token.</h3>
+            <span class="roi-label">On-Chain Verified</span>
+            <h3>Don't trust. Verify.</h3>
 
-            <div class="roi-highlight">100%+ ROI in ETH</div>
-            <p class="roi-subtext">For stakers since September 2024</p>
+            <div class="roi-highlight">49% of early stakers earning ETH</div>
+            <p class="roi-subtext">Without selling a single token</p>
 
             <div class="roi-grid">
                 <div class="roi-stat">
-                    <div class="roi-stat-value">600+</div>
-                    <div class="roi-stat-label">Days Distributing</div>
+                    <div class="roi-stat-value">117</div>
+                    <div class="roi-stat-label">Early Stakers (Pre-Nov 2024)</div>
                 </div>
                 <div class="roi-stat">
-                    <div class="roi-stat-value">$1.6M+</div>
-                    <div class="roi-stat-label">Total ETH Paid</div>
+                    <div class="roi-stat-value">57</div>
+                    <div class="roi-stat-label">Receiving ETH Rewards</div>
                 </div>
                 <div class="roi-stat">
                     <div class="roi-stat-value">0</div>
@@ -834,16 +959,75 @@
                 </div>
             </div>
 
+            <!-- Case Study -->
+            <div class="case-study">
+                <h4>📊 Longest Staker Case Study</h4>
+                <div class="case-study-data">
+                    <div class="case-item">
+                        <span class="case-label">Wallet</span>
+                        <a href="https://etherscan.io/address/0xca90d843288e35beeadfce14e5f906e3f1afc7cb" target="_blank" class="case-value mono">0xca90...c7cb</a>
+                    </div>
+                    <div class="case-item">
+                        <span class="case-label">Staking Since</span>
+                        <span class="case-value">October 3, 2024</span>
+                    </div>
+                    <div class="case-item">
+                        <span class="case-label">Amount Staked</span>
+                        <span class="case-value">15 VISTA</span>
+                    </div>
+                    <div class="case-item">
+                        <span class="case-label">ETH Claimed</span>
+                        <span class="case-value green">0.086 ETH</span>
+                    </div>
+                    <div class="case-item">
+                        <span class="case-label">Still Holding?</span>
+                        <span class="case-value green">✓ 100%</span>
+                    </div>
+                </div>
+            </div>
+
             <p class="roi-distinction">
-                <strong>Power stakers are still holding.</strong> In every other token, early holders must sell to profit. That's a Ponzi. Here, the opposite: stakers received ETH continuously. Initial investment paid itself back. Token still in their wallet. No exit needed. No one left holding the bag.
+                <strong>The math:</strong> 15 VISTA staked → 0.086 ETH earned → Token still held. No exit needed. Investment returns in ETH while maintaining full position.
             </p>
             <p class="roi-distinction">
-                <strong>Most tokens:</strong> Buy → Hope price goes up → Sell to someone else → They need someone else to sell to.<br>
-                <strong>Euler tokens:</strong> Stake → Receive ETH from trading fees → Investment returns in ETH → Token still held. Loop continues.
+                <strong>DAO vs Ponzi:</strong> In a Ponzi, early holders MUST exit before late holders. Here, early holders get paid AND stay. Value circulates. No one needs to be exit liquidity.
             </p>
-            <p class="roi-distinction">
-                <strong>DAO vs Ponzi. Core difference.</strong> Ponzi: early holders MUST exit before late holders. Value flows one direction: in, out. DAO with Euler: early holders get paid back AND stay. They buy more because the loop keeps working. Value circulates. No one needs to be exit liquidity. Behavioral proof of real tokenomics.
-            </p>
+        </div>
+
+        <!-- Verify It Yourself Widget -->
+        <div class="verify-widget">
+            <h3>🔍 Verify It Yourself</h3>
+            <p>Don't trust us. Check the chain.</p>
+
+            <div class="verify-steps">
+                <div class="verify-step">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <strong>Check any staker's position</strong>
+                        <p>Go to <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f#readContract" target="_blank">VISTA Hardstake Contract</a> → Read → <code>getStakerInfo</code> → Enter wallet</p>
+                    </div>
+                </div>
+                <div class="verify-step">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <strong>View all staker transactions</strong>
+                        <p>Check <a href="https://etherscan.io/address/0xee5a6f8a55b02689138c195031d09bafdc7d278f" target="_blank">contract transactions</a> - every stake, claim, withdraw is public</p>
+                    </div>
+                </div>
+                <div class="verify-step">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <strong>Run our Dune query</strong>
+                        <p>Copy this SQL into <a href="https://dune.com" target="_blank">Dune Analytics</a>:</p>
+                        <pre class="dune-query">SELECT "from" as wallet, MIN(block_time) as first_stake
+FROM ethereum.transactions
+WHERE "to" = 0xee5a6f8a55b02689138c195031d09bafdc7d278f
+GROUP BY "from"
+ORDER BY first_stake ASC
+LIMIT 20</pre>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Regulatory Framing Prose -->

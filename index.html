@@ -1500,17 +1500,21 @@
         .win98-content {
             padding: 12px;
             display: flex;
-            gap: 16px;
+            gap: 12px;
             align-items: stretch;
+            overflow: hidden;
+            box-sizing: border-box;
         }
 
         /* LCD Panel */
         .lcd-panel {
             flex: 1;
+            min-width: 0;
             background: #000;
             border: 2px solid;
             border-color: #808080 #ffffff #ffffff #808080;
             padding: 8px;
+            box-sizing: border-box;
         }
 
         .lcd-label {
@@ -1741,7 +1745,7 @@
         .slot-overlay.open { opacity: 1; pointer-events: auto; }
 
         @media (max-width: 768px) {
-            .slot-machine { width: 300px; }
+            .slot-machine { width: 300px; max-width: calc(100% - 24px); }
             .lcd-screen { height: 50px; }
             .slot-reel .word { height: 50px; line-height: 50px; font-size: 18px; }
         }

@@ -3306,6 +3306,63 @@
             color: rgba(255,255,255,0.7);
         }
 
+        /* Widget Demo Section */
+        .widget-demo-section {
+            padding: 80px 24px;
+            background: #0a0a0a;
+        }
+
+        .widget-demo-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .widget-demo-text {
+            flex: 1;
+        }
+
+        .widget-demo-text h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .widget-demo-text p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+
+        .widget-demo-embed {
+            flex-shrink: 0;
+        }
+
+        .widget-demo-embed iframe {
+            width: 400px;
+            height: 520px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .widget-demo-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .widget-demo-text h3 {
+                font-size: 24px;
+            }
+            .widget-demo-embed iframe {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+
         footer {
             padding: 32px 48px;
             background: var(--black);
@@ -4296,6 +4353,19 @@
             <p data-i18n="links.story.desc">decentralised philanthropy. your growth funds refugee resilience.</p>
             <span class="arrow">→</span>
         </a>
+    </div>
+</section>
+
+<!-- Widget Demo Section -->
+<section class="widget-demo-section">
+    <div class="widget-demo-content">
+        <div class="widget-demo-text">
+            <h3>Buy $BONZI</h3>
+            <p>No wallet needed. Email login. Card payment. Done in 60 seconds.</p>
+        </div>
+        <div class="widget-demo-embed">
+            <iframe src="widget/brand-widget.html?embed=true" frameborder="0" scrolling="no"></iframe>
+        </div>
     </div>
 </section>
 

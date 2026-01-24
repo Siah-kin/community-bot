@@ -200,18 +200,14 @@
     </div>
     </div><!-- /preview-wrapper -->
 
-    <!-- CDP SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@4/dist/index.min.js"></script>
-
-    <script>
+    <script type="module">
     /**
      * Bonzi Brand Widget
      * Coinbase CDP + Ethereum Integration
      *
      * Configuration is passed via data attributes or URL params
      */
-    (function() {
-        'use strict';
+    import { CoinbaseWalletSDK } from 'https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@4/+esm';
 
         // Configuration
         const CONFIG = {
@@ -812,13 +808,12 @@
             }
         }
 
-        // Initialize on DOM ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-    })();
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
     </script>
 </body>
 </html>

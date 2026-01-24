@@ -1781,6 +1781,41 @@
         // Load saved language
         const savedLang = localStorage.getItem('bonzi-lang');
         if (savedLang && translations[savedLang]) setLanguage(savedLang);
+
+        // Load metrics from JSON
+        fetch('metrics-data.json')
+            .then(r => r.json())
+            .then(data => {
+                // FREE tier - Murad metrics
+                const v = data.free.vista;
+                const b = data.free.bonzi;
+
+                // Update table cells by finding rows
+                document.querySelectorAll('#tier-free .data-table tbody tr').forEach(row => {
+                    const label = row.cells[0]?.textContent?.trim();
+                    if (row.cells[1] && row.cells[2]) {
+                        if (label === 'Top 10 holders') {
+                            row.cells[1].textContent = v.top_10_pct ? v.top_10_pct + '%' : '—';
+                            row.cells[2].textContent = b.top_10_pct ? b.top_10_pct + '%' : '—';
+                        }
+                        if (label === 'HHI score') {
+                            row.cells[1].textContent = v.hhi_score || '—';
+                            row.cells[2].textContent = b.hhi_score || '—';
+                        }
+                        if (label === 'Total holders') {
+                            row.cells[1].textContent = v.total_holders || '—';
+                            row.cells[2].textContent = b.total_holders || '—';
+                        }
+                    }
+                });
+
+                // Last updated
+                const lastUpdate = document.getElementById('lastUpdate');
+                if (lastUpdate) lastUpdate.textContent = data.updated;
+
+                console.log('Metrics loaded:', data.updated);
+            })
+            .catch(err => console.log('Metrics JSON not loaded:', err));
     </script>
 </body>
 </html>

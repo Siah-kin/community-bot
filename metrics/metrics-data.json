@@ -1,0 +1,38 @@
+{
+    "updated": "2025-01-24",
+    "free": {
+        "vista": {
+            "token_age_months": 6,
+            "total_holders": null,
+            "top_10_pct": null,
+            "hhi_score": null
+        },
+        "bonzi": {
+            "token_age_months": 6,
+            "total_holders": null,
+            "top_10_pct": null,
+            "hhi_score": null
+        },
+        "case_study": {
+            "wallet": "0xca90d843288e35beeadfce14e5f906e3f1afc7cb",
+            "staking_since": "2024-10-03",
+            "amount_staked": 15,
+            "eth_claimed": 0.086,
+            "tokens_sold": 0
+        }
+    },
+    "tier1": {
+        "holders_1k_plus": null,
+        "staker_retention_pct": null,
+        "exit_rate_pct": null,
+        "diamond_hands_pct": null,
+        "avg_tenure_days": null,
+        "weekly_eth_distributed": null
+    },
+    "tier2": {
+        "new_wallets_7d": null,
+        "exiting_wallets_7d": null,
+        "net_flow": null,
+        "top_claimers": []
+    }
+}

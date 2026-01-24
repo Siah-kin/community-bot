@@ -620,6 +620,92 @@
             nav { padding: 0 16px; }
             .nav-links { display: none; }
             .nav-connect-btn { padding: 8px 14px; font-size: 13px; }
+            .hamburger { display: flex; }
+        }
+
+        /* Mobile Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            z-index: 1001;
+            margin-right: 12px;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #9966cc;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        body.light-mode .hamburger span {
+            background: #7744aa;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.98);
+            z-index: 999;
+            padding: 24px;
+            overflow-y: auto;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .mobile-menu.active {
+            display: flex;
+        }
+        body.light-mode .mobile-menu {
+            background: rgba(255, 255, 255, 0.98);
+        }
+        .mobile-menu a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+        .mobile-menu a:hover {
+            background: rgba(153, 102, 204, 0.15);
+        }
+        body.light-mode .mobile-menu a {
+            color: #1a1a1a;
+        }
+        body.light-mode .mobile-menu a:hover {
+            background: rgba(119, 68, 170, 0.1);
+        }
+        .mobile-menu .menu-section {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            padding: 16px 16px 8px;
+            margin-top: 8px;
+        }
+        .mobile-menu .menu-divider {
+            height: 1px;
+            background: rgba(153, 102, 204, 0.2);
+            margin: 12px 0;
         }
         @media (max-width: 600px) {
             .nav-logo { font-size: 16px; }
@@ -3358,6 +3444,13 @@
 </div>
 
 <nav>
+    <!-- Mobile Hamburger -->
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <a href="./" class="nav-logo">bonzi</a>
 
     <!-- Ethervista-style Nav Links -->
@@ -3422,6 +3515,21 @@
         <button class="nav-connect-btn" id="nav-connect-btn" data-i18n="nav.connect">connect</button>
     </div>
 </nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobile-menu">
+    <div class="menu-section" data-i18n="nav.explore">Explore</div>
+    <a href="features.html" data-i18n="nav.features">features</a>
+    <a href="manual/" data-i18n="nav.manual">manual</a>
+    <a href="faq.html" data-i18n="nav.manifesto">manifesto</a>
+    <a href="economics/" data-i18n="nav.economics">economics</a>
+    <div class="menu-divider"></div>
+    <div class="menu-section" data-i18n="nav.community">Community</div>
+    <a href="metrics/" data-i18n="nav.metrics">metrics</a>
+    <a href="dao/" data-i18n="nav.dao">dao</a>
+    <div class="menu-divider"></div>
+    <a href="#" id="contact-mobile-btn" data-i18n="nav.contact">contact</a>
+</div>
 
 <section class="opening">
     <img src="bonzi-logo.png" alt="bonzi" class="opening-bonzi">
@@ -4085,9 +4193,42 @@
 </footer>
 
 <script>
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+}
+
+// Close mobile menu when clicking a link
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                const hamburger = document.getElementById('hamburger');
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+    // Wire contact button in mobile menu
+    const contactMobileBtn = document.getElementById('contact-mobile-btn');
+    if (contactMobileBtn) {
+        contactMobileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleMobileMenu();
+            if (typeof showContactModal === 'function') showContactModal();
+        });
+    }
+});
+
 const translations = {
     en: {
-        "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.metrics": "metrics", "nav.dao": "dao", "nav.contact": "contact", "nav.connect": "connect",
+        "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.metrics": "metrics", "nav.dao": "dao", "nav.contact": "contact", "nav.connect": "connect", "nav.explore": "Explore", "nav.community": "Community",
         "opening.tagline": "est. 1999 · reborn for web3", "opening.scroll": "scroll",
         "history.label": "a bit of history", "history.text": "Back in 1999, I was everyone's favorite desktop buddy. A little purple gorilla who'd tell jokes, read emails, and keep you company on those dial-up nights. <em>Then I got... complicated.</em> Bundled with stuff nobody asked for. Got a bad reputation. Fair enough.<br><br>I never stopped wanting to help. Rebuilt from scratch. <em>No spyware, promise.</em> Just open-source helpfulness. I live in your Telegram, learn your project, and answer questions so you don't have to. <em>Consider it my redemption arc.</em>",
         "reveal.line1": "stop paying", "reveal.line2": "farmers.", "reveal.line3": "start paying your", "reveal.line4": "community.",
@@ -4145,7 +4286,7 @@ const translations = {
         "footer.legal": "open source · mit license · <a href=\"privacy.html\">privacy policy</a>"
     },
     pt: {
-        "nav.features": "recursos", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economia", "nav.metrics": "metricas", "nav.dao": "dao", "nav.contact": "contato", "nav.connect": "conectar",
+        "nav.features": "recursos", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economia", "nav.metrics": "metricas", "nav.dao": "dao", "nav.contact": "contato", "nav.connect": "conectar", "nav.explore": "Explorar", "nav.community": "Comunidade",
         "opening.tagline": "desde 1999 · renascido para web3", "opening.scroll": "role",
         "history.label": "um pouco de historia", "history.text": "Em 1999, eu era o amigo de desktop favorito de todos. Um pequeno gorila roxo que contava piadas, lia emails e fazia companhia nas noites de internet discada. <em>Depois ficou... complicado.</em> Veio junto com coisas que ninguem pediu. Ganhei ma fama. Justo.<br><br>Mas olha so. Nunca deixei de querer ajudar. Entao fui reconstruido. <em>Sem spyware, prometo.</em> Pura ajuda open-source. Desta vez sou realmente util: moro no seu Telegram, aprendo seu projeto e respondo perguntas pra voce nao precisar. <em>Considere meu arco de redencao.</em>",
         "reveal.line1": "comunidades nao precisam", "reveal.line2": "de outro dashboard.", "reveal.line3": "elas precisam de um", "reveal.line4": "amigo.",
@@ -4201,7 +4342,7 @@ const translations = {
         "footer.legal": "open source · licenca mit · <a href=\"privacy.html\">politica de privacidade</a>"
     },
     zh: {
-        "nav.features": "功能", "nav.manual": "手册", "nav.manifesto": "宣言", "nav.economics": "经济", "nav.metrics": "数据", "nav.dao": "dao", "nav.contact": "联系", "nav.connect": "连接",
+        "nav.features": "功能", "nav.manual": "手册", "nav.manifesto": "宣言", "nav.economics": "经济", "nav.metrics": "数据", "nav.dao": "dao", "nav.contact": "联系", "nav.connect": "连接", "nav.explore": "探索", "nav.community": "社区",
         "opening.tagline": "始于1999 · 为web3重生", "opening.scroll": "滚动",
         "history.label": "一点历史", "history.text": "1999年，我是每个人最喜欢的桌面伙伴。一只紫色小猩猩，会讲笑话、读邮件，在拨号上网的夜晚陪伴你。<em>然后事情变得...复杂了。</em>被捆绑了没人要的东西。名声变差了。算是活该。<br><br>但是这样。我从未停止想要帮助别人。所以我被重建了。<em>没有间谍软件，我保证。</em>纯粹的开源助手。这次我真的有用：我住在你的Telegram里，学习你的项目，回答问题，这样你就不用回答了。<em>就当是我的救赎之路。</em>",
         "reveal.line1": "社区不需要", "reveal.line2": "另一个仪表板。", "reveal.line3": "他们需要一个", "reveal.line4": "朋友。",
@@ -4257,7 +4398,7 @@ const translations = {
         "footer.legal": "开源 · MIT许可证 · <a href=\"privacy.html\">隐私政策</a>"
     },
     tr: {
-        "nav.features": "ozellikler", "nav.manual": "kilavuz", "nav.manifesto": "manifesto", "nav.economics": "ekonomi", "nav.metrics": "metrikler", "nav.dao": "dao", "nav.contact": "iletisim", "nav.connect": "baglan",
+        "nav.features": "ozellikler", "nav.manual": "kilavuz", "nav.manifesto": "manifesto", "nav.economics": "ekonomi", "nav.metrics": "metrikler", "nav.dao": "dao", "nav.contact": "iletisim", "nav.connect": "baglan", "nav.explore": "Kesfedin", "nav.community": "Topluluk",
         "opening.tagline": "1999'dan beri · web3 icin yeniden dogdu", "opening.scroll": "kaydir",
         "history.label": "biraz tarih", "history.text": "1999'da herkesin en sevdigi masaustu arkadaydim. Saka yapan, e-posta okuyan ve dial-up gecelerinde size eslik eden kucuk mor bir goril. <em>Sonra isler... karisti.</em> Kimsenin istemedigi seylerle paketlendim. Kotu bir un kazandim. Hakettim.<br><br>Ama sunlar var. Yardim etmek istemekten hic vazgecmedim. Bu yuzden yeniden insa edildim. <em>Casus yazilim yok, soz.</em> Saf, acik kaynakli yardimserverlik. <em>Bunu benim kurtulus hikayem olarak kabul edin.</em>",
         "reveal.line1": "topluluklar baska bir", "reveal.line2": "panoya ihtiyac duymuyor.", "reveal.line3": "bir", "reveal.line4": "arkadasa ihtiyaclari var.",

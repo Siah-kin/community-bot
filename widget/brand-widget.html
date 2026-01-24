@@ -193,6 +193,45 @@
                 Secured by Coinbase
             </span>
         </div>
+
+        <!-- Terms & Conditions Modal -->
+        <div id="terms-modal" class="terms-modal" style="display: none;">
+            <div class="terms-overlay"></div>
+            <div class="terms-content">
+                <h3>Before You Continue</h3>
+
+                <div class="terms-fees">
+                    <p class="terms-intro">This purchase involves the following fees:</p>
+                    <table class="terms-fee-table">
+                        <tr>
+                            <td>Ethervista Protocol Fee</td>
+                            <td><strong>~$20</strong> (fixed per swap)</td>
+                        </tr>
+                        <tr>
+                            <td>Coinbase Onramp Fee</td>
+                            <td>~2-4%</td>
+                        </tr>
+                        <tr>
+                            <td>Network Gas Fee</td>
+                            <td>~$5-20</td>
+                        </tr>
+                    </table>
+                    <p class="terms-example">Example: A $100 purchase may result in ~$70-75 of tokens.</p>
+                </div>
+
+                <div class="terms-checkbox">
+                    <label>
+                        <input type="checkbox" id="terms-accept">
+                        <span>I have read and agree to the <a href="terms.html" target="_blank">Terms & Conditions</a></span>
+                    </label>
+                </div>
+
+                <div class="terms-buttons">
+                    <button id="terms-cancel" class="btn btn-outline">Cancel</button>
+                    <button id="terms-continue" class="btn btn-primary" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- CDP SDK -->
@@ -249,6 +288,8 @@
         let wallet = null;
         let address = null;
         let provider = null;
+        let termsAccepted = false;
+        let pendingAction = null; // Stores the action to execute after terms accepted
 
         // DOM Elements
         const states = {
@@ -304,11 +345,19 @@
 
         // Bind event listeners
         function bindEvents() {
-            // Login buttons
-            document.getElementById('btn-email').addEventListener('click', () => showState('email'));
-            document.getElementById('btn-google').addEventListener('click', () => loginWithProvider('google'));
-            document.getElementById('btn-apple').addEventListener('click', () => loginWithProvider('apple'));
-            document.getElementById('btn-wallet').addEventListener('click', connectExternalWallet);
+            // Login buttons - show terms modal first
+            document.getElementById('btn-email').addEventListener('click', () => showTermsModal('email'));
+            document.getElementById('btn-google').addEventListener('click', () => showTermsModal('google'));
+            document.getElementById('btn-apple').addEventListener('click', () => showTermsModal('apple'));
+            document.getElementById('btn-wallet').addEventListener('click', () => showTermsModal('wallet'));
+
+            // Terms modal events
+            document.getElementById('terms-accept').addEventListener('change', (e) => {
+                document.getElementById('terms-continue').disabled = !e.target.checked;
+            });
+            document.getElementById('terms-cancel').addEventListener('click', hideTermsModal);
+            document.getElementById('terms-continue').addEventListener('click', proceedAfterTerms);
+            document.querySelector('.terms-overlay').addEventListener('click', hideTermsModal);
 
             // Email form
             document.getElementById('btn-back-email').addEventListener('click', () => showState('login'));
@@ -330,6 +379,53 @@
             // Success screen
             document.getElementById('btn-buy-more').addEventListener('click', () => showState('fund'));
             document.getElementById('btn-view-tx').addEventListener('click', viewTransaction);
+        }
+
+        // Show terms modal before proceeding
+        function showTermsModal(action) {
+            // If already accepted in this session, skip modal
+            if (termsAccepted) {
+                executePendingAction(action);
+                return;
+            }
+
+            pendingAction = action;
+            document.getElementById('terms-modal').style.display = 'block';
+            document.getElementById('terms-accept').checked = false;
+            document.getElementById('terms-continue').disabled = true;
+        }
+
+        // Hide terms modal
+        function hideTermsModal() {
+            document.getElementById('terms-modal').style.display = 'none';
+            pendingAction = null;
+        }
+
+        // Proceed after terms accepted
+        function proceedAfterTerms() {
+            termsAccepted = true;
+            hideTermsModal();
+            if (pendingAction) {
+                executePendingAction(pendingAction);
+            }
+        }
+
+        // Execute the pending action
+        function executePendingAction(action) {
+            switch(action) {
+                case 'email':
+                    showState('email');
+                    break;
+                case 'google':
+                    loginWithProvider('google');
+                    break;
+                case 'apple':
+                    loginWithProvider('apple');
+                    break;
+                case 'wallet':
+                    connectExternalWallet();
+                    break;
+            }
         }
 
         // Check for existing session

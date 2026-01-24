@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Bonzi Widget</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #7C3AED;
+        }
+        .meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eee;
+        }
+        h2 {
+            font-size: 18px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        p, li {
+            margin-bottom: 12px;
+            color: #444;
+        }
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        .highlight-box {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box.purple {
+            background: #F3E8FF;
+            border-left-color: #7C3AED;
+        }
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .fee-table th, .fee-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .fee-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #333;
+        }
+        .fee-table td:last-child {
+            text-align: right;
+            font-family: monospace;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 32px;
+            color: #7C3AED;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        strong {
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Terms & Conditions</h1>
+        <div class="meta">
+            <strong>Bonzi Buy Widget</strong><br>
+            Effective: January 24, 2026 | Version 1.0
+        </div>
+
+        <p>These Terms govern your use of the Bonzi Buy Widget ("Widget"). By using the Widget, you agree to these Terms. If you do not agree, do not use the Widget.</p>
+
+        <h2>1. What This Widget Does</h2>
+        <p>The Widget allows users to purchase cryptocurrency tokens using fiat currency (USD) via credit/debit card. The Widget connects third-party services to facilitate this process:</p>
+        <ul>
+            <li><strong>Coinbase Pay</strong> - Converts USD to USDC stablecoin</li>
+            <li><strong>0x Protocol</strong> - Swaps USDC to your desired token</li>
+            <li><strong>Ethervista DEX</strong> - Provides liquidity for token swaps</li>
+        </ul>
+        <p>Bonzi does not custody funds, process payments, or execute trades. All transactions occur through these third-party protocols.</p>
+
+        <h2>2. Fee Disclosure</h2>
+        <div class="highlight-box">
+            <strong>Important:</strong> Multiple fees apply to each purchase. Please review carefully before proceeding.
+        </div>
+
+        <table class="fee-table">
+            <thead>
+                <tr>
+                    <th>Fee Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Ethervista Protocol Fee</strong></td>
+                    <td>Fixed USD fee per swap, paid in ETH. Distributed to liquidity providers and protocol.</td>
+                    <td>~$20</td>
+                </tr>
+                <tr>
+                    <td><strong>Coinbase Onramp Fee</strong></td>
+                    <td>Fee for converting USD to USDC via card payment.</td>
+                    <td>~2-4%</td>
+                </tr>
+                <tr>
+                    <td><strong>Network Gas Fee</strong></td>
+                    <td>Ethereum network transaction fee. Varies with network congestion.</td>
+                    <td>~$5-20</td>
+                </tr>
+                <tr>
+                    <td><strong>0x Protocol Fee</strong></td>
+                    <td>Swap routing and execution fee.</td>
+                    <td>~0.15%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box purple">
+            <strong>Example:</strong> A $100 purchase may result in approximately $70-75 worth of tokens after all fees. Smaller purchases have proportionally higher fee impact due to the fixed $20 Ethervista fee.
+        </div>
+
+        <h2>3. The Ethervista Euler Model</h2>
+        <p>Ethervista uses a unique fee structure called the "Euler Model" where swap fees are fixed in USD value (not percentage-based). This means:</p>
+        <ul>
+            <li>The fee is the same whether you buy $50 or $5,000 worth of tokens</li>
+            <li>This discourages bot spam and incentivizes meaningful transactions</li>
+            <li>Fees are distributed to liquidity providers and the protocol treasury</li>
+            <li>The exact fee varies by token pool (e.g., $BONZI has ~$20 per swap)</li>
+        </ul>
+        <p>For more information, see: <a href="https://docs.ethervista.app" target="_blank">docs.ethervista.app</a></p>
+
+        <h2>4. Risk Acknowledgment</h2>
+        <p>By using this Widget, you acknowledge and accept:</p>
+        <ul>
+            <li><strong>Price Volatility:</strong> Cryptocurrency prices can fluctuate dramatically. You may lose some or all of your investment.</li>
+            <li><strong>Transaction Finality:</strong> Blockchain transactions are irreversible. Once confirmed, they cannot be undone or refunded.</li>
+            <li><strong>No Guarantees:</strong> We do not guarantee token performance, liquidity availability, or transaction success.</li>
+            <li><strong>Smart Contract Risk:</strong> Tokens and DEX protocols rely on smart contracts which may contain bugs or vulnerabilities.</li>
+            <li><strong>Regulatory Risk:</strong> Cryptocurrency regulations vary by jurisdiction and may change.</li>
+        </ul>
+
+        <h2>5. No Financial Advice</h2>
+        <p>Nothing in this Widget constitutes financial, investment, legal, or tax advice. You are solely responsible for evaluating whether any purchase is appropriate for your circumstances. Consult qualified professionals before making financial decisions.</p>
+
+        <h2>6. Eligibility</h2>
+        <p>You must be at least 18 years old (or the age of majority in your jurisdiction) to use this Widget. You may not use the Widget if you are located in a jurisdiction where cryptocurrency transactions are prohibited, or if you are on any sanctions list.</p>
+
+        <h2>7. Third-Party Services</h2>
+        <p>The Widget integrates with third-party services that have their own terms:</p>
+        <ul>
+            <li><a href="https://www.coinbase.com/legal/user_agreement" target="_blank">Coinbase User Agreement</a></li>
+            <li><a href="https://0x.org/terms" target="_blank">0x Protocol Terms</a></li>
+            <li><a href="https://docs.ethervista.app" target="_blank">Ethervista Documentation</a></li>
+        </ul>
+        <p>We are not responsible for the actions, availability, or policies of these third parties.</p>
+
+        <h2>8. Limitation of Liability</h2>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, BONZI AND ITS AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, DATA, OR GOODWILL, ARISING FROM YOUR USE OF THE WIDGET.</p>
+        <p>Our total liability shall not exceed the fees (if any) paid by you to Bonzi in the 12 months preceding the claim.</p>
+
+        <h2>9. Disclaimer</h2>
+        <p>THE WIDGET IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+
+        <h2>10. Changes to Terms</h2>
+        <p>We may update these Terms at any time. Continued use of the Widget after changes constitutes acceptance of the new Terms.</p>
+
+        <h2>11. Contact</h2>
+        <p>For questions about these Terms, contact us via our <a href="https://t.me/bonzisocial" target="_blank">Telegram community</a>.</p>
+
+        <a href="brand-widget.html" class="back-link">&larr; Back to Widget</a>
+    </div>
+</body>
+</html>

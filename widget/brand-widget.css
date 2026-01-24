@@ -562,3 +562,126 @@
     border-radius: 12px;
     box-shadow: none;
 }
+
+/* Terms & Conditions Modal */
+.terms-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.terms-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.terms-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 32px);
+    max-width: 360px;
+    background: var(--color-white);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+}
+
+.terms-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.terms-fees {
+    background: #FEF3C7;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.terms-intro {
+    font-size: 13px;
+    color: #92400E;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.terms-fee-table {
+    width: 100%;
+    font-size: 13px;
+}
+
+.terms-fee-table td {
+    padding: 6px 0;
+    color: #78350F;
+}
+
+.terms-fee-table td:first-child {
+    font-weight: 500;
+}
+
+.terms-fee-table td:last-child {
+    text-align: right;
+}
+
+.terms-example {
+    font-size: 12px;
+    color: #B45309;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(146, 64, 14, 0.2);
+    font-style: italic;
+}
+
+.terms-checkbox {
+    margin-bottom: 20px;
+}
+
+.terms-checkbox label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--color-gray-700);
+    cursor: pointer;
+}
+
+.terms-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--color-purple);
+    cursor: pointer;
+}
+
+.terms-checkbox a {
+    color: var(--color-purple);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+.terms-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.terms-buttons .btn {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 14px;
+}

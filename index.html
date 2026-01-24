@@ -2870,63 +2870,106 @@
             color: #737373;
         }
 
-        /* Live Demo Section */
-        .live-demo-section {
+        /* Demo Cards Section */
+        .demo-cards-section {
             margin-top: 60px;
             text-align: center;
         }
 
-        .live-demo-section h3 {
+        .demo-cards-section h3 {
             font-size: 1.5rem;
             color: #fff;
             margin-bottom: 8px;
         }
 
-        .live-demo-section p {
+        .demo-cards-section p {
             color: #9CA3AF;
             margin-bottom: 24px;
         }
 
-        .live-demo-container {
-            max-width: 420px;
+        .demo-cards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 400px;
             margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            background: #fff;
         }
 
-        .live-demo-iframe {
-            width: 100%;
-            height: 580px;
-            border: none;
-            display: block;
+        .demo-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: #17212B;
+            border: 1px solid #232E3C;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .demo-link {
-            display: inline-block;
-            margin-top: 20px;
+        .demo-card:hover {
+            background: #1E2A36;
+            border-color: #766AC8;
+        }
+
+        .demo-card-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #7B2D8E, #5a1f69);
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-card-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .demo-card-content h4 {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .demo-card-type {
+            color: #6C7883;
+            font-size: 13px;
+        }
+
+        .demo-card-arrow {
+            color: #6C7883;
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .demo-card:hover .demo-card-arrow {
+            transform: translateX(4px);
             color: #766AC8;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
         }
 
-        .demo-link:hover {
-            color: #9b8dd0;
-        }
-
-        body.light-mode .live-demo-section h3 {
+        body.light-mode .demo-cards-section h3 {
             color: #1a1a1a;
         }
 
-        body.light-mode .live-demo-section p {
+        body.light-mode .demo-cards-section p {
             color: #666;
         }
 
-        body.light-mode .live-demo-container {
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        body.light-mode .demo-card {
+            background: #f5f5f5;
+            border-color: #e5e5e5;
+        }
+
+        body.light-mode .demo-card:hover {
+            background: #eee;
+        }
+
+        body.light-mode .demo-card-content h4 {
+            color: #1a1a1a;
         }
 
         /* Pricing section - 4-card grid */
@@ -4036,19 +4079,36 @@
         </div>
     </div>
 
-    <!-- Live Demo Section -->
-    <div class="live-demo-section">
+    <!-- Demo Cards Section -->
+    <div class="demo-cards-section">
         <h3 data-i18n="demo.live.title">See it in action</h3>
-        <p data-i18n="demo.live.subtitle">This is exactly what your users see. Try it.</p>
-        <div class="live-demo-container">
-            <iframe
-                src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI"
-                class="live-demo-iframe"
-                loading="lazy"
-                title="Live Widget Demo">
-            </iframe>
+        <p data-i18n="demo.live.subtitle">Works with any ERC-20. Click to preview.</p>
+        <div class="demo-cards-grid">
+            <div class="demo-card" onclick="openDemoWidget('0xd6175692026bcd7cb12a515e39cf0256ef35cb86', '$BONZI')">
+                <div class="demo-card-icon">B</div>
+                <div class="demo-card-content">
+                    <h4>$BONZI</h4>
+                    <span class="demo-card-type">Community Token</span>
+                </div>
+                <span class="demo-card-arrow">→</span>
+            </div>
+            <div class="demo-card" onclick="openDemoWidget('0x6982508145454Ce325dDbE47a25d4ec3d2311933', '$PEPE')">
+                <div class="demo-card-icon">P</div>
+                <div class="demo-card-content">
+                    <h4>$PEPE</h4>
+                    <span class="demo-card-type">Meme Coin</span>
+                </div>
+                <span class="demo-card-arrow">→</span>
+            </div>
+            <div class="demo-card" onclick="openDemoWidget('0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', '$UNI')">
+                <div class="demo-card-icon">U</div>
+                <div class="demo-card-content">
+                    <h4>$UNI</h4>
+                    <span class="demo-card-type">DeFi Governance</span>
+                </div>
+                <span class="demo-card-arrow">→</span>
+            </div>
         </div>
-        <a href="widget/demo.html" class="demo-link" target="_blank" data-i18n="demo.live.cta">View all display modes →</a>
     </div>
 </section>
 
@@ -5252,6 +5312,12 @@ function previewWidget() {
     params.set('symbol', finalSymbol);
 
     const url = 'widget/brand-widget.html?' + params.toString();
+    window.open(url, '_blank');
+}
+
+// Open demo widget with specific token
+function openDemoWidget(token, symbol) {
+    const url = `widget/brand-widget.html?token=${token}&symbol=${encodeURIComponent(symbol)}`;
     window.open(url, '_blank');
 }
 

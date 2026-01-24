@@ -1,38 +1,210 @@
 {
-    "updated": "2025-01-24",
-    "free": {
-        "vista": {
-            "token_age_months": 6,
-            "total_holders": null,
-            "top_10_pct": null,
-            "hhi_score": null
-        },
-        "bonzi": {
-            "token_age_months": 6,
-            "total_holders": null,
-            "top_10_pct": null,
-            "hhi_score": null
-        },
-        "case_study": {
-            "wallet": "0xca90d843288e35beeadfce14e5f906e3f1afc7cb",
-            "staking_since": "2024-10-03",
-            "amount_staked": 15,
-            "eth_claimed": 0.086,
-            "tokens_sold": 0
-        }
+  "updated": "2026-01-24",
+  "vista": {
+    "token_address": "0xc9bca88b04581699fab5aa276ccaff7df957cbbf",
+    "hardstake_address": "0xee5a6f8a55b02689138c195031d09bafdc7d278f",
+    "launch_date": "2024-09-01",
+    "token_age_months": 16,
+    "total_holders": 14342,
+    "top_10_pct": 65.84,
+    "hhi_score": 690,
+    "total_stakers": 524,
+    "diamond_hands": 65,
+    "diamond_hands_pct": 12.4,
+    "currently_staking": 89,
+    "retention_pct": 17.0,
+    "avg_tenure_days": 341,
+    "max_tenure_days": 478,
+    "holders_1k_plus": null,
+    "holders_10k_plus": null,
+    "weekly_trend": [
+      {
+        "week": "2026-01-19",
+        "stakes": 20,
+        "unstakes": 1
+      },
+      {
+        "week": "2026-01-12",
+        "stakes": 36,
+        "unstakes": 6
+      },
+      {
+        "week": "2026-01-05",
+        "stakes": 13,
+        "unstakes": 3
+      },
+      {
+        "week": "2025-12-29",
+        "stakes": 8,
+        "unstakes": 3
+      },
+      {
+        "week": "2025-12-22",
+        "stakes": 7,
+        "unstakes": 2
+      },
+      {
+        "week": "2025-12-15",
+        "stakes": 8,
+        "unstakes": 3
+      },
+      {
+        "week": "2025-12-08",
+        "stakes": 13,
+        "unstakes": 2
+      },
+      {
+        "week": "2025-12-01",
+        "stakes": 20,
+        "unstakes": 4
+      },
+      {
+        "week": "2025-11-24",
+        "stakes": 15,
+        "unstakes": 8
+      },
+      {
+        "week": "2025-11-17",
+        "stakes": 27,
+        "unstakes": 5
+      },
+      {
+        "week": "2025-11-10",
+        "stakes": 11,
+        "unstakes": 5
+      },
+      {
+        "week": "2025-11-03",
+        "stakes": 14,
+        "unstakes": 3
+      }
+    ],
+    "net_flow_7d": 19,
+    "total_eth_distributed": 29.04,
+    "unique_claimers": 448,
+    "avg_claim_eth": 0.0156,
+    "max_single_claim": 1.96,
+    "lp_total_eth": 133.65,
+    "lp_total_distributions": 1324,
+    "lp_unique_recipients": null
+  },
+  "bonzi": {
+    "token_address": "0xd6175692026bcd7cb12a515e39cf0256ef35cb86",
+    "hardstake_address": "0x3618158bb8d07111e476f4de28676dff050d1a53",
+    "launch_date": "2024-12-01",
+    "token_age_months": 13,
+    "total_holders": 4111,
+    "top_10_pct": 43.5,
+    "hhi_score": 374,
+    "total_stakers": 28,
+    "diamond_hands": 4,
+    "diamond_hands_pct": 14.3,
+    "currently_staking": 8,
+    "retention_pct": 28.6,
+    "avg_tenure_days": 288,
+    "max_tenure_days": 406,
+    "holders_1k_plus": null,
+    "holders_10k_plus": null,
+    "weekly_trend": [
+      {
+        "week": "2026-01-19",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2026-01-12",
+        "stakes": 2,
+        "unstakes": 0
+      },
+      {
+        "week": "2026-01-05",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2025-12-29",
+        "stakes": 1,
+        "unstakes": 1
+      },
+      {
+        "week": "2025-12-08",
+        "stakes": 3,
+        "unstakes": 1
+      },
+      {
+        "week": "2025-11-24",
+        "stakes": 1,
+        "unstakes": 1
+      },
+      {
+        "week": "2025-11-17",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2025-11-10",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2025-10-27",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2025-10-20",
+        "stakes": 4,
+        "unstakes": 1
+      },
+      {
+        "week": "2025-10-06",
+        "stakes": 1,
+        "unstakes": 0
+      },
+      {
+        "week": "2025-09-29",
+        "stakes": 1,
+        "unstakes": 0
+      }
+    ],
+    "net_flow_7d": 1,
+    "total_eth_distributed": 1.11,
+    "unique_claimers": 21,
+    "avg_claim_eth": 0.0072,
+    "max_single_claim": 0.05,
+    "lp_total_eth": 38.9092,
+    "lp_total_distributions": 597,
+    "lp_unique_recipients": 143
+  },
+  "dune_queries": {
+    "vista_hhi": "6591451",
+    "vista_staker_retention": "6591349",
+    "vista_diamond_hands": "6591316",
+    "vista_weekly_trend": "6591328",
+    "vista_tenure": "6591332",
+    "vista_1k_holders": null,
+    "vista_eth_distributed": "6591480",
+    "vista_lp_distributed": "6591489",
+    "bonzi_lp_distributed": "6591492",
+    "bonzi_hhi": "6591469",
+    "bonzi_staker_retention": "6591406",
+    "bonzi_diamond_hands": "6591411",
+    "bonzi_weekly_trend": "6591436",
+    "bonzi_tenure": "6591445",
+    "bonzi_1k_holders": null,
+    "bonzi_eth_distributed": "6591483"
+  },
+  "contracts": {
+    "vista": {
+      "token": "0xc9bca88b04581699fab5aa276ccaff7df957cbbf",
+      "hardstake": "0xee5a6f8a55b02689138c195031d09bafdc7d278f",
+      "launch_date": "2024-09-01"
     },
-    "tier1": {
-        "holders_1k_plus": null,
-        "staker_retention_pct": null,
-        "exit_rate_pct": null,
-        "diamond_hands_pct": null,
-        "avg_tenure_days": null,
-        "weekly_eth_distributed": null
-    },
-    "tier2": {
-        "new_wallets_7d": null,
-        "exiting_wallets_7d": null,
-        "net_flow": null,
-        "top_claimers": []
+    "bonzi": {
+      "token": "0xd6175692026bcd7cb12a515e39cf0256ef35cb86",
+      "hardstake": "0x3618158bb8d07111e476f4de28676dff050d1a53",
+      "lp_pair": "0x970cf9b7346fbaea0588f03356a104100eb675e2",
+      "launch_date": "2024-12-01"
     }
+  }
 }

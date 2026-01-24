@@ -1461,23 +1461,46 @@
         .tokenise-btn {
             display: block;
             margin: 0 auto;
-            background: transparent;
-            border: 2px solid rgba(167, 139, 250, 0.6);
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: 2px solid #10b981;
             border-radius: 8px;
             padding: 20px 64px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: clamp(18px, 3vw, 24px);
             font-weight: 600;
-            color: #a78bfa;
+            color: #fff;
             letter-spacing: 4px;
             text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
 
         .tokenise-btn:hover {
-            background: rgba(124, 58, 237, 0.15);
-            border-color: #a78bfa;
+            background: linear-gradient(135deg, #059669, #047857);
+            border-color: #34d399;
             color: #fff;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+        }
+
+        /* Fixed Tokenise button visible on scroll */
+        .tokenise-btn-fixed {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            margin: 0;
+            padding: 14px 32px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+
+        .tokenise-btn-fixed.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         @keyframes trigger-pulse {
@@ -3591,6 +3614,9 @@
     <!-- Tokenise CTA Button -->
     <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
 
+<!-- Fixed Tokenise Button (visible on scroll) -->
+<button class="tokenise-btn tokenise-btn-fixed" id="tokenise-fixed">Tokenise</button>
+
     <!-- Slot Overlay (click to close) -->
     <div class="slot-overlay" id="slot-overlay"></div>
 
@@ -4976,11 +5002,19 @@ function openSlotPanel() {
     slotPanel.classList.add(randomEntry);
     slotPanel.classList.add('open');
     if (slotOverlay) slotOverlay.classList.add('open');
+
+    // Hide fixed button when panel is open
+    const fixedBtn = document.getElementById('tokenise-fixed');
+    if (fixedBtn) fixedBtn.style.display = 'none';
 }
 
 function closeSlotPanel() {
     slotPanel.classList.remove('open');
     if (slotOverlay) slotOverlay.classList.remove('open');
+
+    // Restore fixed button visibility
+    const fixedBtn = document.getElementById('tokenise-fixed');
+    if (fixedBtn) fixedBtn.style.display = '';
 }
 
 // Open panel
@@ -5623,9 +5657,17 @@ bgMusic.addEventListener('ended', () => {
 // Initialize playlist
 buildPlaylistUI();
 
-// Nav collapse on scroll + volume fade
+// Nav collapse on scroll + volume fade + fixed Tokenise button
 let lastScroll = 0;
 const nav = document.querySelector('nav');
+const tokeniseFixed = document.getElementById('tokenise-fixed');
+const launchTrigger = document.getElementById('launch-trigger');
+
+// Make fixed button trigger same action as main button
+if (tokeniseFixed && launchTrigger) {
+    tokeniseFixed.addEventListener('click', () => launchTrigger.click());
+}
+
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > lastScroll && currentScroll > 100) {
@@ -5634,6 +5676,15 @@ window.addEventListener('scroll', () => {
         nav.style.transform = 'translateY(0)';
     }
     lastScroll = currentScroll;
+
+    // Show/hide fixed Tokenise button based on scroll
+    if (tokeniseFixed) {
+        if (currentScroll > 600) {
+            tokeniseFixed.classList.add('visible');
+        } else {
+            tokeniseFixed.classList.remove('visible');
+        }
+    }
 
     // Update music volume based on scroll position
     updateVolumeByScroll();

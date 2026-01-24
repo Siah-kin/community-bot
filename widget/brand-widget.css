@@ -1,6 +1,6 @@
 /**
  * Bonzi Brand Widget Styles
- * Design: Black/White/Green palette (Bonzi branding)
+ * Design: Black/White/Purple palette (Bonzi branding)
  */
 
 /* Reset & Base */
@@ -71,9 +71,10 @@ body.embed-mode .bonzi-widget {
 
 /* Widget Container */
 .bonzi-widget {
-    --color-purple: #10B981;
-    --color-purple-dark: #059669;
-    --color-purple-light: #34D399;
+    --color-purple: #7C3AED;
+    --color-purple-dark: #5B21B6;
+    --color-purple-light: #A78BFA;
+    --color-gold: #d4af37;
     --color-black: #1a1a1a;
     --color-white: #ffffff;
     --color-gray-50: #fafafa;

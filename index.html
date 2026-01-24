@@ -2870,6 +2870,65 @@
             color: #737373;
         }
 
+        /* Live Demo Section */
+        .live-demo-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .live-demo-section h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .live-demo-section p {
+            color: #9CA3AF;
+            margin-bottom: 24px;
+        }
+
+        .live-demo-container {
+            max-width: 420px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            background: #fff;
+        }
+
+        .live-demo-iframe {
+            width: 100%;
+            height: 580px;
+            border: none;
+            display: block;
+        }
+
+        .demo-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #766AC8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .demo-link:hover {
+            color: #9b8dd0;
+        }
+
+        body.light-mode .live-demo-section h3 {
+            color: #1a1a1a;
+        }
+
+        body.light-mode .live-demo-section p {
+            color: #666;
+        }
+
+        body.light-mode .live-demo-container {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
         /* Pricing section - 4-card grid */
         .pricing-section {
             padding: 120px 48px;
@@ -3976,6 +4035,21 @@
             </div>
         </div>
     </div>
+
+    <!-- Live Demo Section -->
+    <div class="live-demo-section">
+        <h3 data-i18n="demo.live.title">See it in action</h3>
+        <p data-i18n="demo.live.subtitle">This is exactly what your users see. Try it.</p>
+        <div class="live-demo-container">
+            <iframe
+                src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI"
+                class="live-demo-iframe"
+                loading="lazy"
+                title="Live Widget Demo">
+            </iframe>
+        </div>
+        <a href="widget/demo.html" class="demo-link" target="_blank" data-i18n="demo.live.cta">View all display modes →</a>
+    </div>
 </section>
 
 <section class="pricing-section">
@@ -4277,6 +4351,7 @@ const translations = {
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.", "features.claim.detail": "On-chain claims via connected wallet",
         "features.sybil.title": "Sybil Detection", "features.sybil.desc": "AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.", "features.sybil.detail": "Cross-tenant intel sharing",
         "demo.label": "free tools", "demo.title": "build your community. start in 60 seconds.",
+        "demo.live.title": "see it in action", "demo.live.subtitle": "this is exactly what your users see. try it.", "demo.live.cta": "view all display modes →",
         "demo.greeting": "hey! i'm bonzi. back from the dead and ready to help. ask me anything. just don't ask about my past, it's... complicated",
         "demo.sug1": "what can you do?", "demo.sug2": "tell me a joke", "demo.sug3": "are you still spyware?", "demo.placeholder": "type something...", "demo.send": "send",
         "links.source.title": "source code", "links.source.desc": "fully open source. fork it, run it, break it, fix it. trust but verify.",
@@ -4333,6 +4408,7 @@ const translations = {
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Alcance 100 pontos, resgate ETH diretamente. Holders ganham bonus de 1.1x. Recompensas reais por contribuicao real.", "features.claim.detail": "Resgates on-chain via carteira conectada",
         "features.sybil.title": "Deteccao de Sybil", "features.sybil.desc": "IA detecta padroes extrativos. Farmers copiar-colar, sybils multi-carteira, conteudo gerado por bot. Marcados antes do snapshot.", "features.sybil.detail": "Compartilhamento de intel entre tenants",
         "demo.label": "ferramentas gratis", "demo.title": "construa sua comunidade. comece em 60 segundos.",
+        "demo.live.title": "veja em acao", "demo.live.subtitle": "isso e exatamente o que seus usuarios veem. experimente.", "demo.live.cta": "ver todos os modos →",
         "demo.greeting": "opa! sou o bonzi. voltei dos mortos e pronto pra ajudar. pergunte qualquer coisa. so nao pergunte sobre meu passado, e... complicado",
         "demo.sug1": "o que voce faz?", "demo.sug2": "conta uma piada", "demo.sug3": "voce ainda e spyware?", "demo.placeholder": "digite algo...", "demo.send": "enviar",
         "links.source.title": "codigo fonte", "links.source.desc": "totalmente open source. fork, rode, quebre, conserte. confie mas verifique.",
@@ -4389,6 +4465,7 @@ const translations = {
         "features.claim.title": "100分=ETH", "features.claim.desc": "达到100分，直接领取ETH。持币者获得1.1倍奖励。真实贡献真实回报。", "features.claim.detail": "通过连接的钱包链上领取",
         "features.sybil.title": "女巫检测", "features.sybil.desc": "AI检测榨取模式。复制粘贴刷子、多钱包女巫、机器人生成内容。快照前标记。", "features.sybil.detail": "跨租户情报共享",
         "demo.label": "免费工具", "demo.title": "构建你的社区。60秒开始。",
+        "demo.live.title": "实际效果", "demo.live.subtitle": "这正是你的用户看到的。试试吧。", "demo.live.cta": "查看所有显示模式 →",
         "demo.greeting": "嗨！我是bonzi。死而复生，准备好帮忙了。问我任何事。只是别问我的过去，那...有点复杂",
         "demo.sug1": "你能做什么？", "demo.sug2": "讲个笑话", "demo.sug3": "你还是间谍软件吗？", "demo.placeholder": "输入内容...", "demo.send": "发送",
         "links.source.title": "源代码", "links.source.desc": "完全开源。fork它，运行它，破坏它，修复它。",
@@ -4445,6 +4522,7 @@ const translations = {
         "features.claim.title": "100 puan = ETH", "features.claim.desc": "100 puana ulasin, dogrudan ETH talep edin. Token sahipleri 1.1x bonus alir. Gercek katki icin gercek oduller.", "features.claim.detail": "Bagli cuzdan ile zincir uzerinde talep",
         "features.sybil.title": "Sybil Tespiti", "features.sybil.desc": "Yapay zeka cikarici kaliplari tespit eder. Kopyala-yapistir farmer'lar, coklu-cuzdan sybil'ler, bot uretimi icerik. Snapshot oncesi isaretlenir.", "features.sybil.detail": "Coklu-kiralic istihbarat paylasimi",
         "demo.label": "ucretsiz araclar", "demo.title": "toplulugunuzu kurun. 60 saniyede baslayin.",
+        "demo.live.title": "calisirken gorun", "demo.live.subtitle": "kullanicilarinizin gordugu tam olarak bu. deneyin.", "demo.live.cta": "tum gosterim modlarini gor →",
         "demo.greeting": "selam! ben bonzi. olumden dondun ve yardima hazirim. bana bir sey sorun. sadece gecmisimi sormayin, o... karisik",
         "demo.sug1": "ne yapabilirsin?", "demo.sug2": "bir saka anlat", "demo.sug3": "hala casus yazilim misin?", "demo.placeholder": "bir seyler yazin...", "demo.send": "gonder",
         "links.source.title": "kaynak kodu", "links.source.desc": "tamamen acik kaynak. fork'layin, calistirin, kirin, tamir edin.",
@@ -4501,6 +4579,7 @@ const translations = {
         "features.claim.title": "100 очков = ETH", "features.claim.desc": "Набери 100 очков, получи ETH напрямую. Холдеры получают бонус 1.1x. Реальные награды за реальный вклад.", "features.claim.detail": "Ончейн выплаты через подключенный кошелек",
         "features.sybil.title": "Детекция Сибилов", "features.sybil.desc": "ИИ обнаруживает паттерны извлечения. Копипаст фармеры, мульти-кошельковые сибилы, бот-контент. Помечаются до снимка.", "features.sybil.detail": "Кросс-тенантный обмен разведданными",
         "demo.label": "бесплатные инструменты", "demo.title": "создайте сообщество. начните за 60 секунд.",
+        "demo.live.title": "смотрите в действии", "demo.live.subtitle": "это именно то, что видят ваши пользователи. попробуйте.", "demo.live.cta": "все режимы отображения →",
         "demo.greeting": "привет! я bonzi. вернулся из мертвых и готов помочь. спрашивай что угодно. только не спрашивай о моем прошлом, оно... сложное",
         "demo.sug1": "что ты умеешь?", "demo.sug2": "расскажи шутку", "demo.sug3": "ты все еще шпионская программа?", "demo.placeholder": "напиши что-нибудь...", "demo.send": "отправить",
         "links.source.title": "исходный код", "links.source.desc": "полностью open source. форкай, запускай, ломай, чини.",
@@ -4557,6 +4636,7 @@ const translations = {
         "features.claim.title": "100 pts = ETH", "features.claim.desc": "Atteignez 100 points, reclamez de l'ETH directement. Les holders obtiennent un bonus de 1.1x. Vraies recompenses pour vraie contribution.", "features.claim.detail": "Reclamations on-chain via wallet connecte",
         "features.sybil.title": "Detection Sybil", "features.sybil.desc": "L'IA detecte les patterns d'extraction. Farmers copier-coller, sybils multi-wallets, contenu genere par bot. Signales avant le snapshot.", "features.sybil.detail": "Partage d'intel cross-tenant",
         "demo.label": "outils gratuits", "demo.title": "construisez votre communaute. commencez en 60 secondes.",
+        "demo.live.title": "voyez en action", "demo.live.subtitle": "c'est exactement ce que vos utilisateurs voient. essayez.", "demo.live.cta": "voir tous les modes d'affichage →",
         "demo.greeting": "salut ! je suis bonzi. revenu d'entre les morts et pret a aider. demandez-moi n'importe quoi. juste ne demandez pas mon passe, c'est... complique",
         "demo.sug1": "tu fais quoi ?", "demo.sug2": "raconte une blague", "demo.sug3": "t'es encore un spyware ?", "demo.placeholder": "tapez quelque chose...", "demo.send": "envoyer",
         "links.source.title": "code source", "links.source.desc": "entierement open source. forkez, lancez, cassez, reparez.",

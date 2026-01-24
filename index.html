@@ -1482,27 +1482,6 @@
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
         }
 
-        /* Fixed Tokenise button visible on scroll */
-        .tokenise-btn-fixed {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 999;
-            margin: 0;
-            padding: 14px 32px;
-            font-size: 14px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-        }
-
-        .tokenise-btn-fixed.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
         @keyframes trigger-pulse {
             0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
             50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.8); }
@@ -3614,9 +3593,6 @@
     <!-- Tokenise CTA Button -->
     <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
 
-<!-- Fixed Tokenise Button (visible on scroll) -->
-<button class="tokenise-btn tokenise-btn-fixed" id="tokenise-fixed">Tokenise</button>
-
     <!-- Slot Overlay (click to close) -->
     <div class="slot-overlay" id="slot-overlay"></div>
 
@@ -5002,19 +4978,11 @@ function openSlotPanel() {
     slotPanel.classList.add(randomEntry);
     slotPanel.classList.add('open');
     if (slotOverlay) slotOverlay.classList.add('open');
-
-    // Hide fixed button when panel is open
-    const fixedBtn = document.getElementById('tokenise-fixed');
-    if (fixedBtn) fixedBtn.style.display = 'none';
 }
 
 function closeSlotPanel() {
     slotPanel.classList.remove('open');
     if (slotOverlay) slotOverlay.classList.remove('open');
-
-    // Restore fixed button visibility
-    const fixedBtn = document.getElementById('tokenise-fixed');
-    if (fixedBtn) fixedBtn.style.display = '';
 }
 
 // Open panel
@@ -5657,15 +5625,9 @@ bgMusic.addEventListener('ended', () => {
 // Initialize playlist
 buildPlaylistUI();
 
-// Nav collapse on scroll + volume fade + fixed Tokenise button
+// Nav collapse on scroll + volume fade
 let lastScroll = 0;
 const nav = document.querySelector('nav');
-const tokeniseFixed = document.getElementById('tokenise-fixed');
-
-// Make fixed button trigger same action as main button (launchTrigger already defined above)
-if (tokeniseFixed && launchTrigger) {
-    tokeniseFixed.addEventListener('click', () => launchTrigger.click());
-}
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
@@ -5675,15 +5637,6 @@ window.addEventListener('scroll', () => {
         nav.style.transform = 'translateY(0)';
     }
     lastScroll = currentScroll;
-
-    // Show/hide fixed Tokenise button based on scroll
-    if (tokeniseFixed) {
-        if (currentScroll > 600) {
-            tokeniseFixed.classList.add('visible');
-        } else {
-            tokeniseFixed.classList.remove('visible');
-        }
-    }
 
     // Update music volume based on scroll position
     updateVolumeByScroll();

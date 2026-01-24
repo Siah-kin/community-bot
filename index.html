@@ -1110,14 +1110,14 @@
 
         /* Big statement */
         .statement {
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 48px;
-            background: #fff;
-            color: #1a1a1a;
+            padding: 48px 48px 0 48px;
+            background: var(--black);
+            color: var(--white);
             position: relative;
             overflow: hidden;
         }
@@ -1129,11 +1129,22 @@
             line-height: 1.2;
             max-width: 900px;
             text-align: center;
-            color: #1a1a1a;
+            color: var(--white);
         }
 
         .statement-text .highlight {
             color: #7c3aed;
+        }
+
+        /* Launch area - white section */
+        .launch-area {
+            width: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 48px;
         }
 
         .manifesto-btn {
@@ -1441,7 +1452,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin-top: 48px;
+            margin-top: 0;
             margin-bottom: 32px;
             font-size: clamp(32px, 6vw, 72px);
             font-weight: 600;
@@ -3625,13 +3636,16 @@
 <section class="statement">
     <p class="statement-text" data-i18n="statement.text">Trading fees fund the tip pool. AI verifies who's real. <span class="highlight">verified humans earn ETH.</span> bots get nothing. farmers get filtered. value created here stays here. <span class="highlight">that's the loop.</span></p>
 
-    <!-- Launch Sentence (not a button) -->
-    <div class="launch-sentence">
-        <span class="trigger-text">Launch Your </span><span class="trigger-word" id="trigger-word">Future</span>
-    </div>
+    <!-- Launch Area - White Section -->
+    <div class="launch-area">
+        <!-- Launch Sentence (not a button) -->
+        <div class="launch-sentence">
+            <span class="trigger-text">Launch Your </span><span class="trigger-word" id="trigger-word">Future</span>
+        </div>
 
-    <!-- Tokenise CTA Button -->
-    <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
+        <!-- Tokenise CTA Button -->
+        <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
+    </div>
 
     <!-- Slot Overlay (click to close) -->
     <div class="slot-overlay" id="slot-overlay"></div>

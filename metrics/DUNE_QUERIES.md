@@ -226,10 +226,74 @@ QUERIES = {
 
 ## Contract Reference
 
-| Token | Type | Address |
-|-------|------|---------|
-| VISTA | Token | `0xc9bca88b04581699fab5aa276ccaff7df957cbbf` |
-| VISTA | Hardstake | `0xee5a6f8a55b02689138c195031d09bafdc7d278f` |
-| BONZI | Token | `0xd6175692026bcd7cb12a515e39cf0256ef35cb86` |
-| BONZI | Hardstake | `0x3618158bb8d07111e476f4de28676dff050d1a53` |
-| BONZI | LP Pair | `0x970cf9b7346fbaea0588f03356a104100eb675e2` |
+### VISTA Token Ecosystem
+| Contract | Address | Significance |
+|----------|---------|--------------|
+| VISTA Token | `0xc9bca88b04581699fab5aa276ccaff7df957cbbf` | The native token - 1M supply, deflationary via burns |
+| VISTA LP Pair | `0xfdd05552f1377aa488afed744c8024358af02041` | Trading pair - LP fees flow from here |
+| Hardstake/Boost | `0xee5a6f8a55b02689138c195031d09bafdc7d278f` | Single-sided staking - 14 day lock, earns ETH |
+| Hardlock VISTA LP | `0x9099ef7f34dc1af0d27e49dc5b604bccc03dcb21` | LP staking - permanent lock, higher yield |
+
+### BONZI Token Ecosystem
+| Contract | Address | Significance |
+|----------|---------|--------------|
+| BONZI Token | `0xd6175692026bcd7cb12a515e39cf0256ef35cb86` | The mascot token - 1B supply, CTO project |
+| BONZI LP Pair | `0x970cf9b7346fbaea0588f03356a104100eb675e2` | Trading pair - LP fees flow from here |
+| BONZI Hardstake | `0x3618158bb8d07111e476f4de28676dff050d1a53` | Single-sided staking - earns ETH |
+
+### Ethervista Protocol (Shared Infrastructure)
+| Contract | Address | Significance |
+|----------|---------|--------------|
+| Router | `0xCEDd366065A146a039B92Db35756ecD7688FCC77` | All swaps route through here |
+| Factory | `0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4` | Creates new trading pairs |
+| Token Factory | `0x1a97A037A120Db530dDCe8370e24EaD0FE9cf5d0` | Safe token deployment (Etherfun) |
+| Hardlock Universal | `0xF6B510928ab880507246CD6946b7F061Eb8A9C78` | LP locking for all tokens |
+| Autobuy Burner | `0xe17A0C382c8332A889EC9D026D6948e26C7f617D` | Protocol fees → buyback → burn |
+
+---
+
+## Fee Flow Architecture
+
+```
+Trade on Ethervista
+    │
+    ├── LP Fees (buyLpFee + sellLpFee)
+    │   └── → LP Pair Contract
+    │       └── → Distributed to LPs via Euler Model
+    │           ├── Hardlock stakers (permanent lock, higher yield)
+    │           └── Hardstake stakers (14-day lock, lower yield)
+    │
+    └── Protocol Fees (buyProtocolFee + sellProtocolFee)
+        └── → Protocol Address (configurable per pool)
+            └── For VISTA: → Autobuy Burner
+                └── → Buys VISTA → Burns it (deflationary)
+```
+
+**Key Insight:** No team wallet, no treasury. All protocol fees go to autobuy-burner.
+This is anti-Ponzi by design: yield comes from trading fees, not new buyers.
+
+---
+
+## Query IDs (Current)
+
+```python
+QUERIES = {
+    # VISTA
+    'vista_hhi': '6591451',
+    'vista_staker_retention': '6591349',
+    'vista_diamond_hands': '6591316',
+    'vista_weekly_trend': '6591328',
+    'vista_tenure': '6591332',
+    'vista_eth_distributed': '6591480',
+    'vista_lp_distributed': '6591489',
+
+    # BONZI
+    'bonzi_hhi': '6591469',
+    'bonzi_staker_retention': '6591406',
+    'bonzi_diamond_hands': '6591411',
+    'bonzi_weekly_trend': '6591436',
+    'bonzi_tenure': '6591445',
+    'bonzi_eth_distributed': '6591483',
+    'bonzi_lp_distributed': '6591492',
+}
+```

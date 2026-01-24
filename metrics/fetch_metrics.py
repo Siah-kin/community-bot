@@ -57,14 +57,24 @@ QUERIES = {
 CONTRACTS = {
     'vista': {
         'token': '0xc9bca88b04581699fab5aa276ccaff7df957cbbf',
+        'lp_pair': '0xfdd05552f1377aa488afed744c8024358af02041',
         'hardstake': '0xee5a6f8a55b02689138c195031d09bafdc7d278f',
+        'hardlock_lp': '0x9099ef7f34dc1af0d27e49dc5b604bccc03dcb21',
         'launch_date': '2024-09-01',
     },
     'bonzi': {
         'token': '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
-        'hardstake': '0x3618158bb8d07111e476f4de28676dff050d1a53',
         'lp_pair': '0x970cf9b7346fbaea0588f03356a104100eb675e2',
+        'hardstake': '0x3618158bb8d07111e476f4de28676dff050d1a53',
         'launch_date': '2024-12-01',
+    },
+    # Ethervista Protocol (shared infrastructure)
+    'protocol': {
+        'router': '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+        'factory': '0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4',
+        'token_factory': '0x1a97A037A120Db530dDCe8370e24EaD0FE9cf5d0',
+        'hardlock_universal': '0xF6B510928ab880507246CD6946b7F061Eb8A9C78',
+        'autobuy_burner': '0xe17A0C382c8332A889EC9D026D6948e26C7f617D',
     }
 }
 

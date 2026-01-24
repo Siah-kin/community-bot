@@ -1350,16 +1350,15 @@
            LAUNCH SENTENCE + TOKENISE CTA
            ===================================================== */
         .launch-sentence {
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            gap: 0.3em;
+            display: block;
+            text-align: center;
             margin-top: 48px;
             margin-bottom: 32px;
             font-size: clamp(32px, 6vw, 72px);
             font-weight: 600;
             letter-spacing: -0.03em;
             line-height: 1.2;
+            white-space: nowrap;
         }
 
         .launch-sentence .trigger-text {
@@ -1368,7 +1367,7 @@
 
         .launch-sentence .trigger-word {
             display: inline-block;
-            min-width: 5em;
+            width: 320px;
             text-align: left;
             color: #a78bfa;
             transition: opacity 0.15s ease;
@@ -1525,7 +1524,7 @@
         }
 
         .lcd-screen {
-            height: 40px;
+            height: 60px;
             overflow: hidden;
             background: #0a0a1a;
             border: 1px solid #333;
@@ -1542,10 +1541,10 @@
         }
 
         .slot-reel .word {
-            height: 40px;
-            line-height: 40px;
+            height: 60px;
+            line-height: 60px;
             padding: 0 16px;
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
             font-family: 'Courier New', monospace;
             color: #22c55e;
@@ -1745,8 +1744,8 @@
 
         @media (max-width: 768px) {
             .slot-machine { width: 300px; }
-            .lcd-screen { height: 28px; }
-            .slot-reel .word { height: 28px; line-height: 28px; font-size: 14px; }
+            .lcd-screen { height: 50px; }
+            .slot-reel .word { height: 50px; line-height: 50px; font-size: 18px; }
         }
 
         /* Pain points section - Domino Stack with purple accent bg */
@@ -4353,35 +4352,35 @@ const slotWords = [
     // Brand & Business
     'Brand', 'Startup', 'Agency', 'Studio', 'Label', 'Franchise', 'Collective', 'Syndicate', 'Venture', 'Empire',
     // Hidden Bonzi #1
-    '🐵 Bonzi',
+    'Bonzi',
     // Communities
     'Community', 'Tribe', 'Guild', 'Club', 'Network', 'Movement', 'Alliance', 'Coalition', 'Federation', 'Legion',
     // Finance
     'Token', 'Fund', 'Treasury', 'Pool', 'Vault', 'Index', 'Hedge', 'Portfolio', 'Equity', 'DAO',
     // Hidden Bonzi #2
-    '🐵 Bonzi',
+    'Bonzi',
     // Creative
     'Project', 'Idea', 'Vision', 'Dream', 'Mission', 'Legacy', 'Story', 'Narrative', 'Manifesto', 'Revolution',
     // Tech
     'Protocol', 'Platform', 'Infrastructure', 'Oracle', 'API', 'dApp', 'Layer', 'Chain', 'Bridge', 'Node',
     // Hidden Bonzi #3
-    '🐵 Bonzi',
+    'Bonzi',
     // Content
     'Media', 'Channel', 'Podcast', 'Newsletter', 'Magazine', 'Journal', 'Archive', 'Library', 'Academy', 'Course',
     // Physical
     'Product', 'Merch', 'Collection', 'Gallery', 'Space', 'Venue', 'Festival', 'Event', 'Experience', 'Restaurant',
     // Hidden Bonzi #4
-    '🐵 Bonzi',
+    'Bonzi',
     // Services
     'Service', 'Marketplace', 'Exchange', 'Launchpad', 'Incubator', 'Accelerator', 'Consultancy', 'Research', 'Lab', 'Institute',
     // Gaming
     'Game', 'World', 'Universe', 'Realm', 'Arena', 'Tournament', 'League', 'Team', 'Esports', 'Metaverse',
     // Hidden Bonzi #5
-    '🐵 Bonzi',
+    'Bonzi',
     // Impact
     'Charity', 'Foundation', 'Cause', 'Initiative', 'Campaign', 'Cooperative', 'Union', 'Trust', 'Flywheel', 'Future',
     // ULTRA RARE - White Bonzi (mystery prize TBD)
-    '🥇 Gold Bonzi'
+    'Gold Bonzi'
 ];
 
 const slotReel = document.getElementById('slot-reel');
@@ -4437,6 +4436,9 @@ if (slotReel && slotLever) {
         const duration = 3000; // 3 seconds total
         let startTime = null;
 
+        // Find Gold Bonzi position for radar sync
+        const goldBonziIndex = slotWords.indexOf('Gold Bonzi');
+
         function animate(timestamp) {
             if (!startTime) startTime = timestamp;
             const elapsed = timestamp - startTime;
@@ -4449,6 +4451,23 @@ if (slotReel && slotLever) {
             // Apply transform (GPU-accelerated)
             slotReel.style.transform = `translateY(-${currentPosition % totalHeight}px)`;
 
+            // Update Bonzi radar - show proximity to Gold Bonzi
+            const currentIndex = Math.floor((currentPosition % totalHeight) / wordHeight) % slotWords.length;
+            const distance = Math.abs(currentIndex - goldBonziIndex);
+            const normalizedDistance = Math.min(distance, slotWords.length - distance); // Handle wrap-around
+
+            // Map distance to 5 positions (0=far left, 2=center, 4=far right)
+            // When very close (distance < 10), gold appears in center positions
+            if (normalizedDistance < 3) {
+                updateBonziRadar(2); // Center - very close!
+            } else if (normalizedDistance < 10) {
+                updateBonziRadar(currentIndex < goldBonziIndex ? 3 : 1);
+            } else if (normalizedDistance < 20) {
+                updateBonziRadar(currentIndex < goldBonziIndex ? 4 : 0);
+            } else {
+                updateBonziRadar(2); // Default center when far
+            }
+
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
@@ -4458,14 +4477,14 @@ if (slotReel && slotLever) {
 
                 // Check for jackpot
                 const landed = slotWords[targetIndex];
-                if (landed === '🐵 Bonzi') {
+                if (landed === 'Bonzi') {
                     slotMachine.classList.add('jackpot');
-                    if (jackpotMsg) jackpotMsg.textContent = '🎉 BONZI JACKPOT! You found a hidden Bonzi!';
+                    if (jackpotMsg) jackpotMsg.textContent = 'BONZI JACKPOT!';
                     // Purple Bonzi → gold shifts rapidly
                     startGoldFlux();
-                } else if (landed === '🥇 Gold Bonzi') {
+                } else if (landed === 'Gold Bonzi') {
                     slotMachine.classList.add('white-jackpot');
-                    if (jackpotMsg) jackpotMsg.textContent = '🥇 ULTRA RARE GOLD BONZI! All Bonzis turn gold!';
+                    if (jackpotMsg) jackpotMsg.textContent = 'GOLD BONZI JACKPOT! All Bonzis turn gold!';
                     // Gold Bonzi → ALL turn gold
                     turnAllBonzisGold();
                 } else {
@@ -4554,6 +4573,18 @@ const bonziLogos = document.getElementById('bonzi-logos');
 const bonziImages = bonziLogos ? bonziLogos.querySelectorAll('.bonzi-logo-img') : [];
 let goldFluxInterval = null;
 let currentGoldIndex = 2; // Center position default
+
+// Update Bonzi radar during spin - shows proximity to Gold Bonzi
+function updateBonziRadar(position) {
+    if (!bonziImages || bonziImages.length === 0) return;
+    if (position === currentGoldIndex) return; // No change needed
+
+    // Remove gold from current
+    bonziImages[currentGoldIndex].classList.remove('gold');
+    // Add gold to new position
+    currentGoldIndex = position;
+    bonziImages[currentGoldIndex].classList.add('gold');
+}
 
 // Purple Bonzi jackpot → Gold shifts rapidly between positions
 function startGoldFlux() {

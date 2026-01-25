@@ -1139,68 +1139,26 @@
 
     <!-- Page Introduction -->
     <section class="page-intro">
-        <h2 data-i18n="intro.what.title">What Is This Page?</h2>
-
         <div class="intro-block highlight">
-            <h3 data-i18n="intro.why.page.title">Why Look at Metrics?</h3>
-            <p data-i18n="intro.why.page.text">Whether you're launching a token on Ethervista, considering staking, or evaluating VISTA/BONZI as an investment - you need to verify claims, not trust them. This page shows live on-chain data: Is the yield mechanism actually paying out? How distributed is ownership? Are people holding long-term or dumping? The numbers here answer those questions.</p>
+            <p data-i18n="intro.main"><strong>VISTA</strong> and <strong>BONZI</strong> are yield-generating tokens on <a href="https://ethervista.app" target="_blank">Ethervista</a>. Every trade on the DEX generates fees that go directly to stakers and LPs - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.</p>
         </div>
 
-        <div class="intro-block">
-            <h3 data-i18n="intro.product.title">VISTA & BONZI: Yield-Generating Tokens</h3>
-            <p data-i18n="intro.product.text">VISTA and BONZI are tokens on <a href="https://ethervista.app" target="_blank">Ethervista</a>, a decentralized exchange where every trade generates fees. Unlike most DEXs where fees go to the protocol, Ethervista routes fees directly to token stakers and liquidity providers. When you stake VISTA or BONZI, you earn ETH from trading activity - not inflationary token rewards.</p>
-        </div>
+        <table class="comparison-mini">
+            <tr>
+                <td><strong>Most memecoins</strong></td>
+                <td>No yield. Price appreciation only.</td>
+            </tr>
+            <tr>
+                <td><strong>Inflationary staking</strong></td>
+                <td>Rewards in new tokens. Dilutes supply.</td>
+            </tr>
+            <tr>
+                <td><strong>VISTA/BONZI</strong></td>
+                <td>ETH from trading fees. No dilution.</td>
+            </tr>
+        </table>
 
-        <div class="intro-block">
-            <h3 data-i18n="intro.mechanism.title">How the Yield Works</h3>
-            <p data-i18n="intro.mechanism.text">Every swap on Ethervista incurs a small fee. This fee is split between liquidity providers (LPs) and token stakers. The mechanism is automatic and permissionless - no team distributes rewards, the smart contract does. Your share is proportional to your stake. You can claim accumulated ETH anytime, or let it compound. This page shows whether that mechanism is actually working: how much ETH has been distributed, to how many people, over what time period.</p>
-        </div>
-
-        <div class="intro-block">
-            <h3 data-i18n="intro.difference.title">How This Differs From Other Tokens</h3>
-            <table class="comparison-mini">
-                <tr>
-                    <td><strong>Most memecoins</strong></td>
-                    <td>No yield mechanism. Holders earn nothing. Price appreciation is the only upside.</td>
-                </tr>
-                <tr>
-                    <td><strong>Inflationary staking</strong></td>
-                    <td>Rewards paid in newly minted tokens. Dilutes supply. Not real yield.</td>
-                </tr>
-                <tr>
-                    <td><strong>VISTA/BONZI</strong></td>
-                    <td>Yield paid in ETH from trading fees. No dilution. Verifiable on-chain.</td>
-                </tr>
-            </table>
-        </div>
-
-        <h2 data-i18n="intro.title" style="margin-top: 40px;">How to Read This Page</h2>
-
-        <div class="intro-block">
-            <h3 data-i18n="intro.why.title">Why On-Chain Data?</h3>
-            <p data-i18n="intro.why.text">Price charts and market caps are easy to manipulate. This page shows data recorded on Ethereum that cannot be faked: who owns tokens, how much ETH has been distributed, and how long holders actually stay. If a project claims to reward holders, the blockchain will show whether that's true.</p>
-        </div>
-
-        <div class="intro-block">
-            <h3 data-i18n="intro.murad.title">Murad's Memecoin Checklist</h3>
-            <p data-i18n="intro.murad.text">Analyst Murad Mahmudov developed criteria for separating sustainable projects from pump-and-dumps: <strong>token age</strong> (survived 6+ months), <strong>holder distribution</strong> (not controlled by few wallets), <strong>diamond hands ratio</strong> (long-term holders who earn yield without selling), and <strong>conviction metrics</strong> (average hold time, retention rate). We track all of these below.</p>
-        </div>
-
-        <div class="intro-block">
-            <h3 data-i18n="intro.howey.title">Decentralization (Howey Context)</h3>
-            <p data-i18n="intro.howey.text">The Howey test asks whether profits depend on "the efforts of others" - relevant for regulatory classification. Decentralized protocols where yield comes from trading fees (not team efforts) are structurally different. We show: <strong>concentration index</strong> (HHI score - under 1500 means broad distribution), <strong>top holder share</strong>, and whether yield is permissionless protocol revenue vs discretionary distributions.</p>
-        </div>
-
-        <div class="intro-block">
-            <h3 data-i18n="intro.tiers.title">What Each Section Shows</h3>
-            <ul>
-                <li><strong data-i18n="intro.tier1.label">Ownership Distribution:</strong> <span data-i18n="intro.tier1.desc">Can a few wallets crash the price? How spread out is ownership?</span></li>
-                <li><strong data-i18n="intro.tier2.label">Value Distribution:</strong> <span data-i18n="intro.tier2.desc">Has the protocol actually paid holders? How much ETH, to how many people?</span></li>
-                <li><strong data-i18n="intro.tier3.label">Alpha Analytics:</strong> <span data-i18n="intro.tier3.desc">Momentum signals, yield comparisons, and timing data.</span></li>
-            </ul>
-        </div>
-
-        <p class="intro-note" data-i18n="intro.note">All data pulled from Ethereum mainnet via Dune Analytics. Query links provided for verification.</p>
+        <p class="intro-note" data-i18n="intro.note">Metrics follow <a href="https://x.com/MustStopMurad" target="_blank">Murad's memecoin criteria</a> (token age, distribution, holder conviction) and decentralization factors relevant to regulatory classification. Data from <a href="https://dune.com" target="_blank">Dune Analytics</a>.</p>
     </section>
 
     <div class="dashboard">
@@ -1891,26 +1849,8 @@
                 "nav.contact": "contact", "nav.connect": "connect",
                 "hero.title": "On-Chain Metrics",
                 "hero.subtitle": "Verifiable data for evaluating token health and holder outcomes.",
-                "intro.what.title": "What Is This Page?",
-                "intro.why.page.title": "Why Look at Metrics?",
-                "intro.why.page.text": "Whether you're launching a token on Ethervista, considering staking, or evaluating VISTA/BONZI as an investment - you need to verify claims, not trust them. This page shows live on-chain data: Is the yield mechanism actually paying out? How distributed is ownership? Are people holding long-term or dumping? The numbers here answer those questions.",
-                "intro.product.title": "VISTA & BONZI: Yield-Generating Tokens",
-                "intro.product.text": "VISTA and BONZI are tokens on Ethervista, a decentralized exchange where every trade generates fees. Unlike most DEXs where fees go to the protocol, Ethervista routes fees directly to token stakers and liquidity providers. When you stake VISTA or BONZI, you earn ETH from trading activity - not inflationary token rewards.",
-                "intro.mechanism.title": "How the Yield Works",
-                "intro.mechanism.text": "Every swap on Ethervista incurs a small fee. This fee is split between liquidity providers (LPs) and token stakers. The mechanism is automatic and permissionless - no team distributes rewards, the smart contract does. Your share is proportional to your stake. You can claim accumulated ETH anytime, or let it compound. This page shows whether that mechanism is actually working: how much ETH has been distributed, to how many people, over what time period.",
-                "intro.difference.title": "How This Differs From Other Tokens",
-                "intro.title": "How to Read This Page",
-                "intro.why.title": "Why On-Chain Data?",
-                "intro.why.text": "Price charts and market caps are easy to manipulate. This page shows data recorded on Ethereum that cannot be faked: who owns tokens, how much ETH has been distributed, and how long holders actually stay. If a project claims to reward holders, the blockchain will show whether that's true.",
-                "intro.murad.title": "Murad's Memecoin Checklist",
-                "intro.murad.text": "Analyst Murad Mahmudov developed criteria for separating sustainable projects from pump-and-dumps: token age (survived 6+ months), holder distribution (not controlled by few wallets), diamond hands ratio (long-term holders who earn yield without selling), and conviction metrics (average hold time, retention rate). We track all of these below.",
-                "intro.howey.title": "Decentralization (Howey Context)",
-                "intro.howey.text": "The Howey test asks whether profits depend on 'the efforts of others' - relevant for regulatory classification. Decentralized protocols where yield comes from trading fees (not team efforts) are structurally different. We show: concentration index (HHI score - under 1500 means broad distribution), top holder share, and whether yield is permissionless protocol revenue vs discretionary distributions.",
-                "intro.tiers.title": "What Each Section Shows",
-                "intro.tier1.label": "Ownership Distribution:", "intro.tier1.desc": "Can a few wallets crash the price? How spread out is ownership?",
-                "intro.tier2.label": "Value Distribution:", "intro.tier2.desc": "Has the protocol actually paid holders? How much ETH, to how many people?",
-                "intro.tier3.label": "Alpha Analytics:", "intro.tier3.desc": "Momentum signals, yield comparisons, and timing data.",
-                "intro.note": "All data pulled from Ethereum mainnet via Dune Analytics. Query links provided for verification.",
+                "intro.main": "VISTA and BONZI are yield-generating tokens on Ethervista. Every trade on the DEX generates fees that go directly to stakers and LPs - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.",
+                "intro.note": "Metrics follow Murad's memecoin criteria (token age, distribution, holder conviction) and decentralization factors relevant to regulatory classification. Data from Dune Analytics.",
                 "tier.free.title": "Ownership Distribution", "tier.free.intro": "How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Value Distribution", "tier.dao1.req": "Hold $BONZI or $VISTA",
                 "tier.dao1.intro": "Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.",

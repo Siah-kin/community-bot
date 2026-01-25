@@ -862,6 +862,59 @@
             color: var(--purple);
         }
 
+        /* Page introduction */
+        .page-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        .page-intro h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+        .intro-block {
+            margin-bottom: 24px;
+            padding: 20px 24px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+        .intro-block h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: var(--purple);
+        }
+        .intro-block p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        .intro-block strong {
+            color: var(--text-primary);
+        }
+        .intro-block ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .intro-block li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .intro-block li strong {
+            color: var(--text-primary);
+        }
+        .intro-note {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-top: 16px;
+        }
+
         /* Info text tooltips - underlined purple text */
         .info-text {
             color: var(--purple);
@@ -1052,8 +1105,39 @@
     </nav>
 
     <section class="hero">
-        <h1 data-i18n="hero.title">System Metrics</h1>
-        <p data-i18n="hero.subtitle">Live parameters and configuration. Three tiers of access based on token holdings.</p>
+        <h1 data-i18n="hero.title">On-Chain Metrics</h1>
+        <p data-i18n="hero.subtitle">Verifiable data for evaluating token health and holder outcomes.</p>
+    </section>
+
+    <!-- Page Introduction -->
+    <section class="page-intro">
+        <h2 data-i18n="intro.title">How to Read This Page</h2>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.why.title">Why On-Chain Data?</h3>
+            <p data-i18n="intro.why.text">Price charts and market caps are easy to manipulate. This page shows data recorded on Ethereum that cannot be faked: who owns tokens, how much ETH has been distributed, and how long holders actually stay. If a project claims to reward holders, the blockchain will show whether that's true.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.murad.title">Murad's Memecoin Checklist</h3>
+            <p data-i18n="intro.murad.text">Analyst Murad Mahmudov developed criteria for separating sustainable projects from pump-and-dumps: <strong>token age</strong> (survived 6+ months), <strong>holder distribution</strong> (not controlled by few wallets), <strong>diamond hands ratio</strong> (long-term holders who earn yield without selling), and <strong>conviction metrics</strong> (average hold time, retention rate). We track all of these below.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.howey.title">Decentralization (Howey Context)</h3>
+            <p data-i18n="intro.howey.text">The Howey test asks whether profits depend on "the efforts of others" - relevant for regulatory classification. Decentralized protocols where yield comes from trading fees (not team efforts) are structurally different. We show: <strong>concentration index</strong> (HHI score - under 1500 means broad distribution), <strong>top holder share</strong>, and whether yield is permissionless protocol revenue vs discretionary distributions.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.tiers.title">What Each Section Shows</h3>
+            <ul>
+                <li><strong data-i18n="intro.tier1.label">Ownership Distribution:</strong> <span data-i18n="intro.tier1.desc">Can a few wallets crash the price? How spread out is ownership?</span></li>
+                <li><strong data-i18n="intro.tier2.label">Value Distribution:</strong> <span data-i18n="intro.tier2.desc">Has the protocol actually paid holders? How much ETH, to how many people?</span></li>
+                <li><strong data-i18n="intro.tier3.label">Alpha Analytics:</strong> <span data-i18n="intro.tier3.desc">Momentum signals, yield comparisons, and timing data.</span></li>
+            </ul>
+        </div>
+
+        <p class="intro-note" data-i18n="intro.note">All data pulled from Ethereum mainnet via Dune Analytics. Query links provided for verification.</p>
     </section>
 
     <div class="dashboard">
@@ -1742,8 +1826,20 @@
                 "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto",
                 "nav.economics": "economics", "nav.metrics": "metrics", "nav.dao": "dao",
                 "nav.contact": "contact", "nav.connect": "connect",
-                "hero.title": "System Metrics",
-                "hero.subtitle": "Live parameters and configuration. Three tiers of access based on token holdings.",
+                "hero.title": "On-Chain Metrics",
+                "hero.subtitle": "Verifiable data for evaluating token health and holder outcomes.",
+                "intro.title": "How to Read This Page",
+                "intro.why.title": "Why On-Chain Data?",
+                "intro.why.text": "Price charts and market caps are easy to manipulate. This page shows data recorded on Ethereum that cannot be faked: who owns tokens, how much ETH has been distributed, and how long holders actually stay. If a project claims to reward holders, the blockchain will show whether that's true.",
+                "intro.murad.title": "Murad's Memecoin Checklist",
+                "intro.murad.text": "Analyst Murad Mahmudov developed criteria for separating sustainable projects from pump-and-dumps: token age (survived 6+ months), holder distribution (not controlled by few wallets), diamond hands ratio (long-term holders who earn yield without selling), and conviction metrics (average hold time, retention rate). We track all of these below.",
+                "intro.howey.title": "Decentralization (Howey Context)",
+                "intro.howey.text": "The Howey test asks whether profits depend on 'the efforts of others' - relevant for regulatory classification. Decentralized protocols where yield comes from trading fees (not team efforts) are structurally different. We show: concentration index (HHI score - under 1500 means broad distribution), top holder share, and whether yield is permissionless protocol revenue vs discretionary distributions.",
+                "intro.tiers.title": "What Each Section Shows",
+                "intro.tier1.label": "Ownership Distribution:", "intro.tier1.desc": "Can a few wallets crash the price? How spread out is ownership?",
+                "intro.tier2.label": "Value Distribution:", "intro.tier2.desc": "Has the protocol actually paid holders? How much ETH, to how many people?",
+                "intro.tier3.label": "Alpha Analytics:", "intro.tier3.desc": "Momentum signals, yield comparisons, and timing data.",
+                "intro.note": "All data pulled from Ethereum mainnet via Dune Analytics. Query links provided for verification.",
                 "tier.free.title": "Ownership Distribution", "tier.free.intro": "How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Value Distribution", "tier.dao1.req": "Hold $BONZI or $VISTA",
                 "tier.dao1.intro": "Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.",

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy Token - Bonzi Widget</title>
     <link rel="stylesheet" href="brand-widget.css">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.umd.min.js"></script>
     <script>
         // Detect iframe embed and add class immediately
         if (window !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true') {
@@ -210,11 +211,8 @@
      * Bonzi Brand Widget
      * Coinbase CDP + Ethereum Integration
      *
-     * Configuration is passed via data attributes or URL params
+     * Using Coinbase Onramp directly for card purchases
      */
-    import { CoinbaseWalletSDK } from 'https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@4/+esm';
-
-    console.log('SDK imported:', CoinbaseWalletSDK);
 
         // Configuration
         const CONFIG = {
@@ -355,82 +353,47 @@
             }
         }
 
-        // Login with social provider (Google/Apple) or email
+        // Login - create browser wallet and go straight to funding
         async function loginWithProvider(providerType) {
             console.log('loginWithProvider called with:', providerType);
-            showState('loading', `Connecting with ${providerType}...`);
+            showState('loading', 'Creating wallet...');
 
             try {
-                // Initialize Coinbase Wallet SDK v4 with Smart Wallet
-                const sdk = new CoinbaseWalletSDK({
-                    appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png',
-                    appChainIds: [CONFIG.chainId]
-                });
+                // Check for existing wallet
+                let privateKey = localStorage.getItem('bonzi_wallet_key');
+                let browserWallet;
 
-                // v4 API: smartWalletOnly for email/social login
-                wallet = sdk.makeWeb3Provider({
-                    options: 'smartWalletOnly',
-                    attribution: { auto: true }
-                });
+                if (privateKey) {
+                    // Restore existing wallet
+                    browserWallet = new ethers.Wallet(privateKey);
+                } else {
+                    // Create new random wallet
+                    browserWallet = ethers.Wallet.createRandom();
+                    localStorage.setItem('bonzi_wallet_key', browserWallet.privateKey);
+                }
 
-                // Request accounts (triggers Coinbase popup for login)
-                const accounts = await wallet.request({ method: 'eth_requestAccounts' });
-                address = accounts[0];
-
-                // Save session
+                address = browserWallet.address;
+                wallet = browserWallet;
                 localStorage.setItem('bonzi_wallet_address', address);
 
-                showState('fund');
-                updateWalletInfo();
-
-            } catch (error) {
-                console.error('Login failed:', error);
-                console.error('Error details:', error.message, error.code);
-                showState('login');
-                // Don't show alert - check console for error details
-            }
-        }
-
-        // Handle email login
-        async function handleEmailSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('email-input').value;
-
-            showState('loading', 'Creating your wallet...');
-
-            try {
-                // Initialize Coinbase Wallet SDK v4 with Smart Wallet
-                const sdk = new CoinbaseWalletSDK({
-                    appName: 'Bonzi',
-                    appLogoUrl: 'https://bonzivista.org/assets/bonzi-logo.png',
-                    appChainIds: [CONFIG.chainId]
-                });
-
-                // v4 API: smartWalletOnly for email login
-                wallet = sdk.makeWeb3Provider({
-                    options: 'smartWalletOnly',
-                    attribution: { auto: true }
-                });
-
-                // Request accounts (triggers Coinbase popup)
-                const accounts = await wallet.request({ method: 'eth_requestAccounts' });
-                address = accounts[0];
-
-                localStorage.setItem('bonzi_wallet_address', address);
-                localStorage.setItem('bonzi_wallet_email', email);
+                console.log('Wallet created:', address);
 
                 showState('fund');
                 updateWalletInfo();
 
             } catch (error) {
                 console.error('Wallet creation failed:', error);
-                showState('email');
-                if (error.code === 4001 || error.message?.includes('User rejected') || error.message?.includes('User closed')) {
-                    return;
-                }
+                showState('login');
                 alert('Could not create wallet. Please try again.');
             }
+        }
+
+        // Handle email login - same as provider login
+        async function handleEmailSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            localStorage.setItem('bonzi_wallet_email', email);
+            await loginWithProvider('email');
         }
 
         // Connect external wallet (MetaMask, etc.)

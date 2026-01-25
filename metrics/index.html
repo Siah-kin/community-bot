@@ -833,6 +833,35 @@
             max-width: 600px;
         }
 
+        /* Analysis box */
+        .analysis-box {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--purple);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .analysis-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .analysis-box p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        .analysis-box .analysis-source {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        .analysis-box .analysis-source a {
+            color: var(--purple);
+        }
+
         /* Info text tooltips - underlined purple text */
         .info-text {
             color: var(--purple);
@@ -1124,67 +1153,109 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Analysis -->
+            <div class="analysis-box">
+                <h4 data-i18n="analysis.title">Analysis</h4>
+                <p data-i18n="analysis.free.text">BONZI has a lower concentration index (374) than VISTA (690), meaning ownership is more spread out. Both are below 1500, the threshold for broad distribution. For context, highly concentrated tokens often have indices above 2500. The top 10 BONZI wallets hold 43.5% vs 65.8% for VISTA - both within acceptable ranges for established projects.</p>
+                <p class="analysis-source" data-i18n="analysis.free.source">Source: <a href="https://dune.com/queries/6591451" target="_blank">Dune Analytics - HHI Query</a> | Updated daily</p>
+            </div>
         </div>
 
-        <!-- DAO TIER 1 - Staking Activity -->
+        <!-- DAO TIER 1 - Value Distribution -->
         <div class="tier-header">
             <span class="tier-badge dao-1" data-i18n="tier.dao1">DAO-1</span>
-            <span class="tier-title" data-i18n="tier.dao1.title">Staking Activity</span>
+            <span class="tier-title" data-i18n="tier.dao1.title">Value Distribution</span>
             <span class="tier-requirement" data-i18n="tier.dao1.req">Hold $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-1">
             <div class="unlock-prompt">
-                <h3 data-i18n="unlock.title">Staking Activity</h3>
+                <h3 data-i18n="unlock.title">Value Distribution</h3>
                 <p data-i18n="unlock.desc">Connect wallet holding $BONZI or $VISTA</p>
                 <button class="unlock-btn" onclick="connectWallet(1)" data-i18n="btn.connect">Connect Wallet</button>
             </div>
 
-            <p class="section-intro" data-i18n="tier.dao1.intro">How stakers behave over time. Shows whether positions are being held or closed, and how yield is being used.</p>
+            <p class="section-intro" data-i18n="tier.dao1.intro">Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.</p>
 
-            <!-- Position Data -->
-            <h3 class="section-title" data-i18n="section.staker">Position Data</h3>
-            <table class="data-table">
+            <!-- ETH Distributed -->
+            <h3 class="section-title" data-i18n="section.eth">ETH Paid to Holders</h3>
+            <table class="data-table" id="eth-distributed-table">
                 <thead>
                     <tr>
                         <th data-i18n="th.metric">Metric</th>
-                        <th data-i18n="th.value">Value</th>
-                        <th data-i18n="th.meaning">What it means</th>
+                        <th>VISTA</th>
+                        <th>BONZI</th>
+                        <th data-i18n="th.context">Context</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="td.1k">$1K+ positions</td>
-                        <td>—</td>
-                        <td data-i18n="td.1k.meaning">Wallets with significant stake</td>
+                        <td data-i18n="td.staker.eth">ETH to stakers</td>
+                        <td id="vista-staker-eth">— ETH</td>
+                        <td id="bonzi-staker-eth">— ETH</td>
+                        <td data-i18n="td.staker.eth.context">From trading fees, claimable anytime</td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.retention">Staker retention</td>
-                        <td>—%</td>
-                        <td data-i18n="td.retention.meaning">Percentage still staking vs exited</td>
+                        <td data-i18n="td.lp.eth">ETH to LPs</td>
+                        <td id="vista-lp-eth">— ETH</td>
+                        <td id="bonzi-lp-eth">— ETH</td>
+                        <td data-i18n="td.lp.eth.context">Liquidity providers earn larger share</td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.exit">Exit rate (7d)</td>
-                        <td>—%</td>
-                        <td data-i18n="td.exit.meaning">Positions closed in last week</td>
+                        <td data-i18n="td.unique.claimers">Unique recipients</td>
+                        <td id="vista-claimers">—</td>
+                        <td id="bonzi-claimers">—</td>
+                        <td data-i18n="td.unique.claimers.context">Wallets that received ETH</td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.diamond">Yield-only holders</td>
-                        <td>—%</td>
-                        <td data-i18n="td.diamond.meaning">Claimed yield without selling tokens</td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.tenure">Avg stake tenure</td>
-                        <td>— days</td>
-                        <td data-i18n="td.tenure.meaning">Average time positions are held</td>
+                        <td data-i18n="td.tenure">Avg hold time</td>
+                        <td id="vista-tenure">— days</td>
+                        <td id="bonzi-tenure">— days</td>
+                        <td data-i18n="td.tenure.context">How long positions are held</td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- Dune Embed: Staker Retention -->
-            <div class="dune-embed">
-                <iframe src="https://dune.com/embeds/6591349/13181972" width="100%" height="300" frameborder="0"></iframe>
-                <p class="embed-source">Source: <a href="https://dune.com/queries/6591349" target="_blank">Dune Analytics</a></p>
+            <!-- Comparison -->
+            <h3 class="section-title" data-i18n="section.compare">Comparison: ETH Paid to Holders</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th data-i18n="th.eth.paid">ETH Paid</th>
+                        <th data-i18n="th.mechanism">Mechanism</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VISTA + BONZI</td>
+                        <td id="total-eth-paid">— ETH</td>
+                        <td data-i18n="td.mechanism.vista">Trading fees → stakers & LPs</td>
+                    </tr>
+                    <tr>
+                        <td>PEPE</td>
+                        <td>0 ETH</td>
+                        <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                    </tr>
+                    <tr>
+                        <td>SHIB</td>
+                        <td>0 ETH</td>
+                        <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                    </tr>
+                    <tr>
+                        <td>SPX6900</td>
+                        <td>0 ETH</td>
+                        <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Analysis -->
+            <div class="analysis-box">
+                <h4 data-i18n="analysis.title">Analysis</h4>
+                <p data-i18n="analysis.dao1.text">VISTA and BONZI have distributed over 200 ETH to holders since launch. This is real yield from trading fees - not token emissions or inflationary rewards. By comparison, popular memecoins like PEPE, SHIB, and SPX6900 have no yield mechanism and pay holders nothing. The average position is held for 300+ days, indicating holders treat this as long-term participation rather than short-term speculation.</p>
+                <p class="analysis-source" data-i18n="analysis.dao1.source">Source: <a href="https://dune.com/queries/6591480" target="_blank">ETH Distribution Query</a> | <a href="https://dune.com/queries/6591332" target="_blank">Tenure Query</a></p>
             </div>
 
             <!-- Weekly Distribution -->
@@ -1674,10 +1745,22 @@
                 "hero.title": "System Metrics",
                 "hero.subtitle": "Live parameters and configuration. Three tiers of access based on token holdings.",
                 "tier.free.title": "Ownership Distribution", "tier.free.intro": "How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "Staking Activity", "tier.dao1.req": "Hold $BONZI or $VISTA",
-                "tier.dao1.intro": "How stakers behave over time. Shows whether positions are being held or closed, and how yield is being used.",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "Value Distribution", "tier.dao1.req": "Hold $BONZI or $VISTA",
+                "tier.dao1.intro": "Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analytics", "tier.dao2.req": "Stake $BONZI or $VISTA",
-                "unlock.title": "Staking Activity", "unlock.desc": "Connect wallet holding $BONZI or $VISTA",
+                "unlock.title": "Value Distribution", "unlock.desc": "Connect wallet holding $BONZI or $VISTA",
+                "section.eth": "ETH Paid to Holders", "section.compare": "Comparison: ETH Paid to Holders",
+                "th.context": "Context", "th.eth.paid": "ETH Paid", "th.mechanism": "Mechanism",
+                "td.staker.eth": "ETH to stakers", "td.staker.eth.context": "From trading fees, claimable anytime",
+                "td.lp.eth": "ETH to LPs", "td.lp.eth.context": "Liquidity providers earn larger share",
+                "td.unique.claimers": "Unique recipients", "td.unique.claimers.context": "Wallets that received ETH",
+                "td.tenure": "Avg hold time", "td.tenure.context": "How long positions are held",
+                "td.mechanism.vista": "Trading fees to stakers & LPs", "td.mechanism.none": "No yield mechanism",
+                "analysis.title": "Analysis",
+                "analysis.free.text": "BONZI has a lower concentration index (374) than VISTA (690), meaning ownership is more spread out. Both are below 1500, the threshold for broad distribution. For context, highly concentrated tokens often have indices above 2500. The top 10 BONZI wallets hold 43.5% vs 65.8% for VISTA - both within acceptable ranges for established projects.",
+                "analysis.free.source": "Source: Dune Analytics - HHI Query | Updated daily",
+                "analysis.dao1.text": "VISTA and BONZI have distributed over 200 ETH to holders since launch. This is real yield from trading fees - not token emissions or inflationary rewards. By comparison, popular memecoins like PEPE, SHIB, and SPX6900 have no yield mechanism and pay holders nothing. The average position is held for 300+ days, indicating holders treat this as long-term participation rather than short-term speculation.",
+                "analysis.dao1.source": "Source: ETH Distribution Query | Tenure Query",
                 "unlock.title2": "Alpha Metrics", "unlock.desc2": "Connect wallet staking $BONZI or $VISTA",
                 "btn.connect": "Connect Wallet", "last.updated": "Last updated:",
                 "th.metric": "Metric", "th.value": "Value", "th.meaning": "What it means",
@@ -1716,8 +1799,8 @@
                 "hero.title": "Metricas do Sistema",
                 "hero.subtitle": "Parametros ao vivo e configuracao. Tres niveis de acesso baseados em tokens.",
                 "tier.free.title": "Distribuicao de Propriedade", "tier.free.intro": "Como o fornecimento de tokens e distribuido entre carteiras. Propriedade concentrada significa que poucas carteiras controlam o movimento de precos.",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "Atividade de Staking", "tier.dao1.req": "Tenha $BONZI ou $VISTA",
-                "tier.dao1.intro": "Como os stakers se comportam ao longo do tempo. Mostra se as posicoes estao sendo mantidas ou fechadas, e como o rendimento esta sendo usado.",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "Distribuicao de Valor", "tier.dao1.req": "Tenha $BONZI ou $VISTA",
+                "tier.dao1.intro": "ETH real pago aos holders de taxas de negociacao. Ao contrario da maioria dos tokens, stakers e LPs ganham rendimento real - nao emissoes de tokens.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Analises Alpha", "tier.dao2.req": "Stake $BONZI ou $VISTA",
                 "unlock.title": "Atividade de Staking", "unlock.desc": "Conecte carteira com $BONZI ou $VISTA",
                 "unlock.title2": "Metricas Alpha", "unlock.desc2": "Conecte carteira com stake",
@@ -1758,8 +1841,8 @@
                 "hero.title": "系统指标",
                 "hero.subtitle": "实时参数和配置。基于代币持有量的三级访问权限。",
                 "tier.free.title": "所有权分布", "tier.free.intro": "代币供应如何分布在钱包之间。集中所有权意味着少数钱包控制价格走势。",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "质押活动", "tier.dao1.req": "持有 $BONZI 或 $VISTA",
-                "tier.dao1.intro": "质押者随时间的行为。显示仓位是保持还是关闭，以及收益如何使用。",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "价值分配", "tier.dao1.req": "持有 $BONZI 或 $VISTA",
+                "tier.dao1.intro": "从交易费用支付给持有者的真实ETH。与大多数代币不同，质押者和LP获得实际收益 - 而非代币排放。",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha分析", "tier.dao2.req": "质押 $BONZI 或 $VISTA",
                 "unlock.title": "质押活动", "unlock.desc": "连接持有代币的钱包",
                 "unlock.title2": "Alpha指标", "unlock.desc2": "连接质押代币的钱包",
@@ -1800,8 +1883,8 @@
                 "hero.title": "Sistem Metrikleri",
                 "hero.subtitle": "Canli parametreler ve yapilandirma. Token varliklariniza gore uc katmanli erisim.",
                 "tier.free.title": "Sahiplik Dagilimi", "tier.free.intro": "Token arzinin cuzdanlar arasinda nasil dagildigini gosterir. Yogunlasmis sahiplik, az sayida cuzdanin fiyat hareketini kontrol ettigi anlamina gelir.",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "Stake Aktivitesi", "tier.dao1.req": "$BONZI veya $VISTA tutun",
-                "tier.dao1.intro": "Stakerlarin zaman icindeki davranislari. Pozisyonlarin tutulup tutulmadigini ve getirinin nasil kullanildigini gosterir.",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "Deger Dagitimi", "tier.dao1.req": "$BONZI veya $VISTA tutun",
+                "tier.dao1.intro": "Islem ucretlerinden sahiplere odenen gercek ETH. Cogu tokenin aksine, stakerlar ve LP'ler gercek getiri kazanir - token emisyonlari degil.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analizleri", "tier.dao2.req": "$BONZI veya $VISTA stake edin",
                 "unlock.title": "Stake Aktivitesi", "unlock.desc": "Token tutan cuzdani baglayin",
                 "unlock.title2": "Alpha Metrikleri", "unlock.desc2": "Stake yapan cuzdani baglayin",
@@ -1842,8 +1925,8 @@
                 "hero.title": "Системные метрики",
                 "hero.subtitle": "Параметры в реальном времени. Три уровня доступа на основе токенов.",
                 "tier.free.title": "Распределение владения", "tier.free.intro": "Как распределено предложение токенов между кошельками. Концентрированное владение означает, что несколько кошельков контролируют движение цены.",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "Активность стейкинга", "tier.dao1.req": "Держите $BONZI или $VISTA",
-                "tier.dao1.intro": "Как ведут себя стейкеры со временем. Показывает, удерживаются или закрываются позиции, и как используется доход.",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "Распределение ценности", "tier.dao1.req": "Держите $BONZI или $VISTA",
+                "tier.dao1.intro": "Реальный ETH, выплаченный холдерам из торговых комиссий. В отличие от большинства токенов, стейкеры и LP получают реальный доход - не эмиссию токенов.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha аналитика", "tier.dao2.req": "Стейкинг $BONZI или $VISTA",
                 "unlock.title": "Активность стейкинга", "unlock.desc": "Подключите кошелек с токенами",
                 "unlock.title2": "Alpha метрики", "unlock.desc2": "Подключите кошелек со стейкингом",
@@ -1884,8 +1967,8 @@
                 "hero.title": "Metriques Systeme",
                 "hero.subtitle": "Parametres en temps reel. Trois niveaux d'acces bases sur les tokens.",
                 "tier.free.title": "Distribution de propriete", "tier.free.intro": "Comment l'offre de tokens est repartie entre les portefeuilles. Une propriete concentree signifie que quelques portefeuilles controlent le mouvement des prix.",
-                "tier.dao1": "DAO-1", "tier.dao1.title": "Activite de Staking", "tier.dao1.req": "Detenir $BONZI ou $VISTA",
-                "tier.dao1.intro": "Comment les stakers se comportent au fil du temps. Montre si les positions sont maintenues ou fermees, et comment le rendement est utilise.",
+                "tier.dao1": "DAO-1", "tier.dao1.title": "Distribution de Valeur", "tier.dao1.req": "Detenir $BONZI ou $VISTA",
+                "tier.dao1.intro": "ETH reel paye aux detenteurs depuis les frais de trading. Contrairement a la plupart des tokens, les stakers et LPs gagnent un rendement reel - pas des emissions de tokens.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Analyses Alpha", "tier.dao2.req": "Staker $BONZI ou $VISTA",
                 "unlock.title": "Activite de Staking", "unlock.desc": "Connecter portefeuille avec tokens",
                 "unlock.title2": "Metriques Alpha", "unlock.desc2": "Connecter portefeuille avec stake",
@@ -1999,22 +2082,37 @@
                 const lastUpdate = document.getElementById('lastUpdate');
                 if (lastUpdate) lastUpdate.textContent = data.updated;
 
-                // DAO Tier 1 - Community Health (VISTA data, can toggle)
-                document.querySelectorAll('#tier-1 .data-table tbody tr').forEach(row => {
-                    const label = row.cells[0]?.textContent?.trim();
-                    if (row.cells[1]) {
-                        if (label === '$1K+ holders') {
-                            row.cells[1].textContent = v.holders_1k_plus !== null ? v.holders_1k_plus : '—';
-                        }
-                        if (label === 'Staker retention') {
-                            row.cells[1].textContent = v.retention_pct ? v.retention_pct + '%' : '—%';
-                        }
-                        if (label === 'Yield-only holders') {
-                            row.cells[1].textContent = v.diamond_hands_pct ? v.diamond_hands_pct + '%' : '—%';
-                        }
-                        if (label === 'Avg stake tenure') {
-                            row.cells[1].textContent = v.avg_tenure_days ? v.avg_tenure_days + ' days' : '— days';
-                        }
+                // DAO Tier 1 - Value Distribution (ETH paid to holders)
+                const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+                // ETH distributed
+                setEl('vista-staker-eth', v.total_eth_distributed ? v.total_eth_distributed.toFixed(2) + ' ETH' : '— ETH');
+                setEl('bonzi-staker-eth', b.total_eth_distributed ? b.total_eth_distributed.toFixed(2) + ' ETH' : '— ETH');
+                setEl('vista-lp-eth', v.lp_total_eth ? v.lp_total_eth.toFixed(2) + ' ETH' : '— ETH');
+                setEl('bonzi-lp-eth', b.lp_total_eth ? b.lp_total_eth.toFixed(2) + ' ETH' : '— ETH');
+                setEl('vista-claimers', v.unique_claimers ? v.unique_claimers.toLocaleString() : '—');
+                setEl('bonzi-claimers', b.unique_claimers ? b.unique_claimers.toLocaleString() : '—');
+                setEl('vista-tenure', v.avg_tenure_days ? v.avg_tenure_days + ' days' : '— days');
+                setEl('bonzi-tenure', b.avg_tenure_days ? b.avg_tenure_days + ' days' : '— days');
+
+                // Total ETH paid (stakers + LPs for both tokens)
+                const totalEth = (v.total_eth_distributed || 0) + (b.total_eth_distributed || 0) +
+                                 (v.lp_total_eth || 0) + (b.lp_total_eth || 0);
+                setEl('total-eth-paid', totalEth.toFixed(2) + ' ETH');
+
+                // Add info tooltips to DAO-1 metrics
+                document.querySelectorAll('#eth-distributed-table tbody tr').forEach(row => {
+                    const labelCell = row.cells[0];
+                    const label = labelCell?.textContent?.trim();
+                    let key = null;
+                    if (label === 'ETH to stakers') key = 'total_eth_distributed';
+                    if (label === 'ETH to LPs') key = 'lp_total_eth';
+                    if (label === 'Unique recipients') key = 'unique_claimers';
+                    if (label === 'Avg hold time') key = 'avg_tenure_days';
+
+                    if (key && edu[key] && labelCell) {
+                        const tooltip = edu[key];
+                        labelCell.innerHTML = `${label} <span class="info-text" title="${tooltip.explanation}">info</span>`;
                     }
                 });
 

@@ -2075,6 +2075,8 @@
         .flow-block:hover,
         .flow-block.active {
             background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .flow-block-number {
@@ -2117,6 +2119,12 @@
             height: 20px;
             stroke: #0a0a0a;
             stroke-width: 2;
+            animation: arrowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0); opacity: 0.6; }
+            50% { transform: translateX(4px); opacity: 1; }
         }
 
         /* Detail Panel */
@@ -2130,6 +2138,12 @@
         }
         .flow-detail.active {
             display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .flow-detail-header {
@@ -2165,6 +2179,15 @@
             background: #1a1a1a;
             border: 1px solid #2a2a2a;
             padding: 20px;
+            animation: itemFadeIn 0.4s ease-out backwards;
+        }
+        .flow-detail-item:nth-child(1) { animation-delay: 0.1s; }
+        .flow-detail-item:nth-child(2) { animation-delay: 0.2s; }
+        .flow-detail-item:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes itemFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .flow-detail-item h5 {
             font-size: 13px;
@@ -2235,6 +2258,12 @@
             height: 18px;
             stroke: var(--purple);
             stroke-width: 2;
+            animation: loopSpin 4s linear infinite;
+        }
+
+        @keyframes loopSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {

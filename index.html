@@ -2015,48 +2015,240 @@
         .pain-answer { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto; line-height: 1.7; }
         @media (max-width: 768px) { .domino-card { margin-left: calc(var(--index) * 8px); } }
 
-        /* Solutions section */
+        /* Solutions section - Visual System Diagram */
         .solutions-section {
-            padding: 120px 48px;
+            padding: 100px 48px;
             background: #0A0A0A;
+            overflow: hidden;
         }
 
         .solutions-container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        .solution-item {
+        .solutions-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        /* System Diagram */
+        .system-diagram {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        /* Input Layer */
+        .system-layer {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .system-layer-label {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .input-nodes {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .input-node {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+        .input-node:hover {
+            border-color: var(--purple);
+            transform: translateY(-2px);
+        }
+        .input-node-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .input-node-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* Connector Lines */
+        .system-connector {
+            display: flex;
+            justify-content: center;
+            padding: 16px 0;
+            position: relative;
+        }
+        .connector-line {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--purple), rgba(124,58,237,0.3));
+        }
+        .connector-arrow {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid var(--purple);
+        }
+
+        /* Oracle Core */
+        .oracle-core {
+            background: linear-gradient(135deg, #1f1a2e 0%, #0f0a1a 100%);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .oracle-core::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--purple), transparent);
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .oracle-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .oracle-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+        .oracle-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .oracle-modules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .oracle-module {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .oracle-module:hover {
+            border-color: var(--purple);
+            background: rgba(124,58,237,0.1);
+        }
+        .oracle-module-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        .oracle-module h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .oracle-module p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        /* Output Layer */
+        .output-layer {
+            display: flex;
+            justify-content: center;
             gap: 24px;
-            padding: 32px 0;
-            border-bottom: 1px solid var(--gray-light);
+            flex-wrap: wrap;
         }
 
-        .solution-item:last-child {
-            border-bottom: none;
+        .output-node {
+            background: linear-gradient(135deg, #0a1a0f 0%, #0f0f0f 100%);
+            border: 1px solid #10b981;
+            border-radius: 12px;
+            padding: 24px 32px;
+            text-align: center;
+            min-width: 180px;
+        }
+        .output-node-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 4px;
+        }
+        .output-node-label {
+            font-size: 13px;
+            color: var(--gray);
         }
 
-        .solution-number {
+        /* Loop Return */
+        .loop-return-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px dashed #2a2a2a;
+        }
+        .loop-return-text {
             font-size: 14px;
             font-weight: 600;
             color: var(--purple);
-            flex-shrink: 0;
-            width: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .loop-return-text svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--purple);
+            stroke-width: 2;
         }
 
-        .solution-content h4 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-            color: #FAFAFA;
+        @media (max-width: 768px) {
+            .oracle-modules { grid-template-columns: repeat(2, 1fr); }
+            .system-layer-label { display: none; }
+            .input-node { min-width: 100px; padding: 12px 16px; }
         }
-
-        .solution-content p {
-            font-size: 15px;
-            color: rgba(255,255,255,0.6);
-            line-height: 1.6;
+        @media (max-width: 500px) {
+            .oracle-modules { grid-template-columns: 1fr; }
+            .output-layer { flex-direction: column; align-items: center; }
         }
 
         /* Comparison section */
@@ -4055,50 +4247,115 @@
     </div>
 </section>
 
-<section class="solutions-section">
+<section class="solutions-section" id="how">
     <div class="solutions-container">
-        <p class="section-label" data-i18n="solutions.label">how the loop works</p>
-        <h2 class="section-title" data-i18n="solutions.title">oracle curates. code distributes.</h2>
-        <div class="solution-item">
-            <span class="solution-number">01</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item1.title">answers questions forever</h4>
-                <p data-i18n="solutions.item1.desc">Feed bonzi your docs once. It learns them better than your team did. Then it answers the same question 1000 times without complaining or quitting.</p>
-            </div>
+        <div class="solutions-header">
+            <p class="section-label">how the loop works</p>
+            <h2 class="section-title">oracle curates. code distributes.</h2>
         </div>
-        <div class="solution-item">
-            <span class="solution-number">02</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item2.title">AI-powered raid review</h4>
-                <p data-i18n="solutions.item2.desc">Submissions get reviewed automatically. Bonzi checks if the tweet actually exists, if the content is original, if the account is real. No more manual verification hell.</p>
+
+        <div class="system-diagram">
+            <!-- Input Layer -->
+            <div class="system-layer">
+                <span class="system-layer-label">INPUT</span>
+                <div class="input-nodes">
+                    <div class="input-node">
+                        <div class="input-node-icon">?</div>
+                        <div class="input-node-label">Questions</div>
+                    </div>
+                    <div class="input-node">
+                        <div class="input-node-icon">X</div>
+                        <div class="input-node-label">Raids</div>
+                    </div>
+                    <div class="input-node">
+                        <div class="input-node-icon">+</div>
+                        <div class="input-node-label">Thanks</div>
+                    </div>
+                    <div class="input-node">
+                        <div class="input-node-icon">~</div>
+                        <div class="input-node-label">Activity</div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="solution-item">
-            <span class="solution-number">03</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item3.title">spots farmers before you do</h4>
-                <p data-i18n="solutions.item3.desc">Pattern recognition, not vibes. Bonzi tracks behavior across your community and flags suspicious activity before your airdrop turns into a sybil farm.</p>
+
+            <!-- Connector -->
+            <div class="system-connector">
+                <div class="connector-line"></div>
+                <div class="connector-arrow"></div>
             </div>
-        </div>
-        <div class="solution-item">
-            <span class="solution-number">04</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item4.title">24/7 FUD patrol</h4>
-                <p data-i18n="solutions.item4.desc">Bonzi doesn't sleep. When someone drops misinformation at 3am, it responds with facts from your docs instantly. No more waking up to dumpster fires.</p>
+
+            <!-- Oracle Core -->
+            <div class="oracle-core">
+                <div class="oracle-header">
+                    <div class="oracle-title">AI Oracle</div>
+                    <div class="oracle-name">BONZI</div>
+                </div>
+
+                <div class="oracle-modules">
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">Q</div>
+                        <h4>Q&A Engine</h4>
+                        <p>Learns docs. Answers forever.</p>
+                    </div>
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">R</div>
+                        <h4>Raid Review</h4>
+                        <p>Verifies tweets. Checks originality.</p>
+                    </div>
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">S</div>
+                        <h4>Sybil Filter</h4>
+                        <p>Pattern detection. Spots farmers.</p>
+                    </div>
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">M</div>
+                        <h4>FUD Patrol</h4>
+                        <p>24/7 moderation. Facts from docs.</p>
+                    </div>
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">T</div>
+                        <h4>Contribution Tracker</h4>
+                        <p>Real value. Not task counts.</p>
+                    </div>
+                    <div class="oracle-module">
+                        <div class="oracle-module-icon">C</div>
+                        <h4>Native Chat</h4>
+                        <p>Telegram. Discord. Where you are.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="solution-item">
-            <span class="solution-number">05</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item5.title">tracks real contributors</h4>
-                <p data-i18n="solutions.item5.desc">Not task completion numbers. Actual value. Who's helping others? Who's creating content? Who's onboarding newcomers? Bonzi sees everything.</p>
+
+            <!-- Connector -->
+            <div class="system-connector">
+                <div class="connector-line"></div>
+                <div class="connector-arrow"></div>
             </div>
-        </div>
-        <div class="solution-item">
-            <span class="solution-number">06</span>
-            <div class="solution-content">
-                <h4 data-i18n="solutions.item6.title">lives where your community lives</h4>
-                <p data-i18n="solutions.item6.desc">Not another dashboard tab. Not another login. Bonzi sits in your Telegram, Discord, wherever your people actually are.</p>
+
+            <!-- Output Layer -->
+            <div class="system-layer">
+                <span class="system-layer-label">OUTPUT</span>
+                <div class="output-layer">
+                    <div class="output-node">
+                        <div class="output-node-value">100 pts</div>
+                        <div class="output-node-label">= ETH Claim</div>
+                    </div>
+                    <div class="output-node">
+                        <div class="output-node-value">1.1x</div>
+                        <div class="output-node-label">Holder Bonus</div>
+                    </div>
+                    <div class="output-node">
+                        <div class="output-node-value">Verified</div>
+                        <div class="output-node-label">Real Contributors</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loop Return -->
+            <div class="loop-return-bar">
+                <div class="loop-return-text">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9M3 12l3-3m-3 3l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    closed loop — value created here stays here
+                </div>
             </div>
         </div>
     </div>
@@ -4129,92 +4386,6 @@
                 <tr><td data-i18n="comparison.row8">Cost</td><td class="highlight-col check">$0 forever</td><td>freemium</td><td>freemium</td><td>$500+/mo</td></tr>
             </tbody>
         </table>
-    </div>
-</section>
-
-<section class="features-section" id="features">
-    <div class="features-container">
-        <div class="features-header">
-            <h2>the loop</h2>
-            <p>Oracle curates. Code distributes.</p>
-            <div class="loop-subtitle">Value created here stays here</div>
-        </div>
-
-        <div class="loop-flow">
-            <!-- Card 1: CONTRIBUTE -->
-            <div class="loop-card" data-segment="contribute">
-                <div class="loop-card-inner">
-                    <div class="loop-card-number">01</div>
-                    <h3>Contribute</h3>
-                    <p class="loop-card-desc">Create value for the community. Every action is tracked, scored, and rewarded.</p>
-                    <div class="loop-card-items">
-                        <span class="loop-card-tag">Ask</span>
-                        <span class="loop-card-tag">Raid</span>
-                        <span class="loop-card-tag">Thank</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Connector Arrow -->
-            <div class="loop-connector">
-                <div class="loop-connector-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <!-- Card 2: VERIFY -->
-            <div class="loop-card" data-segment="verify">
-                <div class="loop-card-inner">
-                    <div class="loop-card-number">02</div>
-                    <h3>Verify</h3>
-                    <p class="loop-card-desc">AI Oracle filters farmers, detects bots, and validates authentic contributions.</p>
-                    <div class="loop-card-items">
-                        <span class="loop-card-tag">Sybil Detection</span>
-                        <span class="loop-card-tag">Quality Score</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Connector Arrow -->
-            <div class="loop-connector">
-                <div class="loop-connector-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-            </div>
-
-            <!-- Card 3: EARN -->
-            <div class="loop-card" data-segment="earn">
-                <div class="loop-card-inner">
-                    <div class="loop-card-number">03</div>
-                    <h3>Earn</h3>
-                    <p class="loop-card-desc">Hit 100 points, claim ETH. Token holders get 1.1x multiplier. Real rewards.</p>
-                    <div class="loop-card-items">
-                        <span class="loop-card-tag">100pts = ETH</span>
-                        <span class="loop-card-tag">Holder Bonus</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Return Arrow -->
-            <div class="loop-return">
-                <div class="loop-return-line">
-                    <span class="loop-return-text">closed loop — value stays</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Drawer for details -->
-    <div class="loop-drawer" id="loop-drawer">
-        <div class="loop-drawer-content">
-            <div class="loop-drawer-header">
-                <h3 id="drawer-title">Contribute</h3>
-                <button class="loop-drawer-close" id="drawer-close">&times;</button>
-            </div>
-            <div class="loop-drawer-items" id="drawer-items">
-                <!-- Content injected by JS -->
-            </div>
-        </div>
     </div>
 </section>
 

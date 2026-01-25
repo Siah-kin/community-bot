@@ -3477,21 +3477,31 @@
         /* Light mode adjustments */
         body.light-mode .tools-container {
             background: #FFFFFF;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+            border: 2px solid #0a0a0a;
+            box-shadow: none;
         }
 
         body.light-mode .tool-tabs {
-            background: #F5F5F5;
-            border-bottom-color: #E5E5E5;
+            background: #fff;
+            border: 2px solid #0a0a0a;
+            border-bottom: none;
         }
 
         body.light-mode .tool-tab {
             color: #737373;
+            border-bottom: 2px solid #0a0a0a;
+            background: #f5f5f5;
         }
 
-        body.light-mode .tool-tab:hover,
+        body.light-mode .tool-tab:hover {
+            color: #0A0A0A;
+            background: #fff;
+        }
+
         body.light-mode .tool-tab.active {
             color: #0A0A0A;
+            background: #fff;
+            border-bottom-color: #fff;
         }
 
         body.light-mode .tool-desc {

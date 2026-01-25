@@ -2015,238 +2015,202 @@
         .pain-answer { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0 auto; line-height: 1.7; }
         @media (max-width: 768px) { .domino-card { margin-left: calc(var(--index) * 8px); } }
 
-        /* Solutions section - Visual System Diagram */
+        /* Solutions section - System Flow Diagram */
         .solutions-section {
             padding: 100px 48px;
-            background: #fff;
+            background: #0E1621;
             overflow: hidden;
         }
 
         .solutions-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .solutions-header {
             text-align: center;
-            margin-bottom: 64px;
+            margin-bottom: 48px;
         }
         .solutions-header .section-label {
             color: var(--purple);
         }
         .solutions-header .section-title {
-            color: #0a0a0a;
+            color: #fff;
         }
 
-        /* System Diagram */
-        .system-diagram {
-            position: relative;
-            padding: 40px 0;
-        }
-
-        /* Input Layer */
-        .system-layer {
+        /* Flow Diagram - 3 Blocks */
+        .flow-diagram {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin-bottom: 32px;
+            align-items: stretch;
+            gap: 0;
+            margin-bottom: 0;
         }
 
-        .system-layer-label {
+        .flow-block {
+            flex: 1;
+            background: #17212B;
+            border: 1px solid #232E3C;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .flow-block:first-child { border-right: none; }
+        .flow-block:last-child { border-left: none; }
+
+        .flow-block::after {
+            content: '';
             position: absolute;
+            bottom: 0;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 0;
+            height: 3px;
+            background: transparent;
+            transition: background 0.2s ease;
+        }
+        .flow-block:hover::after,
+        .flow-block.active::after {
+            background: var(--purple);
+        }
+        .flow-block:hover,
+        .flow-block.active {
+            background: #1C2836;
+        }
+
+        .flow-block-number {
             font-size: 11px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
+            color: #4A5568;
+            margin-bottom: 12px;
+        }
+        .flow-block.active .flow-block-number {
             color: var(--purple);
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: translateY(-50%) rotate(180deg);
         }
 
-        .input-nodes {
-            display: flex;
-            gap: 2px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .input-node {
-            background: #f5f5f5;
-            border: 2px solid #0a0a0a;
-            padding: 20px 32px;
-            text-align: center;
-            min-width: 140px;
-            transition: all 0.3s ease;
-        }
-        .input-node:hover {
-            background: #0a0a0a;
-        }
-        .input-node:hover .input-node-icon,
-        .input-node:hover .input-node-label {
-            color: #fff;
-        }
-        .input-node-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #0a0a0a;
-            font-weight: 700;
-        }
-        .input-node-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #0a0a0a;
-        }
-
-        /* Connector Lines */
-        .system-connector {
-            display: flex;
-            justify-content: center;
-            padding: 16px 0;
-            position: relative;
-        }
-        .connector-line {
-            width: 2px;
-            height: 48px;
-            background: #0a0a0a;
-        }
-        .connector-arrow {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 10px solid #0a0a0a;
-        }
-
-        /* Oracle Core */
-        .oracle-core {
-            background: #0a0a0a;
-            border: 2px solid #0a0a0a;
-            padding: 48px;
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .oracle-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .oracle-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--purple);
-            margin-bottom: 8px;
-        }
-        .oracle-name {
-            font-size: 32px;
+        .flow-block h3 {
+            font-size: 20px;
             font-weight: 700;
             color: #fff;
+            margin-bottom: 8px;
             letter-spacing: -0.02em;
         }
 
-        .oracle-modules {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
+        .flow-block-sub {
+            font-size: 13px;
+            color: #6C7883;
         }
 
-        .oracle-module {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: default;
+        /* Arrow connectors */
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            flex-shrink: 0;
+            background: #17212B;
+            border-top: 1px solid #232E3C;
+            border-bottom: 1px solid #232E3C;
         }
-        .oracle-module:hover {
-            background: #252525;
+        .flow-arrow svg {
+            width: 20px;
+            height: 20px;
+            stroke: #4A5568;
+            stroke-width: 2;
         }
-        .oracle-module-icon {
-            font-size: 28px;
-            margin-bottom: 12px;
+
+        /* Detail Panel */
+        .flow-detail {
+            background: #111921;
+            border: 1px solid #232E3C;
+            border-top: none;
+            min-height: 200px;
+            padding: 32px;
+            display: none;
+        }
+        .flow-detail.active {
+            display: block;
+        }
+
+        .flow-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #232E3C;
+        }
+        .flow-detail-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .flow-detail-tag {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             color: var(--purple);
-            font-weight: 700;
+            background: rgba(118, 106, 200, 0.15);
+            padding: 4px 10px;
         }
-        .oracle-module h4 {
-            font-size: 14px;
+
+        .flow-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .flow-detail-item {
+            background: #17212B;
+            border: 1px solid #232E3C;
+            padding: 20px;
+        }
+        .flow-detail-item h5 {
+            font-size: 13px;
             font-weight: 600;
             color: #fff;
             margin-bottom: 6px;
         }
-        .oracle-module p {
+        .flow-detail-item p {
             font-size: 12px;
-            color: #888;
-            line-height: 1.4;
+            color: #6C7883;
+            line-height: 1.5;
         }
 
-        /* Output Layer */
-        .output-layer {
+        /* Loop indicator */
+        .flow-loop {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 2px;
-            flex-wrap: wrap;
+            padding: 24px;
+            border: 1px solid #232E3C;
+            border-top: none;
+            background: #0E1621;
         }
-
-        .output-node {
-            background: #10b981;
-            border: 2px solid #10b981;
-            padding: 24px 40px;
-            text-align: center;
-            min-width: 180px;
-        }
-        .output-node-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        .output-node-label {
+        .flow-loop-text {
             font-size: 13px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        /* Loop Return */
-        .loop-return-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 2px solid #e5e5e5;
-        }
-        .loop-return-text {
-            font-size: 14px;
             font-weight: 600;
-            color: #0a0a0a;
+            color: var(--purple);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-        .loop-return-text svg {
-            width: 20px;
-            height: 20px;
+        .flow-loop-text svg {
+            width: 18px;
+            height: 18px;
             stroke: var(--purple);
             stroke-width: 2;
         }
 
         @media (max-width: 768px) {
-            .oracle-modules { grid-template-columns: repeat(2, 1fr); }
-            .system-layer-label { display: none; }
-            .input-node { min-width: 100px; padding: 16px 20px; }
+            .flow-diagram { flex-direction: column; }
+            .flow-arrow { width: 100%; height: 32px; border: 1px solid #232E3C; border-top: none; border-bottom: none; }
+            .flow-arrow svg { transform: rotate(90deg); }
+            .flow-block:first-child, .flow-block:last-child { border: 1px solid #232E3C; }
+            .flow-detail-grid { grid-template-columns: 1fr; }
         }
-        @media (max-width: 500px) {
-            .oracle-modules { grid-template-columns: 1fr; }
             .output-layer { flex-direction: column; align-items: center; }
         }
 
@@ -4253,108 +4217,104 @@
             <h2 class="section-title">oracle curates. code distributes.</h2>
         </div>
 
-        <div class="system-diagram">
-            <!-- Input Layer -->
-            <div class="system-layer">
-                <span class="system-layer-label">INPUT</span>
-                <div class="input-nodes">
-                    <div class="input-node">
-                        <div class="input-node-icon">?</div>
-                        <div class="input-node-label">Questions</div>
-                    </div>
-                    <div class="input-node">
-                        <div class="input-node-icon">X</div>
-                        <div class="input-node-label">Raids</div>
-                    </div>
-                    <div class="input-node">
-                        <div class="input-node-icon">+</div>
-                        <div class="input-node-label">Thanks</div>
-                    </div>
-                    <div class="input-node">
-                        <div class="input-node-icon">~</div>
-                        <div class="input-node-label">Activity</div>
-                    </div>
-                </div>
+        <!-- 3-Block Flow Diagram -->
+        <div class="flow-diagram">
+            <div class="flow-block active" data-flow="launch">
+                <div class="flow-block-number">01</div>
+                <h3>Launch</h3>
+                <div class="flow-block-sub">Token + Economics</div>
             </div>
 
-            <!-- Connector -->
-            <div class="system-connector">
-                <div class="connector-line"></div>
-                <div class="connector-arrow"></div>
+            <div class="flow-arrow">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
 
-            <!-- Oracle Core -->
-            <div class="oracle-core">
-                <div class="oracle-header">
-                    <div class="oracle-title">AI Oracle</div>
-                    <div class="oracle-name">BONZI</div>
-                </div>
-
-                <div class="oracle-modules">
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">Q</div>
-                        <h4>Q&A Engine</h4>
-                        <p>Learns docs. Answers forever.</p>
-                    </div>
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">R</div>
-                        <h4>Raid Review</h4>
-                        <p>Verifies tweets. Checks originality.</p>
-                    </div>
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">S</div>
-                        <h4>Sybil Filter</h4>
-                        <p>Pattern detection. Spots farmers.</p>
-                    </div>
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">M</div>
-                        <h4>FUD Patrol</h4>
-                        <p>24/7 moderation. Facts from docs.</p>
-                    </div>
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">T</div>
-                        <h4>Contribution Tracker</h4>
-                        <p>Real value. Not task counts.</p>
-                    </div>
-                    <div class="oracle-module">
-                        <div class="oracle-module-icon">C</div>
-                        <h4>Native Chat</h4>
-                        <p>Telegram. Discord. Where you are.</p>
-                    </div>
-                </div>
+            <div class="flow-block" data-flow="curate">
+                <div class="flow-block-number">02</div>
+                <h3>Curate</h3>
+                <div class="flow-block-sub">Oracle + AI Stack</div>
             </div>
 
-            <!-- Connector -->
-            <div class="system-connector">
-                <div class="connector-line"></div>
-                <div class="connector-arrow"></div>
+            <div class="flow-arrow">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
 
-            <!-- Output Layer -->
-            <div class="system-layer">
-                <span class="system-layer-label">OUTPUT</span>
-                <div class="output-layer">
-                    <div class="output-node">
-                        <div class="output-node-value">100 pts</div>
-                        <div class="output-node-label">= ETH Claim</div>
-                    </div>
-                    <div class="output-node">
-                        <div class="output-node-value">1.1x</div>
-                        <div class="output-node-label">Holder Bonus</div>
-                    </div>
-                    <div class="output-node">
-                        <div class="output-node-value">Verified</div>
-                        <div class="output-node-label">Real Contributors</div>
-                    </div>
+            <div class="flow-block" data-flow="reward">
+                <div class="flow-block-number">03</div>
+                <h3>Reward</h3>
+                <div class="flow-block-sub">Verified = ETH</div>
+            </div>
+        </div>
+
+        <!-- Detail Panels -->
+        <div class="flow-detail active" id="detail-launch">
+            <div class="flow-detail-header">
+                <h4>Token Launcher</h4>
+                <span class="flow-detail-tag">Etherfun Integration</span>
+            </div>
+            <div class="flow-detail-grid">
+                <div class="flow-detail-item">
+                    <h5>Euler ERC-20</h5>
+                    <p>Deploy your token for $1-2. No code required. Instant liquidity.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <h5>Fee Structure</h5>
+                    <p>Configure 1-10% trading fees. Fees fund the community tip pool.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <h5>Referral Bonus</h5>
+                    <p>Built-in growth incentives. Reward users who bring new holders.</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Loop Return -->
-            <div class="loop-return-bar">
-                <div class="loop-return-text">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9M3 12l3-3m-3 3l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    closed loop — value created here stays here
+        <div class="flow-detail" id="detail-curate">
+            <div class="flow-detail-header">
+                <h4>SIAH Oracle</h4>
+                <span class="flow-detail-tag">AI Curation Layer</span>
+            </div>
+            <div class="flow-detail-grid">
+                <div class="flow-detail-item">
+                    <h5>Q&A Engine</h5>
+                    <p>Learns your docs. Answers questions forever. Never quits.</p>
                 </div>
+                <div class="flow-detail-item">
+                    <h5>Raid Review</h5>
+                    <p>Auto-verifies tweets exist, content is original, accounts are real.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <h5>Sybil Filter</h5>
+                    <p>Pattern detection spots farmers before your airdrop gets drained.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-detail" id="detail-reward">
+            <div class="flow-detail-header">
+                <h4>Verified Earn</h4>
+                <span class="flow-detail-tag">Closed Loop Value</span>
+            </div>
+            <div class="flow-detail-grid">
+                <div class="flow-detail-item">
+                    <h5>100 pts = ETH</h5>
+                    <p>Hit threshold, claim directly. Real rewards for real contribution.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <h5>1.1x Holder Bonus</h5>
+                    <p>Token stakers earn more. Align incentives with believers.</p>
+                </div>
+                <div class="flow-detail-item">
+                    <h5>Value Loops Back</h5>
+                    <p>Trading fees fund tips. Tips reward contributors. They trade more.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loop indicator -->
+        <div class="flow-loop">
+            <div class="flow-loop-text">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 9-9M3 12l3-3m-3 3l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                value created here stays here
             </div>
         </div>
     </div>
@@ -6213,85 +6173,26 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// THE LOOP - Interactive Drawer
+// FLOW DIAGRAM - Clickable Blocks
 // ============================================
-const loopData = {
-    contribute: {
-        title: 'Contribute',
-        items: [
-            { title: 'Ask & Earn', desc: 'AI scores every question for depth, novelty, and cooperation. Curious users earn 1-10 pts per question.', detail: 'Semantic similarity + cooperation metrics' },
-            { title: 'Raid & Earn', desc: 'Submit raid screenshots. AI verifies tweet exists, content is original, account is real.', detail: 'Auto-verification + originality check' },
-            { title: 'Thanks System', desc: 'React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.', detail: 'Reaction tracking via Telethon' }
-        ]
-    },
-    verify: {
-        title: 'Verify',
-        items: [
-            { title: 'Sybil Detection', desc: 'AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content.', detail: 'Cross-tenant intel sharing' },
-            { title: 'Quality Scoring', desc: 'Every contribution scored for authenticity. Farmers can\'t fake genuine curiosity or helpfulness.', detail: 'Behavioral pattern analysis' },
-            { title: 'Live Leaderboard', desc: 'Quality-weighted rankings. Not task counts. Who\'s actually helping? Who\'s creating value?', detail: 'Cooperation score multipliers' }
-        ]
-    },
-    earn: {
-        title: 'Earn',
-        items: [
-            { title: '100 pts = ETH', desc: 'Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.', detail: 'On-chain claims via connected wallet' },
-            { title: 'Holder Bonus', desc: 'Stake tokens for multiplied rewards. The more you believe, the more you earn.', detail: '1.1x multiplier for stakers' },
-            { title: 'Closed Loop', desc: 'Trading fees fund the tip pool. Value created here stays here. That\'s the loop.', detail: 'Self-sustaining economy' }
-        ]
-    }
-};
+const flowBlocks = document.querySelectorAll('.flow-block');
+const flowDetails = document.querySelectorAll('.flow-detail');
 
-const loopCards = document.querySelectorAll('.loop-card');
-const loopDrawer = document.getElementById('loop-drawer');
-const drawerTitle = document.getElementById('drawer-title');
-const drawerItems = document.getElementById('drawer-items');
-const drawerClose = document.getElementById('drawer-close');
+flowBlocks.forEach(block => {
+    block.addEventListener('click', () => {
+        const flowType = block.dataset.flow;
 
-function openDrawer(segment) {
-    const data = loopData[segment];
-    if (!data) return;
+        // Update active block
+        flowBlocks.forEach(b => b.classList.remove('active'));
+        block.classList.add('active');
 
-    // Update active state
-    loopCards.forEach(s => s.classList.remove('active'));
-    document.querySelector(`.loop-card[data-segment="${segment}"]`).classList.add('active');
-
-    // Populate drawer
-    drawerTitle.textContent = data.title;
-    drawerItems.innerHTML = data.items.map(item => `
-        <div class="loop-drawer-item">
-            <h4>${item.title}</h4>
-            <p>${item.desc}</p>
-            <div class="detail">${item.detail}</div>
-        </div>
-    `).join('');
-
-    loopDrawer.classList.add('open');
-}
-
-function closeDrawer() {
-    loopDrawer.classList.remove('open');
-    loopCards.forEach(s => s.classList.remove('active'));
-}
-
-loopCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const segmentType = card.dataset.segment;
-        if (loopDrawer.classList.contains('open') && card.classList.contains('active')) {
-            closeDrawer();
-        } else {
-            openDrawer(segmentType);
+        // Show corresponding detail panel
+        flowDetails.forEach(d => d.classList.remove('active'));
+        const targetDetail = document.getElementById(`detail-${flowType}`);
+        if (targetDetail) {
+            targetDetail.classList.add('active');
         }
     });
-});
-
-drawerClose.addEventListener('click', closeDrawer);
-
-// Close drawer when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.loop-card') && !e.target.closest('.loop-drawer')) {
-        closeDrawer();
-    }
 });
 </script>
 

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-01-24",
+  "updated": "2026-01-25",
   "vista": {
     "token_address": "0xc9bca88b04581699fab5aa276ccaff7df957cbbf",
     "hardstake_address": "0xee5a6f8a55b02689138c195031d09bafdc7d278f",
@@ -15,8 +15,8 @@
     "retention_pct": 17.0,
     "avg_tenure_days": 341,
     "max_tenure_days": 478,
-    "holders_1k_plus": null,
-    "holders_10k_plus": null,
+    "holders_1k_plus": 0,
+    "holders_10k_plus": 0,
     "weekly_trend": [
       {
         "week": "2026-01-19",
@@ -86,7 +86,8 @@
     "max_single_claim": 1.96,
     "lp_total_eth": 133.65,
     "lp_total_distributions": 1324,
-    "lp_unique_recipients": null
+    "lp_unique_recipients": null,
+    "nakamoto_coefficient": 5
   },
   "bonzi": {
     "token_address": "0xd6175692026bcd7cb12a515e39cf0256ef35cb86",
@@ -103,8 +104,8 @@
     "retention_pct": 28.6,
     "avg_tenure_days": 288,
     "max_tenure_days": 406,
-    "holders_1k_plus": null,
-    "holders_10k_plus": null,
+    "holders_1k_plus": 18,
+    "holders_10k_plus": 2,
     "weekly_trend": [
       {
         "week": "2026-01-19",
@@ -174,7 +175,8 @@
     "max_single_claim": 0.05,
     "lp_total_eth": 38.9092,
     "lp_total_distributions": 597,
-    "lp_unique_recipients": 143
+    "lp_unique_recipients": 143,
+    "nakamoto_coefficient": null
   },
   "dune_queries": {
     "vista_hhi": "6591451",
@@ -182,30 +184,99 @@
     "vista_diamond_hands": "6591316",
     "vista_weekly_trend": "6591328",
     "vista_tenure": "6591332",
-    "vista_1k_holders": null,
+    "vista_1k_holders": "6591686",
     "vista_eth_distributed": "6591480",
     "vista_lp_distributed": "6591489",
+    "vista_all_distributions": "6591567",
+    "vista_nakamoto": "6591646",
     "bonzi_lp_distributed": "6591492",
     "bonzi_hhi": "6591469",
     "bonzi_staker_retention": "6591406",
     "bonzi_diamond_hands": "6591411",
     "bonzi_weekly_trend": "6591436",
     "bonzi_tenure": "6591445",
-    "bonzi_1k_holders": null,
-    "bonzi_eth_distributed": "6591483"
+    "bonzi_1k_holders": "6591684",
+    "bonzi_eth_distributed": "6591483",
+    "bonzi_nakamoto": "6591678"
   },
   "contracts": {
     "vista": {
       "token": "0xc9bca88b04581699fab5aa276ccaff7df957cbbf",
+      "lp_pair": "0xfdd05552f1377aa488afed744c8024358af02041",
       "hardstake": "0xee5a6f8a55b02689138c195031d09bafdc7d278f",
+      "hardlock_lp": "0x9099ef7f34dc1af0d27e49dc5b604bccc03dcb21",
       "launch_date": "2024-09-01"
     },
     "bonzi": {
       "token": "0xd6175692026bcd7cb12a515e39cf0256ef35cb86",
-      "hardstake": "0x3618158bb8d07111e476f4de28676dff050d1a53",
       "lp_pair": "0x970cf9b7346fbaea0588f03356a104100eb675e2",
+      "hardstake": "0x3618158bb8d07111e476f4de28676dff050d1a53",
       "launch_date": "2024-12-01"
+    },
+    "protocol": {
+      "router": "0xCEDd366065A146a039B92Db35756ecD7688FCC77",
+      "factory": "0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4",
+      "token_factory": "0x1a97A037A120Db530dDCe8370e24EaD0FE9cf5d0",
+      "hardlock_universal": "0xF6B510928ab880507246CD6946b7F061Eb8A9C78",
+      "autobuy_burner": "0xe17A0C382c8332A889EC9D026D6948e26C7f617D"
     }
+  },
+  "market_context": {
+    "fetched_at": "2026-01-25 02:21 UTC",
+    "eth": {
+      "price_usd": 2950.11,
+      "change_24h_pct": -0.07
+    },
+    "gas": {
+      "safe_gwei": null,
+      "standard_gwei": null,
+      "fast_gwei": null,
+      "level": null
+    },
+    "dex_volume": {
+      "volume_24h_usd": 8906890392,
+      "volume_24h_formatted": "$8.91B",
+      "change_1d_pct": -24.87,
+      "sentiment": "very_active",
+      "impact": "High DEX activity = favorable for Ethervista fees"
+    },
+    "memecoin_sector": {
+      "coins": {
+        "bonk": {
+          "price_usd": 8.86e-06,
+          "change_24h_pct": -1.41
+        },
+        "dogecoin": {
+          "price_usd": 0.123787,
+          "change_24h_pct": -0.37
+        },
+        "floki": {
+          "price_usd": 4.304e-05,
+          "change_24h_pct": -0.07
+        },
+        "pepe": {
+          "price_usd": 4.99e-06,
+          "change_24h_pct": -0.39
+        },
+        "shiba-inu": {
+          "price_usd": 7.79e-06,
+          "change_24h_pct": -0.64
+        }
+      },
+      "sector_avg_change_24h": -0.57,
+      "sentiment": "neutral",
+      "impact": "Memecoin sector strength = tailwind for VISTA/BONZI"
+    },
+    "btc_dominance": {
+      "btc_dominance_pct": 57.45,
+      "eth_dominance_pct": 11.5,
+      "season": "btc_dominant",
+      "impact": "Alt season = more interest in smaller caps like VISTA/BONZI"
+    },
+    "signals": [
+      "\u2705 DEX activity high: good for fee generation",
+      "\u26a0\ufe0f BTC dominant: capital concentrated in Bitcoin"
+    ]
   },
   "educational": {
     "hhi_score": {
@@ -214,6 +285,13 @@
       "explanation": "The Herfindahl-Hirschman Index measures how concentrated token ownership is. Lower = more decentralized. <1,000 is healthy, >2,500 means whales dominate.",
       "comparison": "Bitcoin ~1,200 | Typical memecoin >2,500 | VISTA: 690",
       "why_matters": "High HHI means a few wallets can crash the price. Low HHI means no single entity controls your investment."
+    },
+    "nakamoto_coefficient": {
+      "label": "Nakamoto Coefficient",
+      "short": "Wallets to control 51%",
+      "explanation": "The minimum number of wallets needed to control 51% of supply. Higher = more decentralized.",
+      "comparison": "Bitcoin: ~4 mining pools | VISTA: 5 wallets",
+      "why_matters": "If only 2-3 wallets control 51%, they can collude to manipulate. More wallets = harder to coordinate attacks."
     },
     "top_10_pct": {
       "label": "Top 10 Holders %",
@@ -236,33 +314,19 @@
       "comparison": "VISTA: 65 diamond hands | BONZI: 4 diamond hands",
       "why_matters": "Diamond hands show conviction. These holders believe in sustainable yield over quick flips."
     },
-    "diamond_hands_pct": {
-      "label": "Diamond Hands %",
-      "short": "% of stakers who never left",
-      "explanation": "Of everyone who ever staked, what percentage never unstaked. Higher = stronger holder conviction.",
-      "comparison": "VISTA: 12.4% | BONZI: 14.3%",
-      "why_matters": "Shows what portion of your fellow stakers are truly committed vs just testing the waters."
-    },
     "retention_pct": {
       "label": "Retention Rate",
       "short": "% of stakers still staking",
       "explanation": "Of everyone who ever staked, what percentage are currently still staking. Measures ongoing satisfaction.",
       "comparison": "VISTA: 17% | BONZI: 28.6%",
-      "why_matters": "High retention means stakers are happy with their ETH yields and stay. Low retention = something's wrong."
+      "why_matters": "High retention means stakers are happy with their ETH yields and stay. Low retention = something is wrong."
     },
     "avg_tenure_days": {
       "label": "Avg Tenure",
       "short": "Average staking duration",
       "explanation": "How long the average staker has been staking, in days. Longer = more committed community.",
       "comparison": "VISTA: 341 days | BONZI: 288 days",
-      "why_matters": "Long tenure means people aren't just trying it out - they're earning and staying."
-    },
-    "max_tenure_days": {
-      "label": "Max Tenure",
-      "short": "Longest staking duration",
-      "explanation": "The longest anyone has been continuously staking. Shows the OGs who believed from day one.",
-      "comparison": "VISTA: 478 days | BONZI: 406 days",
-      "why_matters": "Proves the protocol has been paying yield consistently for over a year."
+      "why_matters": "Long tenure means people are not just trying it out - they are earning and staying."
     },
     "total_eth_distributed": {
       "label": "ETH Distributed",
@@ -283,21 +347,7 @@
       "short": "Wallets that received ETH",
       "explanation": "How many different wallets have claimed ETH rewards. Unlike Meteora Stake2Earn (top 100 only), everyone earns.",
       "comparison": "VISTA: 448 claimers | BONZI: 21 claimers | Meteora: Top 100 only",
-      "why_matters": "Permissionless yield - you don't need to be a whale or rank in top N. Everyone proportionally earns."
-    },
-    "avg_claim_eth": {
-      "label": "Avg Claim",
-      "short": "Average ETH per claim",
-      "explanation": "The average amount of ETH received per claim transaction. Varies based on stake size and duration.",
-      "comparison": "VISTA: 0.0156 ETH | BONZI: 0.0072 ETH",
-      "why_matters": "Shows typical earnings. Small but real and consistent from trading activity."
-    },
-    "max_single_claim": {
-      "label": "Max Claim",
-      "short": "Largest single ETH claim",
-      "explanation": "The biggest single claim ever made. Usually from large, long-term stakers.",
-      "comparison": "VISTA: 1.96 ETH (~$6,500) | BONZI: 0.05 ETH",
-      "why_matters": "Proves significant yield is possible for committed stakers."
+      "why_matters": "Permissionless yield - you do not need to be a whale or rank in top N. Everyone proportionally earns."
     },
     "weekly_trend": {
       "label": "Weekly Activity",
@@ -320,17 +370,17 @@
       "comparison": "VISTA: 16 months | BONZI: 13 months | Murad criteria: >6 months",
       "why_matters": "Young tokens often fail. Surviving 12+ months while paying yield proves sustainability."
     },
-    "lp_total_distributions": {
-      "label": "Distribution Count",
-      "short": "Number of fee payouts",
-      "explanation": "Total number of times fees have been distributed to LPs/stakers. More = more consistent.",
-      "comparison": "VISTA LP: 1,324 distributions | BONZI LP: 597 distributions",
-      "why_matters": "High count proves consistent, ongoing fee distribution - not a one-time event."
+    "holders_1k_plus": {
+      "label": "$1K+ Holders",
+      "short": "Wallets with >$1K value",
+      "explanation": "Count of wallets holding more than $1,000 USD worth. Measures serious investor count.",
+      "comparison": "BONZI: 18 holders with $1K+",
+      "why_matters": "More whale-sized holders = more capital committed. But too concentrated = risk."
     }
   },
   "benchmarks": {
     "cult_coins": {
-      "description": "Murad Mahmudov's memecoin criteria",
+      "description": "Murad Mahmudov memecoin criteria",
       "pepe_eth_distributed": 0,
       "shib_eth_distributed": 0,
       "spx6900_eth_distributed": 0,
@@ -349,48 +399,13 @@
       "moderate": "1000-1500",
       "concentrated": "1500-2500",
       "whale_dominated": ">2500"
+    },
+    "nakamoto_scale": {
+      "very_centralized": "1-2 wallets",
+      "centralized": "3-5 wallets",
+      "moderate": "6-10 wallets",
+      "decentralized": "11-20 wallets",
+      "very_decentralized": ">20 wallets"
     }
-  },
-  "market_context": {
-    "fetched_at": "2026-01-25 01:00 UTC",
-    "eth": {
-      "price_usd": 3300,
-      "change_24h_pct": 2.1
-    },
-    "gas": {
-      "safe_gwei": 10,
-      "standard_gwei": 12,
-      "fast_gwei": 15,
-      "level": "low",
-      "impact": "Low gas = more trades = more fees"
-    },
-    "dex_volume": {
-      "volume_24h_usd": 2100000000,
-      "volume_24h_formatted": "$2.10B",
-      "change_1d_pct": 5.2,
-      "sentiment": "active",
-      "impact": "High DEX activity = favorable for Ethervista fees"
-    },
-    "memecoin_sector": {
-      "coins": {
-        "pepe": {"price_usd": 0.00001, "change_24h_pct": 3.2},
-        "shiba-inu": {"price_usd": 0.000022, "change_24h_pct": 1.5},
-        "dogecoin": {"price_usd": 0.32, "change_24h_pct": 2.8}
-      },
-      "sector_avg_change_24h": 2.5,
-      "sentiment": "positive",
-      "impact": "Memecoin sector strength = tailwind for VISTA/BONZI"
-    },
-    "btc_dominance": {
-      "btc_dominance_pct": 52.3,
-      "eth_dominance_pct": 16.8,
-      "season": "mixed",
-      "impact": "Alt season = more interest in smaller caps like VISTA/BONZI"
-    },
-    "signals": [
-      "✅ Low gas: favorable for trading activity",
-      "✅ DEX activity high: good for fee generation",
-      "✅ Memecoin sector strong: tailwind for VISTA/BONZI"
-    ]
   }
 }

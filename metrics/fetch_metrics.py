@@ -342,6 +342,11 @@ def fetch_gas_price() -> dict:
         data = response.json()
         result = data.get("result", {})
 
+        # Handle rate limit / error response (result is string instead of dict)
+        if not isinstance(result, dict):
+            print(f"  Gas API returned: {result}")
+            return {"safe_gwei": None, "standard_gwei": None, "fast_gwei": None, "level": None}
+
         safe = int(result.get("SafeGasPrice", 0))
         standard = int(result.get("ProposeGasPrice", 0))
         fast = int(result.get("FastGasPrice", 0))
@@ -537,6 +542,15 @@ def main():
 
     print("Fetching VISTA and BONZI metrics from Dune...\n")
 
+    # Load existing data to preserve educational/benchmark sections
+    output_path = os.path.join(os.path.dirname(__file__), 'metrics-data.json')
+    existing = {}
+    try:
+        with open(output_path) as f:
+            existing = json.load(f)
+    except FileNotFoundError:
+        pass
+
     # Initialize metrics structure
     metrics = {
         "updated": datetime.now().strftime("%Y-%m-%d"),
@@ -561,8 +575,13 @@ def main():
     # Fetch external market context
     metrics['market_context'] = fetch_market_context()
 
+    # Preserve educational tooltips and benchmarks from existing file
+    if existing.get('educational'):
+        metrics['educational'] = existing['educational']
+    if existing.get('benchmarks'):
+        metrics['benchmarks'] = existing['benchmarks']
+
     # Save to JSON
-    output_path = os.path.join(os.path.dirname(__file__), 'metrics-data.json')
     with open(output_path, 'w') as f:
         json.dump(metrics, f, indent=2)
 

@@ -914,6 +914,34 @@
             text-align: center;
             margin-top: 16px;
         }
+        .intro-block.highlight {
+            border-left: 3px solid var(--purple);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(139, 92, 246, 0.05) 100%);
+        }
+        .intro-block a {
+            color: var(--purple);
+            text-decoration: underline;
+        }
+        .comparison-mini {
+            width: 100%;
+            margin-top: 12px;
+            border-collapse: collapse;
+        }
+        .comparison-mini td {
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .comparison-mini td:first-child {
+            width: 160px;
+            color: var(--text-primary);
+        }
+        .comparison-mini tr:last-child td {
+            border-bottom: none;
+            background: rgba(139, 92, 246, 0.05);
+        }
 
         /* Info text tooltips - underlined purple text */
         .info-text {
@@ -1111,7 +1139,42 @@
 
     <!-- Page Introduction -->
     <section class="page-intro">
-        <h2 data-i18n="intro.title">How to Read This Page</h2>
+        <h2 data-i18n="intro.what.title">What Is This Page?</h2>
+
+        <div class="intro-block highlight">
+            <h3 data-i18n="intro.why.page.title">Why Look at Metrics?</h3>
+            <p data-i18n="intro.why.page.text">Whether you're launching a token on Ethervista, considering staking, or evaluating VISTA/BONZI as an investment - you need to verify claims, not trust them. This page shows live on-chain data: Is the yield mechanism actually paying out? How distributed is ownership? Are people holding long-term or dumping? The numbers here answer those questions with blockchain evidence.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.product.title">VISTA & BONZI: Yield-Generating Tokens</h3>
+            <p data-i18n="intro.product.text">VISTA and BONZI are tokens on <a href="https://ethervista.app" target="_blank">Ethervista</a>, a decentralized exchange where every trade generates fees. Unlike most DEXs where fees go to the protocol, Ethervista routes fees directly to token stakers and liquidity providers. When you stake VISTA or BONZI, you earn ETH from trading activity - not inflationary token rewards.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.mechanism.title">How the Yield Works</h3>
+            <p data-i18n="intro.mechanism.text">Every swap on Ethervista incurs a small fee. This fee is split between liquidity providers (LPs) and token stakers. The mechanism is automatic and permissionless - no team distributes rewards, the smart contract does. Your share is proportional to your stake. You can claim accumulated ETH anytime, or let it compound. This page shows whether that mechanism is actually working: how much ETH has been distributed, to how many people, over what time period.</p>
+        </div>
+
+        <div class="intro-block">
+            <h3 data-i18n="intro.difference.title">How This Differs From Other Tokens</h3>
+            <table class="comparison-mini">
+                <tr>
+                    <td><strong>Most memecoins</strong></td>
+                    <td>No yield mechanism. Holders earn nothing. Price appreciation is the only upside.</td>
+                </tr>
+                <tr>
+                    <td><strong>Inflationary staking</strong></td>
+                    <td>Rewards paid in newly minted tokens. Dilutes supply. Not real yield.</td>
+                </tr>
+                <tr>
+                    <td><strong>VISTA/BONZI</strong></td>
+                    <td>Yield paid in ETH from trading fees. No dilution. Verifiable on-chain.</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 data-i18n="intro.title" style="margin-top: 40px;">How to Read This Page</h2>
 
         <div class="intro-block">
             <h3 data-i18n="intro.why.title">Why On-Chain Data?</h3>
@@ -1828,6 +1891,14 @@
                 "nav.contact": "contact", "nav.connect": "connect",
                 "hero.title": "On-Chain Metrics",
                 "hero.subtitle": "Verifiable data for evaluating token health and holder outcomes.",
+                "intro.what.title": "What Is This Page?",
+                "intro.why.page.title": "Why Look at Metrics?",
+                "intro.why.page.text": "Whether you're launching a token on Ethervista, considering staking, or evaluating VISTA/BONZI as an investment - you need to verify claims, not trust them. This page shows live on-chain data: Is the yield mechanism actually paying out? How distributed is ownership? Are people holding long-term or dumping? The numbers here answer those questions with blockchain evidence.",
+                "intro.product.title": "VISTA & BONZI: Yield-Generating Tokens",
+                "intro.product.text": "VISTA and BONZI are tokens on Ethervista, a decentralized exchange where every trade generates fees. Unlike most DEXs where fees go to the protocol, Ethervista routes fees directly to token stakers and liquidity providers. When you stake VISTA or BONZI, you earn ETH from trading activity - not inflationary token rewards.",
+                "intro.mechanism.title": "How the Yield Works",
+                "intro.mechanism.text": "Every swap on Ethervista incurs a small fee. This fee is split between liquidity providers (LPs) and token stakers. The mechanism is automatic and permissionless - no team distributes rewards, the smart contract does. Your share is proportional to your stake. You can claim accumulated ETH anytime, or let it compound. This page shows whether that mechanism is actually working: how much ETH has been distributed, to how many people, over what time period.",
+                "intro.difference.title": "How This Differs From Other Tokens",
                 "intro.title": "How to Read This Page",
                 "intro.why.title": "Why On-Chain Data?",
                 "intro.why.text": "Price charts and market caps are easy to manipulate. This page shows data recorded on Ethereum that cannot be faked: who owns tokens, how much ETH has been distributed, and how long holders actually stay. If a project claims to reward holders, the blockchain will show whether that's true.",

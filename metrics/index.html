@@ -943,6 +943,62 @@
             background: rgba(139, 92, 246, 0.05);
         }
 
+        /* Case Study Box */
+        .case-study-box {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        .case-study-header {
+            margin-bottom: 16px;
+        }
+        .case-study-label {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.15);
+            color: #16a34a;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .case-study-header h3 {
+            margin: 8px 0 0 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .case-study-box .data-table {
+            margin: 0;
+        }
+        .case-study-insight {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .case-study-insight h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #16a34a;
+        }
+        .case-study-insight p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        body.dark-mode .case-study-label {
+            color: #4ade80;
+        }
+        body.dark-mode .case-study-insight h4 {
+            color: #4ade80;
+        }
+
         /* Info text tooltips - underlined purple text */
         .info-text {
             color: var(--purple);
@@ -1207,33 +1263,41 @@
                 </tbody>
             </table>
 
-            <!-- Anti-Ponzi Proof -->
-            <h3 class="section-title" data-i18n="section.longest">Longest Active Position</h3>
-            <table class="data-table">
-                <tbody>
-                    <tr>
-                        <td data-i18n="td.wallet">Wallet</td>
-                        <td class="mono"><a href="https://etherscan.io/address/0xca90d843288e35beeadfce14e5f906e3f1afc7cb" target="_blank">0xca90...c7cb</a></td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.staking.since">Staking since</td>
-                        <td>Oct 3, 2024</td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.amount">Amount staked</td>
-                        <td>15 VISTA</td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.eth.claimed">ETH claimed</td>
-                        <td>0.086 ETH</td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.sold">Tokens sold</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="table-note" data-i18n="note.antiponzi">This position earned yield without liquidating tokens.</p>
+            <!-- Case Study -->
+            <div class="case-study-box">
+                <div class="case-study-header">
+                    <span class="case-study-label">Case Study</span>
+                    <h3 data-i18n="section.longest">Longest Active Position</h3>
+                </div>
+                <table class="data-table">
+                    <tbody>
+                        <tr>
+                            <td data-i18n="td.wallet">Wallet</td>
+                            <td class="mono"><a href="https://etherscan.io/address/0xca90d843288e35beeadfce14e5f906e3f1afc7cb" target="_blank">0xca90...c7cb</a></td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="td.staking.since">Staking since</td>
+                            <td>Oct 3, 2024</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="td.amount">Amount staked</td>
+                            <td>15 VISTA</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="td.eth.claimed">ETH claimed</td>
+                            <td>0.086 ETH</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="td.sold">Tokens sold</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="case-study-insight">
+                    <h4 data-i18n="casestudy.insight.title">What This Shows</h4>
+                    <p data-i18n="casestudy.insight.text">This wallet staked 15 VISTA over a year ago and has claimed 0.086 ETH in yield - without selling a single token. This is the opposite of Ponzi behavior: the holder earned real value (ETH) from protocol fees, not from later participants. The yield came from trading activity, not from new deposits. This pattern - earning without exiting - is only possible when the underlying mechanism generates actual revenue.</p>
+                </div>
+            </div>
 
             <!-- Contracts -->
             <h3 class="section-title" data-i18n="section.verify">Contract Addresses</h3>
@@ -1271,7 +1335,6 @@
         <div class="tier-header">
             <span class="tier-badge dao-1" data-i18n="tier.dao1">DAO-1</span>
             <span class="tier-title" data-i18n="tier.dao1.title">Value Distribution</span>
-            <span class="tier-requirement" data-i18n="tier.dao1.req">Hold $BONZI or $VISTA</span>
         </div>
 
         <div class="tier-section locked" id="tier-1">

@@ -817,23 +817,27 @@
             border-color: rgba(255,255,255,0.1);
         }
 
-        /* Info icon tooltips */
-        .info-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            background: var(--purple);
-            color: white;
-            border-radius: 50%;
-            font-size: 10px;
+        /* Section intro text */
+        .section-intro {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+            max-width: 600px;
+        }
+
+        /* Info text tooltips - underlined purple text */
+        .info-text {
+            color: var(--purple);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 2px;
             cursor: help;
+            font-size: 12px;
             margin-left: 6px;
-            vertical-align: middle;
             position: relative;
         }
-        .info-icon:hover::after {
+        .info-text:hover::after {
             content: attr(title);
             position: absolute;
             left: 50%;
@@ -852,7 +856,7 @@
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-        .info-icon:hover::before {
+        .info-text:hover::before {
             content: '';
             position: absolute;
             left: 50%;
@@ -866,7 +870,7 @@
 </head>
 <body>
     <nav>
-        <a href="../" class="nav-logo">bonzi</a>
+        <a href="../" class="nav-logo"><img src="../bonzi-logo.png" alt="" class="nav-logo-img">Bonzi</a>
 
         <!-- Ethervista-style Nav Links -->
         <div class="nav-links">
@@ -937,14 +941,13 @@
     </section>
 
     <div class="dashboard">
-        <!-- FREE TIER -->
+        <!-- OWNERSHIP DISTRIBUTION -->
         <div class="tier-header">
-            <span class="tier-badge free" data-i18n="tier.free">FREE</span>
-            <span class="tier-title" data-i18n="tier.free.title">Trust Signals</span>
-            <span class="tier-requirement" data-i18n="tier.free.req">Verify before you buy</span>
+            <span class="tier-title" data-i18n="tier.free.title">Ownership Distribution</span>
         </div>
 
         <div class="tier-section" id="tier-free">
+            <p class="section-intro" data-i18n="tier.free.intro">How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.</p>
             <!-- Decentralization Metrics (Murad) -->
             <table class="data-table">
                 <thead>
@@ -960,25 +963,25 @@
                         <td data-i18n="td.tokenage">Token age</td>
                         <td data-i18n="td.tokenage.val">6+ months</td>
                         <td data-i18n="td.tokenage.val">6+ months</td>
-                        <td data-i18n="td.tokenage.meaning">Time-tested (Murad criterion)</td>
+                        <td data-i18n="td.tokenage.meaning">How long the token has existed</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.top10">Top 10 holders</td>
                         <td>—%</td>
                         <td>—%</td>
-                        <td data-i18n="td.top10.meaning">Lower = less whale control</td>
+                        <td data-i18n="td.top10.meaning">Combined holdings of largest wallets</td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.hhi">HHI score</td>
+                        <td data-i18n="td.hhi">Concentration index</td>
                         <td>—</td>
                         <td>—</td>
-                        <td data-i18n="td.hhi.meaning">< 1500 = decentralized</td>
+                        <td data-i18n="td.hhi.meaning">Under 1500 = broadly distributed</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.holders">Total holders</td>
                         <td>—</td>
                         <td>—</td>
-                        <td data-i18n="td.holders.meaning">Adoption proof</td>
+                        <td data-i18n="td.holders.meaning">Number of unique wallets</td>
                     </tr>
                 </tbody>
             </table>
@@ -1009,10 +1012,11 @@
                     </tr>
                 </tbody>
             </table>
-            <p class="table-note" data-i18n="note.antiponzi">Staker earned ETH without selling. This is not Ponzi behavior.</p>
+            <p class="table-note" data-i18n="note.antiponzi">This position earned yield without liquidating tokens.</p>
 
             <!-- Contracts -->
-            <h3 class="section-title" data-i18n="section.verify">Verify Yourself</h3>
+            <h3 class="section-title" data-i18n="section.verify">Contract Addresses</h3>
+            <p class="section-intro">All contracts are deployed on Ethereum mainnet and can be inspected on Etherscan.</p>
             <table class="data-table">
                 <tbody>
                     <tr>
@@ -1030,10 +1034,6 @@
                     <tr>
                         <td>BONZI Staking</td>
                         <td class="mono"><a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank">0x3618...1a53</a></td>
-                    </tr>
-                    <tr>
-                        <td data-i18n="td.dune">Dune Query</td>
-                        <td class="mono"><a href="https://dune.com/queries/4579721" target="_blank" data-i18n="link.dune">Early staker analysis</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -1094,14 +1094,14 @@
 
             <!-- Dune Embed: Staker Retention -->
             <div class="dune-embed">
-                <iframe src="https://dune.com/embeds/4579721/7654321" width="100%" height="300" frameborder="0"></iframe>
-                <p class="embed-source">Source: <a href="https://dune.com/queries/4579721" target="_blank">Dune Analytics</a></p>
+                <iframe src="https://dune.com/embeds/6591349/13181972" width="100%" height="300" frameborder="0"></iframe>
+                <p class="embed-source">Source: <a href="https://dune.com/queries/6591349" target="_blank">Dune Analytics</a></p>
             </div>
 
             <!-- Weekly Distribution -->
             <h3 class="section-title" data-i18n="section.weekly">Weekly ETH Distribution</h3>
             <div class="dune-embed">
-                <iframe src="https://dune.com/embeds/4579721/7654322" width="100%" height="250" frameborder="0"></iframe>
+                <iframe src="https://dune.com/embeds/6591328/13181952" width="100%" height="250" frameborder="0"></iframe>
             </div>
 
             <!-- Your Position (requires wallet) -->
@@ -1560,22 +1560,22 @@
                 "nav.contact": "contact", "nav.connect": "connect",
                 "hero.title": "System Metrics",
                 "hero.subtitle": "Live parameters and configuration. Three tiers of access based on token holdings.",
-                "tier.free": "FREE", "tier.free.title": "Trust Signals", "tier.free.req": "Verify before you buy",
+                "tier.free.title": "Ownership Distribution", "tier.free.intro": "How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Community Health", "tier.dao1.req": "Hold $BONZI or $VISTA",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analytics", "tier.dao2.req": "Stake $BONZI or $VISTA",
                 "unlock.title": "Community Health Metrics", "unlock.desc": "Connect wallet holding $BONZI or $VISTA",
                 "unlock.title2": "Alpha Metrics", "unlock.desc2": "Connect wallet staking $BONZI or $VISTA",
                 "btn.connect": "Connect Wallet", "last.updated": "Last updated:",
                 "th.metric": "Metric", "th.value": "Value", "th.meaning": "What it means",
-                "td.tokenage": "Token age", "td.tokenage.val": "6+ months", "td.tokenage.meaning": "Time-tested (Murad criterion)",
-                "td.top10": "Top 10 holders", "td.top10.meaning": "Lower = less whale control",
-                "td.hhi": "HHI score", "td.hhi.meaning": "< 1500 = decentralized",
-                "td.holders": "Total holders", "td.holders.meaning": "Adoption proof",
+                "td.tokenage": "Token age", "td.tokenage.val": "6+ months", "td.tokenage.meaning": "How long the token has existed",
+                "td.top10": "Top 10 holders", "td.top10.meaning": "Combined holdings of largest wallets",
+                "td.hhi": "Concentration index", "td.hhi.meaning": "Under 1500 = broadly distributed",
+                "td.holders": "Total holders", "td.holders.meaning": "Number of unique wallets",
                 "section.longest": "Longest Active Position",
                 "td.wallet": "Wallet", "td.staking.since": "Staking since", "td.amount": "Amount staked",
                 "td.eth.claimed": "ETH claimed", "td.sold": "Tokens sold",
-                "note.antiponzi": "Staker earned ETH without selling. This is not Ponzi behavior.",
-                "section.verify": "Verify Yourself", "td.dune": "Dune Query", "link.dune": "Early staker analysis",
+                "note.antiponzi": "This position earned yield without liquidating tokens.",
+                "section.verify": "Contract Addresses",
                 "section.staker": "Staker Behavior",
                 "td.1k": "$1K+ holders", "td.1k.meaning": "Serious conviction (Murad)",
                 "td.retention": "Staker retention", "td.retention.meaning": "Still staking vs unstaked",
@@ -1601,7 +1601,7 @@
                 "nav.contact": "contato", "nav.connect": "conectar",
                 "hero.title": "Metricas do Sistema",
                 "hero.subtitle": "Parametros ao vivo e configuracao. Tres niveis de acesso baseados em tokens.",
-                "tier.free": "GRATIS", "tier.free.title": "Sinais de Confianca", "tier.free.req": "Verifique antes de comprar",
+                "tier.free.title": "Distribuicao de Propriedade", "tier.free.intro": "Como o fornecimento de tokens e distribuido entre carteiras. Propriedade concentrada significa que poucas carteiras controlam o movimento de precos.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Saude da Comunidade", "tier.dao1.req": "Tenha $BONZI ou $VISTA",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Analises Alpha", "tier.dao2.req": "Stake $BONZI ou $VISTA",
                 "unlock.title": "Metricas de Saude", "unlock.desc": "Conecte carteira com $BONZI ou $VISTA",
@@ -1642,7 +1642,7 @@
                 "nav.contact": "联系", "nav.connect": "连接",
                 "hero.title": "系统指标",
                 "hero.subtitle": "实时参数和配置。基于代币持有量的三级访问权限。",
-                "tier.free": "免费", "tier.free.title": "信任信号", "tier.free.req": "购买前验证",
+                "tier.free.title": "所有权分布", "tier.free.intro": "代币供应如何分布在钱包之间。集中所有权意味着少数钱包控制价格走势。",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "社区健康", "tier.dao1.req": "持有 $BONZI 或 $VISTA",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha分析", "tier.dao2.req": "质押 $BONZI 或 $VISTA",
                 "unlock.title": "社区健康指标", "unlock.desc": "连接持有代币的钱包",
@@ -1683,7 +1683,7 @@
                 "nav.contact": "iletisim", "nav.connect": "baglan",
                 "hero.title": "Sistem Metrikleri",
                 "hero.subtitle": "Canli parametreler ve yapilandirma. Token varliklariniza gore uc katmanli erisim.",
-                "tier.free": "UCRETSIZ", "tier.free.title": "Guven Sinyalleri", "tier.free.req": "Satin almadan once dogrulayin",
+                "tier.free.title": "Sahiplik Dagilimi", "tier.free.intro": "Token arzinin cuzdanlar arasinda nasil dagildigini gosterir. Yogunlasmis sahiplik, az sayida cuzdanin fiyat hareketini kontrol ettigi anlamina gelir.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Topluluk Sagligi", "tier.dao1.req": "$BONZI veya $VISTA tutun",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analizleri", "tier.dao2.req": "$BONZI veya $VISTA stake edin",
                 "unlock.title": "Topluluk Sagligi Metrikleri", "unlock.desc": "Token tutan cuzdani baglayin",
@@ -1724,7 +1724,7 @@
                 "nav.contact": "контакт", "nav.connect": "подключить",
                 "hero.title": "Системные метрики",
                 "hero.subtitle": "Параметры в реальном времени. Три уровня доступа на основе токенов.",
-                "tier.free": "БЕСПЛАТНО", "tier.free.title": "Сигналы доверия", "tier.free.req": "Проверьте перед покупкой",
+                "tier.free.title": "Распределение владения", "tier.free.intro": "Как распределено предложение токенов между кошельками. Концентрированное владение означает, что несколько кошельков контролируют движение цены.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Здоровье сообщества", "tier.dao1.req": "Держите $BONZI или $VISTA",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha аналитика", "tier.dao2.req": "Стейкинг $BONZI или $VISTA",
                 "unlock.title": "Метрики сообщества", "unlock.desc": "Подключите кошелек с токенами",
@@ -1765,7 +1765,7 @@
                 "nav.contact": "contact", "nav.connect": "connecter",
                 "hero.title": "Metriques Systeme",
                 "hero.subtitle": "Parametres en temps reel. Trois niveaux d'acces bases sur les tokens.",
-                "tier.free": "GRATUIT", "tier.free.title": "Signaux de Confiance", "tier.free.req": "Verifiez avant d'acheter",
+                "tier.free.title": "Distribution de propriete", "tier.free.intro": "Comment l'offre de tokens est repartie entre les portefeuilles. Une propriete concentree signifie que quelques portefeuilles controlent le mouvement des prix.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Sante Communautaire", "tier.dao1.req": "Detenir $BONZI ou $VISTA",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Analyses Alpha", "tier.dao2.req": "Staker $BONZI ou $VISTA",
                 "unlock.title": "Metriques Communautaires", "unlock.desc": "Connecter portefeuille avec tokens",
@@ -1849,7 +1849,7 @@
                             row.cells[1].textContent = v.top_10_pct ? v.top_10_pct + '%' : '—';
                             row.cells[2].textContent = b.top_10_pct ? b.top_10_pct + '%' : '—';
                         }
-                        if (label === 'HHI score') {
+                        if (label === 'Concentration index') {
                             row.cells[1].textContent = v.hhi_score || '—';
                             row.cells[2].textContent = b.hhi_score || '—';
                         }
@@ -1866,13 +1866,13 @@
                     const label = labelCell?.textContent?.trim();
                     let key = null;
                     if (label === 'Top 10 holders') key = 'top_10_pct';
-                    if (label === 'HHI score') key = 'hhi_score';
+                    if (label === 'Concentration index') key = 'hhi_score';
                     if (label === 'Total holders') key = 'total_holders';
                     if (label === 'Token age') key = 'token_age_months';
 
                     if (key && edu[key] && labelCell) {
                         const tooltip = edu[key];
-                        labelCell.innerHTML = `${label} <span class="info-icon" title="${tooltip.explanation}">\u24D8</span>`;
+                        labelCell.innerHTML = `${label} <span class="info-text" title="${tooltip.explanation}">info</span>`;
                     }
                 });
 

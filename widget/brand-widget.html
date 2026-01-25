@@ -214,6 +214,8 @@
      */
     import { CoinbaseWalletSDK } from 'https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@4/+esm';
 
+    console.log('SDK imported:', CoinbaseWalletSDK);
+
         // Configuration
         const CONFIG = {
             // Token to purchase (set via data-token attribute or URL param)
@@ -310,9 +312,13 @@
 
         // Bind event listeners
         function bindEvents() {
+            console.log('bindEvents called');
+            const btnGoogle = document.getElementById('btn-google');
+            console.log('btn-google element:', btnGoogle);
+
             // Login buttons - direct action (terms via footer link)
             document.getElementById('btn-email').addEventListener('click', () => showState('email'));
-            document.getElementById('btn-google').addEventListener('click', () => loginWithProvider('google'));
+            btnGoogle.addEventListener('click', () => { console.log('Google clicked'); loginWithProvider('google'); });
             document.getElementById('btn-apple').addEventListener('click', () => loginWithProvider('apple'));
             document.getElementById('btn-wallet').addEventListener('click', connectExternalWallet);
 
@@ -351,6 +357,7 @@
 
         // Login with social provider (Google/Apple) or email
         async function loginWithProvider(providerType) {
+            console.log('loginWithProvider called with:', providerType);
             showState('loading', `Connecting with ${providerType}...`);
 
             try {

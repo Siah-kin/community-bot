@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fee Model & Terms - Bonzi Widget</title>
+    <title>Fees & Terms - Bonzi Widget</title>
     <style>
         :root {
             --black: #0a0a0a;
             --white: #ffffff;
             --purple: #7c3aed;
-            --purple-light: #a78bfa;
-            --gold: #d4af37;
             --gray-50: #fafafa;
             --gray-100: #f5f5f5;
             --gray-200: #e5e5e5;
@@ -26,7 +24,7 @@
             padding: 40px 20px;
         }
         .container {
-            max-width: 680px;
+            max-width: 600px;
             margin: 0 auto;
             background: var(--white);
             padding: 48px;
@@ -34,318 +32,126 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         h1 {
-            font-size: 28px;
-            margin-bottom: 12px;
+            font-size: 24px;
+            margin-bottom: 24px;
             color: var(--black);
-            letter-spacing: -0.5px;
-        }
-        .lead {
-            font-size: 17px;
-            color: var(--gray-700);
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-        .meta {
-            color: var(--gray-500);
-            font-size: 13px;
-            margin-bottom: 40px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--gray-200);
         }
         h2 {
-            font-size: 20px;
-            margin-top: 48px;
-            margin-bottom: 16px;
+            font-size: 18px;
+            margin-top: 32px;
+            margin-bottom: 12px;
             color: var(--black);
-            letter-spacing: -0.3px;
         }
         p {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: var(--gray-700);
-        }
-        ul, ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
-            color: var(--gray-700);
-        }
-        li { margin-bottom: 8px; }
-
-        /* Technical Box */
-        .technical-box {
-            background: var(--gray-100);
-            border-left: 4px solid var(--purple);
-            padding: 20px 20px 20px 24px;
-            margin: 24px 0;
-            position: relative;
-        }
-        .technical-box::before {
-            content: "HOW IT WORKS";
-            position: absolute;
-            top: -10px;
-            left: 16px;
-            background: var(--purple);
-            color: white;
-            padding: 4px 12px;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: 1px;
-            border-radius: 2px;
-        }
-        .technical-box p { margin-bottom: 12px; color: var(--gray-700); }
-        .technical-box p:last-child { margin-bottom: 0; }
-
-        /* Advantage Box */
-        .advantage-box {
-            background: var(--gray-50);
-            border-left: 4px solid var(--gold);
-            padding: 20px 20px 20px 24px;
-            margin: 24px 0;
-            position: relative;
-        }
-        .advantage-box::before {
-            content: "WHY THIS MATTERS";
-            position: absolute;
-            top: -10px;
-            left: 16px;
-            background: var(--black);
-            color: var(--gold);
-            padding: 4px 12px;
-            font-weight: 600;
-            font-size: 10px;
-            letter-spacing: 1px;
-            border-radius: 2px;
-        }
-
-        /* Fee Table */
-        .fee-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 24px 0;
             font-size: 15px;
         }
-        .fee-table th, .fee-table td {
-            padding: 14px 16px;
-            text-align: left;
+        ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+            color: var(--gray-700);
+            font-size: 15px;
+        }
+        li { margin-bottom: 6px; }
+        .fee-box {
+            background: var(--gray-100);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
             border-bottom: 1px solid var(--gray-200);
         }
-        .fee-table th {
-            background: var(--gray-100);
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--gray-500);
-        }
-        .fee-table td:last-child { text-align: right; font-weight: 500; }
-        .fee-table .primary { background: #f5f3ff; }
-        .fee-table .primary td { color: var(--purple); font-weight: 600; }
-
-        /* Contract Link */
+        .fee-row:last-child { border-bottom: none; }
+        .fee-label { color: var(--gray-700); }
+        .fee-value { font-weight: 500; }
         .contract-link {
             display: inline-block;
             background: var(--gray-100);
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-family: 'SF Mono', Monaco, monospace;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-family: monospace;
             font-size: 12px;
             color: var(--gray-700);
             text-decoration: none;
-            margin: 8px 0;
-            word-break: break-all;
+            margin: 4px 4px 4px 0;
         }
         .contract-link:hover { background: var(--gray-200); }
-
-        /* Legal Section */
-        .legal-section {
-            margin-top: 64px;
-            padding-top: 32px;
+        .legal {
+            margin-top: 40px;
+            padding-top: 24px;
             border-top: 1px solid var(--gray-200);
-        }
-        .legal-section h2 {
-            font-size: 16px;
-            color: var(--gray-500);
-            margin-bottom: 24px;
-        }
-        .legal-section h3 {
-            font-size: 14px;
-            color: var(--gray-700);
-            margin-top: 24px;
-            margin-bottom: 8px;
-        }
-        .legal-section p, .legal-section li {
             font-size: 13px;
             color: var(--gray-500);
-            line-height: 1.6;
         }
-
+        .legal h3 {
+            font-size: 13px;
+            color: var(--gray-700);
+            margin-top: 16px;
+            margin-bottom: 4px;
+        }
         .back-link {
             display: inline-block;
-            margin-top: 40px;
+            margin-top: 32px;
             color: var(--purple);
             text-decoration: none;
-            font-weight: 500;
             font-size: 14px;
         }
         .back-link:hover { text-decoration: underline; }
         a { color: var(--purple); }
-
-        .callout {
-            background: #fffbeb;
-            border: 1px solid #fcd34d;
-            padding: 16px 20px;
-            border-radius: 8px;
-            margin: 24px 0;
-            font-size: 14px;
-        }
-        .callout strong { color: #92400e; }
-
         @media (max-width: 600px) {
             .container { padding: 32px 24px; }
-            h1 { font-size: 24px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>The $20 Fee. And Why It Exists.</h1>
-        <p class="lead">Every swap on Ethervista costs $20. Not a percentage. A flat fee, paid in ETH. This page explains where that money goes and why this model works differently than what you're used to.</p>
-        <div class="meta">
-            Bonzi Widget v1.0 · January 2026 · <a href="https://docs.ethervista.app" target="_blank">Ethervista Docs</a>
+        <h1>Fees & Terms</h1>
+
+        <h2>Trading Fees</h2>
+        <p>$BONZI trades on <a href="https://ethervista.com" target="_blank">Ethervista</a>.</p>
+
+        <div class="fee-box">
+            <div class="fee-row">
+                <span class="fee-label">Buy fee</span>
+                <span class="fee-value">$20 flat</span>
+            </div>
+            <div class="fee-row">
+                <span class="fee-label">Sell fee</span>
+                <span class="fee-value">$20 flat</span>
+            </div>
+            <div class="fee-row">
+                <span class="fee-label">Card processing</span>
+                <span class="fee-value">~3%</span>
+            </div>
+            <div class="fee-row">
+                <span class="fee-label">Network gas</span>
+                <span class="fee-value">Variable</span>
+            </div>
         </div>
 
-        <h2>The Short Version</h2>
-        <p>You pay $20 per swap. That $20 gets split between liquidity providers (who earn ETH, not tokens), the protocol treasury, and a buyback mechanism. Developers earn from trading activity. Not from price pumps. Not from dumping on you.</p>
+        <p>Swap fees paid in ETH to liquidity providers. <a href="https://docs.ethervista.app" target="_blank">Learn more</a></p>
 
-        <p>This is different from Uniswap's 0.3% model. On Uniswap, a $50 trade costs $0.15. A $50,000 trade costs $150. Sounds fair until you realize it incentivizes thousands of small bot trades and penalizes real participation.</p>
+        <h2>Contracts</h2>
+        <a href="https://etherscan.io/address/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank" class="contract-link">$BONZI</a>
+        <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" class="contract-link">Pool</a>
 
-        <div class="callout">
-            <strong>Heads up:</strong> If you're buying less than $200 worth, the fixed fee hits hard. A $50 purchase loses 40% to fees before you even get tokens. This model rewards larger, committed purchases. That's intentional.
-        </div>
-
-        <h2>Fee Breakdown</h2>
-        <p>Here's what you actually pay when using this widget:</p>
-
-        <table class="fee-table">
-            <thead>
-                <tr>
-                    <th>Fee</th>
-                    <th>What It Is</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="primary">
-                    <td>Ethervista Protocol</td>
-                    <td>Fixed per-swap fee. Split between LPs, treasury, burn.</td>
-                    <td>$20</td>
-                </tr>
-                <tr>
-                    <td>Coinbase</td>
-                    <td>Card processing to buy USDC</td>
-                    <td>2-4%</td>
-                </tr>
-                <tr>
-                    <td>Ethereum Gas</td>
-                    <td>Network fee. Changes with congestion.</td>
-                    <td>$3-15</td>
-                </tr>
-                <tr>
-                    <td>0x Swap</td>
-                    <td>Routing and execution</td>
-                    <td>~0.15%</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p><strong>$100 purchase:</strong> ~$67 in tokens. <strong>$500 purchase:</strong> ~$460 in tokens. <strong>$1,000 purchase:</strong> ~$950 in tokens.</p>
-
-        <p>The math favors commitment over speculation.</p>
-
-        <h2>Where the $20 Goes</h2>
-
-        <p>The fee splits between four destinations. You can verify this on-chain.</p>
-
-        <div class="technical-box">
-            <p><strong>Liquidity Providers</strong> receive the majority. They earn ETH directly. Not governance tokens that inflate. Not rewards that require gas to claim. Actual ETH, calculated per-swap using Euler math (O(1) distribution, no matter how many LPs exist).</p>
-            <p><strong>Protocol Treasury</strong> funds development. No VCs. No token sales. The protocol pays for itself through usage.</p>
-            <p><strong>Buyback + Burn</strong> removes tokens from circulation. Every swap creates deflationary pressure.</p>
-            <p><strong>$1 to VISTA</strong> funds the DEX itself. Flash loans, futures, new features.</p>
-        </div>
-
-        <p>Verify the contracts:</p>
-        <a href="https://etherscan.io/address/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank" class="contract-link">$BONZI: 0xd617...cb86</a>
-        <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" class="contract-link">Pool: 0x970c...75e2</a>
-
-        <h2>Why Fixed Fees</h2>
-
-        <p>Most DEX fees are percentages. Sounds neutral. But it creates problems:</p>
-
-        <ul>
-            <li>Bots spam thousands of micro-trades. Each one profitable, each one clogging the pool.</li>
-            <li>Developers earn more when prices are volatile. Pump and dump becomes rational.</li>
-            <li>Large purchases get punished. The people who believe most pay the most.</li>
-        </ul>
-
-        <p>Fixed fees flip the incentives. Bots can't profit on small trades. Developers earn from volume, which means building things people actually use. And your $10,000 purchase pays the same $20 as someone's $100.</p>
-
-        <div class="advantage-box">
-            <p>The project succeeds when trading activity is high. Not when prices spike. Not when retail gets dumped on. When people actually use the protocol.</p>
-            <p>That's alignment you can verify on-chain. Not a promise in a whitepaper.</p>
-        </div>
-
-        <h2>The Euler Math</h2>
-
-        <p>How do you split fees fairly among thousands of LPs without spending $50 in gas per distribution? Ethervista uses Euler sequences.</p>
-
-        <div class="technical-box">
-            <p>Each swap updates a single number: <code>Euler(n) = Euler(n-1) + (fee / totalLP)</code></p>
-            <p>Each LP stores when they entered. Their reward = <code>(currentEuler - entryEuler) × holdings</code></p>
-            <p>One storage slot. O(1) computation. Works for 10 LPs or 10 million.</p>
-        </div>
-
-        <p>This is why LPs get paid in ETH instantly, not in tokens you have to harvest.</p>
-
-        <h2>What This Isn't For</h2>
-
-        <p>Small speculative trades. If you want to throw $20 at a memecoin and see what happens, you'll lose most of it to fees. That's by design.</p>
-
-        <p>Quick flips. The fee structure discourages in-and-out trading. It rewards holding.</p>
-
-        <p>People who don't read terms pages. You're here, so probably not you.</p>
-
-        <!-- Legal Section -->
-        <div class="legal-section">
-            <h2>Terms of Use</h2>
-
-            <h3>What This Widget Does</h3>
-            <p>Connects Coinbase (fiat onramp), 0x Protocol (swap execution), and Ethervista (liquidity). We don't hold funds. We don't process payments. We don't execute trades. We're a frontend.</p>
-
-            <h3>Third-Party Services</h3>
-            <p><a href="https://www.coinbase.com/legal/user_agreement" target="_blank">Coinbase User Agreement</a> · <a href="https://0x.org/terms" target="_blank">0x Terms</a> · <a href="https://docs.ethervista.app" target="_blank">Ethervista Docs</a></p>
-            <p>Their terms apply. Their uptime issues are their problem. We can't fix them.</p>
+        <div class="legal">
+            <h3>What This Is</h3>
+            <p>A frontend connecting Coinbase, 0x, and Ethervista. We don't hold funds or execute trades.</p>
 
             <h3>Risks</h3>
-            <ul>
-                <li><strong>Volatility:</strong> Prices move. Sometimes a lot. You could lose everything.</li>
-                <li><strong>Finality:</strong> Blockchain transactions don't reverse. No chargebacks. No customer service.</li>
-                <li><strong>Smart contracts:</strong> Code has bugs. Audits reduce risk but don't eliminate it.</li>
-                <li><strong>Regulation:</strong> Laws change. What's legal today might not be tomorrow.</li>
-            </ul>
+            <p>Crypto is volatile. Transactions are final. Smart contracts can have bugs. This is not financial advice.</p>
 
-            <h3>Not Advice</h3>
-            <p>This isn't financial advice. Or investment advice. Or legal advice. Or tax advice. Talk to professionals who know your situation.</p>
-
-            <h3>Eligibility</h3>
-            <p>18+ or legal age in your jurisdiction. Not available where crypto is prohibited. Not available if you're sanctioned.</p>
-
-            <h3>Liability</h3>
-            <p>We're not liable for losses. Not for price drops. Not for failed transactions. Not for bugs in third-party code. Use at your own risk.</p>
-
-            <h3>Changes</h3>
-            <p>Terms update. Using the widget after updates means you accept them.</p>
+            <h3>Third Parties</h3>
+            <p><a href="https://www.coinbase.com/legal/user_agreement" target="_blank">Coinbase</a> · <a href="https://0x.org/terms" target="_blank">0x</a> · <a href="https://docs.ethervista.app" target="_blank">Ethervista</a></p>
 
             <h3>Questions</h3>
-            <p><a href="https://t.me/bonzivista_bot" target="_blank">Contact @bonzivista_bot</a></p>
+            <p><a href="https://t.me/bonzivista_bot" target="_blank">@bonzivista_bot</a></p>
         </div>
 
         <a href="brand-widget.html" class="back-link">← Back to Widget</a>

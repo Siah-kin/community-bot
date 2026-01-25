@@ -47,6 +47,25 @@
             --gray: #71717A;
             --gray-light: #E4E4E7;
             --gold: #d4af37;
+            /* Sharp corners system - unified */
+            --radius-none: 0;
+            --radius-sm: 2px;
+            --radius-circle: 50%;
+        }
+
+        /* Global sharp corners override */
+        .card, .feature-card, .loop-card, .domino-card, .stat-box,
+        .solution-card, .pain-card, .system-content, .chat-box,
+        .manifesto-box, .action-card, .launch-slot, .slot-machine,
+        .tool-card, .dao-box, .perk-card, .tier-card,
+        [class*="card"], [class*="box"]:not(.checkbox):not(.select-box) {
+            border-radius: var(--radius-none) !important;
+        }
+
+        /* Keep circles for avatars and dots only */
+        .cursor, .cursor-dot, .avatar, .step-num-circle,
+        [class*="avatar"], [class*="dot"], [class*="circle"] {
+            border-radius: var(--radius-circle) !important;
         }
 
         html {
@@ -96,6 +115,7 @@
 
         /* Win98 Player - Fixed bottom bar */
         .win98-player {
+            display: none; /* Hidden easter egg */
             position: fixed;
             bottom: 0;
             left: 0;
@@ -682,7 +702,7 @@
             text-decoration: none;
             font-size: 18px;
             padding: 14px 16px;
-            border-radius: 12px;
+            border-radius: 0;
             transition: background 0.2s;
         }
         .mobile-menu a:hover {
@@ -717,7 +737,7 @@
             font-weight: 600;
             font-size: 14px;
             padding: 10px 24px;
-            border-radius: 24px;
+            border-radius: 2px;
             border: none;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -1149,38 +1169,7 @@
             overflow: hidden;
         }
 
-        .launch-area::before,
-        .launch-area::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 120px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .launch-area::before {
-            left: 0;
-            background: linear-gradient(90deg,
-                #8B0000 0%,
-                #a31515 20%,
-                #8B0000 40%,
-                #6B0000 60%,
-                #8B0000 80%,
-                transparent 100%);
-        }
-
-        .launch-area::after {
-            right: 0;
-            background: linear-gradient(-90deg,
-                #8B0000 0%,
-                #a31515 20%,
-                #8B0000 40%,
-                #6B0000 60%,
-                #8B0000 80%,
-                transparent 100%);
-        }
+        /* Red curtains removed - clean design */
 
         .manifesto-btn {
             display: inline-block;
@@ -1874,7 +1863,7 @@
         .prize-content {
             background: linear-gradient(135deg, #1a1025 0%, #2d1f3d 100%);
             border: 3px solid #7c3aed;
-            border-radius: 16px;
+            border-radius: 0;
             padding: 32px;
             text-align: center;
             max-width: 360px;
@@ -2003,7 +1992,7 @@
         .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple-light); margin-bottom: 24px; }
         .section-title { font-size: clamp(28px, 5vw, 48px); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 48px; line-height: 1.2; }
         .domino-stack { display: flex; flex-direction: column; gap: 0; }
-        .domino-card { padding: 24px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-left: calc(var(--index) * 20px); margin-bottom: -8px; transition: all 0.3s ease; }
+        .domino-card { padding: 24px 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); margin-left: calc(var(--index) * 20px); margin-bottom: -8px; transition: all 0.3s ease; }
         .domino-card:hover { background: rgba(124,58,237,0.1); border-color: var(--purple); transform: translateX(8px); }
         .domino-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: rgba(124,58,237,0.2); color: var(--purple-light); border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 14px; }
         .domino-card h4 { display: inline; font-size: 17px; font-weight: 600; color: var(--white); }
@@ -2036,6 +2025,66 @@
         }
         .solutions-header .section-title {
             color: #0a0a0a;
+        }
+
+        /* Compact Ecosystem Flowchart */
+        .ecosystem-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 48px;
+            padding: 32px 16px;
+            background: #f8f8f8;
+            border: 2px solid #0a0a0a;
+            flex-wrap: wrap;
+        }
+        .eco-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 20px;
+            min-width: 100px;
+            text-align: center;
+        }
+        .eco-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 4px;
+        }
+        .eco-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0a0a0a;
+            letter-spacing: 0.05em;
+        }
+        .eco-sub {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .eco-arrow {
+            font-size: 20px;
+            color: #0a0a0a;
+            font-weight: 300;
+        }
+        .eco-center {
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid var(--purple);
+        }
+        .eco-loop {
+            width: 100%;
+            text-align: right;
+            padding: 8px 16px 0;
+            font-size: 11px;
+            color: var(--purple);
+            letter-spacing: 0.05em;
+        }
+        @media (max-width: 768px) {
+            .ecosystem-flow { flex-direction: column; gap: 8px; }
+            .eco-arrow { transform: rotate(90deg); }
+            .eco-loop { text-align: center; }
         }
 
         /* Flow Diagram - 3 Blocks */
@@ -2266,7 +2315,113 @@
             to { transform: rotate(360deg); }
         }
 
+        /* System Tabs - Demo widget style */
+        .system-tabs {
+            display: flex;
+            border: 2px solid #0a0a0a;
+            margin-bottom: 0;
+        }
+        .system-tab {
+            flex: 1;
+            padding: 16px 12px;
+            background: #f8f8f8;
+            border: none;
+            border-right: 2px solid #0a0a0a;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+        .system-tab:last-child { border-right: none; }
+        .system-tab:hover {
+            background: #fff;
+            color: #0a0a0a;
+        }
+        .system-tab.active {
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        /* Tab Content Panels */
+        .system-content {
+            display: none;
+            background: #0a0a0a;
+            border: 2px solid #0a0a0a;
+            border-top: none;
+            padding: 32px;
+        }
+        .system-content.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Flow steps inside tab */
+        .system-flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 24px;
+        }
+        .system-step {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .system-step-num {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+        .system-step-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .system-step-sub {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .system-arrow {
+            width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .system-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--purple);
+            stroke-width: 2;
+        }
+
+        /* System description */
+        .system-desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.6;
+            padding-top: 16px;
+            border-top: 1px solid #2a2a2a;
+        }
+        .system-desc strong {
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
+            .system-tabs { flex-wrap: wrap; }
+            .system-tab { flex: 1 1 33%; border-bottom: 2px solid #0a0a0a; }
+            .system-tab:nth-child(3) { border-right: none; }
+            .system-flow { flex-direction: column; }
+            .system-arrow { transform: rotate(90deg); height: 24px; width: auto; }
             .flow-diagram { flex-direction: column; }
             .flow-arrow { width: 100%; height: 32px; border: 2px solid #0a0a0a; border-top: none; border-bottom: none; }
             .flow-arrow svg { transform: rotate(90deg); }
@@ -2454,7 +2609,7 @@
             text-align: center;
             position: relative;
             background: #1a1a1a;
-            border-radius: 16px;
+            border-radius: 0;
             padding: 28px 16px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.1);
@@ -2588,8 +2743,8 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .loop-card:first-child { border-radius: 16px 0 0 16px; }
-        .loop-card:last-child { border-radius: 0 16px 16px 0; }
+        .loop-card:first-child { border-radius: 0; }
+        .loop-card:last-child { border-radius: 0; }
 
         .loop-card::before {
             content: '';
@@ -2784,7 +2939,7 @@
         .loop-drawer-item {
             background: rgba(124, 58, 237, 0.05);
             border: 1px solid #2a2a2a;
-            border-radius: 12px;
+            border-radius: 0;
             padding: 24px;
             transition: all 0.2s ease;
         }
@@ -2816,7 +2971,7 @@
 
         @media (max-width: 900px) {
             .loop-flow { flex-direction: column; gap: 16px; padding-bottom: 40px; }
-            .loop-card { max-width: 100%; border-radius: 12px !important; }
+            .loop-card { max-width: 100%; border-radius: 0 !important; }
             .loop-connector { display: none; }
             .loop-return { display: none; }
             .loop-drawer-items { grid-template-columns: 1fr; }
@@ -2864,7 +3019,7 @@
             width: 100%;
             max-width: 480px;
             background: #0E1621;
-            border-radius: 12px;
+            border-radius: 0;
             box-shadow: 0 4px 24px rgba(0,0,0,0.3);
             overflow: hidden;
         }
@@ -2961,7 +3116,7 @@
         .chat-message.bot .chat-bubble {
             background: #182533;
             color: #fff;
-            border-radius: 12px 12px 12px 4px;
+            border-radius: 0;
             border: none;
         }
 
@@ -2972,7 +3127,7 @@
         .chat-message.user .chat-bubble {
             background: #766AC8;
             color: white;
-            border-radius: 12px 12px 4px 12px;
+            border-radius: 0;
         }
 
         .typing-indicator {
@@ -2980,7 +3135,7 @@
             gap: 4px;
             padding: 10px 14px;
             background: #182533;
-            border-radius: 12px 12px 12px 4px;
+            border-radius: 0;
         }
 
         .typing-indicator span {
@@ -3012,7 +3167,7 @@
             padding: 10px 14px;
             background: #242F3D;
             border: none;
-            border-radius: 20px;
+            border-radius: 2px;
             font-size: 14px;
             color: #fff;
             outline: none;
@@ -3031,7 +3186,7 @@
             background: #766AC8;
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 2px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
@@ -3054,7 +3209,7 @@
             padding: 6px 12px;
             background: #242F3D;
             border: none;
-            border-radius: 16px;
+            border-radius: 2px;
             font-size: 12px;
             color: #8B9CAB;
             cursor: pointer;
@@ -3071,7 +3226,7 @@
             width: 100%;
             max-width: 600px;
             background: #0E1621;
-            border-radius: 16px;
+            border-radius: 0;
             box-shadow: 0 4px 24px rgba(0,0,0,0.3);
             overflow: hidden;
         }
@@ -3269,7 +3424,7 @@
             width: 200px;
             height: 200px;
             background: #242F3D;
-            border-radius: 12px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3280,7 +3435,7 @@
         }
 
         #qr-canvas-mini {
-            border-radius: 12px;
+            border-radius: 0;
         }
 
         /* Bot Features */
@@ -3458,7 +3613,7 @@
         .price-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+            border-radius: 0;
             padding: 32px 28px;
             text-align: left;
             position: relative;
@@ -3497,7 +3652,7 @@
             font-size: 11px;
             font-weight: 600;
             padding: 6px 14px;
-            border-radius: 20px;
+            border-radius: 2px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -3566,7 +3721,7 @@
             display: block;
             text-align: center;
             padding: 14px 24px;
-            border-radius: 10px;
+            border-radius: 2px;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
@@ -3697,7 +3852,7 @@
             padding: 48px 32px;
             background: rgba(255,255,255,0.95);
             border: none;
-            border-radius: 16px;
+            border-radius: 0;
             text-decoration: none;
             color: #1a1a1a;
             transition: all 0.3s ease;
@@ -3874,7 +4029,7 @@
         .contact-form-container {
             background: var(--black);
             border: 1px solid var(--purple);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 48px;
             max-width: 500px;
             width: 90%;
@@ -4277,96 +4432,227 @@
             <h2 class="section-title">oracle curates. code distributes.</h2>
         </div>
 
-        <!-- 3-Block Flow Diagram -->
-        <div class="flow-diagram">
-            <div class="flow-block tokenise active" data-flow="launch">
-                <div class="flow-block-number">01</div>
-                <h3>Tokenise</h3>
-                <div class="flow-block-sub">Token + Economics</div>
+        <!-- Compact Ecosystem Flowchart -->
+        <div class="ecosystem-flow">
+            <div class="eco-step">
+                <span class="eco-num">1</span>
+                <span class="eco-label">JOIN</span>
+                <span class="eco-sub">/start</span>
             </div>
-
-            <div class="flow-arrow">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="eco-arrow">→</div>
+            <div class="eco-step">
+                <span class="eco-num">2</span>
+                <span class="eco-label">CONNECT</span>
+                <span class="eco-sub">wallet</span>
             </div>
-
-            <div class="flow-block" data-flow="curate">
-                <div class="flow-block-number">02</div>
-                <h3>Curate</h3>
-                <div class="flow-block-sub">Oracle + AI Stack</div>
+            <div class="eco-arrow">→</div>
+            <div class="eco-step eco-center">
+                <span class="eco-num">3</span>
+                <span class="eco-label">CONTRIBUTE</span>
+                <span class="eco-sub">raids · Q&A · memes</span>
             </div>
-
-            <div class="flow-arrow">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="eco-arrow">→</div>
+            <div class="eco-step">
+                <span class="eco-num">4</span>
+                <span class="eco-label">VERIFY</span>
+                <span class="eco-sub">oracle</span>
             </div>
+            <div class="eco-arrow">→</div>
+            <div class="eco-step">
+                <span class="eco-num">5</span>
+                <span class="eco-label">EARN</span>
+                <span class="eco-sub">ETH rewards</span>
+            </div>
+            <div class="eco-loop">↩ level up & repeat</div>
+        </div>
 
-            <div class="flow-block" data-flow="reward">
-                <div class="flow-block-number">03</div>
-                <h3>Reward</h3>
-                <div class="flow-block-sub">Verified = ETH</div>
+        <!-- 6 System Tabs -->
+        <div class="system-tabs">
+            <button class="system-tab active" data-tab="journey">Journey</button>
+            <button class="system-tab" data-tab="learn">Learn</button>
+            <button class="system-tab" data-tab="contribute">Contribute</button>
+            <button class="system-tab" data-tab="reputation">Reputation</button>
+            <button class="system-tab" data-tab="launch">Launch</button>
+            <button class="system-tab" data-tab="trust">Trust</button>
+        </div>
+
+        <!-- Tab 1: Journey -->
+        <div class="system-content active" id="tab-journey">
+            <div class="system-flow">
+                <div class="system-step">
+                    <div class="system-step-num">01</div>
+                    <div class="system-step-title">Join</div>
+                    <div class="system-step-sub">/start in Telegram</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">02</div>
+                    <div class="system-step-title">Connect</div>
+                    <div class="system-step-sub">Link your wallet</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">03</div>
+                    <div class="system-step-title">Build</div>
+                    <div class="system-step-sub">Earn Thank Points</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">04</div>
+                    <div class="system-step-title">Earn</div>
+                    <div class="system-step-sub">100 pts = ETH</div>
+                </div>
+            </div>
+            <div class="system-desc">
+                <strong>The onboarding loop.</strong> Every user starts here. /start → wallet connect → contribute → claim rewards. No signups, no emails, no friction.
             </div>
         </div>
 
-        <!-- Detail Panels -->
-        <div class="flow-detail active" id="detail-launch">
-            <div class="flow-detail-header">
-                <h4>Token Launcher</h4>
-                <span class="flow-detail-tag">Etherfun Integration</span>
+        <!-- Tab 2: Learn -->
+        <div class="system-content" id="tab-learn">
+            <div class="system-flow">
+                <div class="system-step">
+                    <div class="system-step-num">01</div>
+                    <div class="system-step-title">Ask</div>
+                    <div class="system-step-sub">Question in chat</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">02</div>
+                    <div class="system-step-title">Learn</div>
+                    <div class="system-step-sub">AI answers instantly</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">03</div>
+                    <div class="system-step-title">Grow</div>
+                    <div class="system-step-sub">Knowledge compounds</div>
+                </div>
             </div>
-            <div class="flow-detail-grid">
-                <div class="flow-detail-item">
-                    <h5>Euler ERC-20</h5>
-                    <p>Deploy your token for $1-2. No code required. Instant liquidity.</p>
-                </div>
-                <div class="flow-detail-item">
-                    <h5>Fee Structure</h5>
-                    <p>Configure 1-10% trading fees. Fees fund the community tip pool.</p>
-                </div>
-                <div class="flow-detail-item">
-                    <h5>Referral Bonus</h5>
-                    <p>Built-in growth incentives. Reward users who bring new holders.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="flow-detail" id="detail-curate">
-            <div class="flow-detail-header">
-                <h4>SIAH Oracle</h4>
-                <span class="flow-detail-tag">AI Curation Layer</span>
-            </div>
-            <div class="flow-detail-grid">
-                <div class="flow-detail-item">
-                    <h5>Q&A Engine</h5>
-                    <p>Learns your docs. Answers questions forever. Never quits.</p>
-                </div>
-                <div class="flow-detail-item">
-                    <h5>Raid Review</h5>
-                    <p>Auto-verifies tweets exist, content is original, accounts are real.</p>
-                </div>
-                <div class="flow-detail-item">
-                    <h5>Sybil Filter</h5>
-                    <p>Pattern detection spots farmers before your airdrop gets drained.</p>
-                </div>
+            <div class="system-desc">
+                <strong>The learning loop.</strong> SIAH reads your docs and answers questions 24/7. Corrections improve future answers. The oracle gets smarter with every interaction.
             </div>
         </div>
 
-        <div class="flow-detail" id="detail-reward">
-            <div class="flow-detail-header">
-                <h4>Verified Earn</h4>
-                <span class="flow-detail-tag">Closed Loop Value</span>
+        <!-- Tab 3: Contribute -->
+        <div class="system-content" id="tab-contribute">
+            <div class="system-flow">
+                <div class="system-step">
+                    <div class="system-step-num">01</div>
+                    <div class="system-step-title">Contribute</div>
+                    <div class="system-step-sub">Raids, Q&A, Memes</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">02</div>
+                    <div class="system-step-title">Verify</div>
+                    <div class="system-step-sub">Oracle reviews</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">03</div>
+                    <div class="system-step-title">Earn</div>
+                    <div class="system-step-sub">+Thank Points</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">04</div>
+                    <div class="system-step-title">Level Up</div>
+                    <div class="system-step-sub">Unlock tiers</div>
+                </div>
             </div>
-            <div class="flow-detail-grid">
-                <div class="flow-detail-item">
-                    <h5>100 pts = ETH</h5>
-                    <p>Hit threshold, claim directly. Real rewards for real contribution.</p>
+            <div class="system-desc">
+                <strong>The contribution loop.</strong> Submit work → oracle verifies → points credited → repeat. Farmers get filtered. Real contributors level up.
+            </div>
+        </div>
+
+        <!-- Tab 4: Reputation -->
+        <div class="system-content" id="tab-reputation">
+            <div class="system-flow">
+                <div class="system-step">
+                    <div class="system-step-num">TIER 1</div>
+                    <div class="system-step-title">50 pts</div>
+                    <div class="system-step-sub">Beta access</div>
                 </div>
-                <div class="flow-detail-item">
-                    <h5>1.1x Holder Bonus</h5>
-                    <p>Token stakers earn more. Align incentives with believers.</p>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">TIER 2</div>
+                    <div class="system-step-title">100 pts</div>
+                    <div class="system-step-sub">Voting rights</div>
                 </div>
-                <div class="flow-detail-item">
-                    <h5>Value Loops Back</h5>
-                    <p>Trading fees fund tips. Tips reward contributors. They trade more.</p>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">TIER 3</div>
+                    <div class="system-step-title">250 pts</div>
+                    <div class="system-step-sub">Proposals</div>
                 </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">TIER 4</div>
+                    <div class="system-step-title">500 pts</div>
+                    <div class="system-step-sub">Revenue share</div>
+                </div>
+            </div>
+            <div class="system-desc">
+                <strong>The reputation ladder.</strong> Points unlock access. Each tier adds privileges. Sybil-resistant because you can't fake sustained contribution.
+            </div>
+        </div>
+
+        <!-- Tab 5: Launch -->
+        <div class="system-content" id="tab-launch">
+            <div class="system-flow">
+                <div class="system-step" style="border-color: #10b981;">
+                    <div class="system-step-num" style="color: #10b981;">01</div>
+                    <div class="system-step-title" style="color: #10b981;">Tokenise</div>
+                    <div class="system-step-sub">Deploy for $1-2</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">02</div>
+                    <div class="system-step-title">Configure</div>
+                    <div class="system-step-sub">Set 1-10% fees</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">03</div>
+                    <div class="system-step-title">Fund Pool</div>
+                    <div class="system-step-sub">Fees → tip pool</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">04</div>
+                    <div class="system-step-title">Reward</div>
+                    <div class="system-step-sub">Pool → contributors</div>
+                </div>
+            </div>
+            <div class="system-desc">
+                <strong>The tokenomics loop.</strong> Launch via Etherfun → trading fees fund community pool → pool rewards verified contributors → they trade more → cycle continues.
+            </div>
+        </div>
+
+        <!-- Tab 6: Trust -->
+        <div class="system-content" id="tab-trust">
+            <div class="system-flow">
+                <div class="system-step">
+                    <div class="system-step-num">01</div>
+                    <div class="system-step-title">Activity</div>
+                    <div class="system-step-sub">On-chain record</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">02</div>
+                    <div class="system-step-title">Verified</div>
+                    <div class="system-step-sub">Oracle signs</div>
+                </div>
+                <div class="system-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="system-step">
+                    <div class="system-step-num">03</div>
+                    <div class="system-step-title">Portable</div>
+                    <div class="system-step-sub">Take it anywhere</div>
+                </div>
+            </div>
+            <div class="system-desc">
+                <strong>The trust layer.</strong> Your reputation is yours. Recorded on-chain, verified by oracle, portable across communities. Real proof-of-contribution.
             </div>
         </div>
 
@@ -6233,24 +6519,24 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// FLOW DIAGRAM - Clickable Blocks
+// SYSTEM TABS - 6 Loop Interfaces
 // ============================================
-const flowBlocks = document.querySelectorAll('.flow-block');
-const flowDetails = document.querySelectorAll('.flow-detail');
+const systemTabs = document.querySelectorAll('.system-tab');
+const systemContents = document.querySelectorAll('.system-content');
 
-flowBlocks.forEach(block => {
-    block.addEventListener('click', () => {
-        const flowType = block.dataset.flow;
+systemTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabId = tab.dataset.tab;
 
-        // Update active block
-        flowBlocks.forEach(b => b.classList.remove('active'));
-        block.classList.add('active');
+        // Update active tab
+        systemTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
 
-        // Show corresponding detail panel
-        flowDetails.forEach(d => d.classList.remove('active'));
-        const targetDetail = document.getElementById(`detail-${flowType}`);
-        if (targetDetail) {
-            targetDetail.classList.add('active');
+        // Show corresponding content
+        systemContents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`tab-${tabId}`);
+        if (targetContent) {
+            targetContent.classList.add('active');
         }
     });
 });

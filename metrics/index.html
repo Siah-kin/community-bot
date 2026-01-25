@@ -999,6 +999,36 @@
             color: #4ade80;
         }
 
+        /* Winning metric highlighting */
+        .metric-win {
+            color: #10B981 !important;
+            font-weight: 600;
+        }
+        .metric-win::before {
+            content: '✓ ';
+            font-size: 10px;
+        }
+        .benchmark-col {
+            color: var(--gray);
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .benchmark-col .benchmark-val {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .benchmark-col .benchmark-ref {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        .metric-neutral {
+            color: var(--gray);
+        }
+        .metric-label-strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
         /* Info text tooltips - underlined purple text */
         .info-text {
             color: var(--purple);
@@ -1232,33 +1262,33 @@
                         <th data-i18n="th.metric">Metric</th>
                         <th>VISTA</th>
                         <th>BONZI</th>
-                        <th data-i18n="th.meaning">What it means</th>
+                        <th data-i18n="th.benchmark">Benchmark</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="td.tokenage">Token age</td>
-                        <td data-i18n="td.tokenage.val">6+ months</td>
-                        <td data-i18n="td.tokenage.val">6+ months</td>
-                        <td data-i18n="td.tokenage.meaning">How long the token has existed</td>
+                        <td data-i18n="td.tokenage">Token age <span class="info-text" title="Murad's thesis: tokens need 6+ months to prove staying power. Most rugs happen in weeks.">info</span></td>
+                        <td class="metric-win" data-i18n="td.tokenage.val">6+ months</td>
+                        <td class="metric-win" data-i18n="td.tokenage.val">6+ months</td>
+                        <td class="benchmark-col"><span class="benchmark-val">6 mo minimum</span><br><span class="benchmark-ref">Avg memecoin: 2-4 weeks</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.top10">Top 10 holders</td>
-                        <td>—%</td>
-                        <td>—%</td>
-                        <td data-i18n="td.top10.meaning">Combined holdings of largest wallets</td>
+                        <td data-i18n="td.top10">Top 10 holders <span class="info-text" title="Lower is better. High concentration means a few wallets can dump the price.">info</span></td>
+                        <td id="vista-top10">—%</td>
+                        <td id="bonzi-top10">—%</td>
+                        <td class="benchmark-col"><span class="benchmark-val">&lt;70% healthy</span><br><span class="benchmark-ref">PEPE: 82% | SHIB: 78%</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.hhi">Concentration index</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td data-i18n="td.hhi.meaning">Under 1500 = broadly distributed</td>
+                        <td data-i18n="td.hhi">Concentration index <span class="info-text" title="Herfindahl-Hirschman Index. Under 1500 = competitive/distributed. Over 2500 = highly concentrated.">info</span></td>
+                        <td id="vista-hhi">—</td>
+                        <td id="bonzi-hhi">—</td>
+                        <td class="benchmark-col"><span class="benchmark-val">&lt;1500 distributed</span><br><span class="benchmark-ref">PEPE: 2,100 | SPX: 3,400</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.holders">Total holders</td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td data-i18n="td.holders.meaning">Number of unique wallets</td>
+                        <td data-i18n="td.holders">Total holders <span class="info-text" title="More holders = more distributed risk. But quality matters more than quantity.">info</span></td>
+                        <td id="vista-holders">—</td>
+                        <td id="bonzi-holders">—</td>
+                        <td class="benchmark-col"><span class="benchmark-val">Context varies</span><br><span class="benchmark-ref">PEPE: 280K | SHIB: 1.4M</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -1354,33 +1384,33 @@
                         <th data-i18n="th.metric">Metric</th>
                         <th>VISTA</th>
                         <th>BONZI</th>
-                        <th data-i18n="th.context">Context</th>
+                        <th data-i18n="th.benchmark">Benchmark</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="td.staker.eth">ETH to stakers</td>
-                        <td id="vista-staker-eth">— ETH</td>
-                        <td id="bonzi-staker-eth">— ETH</td>
-                        <td data-i18n="td.staker.eth.context">From trading fees, claimable anytime</td>
+                        <td data-i18n="td.staker.eth">ETH to stakers <span class="info-text" title="Real ETH from trading fees, not token emissions. Claimable anytime.">info</span></td>
+                        <td id="vista-staker-eth" class="metric-win">— ETH</td>
+                        <td id="bonzi-staker-eth" class="metric-win">— ETH</td>
+                        <td class="benchmark-col"><span class="benchmark-val">&gt;0 = yield exists</span><br><span class="benchmark-ref">PEPE/SHIB/SPX: 0 ETH</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.lp.eth">ETH to LPs</td>
-                        <td id="vista-lp-eth">— ETH</td>
-                        <td id="bonzi-lp-eth">— ETH</td>
-                        <td data-i18n="td.lp.eth.context">Liquidity providers earn larger share</td>
+                        <td data-i18n="td.lp.eth">ETH to LPs <span class="info-text" title="Liquidity providers earn the largest share of trading fees.">info</span></td>
+                        <td id="vista-lp-eth" class="metric-win">— ETH</td>
+                        <td id="bonzi-lp-eth" class="metric-win">— ETH</td>
+                        <td class="benchmark-col"><span class="benchmark-val">&gt;0 = LP incentive</span><br><span class="benchmark-ref">Most DEX LPs: IL only</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.unique.claimers">Unique recipients</td>
+                        <td data-i18n="td.unique.claimers">Unique recipients <span class="info-text" title="Number of wallets that have actually received ETH from the protocol.">info</span></td>
                         <td id="vista-claimers">—</td>
                         <td id="bonzi-claimers">—</td>
-                        <td data-i18n="td.unique.claimers.context">Wallets that received ETH</td>
+                        <td class="benchmark-col"><span class="benchmark-val">Distributed &gt; concentrated</span><br><span class="benchmark-ref">Context: % of holders</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.tenure">Avg hold time</td>
-                        <td id="vista-tenure">— days</td>
-                        <td id="bonzi-tenure">— days</td>
-                        <td data-i18n="td.tenure.context">How long positions are held</td>
+                        <td data-i18n="td.tenure">Avg hold time <span class="info-text" title="Longer hold times indicate conviction. Murad: 'diamond hands' who don't panic sell.">info</span></td>
+                        <td id="vista-tenure" class="metric-win">— days</td>
+                        <td id="bonzi-tenure" class="metric-win">— days</td>
+                        <td class="benchmark-col"><span class="benchmark-val">&gt;90 days = conviction</span><br><span class="benchmark-ref">Avg memecoin: 14-30 days</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -1393,28 +1423,33 @@
                         <th>Token</th>
                         <th data-i18n="th.eth.paid">ETH Paid</th>
                         <th data-i18n="th.mechanism">Mechanism</th>
+                        <th data-i18n="th.verdict">Verdict</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>VISTA + BONZI</td>
-                        <td id="total-eth-paid">— ETH</td>
+                        <td class="metric-label-strong">VISTA + BONZI</td>
+                        <td id="total-eth-paid" class="metric-win">— ETH</td>
                         <td data-i18n="td.mechanism.vista">Trading fees → stakers & LPs</td>
+                        <td class="metric-win">Real yield</td>
                     </tr>
                     <tr>
                         <td>PEPE</td>
-                        <td>0 ETH</td>
+                        <td class="metric-neutral">0 ETH</td>
                         <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                        <td class="metric-neutral">Price only</td>
                     </tr>
                     <tr>
                         <td>SHIB</td>
-                        <td>0 ETH</td>
+                        <td class="metric-neutral">0 ETH</td>
                         <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                        <td class="metric-neutral">Price only</td>
                     </tr>
                     <tr>
                         <td>SPX6900</td>
-                        <td>0 ETH</td>
+                        <td class="metric-neutral">0 ETH</td>
                         <td data-i18n="td.mechanism.none">No yield mechanism</td>
+                        <td class="metric-neutral">Price only</td>
                     </tr>
                 </tbody>
             </table>
@@ -1519,28 +1554,33 @@
                         <th data-i18n="th.protocol">Protocol</th>
                         <th data-i18n="th.apy">APY</th>
                         <th data-i18n="th.risk">Risk</th>
+                        <th data-i18n="th.notes">Notes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="td.vistastake">VISTA Staking</td>
-                        <td>—%</td>
+                        <td class="metric-label-strong" data-i18n="td.vistastake">VISTA Staking</td>
+                        <td id="vista-apy">—%</td>
                         <td data-i18n="td.risk.sc">Smart contract</td>
+                        <td class="benchmark-col">Variable, trading-volume dependent</td>
                     </tr>
                     <tr>
                         <td>Lido (stETH)</td>
                         <td>~3.5%</td>
                         <td data-i18n="td.risk.sc">Smart contract</td>
+                        <td class="benchmark-col">ETH staking, established</td>
                     </tr>
                     <tr>
                         <td>Aave (USDC)</td>
                         <td>~4%</td>
                         <td data-i18n="td.risk.sc">Smart contract</td>
+                        <td class="benchmark-col">Stablecoin lending</td>
                     </tr>
                     <tr>
                         <td>US Treasury</td>
                         <td>~4.5%</td>
                         <td data-i18n="td.risk.sov">Sovereign</td>
+                        <td class="benchmark-col">Risk-free baseline</td>
                     </tr>
                 </tbody>
             </table>
@@ -1933,7 +1973,7 @@
                 "analysis.dao1.source": "Source: ETH Distribution Query | Tenure Query",
                 "unlock.title2": "Alpha Metrics", "unlock.desc2": "Connect wallet staking $BONZI or $VISTA",
                 "btn.connect": "Connect Wallet", "last.updated": "Last updated:",
-                "th.metric": "Metric", "th.value": "Value", "th.meaning": "What it means",
+                "th.metric": "Metric", "th.value": "Value", "th.meaning": "What it means", "th.benchmark": "Benchmark", "th.verdict": "Verdict", "th.notes": "Notes",
                 "td.tokenage": "Token age", "td.tokenage.val": "6+ months", "td.tokenage.meaning": "How long the token has existed",
                 "td.top10": "Top 10 holders", "td.top10.meaning": "Combined holdings of largest wallets",
                 "td.hhi": "Concentration index", "td.hhi.meaning": "Under 1500 = broadly distributed",
@@ -1975,7 +2015,7 @@
                 "unlock.title": "Atividade de Staking", "unlock.desc": "Conecte carteira com $BONZI ou $VISTA",
                 "unlock.title2": "Metricas Alpha", "unlock.desc2": "Conecte carteira com stake",
                 "btn.connect": "Conectar Carteira", "last.updated": "Ultima atualizacao:",
-                "th.metric": "Metrica", "th.value": "Valor", "th.meaning": "O que significa",
+                "th.metric": "Metrica", "th.value": "Valor", "th.meaning": "O que significa", "th.benchmark": "Referencia", "th.verdict": "Veredicto", "th.notes": "Notas",
                 "td.tokenage": "Idade do token", "td.tokenage.val": "6+ meses", "td.tokenage.meaning": "Ha quanto tempo o token existe",
                 "td.top10": "Top 10 holders", "td.top10.meaning": "Holdings combinadas das maiores carteiras",
                 "td.hhi": "Indice de concentracao", "td.hhi.meaning": "Abaixo de 1500 = amplamente distribuido",
@@ -2017,7 +2057,7 @@
                 "unlock.title": "质押活动", "unlock.desc": "连接持有代币的钱包",
                 "unlock.title2": "Alpha指标", "unlock.desc2": "连接质押代币的钱包",
                 "btn.connect": "连接钱包", "last.updated": "最后更新：",
-                "th.metric": "指标", "th.value": "数值", "th.meaning": "含义",
+                "th.metric": "指标", "th.value": "数值", "th.meaning": "含义", "th.benchmark": "基准", "th.verdict": "结论", "th.notes": "备注",
                 "td.tokenage": "代币年龄", "td.tokenage.val": "6个月+", "td.tokenage.meaning": "代币存在多久",
                 "td.top10": "前10持有者", "td.top10.meaning": "最大钱包的总持有量",
                 "td.hhi": "集中度指数", "td.hhi.meaning": "低于1500 = 广泛分布",
@@ -2059,7 +2099,7 @@
                 "unlock.title": "Stake Aktivitesi", "unlock.desc": "Token tutan cuzdani baglayin",
                 "unlock.title2": "Alpha Metrikleri", "unlock.desc2": "Stake yapan cuzdani baglayin",
                 "btn.connect": "Cuzdan Bagla", "last.updated": "Son guncelleme:",
-                "th.metric": "Metrik", "th.value": "Deger", "th.meaning": "Anlami",
+                "th.metric": "Metrik", "th.value": "Deger", "th.meaning": "Anlami", "th.benchmark": "Referans", "th.verdict": "Sonuc", "th.notes": "Notlar",
                 "td.tokenage": "Token yasi", "td.tokenage.val": "6+ ay", "td.tokenage.meaning": "Tokenin ne kadar suredir var oldugu",
                 "td.top10": "Ilk 10 holder", "td.top10.meaning": "En buyuk cuzdanlarin toplam varliklari",
                 "td.hhi": "Yogunlasma endeksi", "td.hhi.meaning": "1500 alti = genis dagilim",
@@ -2101,7 +2141,7 @@
                 "unlock.title": "Активность стейкинга", "unlock.desc": "Подключите кошелек с токенами",
                 "unlock.title2": "Alpha метрики", "unlock.desc2": "Подключите кошелек со стейкингом",
                 "btn.connect": "Подключить кошелек", "last.updated": "Обновлено:",
-                "th.metric": "Метрика", "th.value": "Значение", "th.meaning": "Значение",
+                "th.metric": "Метрика", "th.value": "Значение", "th.meaning": "Значение", "th.benchmark": "Эталон", "th.verdict": "Вердикт", "th.notes": "Заметки",
                 "td.tokenage": "Возраст токена", "td.tokenage.val": "6+ месяцев", "td.tokenage.meaning": "Как долго существует токен",
                 "td.top10": "Топ-10 холдеров", "td.top10.meaning": "Совокупные активы крупнейших кошельков",
                 "td.hhi": "Индекс концентрации", "td.hhi.meaning": "Ниже 1500 = широкое распределение",
@@ -2143,7 +2183,7 @@
                 "unlock.title": "Activite de Staking", "unlock.desc": "Connecter portefeuille avec tokens",
                 "unlock.title2": "Metriques Alpha", "unlock.desc2": "Connecter portefeuille avec stake",
                 "btn.connect": "Connecter Portefeuille", "last.updated": "Mis a jour:",
-                "th.metric": "Metrique", "th.value": "Valeur", "th.meaning": "Signification",
+                "th.metric": "Metrique", "th.value": "Valeur", "th.meaning": "Signification", "th.benchmark": "Reference", "th.verdict": "Verdict", "th.notes": "Notes",
                 "td.tokenage": "Age du token", "td.tokenage.val": "6+ mois", "td.tokenage.meaning": "Depuis combien de temps le token existe",
                 "td.top10": "Top 10 detenteurs", "td.top10.meaning": "Avoirs combines des plus grands portefeuilles",
                 "td.hhi": "Indice de concentration", "td.hhi.meaning": "Sous 1500 = largement distribue",

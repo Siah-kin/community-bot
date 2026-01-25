@@ -2345,25 +2345,157 @@
         }
 
         /* Demo section */
-        /* Feature showcase */
-        .features-section { padding: 120px 48px; background: var(--purple); }
+        /* The Loop - Interactive Flywheel */
+        .features-section { padding: 120px 48px; background: var(--black); position: relative; }
         .features-container { max-width: 1100px; margin: 0 auto; }
         .features-header { text-align: center; margin-bottom: 64px; }
-        .features-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
+        .features-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple); margin-bottom: 16px; }
         .features-header p { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; color: var(--white); }
-        .features-link { display: inline-block; margin-top: 20px; color: var(--white); font-size: 15px; font-weight: 500; text-decoration: none; padding: 10px 20px; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; transition: all 0.3s ease; }
-        .features-link:hover { background: var(--white); color: var(--purple); border-color: var(--white); }
-        .features-link strong { font-weight: 700; }
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .feature-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
-        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
-        .feature-icon { width: 48px; height: 48px; background: rgba(124,58,237,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; color: #7C3AED; }
-        .feature-icon svg { width: 24px; height: 24px; stroke: #7C3AED; }
-        .feature-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.02em; color: #FAFAFA; }
-        .feature-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
-        .feature-card .feature-detail { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-light); font-size: 13px; color: var(--purple); font-weight: 500; }
-        @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+        .features-header .loop-subtitle { font-size: 18px; color: var(--gray); margin-top: 16px; }
+
+        /* Loop Diagram */
+        .loop-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
+        .loop-diagram { position: relative; width: 360px; height: 360px; }
+
+        .loop-segment {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .loop-segment:hover { transform: scale(1.05); }
+        .loop-segment.active { transform: scale(1.08); }
+
+        .loop-segment-box {
+            background: #1a1a1a;
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 24px 32px;
+            min-width: 160px;
+        }
+        .loop-segment.active .loop-segment-box {
+            background: var(--purple);
+            border-color: var(--white);
+        }
+
+        .loop-segment h3 {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple);
+            margin-bottom: 8px;
+        }
+        .loop-segment.active h3 { color: var(--white); }
+
+        .loop-segment .loop-items {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        .loop-segment.active .loop-items { color: rgba(255,255,255,0.9); }
+
+        /* Position segments in triangle */
+        .loop-segment.contribute { top: 0; left: 50%; transform: translateX(-50%); }
+        .loop-segment.contribute:hover, .loop-segment.contribute.active { transform: translateX(-50%) scale(1.05); }
+        .loop-segment.verify { bottom: 40px; left: 0; }
+        .loop-segment.earn { bottom: 40px; right: 0; }
+
+        /* Arrows */
+        .loop-arrows {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .loop-arrows svg { width: 100%; height: 100%; }
+        .loop-arrows path {
+            fill: none;
+            stroke: var(--purple);
+            stroke-width: 2;
+            stroke-dasharray: 8 4;
+            opacity: 0.6;
+        }
+        .loop-arrows polygon { fill: var(--purple); opacity: 0.6; }
+
+        /* Bottom Drawer */
+        .loop-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border-top: 3px solid var(--purple);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .loop-drawer.open { transform: translateY(0); }
+
+        .loop-drawer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 48px;
+        }
+
+        .loop-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .loop-drawer-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .loop-drawer-close {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            line-height: 1;
+        }
+        .loop-drawer-close:hover { color: var(--white); }
+
+        .loop-drawer-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        .loop-drawer-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .loop-drawer-item p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        .loop-drawer-item .detail {
+            font-size: 12px;
+            color: var(--purple);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .loop-diagram { width: 300px; height: 320px; }
+            .loop-segment-box { padding: 16px 20px; min-width: 120px; }
+            .loop-segment h3 { font-size: 14px; }
+            .loop-segment .loop-items { font-size: 12px; }
+            .loop-drawer-content { padding: 24px; }
+        }
 
         .demo-section {
             min-height: 100vh;
@@ -3887,46 +4019,64 @@
 <section class="features-section" id="features">
     <div class="features-container">
         <div class="features-header">
-            <h2 data-i18n="features.label">adaptive features</h2>
-            <p data-i18n="features.title">AI that learns from every interaction. Not static bots.</p>
-            <a href="features.html" class="features-link">See <strong>how</strong> they learn and adapt →</a>
+            <h2>the loop</h2>
+            <p>Oracle curates. Code distributes.</p>
+            <div class="loop-subtitle">Click each stage to see how it works</div>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
-                <h4 data-i18n="features.ask.title">Ask & Earn</h4>
-                <p data-i18n="features.ask.desc">AI scores every question for depth, novelty, and cooperation. Curious users earn 1-10 pts per question. Farmers can't fake curiosity.</p>
-                <div class="feature-detail" data-i18n="features.ask.detail">Semantic similarity + cooperation metrics</div>
+
+        <div class="loop-container">
+            <div class="loop-diagram">
+                <!-- Arrows connecting the segments -->
+                <div class="loop-arrows">
+                    <svg viewBox="0 0 360 360">
+                        <!-- Contribute to Verify -->
+                        <path d="M 100 120 Q 60 180 80 240" />
+                        <polygon points="75,235 85,245 90,232" />
+                        <!-- Verify to Earn -->
+                        <path d="M 140 280 Q 180 300 220 280" />
+                        <polygon points="215,285 228,280 218,272" />
+                        <!-- Earn to Contribute -->
+                        <path d="M 280 240 Q 300 180 260 120" />
+                        <polygon points="265,125 255,115 252,128" />
+                    </svg>
+                </div>
+
+                <!-- CONTRIBUTE segment (top) -->
+                <div class="loop-segment contribute" data-segment="contribute">
+                    <div class="loop-segment-box">
+                        <h3>Contribute</h3>
+                        <div class="loop-items">Ask &bull; Raid &bull; Thank</div>
+                    </div>
+                </div>
+
+                <!-- VERIFY segment (bottom left) -->
+                <div class="loop-segment verify" data-segment="verify">
+                    <div class="loop-segment-box">
+                        <h3>Verify</h3>
+                        <div class="loop-items">AI Oracle</div>
+                    </div>
+                </div>
+
+                <!-- EARN segment (bottom right) -->
+                <div class="loop-segment earn" data-segment="earn">
+                    <div class="loop-segment-box">
+                        <h3>Earn</h3>
+                        <div class="loop-items">100 pts = ETH</div>
+                    </div>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-                <h4 data-i18n="features.raid.title">Raid & Earn</h4>
-                <p data-i18n="features.raid.desc">Submit raid screenshots. AI verifies tweet exists, content is original, account is real. No more manual review hell.</p>
-                <div class="feature-detail" data-i18n="features.raid.detail">Auto-verification + originality check</div>
+        </div>
+    </div>
+
+    <!-- Bottom Drawer for details -->
+    <div class="loop-drawer" id="loop-drawer">
+        <div class="loop-drawer-content">
+            <div class="loop-drawer-header">
+                <h3 id="drawer-title">Contribute</h3>
+                <button class="loop-drawer-close" id="drawer-close">&times;</button>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
-                <h4 data-i18n="features.thanks.title">Thanks System</h4>
-                <p data-i18n="features.thanks.desc">React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.</p>
-                <div class="feature-detail" data-i18n="features.thanks.detail">Reaction tracking via Telethon</div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
-                <h4 data-i18n="features.leaderboard.title">Live Leaderboard</h4>
-                <p data-i18n="features.leaderboard.desc">Quality-weighted rankings. Not task counts. Who's actually helping? Who's creating value? Bonzi tracks it all.</p>
-                <div class="feature-detail" data-i18n="features.leaderboard.detail">Cooperation score multipliers</div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></div>
-                <h4 data-i18n="features.claim.title">100 pts = ETH</h4>
-                <p data-i18n="features.claim.desc">Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.</p>
-                <div class="feature-detail" data-i18n="features.claim.detail">On-chain claims via connected wallet</div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
-                <h4 data-i18n="features.sybil.title">Sybil Detection</h4>
-                <p data-i18n="features.sybil.desc">AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content. Flagged before snapshot.</p>
-                <div class="feature-detail" data-i18n="features.sybil.detail">Cross-tenant intel sharing</div>
+            <div class="loop-drawer-items" id="drawer-items">
+                <!-- Content injected by JS -->
             </div>
         </div>
     </div>
@@ -5754,6 +5904,88 @@ window.addEventListener('scroll', () => {
 
     // Update music volume based on scroll position
     updateVolumeByScroll();
+});
+
+// ============================================
+// THE LOOP - Interactive Drawer
+// ============================================
+const loopData = {
+    contribute: {
+        title: 'Contribute',
+        items: [
+            { title: 'Ask & Earn', desc: 'AI scores every question for depth, novelty, and cooperation. Curious users earn 1-10 pts per question.', detail: 'Semantic similarity + cooperation metrics' },
+            { title: 'Raid & Earn', desc: 'Submit raid screenshots. AI verifies tweet exists, content is original, account is real.', detail: 'Auto-verification + originality check' },
+            { title: 'Thanks System', desc: 'React to helpful posts with emoji. Author gets +1 pt. Real appreciation, tracked on-chain ready.', detail: 'Reaction tracking via Telethon' }
+        ]
+    },
+    verify: {
+        title: 'Verify',
+        items: [
+            { title: 'Sybil Detection', desc: 'AI detects extractive patterns. Copy-paste farmers, multi-wallet sybils, bot-generated content.', detail: 'Cross-tenant intel sharing' },
+            { title: 'Quality Scoring', desc: 'Every contribution scored for authenticity. Farmers can\'t fake genuine curiosity or helpfulness.', detail: 'Behavioral pattern analysis' },
+            { title: 'Live Leaderboard', desc: 'Quality-weighted rankings. Not task counts. Who\'s actually helping? Who\'s creating value?', detail: 'Cooperation score multipliers' }
+        ]
+    },
+    earn: {
+        title: 'Earn',
+        items: [
+            { title: '100 pts = ETH', desc: 'Hit 100 points, claim ETH directly. Token holders get 1.1x bonus. Real rewards for real contribution.', detail: 'On-chain claims via connected wallet' },
+            { title: 'Holder Bonus', desc: 'Stake tokens for multiplied rewards. The more you believe, the more you earn.', detail: '1.1x multiplier for stakers' },
+            { title: 'Closed Loop', desc: 'Trading fees fund the tip pool. Value created here stays here. That\'s the loop.', detail: 'Self-sustaining economy' }
+        ]
+    }
+};
+
+const loopSegments = document.querySelectorAll('.loop-segment');
+const loopDrawer = document.getElementById('loop-drawer');
+const drawerTitle = document.getElementById('drawer-title');
+const drawerItems = document.getElementById('drawer-items');
+const drawerClose = document.getElementById('drawer-close');
+
+function openDrawer(segment) {
+    const data = loopData[segment];
+    if (!data) return;
+
+    // Update active state
+    loopSegments.forEach(s => s.classList.remove('active'));
+    document.querySelector(`.loop-segment.${segment}`).classList.add('active');
+
+    // Populate drawer
+    drawerTitle.textContent = data.title;
+    drawerItems.innerHTML = data.items.map(item => `
+        <div class="loop-drawer-item">
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+            <div class="detail">${item.detail}</div>
+        </div>
+    `).join('');
+
+    loopDrawer.classList.add('open');
+}
+
+function closeDrawer() {
+    loopDrawer.classList.remove('open');
+    loopSegments.forEach(s => s.classList.remove('active'));
+}
+
+loopSegments.forEach(segment => {
+    segment.addEventListener('click', () => {
+        const segmentType = segment.dataset.segment;
+        if (loopDrawer.classList.contains('open') && segment.classList.contains('active')) {
+            closeDrawer();
+        } else {
+            openDrawer(segmentType);
+        }
+    });
+});
+
+drawerClose.addEventListener('click', closeDrawer);
+
+// Close drawer when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.loop-segment') && !e.target.closest('.loop-drawer')) {
+        closeDrawer();
+    }
 });
 </script>
 

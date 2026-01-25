@@ -2018,7 +2018,7 @@
         /* Solutions section - Visual System Diagram */
         .solutions-section {
             padding: 100px 48px;
-            background: #0A0A0A;
+            background: #fff;
             overflow: hidden;
         }
 
@@ -2030,6 +2030,12 @@
         .solutions-header {
             text-align: center;
             margin-bottom: 64px;
+        }
+        .solutions-header .section-label {
+            color: var(--purple);
+        }
+        .solutions-header .section-title {
+            color: #0a0a0a;
         }
 
         /* System Diagram */
@@ -2064,32 +2070,36 @@
 
         .input-nodes {
             display: flex;
-            gap: 16px;
+            gap: 2px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .input-node {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-            border: 1px solid #2a2a2a;
-            border-radius: 8px;
-            padding: 16px 24px;
+            background: #f5f5f5;
+            border: 2px solid #0a0a0a;
+            padding: 20px 32px;
             text-align: center;
-            min-width: 120px;
+            min-width: 140px;
             transition: all 0.3s ease;
         }
         .input-node:hover {
-            border-color: var(--purple);
-            transform: translateY(-2px);
+            background: #0a0a0a;
+        }
+        .input-node:hover .input-node-icon,
+        .input-node:hover .input-node-label {
+            color: #fff;
         }
         .input-node-icon {
             font-size: 24px;
             margin-bottom: 8px;
+            color: #0a0a0a;
+            font-weight: 700;
         }
         .input-node-label {
             font-size: 13px;
             font-weight: 600;
-            color: var(--white);
+            color: #0a0a0a;
         }
 
         /* Connector Lines */
@@ -2101,8 +2111,8 @@
         }
         .connector-line {
             width: 2px;
-            height: 40px;
-            background: linear-gradient(180deg, var(--purple), rgba(124,58,237,0.3));
+            height: 48px;
+            background: #0a0a0a;
         }
         .connector-arrow {
             position: absolute;
@@ -2111,29 +2121,19 @@
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 8px solid var(--purple);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid #0a0a0a;
         }
 
         /* Oracle Core */
         .oracle-core {
-            background: linear-gradient(135deg, #1f1a2e 0%, #0f0a1a 100%);
-            border: 2px solid var(--purple);
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 800px;
+            background: #0a0a0a;
+            border: 2px solid #0a0a0a;
+            padding: 48px;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
-        }
-        .oracle-core::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--purple), transparent);
-            opacity: 0.2;
-            z-index: -1;
         }
 
         .oracle-header {
@@ -2149,44 +2149,44 @@
             margin-bottom: 8px;
         }
         .oracle-name {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            color: var(--white);
+            color: #fff;
             letter-spacing: -0.02em;
         }
 
         .oracle-modules {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 2px;
         }
 
         .oracle-module {
-            background: rgba(0,0,0,0.4);
+            background: #1a1a1a;
             border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: default;
         }
         .oracle-module:hover {
-            border-color: var(--purple);
-            background: rgba(124,58,237,0.1);
+            background: #252525;
         }
         .oracle-module-icon {
             font-size: 28px;
             margin-bottom: 12px;
+            color: var(--purple);
+            font-weight: 700;
         }
         .oracle-module h4 {
             font-size: 14px;
             font-weight: 600;
-            color: var(--white);
+            color: #fff;
             margin-bottom: 6px;
         }
         .oracle-module p {
             font-size: 12px;
-            color: var(--gray);
+            color: #888;
             line-height: 1.4;
         }
 
@@ -2194,27 +2194,26 @@
         .output-layer {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 2px;
             flex-wrap: wrap;
         }
 
         .output-node {
-            background: linear-gradient(135deg, #0a1a0f 0%, #0f0f0f 100%);
-            border: 1px solid #10b981;
-            border-radius: 12px;
-            padding: 24px 32px;
+            background: #10b981;
+            border: 2px solid #10b981;
+            padding: 24px 40px;
             text-align: center;
             min-width: 180px;
         }
         .output-node-value {
             font-size: 24px;
             font-weight: 700;
-            color: #10b981;
+            color: #fff;
             margin-bottom: 4px;
         }
         .output-node-label {
             font-size: 13px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.8);
         }
 
         /* Loop Return */
@@ -2222,14 +2221,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 48px;
             padding-top: 32px;
-            border-top: 1px dashed #2a2a2a;
+            border-top: 2px solid #e5e5e5;
         }
         .loop-return-text {
             font-size: 14px;
             font-weight: 600;
-            color: var(--purple);
+            color: #0a0a0a;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -2244,7 +2243,7 @@
         @media (max-width: 768px) {
             .oracle-modules { grid-template-columns: repeat(2, 1fr); }
             .system-layer-label { display: none; }
-            .input-node { min-width: 100px; padding: 12px 16px; }
+            .input-node { min-width: 100px; padding: 16px 20px; }
         }
         @media (max-width: 500px) {
             .oracle-modules { grid-template-columns: 1fr; }

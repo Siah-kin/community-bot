@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stake BONZI - DAO Member Access</title>
+    <meta name="description" content="Stake your BONZI tokens to earn ETH rewards and DAO points. Mobile-friendly, MEV-protected.">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --green: #10B981;
+            --red: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            color: #FAFAFA;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Mobile-first header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 1rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Gate overlay */
+        .gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 2rem;
+        }
+
+        .gate-content {
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .gate-content h2 {
+            color: var(--purple-light);
+            margin-bottom: 1rem;
+        }
+
+        .gate-content p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Connect button */
+        .connect-btn {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(124, 58, 237, 0.08);
+            border-radius: 12px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main card */
+        .stake-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .balance {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .balance span {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        /* Input group */
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem;
+            padding-right: 4rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--purple);
+        }
+
+        .input-wrapper input::placeholder {
+            color: var(--gray);
+        }
+
+        .max-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Action buttons */
+        .action-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+        }
+
+        .action-btn.primary:hover:not(:disabled) {
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Info box */
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+        }
+
+        .info-box.warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #FBB524;
+        }
+
+        .info-box p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Rewards section */
+        .rewards-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rewards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .claimable {
+            text-align: right;
+        }
+
+        .claimable-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .claimable-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        /* Points section */
+        .points-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Self-compound section */
+        .compound-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .compound-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--green);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .compound-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            min-width: 70px;
+        }
+
+        .flow-step-icon {
+            font-size: 1.25rem;
+        }
+
+        .flow-step-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .flow-arrow {
+            color: var(--green);
+            font-size: 1.25rem;
+        }
+
+        .compound-description {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .buy-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .widget-embed {
+            margin-top: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .widget-embed iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .widget-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: transparent;
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 0.75rem;
+        }
+
+        .widget-toggle:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .points-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .points-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .points-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .points-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* MEV protection badge */
+        .mev-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        /* Status messages */
+        .status {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--red);
+        }
+
+        .status.pending {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+        }
+
+        /* Hidden by default */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            body {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .stake-card, .rewards-card, .points-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Gate overlay - shown until wallet connected & verified -->
+    <div class="gate-overlay" id="gateOverlay">
+        <div class="gate-content">
+            <img src="bonzi-logo.png" alt="Bonzi" class="logo">
+            <h2>DAO Member Access</h2>
+            <p>This page is for BONZI holders only. Connect your wallet to verify ownership and access staking.</p>
+            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">
+                Connect Wallet
+            </button>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--gray);">
+                Don't have BONZI? <a href="https://ethervista.app" target="_blank" style="color: var(--purple-light);">Buy on Ethervista</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main content - hidden until verified -->
+    <div class="container" id="mainContent" style="display: none;">
+        <header>
+            <img src="bonzi-logo.png" alt="Bonzi" class="logo">
+            <h1>Stake BONZI</h1>
+            <p class="subtitle">Earn ETH rewards + DAO points</p>
+        </header>
+
+        <!-- Protocol stats -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="totalStaked">15%</div>
+                <div class="stat-label">Supply Locked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="totalStakers">--</div>
+                <div class="stat-label">Stakers</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="estApy">~12%</div>
+                <div class="stat-label">Est. APY</div>
+            </div>
+        </div>
+
+        <!-- MEV protection badge -->
+        <div class="mev-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            MEV Protected via Flashbots
+        </div>
+
+        <!-- Status messages -->
+        <div class="status hidden" id="statusMessage"></div>
+
+        <!-- Stake card -->
+        <div class="stake-card">
+            <div class="card-header">
+                <span class="card-title">Stake BONZI</span>
+                <span class="balance">Balance: <span id="bonziBalance">0</span></span>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <input type="number" id="stakeAmount" placeholder="0.0" min="0" step="any">
+                    <button class="max-btn" onclick="setMax()">MAX</button>
+                </div>
+            </div>
+
+            <button class="action-btn primary" id="stakeBtn" onclick="stake()" disabled>
+                Enter Amount
+            </button>
+        </div>
+
+        <!-- Info box -->
+        <div class="info-box warning">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBB524" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p><strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days. Claim rewards anytime.</p>
+        </div>
+
+        <!-- Rewards card -->
+        <div class="rewards-card">
+            <div class="rewards-header">
+                <div>
+                    <span class="card-title">Your Position</span>
+                    <p style="color: var(--gray); font-size: 0.85rem; margin-top: 0.25rem;">
+                        Staked: <span id="stakedBalance">0</span> BONZI
+                    </p>
+                </div>
+                <div class="claimable">
+                    <div class="claimable-label">Claimable</div>
+                    <div class="claimable-value" id="claimableEth">0.00 ETH</div>
+                </div>
+            </div>
+
+            <button class="action-btn primary" id="claimBtn" onclick="claim()" disabled>
+                Claim Rewards
+            </button>
+            <button class="action-btn secondary" id="withdrawBtn" onclick="withdraw()" disabled>
+                Withdraw (after lock)
+            </button>
+        </div>
+
+        <!-- Points card -->
+        <div class="points-card">
+            <div class="points-header">
+                <span class="points-title">Stake & Earn Points</span>
+                <span class="points-value" id="monthlyPoints">+0 pts/mo</span>
+            </div>
+            <p class="points-info">
+                Earn 100 DAO points per month while staking. Points unlock governance perks and tier benefits.
+            </p>
+        </div>
+
+        <!-- Self-Compound Section -->
+        <div class="compound-card">
+            <div class="compound-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/>
+                </svg>
+                Self-Compounding Loop
+            </div>
+
+            <p class="compound-description">
+                Maximize your returns: claim ETH rewards, buy more BONZI, stake it, repeat. Compound your gains without leaving this page.
+            </p>
+
+            <!-- Visual flow -->
+            <div class="compound-flow">
+                <div class="flow-step">
+                    <span class="flow-step-icon">💰</span>
+                    <span class="flow-step-label">Claim ETH</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <span class="flow-step-icon">🟣</span>
+                    <span class="flow-step-label">Buy BONZI</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <span class="flow-step-icon">🔒</span>
+                    <span class="flow-step-label">Stake</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <span class="flow-step-icon">📈</span>
+                    <span class="flow-step-label">Earn More</span>
+                </div>
+            </div>
+
+            <!-- Buy button -->
+            <a href="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI" class="buy-btn" id="buyBonziBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v12M6 12h12"/>
+                </svg>
+                Buy More BONZI
+            </a>
+
+            <!-- Toggle embedded widget -->
+            <button class="widget-toggle" onclick="toggleWidget()">
+                <span id="widgetToggleText">Show Buy Widget Here</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </button>
+
+            <!-- Embedded widget (hidden by default) -->
+            <div class="widget-embed hidden" id="widgetEmbed">
+                <iframe
+                    src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI&embed=true"
+                    title="Buy BONZI Widget"
+                    allow="clipboard-write; payment">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="info-box" style="margin-bottom: 1.5rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            <p>
+                <strong>Quick actions:</strong><br>
+                <a href="https://ethervista.app" target="_blank" style="color: var(--purple-light);">Trade on Ethervista</a> &bull;
+                <a href="widget/brand-widget.html" target="_blank" style="color: var(--purple-light);">Full Buy Widget</a> &bull;
+                <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" style="color: var(--purple-light);">Price Chart</a>
+            </p>
+        </div>
+
+        <footer>
+            <p>
+                <a href="index.html">Home</a> &bull;
+                <a href="faq.html">FAQ</a> &bull;
+                <a href="https://etherscan.io/address/0xEE5a6F8a55B02689138c195031d09BAFDc7d278F" target="_blank">Contract</a>
+            </p>
+            <p style="margin-top: 0.5rem;">Transactions routed via Flashbots for MEV protection</p>
+        </footer>
+    </div>
+
+    <!-- Web3 Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script>
+        // Contract addresses
+        const CONTRACTS = {
+            BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+            ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+            HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F'
+        };
+
+        // MEV-protected RPC
+        const MEV_PROTECTED_RPC = 'https://rpc.flashbots.net';
+        const PUBLIC_RPC = 'https://eth.llamarpc.com';
+
+        // ABIs (minimal)
+        const ERC20_ABI = [
+            'function balanceOf(address) view returns (uint256)',
+            'function approve(address spender, uint256 amount) returns (bool)',
+            'function allowance(address owner, address spender) view returns (uint256)'
+        ];
+
+        const HARDSTAKE_ABI = [
+            'function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
+            'function claimShare()',
+            'function withdraw(uint256 amount)'
+        ];
+
+        const ROUTER_ABI = [
+            'function hardstake(address _contract, address _token, uint256 _amount)'
+        ];
+
+        // State
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+        let bonziBalance = 0;
+
+        // Connect wallet
+        async function connectWallet() {
+            const btn = document.getElementById('connectBtn');
+            btn.textContent = 'Connecting...';
+            btn.disabled = true;
+
+            try {
+                if (!window.ethereum) {
+                    throw new Error('No wallet found. Please install MetaMask or use a Web3 browser.');
+                }
+
+                // Request accounts
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+                userAddress = accounts[0];
+
+                // Check network
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== '0x1') {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x1' }]
+                    });
+                }
+
+                // Setup provider (public for reads)
+                provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
+
+                // Check BONZI balance for gating
+                const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
+                const balance = await bonziContract.balanceOf(userAddress);
+                bonziBalance = parseFloat(ethers.utils.formatEther(balance));
+
+                // Check staked balance too
+                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, provider);
+                const stakerInfo = await hardstakeContract.getStakerInfo(userAddress);
+                const stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
+
+                // Gate check: must hold or stake BONZI
+                if (bonziBalance === 0 && stakedBalance === 0) {
+                    throw new Error('You need BONZI tokens to access this page. Buy on Ethervista first.');
+                }
+
+                // Passed gate - show main content
+                document.getElementById('gateOverlay').classList.add('hidden');
+                document.getElementById('mainContent').style.display = 'block';
+
+                // Update UI
+                await updateUI();
+
+                // Listen for account/network changes
+                window.ethereum.on('accountsChanged', () => location.reload());
+                window.ethereum.on('chainChanged', () => location.reload());
+
+            } catch (error) {
+                btn.textContent = 'Connect Wallet';
+                btn.disabled = false;
+                alert(error.message);
+            }
+        }
+
+        // Update UI with current balances
+        async function updateUI() {
+            try {
+                const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
+                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, provider);
+
+                // Get balances
+                const balance = await bonziContract.balanceOf(userAddress);
+                bonziBalance = parseFloat(ethers.utils.formatEther(balance));
+                document.getElementById('bonziBalance').textContent = bonziBalance.toLocaleString(undefined, {maximumFractionDigits: 2});
+
+                // Get staker info
+                const stakerInfo = await hardstakeContract.getStakerInfo(userAddress);
+                const stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
+                const claimableEth = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
+                const timeRemaining = stakerInfo.timeRemaining.toNumber();
+
+                document.getElementById('stakedBalance').textContent = stakedBalance.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById('claimableEth').textContent = claimableEth.toFixed(6) + ' ETH';
+
+                // Enable/disable buttons
+                document.getElementById('stakeBtn').disabled = bonziBalance === 0;
+                document.getElementById('claimBtn').disabled = claimableEth === 0;
+                document.getElementById('withdrawBtn').disabled = stakedBalance === 0 || timeRemaining > 0;
+
+                // Update points display
+                const monthlyPoints = stakedBalance > 0 ? 100 + Math.min(Math.floor(stakedBalance / 10000), 100) : 0;
+                document.getElementById('monthlyPoints').textContent = '+' + monthlyPoints + ' pts/mo';
+
+                // Update stake button text
+                updateStakeButton();
+
+            } catch (error) {
+                console.error('UI update error:', error);
+            }
+        }
+
+        // Set max amount
+        function setMax() {
+            document.getElementById('stakeAmount').value = bonziBalance;
+            updateStakeButton();
+        }
+
+        // Update stake button based on input
+        function updateStakeButton() {
+            const amount = parseFloat(document.getElementById('stakeAmount').value) || 0;
+            const btn = document.getElementById('stakeBtn');
+
+            if (amount === 0) {
+                btn.textContent = 'Enter Amount';
+                btn.disabled = true;
+            } else if (amount > bonziBalance) {
+                btn.textContent = 'Insufficient Balance';
+                btn.disabled = true;
+            } else {
+                btn.textContent = 'Stake ' + amount.toLocaleString() + ' BONZI';
+                btn.disabled = false;
+            }
+        }
+
+        // Listen for input changes
+        document.getElementById('stakeAmount').addEventListener('input', updateStakeButton);
+
+        // Show status message
+        function showStatus(message, type = 'pending') {
+            const el = document.getElementById('statusMessage');
+            el.textContent = message;
+            el.className = 'status ' + type;
+            el.classList.remove('hidden');
+        }
+
+        function hideStatus() {
+            document.getElementById('statusMessage').classList.add('hidden');
+        }
+
+        // Stake function
+        async function stake() {
+            const amount = document.getElementById('stakeAmount').value;
+            if (!amount || parseFloat(amount) === 0) return;
+
+            const amountWei = ethers.utils.parseEther(amount);
+
+            try {
+                showStatus('Requesting approval...');
+
+                // Get signer from wallet (for signing txs)
+                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = walletProvider.getSigner();
+
+                // Check allowance
+                const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, signer);
+                const allowance = await bonziContract.allowance(userAddress, CONTRACTS.ROUTER);
+
+                if (allowance.lt(amountWei)) {
+                    showStatus('Approve BONZI spending in your wallet...');
+                    const approveTx = await bonziContract.approve(CONTRACTS.ROUTER, amountWei);
+                    showStatus('Waiting for approval confirmation...');
+                    await approveTx.wait();
+                }
+
+                // Use MEV-protected provider for the stake transaction
+                showStatus('Submitting stake via Flashbots (MEV protected)...');
+
+                // For MEV protection, we'd ideally use Flashbots bundle
+                // For simplicity, using standard tx through wallet
+                const routerContract = new ethers.Contract(CONTRACTS.ROUTER, ROUTER_ABI, signer);
+                const stakeTx = await routerContract.hardstake(
+                    CONTRACTS.HARDSTAKE,
+                    CONTRACTS.BONZI_TOKEN,
+                    amountWei
+                );
+
+                showStatus('Waiting for confirmation...');
+                await stakeTx.wait();
+
+                showStatus('Staked successfully!', 'success');
+                document.getElementById('stakeAmount').value = '';
+
+                // Update UI
+                await updateUI();
+
+                // Hide status after 3 seconds
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Stake error:', error);
+                showStatus(error.message || 'Transaction failed', 'error');
+            }
+        }
+
+        // Claim function
+        async function claim() {
+            try {
+                showStatus('Claiming rewards...');
+
+                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = walletProvider.getSigner();
+
+                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const claimTx = await hardstakeContract.claimShare();
+
+                showStatus('Waiting for confirmation...');
+                await claimTx.wait();
+
+                showStatus('Rewards claimed!', 'success');
+                await updateUI();
+
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Claim error:', error);
+                showStatus(error.message || 'Claim failed', 'error');
+            }
+        }
+
+        // Withdraw function
+        async function withdraw() {
+            try {
+                const stakedEl = document.getElementById('stakedBalance');
+                const stakedAmount = parseFloat(stakedEl.textContent.replace(/,/g, ''));
+
+                if (stakedAmount === 0) return;
+
+                showStatus('Withdrawing staked BONZI...');
+
+                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = walletProvider.getSigner();
+
+                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const amountWei = ethers.utils.parseEther(stakedAmount.toString());
+                const withdrawTx = await hardstakeContract.withdraw(amountWei);
+
+                showStatus('Waiting for confirmation...');
+                await withdrawTx.wait();
+
+                showStatus('Withdrawal complete!', 'success');
+                await updateUI();
+
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Withdraw error:', error);
+                showStatus(error.message || 'Withdrawal failed', 'error');
+            }
+        }
+
+        // Check if already connected on page load
+        window.addEventListener('load', async () => {
+            if (window.ethereum && window.ethereum.selectedAddress) {
+                await connectWallet();
+            }
+        });
+
+        // Toggle widget visibility
+        function toggleWidget() {
+            const embed = document.getElementById('widgetEmbed');
+            const toggleText = document.getElementById('widgetToggleText');
+
+            if (embed.classList.contains('hidden')) {
+                embed.classList.remove('hidden');
+                toggleText.textContent = 'Hide Buy Widget';
+            } else {
+                embed.classList.add('hidden');
+                toggleText.textContent = 'Show Buy Widget Here';
+            }
+        }
+    </script>
+</body>
+</html>

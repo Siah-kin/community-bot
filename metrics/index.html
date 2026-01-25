@@ -1880,6 +1880,25 @@
                 const lastUpdate = document.getElementById('lastUpdate');
                 if (lastUpdate) lastUpdate.textContent = data.updated;
 
+                // DAO Tier 1 - Community Health (VISTA data, can toggle)
+                document.querySelectorAll('#tier-1 .data-table tbody tr').forEach(row => {
+                    const label = row.cells[0]?.textContent?.trim();
+                    if (row.cells[1]) {
+                        if (label === '$1K+ holders') {
+                            row.cells[1].textContent = v.holders_1k_plus !== null ? v.holders_1k_plus : '—';
+                        }
+                        if (label === 'Staker retention') {
+                            row.cells[1].textContent = v.retention_pct ? v.retention_pct + '%' : '—%';
+                        }
+                        if (label === 'Diamond hands') {
+                            row.cells[1].textContent = v.diamond_hands_pct ? v.diamond_hands_pct + '%' : '—%';
+                        }
+                        if (label === 'Avg stake tenure') {
+                            row.cells[1].textContent = v.avg_tenure_days ? v.avg_tenure_days + ' days' : '— days';
+                        }
+                    }
+                });
+
                 console.log('Metrics loaded:', data.updated);
             })
             .catch(err => console.log('Metrics JSON not loaded:', err));

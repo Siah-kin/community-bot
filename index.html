@@ -2345,80 +2345,174 @@
         }
 
         /* Demo section */
-        /* The Loop - Interactive Flywheel */
-        .features-section { padding: 120px 48px; background: var(--black); position: relative; }
-        .features-container { max-width: 1100px; margin: 0 auto; }
-        .features-header { text-align: center; margin-bottom: 64px; }
-        .features-header h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--purple); margin-bottom: 16px; }
-        .features-header p { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; color: var(--white); }
-        .features-header .loop-subtitle { font-size: 18px; color: var(--gray); margin-top: 16px; }
+        /* The Loop - Professional System Design */
+        .features-section { padding: 100px 48px; background: var(--black); position: relative; overflow: hidden; }
+        .features-container { max-width: 1200px; margin: 0 auto; }
+        .features-header { text-align: center; margin-bottom: 80px; }
+        .features-header h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--purple); margin-bottom: 16px; font-weight: 600; }
+        .features-header p { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.03em; color: var(--white); line-height: 1.1; }
+        .features-header .loop-subtitle { font-size: 16px; color: var(--gray); margin-top: 20px; font-weight: 400; }
 
-        /* Loop Diagram */
-        .loop-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
-        .loop-diagram { position: relative; width: 360px; height: 360px; }
+        /* Loop Flow - Horizontal System */
+        .loop-flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            padding: 40px 0 80px;
+        }
 
-        .loop-segment {
-            position: absolute;
+        /* Loop Card */
+        .loop-card {
+            flex: 1;
+            max-width: 320px;
+            background: linear-gradient(180deg, #151515 0%, #0a0a0a 100%);
+            border: 1px solid #2a2a2a;
+            position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .loop-segment:hover { transform: scale(1.05); }
-        .loop-segment.active { transform: scale(1.08); }
+        .loop-card:first-child { border-radius: 16px 0 0 16px; }
+        .loop-card:last-child { border-radius: 0 16px 16px 0; }
 
-        .loop-segment-box {
-            background: #1a1a1a;
-            border: 2px solid var(--purple);
-            border-radius: 16px;
-            padding: 24px 32px;
-            min-width: 160px;
-        }
-        .loop-segment.active .loop-segment-box {
-            background: var(--purple);
-            border-color: var(--white);
-        }
-
-        .loop-segment h3 {
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--purple);
-            margin-bottom: 8px;
-        }
-        .loop-segment.active h3 { color: var(--white); }
-
-        .loop-segment .loop-items {
-            font-size: 14px;
-            color: var(--gray);
-        }
-        .loop-segment.active .loop-items { color: rgba(255,255,255,0.9); }
-
-        /* Position segments in triangle */
-        .loop-segment.contribute { top: 0; left: 50%; transform: translateX(-50%); }
-        .loop-segment.contribute:hover, .loop-segment.contribute.active { transform: translateX(-50%) scale(1.05); }
-        .loop-segment.verify { bottom: 40px; left: 0; }
-        .loop-segment.earn { bottom: 40px; right: 0; }
-
-        /* Arrows */
-        .loop-arrows {
+        .loop-card::before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--purple);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .loop-card:hover::before, .loop-card.active::before { opacity: 1; }
+
+        .loop-card:hover {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-color: var(--purple);
+            transform: translateY(-4px);
+            z-index: 2;
+        }
+        .loop-card.active {
+            background: linear-gradient(180deg, #1f1a2e 0%, #0f0a1a 100%);
+            border-color: var(--purple);
+            z-index: 2;
+        }
+
+        .loop-card-inner {
+            padding: 48px 32px;
             height: 100%;
-            pointer-events: none;
+            display: flex;
+            flex-direction: column;
         }
-        .loop-arrows svg { width: 100%; height: 100%; }
-        .loop-arrows path {
-            fill: none;
+
+        .loop-card-number {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 16px;
+            font-family: monospace;
+        }
+
+        .loop-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .loop-card-desc {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .loop-card-items {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .loop-card-tag {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple);
+            background: rgba(124, 58, 237, 0.1);
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        /* Connector Arrows */
+        .loop-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 0;
+            position: relative;
+            z-index: 3;
+        }
+        .loop-connector-arrow {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--black);
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loop-connector-arrow svg {
+            width: 16px;
+            height: 16px;
             stroke: var(--purple);
-            stroke-width: 2;
-            stroke-dasharray: 8 4;
-            opacity: 0.6;
+            stroke-width: 2.5;
+            fill: none;
         }
-        .loop-arrows polygon { fill: var(--purple); opacity: 0.6; }
+
+        /* Return Arrow */
+        .loop-return {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .loop-return-line {
+            width: 600px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple) 10%, var(--purple) 90%, transparent);
+            position: relative;
+        }
+        .loop-return-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -6px;
+            border: 6px solid transparent;
+            border-right-color: var(--purple);
+        }
+        .loop-return-text {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--purple);
+            white-space: nowrap;
+        }
 
         /* Bottom Drawer */
         .loop-drawer {
@@ -2426,8 +2520,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #1a1a1a;
-            border-top: 3px solid var(--purple);
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-top: 2px solid var(--purple);
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
@@ -2437,63 +2531,85 @@
         .loop-drawer.open { transform: translateY(0); }
 
         .loop-drawer-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 32px 48px;
+            padding: 40px 48px;
         }
 
         .loop-drawer-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #2a2a2a;
         }
         .loop-drawer-header h3 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: var(--purple);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: var(--white);
+            letter-spacing: -0.02em;
         }
         .loop-drawer-close {
             background: transparent;
-            border: none;
+            border: 1px solid #2a2a2a;
             color: var(--gray);
-            font-size: 28px;
+            font-size: 20px;
             cursor: pointer;
-            padding: 8px;
+            padding: 8px 12px;
             line-height: 1;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
-        .loop-drawer-close:hover { color: var(--white); }
-
         .loop-drawer-items {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .loop-drawer-item {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+        .loop-drawer-item:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            background: rgba(124, 58, 237, 0.08);
         }
         .loop-drawer-item h4 {
             font-size: 16px;
             font-weight: 600;
             color: var(--white);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .loop-drawer-item p {
             font-size: 14px;
             color: var(--gray);
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .loop-drawer-item .detail {
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
             color: var(--purple);
-            margin-top: 8px;
-            font-weight: 500;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #2a2a2a;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
+        @media (max-width: 900px) {
+            .loop-flow { flex-direction: column; gap: 16px; padding-bottom: 40px; }
+            .loop-card { max-width: 100%; border-radius: 12px !important; }
+            .loop-connector { display: none; }
+            .loop-return { display: none; }
+            .loop-drawer-items { grid-template-columns: 1fr; }
+        }
         @media (max-width: 600px) {
-            .loop-diagram { width: 300px; height: 320px; }
-            .loop-segment-box { padding: 16px 20px; min-width: 120px; }
-            .loop-segment h3 { font-size: 14px; }
-            .loop-segment .loop-items { font-size: 12px; }
+            .features-section { padding: 80px 24px; }
+            .loop-card-inner { padding: 32px 24px; }
+            .loop-card h3 { font-size: 22px; }
             .loop-drawer-content { padding: 24px; }
         }
 
@@ -4021,48 +4137,68 @@
         <div class="features-header">
             <h2>the loop</h2>
             <p>Oracle curates. Code distributes.</p>
-            <div class="loop-subtitle">Click each stage to see how it works</div>
+            <div class="loop-subtitle">Value created here stays here</div>
         </div>
 
-        <div class="loop-container">
-            <div class="loop-diagram">
-                <!-- Arrows connecting the segments -->
-                <div class="loop-arrows">
-                    <svg viewBox="0 0 360 360">
-                        <!-- Contribute to Verify -->
-                        <path d="M 100 120 Q 60 180 80 240" />
-                        <polygon points="75,235 85,245 90,232" />
-                        <!-- Verify to Earn -->
-                        <path d="M 140 280 Q 180 300 220 280" />
-                        <polygon points="215,285 228,280 218,272" />
-                        <!-- Earn to Contribute -->
-                        <path d="M 280 240 Q 300 180 260 120" />
-                        <polygon points="265,125 255,115 252,128" />
-                    </svg>
-                </div>
-
-                <!-- CONTRIBUTE segment (top) -->
-                <div class="loop-segment contribute" data-segment="contribute">
-                    <div class="loop-segment-box">
-                        <h3>Contribute</h3>
-                        <div class="loop-items">Ask &bull; Raid &bull; Thank</div>
+        <div class="loop-flow">
+            <!-- Card 1: CONTRIBUTE -->
+            <div class="loop-card" data-segment="contribute">
+                <div class="loop-card-inner">
+                    <div class="loop-card-number">01</div>
+                    <h3>Contribute</h3>
+                    <p class="loop-card-desc">Create value for the community. Every action is tracked, scored, and rewarded.</p>
+                    <div class="loop-card-items">
+                        <span class="loop-card-tag">Ask</span>
+                        <span class="loop-card-tag">Raid</span>
+                        <span class="loop-card-tag">Thank</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- VERIFY segment (bottom left) -->
-                <div class="loop-segment verify" data-segment="verify">
-                    <div class="loop-segment-box">
-                        <h3>Verify</h3>
-                        <div class="loop-items">AI Oracle</div>
+            <!-- Connector Arrow -->
+            <div class="loop-connector">
+                <div class="loop-connector-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+
+            <!-- Card 2: VERIFY -->
+            <div class="loop-card" data-segment="verify">
+                <div class="loop-card-inner">
+                    <div class="loop-card-number">02</div>
+                    <h3>Verify</h3>
+                    <p class="loop-card-desc">AI Oracle filters farmers, detects bots, and validates authentic contributions.</p>
+                    <div class="loop-card-items">
+                        <span class="loop-card-tag">Sybil Detection</span>
+                        <span class="loop-card-tag">Quality Score</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- EARN segment (bottom right) -->
-                <div class="loop-segment earn" data-segment="earn">
-                    <div class="loop-segment-box">
-                        <h3>Earn</h3>
-                        <div class="loop-items">100 pts = ETH</div>
+            <!-- Connector Arrow -->
+            <div class="loop-connector">
+                <div class="loop-connector-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+            </div>
+
+            <!-- Card 3: EARN -->
+            <div class="loop-card" data-segment="earn">
+                <div class="loop-card-inner">
+                    <div class="loop-card-number">03</div>
+                    <h3>Earn</h3>
+                    <p class="loop-card-desc">Hit 100 points, claim ETH. Token holders get 1.1x multiplier. Real rewards.</p>
+                    <div class="loop-card-items">
+                        <span class="loop-card-tag">100pts = ETH</span>
+                        <span class="loop-card-tag">Holder Bonus</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- Return Arrow -->
+            <div class="loop-return">
+                <div class="loop-return-line">
+                    <span class="loop-return-text">closed loop — value stays</span>
                 </div>
             </div>
         </div>
@@ -5936,7 +6072,7 @@ const loopData = {
     }
 };
 
-const loopSegments = document.querySelectorAll('.loop-segment');
+const loopCards = document.querySelectorAll('.loop-card');
 const loopDrawer = document.getElementById('loop-drawer');
 const drawerTitle = document.getElementById('drawer-title');
 const drawerItems = document.getElementById('drawer-items');
@@ -5947,8 +6083,8 @@ function openDrawer(segment) {
     if (!data) return;
 
     // Update active state
-    loopSegments.forEach(s => s.classList.remove('active'));
-    document.querySelector(`.loop-segment.${segment}`).classList.add('active');
+    loopCards.forEach(s => s.classList.remove('active'));
+    document.querySelector(`.loop-card[data-segment="${segment}"]`).classList.add('active');
 
     // Populate drawer
     drawerTitle.textContent = data.title;
@@ -5965,13 +6101,13 @@ function openDrawer(segment) {
 
 function closeDrawer() {
     loopDrawer.classList.remove('open');
-    loopSegments.forEach(s => s.classList.remove('active'));
+    loopCards.forEach(s => s.classList.remove('active'));
 }
 
-loopSegments.forEach(segment => {
-    segment.addEventListener('click', () => {
-        const segmentType = segment.dataset.segment;
-        if (loopDrawer.classList.contains('open') && segment.classList.contains('active')) {
+loopCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const segmentType = card.dataset.segment;
+        if (loopDrawer.classList.contains('open') && card.classList.contains('active')) {
             closeDrawer();
         } else {
             openDrawer(segmentType);
@@ -5983,7 +6119,7 @@ drawerClose.addEventListener('click', closeDrawer);
 
 // Close drawer when clicking outside
 document.addEventListener('click', (e) => {
-    if (!e.target.closest('.loop-segment') && !e.target.closest('.loop-drawer')) {
+    if (!e.target.closest('.loop-card') && !e.target.closest('.loop-drawer')) {
         closeDrawer();
     }
 });

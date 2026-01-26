@@ -1108,14 +1108,17 @@
 
         /* Reveal section */
         .reveal {
-            min-height: 80vh;
-            padding: 120px 48px;
+            min-height: 50vh;
+            padding: 72px 48px;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         .reveal-content {
             max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .reveal-line {
@@ -1480,9 +1483,11 @@
            ===================================================== */
         .launch-sentence {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: center;
             text-align: center;
+            gap: 0.3em;
             margin-top: 0;
             margin-bottom: 32px;
             font-size: clamp(32px, 6vw, 72px);
@@ -1496,8 +1501,7 @@
         }
 
         .launch-sentence .trigger-word {
-            display: block;
-            text-align: center;
+            display: inline;
             color: #7c3aed;
         }
 
@@ -3996,7 +4000,7 @@
             .opening { padding: 24px; }
             .opening-bonzi { width: 140px; height: 140px; }
             .history { padding: 80px 24px; }
-            .reveal { padding: 80px 24px; }
+            .reveal { padding: 48px 24px; }
             .demo-section { padding: 80px 24px; }
             .links-grid { grid-template-columns: 1fr; }
             .pain-grid { grid-template-columns: 1fr; }

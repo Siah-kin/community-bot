@@ -551,6 +551,13 @@ body.embed-mode .bonzi-widget {
     flex: 1;
 }
 
+.success-hint {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--color-gray-500);
+    text-align: center;
+}
+
 /* Footer */
 .widget-footer {
     padding: 12px 20px;

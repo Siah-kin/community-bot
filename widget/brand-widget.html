@@ -186,9 +186,11 @@
                 </div>
 
                 <div class="success-actions">
+                    <button id="btn-stake" class="btn btn-primary">Start Staking →</button>
                     <button id="btn-buy-more" class="btn btn-secondary">Buy More</button>
                     <button id="btn-view-tx" class="btn btn-outline">View Transaction</button>
                 </div>
+                <p class="success-hint">Stake your tokens to earn ETH rewards</p>
             </div>
         </div>
 
@@ -338,6 +340,16 @@
             document.getElementById('btn-swap').addEventListener('click', executeSwap);
 
             // Success screen
+            document.getElementById('btn-stake').addEventListener('click', () => {
+                // Redirect to stake page - works whether embedded or standalone
+                const stakeUrl = window.location.origin + '/stake.html';
+                if (window.parent !== window) {
+                    // If embedded in iframe, open in parent window
+                    window.parent.location.href = stakeUrl;
+                } else {
+                    window.location.href = stakeUrl;
+                }
+            });
             document.getElementById('btn-buy-more').addEventListener('click', () => showState('fund'));
             document.getElementById('btn-view-tx').addEventListener('click', viewTransaction);
         }

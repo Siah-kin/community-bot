@@ -703,9 +703,20 @@
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
             <h2>DAO Member Access</h2>
             <p>This page is for BONZI holders only. Connect your wallet to verify ownership and access staking.</p>
-            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">
-                Connect Wallet
-            </button>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 300px; margin: 0 auto;">
+                <button class="connect-btn" id="connectBtn" onclick="connectWallet('metamask')" style="margin: 0;">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
+                        MetaMask / Browser
+                    </span>
+                </button>
+                <button class="connect-btn" id="wcConnectBtn" onclick="connectWallet('walletconnect')" style="margin: 0; background: linear-gradient(135deg, #3B99FC, #2D7DD2);">
+                    <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
+                        WalletConnect (Mobile)
+                    </span>
+                </button>
+            </div>
             <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--gray);">
                 Don't have BONZI? <a href="https://ethervista.app" target="_blank" style="color: var(--purple-light);">Buy on Ethervista</a>
             </p>
@@ -995,6 +1006,9 @@
 
     <!-- Web3 Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <!-- WalletConnect v2 -->
+    <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
+    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
     <script>
         // Contract addresses
         const CONTRACTS = {
@@ -1029,31 +1043,150 @@
         let signer = null;
         let userAddress = null;
         let bonziBalance = 0;
+        let walletConnectProvider = null;
+        let connectionType = null; // 'metamask' or 'walletconnect'
 
-        // Connect wallet
-        async function connectWallet() {
-            const btn = document.getElementById('connectBtn');
-            btn.textContent = 'Connecting...';
-            btn.disabled = true;
+        // WalletConnect Project ID (public, for BONZI dApp)
+        const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
+
+        // Detect mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Initialize WalletConnect provider
+        async function initWalletConnect() {
+            if (!window.EthereumProvider) {
+                console.error('WalletConnect not loaded');
+                return null;
+            }
 
             try {
-                if (!window.ethereum) {
-                    throw new Error('No wallet found. Please install MetaMask or use a Web3 browser.');
-                }
-
-                // Request accounts
-                const accounts = await window.ethereum.request({
-                    method: 'eth_requestAccounts'
+                const wcProvider = await window.EthereumProvider.init({
+                    projectId: WALLETCONNECT_PROJECT_ID,
+                    chains: [1], // Ethereum mainnet
+                    showQrModal: true,
+                    metadata: {
+                        name: 'BONZI Staking',
+                        description: 'Stake BONZI tokens to earn ETH rewards',
+                        url: 'https://siah-kin.github.io/community-bot/stake.html',
+                        icons: ['https://siah-kin.github.io/community-bot/bonzi-logo.png']
+                    }
                 });
-                userAddress = accounts[0];
 
-                // Check network
-                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-                if (chainId !== '0x1') {
-                    await window.ethereum.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: '0x1' }]
+                return wcProvider;
+            } catch (error) {
+                console.error('WalletConnect init failed:', error);
+                return null;
+            }
+        }
+
+        // Check for existing WalletConnect session
+        async function checkExistingSession() {
+            const savedSession = localStorage.getItem('bonzi_wc_session');
+            if (savedSession) {
+                try {
+                    const session = JSON.parse(savedSession);
+                    if (session.connected && session.address) {
+                        // Try to restore session
+                        return await connectWallet('walletconnect', true);
+                    }
+                } catch (e) {
+                    localStorage.removeItem('bonzi_wc_session');
+                }
+            }
+            return false;
+        }
+
+        // Connect wallet (supports both MetaMask and WalletConnect)
+        async function connectWallet(type = 'metamask', isReconnect = false) {
+            const btn = document.getElementById('connectBtn');
+            const wcBtn = document.getElementById('wcConnectBtn');
+
+            // Auto-prefer WalletConnect on mobile if no type specified
+            if (!type && isMobile() && !window.ethereum) {
+                type = 'walletconnect';
+            }
+
+            const activeBtn = type === 'walletconnect' ? wcBtn : btn;
+            const originalText = activeBtn.innerHTML;
+            activeBtn.innerHTML = '<span>Connecting...</span>';
+            activeBtn.disabled = true;
+
+            // Disable both buttons during connection
+            btn.disabled = true;
+            wcBtn.disabled = true;
+
+            try {
+                if (type === 'walletconnect') {
+                    // WalletConnect flow
+                    walletConnectProvider = await initWalletConnect();
+
+                    if (!walletConnectProvider) {
+                        throw new Error('WalletConnect failed to initialize. Please try again.');
+                    }
+
+                    // Connect (shows QR modal)
+                    if (!isReconnect) {
+                        await walletConnectProvider.connect();
+                    }
+
+                    const accounts = walletConnectProvider.accounts;
+                    if (!accounts || accounts.length === 0) {
+                        throw new Error('No accounts returned from WalletConnect');
+                    }
+
+                    userAddress = accounts[0];
+                    connectionType = 'walletconnect';
+
+                    // Save session for reconnection
+                    localStorage.setItem('bonzi_wc_session', JSON.stringify({
+                        connected: true,
+                        address: userAddress,
+                        timestamp: Date.now()
+                    }));
+
+                    // Listen for disconnect
+                    walletConnectProvider.on('disconnect', () => {
+                        localStorage.removeItem('bonzi_wc_session');
+                        location.reload();
                     });
+
+                    walletConnectProvider.on('accountsChanged', (accounts) => {
+                        if (accounts.length === 0) {
+                            localStorage.removeItem('bonzi_wc_session');
+                        }
+                        location.reload();
+                    });
+
+                } else {
+                    // MetaMask / injected wallet flow
+                    if (!window.ethereum) {
+                        if (isMobile()) {
+                            throw new Error('No browser wallet found. Tap "WalletConnect (Mobile)" to connect your mobile wallet.');
+                        }
+                        throw new Error('No wallet found. Please install MetaMask or use WalletConnect.');
+                    }
+
+                    // Request accounts
+                    const accounts = await window.ethereum.request({
+                        method: 'eth_requestAccounts'
+                    });
+                    userAddress = accounts[0];
+                    connectionType = 'metamask';
+
+                    // Check network
+                    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                    if (chainId !== '0x1') {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x1' }]
+                        });
+                    }
+
+                    // Listen for account/network changes
+                    window.ethereum.on('accountsChanged', () => location.reload());
+                    window.ethereum.on('chainChanged', () => location.reload());
                 }
 
                 // Setup provider (public for reads)
@@ -1071,6 +1204,10 @@
 
                 // Gate check: must hold or stake BONZI
                 if (bonziBalance === 0 && stakedBalance === 0) {
+                    if (connectionType === 'walletconnect' && walletConnectProvider) {
+                        await walletConnectProvider.disconnect();
+                        localStorage.removeItem('bonzi_wc_session');
+                    }
                     throw new Error('You need BONZI tokens to access this page. Buy on Ethervista first.');
                 }
 
@@ -1081,14 +1218,28 @@
                 // Update UI
                 await updateUI();
 
-                // Listen for account/network changes
-                window.ethereum.on('accountsChanged', () => location.reload());
-                window.ethereum.on('chainChanged', () => location.reload());
-
             } catch (error) {
-                btn.textContent = 'Connect Wallet';
+                activeBtn.innerHTML = originalText;
                 btn.disabled = false;
+                wcBtn.disabled = false;
+
+                // Clean up WalletConnect on error
+                if (connectionType === 'walletconnect') {
+                    localStorage.removeItem('bonzi_wc_session');
+                }
+
                 alert(error.message);
+            }
+        }
+
+        // Get signer based on connection type
+        function getWalletSigner() {
+            if (connectionType === 'walletconnect' && walletConnectProvider) {
+                const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
+                return wcWeb3Provider.getSigner();
+            } else {
+                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+                return walletProvider.getSigner();
             }
         }
 
@@ -1181,8 +1332,7 @@
                 showStatus('Requesting approval...');
 
                 // Get signer from wallet (for signing txs)
-                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
-                signer = walletProvider.getSigner();
+                signer = getWalletSigner();
 
                 // Check allowance
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, signer);
@@ -1230,8 +1380,7 @@
             try {
                 showStatus('Claiming rewards...');
 
-                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
-                signer = walletProvider.getSigner();
+                signer = getWalletSigner();
 
                 const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
                 const claimTx = await hardstakeContract.claimShare();
@@ -1260,8 +1409,7 @@
 
                 showStatus('Withdrawing staked BONZI...');
 
-                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
-                signer = walletProvider.getSigner();
+                signer = getWalletSigner();
 
                 const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
                 const amountWei = ethers.utils.parseEther(stakedAmount.toString());
@@ -1283,10 +1431,33 @@
 
         // Check if already connected on page load
         window.addEventListener('load', async () => {
+            // First check for existing WalletConnect session
+            const wcRestored = await checkExistingSession();
+            if (wcRestored) return;
+
+            // Then check for MetaMask auto-connect
             if (window.ethereum && window.ethereum.selectedAddress) {
-                await connectWallet();
+                await connectWallet('metamask');
+            }
+
+            // On mobile without injected wallet, highlight WalletConnect button
+            if (isMobile() && !window.ethereum) {
+                const wcBtn = document.getElementById('wcConnectBtn');
+                if (wcBtn) {
+                    wcBtn.style.animation = 'pulse 2s infinite';
+                }
             }
         });
+
+        // Add pulse animation for mobile WalletConnect button
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(59, 153, 252, 0.4); }
+                50% { box-shadow: 0 0 0 10px rgba(59, 153, 252, 0); }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Toggle widget visibility
         function toggleWidget() {

@@ -1013,8 +1013,9 @@
         // Contract addresses
         const CONTRACTS = {
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+            VISTA_TOKEN: '0xc9bca88b04581699fab5aa276ccaff7df957cbbf',
             ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
-            HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F'
+            HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F'  // VISTA hardstake pool
         };
 
         // MEV-protected RPC
@@ -1191,24 +1192,36 @@
 
                 // Setup provider (public for reads)
                 provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
+                console.log('[GATE] Provider ready, checking balances for:', userAddress);
 
                 // Check BONZI balance for gating
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
                 const balance = await bonziContract.balanceOf(userAddress);
                 bonziBalance = parseFloat(ethers.utils.formatEther(balance));
+                console.log('[GATE] BONZI balance:', bonziBalance);
 
-                // Check staked balance too
+                // Check VISTA balance too (DAO recognizes both tokens)
+                const vistaContract = new ethers.Contract(CONTRACTS.VISTA_TOKEN, ERC20_ABI, provider);
+                const vistaBalanceRaw = await vistaContract.balanceOf(userAddress);
+                const vistaBalance = parseFloat(ethers.utils.formatEther(vistaBalanceRaw));
+                console.log('[GATE] VISTA balance:', vistaBalance);
+
+                // Check staked balance (VISTA hardstake pool)
                 const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, provider);
                 const stakerInfo = await hardstakeContract.getStakerInfo(userAddress);
                 const stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
+                console.log('[GATE] Staked balance:', stakedBalance);
 
-                // Gate check: must hold or stake BONZI
-                if (bonziBalance === 0 && stakedBalance === 0) {
+                // Gate check: must hold BONZI, VISTA, or be staking
+                const hasAccess = bonziBalance > 0 || vistaBalance > 0 || stakedBalance > 0;
+                console.log('[GATE] Access granted:', hasAccess);
+
+                if (!hasAccess) {
                     if (connectionType === 'walletconnect' && walletConnectProvider) {
                         await walletConnectProvider.disconnect();
                         localStorage.removeItem('bonzi_wc_session');
                     }
-                    throw new Error('You need BONZI tokens to access this page. Buy on Ethervista first.');
+                    throw new Error('You need BONZI or VISTA tokens to access this page. Buy on Ethervista first.');
                 }
 
                 // Passed gate - show main content

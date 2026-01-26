@@ -1149,6 +1149,52 @@
         .footer-links svg {
             display: block;
         }
+
+        /* Light mode overrides */
+        body.light-mode {
+            background: #FAFAFA;
+            color: #0A0A0A;
+        }
+
+        body.light-mode .metric-card,
+        body.light-mode .three-box,
+        body.light-mode .metrics-grid-2x2 > div,
+        body.light-mode .chart-container {
+            background: #FFFFFF;
+            border-color: #E5E5E5;
+        }
+
+        body.light-mode .metric-label,
+        body.light-mode .chart-stat .stat-label {
+            color: #52525B;
+        }
+
+        body.light-mode .metric-value,
+        body.light-mode .chart-stat .stat-value {
+            color: #0A0A0A;
+        }
+
+        body.light-mode nav {
+            background: rgba(250, 250, 250, 0.95);
+            border-bottom-color: #E5E5E5;
+        }
+
+        body.light-mode .nav-link {
+            color: #52525B;
+        }
+
+        body.light-mode .nav-link:hover {
+            color: var(--purple);
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(180deg, #F5F5F5 0%, #FAFAFA 100%);
+        }
+
+        body.light-mode .hero h1,
+        body.light-mode h2 {
+            color: #0A0A0A;
+        }
     </style>
 </head>
 <body>
@@ -1648,6 +1694,20 @@
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
 
     <script>
+        // Theme toggle
+        function initTheme() {
+            const saved = localStorage.getItem('bonzi-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (prefersDark ? 'dark' : 'light');
+            document.body.classList.toggle('light-mode', theme === 'light');
+        }
+        initTheme();
+
+        document.getElementById('theme-toggle')?.addEventListener('click', function() {
+            const isLight = document.body.classList.toggle('light-mode');
+            localStorage.setItem('bonzi-theme', isLight ? 'light' : 'dark');
+        });
+
         // Token Contracts (Ethereum mainnet)
         const BONZI_TOKEN = '0xd6175692026bcd7cb12a515e39cf0256ef35cb86';  // VERIFIED
         const VISTA_TOKEN = '0xc9bca88b04581699fab5aa276ccaff7df957cbbf';  // VERIFIED

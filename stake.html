@@ -1010,13 +1010,23 @@
     <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
     <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
     <script>
-        // Contract addresses
+        // Contract addresses - aligned with DAO page gate
         const CONTRACTS = {
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
             VISTA_TOKEN: '0xc9bca88b04581699fab5aa276ccaff7df957cbbf',
             ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
-            HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F'  // VISTA hardstake pool
+            // Hardstake pools (separate contracts)
+            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
+            VISTA_HARDSTAKE: '0xee5a6f8a55b02689138c195031d09bafdc7d278f',
+            // LP tokens
+            BONZI_LP: '0x970cf9b7346fbaea0588f03356a104100eb675e2',
+            VISTA_LP: '0xfdd05552f1377aa488afed744c8024358af02041'
         };
+
+        // Gate thresholds (same as DAO)
+        const MIN_BONZI = 1000000; // 1M BONZI
+        const MIN_VISTA = 100;     // 100 VISTA
+        const MIN_LP = 0.001;      // Min LP balance
 
         // MEV-protected RPC
         const MEV_PROTECTED_RPC = 'https://rpc.flashbots.net';
@@ -1217,26 +1227,48 @@
                 provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
                 console.log('[GATE] Provider ready using', PUBLIC_RPC, 'checking balances for:', userAddress);
 
-                // Check BONZI balance for gating
+                // Create all contracts
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
-                const balance = await bonziContract.balanceOf(userAddress);
-                bonziBalance = parseFloat(ethers.utils.formatEther(balance));
-                console.log('[GATE] BONZI balance:', bonziBalance);
-
-                // Check VISTA balance too (DAO recognizes both tokens)
                 const vistaContract = new ethers.Contract(CONTRACTS.VISTA_TOKEN, ERC20_ABI, provider);
-                const vistaBalanceRaw = await vistaContract.balanceOf(userAddress);
-                const vistaBalance = parseFloat(ethers.utils.formatEther(vistaBalanceRaw));
-                console.log('[GATE] VISTA balance:', vistaBalance);
+                const bonziHardstake = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
+                const vistaHardstake = new ethers.Contract(CONTRACTS.VISTA_HARDSTAKE, HARDSTAKE_ABI, provider);
+                const bonziLp = new ethers.Contract(CONTRACTS.BONZI_LP, ERC20_ABI, provider);
+                const vistaLp = new ethers.Contract(CONTRACTS.VISTA_LP, ERC20_ABI, provider);
 
-                // Check staked balance (VISTA hardstake pool)
-                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, provider);
-                const stakerInfo = await hardstakeContract.getStakerInfo(userAddress);
-                const stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
-                console.log('[GATE] Staked balance:', stakedBalance);
+                // Fetch all balances in parallel (same as DAO page)
+                const [
+                    bonziRaw, vistaRaw,
+                    bonziStakeInfo, vistaStakeInfo,
+                    bonziLpRaw, vistaLpRaw
+                ] = await Promise.all([
+                    bonziContract.balanceOf(userAddress),
+                    vistaContract.balanceOf(userAddress),
+                    bonziHardstake.getStakerInfo(userAddress).catch(() => ({ amountStaked: 0 })),
+                    vistaHardstake.getStakerInfo(userAddress).catch(() => ({ amountStaked: 0 })),
+                    bonziLp.balanceOf(userAddress).catch(() => 0),
+                    vistaLp.balanceOf(userAddress).catch(() => 0)
+                ]);
 
-                // Gate check: must hold BONZI, VISTA, or be staking
-                const hasAccess = bonziBalance > 0 || vistaBalance > 0 || stakedBalance > 0;
+                // Calculate totals
+                const bonziWallet = parseFloat(ethers.utils.formatEther(bonziRaw));
+                const bonziStaked = parseFloat(ethers.utils.formatEther(bonziStakeInfo.amountStaked || bonziStakeInfo[0] || 0));
+                bonziBalance = bonziWallet + bonziStaked;
+                const bonziLpBalance = parseFloat(ethers.utils.formatEther(bonziLpRaw));
+
+                const vistaWallet = parseFloat(ethers.utils.formatEther(vistaRaw));
+                const vistaStaked = parseFloat(ethers.utils.formatEther(vistaStakeInfo.amountStaked || vistaStakeInfo[0] || 0));
+                const vistaBalance = vistaWallet + vistaStaked;
+                const vistaLpBalance = parseFloat(ethers.utils.formatEther(vistaLpRaw));
+
+                console.log('[GATE] BONZI:', bonziWallet, 'wallet +', bonziStaked, 'staked +', bonziLpBalance, 'LP');
+                console.log('[GATE] VISTA:', vistaWallet, 'wallet +', vistaStaked, 'staked +', vistaLpBalance, 'LP');
+
+                // Gate check: same thresholds as DAO page
+                const hasBonziLp = bonziLpBalance >= MIN_LP;
+                const hasVistaLp = vistaLpBalance >= MIN_LP;
+                const hasBonzi = bonziBalance >= MIN_BONZI || hasBonziLp;
+                const hasVista = vistaBalance >= MIN_VISTA || hasVistaLp;
+                const hasAccess = hasBonzi || hasVista;
                 console.log('[GATE] Access granted:', hasAccess);
 
                 if (!hasAccess) {
@@ -1244,8 +1276,17 @@
                         await walletConnectProvider.disconnect();
                         localStorage.removeItem('bonzi_wc_session');
                     }
-                    throw new Error('You need BONZI or VISTA tokens to access this page. Buy on Ethervista first.');
+                    const bonziInfo = bonziStaked > 0 ? `${bonziWallet.toLocaleString()} + ${bonziStaked.toLocaleString()} staked` : bonziBalance.toLocaleString();
+                    const vistaInfo = vistaStaked > 0 ? `${vistaWallet.toFixed(2)} + ${vistaStaked.toFixed(2)} staked` : vistaBalance.toFixed(2);
+                    throw new Error(
+                        `Access requires:\n• ${MIN_BONZI.toLocaleString()} $BONZI (you have ${bonziInfo})\n• OR ${MIN_VISTA} $VISTA (you have ${vistaInfo})\n• OR ${MIN_LP}+ LP tokens`
+                    );
                 }
+
+                // Store auth with timestamp (same as DAO page - 24h session)
+                localStorage.setItem('bonzi_wallet_address', userAddress);
+                localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+                localStorage.setItem('bonzi_token_verified', 'true');
 
                 // Passed gate - show main content
                 document.getElementById('gateOverlay').classList.add('hidden');
@@ -1283,7 +1324,7 @@
         async function updateUI() {
             try {
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
-                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, provider);
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
 
                 // Get balances
                 const balance = await bonziContract.balanceOf(userAddress);
@@ -1388,7 +1429,7 @@
                 // For simplicity, using standard tx through wallet
                 const routerContract = new ethers.Contract(CONTRACTS.ROUTER, ROUTER_ABI, signer);
                 const stakeTx = await routerContract.hardstake(
-                    CONTRACTS.HARDSTAKE,
+                    CONTRACTS.BONZI_HARDSTAKE,
                     CONTRACTS.BONZI_TOKEN,
                     amountWei
                 );
@@ -1418,7 +1459,7 @@
 
                 signer = getWalletSigner();
 
-                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
                 const claimTx = await hardstakeContract.claimShare();
 
                 showStatus('Waiting for confirmation...');
@@ -1447,7 +1488,7 @@
 
                 signer = getWalletSigner();
 
-                const hardstakeContract = new ethers.Contract(CONTRACTS.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
                 const amountWei = ethers.utils.parseEther(stakedAmount.toString());
                 const withdrawTx = await hardstakeContract.withdraw(amountWei);
 
@@ -1544,7 +1585,7 @@
                     body: JSON.stringify({
                         jsonrpc: '2.0',
                         method: 'eth_getBalance',
-                        params: [CONTRACTS.HARDSTAKE, 'latest'],
+                        params: [CONTRACTS.BONZI_HARDSTAKE, 'latest'],
                         id: 1
                     })
                 });

@@ -11,58 +11,52 @@ Lock down community-bot landing page to "Coming Soon" teaser mode.
 5. **Win98 music player** - Keep fully functional
 
 ## Cutoff Point
-**Lock JUST BEFORE line 4564:** `<div class="launch-area">`
-
-The **Tokenise button** and everything below should be hidden/locked.
+**Keep the Tokenise button visible.** Add "Coming Soon" text directly below it.
+Lock everything AFTER the launch-area (line ~4574 onwards).
 
 ## Changes Required
 
-### 1. Add "Coming Soon" Overlay
-Insert just before `<div class="launch-area">`:
+### 1. Add "Coming Soon" Below Tokenise Button
+Insert AFTER the `<button class="tokenise-btn">` (line ~4572):
 ```html
-<!-- Coming Soon Cutoff -->
-<div class="coming-soon-gate">
-    <div class="coming-soon-content">
-        <span class="lock-icon">🔒</span>
-        <h2>Coming Soon</h2>
-        <p>Full experience launching shortly.</p>
+<!-- Coming Soon text -->
+<p class="coming-soon-text">Coming Soon</p>
+```
+
+So the launch-area becomes:
+```html
+<div class="launch-area">
+    <div class="launch-sentence">
+        <span class="trigger-text">Launch Your </span><span class="trigger-word" id="trigger-word">Future</span>
     </div>
+    <button class="tokenise-btn" id="launch-trigger">Tokenise</button>
+    <p class="coming-soon-text">Coming Soon</p>  <!-- ADD THIS -->
 </div>
 ```
 
-### 2. CSS for Coming Soon Gate
+### 2. CSS for Coming Soon Text
 ```css
-.coming-soon-gate {
-    position: relative;
-    width: 100%;
-    padding: 120px 40px;
-    background: linear-gradient(180deg, transparent 0%, rgba(10,10,10,0.95) 30%);
-    text-align: center;
-}
-.coming-soon-content {
-    max-width: 400px;
-    margin: 0 auto;
-}
-.coming-soon-content .lock-icon {
-    font-size: 48px;
-    display: block;
-    margin-bottom: 16px;
-}
-.coming-soon-content h2 {
-    font-size: 32px;
-    color: var(--purple);
-    margin-bottom: 8px;
-}
-.coming-soon-content p {
+.coming-soon-text {
+    margin-top: 16px;
+    font-size: 14px;
     color: var(--gray);
-    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 ```
 
-### 3. Hide Everything After Cutoff
+### 3. Hide Everything After Launch Area
 ```css
-/* Hide all content after coming-soon-gate */
-.coming-soon-gate ~ * {
+/* Hide all sections after statement (which contains launch-area) */
+.statement ~ section,
+.statement ~ .pain-section,
+.statement ~ .solutions-section,
+.statement ~ .comparison-section,
+.statement ~ .demo-section,
+.statement ~ .pricing-section,
+.statement ~ .mission-section,
+.statement ~ .links-section,
+.statement ~ footer {
     display: none !important;
 }
 

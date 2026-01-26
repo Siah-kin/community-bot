@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stake BONZI - Earn ETH Rewards</title>
+    <meta name="description" content="Stake your BONZI tokens to earn ETH rewards. Mobile-friendly with WalletConnect support.">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Stake BONZI - Earn ETH Rewards">
+    <meta property="og:description" content="Stake BONZI tokens and earn ETH rewards from protocol fees.">
+    <meta property="og:type" content="website">
+
+    <style>
+        /* Reset & Variables */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --purple-glow: rgba(124, 58, 237, 0.4);
+            --bg-dark: #0A0A0A;
+            --bg-card: #111111;
+            --bg-input: #1A1A1A;
+            --white: #FAFAFA;
+            --gray: #71717A;
+            --gray-light: #A1A1AA;
+            --green: #10B981;
+            --green-dark: #059669;
+            --red: #EF4444;
+            --border: rgba(124, 58, 237, 0.2);
+            --border-hover: rgba(124, 58, 237, 0.4);
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        /* Embed mode */
+        body.embed-mode {
+            padding: 0;
+            min-height: auto;
+        }
+
+        body.embed-mode .staking-widget {
+            max-width: 100%;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        /* Widget Container */
+        .staking-widget {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.08) 0%, transparent 100%);
+        }
+
+        .widget-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .network-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--green);
+        }
+
+        .network-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .widget-content {
+            padding: 20px;
+        }
+
+        /* States */
+        .widget-state {
+            display: none;
+        }
+
+        .widget-state.active {
+            display: block;
+        }
+
+        /* Connect State */
+        .connect-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .connect-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .connect-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .connect-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--purple-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--white);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--border-hover);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .btn-success {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Wallet icons */
+        .wallet-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 16px;
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* Position Card */
+        .position-card {
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .position-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .position-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .position-balance {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .position-balance span {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        /* Rewards Display */
+        .rewards-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .rewards-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .rewards-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .rewards-eth {
+            font-size: 14px;
+            color: var(--gray);
+            margin-left: 4px;
+        }
+
+        /* Input Group */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .input-label span {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .input-label .balance {
+            font-size: 12px;
+        }
+
+        .input-label .balance strong {
+            color: var(--purple-light);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 16px;
+            padding-right: 70px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--purple);
+        }
+
+        .input-wrapper input::placeholder {
+            color: var(--gray);
+        }
+
+        .max-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 6px 12px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .max-btn:hover {
+            background: var(--purple-dark);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-buttons.row {
+            flex-direction: row;
+        }
+
+        .action-buttons.row .btn {
+            flex: 1;
+        }
+
+        /* Info Box */
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--gray-light);
+            line-height: 1.5;
+        }
+
+        .info-box.warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #FBB524;
+        }
+
+        .info-box svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-message.active {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-message.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+        }
+
+        .status-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--red);
+        }
+
+        .status-message.pending {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .widget-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            margin-left: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-light);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-input);
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--purple);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            color: var(--white);
+        }
+
+        /* Connected Header */
+        .connected-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .connected-address {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .address-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .address-text {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 13px;
+            color: var(--white);
+        }
+
+        .disconnect-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 6px;
+            color: var(--red);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .disconnect-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Staked Position */
+        .staked-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .staked-item {
+            padding: 14px;
+            background: var(--bg-input);
+            border-radius: 10px;
+        }
+
+        .staked-item-label {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 6px;
+        }
+
+        .staked-item-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .staked-item-value.highlight {
+            color: var(--green);
+        }
+
+        /* Responsive */
+        @media (max-width: 440px) {
+            body {
+                padding: 0;
+            }
+
+            .staking-widget {
+                max-width: 100%;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+        }
+
+        /* Hidden utility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="staking-widget" id="stakingWidget">
+        <!-- Header -->
+        <div class="widget-header">
+            <div class="widget-logo">
+                <img src="../bonzi-logo.png" alt="Bonzi" class="logo-img" onerror="this.style.display='none'">
+                <span class="logo-text">Stake BONZI</span>
+            </div>
+            <div class="network-badge">
+                <span class="network-dot"></span>
+                <span>Ethereum</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="widget-content">
+            <!-- Status Message -->
+            <div class="status-message" id="statusMessage">
+                <div class="spinner"></div>
+                <span id="statusText">Processing...</span>
+            </div>
+
+            <!-- State: Connect Wallet -->
+            <div class="widget-state active" id="stateConnect">
+                <div class="connect-state">
+                    <h2 class="connect-title">Stake & Earn</h2>
+                    <p class="connect-subtitle">Stake BONZI tokens to earn ETH rewards from protocol fees</p>
+
+                    <div class="connect-buttons">
+                        <button class="btn btn-primary" id="btnWalletConnect">
+                            <svg class="wallet-icon" viewBox="0 0 24 24" fill="none">
+                                <path d="M5.5 7.5C9.5 4 14.5 4 18.5 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M7 10.5C9.5 8.5 14.5 8.5 17 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="12" cy="14" r="2" fill="currentColor"/>
+                            </svg>
+                            WalletConnect
+                        </button>
+
+                        <button class="btn btn-secondary" id="btnMetaMask">
+                            <svg class="wallet-icon" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 8L12 2L3 8V16L12 22L21 16V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M12 22V12" stroke="currentColor" stroke-width="2"/>
+                                <path d="M21 8L12 12L3 8" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Browser Wallet
+                        </button>
+                    </div>
+
+                    <div class="divider"><span>Info</span></div>
+
+                    <div class="info-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple-light)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4M12 8h.01"/>
+                        </svg>
+                        <span>Stake your BONZI to earn a share of protocol trading fees distributed in ETH.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- State: Main Staking Interface -->
+            <div class="widget-state" id="stateMain">
+                <!-- Connected Header -->
+                <div class="connected-header">
+                    <div class="connected-address">
+                        <span class="address-dot"></span>
+                        <span class="address-text" id="connectedAddress">0x...abc</span>
+                    </div>
+                    <button class="disconnect-btn" id="btnDisconnect">Disconnect</button>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalStaked">--</div>
+                        <div class="stat-label">Total Staked</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="stakersCount">--</div>
+                        <div class="stat-label">Stakers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="poolEth">--</div>
+                        <div class="stat-label">Pool ETH</div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="stake">Stake</button>
+                    <button class="tab" data-tab="unstake">Unstake</button>
+                </div>
+
+                <!-- Stake Tab -->
+                <div class="tab-content active" id="tabStake">
+                    <div class="input-group">
+                        <div class="input-label">
+                            <span>Amount to Stake</span>
+                            <span class="balance">Balance: <strong id="bonziBalance">0</strong> BONZI</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="number" id="stakeAmount" placeholder="0.0" min="0" step="any">
+                            <button class="max-btn" id="btnMaxStake">MAX</button>
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#FBB524" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span><strong>14-day lock.</strong> Staked tokens cannot be withdrawn for 14 days.</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="btnApprove" style="display: none;">
+                            Approve BONZI
+                        </button>
+                        <button class="btn btn-primary" id="btnStake" disabled>
+                            Enter Amount
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Unstake Tab -->
+                <div class="tab-content hidden" id="tabUnstake">
+                    <div class="staked-info">
+                        <div class="staked-item">
+                            <div class="staked-item-label">Your Staked</div>
+                            <div class="staked-item-value" id="userStaked">0</div>
+                        </div>
+                        <div class="staked-item">
+                            <div class="staked-item-label">Lock Remaining</div>
+                            <div class="staked-item-value" id="lockRemaining">--</div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-label">
+                            <span>Amount to Withdraw</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="number" id="withdrawAmount" placeholder="0.0" min="0" step="any">
+                            <button class="max-btn" id="btnMaxWithdraw">MAX</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="btnWithdraw" disabled>
+                            Withdraw
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rewards Section (Always Visible) -->
+                <div class="divider"><span>Your Rewards</span></div>
+
+                <div class="rewards-display">
+                    <span class="rewards-label">Claimable ETH</span>
+                    <div>
+                        <span class="rewards-value" id="claimableEth">0.00</span>
+                        <span class="rewards-eth">ETH</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" id="btnClaim" disabled>
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 7l-5-5-5 5"/>
+                    </svg>
+                    Claim Rewards
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="widget-footer">
+            <span>Powered by Ethervista</span>
+            <div class="footer-links">
+                <a href="https://etherscan.io/address/0xEE5a6F8a55B02689138c195031d09BAFDc7d278F" target="_blank">Contract</a>
+                <a href="../stake.html" target="_blank">Full Page</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+    <!-- WalletConnect -->
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // =====================================================================
+        // CONFIGURATION
+        // =====================================================================
+        const CONFIG = {
+            BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+            ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+            HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F',
+
+            RPC_URL: 'https://eth.llamarpc.com',
+            CHAIN_ID: 1,
+
+            // WalletConnect Project ID (replace with your own for production)
+            WC_PROJECT_ID: '8f82eb25-6b39-438c-a8c2-82a63af94b62'
+        };
+
+        // =====================================================================
+        // ABIs
+        // =====================================================================
+        const ERC20_ABI = [
+            'function balanceOf(address owner) view returns (uint256)',
+            'function approve(address spender, uint256 amount) returns (bool)',
+            'function allowance(address owner, address spender) view returns (uint256)'
+        ];
+
+        const HARDSTAKE_ABI = [
+            'function getStakerInfo(address staker) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
+            'function claimShare()',
+            'function withdraw(uint256 amount)'
+        ];
+
+        const ROUTER_ABI = [
+            'function hardstake(address _contract, address _token, uint256 _amount)'
+        ];
+
+        // =====================================================================
+        // STATE
+        // =====================================================================
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+        let bonziBalance = 0;
+        let stakedBalance = 0;
+        let claimableRewards = 0;
+        let allowance = 0;
+
+        // =====================================================================
+        // DOM ELEMENTS
+        // =====================================================================
+        const elements = {
+            // States
+            stateConnect: document.getElementById('stateConnect'),
+            stateMain: document.getElementById('stateMain'),
+
+            // Status
+            statusMessage: document.getElementById('statusMessage'),
+            statusText: document.getElementById('statusText'),
+
+            // Connect
+            btnWalletConnect: document.getElementById('btnWalletConnect'),
+            btnMetaMask: document.getElementById('btnMetaMask'),
+
+            // Connected Header
+            connectedAddress: document.getElementById('connectedAddress'),
+            btnDisconnect: document.getElementById('btnDisconnect'),
+
+            // Stats
+            totalStaked: document.getElementById('totalStaked'),
+            stakersCount: document.getElementById('stakersCount'),
+            poolEth: document.getElementById('poolEth'),
+
+            // Tabs
+            tabStake: document.getElementById('tabStake'),
+            tabUnstake: document.getElementById('tabUnstake'),
+
+            // Stake Tab
+            bonziBalance: document.getElementById('bonziBalance'),
+            stakeAmount: document.getElementById('stakeAmount'),
+            btnMaxStake: document.getElementById('btnMaxStake'),
+            btnApprove: document.getElementById('btnApprove'),
+            btnStake: document.getElementById('btnStake'),
+
+            // Unstake Tab
+            userStaked: document.getElementById('userStaked'),
+            lockRemaining: document.getElementById('lockRemaining'),
+            withdrawAmount: document.getElementById('withdrawAmount'),
+            btnMaxWithdraw: document.getElementById('btnMaxWithdraw'),
+            btnWithdraw: document.getElementById('btnWithdraw'),
+
+            // Rewards
+            claimableEth: document.getElementById('claimableEth'),
+            btnClaim: document.getElementById('btnClaim')
+        };
+
+        // =====================================================================
+        // UTILITY FUNCTIONS
+        // =====================================================================
+        function showState(stateName) {
+            elements.stateConnect.classList.remove('active');
+            elements.stateMain.classList.remove('active');
+
+            if (stateName === 'connect') {
+                elements.stateConnect.classList.add('active');
+            } else if (stateName === 'main') {
+                elements.stateMain.classList.add('active');
+            }
+        }
+
+        function showStatus(message, type = 'pending') {
+            elements.statusText.textContent = message;
+            elements.statusMessage.className = 'status-message active ' + type;
+
+            // Hide spinner for success/error
+            const spinner = elements.statusMessage.querySelector('.spinner');
+            spinner.style.display = type === 'pending' ? 'block' : 'none';
+        }
+
+        function hideStatus() {
+            elements.statusMessage.classList.remove('active');
+        }
+
+        function formatAddress(address) {
+            return address.slice(0, 6) + '...' + address.slice(-4);
+        }
+
+        function formatNumber(num, decimals = 2) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toFixed(decimals);
+        }
+
+        function formatTime(seconds) {
+            if (seconds <= 0) return 'Unlocked';
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            if (days > 0) return days + 'd ' + hours + 'h';
+            return hours + 'h';
+        }
+
+        // =====================================================================
+        // WALLET CONNECTION
+        // =====================================================================
+        async function connectWalletConnect() {
+            try {
+                showStatus('Connecting via WalletConnect...');
+
+                // Create WalletConnect provider
+                const WalletConnectProvider = window.WalletConnectProvider.default;
+                const wcProvider = new WalletConnectProvider({
+                    rpc: { 1: CONFIG.RPC_URL },
+                    chainId: CONFIG.CHAIN_ID
+                });
+
+                // Enable session (triggers QR modal)
+                await wcProvider.enable();
+
+                // Create ethers provider
+                provider = new ethers.providers.Web3Provider(wcProvider);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                // Listen for disconnect
+                wcProvider.on('disconnect', () => {
+                    disconnect();
+                });
+
+                await onConnected();
+
+            } catch (error) {
+                console.error('WalletConnect error:', error);
+                showStatus('Connection failed: ' + error.message, 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        async function connectMetaMask() {
+            try {
+                if (!window.ethereum) {
+                    showStatus('No browser wallet found. Please install MetaMask.', 'error');
+                    setTimeout(hideStatus, 3000);
+                    return;
+                }
+
+                showStatus('Connecting to browser wallet...');
+
+                // Request accounts
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+
+                // Check network
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (parseInt(chainId, 16) !== CONFIG.CHAIN_ID) {
+                    showStatus('Please switch to Ethereum Mainnet', 'error');
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x1' }]
+                        });
+                    } catch (switchError) {
+                        setTimeout(hideStatus, 3000);
+                        return;
+                    }
+                }
+
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                userAddress = accounts[0];
+
+                // Listen for account/chain changes
+                window.ethereum.on('accountsChanged', (accounts) => {
+                    if (accounts.length === 0) {
+                        disconnect();
+                    } else {
+                        userAddress = accounts[0];
+                        updateUI();
+                    }
+                });
+
+                window.ethereum.on('chainChanged', () => {
+                    window.location.reload();
+                });
+
+                await onConnected();
+
+            } catch (error) {
+                console.error('MetaMask error:', error);
+                showStatus('Connection failed: ' + error.message, 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        async function onConnected() {
+            // Save connection
+            localStorage.setItem('bonzi_staking_address', userAddress);
+
+            // Update UI
+            elements.connectedAddress.textContent = formatAddress(userAddress);
+            showState('main');
+            hideStatus();
+
+            // Load data
+            await updateUI();
+        }
+
+        function disconnect() {
+            localStorage.removeItem('bonzi_staking_address');
+            provider = null;
+            signer = null;
+            userAddress = null;
+            showState('connect');
+        }
+
+        // =====================================================================
+        // DATA LOADING
+        // =====================================================================
+        async function updateUI() {
+            if (!userAddress || !provider) return;
+
+            try {
+                const readProvider = new ethers.providers.JsonRpcProvider(CONFIG.RPC_URL);
+                const bonziContract = new ethers.Contract(CONFIG.BONZI_TOKEN, ERC20_ABI, readProvider);
+                const hardstakeContract = new ethers.Contract(CONFIG.HARDSTAKE, HARDSTAKE_ABI, readProvider);
+
+                // Get user data in parallel
+                const [balance, allow, stakerInfo, poolBalance] = await Promise.all([
+                    bonziContract.balanceOf(userAddress),
+                    bonziContract.allowance(userAddress, CONFIG.ROUTER),
+                    hardstakeContract.getStakerInfo(userAddress),
+                    readProvider.getBalance(CONFIG.HARDSTAKE)
+                ]);
+
+                // Parse values
+                bonziBalance = parseFloat(ethers.utils.formatEther(balance));
+                allowance = parseFloat(ethers.utils.formatEther(allow));
+                stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
+                const timeRemaining = stakerInfo.timeRemaining.toNumber();
+                claimableRewards = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
+                const poolEth = parseFloat(ethers.utils.formatEther(poolBalance));
+
+                // Update displays
+                elements.bonziBalance.textContent = formatNumber(bonziBalance, 2);
+                elements.userStaked.textContent = formatNumber(stakedBalance, 2) + ' BONZI';
+                elements.lockRemaining.textContent = formatTime(timeRemaining);
+                elements.claimableEth.textContent = claimableRewards.toFixed(6);
+                elements.poolEth.textContent = formatNumber(poolEth, 4);
+
+                // Mock stats (would be from indexer/API in production)
+                elements.totalStaked.textContent = '15%';
+                elements.stakersCount.textContent = '142';
+
+                // Update button states
+                updateButtons();
+
+            } catch (error) {
+                console.error('UI update error:', error);
+            }
+        }
+
+        function updateButtons() {
+            const stakeAmount = parseFloat(elements.stakeAmount.value) || 0;
+            const withdrawAmount = parseFloat(elements.withdrawAmount.value) || 0;
+            const lockRemaining = document.getElementById('lockRemaining').textContent;
+
+            // Stake button
+            if (stakeAmount <= 0) {
+                elements.btnStake.textContent = 'Enter Amount';
+                elements.btnStake.disabled = true;
+                elements.btnApprove.style.display = 'none';
+            } else if (stakeAmount > bonziBalance) {
+                elements.btnStake.textContent = 'Insufficient Balance';
+                elements.btnStake.disabled = true;
+                elements.btnApprove.style.display = 'none';
+            } else if (allowance < stakeAmount) {
+                elements.btnApprove.style.display = 'block';
+                elements.btnApprove.disabled = false;
+                elements.btnStake.textContent = 'Stake ' + formatNumber(stakeAmount) + ' BONZI';
+                elements.btnStake.disabled = true;
+            } else {
+                elements.btnApprove.style.display = 'none';
+                elements.btnStake.textContent = 'Stake ' + formatNumber(stakeAmount) + ' BONZI';
+                elements.btnStake.disabled = false;
+            }
+
+            // Withdraw button
+            if (withdrawAmount <= 0) {
+                elements.btnWithdraw.textContent = 'Enter Amount';
+                elements.btnWithdraw.disabled = true;
+            } else if (withdrawAmount > stakedBalance) {
+                elements.btnWithdraw.textContent = 'Exceeds Staked';
+                elements.btnWithdraw.disabled = true;
+            } else if (lockRemaining !== 'Unlocked') {
+                elements.btnWithdraw.textContent = 'Locked (' + lockRemaining + ')';
+                elements.btnWithdraw.disabled = true;
+            } else {
+                elements.btnWithdraw.textContent = 'Withdraw ' + formatNumber(withdrawAmount) + ' BONZI';
+                elements.btnWithdraw.disabled = false;
+            }
+
+            // Claim button
+            elements.btnClaim.disabled = claimableRewards <= 0;
+        }
+
+        // =====================================================================
+        // TRANSACTIONS
+        // =====================================================================
+        async function approve() {
+            const amount = elements.stakeAmount.value;
+            if (!amount) return;
+
+            const amountWei = ethers.utils.parseEther(amount);
+
+            try {
+                showStatus('Requesting approval...');
+
+                const bonziContract = new ethers.Contract(CONFIG.BONZI_TOKEN, ERC20_ABI, signer);
+                const tx = await bonziContract.approve(CONFIG.ROUTER, amountWei);
+
+                showStatus('Waiting for confirmation...');
+                await tx.wait();
+
+                showStatus('Approved!', 'success');
+                allowance = parseFloat(amount);
+                updateButtons();
+
+                setTimeout(hideStatus, 2000);
+
+            } catch (error) {
+                console.error('Approve error:', error);
+                showStatus('Approval failed: ' + (error.reason || error.message), 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        async function stake() {
+            const amount = elements.stakeAmount.value;
+            if (!amount) return;
+
+            const amountWei = ethers.utils.parseEther(amount);
+
+            try {
+                showStatus('Submitting stake transaction...');
+
+                const routerContract = new ethers.Contract(CONFIG.ROUTER, ROUTER_ABI, signer);
+                const tx = await routerContract.hardstake(
+                    CONFIG.HARDSTAKE,
+                    CONFIG.BONZI_TOKEN,
+                    amountWei
+                );
+
+                showStatus('Waiting for confirmation...');
+                await tx.wait();
+
+                showStatus('Staked successfully!', 'success');
+                elements.stakeAmount.value = '';
+                await updateUI();
+
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Stake error:', error);
+                showStatus('Stake failed: ' + (error.reason || error.message), 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        async function withdraw() {
+            const amount = elements.withdrawAmount.value;
+            if (!amount) return;
+
+            const amountWei = ethers.utils.parseEther(amount);
+
+            try {
+                showStatus('Submitting withdrawal...');
+
+                const hardstakeContract = new ethers.Contract(CONFIG.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const tx = await hardstakeContract.withdraw(amountWei);
+
+                showStatus('Waiting for confirmation...');
+                await tx.wait();
+
+                showStatus('Withdrawal successful!', 'success');
+                elements.withdrawAmount.value = '';
+                await updateUI();
+
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Withdraw error:', error);
+                showStatus('Withdrawal failed: ' + (error.reason || error.message), 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        async function claim() {
+            try {
+                showStatus('Claiming rewards...');
+
+                const hardstakeContract = new ethers.Contract(CONFIG.HARDSTAKE, HARDSTAKE_ABI, signer);
+                const tx = await hardstakeContract.claimShare();
+
+                showStatus('Waiting for confirmation...');
+                await tx.wait();
+
+                showStatus('Rewards claimed!', 'success');
+                await updateUI();
+
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Claim error:', error);
+                showStatus('Claim failed: ' + (error.reason || error.message), 'error');
+                setTimeout(hideStatus, 3000);
+            }
+        }
+
+        // =====================================================================
+        // EVENT HANDLERS
+        // =====================================================================
+        function init() {
+            // Check embed mode
+            if (window !== window.top || new URLSearchParams(window.location.search).get('embed') === 'true') {
+                document.body.classList.add('embed-mode');
+            }
+
+            // Connect buttons
+            elements.btnWalletConnect.addEventListener('click', connectWalletConnect);
+            elements.btnMetaMask.addEventListener('click', connectMetaMask);
+            elements.btnDisconnect.addEventListener('click', disconnect);
+
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const tabName = tab.dataset.tab;
+                    elements.tabStake.classList.toggle('hidden', tabName !== 'stake');
+                    elements.tabUnstake.classList.toggle('hidden', tabName !== 'unstake');
+                });
+            });
+
+            // Max buttons
+            elements.btnMaxStake.addEventListener('click', () => {
+                elements.stakeAmount.value = bonziBalance;
+                updateButtons();
+            });
+
+            elements.btnMaxWithdraw.addEventListener('click', () => {
+                elements.withdrawAmount.value = stakedBalance;
+                updateButtons();
+            });
+
+            // Input changes
+            elements.stakeAmount.addEventListener('input', updateButtons);
+            elements.withdrawAmount.addEventListener('input', updateButtons);
+
+            // Action buttons
+            elements.btnApprove.addEventListener('click', approve);
+            elements.btnStake.addEventListener('click', stake);
+            elements.btnWithdraw.addEventListener('click', withdraw);
+            elements.btnClaim.addEventListener('click', claim);
+
+            // Check for existing session
+            const savedAddress = localStorage.getItem('bonzi_staking_address');
+            if (savedAddress && window.ethereum) {
+                // Try to restore session
+                window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+                    if (accounts.length > 0 && accounts[0].toLowerCase() === savedAddress.toLowerCase()) {
+                        provider = new ethers.providers.Web3Provider(window.ethereum);
+                        signer = provider.getSigner();
+                        userAddress = accounts[0];
+                        onConnected();
+                    }
+                }).catch(() => {});
+            }
+
+            // Refresh data periodically
+            setInterval(() => {
+                if (userAddress) {
+                    updateUI();
+                }
+            }, 30000);
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+</body>
+</html>

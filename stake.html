@@ -318,32 +318,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Self-compound section */
-        .compound-card {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .compound-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .compound-description {
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
+        /* Buy widget (inside vault) */
         .buy-btn {
             display: flex;
             align-items: center;
@@ -351,7 +326,7 @@
             gap: 0.5rem;
             width: 100%;
             padding: 1rem;
-            background: var(--green);
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
             color: white;
             border: none;
             border-radius: 12px;
@@ -363,9 +338,8 @@
         }
 
         .buy-btn:hover {
-            background: #059669;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
 
         .widget-embed {
@@ -389,8 +363,8 @@
             width: 100%;
             padding: 0.75rem;
             background: transparent;
-            color: var(--green);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--purple-light);
+            border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 8px;
             font-size: 0.9rem;
             cursor: pointer;
@@ -398,7 +372,7 @@
         }
 
         .widget-toggle:hover {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(124, 58, 237, 0.1);
         }
 
         /* Compounding Vault */
@@ -887,43 +861,7 @@
             </p>
         </div>
 
-        <!-- Self-Compound Section - Simplified -->
-        <div class="compound-card">
-            <div class="compound-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/>
-                </svg>
-                Manual Compound
-            </div>
-
-            <p class="compound-description">
-                Claim ETH, buy BONZI, stake again. Grow your position manually.
-            </p>
-
-            <!-- Buy button -->
-            <a href="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI" class="buy-btn" id="buyBonziBtn">
-                Buy More BONZI
-            </a>
-
-            <!-- Toggle embedded widget -->
-            <button class="widget-toggle" onclick="toggleWidget()">
-                <span id="widgetToggleText">Show Buy Widget</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                </svg>
-            </button>
-
-            <!-- Embedded widget (hidden by default) -->
-            <div class="widget-embed hidden" id="widgetEmbed">
-                <iframe
-                    src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI&embed=true"
-                    title="Buy BONZI Widget"
-                    allow="clipboard-write; payment">
-                </iframe>
-            </div>
-        </div>
-
-        <!-- Compounding Vault Section (NEW) -->
+        <!-- Compounding Vault Section -->
         <div class="vault-card" id="vaultSection">
             <div class="vault-header">
                 <div class="vault-title">
@@ -1008,6 +946,26 @@
                     <path d="M12 16v-4M12 8h.01"/>
                 </svg>
                 <span>Vault keeper runs every 6h: claims ETH → swaps to BONZI → restakes. Share price only goes up.</span>
+            </div>
+
+            <!-- Buy More Section (inside vault) -->
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(124, 58, 237, 0.2);">
+                <a href="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI" class="buy-btn" id="buyBonziBtn">
+                    Buy More BONZI
+                </a>
+                <button class="widget-toggle" onclick="toggleWidget()">
+                    <span id="widgetToggleText">Show Buy Widget</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="widget-embed hidden" id="widgetEmbed">
+                    <iframe
+                        src="widget/brand-widget.html?token=0xd6175692026bcd7cb12a515e39cf0256ef35cb86&symbol=$BONZI&embed=true"
+                        title="Buy BONZI Widget"
+                        allow="clipboard-write; payment">
+                    </iframe>
+                </div>
             </div>
         </div>
 

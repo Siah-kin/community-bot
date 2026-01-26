@@ -26,7 +26,7 @@
     --black: #0A0A0A;
     --gray: #52525B;
     --gray-light: #F4F4F5;
-    --red: #EF4444;
+    --red: #e74c3c;
     --gold: #D4AF37;
     --green: #27ae60;
 }
@@ -72,7 +72,7 @@ body.dark-mode .highlight-box {
 
 body.dark-mode .solution-box {
     background: #0D2818;
-    border-left-color: #10B981;
+    border-left-color: var(--green);
 }
 
 body.dark-mode .solution-box strong {
@@ -630,7 +630,7 @@ body.dark-mode .feature-box {
 /* Solution Box - Green/success */
 .solution-box {
     background: #ECFDF5;
-    border-left: 4px solid #10B981;
+    border-left: 4px solid var(--green);
     padding: 24px 28px;
     margin: 20px 0;
     font-size: 15px;

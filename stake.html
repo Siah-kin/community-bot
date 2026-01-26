@@ -599,6 +599,101 @@
             }
         }
 
+        /* Flywheel / Closed Loop Visual */
+        .flywheel-section {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .flywheel-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--purple);
+            margin-bottom: 1rem;
+        }
+
+        .flywheel-visual {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+
+        .flywheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            background: var(--purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+            font-size: 11px;
+            line-height: 1.3;
+            color: white;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .flywheel-node {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 2px solid var(--purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--purple-light);
+        }
+
+        /* Position nodes in a circle (5 nodes around center) */
+        .flywheel-node:nth-child(2) { top: 0; left: 50%; transform: translateX(-50%); }
+        .flywheel-node:nth-child(3) { top: 20%; right: 0; }
+        .flywheel-node:nth-child(4) { bottom: 20%; right: 0; }
+        .flywheel-node:nth-child(5) { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .flywheel-node:nth-child(6) { bottom: 20%; left: 0; }
+        .flywheel-node:nth-child(7) { top: 20%; left: 0; }
+
+        /* Animated rotation indicator */
+        .flywheel-visual::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px dashed rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .flywheel-caption {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .flywheel-caption strong {
+            color: var(--green);
+        }
+
         .points-header {
             display: flex;
             justify-content: space-between;
@@ -901,9 +996,20 @@
                 </div>
             </div>
 
-            <p class="vault-description">
-                Deposit BONZI → Get shares → Rewards auto-compound every 6h → Withdraw more BONZI than you deposited. Zero gas, zero effort.
-            </p>
+            <!-- Flywheel: The Closed Loop -->
+            <div class="flywheel-section">
+                <div class="flywheel-label">The Closed Loop</div>
+                <div class="flywheel-visual">
+                    <div class="flywheel-center">AUTO<br>COMPOUND</div>
+                    <div class="flywheel-node">Deposit<br>BONZI</div>
+                    <div class="flywheel-node">Hardstake<br>Pool</div>
+                    <div class="flywheel-node">Earn<br>ETH</div>
+                    <div class="flywheel-node">Swap to<br>BONZI</div>
+                    <div class="flywheel-node">Restake<br>More</div>
+                    <div class="flywheel-node">Shares<br>Grow</div>
+                </div>
+                <p class="flywheel-caption">Every 6h: <strong>claim → swap → stake → repeat</strong></p>
+            </div>
 
             <!-- Vault Stats -->
             <div class="vault-stats">

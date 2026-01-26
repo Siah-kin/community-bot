@@ -71,6 +71,40 @@
         .nav-links a:hover { color: var(--purple); }
         .nav-divider { color: var(--gray-light); font-size: 16px; margin: 0 8px; }
         .nav-links a.active { color: var(--purple); }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .nav-lang-select {
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            padding: 6px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .theme-toggle svg { width: 16px; height: 16px; }
+        .theme-toggle .icon-sun { display: none; }
+        body.light-mode .theme-toggle .icon-moon { display: none; }
+        body.light-mode .theme-toggle .icon-sun { display: block; }
+        .nav-connect-btn {
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: lowercase;
+        }
+        .nav-connect-btn:hover { background: var(--purple-dark); }
 
         .hero {
             padding: 140px 40px 40px;
@@ -1241,6 +1275,7 @@
             </div>
             <div class="nav-divider"></div>
             <a href="./" class="nav-link gated active" data-i18n="nav.metrics">metrics</a>
+            <a href="../stake.html" class="nav-link gated" data-i18n="nav.stake">stake</a>
             <a href="../dao/" class="nav-link gated" data-i18n="nav.dao">dao</a>
             <div class="nav-divider"></div>
             <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>

@@ -1020,7 +1020,29 @@
 
         // MEV-protected RPC
         const MEV_PROTECTED_RPC = 'https://rpc.flashbots.net';
-        const PUBLIC_RPC = 'https://eth.llamarpc.com';
+        // Public RPCs with fallbacks
+        const RPC_ENDPOINTS = [
+            'https://eth.drpc.org',
+            'https://rpc.ankr.com/eth',
+            'https://eth.llamarpc.com',
+            'https://cloudflare-eth.com'
+        ];
+        let PUBLIC_RPC = RPC_ENDPOINTS[0];
+
+        // Try to find a working RPC
+        async function findWorkingRpc() {
+            for (const rpc of RPC_ENDPOINTS) {
+                try {
+                    const testProvider = new ethers.providers.JsonRpcProvider(rpc);
+                    await testProvider.getBlockNumber();
+                    console.log('[RPC] Using:', rpc);
+                    return rpc;
+                } catch (e) {
+                    console.warn('[RPC] Failed:', rpc);
+                }
+            }
+            return RPC_ENDPOINTS[0]; // fallback
+        }
 
         // ABIs (minimal)
         const ERC20_ABI = [
@@ -1190,9 +1212,10 @@
                     window.ethereum.on('chainChanged', () => location.reload());
                 }
 
-                // Setup provider (public for reads)
+                // Setup provider (public for reads) - find working RPC
+                PUBLIC_RPC = await findWorkingRpc();
                 provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
-                console.log('[GATE] Provider ready, checking balances for:', userAddress);
+                console.log('[GATE] Provider ready using', PUBLIC_RPC, 'checking balances for:', userAddress);
 
                 // Check BONZI balance for gating
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);

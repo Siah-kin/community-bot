@@ -3788,6 +3788,7 @@
             flex-wrap: wrap;
             color: var(--gray);
             font-size: 14px;
+            margin-top: 48px;
         }
 
         .pricing-footer span {
@@ -3798,6 +3799,225 @@
 
         .pricing-footer .icon {
             font-size: 16px;
+        }
+
+        /* Educational pricing layout */
+        .pricing-edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-edu-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        .edu-block {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 32px;
+        }
+
+        .edu-block h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--purple-light);
+        }
+
+        .edu-block p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 16px;
+        }
+
+        .edu-ctas {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-edu {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+
+        .btn-edu.btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+        }
+
+        .btn-edu.btn-outline:hover {
+            border-color: var(--purple-light);
+            color: var(--purple-light);
+        }
+
+        .btn-edu.btn-primary {
+            background: var(--purple);
+            border: 1px solid var(--purple);
+            color: var(--white);
+        }
+
+        .btn-edu.btn-primary:hover {
+            background: var(--purple-light);
+        }
+
+        /* Math details/accordion */
+        .math-details {
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .math-details summary {
+            padding: 16px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--white);
+            background: rgba(255,255,255,0.02);
+            list-style: none;
+        }
+
+        .math-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .math-details summary::before {
+            content: "+";
+            margin-right: 12px;
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        .math-details[open] summary::before {
+            content: "−";
+        }
+
+        .math-details[open] summary {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .math-content {
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .math-content p {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .math-content strong {
+            color: var(--white);
+        }
+
+        .math-example {
+            background: rgba(124,58,237,0.1);
+            border-left: 3px solid var(--purple);
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .math-label {
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+
+        .math-example p {
+            margin-bottom: 0;
+        }
+
+        .math-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+
+        .math-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .math-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Hosted block */
+        .hosted-block {
+            background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(124,58,237,0.02));
+            border: 1px solid rgba(124,58,237,0.3);
+            padding: 32px;
+            text-align: left;
+        }
+
+        .hosted-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .hosted-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .hosted-left h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .hosted-left p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+        }
+
+        .hosted-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .hosted-price {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .hosted-price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .hosted-note {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .hosted-note a {
+            color: var(--purple-light);
+            text-decoration: underline;
         }
 
         .btn-large:hover {
@@ -4883,91 +5103,73 @@
 
 <section class="pricing-section">
     <div class="pricing-container">
-        <p class="pricing-label" data-i18n="pricing.label">honest pricing</p>
-        <h2 class="pricing-title" data-i18n="pricing.title">one rate. every feature. no tricks.</h2>
-        <p class="pricing-subtitle" data-i18n="pricing.subtitle">Same access for everyone. Pay monthly or yearly - your choice.</p>
+        <p class="pricing-label">how it works</p>
+        <h2 class="pricing-title">open source infrastructure for tokenized communities</h2>
+        <p class="pricing-subtitle">Self-host free. We run it for €25/mo. Same code either way.</p>
 
-        <div class="pricing-grid">
-            <!-- Free -->
-            <div class="price-card">
-                <div class="card-header">
-                    <h3 data-i18n="pricing.free.name">Free</h3>
-                    <p class="card-tagline" data-i18n="pricing.free.tagline">Self-host forever</p>
+        <!-- Two-column educational layout -->
+        <div class="pricing-edu-grid">
+            <!-- Left: What you get -->
+            <div class="edu-block">
+                <h3>What this is</h3>
+                <p>AI that manages your community's information, identity, and coordination. Your token becomes the organizing layer—activities, ambassadors, rewards all flow through it.</p>
+                <p>Contributors surface through work. Vetted builders get rewarded visibly. No cold sales, no top-down management.</p>
+                <div class="edu-ctas">
+                    <a href="https://github.com/Siah-kin/community-bot" class="btn-edu btn-outline">View Source</a>
+                    <a href="https://t.me/BonziVistaBot" class="btn-edu btn-outline">Try Demo</a>
                 </div>
-                <div class="card-price">
-                    <span class="price-amount">€0</span>
-                    <span class="price-period" data-i18n="pricing.free.period">forever</span>
-                </div>
-                <ul class="card-features">
-                    <li data-i18n="pricing.free.f1">Full source code</li>
-                    <li data-i18n="pricing.free.f2">Unlimited interactions</li>
-                    <li data-i18n="pricing.free.f3">Community support</li>
-                    <li data-i18n="pricing.free.f4">Run on your own server</li>
-                </ul>
-                <a href="https://github.com/Siah-kin/community-bot" class="btn-card btn-outline" data-i18n="pricing.free.cta">View Source →</a>
             </div>
 
-            <!-- Monthly -->
-            <div class="price-card">
-                <div class="card-header">
-                    <h3 data-i18n="pricing.monthly.name">Monthly</h3>
-                    <p class="card-tagline" data-i18n="pricing.monthly.tagline">Full access, cancel anytime</p>
-                </div>
-                <div class="card-price">
-                    <span class="price-amount">€25</span>
-                    <span class="price-period" data-i18n="pricing.monthly.period">/month</span>
-                </div>
-                <ul class="card-features">
-                    <li data-i18n="pricing.monthly.f1">Everything included</li>
-                    <li data-i18n="pricing.monthly.f2">Cross-tenant sybil intel</li>
-                    <li data-i18n="pricing.monthly.f3">Knowledge base + RAG</li>
-                    <li data-i18n="pricing.monthly.f4">No auto-renew traps</li>
-                </ul>
-                <a href="https://t.me/ethervistatoken" class="btn-card btn-primary" data-i18n="pricing.monthly.cta">Get Started →</a>
-            </div>
-
-            <!-- Yearly -->
-            <div class="price-card">
-                <div class="card-header">
-                    <h3 data-i18n="pricing.yearly.name">Yearly</h3>
-                    <p class="card-tagline" data-i18n="pricing.yearly.tagline">Same rate, pay once</p>
-                </div>
-                <div class="card-price">
-                    <span class="price-amount">€300</span>
-                    <span class="price-period" data-i18n="pricing.yearly.period">/year</span>
-                </div>
-                <ul class="card-features">
-                    <li data-i18n="pricing.yearly.f1">Everything included</li>
-                    <li data-i18n="pricing.yearly.f2">Cross-tenant sybil intel</li>
-                    <li data-i18n="pricing.yearly.f3">Knowledge base + RAG</li>
-                    <li data-i18n="pricing.yearly.f4">Priority support</li>
-                </ul>
-                <a href="https://t.me/ethervistatoken" class="btn-card btn-primary" data-i18n="pricing.yearly.cta">Get Started →</a>
-            </div>
-
-            <!-- Social Impact -->
-            <div class="price-card impact">
-                <div class="card-badge impact-badge" data-i18n="pricing.impact.badge">80% Off</div>
-                <div class="card-header">
-                    <h3 data-i18n="pricing.impact.name">Social Impact</h3>
-                    <p class="card-tagline" data-i18n="pricing.impact.tagline">For nonprofits & social startups</p>
-                </div>
-                <div class="card-price">
-                    <span class="price-amount">€60</span>
-                    <span class="price-period" data-i18n="pricing.impact.period">/year</span>
-                </div>
-                <ul class="card-features">
-                    <li data-i18n="pricing.impact.f1">Everything included</li>
-                    <li data-i18n="pricing.impact.f2">Same features as paid tiers</li>
-                    <li data-i18n="pricing.impact.f3">Proof of nonprofit status</li>
-                    <li data-i18n="pricing.impact.f4">Building a better world</li>
-                </ul>
-                <a href="https://t.me/ethervistatoken" class="btn-card btn-impact" data-i18n="pricing.impact.cta">Apply Now →</a>
+            <!-- Right: The math -->
+            <div class="edu-block edu-math">
+                <h3>The rug-proof math</h3>
+                <details class="math-details">
+                    <summary>Why 25-75% LP lock matters</summary>
+                    <div class="math-content">
+                        <p><strong>LP = Liquidity Pool.</strong> When you create a token, you pair it with ETH so people can trade it.</p>
+                        <p><strong>The problem:</strong> Founders can pull their LP tokens and drain the pool. This is a "rug pull."</p>
+                        <p><strong>The solution:</strong> Lock 25-75% of LP tokens in a smart contract. The code won't let anyone withdraw them—not even the founder.</p>
+                        <div class="math-example">
+                            <span class="math-label">Example</span>
+                            <p>Token launches with $100K in LP.<br>
+                            50% locked = $50K can never be pulled.<br>
+                            Price floor is structurally protected.</p>
+                        </div>
+                        <p>This isn't a promise. It's code. Verifiable on-chain.</p>
+                    </div>
+                </details>
+                <details class="math-details">
+                    <summary>How visible reward flows work</summary>
+                    <div class="math-content">
+                        <p>Every contribution is tracked. Every reward is visible. The AI manages the complexity—you see the results.</p>
+                        <ul class="math-list">
+                            <li><strong>Help someone</strong> → Points accumulate</li>
+                            <li><strong>Get vetted</strong> → Trust score rises</li>
+                            <li><strong>Claim rewards</strong> → Visible on-chain</li>
+                        </ul>
+                        <p>No hidden treasuries. No governance theater. Work = receipts.</p>
+                    </div>
+                </details>
             </div>
         </div>
 
+        <!-- Hosted option -->
+        <div class="hosted-block">
+            <div class="hosted-content">
+                <div class="hosted-left">
+                    <h4>Hosted option</h4>
+                    <p>We run the infrastructure. You use Telegram. €25/mo, cancel anytime.</p>
+                </div>
+                <div class="hosted-right">
+                    <span class="hosted-price">€25<span>/mo</span></span>
+                    <a href="https://t.me/ethervistatoken" class="btn-edu btn-primary">Get Hosted</a>
+                </div>
+            </div>
+            <p class="hosted-note">Nonprofit? <a href="https://t.me/ethervistatoken">Reach out</a>—we'll work something out.</p>
+        </div>
+
         <div class="pricing-footer">
-            <p class="privacy-note" data-i18n="pricing.privacy">🔒 Wallet address only. We don't store your email, name, or payment details.</p>
+            <p class="privacy-note">Built from refugee operations experience. No VC. Revenue keeps the project alive.</p>
         </div>
     </div>
 </section>

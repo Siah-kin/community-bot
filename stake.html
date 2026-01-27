@@ -1465,6 +1465,7 @@
                 const stakerInfo = await hardstakeContract.getStakerInfo(userAddress);
                 const stakedBalance = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
                 const claimableEth = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
+                currentClaimableEth = claimableEth; // Update global for Euler warning
                 const timeRemaining = stakerInfo.timeRemaining.toNumber();
 
                 document.getElementById('stakedBalance').textContent = stakedBalance.toLocaleString(undefined, {maximumFractionDigits: 2});
@@ -1528,10 +1529,24 @@
             document.getElementById('statusMessage').classList.add('hidden');
         }
 
+        // Global claimable tracker for Euler warning
+        let currentClaimableEth = 0;
+
         // Stake function
         async function stake() {
             const amount = document.getElementById('stakeAmount').value;
             if (!amount || parseFloat(amount) === 0) return;
+
+            // CRITICAL: Euler reset warning - user loses unclaimed rewards
+            if (currentClaimableEth > 0) {
+                const proceed = confirm(
+                    `⚠️ You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
+                    `Staking resets your Euler index.\n` +
+                    `Claim first or lose your rewards.\n\n` +
+                    `Continue anyway?`
+                );
+                if (!proceed) return;
+            }
 
             const amountWei = ethers.utils.parseEther(amount);
 
@@ -1608,6 +1623,17 @@
 
         // Withdraw function
         async function withdraw() {
+            // CRITICAL: Euler reset warning - user loses unclaimed rewards
+            if (currentClaimableEth > 0) {
+                const proceed = confirm(
+                    `⚠️ You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
+                    `Withdrawing resets your Euler index.\n` +
+                    `Claim first or lose your rewards.\n\n` +
+                    `Continue anyway?`
+                );
+                if (!proceed) return;
+            }
+
             try {
                 const stakedEl = document.getElementById('stakedBalance');
                 const stakedAmount = parseFloat(stakedEl.textContent.replace(/,/g, ''));

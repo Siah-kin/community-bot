@@ -4467,91 +4467,6 @@
             letter-spacing: 1px;
         }
 
-        /* =====================================================
-           JOURNEY CARDS - 3 Doors
-           ===================================================== */
-        .journey-section {
-            padding: 80px 24px;
-            background: var(--black);
-            text-align: center;
-        }
-        .journey-section .section-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--gray);
-            margin-bottom: 12px;
-        }
-        .journey-section .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 48px;
-            color: var(--white);
-        }
-        .journey-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .journey-card {
-            background: #18181B;
-            border: 1px solid #27272A;
-            padding: 32px 24px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-        .journey-card:hover {
-            border-color: var(--purple);
-            transform: translateY(-4px);
-        }
-        .journey-card .card-icon {
-            font-size: 32px;
-            margin-bottom: 16px;
-        }
-        .journey-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--white);
-            margin-bottom: 8px;
-        }
-        .journey-card .card-subtitle {
-            font-size: 14px;
-            color: var(--purple-light);
-            margin-bottom: 16px;
-        }
-        .journey-card p {
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .journey-card .card-cta {
-            display: inline-block;
-            color: var(--purple);
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-        }
-        .journey-card .card-cta:hover {
-            text-decoration: underline;
-        }
-        .journey-card .card-note {
-            display: block;
-            font-size: 11px;
-            color: var(--gray);
-            margin-top: 8px;
-        }
-        @media (max-width: 768px) {
-            .journey-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .journey-section .section-title {
-                font-size: 24px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -4834,43 +4749,6 @@
     </div>
 </div>
 
-<!-- Journey Cards - 3 Doors -->
-<section class="journey-section">
-    <p class="section-label">three paths, one destination</p>
-    <h2 class="section-title">choose how you want to begin</h2>
-
-    <div class="journey-grid">
-        <!-- Savvy -->
-        <div class="journey-card">
-            <div class="card-icon">🚀</div>
-            <h3>Launch Now</h3>
-            <p class="card-subtitle">I know what I'm doing</p>
-            <p>Connect wallet → configure token → live in 5 minutes. Free via EtherFun (~$0.05 gas).</p>
-            <a href="https://etherfun.app" target="_blank" class="card-cta">Launch Token →</a>
-            <span class="card-note">Requires wallet connection</span>
-        </div>
-
-        <!-- Curious -->
-        <div class="journey-card">
-            <div class="card-icon">🎮</div>
-            <h3>Try First</h3>
-            <p class="card-subtitle">Show me how it works</p>
-            <p>Join our Telegram. Earn points by helping others. See raids, tips, and leaderboards in action.</p>
-            <a href="https://t.me/etherfun_trenches" target="_blank" class="card-cta">Join Demo →</a>
-            <span class="card-note">No wallet needed</span>
-        </div>
-
-        <!-- Careful -->
-        <div class="journey-card">
-            <div class="card-icon">📚</div>
-            <h3>Learn More</h3>
-            <p class="card-subtitle">I want to understand first</p>
-            <p>Read the whitepaper. Check the FAQ. Watch the bot work in public channels. Take your time.</p>
-            <a href="manual/" class="card-cta">Read Docs →</a>
-            <span class="card-note">Zero commitment</span>
-        </div>
-    </div>
-</section>
 
 <section class="pain-section">
     <div class="pain-container">

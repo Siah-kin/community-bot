@@ -22,7 +22,6 @@
     <meta name="twitter:description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors.">
 
     <link rel="icon" href="bonzi-logo.png" type="image/png">
-    <link rel="stylesheet" href="css/bonzi-design.css">
 
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://bonzi-v5.onrender.com; media-src 'self'; frame-ancestors 'none';">
@@ -33,13 +32,44 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <style>
-        /* Page-specific styles - base styles come from bonzi-design.css */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Additional radius overrides for index-specific elements */
         :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #d4af37;
+            --red: #DC2626;
+            --red-light: #FEE2E2;
+            --green: #10B981;
+            --green-light: #D1FAE5;
+            /* Sharp corners system - unified */
             --radius-none: 0;
             --radius-sm: 2px;
             --radius-circle: 50%;
+        }
+
+        /* Global sharp corners override */
+        .card, .feature-card, .loop-card, .domino-card, .stat-box,
+        .solution-card, .pain-card, .system-content, .chat-box,
+        .manifesto-box, .action-card, .launch-slot, .slot-machine,
+        .tool-card, .dao-box, .perk-card, .tier-card,
+        [class*="card"], [class*="box"]:not(.checkbox):not(.select-box) {
+            border-radius: var(--radius-none) !important;
+        }
+
+        /* Keep circles for avatars and dots only */
+        .cursor, .cursor-dot, .avatar, .step-num-circle,
+        [class*="avatar"], [class*="dot"], [class*="circle"] {
+            border-radius: var(--radius-circle) !important;
         }
 
         html {

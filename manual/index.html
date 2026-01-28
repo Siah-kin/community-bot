@@ -202,7 +202,10 @@
             border-radius: 8px !important;
             font-weight: 600 !important;
         }
-        .stakeholder-btn .icon { font-size: 18px; }
+        .stakeholder-btn .icon { font-size: 18px; display: inline-flex; align-items: center; }
+        .stakeholder-btn .icon svg { width: 18px; height: 18px; fill: #7c3aed; }
+        .section-icon { display: inline; margin-right: 8px; }
+        .section-icon svg { width: 24px; height: 24px; fill: #7c3aed; vertical-align: middle; }
 
         /* Main Content */
         .docs-content {
@@ -425,12 +428,12 @@
             <!-- Stakeholder selector -->
             <div class="sidebar-section">
                 <h4>Who are you?</h4>
-                <a href="#branders" class="stakeholder-btn"><span class="icon">🚀</span> Brander</a>
-                <a href="#farmers" class="stakeholder-btn"><span class="icon">🎮</span> Farmer</a>
-                <a href="#investors" class="stakeholder-btn"><span class="icon">💰</span> Investor</a>
-                <a href="#stakers" class="stakeholder-btn"><span class="icon">📈</span> Staker</a>
-                <a href="#developers" class="stakeholder-btn"><span class="icon">🔧</span> Developer</a>
-                <a href="#agents" class="stakeholder-btn"><span class="icon">🤖</span> AI Agent</a>
+                <a href="#branders" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12.5 2.5c-.28 0-.5.22-.5.5v.5c0 .28.22.5.5.5s.5-.22.5-.5V3c0-.28-.22-.5-.5-.5zM7 4L5.5 18h14L18 4H7zm1 1h9l1.2 12H6.8L8 5zm4.5 2a1.5 1.5 0 000 3 1.5 1.5 0 000-3zM10 18l-1 3h7l-1-3h-5z"/></svg></span> Brander</a>
+                <a href="#farmers" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M7.97 16L5 19l7 2 7-2-2.97-3H7.97zM12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg></span> Farmer</a>
+                <a href="#investors" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.89-8.9c-1.78-.59-2.64-.96-2.64-1.9 0-1.02 1.11-1.39 1.81-1.39.86 0 1.57.36 1.97.99l1.63-1.04c-.6-.99-1.52-1.62-2.66-1.8V4h-2v1.96c-2.06.43-3.14 1.93-3.14 3.34 0 2.38 2.2 3.19 3.78 3.76 1.53.55 2.5 1.01 2.5 2.09 0 1.21-1.11 1.61-1.96 1.61-1.14 0-2.05-.67-2.44-1.77l-1.71.91c.51 1.33 1.61 2.21 3.11 2.51V20h2v-1.6c2.05-.44 3.25-1.93 3.25-3.55-.01-2.36-2.08-3.2-3.5-3.75z"/></svg></span> Investor</a>
+                <a href="#stakers" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></span> Staker</a>
+                <a href="#developers" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg></span> Developer</a>
+                <a href="#agents" class="stakeholder-btn"><span class="icon"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg></span> AI Agent</a>
             </div>
 
             <div class="sidebar-section">
@@ -500,7 +503,7 @@
             </div>
 
             <!-- ===================== BRANDERS ===================== -->
-            <h2 id="branders">🚀 For Branders</h2>
+            <h2 id="branders"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12.5 2.5c-.28 0-.5.22-.5.5v.5c0 .28.22.5.5.5s.5-.22.5-.5V3c0-.28-.22-.5-.5-.5zM7 4L5.5 18h14L18 4H7zm1 1h9l1.2 12H6.8L8 5zm4.5 2a1.5 1.5 0 000 3 1.5 1.5 0 000-3zM10 18l-1 3h7l-1-3h-5z"/></svg></span>For Branders</h2>
             <p class="docs-intro">Launch your token on VISTA-20 and get full DAO infrastructure from day one.</p>
 
             <h3>Launch Your Token</h3>
@@ -542,7 +545,7 @@
             </ul>
 
             <!-- ===================== FARMERS ===================== -->
-            <h2 id="farmers">🎮 For Farmers</h2>
+            <h2 id="farmers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M7.97 16L5 19l7 2 7-2-2.97-3H7.97zM12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg></span>For Farmers</h2>
             <p class="docs-intro">Earn ETH through genuine contributions. Sybil-protected - only humans earn.</p>
 
             <h3>Quick Start</h3>
@@ -617,7 +620,7 @@
             </div>
 
             <!-- ===================== INVESTORS ===================== -->
-            <h2 id="investors">💰 For Investors</h2>
+            <h2 id="investors"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.89-8.9c-1.78-.59-2.64-.96-2.64-1.9 0-1.02 1.11-1.39 1.81-1.39.86 0 1.57.36 1.97.99l1.63-1.04c-.6-.99-1.52-1.62-2.66-1.8V4h-2v1.96c-2.06.43-3.14 1.93-3.14 3.34 0 2.38 2.2 3.19 3.78 3.76 1.53.55 2.5 1.01 2.5 2.09 0 1.21-1.11 1.61-1.96 1.61-1.14 0-2.05-.67-2.44-1.77l-1.71.91c.51 1.33 1.61 2.21 3.11 2.51V20h2v-1.6c2.05-.44 3.25-1.93 3.25-3.55-.01-2.36-2.08-3.2-3.5-3.75z"/></svg></span>For Investors</h2>
             <p class="docs-intro">Buy tokens on brand websites. Each brand has embeddable buy widgets.</p>
 
             <h3>How to Buy</h3>
@@ -637,7 +640,7 @@
             </ul>
 
             <!-- ===================== STAKERS ===================== -->
-            <h2 id="stakers">📈 For Stakers</h2>
+            <h2 id="stakers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></span>For Stakers</h2>
             <p class="docs-intro">Stake into brand success. Self-compounding yields on Ethervista.</p>
 
             <h3>Staking Guide</h3>
@@ -666,7 +669,7 @@
             </ul>
 
             <!-- ===================== DEVELOPERS ===================== -->
-            <h2 id="developers">🔧 For Developers</h2>
+            <h2 id="developers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg></span>For Developers</h2>
             <p class="docs-intro">Integrate DeFi widgets. Fork the OSS. Ship faster.</p>
 
             <h3>Widget Library</h3>
@@ -693,7 +696,7 @@
             <p>Full REST API for custom integrations. See <a href="https://github.com/Siah-kin/community-bot/blob/main/API.md">API.md</a> in the repo.</p>
 
             <!-- ===================== AGENTS ===================== -->
-            <h2 id="agents">🤖 For AI Agents</h2>
+            <h2 id="agents"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg></span>For AI Agents</h2>
             <p class="docs-intro">The first Community Oracle other AIs can trust. ERC-8004 compliant.</p>
 
             <h3>What is ERC-8004?</h3>

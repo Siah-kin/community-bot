@@ -1,6 +1,9 @@
 /**
  * Bonzi Design System
- * Shared CSS extracted from manifesto page (faq.html)
+ * Single source of truth for bonzivista.org styling
+ *
+ * Source files: index.html (dark), faq.html (light/manifesto)
+ * Skill doc: src/fronts/web/skills/bonzi-web-design.skill/SKILL.md
  *
  * Color Palette:
  * - Purple: #7C3AED (primary accent)
@@ -8,11 +11,16 @@
  * - Purple Dark: #5B21B6 (gradients)
  * - Black: #0A0A0A (dark bg)
  * - White: #FFFFFF (light bg)
- * - Gold: #D4AF37 (links, highlights)
- * - Green: #27ae60 (success ONLY)
- * - Red: #e74c3c (error ONLY)
+ * - Gray: #71717A (body text)
+ * - Gray Light: #F4F4F5 (light backgrounds)
+ * - Gold: #d4af37 (connect button, links)
+ * - Green: #10B981 (success/solutions ONLY)
+ * - Red: #DC2626 (error/warning ONLY)
  *
- * Musical Rhythm: 60-70% prose, 20-25% boxes, 5-10% accents
+ * Rules:
+ * - Sharp corners on all cards/boxes (no border-radius)
+ * - Red/green for STATUS only, never decorative
+ * - 60-70% prose, 20-25% boxes, 5-10% accents
  */
 
 /* ========================================
@@ -24,11 +32,13 @@
     --purple-dark: #5B21B6;
     --white: #FFFFFF;
     --black: #0A0A0A;
-    --gray: #52525B;
+    --gray: #71717A;
     --gray-light: #F4F4F5;
-    --red: #e74c3c;
-    --gold: #D4AF37;
-    --green: #27ae60;
+    --gold: #d4af37;
+    --red: #DC2626;
+    --red-light: #FEE2E2;
+    --green: #10B981;
+    --green-light: #D1FAE5;
 }
 
 /* ========================================
@@ -1371,9 +1381,89 @@ body.dark-mode .perk-desc {
 }
 
 /* ========================================
-   RESPONSIVE
+   RESPONSIVE DESIGN SYSTEM
+
+   Breakpoints:
+   - 1440px: Ultra-wide / large monitors
+   - 1024px: Tablet landscape / small desktop
+   - 768px:  Tablet portrait
+   - 480px:  Mobile
    ======================================== */
+
+/* --- LARGE SCREEN CONTAINMENT (1440px+) ---
+   Prevents ultra-wide stretching on large monitors
+   Content stays readable, doesn't span full width */
+
+.container,
+.content-container,
+.page-hero,
+.slap-content,
+.toc-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Full-width sections still have contained content */
+.slap-section .slap-content,
+.manifesto-quote blockquote {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Cards and grids max out at readable widths */
+.carnage-stats,
+.market-stats,
+.perks-grid,
+.comparison-grid {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- ULTRA-WIDE (1440px+) ---
+   Typography scaling for large screens */
+@media (min-width: 1440px) {
+    html {
+        font-size: 18px; /* Slight scale-up for readability */
+    }
+
+    .page-hero h1 {
+        font-size: 64px;
+    }
+
+    .slap-text {
+        font-size: 22px;
+    }
+
+    .manifesto-quote blockquote {
+        font-size: 32px;
+    }
+}
+
+/* --- TABLET LANDSCAPE / SMALL DESKTOP (1024px) --- */
+@media (max-width: 1024px) {
+    .page-hero h1 {
+        font-size: 48px;
+        letter-spacing: -1.5px;
+    }
+
+    .carnage-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .market-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- TABLET PORTRAIT (768px) --- */
 @media (max-width: 768px) {
+    html {
+        font-size: 16px; /* Reset to base */
+    }
+
     nav {
         padding: 8px 12px;
     }
@@ -1388,6 +1478,11 @@ body.dark-mode .perk-desc {
 
     .page-hero h1 {
         font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .page-intro {
+        font-size: 16px;
     }
 
     .slap-section {
@@ -1400,10 +1495,15 @@ body.dark-mode .perk-desc {
 
     .carnage-stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .carnage-stat .number {
+        font-size: 28px;
     }
 
     .content-container {
-        padding: 60px 24px 80px;
+        padding: 40px 24px 60px;
     }
 
     .comparison-grid {
@@ -1427,6 +1527,11 @@ body.dark-mode .perk-desc {
         font-size: 12px;
     }
 
+    .competitor-table th,
+    .competitor-table td {
+        padding: 8px 12px;
+    }
+
     .toc-container {
         padding: 0 24px 40px;
     }
@@ -1438,4 +1543,128 @@ body.dark-mode .perk-desc {
     .perks-grid {
         grid-template-columns: 1fr;
     }
+
+    /* Boxes need less padding on mobile */
+    .technical-box,
+    .brutal-box,
+    .feature-box,
+    .highlight-box,
+    .solution-box,
+    .advantage-box {
+        padding: 20px;
+    }
+
+    /* Buttons stack on mobile */
+    .btn-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* --- MOBILE (480px) --- */
+@media (max-width: 480px) {
+    .page-hero {
+        padding: 100px 16px 32px;
+    }
+
+    .page-hero h1 {
+        font-size: 28px;
+    }
+
+    .slap-section {
+        padding: 40px 16px;
+    }
+
+    .slap-text {
+        font-size: 16px;
+    }
+
+    .carnage-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .carnage-stat .number {
+        font-size: 24px;
+    }
+
+    .content-container {
+        padding: 32px 16px 48px;
+    }
+
+    .faq-question {
+        font-size: 18px;
+    }
+
+    .faq-answer {
+        font-size: 15px;
+    }
+
+    .manifesto-quote {
+        padding: 24px 16px;
+    }
+
+    .manifesto-quote blockquote {
+        font-size: 18px;
+    }
+
+    /* Nav stays minimal */
+    nav {
+        padding: 8px 12px;
+    }
+
+    .nav-logo {
+        font-size: 18px;
+    }
+
+    .nav-connect-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
+/* --- TOUCH DEVICES --- */
+@media (hover: none) {
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .nav-connect-btn:hover {
+        transform: none;
+    }
+}
+
+/* --- UTILITY CLASSES --- */
+.container {
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.container-narrow {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.container-wide {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Hide/show at breakpoints */
+.hide-mobile { display: block; }
+.show-mobile { display: none; }
+
+@media (max-width: 768px) {
+    .hide-mobile { display: none; }
+    .show-mobile { display: block; }
 }

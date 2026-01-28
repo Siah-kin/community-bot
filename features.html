@@ -70,7 +70,7 @@
             transition: color 0.2s;
         }
         .nav-link:hover { color: var(--black); }
-        .nav-link.active { color: var(--black); font-weight: 600; }
+        .nav-link.active { color: var(--black); }
         .nav-divider {
             width: 1px;
             height: 16px;
@@ -163,7 +163,7 @@
         body.dark-mode .nav-link:hover { color: #FFFFFF; }
         body.dark-mode .nav-divider { background: rgba(255, 255, 255, 0.15); }
         body.dark-mode .nav-dropdown-menu {
-            background: rgba(20, 20, 20, 0.98);
+            background: rgba(26, 26, 26, 0.98);
             border-color: rgba(255, 255, 255, 0.1);
         }
         body.dark-mode .nav-dropdown-menu a { color: rgba(255, 255, 255, 0.7); }
@@ -233,7 +233,7 @@
 
         /* Hero */
         .hero {
-            padding: 160px 40px 80px;
+            padding: 160px 40px 60px;
             max-width: 900px;
             margin: 0 auto;
         }
@@ -246,10 +246,11 @@
             margin-bottom: 16px;
         }
         .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 56px;
+            font-weight: 800;
             margin-bottom: 24px;
-            line-height: 1.1;
+            line-height: 1.05;
+            letter-spacing: -2px;
         }
         .hero p {
             font-size: 20px;
@@ -484,8 +485,8 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero { padding: 120px 20px 60px; }
-            .hero h1 { font-size: 28px; }
+            .hero { padding: 120px 24px 40px; }
+            .hero h1 { font-size: 36px; }
             .hero p { font-size: 16px; }
             .feature-section { padding: 60px 20px; }
             .feature-section:nth-child(even) {

@@ -399,29 +399,39 @@
 
     <div class="docs-layout">
         <aside class="sidebar" id="sidebar">
+            <!-- Journey selector -->
             <div class="sidebar-section">
-                <h4>Getting Started</h4>
-                <a href="#intro" class="active">What is Bonzi?</a>
-                <a href="#quickstart">Quick Start</a>
-                <a href="#commands">Commands</a>
+                <h4>I want to...</h4>
+                <a href="#launch" style="color: var(--purple);">🚀 Launch a Token</a>
+                <a href="#earn" style="color: var(--purple);">🎮 Earn Points</a>
+                <a href="#intro" class="active" style="color: var(--purple);">📚 Understand First</a>
             </div>
+
             <div class="sidebar-section">
-                <h4>Features</h4>
-                <a href="#ask">Ask Questions</a>
-                <a href="#leaderboard">Leaderboard</a>
-                <a href="#thanks">Thanks System</a>
-                <a href="#settings">Settings</a>
-            </div>
-            <div class="sidebar-section">
-                <h4>Advanced</h4>
-                <a href="#staking">Staking Guide</a>
+                <h4>🚀 For Launchers</h4>
+                <a href="#launch">Launch Your Token</a>
                 <a href="#admin">Admin Tools</a>
-            </div>
-            <div class="sidebar-section">
-                <h4>Integration</h4>
                 <a href="../widget/README.md">Buy Widget</a>
                 <a href="../widget/qr.html">QR Codes</a>
             </div>
+
+            <div class="sidebar-section">
+                <h4>🎮 For Contributors</h4>
+                <a href="#quickstart">Quick Start</a>
+                <a href="#commands">Commands</a>
+                <a href="#ask">Ask & Earn</a>
+                <a href="#leaderboard">Leaderboard</a>
+                <a href="#thanks">Thanks System</a>
+                <a href="#claim">Claim ETH</a>
+            </div>
+
+            <div class="sidebar-section">
+                <h4>📚 For Learners</h4>
+                <a href="#intro">What is Bonzi?</a>
+                <a href="#staking">Staking Guide</a>
+                <a href="#settings">Settings</a>
+            </div>
+
             <div class="sidebar-section">
                 <h4>Help</h4>
                 <a href="#troubleshooting">Troubleshooting</a>
@@ -442,6 +452,25 @@
                 <strong>Open Source:</strong> Bonzi is MIT-licensed. Self-host for free, forever. No tracking, no ads, no data harvesting. <a href="https://github.com/Siah-kin/community-bot">View source →</a>
             </div>
 
+            <!-- LAUNCHER JOURNEY -->
+            <h2 id="launch">🚀 Launch Your Token</h2>
+            <p class="docs-intro">Ready to tokenise your brand? Here's the path from idea to live token in under 5 minutes.</p>
+
+            <ol>
+                <li><strong>Connect wallet:</strong> Go to <a href="https://etherfun.app" target="_blank">etherfun.app</a></li>
+                <li><strong>Configure token:</strong> Set name, symbol, and fee structure</li>
+                <li><strong>Sign transaction:</strong> ~$0.05 gas on Ethereum</li>
+                <li><strong>Bot auto-deploys:</strong> Bonzi is automatically configured for your token</li>
+                <li><strong>Share:</strong> Your community can now buy, stake, and earn</li>
+            </ol>
+
+            <div class="highlight-box">
+                <strong>What you get:</strong> VISTA-20 token on Ethervista · Trading fees fund tip pool · Sybil-protected rewards · AI community support
+            </div>
+
+            <p>After launch, use the <a href="#admin">Admin Tools</a> to customize Bonzi's personality and knowledge base for your project.</p>
+
+            <!-- CONTRIBUTOR JOURNEY -->
             <h2 id="quickstart">Quick Start</h2>
             <p>Getting Bonzi running in your group takes about 2 minutes. No coding required.</p>
 
@@ -547,6 +576,25 @@
                 Learn more: <a href="../features.html#thanks">Thanks Protocol - Merit over money →</a>
             </div>
 
+            <h2 id="claim">Claim ETH Rewards</h2>
+            <p>Your contributions have real value. Once you hit the threshold, you can claim ETH directly to your wallet.</p>
+
+            <ol>
+                <li><strong>Earn points:</strong> Ask questions, help others, get thanked</li>
+                <li><strong>Link wallet:</strong> Use <code>/link_wallet [your-address]</code></li>
+                <li><strong>Check eligibility:</strong> Use <code>/claim</code> to see your status</li>
+                <li><strong>Claim:</strong> When eligible, confirm and receive ETH</li>
+            </ol>
+
+            <div class="highlight-box">
+                <strong>Where does the ETH come from?</strong> Trading fees from the token fund the tip pool. No VC money, no marketing budget - just value created by the community, returned to the community.
+            </div>
+
+            <div class="technical-box" style="margin-top: 16px;">
+                <strong>Sybil Protection:</strong> AI verifies genuine contributions. Bot farms and copy-paste merchants get filtered. Only humans earn.
+            </div>
+
+            <!-- LEARNER JOURNEY -->
             <h2 id="settings">Settings</h2>
             <p>Use <code>/settings</code> or the dashboard to configure your experience.</p>
 

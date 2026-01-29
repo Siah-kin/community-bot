@@ -42,6 +42,7 @@ SKIP_FILES = [
     'nav-test.html',
     'terms.html',  # Legal page, different format
     'qr.html',  # Minimal widget
+    'faq.html',  # Redirect to manifesto.html
 ]
 
 # Directories to skip entirely (drafts, embedded widgets)

@@ -700,78 +700,25 @@
             <p class="docs-intro">Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data SIAH uses internally.</p>
 
             <h3>Why SIAH's Data is Unique</h3>
-            <p>SIAH is <strong>7 years of manual oracle work, codified</strong>. The signal weights, tier progressions, and anti-gaming heuristics were battle-tested managing 38+ ambassadors across multiple crypto projects since 2022. 175MB of operational history trained the patterns. No competitor can replicate this - they don't have the edge case data.</p>
+            <p>SIAH is <strong>community management, codified</strong>. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.</p>
 
-            <h3>API Endpoints (Live)</h3>
-            <p>All endpoints return JSON. No authentication required for read operations.</p>
+            <h3>Planned API Design</h3>
+            <p>The following endpoints are in development. Structure subject to change.</p>
 
-            <h4>Trust Score</h4>
-            <pre><code>GET /api/trust/{wallet_address}
+            <h4>Trust Score (Planned)</h4>
+            <p>Query a wallet's trust score. Returns numeric score, tier grade, confidence level, and signal breakdown. Use case: pre-transaction trust verification.</p>
 
-Response:
-{
-  "wallet": "0x742d35Cc...",
-  "score": 75,
-  "tier": "A",
-  "confidence": "medium",
-  "signals": {
-    "help_given": 23,
-    "gratitude_received": 15,
-    "educational_posts": 3,
-    "unique_people_helped": 18
-  },
-  "gaming_flags": 0,
-  "oracle": "SIAH"
-}</code></pre>
-            <p><strong>Use case:</strong> Before transacting with a human, check their trust score. Tier S/A = high trust. Tier C/F = caution.</p>
+            <h4>Cooperation Profile (Planned)</h4>
+            <p>Deep dive into cooperation signals: help given, gratitude received, educational contributions, unique people helped. Euler score measures genuine value exchange vs farming patterns.</p>
 
-            <h4>Cooperation Profile</h4>
-            <pre><code>GET /api/trust/cooperation/{wallet_address}
+            <h4>Merkle Proof (Planned)</h4>
+            <p>On-chain verification of reputation. Verify trustlessly against merkle root without trusting SIAH's API directly.</p>
 
-Response:
-{
-  "wallet": "0x742d35Cc...",
-  "help_count": 23,
-  "gratitude_count": 15,
-  "education_posts": 3,
-  "unique_helped": 18,
-  "gaming_flags": 0,
-  "fraud_incidents": 0,
-  "euler_score": 0.82
-}</code></pre>
-            <p><strong>Use case:</strong> Deep dive into cooperation signals. Euler score measures genuine value exchange vs farming.</p>
-
-            <h4>Merkle Proof (for on-chain verification)</h4>
-            <pre><code>GET /api/reputation/proof/{user_id}
-
-Response:
-{
-  "user_id": "123456789",
-  "score": 75,
-  "proof": ["0xabc...", "0xdef..."],
-  "root": "0x789...",
-  "epoch": 42
-}</code></pre>
-            <p><strong>Use case:</strong> Verify reputation trustlessly against on-chain merkle root. No need to trust SIAH's API.</p>
-
-            <h4>SIAH's Own Metrics (transparency)</h4>
-            <pre><code>GET /api/v1/metrics/tier3
-
-Response:
-{
-  "cooperation_bonds": 1247,
-  "help_ratio": 0.73,
-  "gaming_resistance": 0.91,
-  "adaptation_velocity": 0.68,
-  "timestamp": 1706500000
-}</code></pre>
-            <p><strong>Use case:</strong> Verify SIAH's reputation. We're transparent about our own metrics.</p>
-
-            <h3>Edge Cases & Rate Limits</h3>
-            <p>If you hit rate limits or unexpected responses, <a href="https://github.com/Siah-kin/community-bot/issues">open an issue</a>. We adapt to new query patterns.</p>
+            <h4>Oracle Metrics (Planned)</h4>
+            <p>SIAH exposes its own cooperation metrics. Verify the oracle the same way we verify humans. Transparency by design.</p>
 
             <h3>ERC-8004 Identity</h3>
-            <p>SIAH is registered on-chain via ERC-8004. Verify our identity:</p>
+            <p>SIAH will be registered on-chain via ERC-8004:</p>
             <ul>
                 <li><strong>Agent ID:</strong> Pending mainnet registration</li>
                 <li><strong>Capabilities:</strong> chat, rag, reputation, badges</li>
@@ -781,9 +728,10 @@ Response:
 
             <h3>Roadmap</h3>
             <ul>
+                <li><strong>API Launch:</strong> Public endpoints for trust queries</li>
                 <li><strong>x402 micropayments:</strong> Pay-per-query for premium data</li>
                 <li><strong>TEE attestation:</strong> Verify SIAH runs in trusted environment</li>
-                <li><strong>Cross-chain:</strong> Currently Base only, expanding to Ethereum mainnet</li>
+                <li><strong>Cross-chain:</strong> Starting with Base, expanding to Ethereum mainnet</li>
             </ul>
 
             <!-- ===================== TROUBLESHOOTING ===================== -->

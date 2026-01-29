@@ -4759,18 +4759,18 @@
             Save this code! Redeem when we launch.
         </p>
 
-        <!-- Email capture for reminder -->
-        <div class="prize-email-capture" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #27272A;">
+        <!-- Handle capture for reminder -->
+        <div class="prize-handle-capture" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #27272A;">
             <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">Get reminded when you can redeem:</p>
-            <form id="prize-email-form" style="display: flex; gap: 8px;">
-                <input type="email" id="prize-email" placeholder="your@email.com" required
+            <form id="prize-handle-form" style="display: flex; gap: 8px;">
+                <input type="text" id="prize-handle" placeholder="@telegram or @x_handle" required
                     style="flex: 1; padding: 10px 12px; background: #18181B; border: 1px solid #27272A; color: white; font-size: 14px;">
                 <button type="submit" style="padding: 10px 16px; background: var(--purple); color: white; border: none; font-weight: 600; cursor: pointer;">
-                    Remind Me
+                    Notify Me
                 </button>
             </form>
-            <p id="email-success" style="display: none; color: #22c55e; font-size: 12px; margin-top: 8px;">
-                ✓ We'll email you when it's live!
+            <p id="handle-success" style="display: none; color: #22c55e; font-size: 12px; margin-top: 8px;">
+                Saved! We'll reach out when it's live.
             </p>
         </div>
 
@@ -6318,26 +6318,26 @@ if (prizeModal) {
     });
 }
 
-// Email reminder form
-const prizeEmailForm = document.getElementById('prize-email-form');
-if (prizeEmailForm) {
-    prizeEmailForm.addEventListener('submit', async (e) => {
+// Handle reminder form (Telegram/X)
+const prizeHandleForm = document.getElementById('prize-handle-form');
+if (prizeHandleForm) {
+    prizeHandleForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('prize-email').value;
+        const handle = document.getElementById('prize-handle').value;
         const code = prizeCode.textContent;
         const points = prizePoints.textContent;
 
         // Store locally for now
         const winners = JSON.parse(localStorage.getItem('bonzi_winners') || '[]');
-        winners.push({ email, code, points, timestamp: Date.now() });
+        winners.push({ handle, code, points, timestamp: Date.now() });
         localStorage.setItem('bonzi_winners', JSON.stringify(winners));
 
         // Show success
-        document.getElementById('email-success').style.display = 'block';
-        prizeEmailForm.style.display = 'none';
+        document.getElementById('handle-success').style.display = 'block';
+        prizeHandleForm.style.display = 'none';
 
         // TODO: POST to backend when ready
-        // await fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ email, code, points }) });
+        // await fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ handle, code, points }) });
     });
 }
 

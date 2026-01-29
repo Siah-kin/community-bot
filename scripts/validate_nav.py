@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 # Expected nav structure (source of truth from index.html)
-# Note: faq.html contains the Manifesto, nav label should be "manifesto"
+# Note: manifesto.html contains the Manifesto
 EXPECTED_NAV_LINKS = [
     "features",
     "manual",
@@ -29,7 +29,7 @@ EXPECTED_NAV_LINKS = [
 HTML_PAGES = [
     "index.html",
     "features.html",
-    "faq.html",
+    "manifesto.html",
     "research/index.html",
     "manual/index.html",
     "dao/index.html",

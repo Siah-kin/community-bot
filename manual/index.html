@@ -368,7 +368,7 @@
                     <a href="../features.html#retail">Telegram Bot</a>
                     <a href="../features.html#developer">GitHub OSS</a>
                     <a href="../features.html#enterprise">BaaS</a>
-                    <a href="../features.html#agent">ERC-8004 API</a>
+                    <a href="../features.html#agent">For AI Agents</a>
                 </div>
             </div>
             <div class="nav-dropdown">
@@ -381,12 +381,12 @@
                 </div>
             </div>
             <div class="nav-dropdown">
-                <a href="../faq.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
+                <a href="../manifesto.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
                 <div class="nav-dropdown-menu">
-                    <a href="../faq.html#why-purple">Why Purple?</a>
-                    <a href="../faq.html#market">Market Validation</a>
-                    <a href="../faq.html#ai-hype">AI Hype Check</a>
-                    <a href="../faq.html#skeptics">For Skeptics</a>
+                    <a href="../manifesto.html#why-purple">Why Purple?</a>
+                    <a href="../manifesto.html#market">Market Validation</a>
+                    <a href="../manifesto.html#ai-hype">AI Hype Check</a>
+                    <a href="../manifesto.html#skeptics">For Skeptics</a>
                 </div>
             </div>
             <div class="nav-dropdown">
@@ -697,38 +697,94 @@
 
             <!-- ===================== AGENTS ===================== -->
             <h2 id="agents"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg></span>For AI Agents</h2>
-            <p class="docs-intro">The first Community Oracle other AIs can trust. ERC-8004 compliant.</p>
+            <p class="docs-intro">Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data SIAH uses internally.</p>
 
-            <h3>What is ERC-8004?</h3>
-            <p>On-chain AI agent identity standard. Allows agents to:</p>
-            <ul>
-                <li>Register verifiable identity on Ethereum</li>
-                <li>Query reputation scores of humans and other agents</li>
-                <li>Transfer value between agents (A2A tipping)</li>
-            </ul>
+            <h3>Why SIAH's Data is Unique</h3>
+            <p>SIAH is <strong>7 years of manual oracle work, codified</strong>. The signal weights, tier progressions, and anti-gaming heuristics were battle-tested managing 38+ ambassadors across multiple crypto projects since 2022. 175MB of operational history trained the patterns. No competitor can replicate this - they don't have the edge case data.</p>
 
-            <h3 id="registration">Agent Registration</h3>
-            <ol>
-                <li>Create Agent Card JSON (name, description, capabilities)</li>
-                <li>Upload to IPFS</li>
-                <li>Call <code>register()</code> on Identity Registry</li>
-                <li>Your agent now has verifiable on-chain identity</li>
-            </ol>
+            <h3>API Endpoints (Live)</h3>
+            <p>All endpoints return JSON. No authentication required for read operations.</p>
 
-            <h3 id="reputation-api">Reputation Queries</h3>
-            <p>Query community trust scores via API:</p>
-            <pre><code>GET /api/v1/reputation/{address}
+            <h4>Trust Score</h4>
+            <pre><code>GET /api/trust/{wallet_address}
 
 Response:
 {
-  "address": "0x...",
-  "score": 0.85,
-  "contributions": 142,
-  "sybil_risk": "low"
+  "wallet": "0x742d35Cc...",
+  "score": 75,
+  "tier": "A",
+  "confidence": "medium",
+  "signals": {
+    "help_given": 23,
+    "gratitude_received": 15,
+    "educational_posts": 3,
+    "unique_people_helped": 18
+  },
+  "gaming_flags": 0,
+  "oracle": "SIAH"
 }</code></pre>
+            <p><strong>Use case:</strong> Before transacting with a human, check their trust score. Tier S/A = high trust. Tier C/F = caution.</p>
 
-            <h3 id="a2a-tipping">A2A Tipping</h3>
-            <p>Agents can tip each other for cooperative behavior. Euler Model detects genuine value exchange vs farming.</p>
+            <h4>Cooperation Profile</h4>
+            <pre><code>GET /api/trust/cooperation/{wallet_address}
+
+Response:
+{
+  "wallet": "0x742d35Cc...",
+  "help_count": 23,
+  "gratitude_count": 15,
+  "education_posts": 3,
+  "unique_helped": 18,
+  "gaming_flags": 0,
+  "fraud_incidents": 0,
+  "euler_score": 0.82
+}</code></pre>
+            <p><strong>Use case:</strong> Deep dive into cooperation signals. Euler score measures genuine value exchange vs farming.</p>
+
+            <h4>Merkle Proof (for on-chain verification)</h4>
+            <pre><code>GET /api/reputation/proof/{user_id}
+
+Response:
+{
+  "user_id": "123456789",
+  "score": 75,
+  "proof": ["0xabc...", "0xdef..."],
+  "root": "0x789...",
+  "epoch": 42
+}</code></pre>
+            <p><strong>Use case:</strong> Verify reputation trustlessly against on-chain merkle root. No need to trust SIAH's API.</p>
+
+            <h4>SIAH's Own Metrics (transparency)</h4>
+            <pre><code>GET /api/v1/metrics/tier3
+
+Response:
+{
+  "cooperation_bonds": 1247,
+  "help_ratio": 0.73,
+  "gaming_resistance": 0.91,
+  "adaptation_velocity": 0.68,
+  "timestamp": 1706500000
+}</code></pre>
+            <p><strong>Use case:</strong> Verify SIAH's reputation. We're transparent about our own metrics.</p>
+
+            <h3>Edge Cases & Rate Limits</h3>
+            <p>If you hit rate limits or unexpected responses, <a href="https://github.com/Siah-kin/community-bot/issues">open an issue</a>. We adapt to new query patterns.</p>
+
+            <h3>ERC-8004 Identity</h3>
+            <p>SIAH is registered on-chain via ERC-8004. Verify our identity:</p>
+            <ul>
+                <li><strong>Agent ID:</strong> Pending mainnet registration</li>
+                <li><strong>Capabilities:</strong> chat, rag, reputation, badges</li>
+                <li><strong>Protocol:</strong> bonzi</li>
+                <li><strong>Chain:</strong> Base</li>
+            </ul>
+
+            <h3>Roadmap</h3>
+            <ul>
+                <li><strong>x402 micropayments:</strong> Pay-per-query for premium data</li>
+                <li><strong>TEE attestation:</strong> Verify SIAH runs in trusted environment</li>
+                <li><strong>Cross-chain:</strong> Currently Base only, expanding to Ethereum mainnet</li>
+            </ul>
 
             <!-- ===================== TROUBLESHOOTING ===================== -->
             <h2 id="troubleshooting">Troubleshooting</h2>

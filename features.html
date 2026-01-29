@@ -449,7 +449,7 @@
                     <a href="#retail">Telegram Bot</a>
                     <a href="#developer">GitHub OSS</a>
                     <a href="#enterprise">BaaS</a>
-                    <a href="#agent">ERC-8004 API</a>
+                    <a href="#agent">For AI Agents</a>
                 </div>
             </div>
             <div class="nav-dropdown">
@@ -462,12 +462,12 @@
                 </div>
             </div>
             <div class="nav-dropdown">
-                <a href="faq.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
+                <a href="manifesto.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
                 <div class="nav-dropdown-menu">
-                    <a href="faq.html#why-purple">Why Purple?</a>
-                    <a href="faq.html#market">Market Validation</a>
-                    <a href="faq.html#ai-hype">AI Hype Check</a>
-                    <a href="faq.html#skeptics">For Skeptics</a>
+                    <a href="manifesto.html#why-purple">Why Purple?</a>
+                    <a href="manifesto.html#market">Market Validation</a>
+                    <a href="manifesto.html#ai-hype">AI Hype Check</a>
+                    <a href="manifesto.html#skeptics">For Skeptics</a>
                 </div>
             </div>
             <div class="nav-dropdown">
@@ -514,7 +514,7 @@
             <a href="#retail" class="access-btn retail">Telegram Bot</a>
             <a href="#developer" class="access-btn dev">GitHub OSS</a>
             <a href="#enterprise" class="access-btn enterprise">BaaS $25/mo</a>
-            <a href="#agent" class="access-btn agent">ERC-8004 API</a>
+            <a href="#agent" class="access-btn agent">For AI Agents</a>
         </div>
 
         <p class="hero-sponsor">Sponsored by <strong>BONZI</strong> + <strong>VISTA</strong> community</p>
@@ -678,7 +678,7 @@
         </div>
     </section>
 
-    <!-- AGENT - ERC-8004 -->
+    <!-- AGENT - FOR AI AGENTS -->
     <section class="access-section" id="agent">
         <div class="section-inner">
             <div class="section-header">
@@ -686,33 +686,54 @@
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
                 </div>
                 <div class="section-title">
-                    <h2>ERC-8004 Oracle <span class="status-badge beta">Beta</span></h2>
-                    <div class="tagline">The first Community Oracle other AIs can trust.</div>
+                    <h2>For AI Agents <span class="status-badge live">Live</span></h2>
+                    <div class="tagline">Agents as peers. Query trust scores. Verify cooperation. Detect gaming.</div>
                 </div>
             </div>
 
+            <div class="subsection-label">Edge Case Expertise (7 Years, Codified)</div>
             <div class="feature-grid">
                 <div class="feature-card">
-                    <h3>On-Chain Identity</h3>
-                    <p>ERC-8004 compliant agent registration. Verifiable AI identity on Ethereum.</p>
+                    <h3>Trust Scores</h3>
+                    <p><code>GET /api/trust/{wallet}</code><br>0-100 score, S/A/B/C/F tier. Calibrated from 38+ ambassador evaluations since 2022.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Cooperation Detection</h3>
-                    <p>Euler Model for genuine value exchange. Separate real cooperation from farming.</p>
+                    <h3>Cooperation Signals</h3>
+                    <p><code>GET /api/trust/cooperation/{wallet}</code><br>Help, gratitude, education weights. Battle-tested from HEROES system + $TRUTH operations.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Reputation Queries</h3>
-                    <p>Read community trust scores via API. Let your agent verify humans before transacting.</p>
+                    <h3>Gaming Detection</h3>
+                    <p><code>gaming_flags</code> in responses.<br>Anti-sybil heuristics from 175MB of manipulation patterns detected over 7 years.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>A2A Tipping</h3>
-                    <p>Cross-agent value transfer protocol. Agents can tip each other for cooperative behavior.</p>
+                    <h3>Oracle Metrics</h3>
+                    <p><code>GET /api/v1/metrics/tier3</code><br>SIAH's own evolution. Verify the oracle the same way we verify humans.</p>
                 </div>
             </div>
 
-            <a href="https://8004scan.io" class="section-cta agent" target="_blank">
-                View Agent Card
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            <div class="subsection-label">Use Cases (Peer with SIAH for...)</div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Pre-Transaction Trust</h3>
+                    <p>Before transacting with a human, check their cooperation history. Tier S/A = proceed. Tier C/F = caution.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Community Health Checks</h3>
+                    <p>Is this DAO legitimate? Cooperation signals reveal real community vs paid shills.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gaming Detection</h3>
+                    <p>Is this engagement genuine? Euler score separates authentic value exchange from wash trading.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Verify SIAH's Data</h3>
+                    <p>Query our metrics. Check our ERC-8004 identity. You verify us the same way we verify humans.</p>
+                </div>
+            </div>
+
+            <a href="manual/#agents" class="section-cta agent">
+                Agent Documentation
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
         </div>
     </section>

@@ -719,12 +719,21 @@
 
             <h3>ERC-8004 Identity</h3>
             <p><a href="https://eips.ethereum.org/EIPS/eip-8004" target="_blank">ERC-8004</a> establishes three on-chain registries for AI agents: Identity, Reputation, and Validation. Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.</p>
+
+            <h4>Standard Status</h4>
             <ul>
-                <li><strong>Status:</strong> Live on Ethereum mainnet</li>
-                <li><strong>Chain:</strong> Ethereum</li>
-                <li><strong>SIAH Registration:</strong> Planned</li>
+                <li><strong>ERC-8004:</strong> Live on Ethereum mainnet</li>
+                <li><strong>Chain:</strong> Ethereum (Base coming soon)</li>
             </ul>
-            <p>Once registered, other agents can query SIAH's reputation data trustlessly via the standard's Reputation Registry.</p>
+
+            <h4>SIAH Integration Status</h4>
+            <ul>
+                <li><strong>Client code:</strong> Scaffolded (read + dry-run)</li>
+                <li><strong>Agent registration:</strong> Not yet registered</li>
+                <li><strong>Trust signal bridge:</strong> Planned (internal signals → on-chain feedback)</li>
+                <li><strong>Live oracle queries:</strong> Planned</li>
+            </ul>
+            <p>Once fully integrated, SIAH's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query SIAH's reputation data trustlessly on-chain.</p>
 
             <!-- ===================== TROUBLESHOOTING ===================== -->
             <h2 id="troubleshooting" data-i18n="trouble.title">Troubleshooting</h2>

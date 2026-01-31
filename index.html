@@ -22,6 +22,7 @@
     <meta name="twitter:description" content="Open-source AI that detects sybils, verifies raids, rewards real contributors.">
 
     <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="css/nav.css">
 
     <!-- Security Headers -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://bonzi-v5.onrender.com; media-src 'self'; frame-ancestors 'none';">
@@ -30,6 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="js/nav-loader.js" defer></script>
 
     <style>
         * {
@@ -4478,7 +4480,7 @@
 
     </style>
 </head>
-<body>
+<body data-theme-default="dark">
 
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
@@ -4501,93 +4503,8 @@
     <span class="arrow">▼</span>
 </div>
 
-<nav>
-    <!-- Mobile Hamburger -->
-    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <a href="./" class="nav-logo"><img src="bonzi-logo.png" alt="" class="nav-logo-img">Bonzi</a>
-
-    <!-- Ethervista-style Nav Links -->
-    <div class="nav-links">
-        <div class="nav-dropdown">
-            <a href="features.html" class="nav-link" data-i18n="nav.features">features</a>
-            <div class="nav-dropdown-menu">
-                <a href="features.html#retail">Telegram Bot</a>
-                <a href="features.html#developer">GitHub OSS</a>
-                <a href="features.html#enterprise">BaaS</a>
-                <a href="features.html#agent">ERC-8004 API</a>
-            </div>
-        </div>
-        <div class="nav-dropdown">
-            <a href="manual/" class="nav-link" data-i18n="nav.manual">manual</a>
-            <div class="nav-dropdown-menu">
-                <a href="manual/#quickstart">Quick Start</a>
-                <a href="manual/#commands">Commands</a>
-                <a href="manual/#staking">Staking Guide</a>
-                <a href="manual/#admin">Admin Tools</a>
-            </div>
-        </div>
-        <div class="nav-dropdown">
-            <a href="manifesto.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
-            <div class="nav-dropdown-menu">
-                <a href="manifesto.html#why-purple">Why Purple?</a>
-                <a href="manifesto.html#market">Market Validation</a>
-                <a href="manifesto.html#ai-hype">AI Hype Check</a>
-                <a href="manifesto.html#skeptics">For Skeptics</a>
-            </div>
-        </div>
-        <div class="nav-dropdown">
-            <a href="economics/" class="nav-link" data-i18n="nav.economics">economics</a>
-            <div class="nav-dropdown-menu">
-                <a href="economics/#ethervista">Ethervista</a>
-                <a href="economics/#euler-model">Euler Model</a>
-                <a href="economics/#hardstake">Hardstake</a>
-                <a href="economics/#anti-rug">Anti-Rug</a>
-            </div>
-        </div>
-        <div class="nav-divider"></div>
-        <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">metrics <small style="font-size:9px;">Coming Soon</small></span>
-        <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">stake <small style="font-size:9px;">Coming Soon</small></span>
-        <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">dao <small style="font-size:9px;">Coming Soon</small></span>
-        <div class="nav-divider"></div>
-        <a href="#" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact">contact</a>
-    </div>
-
-    <!-- Right: Lang, Theme, Connect -->
-    <div class="nav-right">
-        <select class="nav-lang-select" id="lang-select" aria-label="Language">
-            <option value="en">🇺🇸 EN</option>
-            <option value="pt">🇧🇷 PT</option>
-            <option value="zh">🇨🇳 ZH</option>
-            <option value="tr">🇹🇷 TR</option>
-            <option value="ru">🇷🇺 RU</option>
-            <option value="fr">🇫🇷 FR</option>
-        </select>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-        <button class="nav-connect-btn" id="nav-connect-btn" disabled style="opacity: 0.5; cursor: not-allowed; background: #3a3a3a;">Coming Soon</button>
-    </div>
-</nav>
-
-<!-- Mobile Menu Overlay -->
-<div class="mobile-menu" id="mobile-menu">
-    <a href="features.html" data-i18n="nav.features">features</a>
-    <a href="manual/" data-i18n="nav.manual">manual</a>
-    <a href="manifesto.html" data-i18n="nav.manifesto">manifesto</a>
-    <a href="economics/" data-i18n="nav.economics">economics</a>
-    <div class="menu-divider"></div>
-    <span class="menu-gated">metrics <small>Coming Soon</small></span>
-    <span class="menu-gated">stake <small>Coming Soon</small></span>
-    <span class="menu-gated">dao <small>Coming Soon</small></span>
-    <div class="menu-divider"></div>
-    <a href="#" id="contact-mobile-btn" data-i18n="nav.contact">contact</a>
-</div>
+<nav id="nav-container" class="site-nav"></nav>
+<div id="mobile-menu-container"></div>
 
 <section class="opening">
     <img src="bonzi-logo.png" alt="bonzi" class="opening-bonzi">
@@ -5405,39 +5322,6 @@
 </footer>
 
 <script>
-// Mobile menu toggle
-function toggleMobileMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-}
-
-// Close mobile menu when clicking a link
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenu) {
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                const hamburger = document.getElementById('hamburger');
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-    }
-    // Wire contact button in mobile menu
-    const contactMobileBtn = document.getElementById('contact-mobile-btn');
-    if (contactMobileBtn) {
-        contactMobileBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            toggleMobileMenu();
-            if (typeof showContactModal === 'function') showContactModal();
-        });
-    }
-});
-
 const translations = {
     en: {
         "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.stake": "stake", "nav.metrics": "metrics", "nav.dao": "dao", "nav.contact": "contact", "nav.connect": "connect", "nav.explore": "Explore", "nav.community": "Community",
@@ -6605,78 +6489,12 @@ systemTabs.forEach(tab => {
 </div>
 
 <script>
-// Theme Toggle (Day/Night)
-const themeToggle = document.getElementById('theme-toggle');
-const savedTheme = localStorage.getItem('bonzi_theme');
-
-// Apply saved theme on load
-if (savedTheme === 'light') {
-    document.body.classList.add('light-mode');
-}
-
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    const isLight = document.body.classList.contains('light-mode');
-    localStorage.setItem('bonzi_theme', isLight ? 'light' : 'dark');
-});
-
-// Mobile dropdown touch support
-const navDropdowns = document.querySelectorAll('.nav-dropdown');
-navDropdowns.forEach(dropdown => {
-    const link = dropdown.querySelector('.nav-link');
-    link.addEventListener('click', (e) => {
-        // On mobile (touch devices), toggle dropdown on first tap
-        if (window.matchMedia('(hover: none)').matches) {
-            if (!dropdown.classList.contains('active')) {
-                e.preventDefault();
-                // Close other dropdowns
-                navDropdowns.forEach(d => d.classList.remove('active'));
-                dropdown.classList.add('active');
-            }
-            // Second tap navigates to the page
-        }
-    });
-});
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-dropdown')) {
-        navDropdowns.forEach(d => d.classList.remove('active'));
-    }
-});
-
-// Nav Language Select (Win98 dropdown style)
-const langSelect = document.getElementById('lang-select');
-if (langSelect) {
-    // Set initial value from saved preference
-    const savedLang = localStorage.getItem('bonzi-lang');
-    if (savedLang) langSelect.value = savedLang;
-
-    langSelect.addEventListener('change', (e) => {
-        const lang = e.target.value;
-        if (typeof setLanguage === 'function') setLanguage(lang);
-    });
-}
-
 // Contact Form
 const contactModal = document.getElementById('contact-modal');
-const contactNavBtn = document.getElementById('contact-nav-btn');
 const contactClose = document.getElementById('contact-close');
 const contactForm = document.getElementById('contact-form');
 const contactFormContent = document.getElementById('contact-form-content');
 const contactSuccess = document.getElementById('contact-success');
-
-contactNavBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    contactModal.classList.add('active');
-});
-
-// Open contact modal if ?contact=1 in URL (from other pages)
-if (new URLSearchParams(window.location.search).get('contact')) {
-    contactModal.classList.add('active');
-    // Clean up URL
-    window.history.replaceState({}, '', window.location.pathname);
-}
 
 contactClose.addEventListener('click', () => {
     contactModal.classList.remove('active');
@@ -6733,7 +6551,7 @@ contactForm.addEventListener('submit', async (e) => {
 
 <script>
 // Nav Connect Button Handler
-(function() {
+function initNavConnect() {
     const navBtn = document.getElementById('nav-connect-btn');
     if (!navBtn) return;
 
@@ -6789,7 +6607,13 @@ contactForm.addEventListener('submit', async (e) => {
 
     updateButtonState();
     navBtn.addEventListener('click', handleConnect);
-})();
+}
+
+if (window.navReady && typeof window.navReady.then === 'function') {
+    window.navReady.then(initNavConnect);
+} else {
+    document.addEventListener('nav:loaded', initNavConnect, { once: true });
+}
 </script>
 
 </body>

@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/bonzi-design.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav-loader.js" defer></script>
     <style>
         :root {
             --sidebar-width: 280px;
@@ -357,71 +359,9 @@
         }
     </style>
 </head>
-<body>
-    <nav>
-        <a href="../" class="nav-logo"><img src="../bonzi-logo.png" alt="" class="nav-logo-img">Bonzi</a>
-
-        <div class="nav-links">
-            <div class="nav-dropdown">
-                <a href="../features.html" class="nav-link" data-i18n="nav.features">features</a>
-                <div class="nav-dropdown-menu">
-                    <a href="../features.html#retail">Telegram Bot</a>
-                    <a href="../features.html#developer">GitHub OSS</a>
-                    <a href="../features.html#enterprise">BaaS</a>
-                    <a href="../features.html#agent">For AI Agents</a>
-                </div>
-            </div>
-            <div class="nav-dropdown">
-                <a href="./" class="nav-link active" data-i18n="nav.manual">manual</a>
-                <div class="nav-dropdown-menu">
-                    <a href="#quickstart">Quick Start</a>
-                    <a href="#commands">Commands</a>
-                    <a href="#staking">Staking Guide</a>
-                    <a href="#admin">Admin Tools</a>
-                </div>
-            </div>
-            <div class="nav-dropdown">
-                <a href="../manifesto.html" class="nav-link" data-i18n="nav.manifesto">manifesto</a>
-                <div class="nav-dropdown-menu">
-                    <a href="../manifesto.html#why-purple">Why Purple?</a>
-                    <a href="../manifesto.html#market">Market Validation</a>
-                    <a href="../manifesto.html#ai-hype">AI Hype Check</a>
-                    <a href="../manifesto.html#skeptics">For Skeptics</a>
-                </div>
-            </div>
-            <div class="nav-dropdown">
-                <a href="../economics/" class="nav-link" data-i18n="nav.economics">economics</a>
-                <div class="nav-dropdown-menu">
-                    <a href="../economics/#ethervista">Ethervista</a>
-                    <a href="../economics/#euler-model">Euler Model</a>
-                    <a href="../economics/#hardstake">Hardstake</a>
-                    <a href="../economics/#anti-rug">Anti-Rug</a>
-                </div>
-            </div>
-            <div class="nav-divider"></div>
-            <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">metrics <small style="font-size:9px;">Coming Soon</small></span>
-            <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">stake <small style="font-size:9px;">Coming Soon</small></span>
-            <span class="nav-link gated" style="cursor: not-allowed; opacity: 0.5;">dao <small style="font-size:9px;">Coming Soon</small></span>
-            <div class="nav-divider"></div>
-            <a href="../index.html?contact=1" class="nav-link" data-i18n="nav.contact">contact</a>
-        </div>
-
-        <div class="nav-right">
-            <select class="nav-lang-select" id="lang-select" aria-label="Language">
-                <option value="en">🇺🇸 EN</option>
-                <option value="pt">🇧🇷 PT</option>
-                <option value="zh">🇨🇳 ZH</option>
-                <option value="tr">🇹🇷 TR</option>
-                <option value="ru">🇷🇺 RU</option>
-                <option value="fr">🇫🇷 FR</option>
-            </select>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            </button>
-            <button class="nav-connect-btn" id="nav-connect-btn" disabled style="opacity: 0.5; cursor: not-allowed; background: #3a3a3a;">Coming Soon</button>
-        </div>
-    </nav>
+<body data-theme-default="light">
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
 
     <div class="docs-layout">
         <aside class="sidebar" id="sidebar">
@@ -754,18 +694,6 @@
     </div>
 
     <script>
-        // Theme toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const savedTheme = localStorage.getItem('bonzi_theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            localStorage.setItem('bonzi_theme', isDark ? 'dark' : 'light');
-        });
-
         // Highlight active section on scroll
         const sections = document.querySelectorAll('h1[id], h2[id], h3[id]');
         const navLinks = document.querySelectorAll('.sidebar-section a');
@@ -1057,18 +985,28 @@
                 }
             });
             localStorage.setItem('bonzi_lang', lang);
+            localStorage.setItem('bonzi-lang', lang);
         }
 
         // Language selector
-        const langSelect = document.getElementById('lang-select');
-        const savedLang = localStorage.getItem('bonzi_lang') || 'en';
-        langSelect.value = savedLang;
-        if (savedLang !== 'en') {
-            applyTranslations(savedLang);
+        function initLanguageSelect() {
+            const langSelect = document.getElementById('lang-select');
+            if (!langSelect) return;
+            const savedLang = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';
+            langSelect.value = savedLang;
+            if (savedLang !== 'en') {
+                applyTranslations(savedLang);
+            }
+            langSelect.addEventListener('change', (e) => {
+                applyTranslations(e.target.value);
+            });
         }
-        langSelect.addEventListener('change', (e) => {
-            applyTranslations(e.target.value);
-        });
+
+        if (window.navReady && typeof window.navReady.then === 'function') {
+            window.navReady.then(initLanguageSelect);
+        } else {
+            document.addEventListener('nav:loaded', initLanguageSelect, { once: true });
+        }
     </script>
 </body>
 </html>

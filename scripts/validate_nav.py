@@ -11,18 +11,18 @@ Run: python3 scripts/validate_nav.py
 import re
 import sys
 from pathlib import Path
+from typing import Optional
 
-# Expected nav structure (source of truth from index.html)
-# Note: manifesto.html contains the Manifesto
+# Expected nav structure (source of truth from includes/nav.html)
 EXPECTED_NAV_LINKS = [
     "features",
     "manual",
-    "research",
-    "economics",
     "manifesto",
-    "contact",
+    "economics",
+    "metrics",
+    "stake",
     "dao",
-    "source"
+    "contact"
 ]
 
 # Pages that should have consistent nav
@@ -30,21 +30,25 @@ HTML_PAGES = [
     "index.html",
     "features.html",
     "manifesto.html",
-    "research/index.html",
+    "privacy.html",
+    "stake.html",
+    "vote.html",
     "manual/index.html",
+    "economics/index.html",
     "dao/index.html",
-    "economics/index.html"
+    "metrics/index.html"
 ]
 
 
-def extract_nav_links(html_content: str) -> list:
-    """Extract nav link text from HTML."""
-    # Find nav section
+def extract_nav_links(html_content: str, allow_fragment: bool = False) -> list:
+    """Extract nav link text from HTML or a nav fragment."""
     nav_match = re.search(r'<nav[^>]*>(.*?)</nav>', html_content, re.DOTALL)
-    if not nav_match:
+    if nav_match:
+        nav_html = nav_match.group(1)
+    elif allow_fragment:
+        nav_html = html_content
+    else:
         return []
-
-    nav_html = nav_match.group(1)
 
     # Extract full link content (including nested elements)
     links = re.findall(r'<a[^>]*>(.*?)</a>', nav_html, re.DOTALL)
@@ -67,16 +71,18 @@ def extract_nav_links(html_content: str) -> list:
     return normalized
 
 
-def check_nav_style(html_content: str, filename: str) -> list:
+def check_nav_style(html_content: str, filename: str, nav_fragment: Optional[str] = None) -> list:
     """Check nav styling consistency."""
     issues = []
 
-    nav_match = re.search(r'<nav[^>]*>(.*?)</nav>', html_content, re.DOTALL)
-    if not nav_match:
-        issues.append(f"{filename}: No <nav> element found")
-        return issues
-
-    nav_html = nav_match.group(1)
+    if nav_fragment is not None:
+        nav_html = nav_fragment
+    else:
+        nav_match = re.search(r'<nav[^>]*>(.*?)</nav>', html_content, re.DOTALL)
+        if not nav_match:
+            issues.append(f"{filename}: No <nav> element found")
+            return issues
+        nav_html = nav_match.group(1)
 
     # Remove dropdown menus before checking - their items can be capitalized (proper nouns)
     nav_without_dropdowns = re.sub(r'<div class="nav-dropdown-menu">.*?</div>', '', nav_html, flags=re.DOTALL)
@@ -97,6 +103,10 @@ def validate_all_pages(root_dir: Path) -> tuple:
     """Validate all HTML pages for nav consistency."""
     errors = []
     warnings = []
+    shared_nav = None
+    shared_nav_path = root_dir / "includes" / "nav.html"
+    if shared_nav_path.exists():
+        shared_nav = shared_nav_path.read_text()
 
     for page_path in HTML_PAGES:
         full_path = root_dir / page_path
@@ -107,13 +117,17 @@ def validate_all_pages(root_dir: Path) -> tuple:
         content = full_path.read_text()
 
         # Check nav links
+        nav_fragment = None
         links = extract_nav_links(content)
+        if not links and shared_nav:
+            links = extract_nav_links(shared_nav, allow_fragment=True)
+            nav_fragment = shared_nav
         if not links:
             errors.append(f"{page_path}: No nav links extracted")
             continue
 
         # Check style issues
-        style_issues = check_nav_style(content, page_path)
+        style_issues = check_nav_style(content, page_path, nav_fragment)
         errors.extend(style_issues)
 
         # Check for minimum required links
@@ -149,7 +163,7 @@ def main():
         for e in errors:
             print(f"   {e}")
         print("\n   Fix nav inconsistencies before committing.")
-        print("   Source of truth: index.html nav structure")
+        print("   Source of truth: includes/nav.html")
         sys.exit(1)
 
     print("\n✅ All nav structures consistent")

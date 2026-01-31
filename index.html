@@ -4735,19 +4735,15 @@
             Save this code! Redeem when we launch.
         </p>
 
-        <!-- Handle capture for reminder -->
-        <div class="prize-handle-capture" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #27272A;">
-            <p style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">Get reminded when you can redeem:</p>
-            <form id="prize-handle-form" style="display: flex; gap: 8px;">
-                <input type="text" id="prize-handle" placeholder="@telegram or @x_handle" required
-                    style="flex: 1; padding: 10px 12px; background: #18181B; border: 1px solid #27272A; color: white; font-size: 14px;">
-                <button type="submit" style="padding: 10px 16px; background: var(--purple); color: white; border: none; font-weight: 600; cursor: pointer;">
-                    Notify Me
-                </button>
-            </form>
-            <p id="handle-success" style="display: none; color: #22c55e; font-size: 12px; margin-top: 8px;">
-                Saved! We'll reach out when it's live.
-            </p>
+        <!-- Telegram CTA for prize redemption -->
+        <div class="prize-telegram-cta" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #27272A;">
+            <p style="font-size: 12px; color: var(--gray); margin-bottom: 12px;">Claim your prize on Telegram:</p>
+            <a id="prize-telegram-btn" href="#" target="_blank" rel="noopener"
+                style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); color: white; text-decoration: none; font-weight: 600; font-size: 14px; transition: transform 0.2s, box-shadow 0.2s;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Claim on @Bonzivista_bot
+            </a>
+            <p style="font-size: 11px; color: var(--gray); margin-top: 8px;">Your code will be auto-filled in the bot</p>
         </div>
 
         <button class="prize-close" id="prize-close" style="margin-top: 16px;">Got it!</button>
@@ -6294,26 +6290,31 @@ if (prizeModal) {
     });
 }
 
-// Handle reminder form (Telegram/X)
-const prizeHandleForm = document.getElementById('prize-handle-form');
-if (prizeHandleForm) {
-    prizeHandleForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const handle = document.getElementById('prize-handle').value;
+// Set Telegram deeplink with prize code
+const prizeTelegramBtn = document.getElementById('prize-telegram-btn');
+if (prizeTelegramBtn) {
+    // Update deeplink when prize modal opens
+    const updateTelegramLink = () => {
+        const code = prizeCode.textContent;
+        prizeTelegramBtn.href = `https://t.me/Bonzivista_bot?start=PRIZE-${code}`;
+    };
+
+    // Observer to update link when code changes
+    const observer = new MutationObserver(updateTelegramLink);
+    observer.observe(prizeCode, { childList: true, characterData: true, subtree: true });
+
+    // Initial set
+    updateTelegramLink();
+
+    // Track click for analytics
+    prizeTelegramBtn.addEventListener('click', () => {
         const code = prizeCode.textContent;
         const points = prizePoints.textContent;
 
-        // Store locally for now
+        // Store locally for tracking
         const winners = JSON.parse(localStorage.getItem('bonzi_winners') || '[]');
-        winners.push({ handle, code, points, timestamp: Date.now() });
+        winners.push({ code, points, claimed_via: 'telegram', timestamp: Date.now() });
         localStorage.setItem('bonzi_winners', JSON.stringify(winners));
-
-        // Show success
-        document.getElementById('handle-success').style.display = 'block';
-        prizeHandleForm.style.display = 'none';
-
-        // TODO: POST to backend when ready
-        // await fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ handle, code, points }) });
     });
 }
 

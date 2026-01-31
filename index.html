@@ -253,18 +253,13 @@
             border-bottom: 3px solid #ffffff;
         }
 
-        .sound-toggle svg {
-            width: 24px;
-            height: 24px;
-            fill: #000000;
+        .sound-toggle span {
+            font-size: 24px;
+            line-height: 1;
         }
 
         .sound-toggle.muted {
             background: #a0a0a0;
-        }
-
-        .sound-toggle.muted svg {
-            fill: #606060;
         }
 
         .sound-toggle .sound-on { display: block; }
@@ -4488,33 +4483,15 @@
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
 
-<!-- Background music -->
-<audio id="bg-music" preload="auto"></audio>
+<!-- Background music - Moby God Moving (teaser mode) -->
+<audio id="bg-music" preload="auto" loop>
+    <source src="moby-god-moving.mp3" type="audio/mpeg">
+</audio>
 
-<!-- Windows 98 Style Player Bar -->
-<div class="win98-player muted" id="win98-player">
-    <button class="win98-btn" id="prev-btn" title="Previous">⏮</button>
-    <button class="win98-btn play-btn" id="play-pause-btn" title="Play/Pause">▶</button>
-    <button class="win98-btn" id="next-btn" title="Next">⏭</button>
-    <button class="win98-btn" id="shuffle-btn" title="Shuffle">🔀</button>
-    <button class="win98-btn" id="playlist-btn" title="Playlist">📋</button>
-    <div class="win98-track-display" id="win98-track">► RATM - Killing in the Name</div>
-    <button class="win98-btn win98-close" id="win98-close" title="Close">✕</button>
-
-    <!-- Playlist dropdown -->
-    <div class="win98-playlist" id="win98-playlist">
-        <!-- Populated by JS -->
-    </div>
-</div>
-
-<!-- Sound toggle button (Win98 style) -->
-<button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle sound">
-    <svg class="sound-on" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-    </svg>
-    <svg class="sound-off" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-    </svg>
+<!-- Megaphone toggle (teaser mode - simple on/off) -->
+<button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle music">
+    <span class="sound-on">📢</span>
+    <span class="sound-off">🔇</span>
 </button>
 
 <!-- Click hint - iykyk -->
@@ -4600,15 +4577,14 @@
 
 <!-- Mobile Menu Overlay -->
 <div class="mobile-menu" id="mobile-menu">
-    <div class="menu-section" data-i18n="nav.explore">Explore</div>
     <a href="features.html" data-i18n="nav.features">features</a>
     <a href="manual/" data-i18n="nav.manual">manual</a>
     <a href="manifesto.html" data-i18n="nav.manifesto">manifesto</a>
     <a href="economics/" data-i18n="nav.economics">economics</a>
     <div class="menu-divider"></div>
-    <div class="menu-section" data-i18n="nav.community">Community</div>
-    <a href="metrics/" data-i18n="nav.metrics">metrics</a>
-    <a href="dao/" data-i18n="nav.dao">dao</a>
+    <span class="menu-gated">metrics <small>Coming Soon</small></span>
+    <span class="menu-gated">stake <small>Coming Soon</small></span>
+    <span class="menu-gated">dao <small>Coming Soon</small></span>
     <div class="menu-divider"></div>
     <a href="#" id="contact-mobile-btn" data-i18n="nav.contact">contact</a>
 </div>
@@ -6498,407 +6474,67 @@ document.getElementById('widget-symbol')?.addEventListener('input', function() {
 // ===========================================
 // "Every generation hates something about the current generation. It was our punk song." - Ozzy
 //
-// MUSIC ZONES:
-// 1. pain-section     → Sabbath OR RATM (random) - angry
-// 2. solutions-section → Moby "All That I Need" - hopeful
-// 3. features-section → Moby "God Moving" - mellow, loops to end
-//
-// SILENT ZONES:
-// - Opening/intro (before pain)
-// - comparison-section (after solutions, before features)
-//
-// SECTION LIST:
-// .opening → .history → .reveal → .statement → .pain-section →
-// .solutions-section → .comparison-section → .features-section →
-// .demo-section → .pricing-section → .mission-section → .links-section
-
 // ===========================================
-// SPATIAL AUDIO - TWO ROOMS (v3)
+// TEASER MODE: Moby "God Moving" only
 // ===========================================
-// Music is SPATIAL, not triggered. Like rooms in a house.
-// Walk into room = hear music. Walk out = fades. Walk back = still playing.
-//
-// ===========================================
-// REVOLUTION PLAYLIST - Click to cycle tracks
+// Simple megaphone toggle - one track, loops forever
+// When going live, swap back to full spatial audio system
 // ===========================================
 
 const bgMusic = document.getElementById('bg-music');
 const soundToggle = document.getElementById('sound-toggle');
 const soundHint = document.getElementById('sound-hint');
-const solutionsSection = document.querySelector('.solutions-section');
-const comparisonSection = document.querySelector('.comparison-section');
-const featuresSection = document.querySelector('.features-section');
-const pricingSection = document.querySelector('.pricing-section');
-const missionSection = document.querySelector('.mission-section');
-
-// Revolution playlist - cycles on button click (top section only)
-const revolutionPlaylist = [
-    { src: 'killing-in-the-name.mp3', name: 'RATM - Killing in the Name' },
-    { src: 'children-of-the-grave.mp3', name: 'Black Sabbath - Children of the Grave' },
-    { src: 'moby-all-that-i-need.mp3', name: 'Moby - All That I Need Is To Be Loved' },
-    { src: 'electric-wizard-we-hate-you.mp3', name: 'Electric Wizard - We Hate You' },
-    { src: 'david-bowie-space-oddity.mp3', name: 'David Bowie - Space Oddity' }
-];
-
-// The magical song - only plays after "why bonzi is different"
-const magicalTrack = { src: 'moby-god-moving.mp3', name: 'Moby - God Moving Over the Face of the Waters' };
 
 let isMuted = true;
-let maxVolume = 0.5;
-let magicalVolume = 0.3;
-let backgroundVolume = 0.1; // Lower background level when scrolling further
-let currentTrackIndex = 0;
-let targetVolume = 0;
-let inMagicalZone = false;
+const musicVolume = 0.3;
 
 // Start muted
 bgMusic.volume = 0;
-bgMusic.src = revolutionPlaylist[0].src;
-bgMusic.loop = false;
 
-// Smooth volume transition
-function smoothVolume() {
-    if (isMuted) return;
-    const diff = targetVolume - bgMusic.volume;
-    if (Math.abs(diff) > 0.01) {
-        bgMusic.volume += diff * 0.08; // Smooth easing
-        requestAnimationFrame(smoothVolume);
-    } else {
-        bgMusic.volume = targetVolume;
-    }
-}
-
-// Scroll-based zones: revolution tracks fade to silence, then magical track appears
-function updateVolumeByScroll() {
-    if (isMuted) return;
-
-    const scrollY = window.pageYOffset;
-    const viewportHeight = window.innerHeight;
-    const scrollCenter = scrollY + (viewportHeight * 0.5);
-
-    // Get section positions
-    const solRect = solutionsSection.getBoundingClientRect();
-    const solTop = solRect.top + scrollY;
-    const compRect = comparisonSection.getBoundingClientRect();
-    const compTop = compRect.top + scrollY;
-
-    // ZONE 1: Top → solutions = Revolution playlist fades to silence
-    if (scrollCenter < solTop) {
-        if (inMagicalZone) {
-            // Switching back from magical zone to revolution
-            inMagicalZone = false;
-            bgMusic.src = revolutionPlaylist[currentTrackIndex].src;
-            bgMusic.loop = false;
-            bgMusic.play().catch(e => {});
-            console.log('🎸 Back to:', revolutionPlaylist[currentTrackIndex].name);
-        }
-        // Fade from full volume to silence as approaching solutions
-        const fadeProgress = scrollCenter / solTop;
-        targetVolume = maxVolume * (1 - fadeProgress);
-        smoothVolume();
-    }
-    // ZONE 2: Solutions section = SILENCE gap
-    else if (scrollCenter < compTop) {
-        targetVolume = 0;
-        smoothVolume();
-    }
-    // ZONE 3: Comparison onward = Magical track (Moby God Moving)
-    // Fades in at comparison, then fades down to background as you scroll further
-    else {
-        if (!inMagicalZone) {
-            // Enter magical zone - switch to Moby God Moving
-            inMagicalZone = true;
-            bgMusic.src = magicalTrack.src;
-            bgMusic.loop = false;
-            bgMusic.volume = 0;
-            bgMusic.play().catch(e => {});
-            console.log('✨ Magical zone:', magicalTrack.name);
-        }
-
-        // Get additional section positions for fade curve
-        const featRect = featuresSection.getBoundingClientRect();
-        const featTop = featRect.top + scrollY;
-        const pricingRect = pricingSection.getBoundingClientRect();
-        const pricingTop = pricingRect.top + scrollY;
-
-        // Fade in at comparison
-        const distIntoMagical = scrollCenter - compTop;
-        const fadeInDistance = viewportHeight * 0.5;
-
-        if (distIntoMagical < fadeInDistance) {
-            // Fading IN
-            targetVolume = magicalVolume * (distIntoMagical / fadeInDistance);
-        } else if (scrollCenter < featTop) {
-            // Full volume between comparison and features
-            targetVolume = magicalVolume;
-        } else if (scrollCenter < pricingTop) {
-            // Fade DOWN to background between features and pricing
-            const fadeProgress = (scrollCenter - featTop) / (pricingTop - featTop);
-            targetVolume = magicalVolume - (fadeProgress * (magicalVolume - backgroundVolume));
-        } else {
-            // Stay at background level from pricing onward
-            targetVolume = backgroundVolume;
-        }
-        smoothVolume();
-    }
-}
-
-// Save audio state before leaving page (only if in magical zone)
-window.addEventListener('beforeunload', () => {
-    if (!isMuted && inMagicalZone) {
-        localStorage.setItem('bonzi_audio', JSON.stringify({
-            magical: true,
-            time: bgMusic.currentTime,
-            volume: bgMusic.volume
-        }));
-    }
-});
-
-// Check if we should resume magical track from another page
+// Check localStorage for previous state
 function checkResumeAudio() {
-    const saved = localStorage.getItem('bonzi_audio');
-    if (saved) {
-        const state = JSON.parse(saved);
-        if (state.magical) {
-            bgMusic.src = magicalTrack.src;
-            bgMusic.currentTime = state.time || 0;
-            bgMusic.loop = false;
-            bgMusic.volume = state.volume || magicalVolume;
-            inMagicalZone = true;
-            isMuted = false;
-            soundToggle.classList.remove('muted');
-            bgMusic.play().catch(e => {});
-            console.log('✨ Resumed:', magicalTrack.name);
-        }
-        localStorage.removeItem('bonzi_audio');
+    const saved = localStorage.getItem('bonzi_music_playing');
+    if (saved === 'true') {
+        // User had music on - show visual cue but still require tap (mobile restriction)
+        // We'll auto-play attempt, but it will fail on mobile without interaction
+        isMuted = false;
+        soundToggle.classList.remove('muted');
+        bgMusic.volume = musicVolume;
+        bgMusic.play().catch(e => {
+            // Autoplay blocked (mobile) - reset to muted state
+            isMuted = true;
+            soundToggle.classList.add('muted');
+            bgMusic.volume = 0;
+            console.log('🔇 Autoplay blocked - tap to enable');
+        });
     }
 }
 checkResumeAudio();
 
-// Play revolution track (only in top zone)
-function playRevolutionTrack(index) {
-    if (inMagicalZone) return; // Don't interrupt magical zone
-    currentTrackIndex = index;
-    bgMusic.src = revolutionPlaylist[index].src;
-    bgMusic.loop = false;
-    bgMusic.volume = maxVolume; // Set volume!
-    bgMusic.play().catch(e => console.log('Play blocked:', e));
-    console.log('🎸 Now playing:', revolutionPlaylist[index].name);
-}
-
-// Toggle sound - simple on/off toggle + show/hide Win98 player
+// Toggle sound - simple on/off
 soundToggle.addEventListener('click', () => {
     soundHint.classList.add('hidden');
 
     if (isMuted) {
-        // Unmute - start/resume playing, show Win98 player
+        // Unmute
         isMuted = false;
         soundToggle.classList.remove('muted');
-        win98Player.classList.remove('muted');
-        if (!inMagicalZone) {
-            playRevolutionTrack(currentTrackIndex);
-        } else {
-            bgMusic.play().catch(e => {});
-        }
-        updateVolumeByScroll();
-        buildPlaylistUI();
+        bgMusic.volume = musicVolume;
+        bgMusic.play().catch(e => console.log('Play blocked:', e));
+        localStorage.setItem('bonzi_music_playing', 'true');
+        console.log('📢 Playing: Moby - God Moving Over the Face of the Waters');
     } else {
-        // Mute - stop playing, hide Win98 player
+        // Mute
         isMuted = true;
         soundToggle.classList.add('muted');
-        win98Player.classList.add('muted');
         bgMusic.pause();
         bgMusic.volume = 0;
-        isPlaylistOpen = false;
-        win98Playlist.classList.remove('open');
-    }
-    updatePlayerUI();
-    console.log(isMuted ? '🔇 Muted' : '🔊 Playing');
-});
-
-// =====================================================
-// WINDOWS 98 STYLE AUDIO PLAYER
-// =====================================================
-const win98Player = document.getElementById('win98-player');
-const win98Track = document.getElementById('win98-track');
-const win98Playlist = document.getElementById('win98-playlist');
-const playPauseBtn = document.getElementById('play-pause-btn');
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-const shuffleBtn = document.getElementById('shuffle-btn');
-const playlistBtn = document.getElementById('playlist-btn');
-const win98Close = document.getElementById('win98-close');
-
-let isPlaylistOpen = false;
-let isShuffleOn = true; // Shuffle on by default
-
-// Build Win98 playlist UI
-function buildPlaylistUI() {
-    let html = '';
-    revolutionPlaylist.forEach((track, i) => {
-        const isActive = !inMagicalZone && currentTrackIndex === i;
-        html += `<div class="win98-playlist-item ${isActive ? 'active' : ''}" data-index="${i}">
-            <span class="win98-playlist-item-num">${i + 1}.</span>
-            <span>${track.name}</span>
-        </div>`;
-    });
-    html += '<div class="win98-playlist-divider"></div>';
-    html += `<div class="win98-playlist-item magical ${inMagicalZone ? 'active' : ''}" data-magical="true">
-        <span class="win98-playlist-item-num">✨</span>
-        <span>${magicalTrack.name}</span>
-    </div>`;
-    win98Playlist.innerHTML = html;
-
-    // Add click handlers
-    win98Playlist.querySelectorAll('.win98-playlist-item').forEach(item => {
-        item.addEventListener('click', () => {
-            if (item.dataset.magical) {
-                // Can't manually select magical track - it's zone-based
-                return;
-            }
-            const idx = parseInt(item.dataset.index);
-            if (!inMagicalZone) {
-                isMuted = false;
-                soundToggle.classList.remove('muted');
-                win98Player.classList.remove('muted');
-                playRevolutionTrack(idx);
-                updatePlayerUI();
-                isPlaylistOpen = false;
-                win98Playlist.classList.remove('open');
-            }
-        });
-    });
-}
-
-// Update Win98 player UI state
-function updatePlayerUI() {
-    // Update track display with Win98 style
-    const trackName = inMagicalZone ? magicalTrack.name : revolutionPlaylist[currentTrackIndex].name;
-    const playState = (isMuted || bgMusic.paused) ? '■' : '►';
-    win98Track.textContent = `${playState} ${trackName}`;
-
-    // Update play/pause button text
-    playPauseBtn.textContent = (isMuted || bgMusic.paused) ? '▶' : '⏸';
-    playPauseBtn.classList.toggle('playing', !isMuted && !bgMusic.paused);
-
-    // Update shuffle button
-    shuffleBtn.classList.toggle('playing', isShuffleOn);
-
-    // Update Win98 player visibility
-    win98Player.classList.toggle('muted', isMuted);
-
-    // Update playlist active states
-    win98Playlist.querySelectorAll('.win98-playlist-item').forEach(item => {
-        item.classList.remove('active');
-        if (item.dataset.magical && inMagicalZone) {
-            item.classList.add('active');
-        } else if (!item.dataset.magical && !inMagicalZone && parseInt(item.dataset.index) === currentTrackIndex) {
-            item.classList.add('active');
-        }
-    });
-}
-
-// Playlist button toggle
-playlistBtn.addEventListener('click', () => {
-    isPlaylistOpen = !isPlaylistOpen;
-    win98Playlist.classList.toggle('open', isPlaylistOpen);
-    if (isPlaylistOpen) {
-        buildPlaylistUI();
+        localStorage.setItem('bonzi_music_playing', 'false');
+        console.log('🔇 Muted');
     }
 });
 
-// Close button - hide player bar
-win98Close.addEventListener('click', () => {
-    isMuted = true;
-    soundToggle.classList.add('muted');
-    win98Player.classList.add('muted');
-    bgMusic.pause();
-    bgMusic.volume = 0;
-    isPlaylistOpen = false;
-    win98Playlist.classList.remove('open');
-    updatePlayerUI();
-});
-
-// Play/Pause button
-playPauseBtn.addEventListener('click', () => {
-    if (isMuted) {
-        isMuted = false;
-        soundToggle.classList.remove('muted');
-        win98Player.classList.remove('muted');
-        if (!inMagicalZone) {
-            playRevolutionTrack(currentTrackIndex);
-        } else {
-            bgMusic.play().catch(e => {});
-        }
-        updateVolumeByScroll();
-    } else {
-        if (bgMusic.paused) {
-            bgMusic.play().catch(e => {});
-        } else {
-            bgMusic.pause();
-        }
-    }
-    updatePlayerUI();
-});
-
-// Previous track
-prevBtn.addEventListener('click', () => {
-    if (inMagicalZone) return;
-    currentTrackIndex = (currentTrackIndex - 1 + revolutionPlaylist.length) % revolutionPlaylist.length;
-    if (!isMuted) {
-        playRevolutionTrack(currentTrackIndex);
-    }
-    updatePlayerUI();
-});
-
-// Next track
-nextBtn.addEventListener('click', () => {
-    if (inMagicalZone) return;
-    if (isShuffleOn) {
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * revolutionPlaylist.length);
-        } while (newIndex === currentTrackIndex && revolutionPlaylist.length > 1);
-        currentTrackIndex = newIndex;
-    } else {
-        currentTrackIndex = (currentTrackIndex + 1) % revolutionPlaylist.length;
-    }
-    if (!isMuted) {
-        playRevolutionTrack(currentTrackIndex);
-    }
-    updatePlayerUI();
-});
-
-// Shuffle toggle
-shuffleBtn.addEventListener('click', () => {
-    isShuffleOn = !isShuffleOn;
-    updatePlayerUI();
-    console.log(isShuffleOn ? '🔀 Shuffle ON' : '🔀 Shuffle OFF');
-});
-
-// Auto-advance on track end - always advances to next track
-bgMusic.addEventListener('ended', () => {
-    if (!inMagicalZone && !isMuted) {
-        if (isShuffleOn) {
-            // Random next track
-            let newIndex;
-            do {
-                newIndex = Math.floor(Math.random() * revolutionPlaylist.length);
-            } while (newIndex === currentTrackIndex && revolutionPlaylist.length > 1);
-            currentTrackIndex = newIndex;
-        } else {
-            // Sequential next track
-            currentTrackIndex = (currentTrackIndex + 1) % revolutionPlaylist.length;
-        }
-        playRevolutionTrack(currentTrackIndex);
-        updatePlayerUI();
-    }
-});
-
-// Initialize playlist
-buildPlaylistUI();
-
-// Nav collapse on scroll + volume fade
+// Nav collapse on scroll (keep this behavior)
 let lastScroll = 0;
 const nav = document.querySelector('nav');
 
@@ -6910,9 +6546,6 @@ window.addEventListener('scroll', () => {
         nav.style.transform = 'translateY(0)';
     }
     lastScroll = currentScroll;
-
-    // Update music volume based on scroll position
-    updateVolumeByScroll();
 });
 
 // ============================================

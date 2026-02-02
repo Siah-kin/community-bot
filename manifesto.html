@@ -280,6 +280,29 @@
         .manifesto-intro strong {
             color: var(--black);
         }
+        .manifesto-v1-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: var(--purple);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .manifesto-v1-link:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+        body.dark-mode .manifesto-v1-link {
+            background: var(--purple-light);
+            color: var(--black);
+        }
+        body.dark-mode .manifesto-v1-link:hover {
+            background: var(--purple);
+            color: var(--white);
+        }
 
         /* The Slap */
         .slap-section {
@@ -755,6 +778,9 @@
             <br><br>
             The OGs went through the most sour piss on their necks. We watched the footprint of printed debt in fiat AND the % losses by sheer pop size of participants in crypto. We're not here to sugar coat anything. We're here to build something that isn't a ponzi.
         </p>
+        <a href="https://bonzivista.app/manifesto" target="_blank" rel="noopener noreferrer" class="manifesto-v1-link">
+            Read Manifesto V1 →
+        </a>
     </section>
 
     <!-- TABLE OF CONTENTS -->

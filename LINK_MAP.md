@@ -35,7 +35,7 @@ https://siah-kin.github.io/community-bot/
 |------|--------|----------|
 | GitHub Source | https://github.com/Siah-kin/community-bot | _blank |
 | Ethervista | https://ethervista.com | _blank |
-| Telegram | https://t.me/ethervista | _blank |
+| Telegram | https://t.me/Bonzivista_bot | _blank |
 
 ## Internal Link Patterns
 

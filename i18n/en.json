@@ -154,7 +154,7 @@
   "stakers.title": "For Stakers",
   "stakers.intro": "Stake into brand success. Self-compounding yields on Ethervista.",
   "stakers.guide.title": "Staking Guide",
-  "stakers.guide.1": "Visit ethervista.com",
+  "stakers.guide.1": "Visit www.ethervista.app/how-it-works",
   "stakers.guide.2": "Connect wallet",
   "stakers.guide.3": "Choose: Hardstake (locked) or LP (liquid)",
   "stakers.guide.4": "Link wallet in Bonzi: /link_wallet 0x...",
@@ -231,5 +231,5 @@
   "trouble.answers.title": "Wrong answers",
   "trouble.answers.desc": "Use feedback buttons to report. For persistent issues, use /bug.",
   "trouble.help": "Need help?",
-  "trouble.help.desc": "Join t.me/ethervista or open an issue on GitHub."
+  "trouble.help.desc": "Join t.me/Bonzivista_bot or open an issue on GitHub."
 }

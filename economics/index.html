@@ -414,6 +414,68 @@ to liquidity providers
             <a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank" class="source-link">→ More on Ethervista security features (Gate.io)</a>
         </div>
 
+        <div class="section" id="closed-loop">
+            <h2>Closed-Loop Marketing</h2>
+            <p>Here's where it gets interesting. A portion of trading fees can fund a <strong>marketing staking pool</strong> - ecosystem money that exists because users trade. The idea: use it to reward users who grow the ecosystem.</p>
+
+            <div class="flow-diagram">
+Users trade BONZI
+        |
+        v
+  Flat ETH fee taken
+        |
+   +----+----+
+   |         |
+   v         v
+  LPs    Treasury
+         (protocol fee)
+             |
+             v
+    Marketing Staking Pool
+             |
+             v
+    AI Oracle vets quality
+    (prevents gaming/spam)
+             |
+             v
+    Pro-rata rewards to
+    genuine contributors
+             |
+             v
+    Contributors market more
+             |
+    +--------+
+    |
+    v
+More users trade... (loop)
+            </div>
+
+            <p>The key innovation: an <strong>AI oracle (SIAH)</strong> evaluates contribution quality before rewards are distributed. This prevents the classic problem where marketing rewards get gamed by bots and spam.</p>
+
+            <div class="mechanism-grid">
+                <div class="mechanism">
+                    <h3>Quality Scoring</h3>
+                    <p>Contributors earn a CPI (Cooperation Performance Index) score based on genuine ecosystem participation - helpful answers, quality content, real engagement. Higher score = larger share of the pool.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Anti-Gaming</h3>
+                    <p>The oracle detects coordinated behavior, bot patterns, and artificial inflation. Rewards flow to humans doing real work, not scripts farming points.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Self-Sustaining</h3>
+                    <p>More quality marketing → more users → more trades → more fees → bigger reward pool. The flywheel compounds without requiring external capital.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Aligned Incentives</h3>
+                    <p>Everyone benefits from ecosystem growth. LPs earn more fees. Contributors earn rewards. Users get better content. No zero-sum competition.</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <p><strong>Think of it as:</strong> X (Twitter) revenue sharing, but for crypto communities. Instead of paying creators based on impressions, pay them based on actual ecosystem contribution - measured and verified by AI.</p>
+            </div>
+        </div>
+
         <div class="section">
             <h2>Common Questions</h2>
 
@@ -431,6 +493,16 @@ to liquidity providers
                 <strong>What are the risks?</strong>
                 <p>Smart contract risk (all DeFi). Impermanent loss for LPs. Volume dependency for yield. Token price can still go to zero for market reasons. The 5-day lock helps but doesn't eliminate scam risk for new tokens. DYOR.</p>
             </div>
+
+            <div class="question">
+                <strong>How does the AI oracle prevent gaming of marketing rewards?</strong>
+                <p>SIAH uses 8 different signals to build a reputation score: on-chain behavior, cooperation patterns, question quality, sybil detection, and more. Gaming one signal doesn't help - you need consistent genuine participation across multiple dimensions. The system is designed to reward humans doing real work, not bots optimizing metrics.</p>
+            </div>
+
+            <div class="question">
+                <strong>Is this live yet?</strong>
+                <p>The scoring oracle is live. The treasury-to-marketing-pool flow is in governance discussion. Community will vote on activation parameters (fee percentage, minimum scores, etc.).</p>
+            </div>
         </div>
 
         <div class="section">
@@ -440,6 +512,7 @@ to liquidity providers
                 <li><a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank">Gate.io - Ethervista Overview</a></li>
                 <li><a href="https://99bitcoins.com/news/bonzi-the-first-meme-coin-on-ethervista-can-it-save-ethereum/" target="_blank">99Bitcoins - Bonzi, First Meme Coin on Ethervista</a></li>
                 <li><a href="https://www.coingecko.com/en/coins/bonzi" target="_blank">CoinGecko - BONZI</a></li>
+                <li><a href="https://t.me/bonzi_community_bot" target="_blank">SIAH Oracle Bot - Telegram</a></li>
             </ul>
         </div>
     </div>

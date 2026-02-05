@@ -618,11 +618,25 @@
             // Update address
             document.getElementById('result-address').textContent = address;
 
-            // Update flags
+            // Update flags - convert API signals to flag array
             const flagsContainer = document.getElementById('flags');
             flagsContainer.innerHTML = '';
 
-            const flags = result.flags || ['human', 'cooperative'];
+            // Convert signals object to flags array
+            let flags = result.flags || [];
+            if (result.signals && !result.flags) {
+                flags = [];
+                const s = result.signals;
+                if (s.help_given > 10) flags.push('high_cooperation');
+                else if (s.help_given > 0) flags.push('cooperative');
+                if (s.unique_people_helped > 5) flags.push('established');
+                if (result.confidence === 'high') flags.push('human_verified');
+                else if (result.confidence === 'medium') flags.push('human');
+                if (s.help_given === 0 && s.gratitude_received === 0) flags.push('limited_history');
+                if (result.reason) flags.push('new_wallet');
+            }
+            if (flags.length === 0) flags = ['human'];
+
             flags.forEach(flag => {
                 const el = document.createElement('span');
                 el.className = 'flag ' + getFlagType(flag);

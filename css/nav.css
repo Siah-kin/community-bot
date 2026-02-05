@@ -1,5 +1,6 @@
 /* Shared navigation styles */
-.site-nav {
+.site-nav,
+#nav-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +16,8 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-body.dark-mode .site-nav {
+body.dark-mode .site-nav,
+body.dark-mode #nav-container {
     background: rgba(10, 10, 10, 0.95);
     border-bottom-color: rgba(255, 255, 255, 0.08);
 }

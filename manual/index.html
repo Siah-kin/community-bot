@@ -419,6 +419,7 @@
             <div class="sidebar-section">
                 <h4 data-i18n="sidebar.agents">For AI Agents</h4>
                 <a href="#agents" data-i18n="sidebar.erc8004">ERC-8004 Overview</a>
+                <a href="#vetter" style="color: var(--green);">Wallet Vetter (Live)</a>
                 <a href="#registration" data-i18n="sidebar.registration">Agent Registration</a>
                 <a href="#reputation-api" data-i18n="sidebar.reputation">Reputation Queries</a>
                 <a href="#a2a-tipping" data-i18n="sidebar.a2a">A2A Tipping</a>
@@ -641,6 +642,63 @@
 
             <h3 data-i18n="agents.why.title">Why SIAH's Data is Unique</h3>
             <p data-i18n="agents.why.desc">SIAH is <strong>community management, codified</strong>. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.</p>
+
+            <h3 id="vetter">Wallet Vetter (Live)</h3>
+            <p>Check any Ethereum wallet's trust score using SIAH's multi-oracle system. 8 independent signals aggregated into one anti-gameable tier.</p>
+
+            <div class="highlight-box" style="border-left-color: var(--green);">
+                <strong>3 Ways to Use:</strong>
+                <ul style="margin-top: 8px; margin-left: 20px;">
+                    <li><strong>Web Widget:</strong> <a href="../vetter/">siah-kin.github.io/community-bot/vetter/</a> (5 free queries/day)</li>
+                    <li><strong>Telegram:</strong> <code>/vetx 0x...</code> in <a href="https://t.me/SiahBot">@SiahBot</a> (unlimited)</li>
+                    <li><strong>API:</strong> <code>GET /api/trust/{wallet}</code> ($0.01/query via x402)</li>
+                </ul>
+            </div>
+
+            <h4>Response Format</h4>
+            <pre style="background: #1F1F23; padding: 16px; overflow-x: auto; font-size: 13px;"><code>{
+  "tier": "B",           // S, A, B, C, or F
+  "score": 52.3,         // 0-100 composite score
+  "confidence": "medium", // low, medium, high
+  "signals": {
+    "cooperation": 0.65,  // Help given/received
+    "eigentrust": 0.48,   // Graph-based trust
+    "sybil": 0.82,        // Not-a-bot confidence
+    "dao": 0.31           // DAO participation
+  }
+}</code></pre>
+
+            <h4>Tier Breakdown</h4>
+            <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 8px;"><strong style="color: #10B981;">S-TIER</strong></td>
+                    <td style="padding: 8px;">80-100</td>
+                    <td style="padding: 8px;">Exceptional trust - verified contributor</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 8px;"><strong style="color: #3B82F6;">A-TIER</strong></td>
+                    <td style="padding: 8px;">60-79</td>
+                    <td style="padding: 8px;">High trust - established reputation</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 8px;"><strong style="color: #8B5CF6;">B-TIER</strong></td>
+                    <td style="padding: 8px;">40-59</td>
+                    <td style="padding: 8px;">Moderate trust - standard user</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 8px;"><strong style="color: #F59E0B;">C-TIER</strong></td>
+                    <td style="padding: 8px;">20-39</td>
+                    <td style="padding: 8px;">Low trust - limited history</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;"><strong style="color: #EF4444;">F-TIER</strong></td>
+                    <td style="padding: 8px;">0-19</td>
+                    <td style="padding: 8px;">Untrusted - exercise caution</td>
+                </tr>
+            </table>
+
+            <h4>External Verification Links</h4>
+            <p>Every vetter result includes links to verify independently: <a href="https://bubblemaps.io" target="_blank">Bubblemaps</a>, <a href="https://debank.com" target="_blank">DeBank</a>, <a href="https://etherscan.io" target="_blank">Etherscan</a>, <a href="https://arkhamintelligence.com" target="_blank">Arkham</a>.</p>
 
             <h3 data-i18n="agents.api.title">Planned API Design</h3>
             <p data-i18n="agents.api.desc">The following endpoints are in development. Structure subject to change.</p>

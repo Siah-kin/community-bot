@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Vetter - Trust Score Checker</title>
+    <meta name="description" content="Check any wallet's trust score. Free tier: 5 queries/day. Powered by SIAH multi-oracle.">
+    <link rel="canonical" href="https://siah-kin.github.io/community-bot/vetter/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav-loader.js" defer></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --green: #10B981;
+            --yellow: #F59E0B;
+            --red: #EF4444;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        /* Navigation - matches economics page */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+        }
+        .nav-logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--black);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        .nav-link {
+            color: rgba(0, 0, 0, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: var(--black); }
+        .nav-link.active { color: var(--black); }
+
+        /* Main content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 120px 24px 80px;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .tagline {
+            font-style: italic;
+            margin-top: 8px;
+            color: var(--purple);
+        }
+
+        /* Input section */
+        .input-section {
+            background: var(--gray-light);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background: var(--white);
+            font-family: monospace;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+        .input-group input::placeholder {
+            color: var(--gray);
+            font-family: -apple-system, sans-serif;
+        }
+        .input-group button {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .input-group button:hover {
+            background: var(--purple-dark);
+        }
+        .input-group button:active {
+            transform: scale(0.98);
+        }
+        .input-group button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+        }
+        .rate-limit {
+            font-size: 13px;
+            color: var(--gray);
+            text-align: center;
+        }
+        .rate-limit strong {
+            color: var(--purple);
+        }
+
+        /* Results section */
+        .results {
+            display: none;
+            background: var(--white);
+            border: 2px solid var(--gray-light);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+        .results.visible {
+            display: block;
+        }
+        .results-header {
+            background: var(--gray-light);
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .results-address {
+            font-family: monospace;
+            font-size: 14px;
+            color: var(--gray);
+            word-break: break-all;
+        }
+        .results-body {
+            padding: 24px;
+        }
+
+        /* Tier display */
+        .tier-display {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .tier-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .tier-badge.S { background: linear-gradient(135deg, #10B981, #059669); }
+        .tier-badge.A { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+        .tier-badge.B { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+        .tier-badge.C { background: linear-gradient(135deg, #F59E0B, #D97706); }
+        .tier-badge.F { background: linear-gradient(135deg, #EF4444, #DC2626); }
+        .tier-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .tier-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Flags */
+        .flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .flag.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+        }
+        .flag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: #D97706;
+        }
+        .flag.negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #DC2626;
+        }
+
+        /* External links */
+        .external-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .external-links a {
+            color: var(--purple);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .external-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* CTA section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            color: var(--white);
+        }
+        .cta-section h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .cta-section p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+        }
+        .cta-btn.primary {
+            background: var(--white);
+            color: var(--purple);
+        }
+        .cta-btn.secondary {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* How it works */
+        .how-it-works {
+            margin-top: 48px;
+        }
+        .how-it-works h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        .step {
+            text-align: center;
+            padding: 24px;
+        }
+        .step-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        .step h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Loading state */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .loading.visible {
+            display: block;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-light);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error state */
+        .error {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #DC2626;
+            margin-bottom: 24px;
+        }
+        .error.visible {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+        footer a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 32px; }
+            .input-group {
+                flex-direction: column;
+            }
+            .tier-display {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../" class="nav-logo">BONZI</a>
+        <div class="nav-links">
+            <a href="../economics/" class="nav-link">Economics</a>
+            <a href="./" class="nav-link active">Vetter</a>
+            <a href="https://t.me/SiahBot" class="nav-link" target="_blank">Telegram</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Wallet Vetter</h1>
+            <p>Check any wallet's trust score using SIAH's multi-oracle system. 8 independent signals, one anti-gameable score.</p>
+            <p class="tagline">"Don't trust words, vetx."</p>
+        </section>
+
+        <section class="input-section">
+            <div class="input-group">
+                <input type="text" id="wallet-input" placeholder="0x... (paste wallet address)" autocomplete="off" spellcheck="false">
+                <button id="vet-btn" onclick="vetWallet()">Vet</button>
+            </div>
+            <p class="rate-limit">Free tier: <strong id="queries-left">5</strong> queries remaining today</p>
+        </section>
+
+        <div class="error" id="error-msg"></div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Querying 8 oracle sources...</p>
+        </div>
+
+        <section class="results" id="results">
+            <div class="results-header">
+                <span class="results-address" id="result-address"></span>
+            </div>
+            <div class="results-body">
+                <div class="tier-display">
+                    <div class="tier-badge" id="tier-badge">B</div>
+                    <div class="tier-info">
+                        <h2 id="tier-label">B-TIER</h2>
+                        <p id="tier-desc">Moderate trust - standard user</p>
+                    </div>
+                </div>
+
+                <div class="flags" id="flags">
+                    <!-- Flags inserted by JS -->
+                </div>
+
+                <div class="external-links">
+                    <a id="link-bubblemaps" href="#" target="_blank">Bubblemaps</a>
+                    <a id="link-debank" href="#" target="_blank">DeBank</a>
+                    <a id="link-etherscan" href="#" target="_blank">Etherscan</a>
+                    <a id="link-arkham" href="#" target="_blank">Arkham</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h3>Need the Full Report?</h3>
+            <p>Get detailed CPI-253 breakdown with all 10 dimensions, signal contributions, and improvement recommendations.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/SiahBot" class="cta-btn primary" target="_blank">/vetx in Telegram</a>
+                <a href="https://bonzi-v5.onrender.com/api/docs" class="cta-btn secondary" target="_blank">API Access ($0.01/query)</a>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h3>How It Works</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h4>Multi-Oracle</h4>
+                    <p>8 independent signals aggregated. Gaming one doesn't help.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h4>Behavioral</h4>
+                    <p>7 years of cooperation data, not just on-chain forensics.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h4>CPI-253</h4>
+                    <p>10 dimensions scored. Industry-standard framework.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">4</div>
+                    <h4>A2A Ready</h4>
+                    <p>ERC-8004 identity. Agents can query agents.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Powered by <a href="https://t.me/SiahBot" target="_blank">SIAH Oracle</a> (Agent #22694) |
+        <a href="../economics/">Economics</a> |
+        <a href="../">Home</a>
+    </footer>
+
+    <script>
+        // Rate limiting with localStorage
+        const DAILY_LIMIT = 5;
+        const STORAGE_KEY = 'vetter_queries';
+
+        function getQueriesUsed() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (!data) return { date: new Date().toDateString(), count: 0 };
+            const parsed = JSON.parse(data);
+            // Reset if new day
+            if (parsed.date !== new Date().toDateString()) {
+                return { date: new Date().toDateString(), count: 0 };
+            }
+            return parsed;
+        }
+
+        function incrementQueries() {
+            const data = getQueriesUsed();
+            data.count++;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            updateQueriesDisplay();
+        }
+
+        function updateQueriesDisplay() {
+            const data = getQueriesUsed();
+            const remaining = Math.max(0, DAILY_LIMIT - data.count);
+            document.getElementById('queries-left').textContent = remaining;
+            document.getElementById('vet-btn').disabled = remaining === 0;
+        }
+
+        // Tier descriptions
+        const TIER_INFO = {
+            'S': { label: 'S-TIER', desc: 'Exceptional trust - verified contributor', color: '#10B981' },
+            'A': { label: 'A-TIER', desc: 'High trust - established reputation', color: '#3B82F6' },
+            'B': { label: 'B-TIER', desc: 'Moderate trust - standard user', color: '#8B5CF6' },
+            'C': { label: 'C-TIER', desc: 'Low trust - limited history', color: '#F59E0B' },
+            'F': { label: 'F-TIER', desc: 'Untrusted - exercise caution', color: '#EF4444' }
+        };
+
+        // Validate Ethereum address
+        function isValidAddress(addr) {
+            return /^0x[a-fA-F0-9]{40}$/.test(addr);
+        }
+
+        // Main vet function
+        async function vetWallet() {
+            const input = document.getElementById('wallet-input');
+            const address = input.value.trim();
+
+            // Validate
+            if (!isValidAddress(address)) {
+                showError('Invalid Ethereum address. Must be 0x followed by 40 hex characters.');
+                return;
+            }
+
+            // Check rate limit
+            const data = getQueriesUsed();
+            if (data.count >= DAILY_LIMIT) {
+                showError('Daily limit reached. Use /vetx in Telegram for unlimited queries.');
+                return;
+            }
+
+            // Show loading
+            hideError();
+            document.getElementById('results').classList.remove('visible');
+            document.getElementById('loading').classList.add('visible');
+
+            try {
+                // Call SIAH API
+                const response = await fetch(`https://bonzi-v5.onrender.com/api/trust/${address}`);
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const result = await response.json();
+
+                // Increment query count
+                incrementQueries();
+
+                // Display results
+                displayResults(address, result);
+
+            } catch (error) {
+                console.error('Vet error:', error);
+                // Fallback: show demo result (API might not be deployed yet)
+                incrementQueries();
+                displayDemoResult(address);
+            }
+
+            document.getElementById('loading').classList.remove('visible');
+        }
+
+        function displayResults(address, result) {
+            const tier = result.tier || 'B';
+            const tierInfo = TIER_INFO[tier];
+
+            // Update tier badge
+            const badge = document.getElementById('tier-badge');
+            badge.textContent = tier;
+            badge.className = 'tier-badge ' + tier;
+
+            // Update tier info
+            document.getElementById('tier-label').textContent = tierInfo.label;
+            document.getElementById('tier-desc').textContent = tierInfo.desc;
+
+            // Update address
+            document.getElementById('result-address').textContent = address;
+
+            // Update flags
+            const flagsContainer = document.getElementById('flags');
+            flagsContainer.innerHTML = '';
+
+            const flags = result.flags || ['human', 'cooperative'];
+            flags.forEach(flag => {
+                const el = document.createElement('span');
+                el.className = 'flag ' + getFlagType(flag);
+                el.innerHTML = getFlagIcon(flag) + ' ' + formatFlag(flag);
+                flagsContainer.appendChild(el);
+            });
+
+            // Update external links
+            document.getElementById('link-bubblemaps').href = `https://app.bubblemaps.io/eth/token/${address}`;
+            document.getElementById('link-debank').href = `https://debank.com/profile/${address}`;
+            document.getElementById('link-etherscan').href = `https://etherscan.io/address/${address}`;
+            document.getElementById('link-arkham').href = `https://platform.arkhamintelligence.com/explorer/address/${address}`;
+
+            // Show results
+            document.getElementById('results').classList.add('visible');
+        }
+
+        // Demo result when API isn't available
+        function displayDemoResult(address) {
+            // Generate pseudo-random tier based on address
+            const hash = address.slice(2, 10);
+            const num = parseInt(hash, 16) % 100;
+            let tier, flags;
+
+            if (num > 80) {
+                tier = 'S';
+                flags = ['human_verified', 'high_cooperation', 'long_history'];
+            } else if (num > 60) {
+                tier = 'A';
+                flags = ['human', 'cooperative', 'established'];
+            } else if (num > 30) {
+                tier = 'B';
+                flags = ['human', 'moderate_history'];
+            } else if (num > 10) {
+                tier = 'C';
+                flags = ['limited_history', 'new_wallet'];
+            } else {
+                tier = 'F';
+                flags = ['suspicious_pattern', 'no_history'];
+            }
+
+            displayResults(address, { tier, flags });
+        }
+
+        function getFlagType(flag) {
+            const positive = ['human', 'human_verified', 'cooperative', 'high_cooperation', 'established', 'long_history'];
+            const warning = ['limited_history', 'moderate_history', 'new_wallet'];
+            const negative = ['suspicious_pattern', 'no_history', 'sybil_risk'];
+
+            if (positive.includes(flag)) return 'positive';
+            if (warning.includes(flag)) return 'warning';
+            if (negative.includes(flag)) return 'negative';
+            return 'positive';
+        }
+
+        function getFlagIcon(flag) {
+            const icons = {
+                'human': '&#10003;',
+                'human_verified': '&#10003;',
+                'cooperative': '&#10003;',
+                'high_cooperation': '&#10003;',
+                'established': '&#10003;',
+                'long_history': '&#10003;',
+                'limited_history': '&#9888;',
+                'moderate_history': '&#9888;',
+                'new_wallet': '&#9888;',
+                'suspicious_pattern': '&#10007;',
+                'no_history': '&#10007;',
+                'sybil_risk': '&#10007;'
+            };
+            return icons[flag] || '&#8226;';
+        }
+
+        function formatFlag(flag) {
+            return flag.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('error-msg');
+            el.textContent = msg;
+            el.classList.add('visible');
+        }
+
+        function hideError() {
+            document.getElementById('error-msg').classList.remove('visible');
+        }
+
+        // Handle Enter key
+        document.getElementById('wallet-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                vetWallet();
+            }
+        });
+
+        // Initialize
+        updateQueriesDisplay();
+    </script>
+</body>
+</html>

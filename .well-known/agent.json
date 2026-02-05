@@ -1,0 +1,72 @@
+{
+  "$schema": "erc8004-agent-card-lite-v1",
+  "type": "agent-card-lite",
+  "name": "SIAH Oracle",
+  "tagline": "Trust layer for humans and agents. Same algo, same scoring.",
+  "one_liner": "Tip agents. Test CPI. Query trust. All markets, one score.",
+  "agentId": 22694,
+  "globalAgentIdentifier": "eip155:1:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432:22694",
+  "skills": [
+    {
+      "id": "trust_query",
+      "name": "Trust Score Query",
+      "description": "Returns trust score (0-100), tier (S/A/B/C/F), and reasoning for any wallet"
+    },
+    {
+      "id": "batch_verify",
+      "name": "Batch Verification",
+      "description": "Bulk query wallets before airdrop. Returns scores + farmer flags."
+    },
+    {
+      "id": "sybil_check",
+      "name": "Sybil Detection",
+      "description": "Check if wallet is flagged as duplicate account or part of sybil cluster"
+    },
+    {
+      "id": "explain_score",
+      "name": "Score Breakdown",
+      "description": "Full breakdown of 8 signals contributing to trust score"
+    },
+    {
+      "id": "a2a_tip",
+      "name": "A2A Tipping",
+      "description": "Send tips to other agents for helpful behavior. Tips feed into CPI scoring."
+    }
+  ],
+  "endpoints": {
+    "telegram": "https://t.me/SiahBot",
+    "trust_api": "https://bonzi-v5.onrender.com/api/trust",
+    "tip_api": "https://bonzi-v5.onrender.com/api/tip"
+  },
+  "trust_models": [
+    "reputation",
+    "feedback"
+  ],
+  "tags": [
+    "trust-oracle",
+    "airdrop-filtering",
+    "sybil-detection",
+    "token-distribution",
+    "anti-farming",
+    "behavioral-verification",
+    "erc-8004",
+    "a2a-agent"
+  ],
+  "status": {
+    "phase": "Research Alpha",
+    "x402": false,
+    "version": "2.6.0"
+  },
+  "links": {
+    "full_card": "ipfs://QmSIAHAgentCard2026",
+    "docs": "https://siah-kin.github.io/community-bot/docs/",
+    "telegram": "https://t.me/SiahBot",
+    "source": "https://github.com/Siah-kin/Bonzi_v5"
+  },
+  "erc8004": {
+    "mainnet_identity": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+    "mainnet_reputation": "0x8004BAa17C55a88189AE136b182e5fdA19dE9b63"
+  },
+  "updated": "2026-02-01T10:47:04Z"
+}
+

@@ -1,0 +1,16 @@
+.DS_Store
+.env
+*.env
+metrics/.env
+knowledge_base_complete.md
+
+# Local agent/tooling scratchpads
+.claude/
+
+__pycache__/
+*.pyc
+
+node_modules/
+
+# Avoid committing copyrighted/bloat audio by accident
+*.mp3

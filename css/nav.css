@@ -62,7 +62,6 @@ body.dark-mode .nav-logo {
 
 .nav-link.active {
     color: var(--purple);
-    background: rgba(124, 58, 237, 0.08);
 }
 
 .nav-link.gated {
@@ -94,7 +93,6 @@ body.dark-mode .nav-link:hover {
 
 body.dark-mode .nav-link.active {
     color: var(--purple-light);
-    background: rgba(124, 58, 237, 0.2);
 }
 
 body.dark-mode .nav-divider {

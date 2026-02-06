@@ -468,8 +468,72 @@
                 <li data-i18n="branders.wizard.4">Bot starts answering questions immediately</li>
             </ol>
 
+            <h4>User Onboarding Flow</h4>
+            <p>When users first interact, they go through a 4-step onboarding wizard:</p>
+            <table class="command-table">
+                <thead><tr><th>Step</th><th>Screen</th><th>User Choices</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td><strong>Welcome</strong></td><td>"Let's Go!" → continue | "Skip for now" → dashboard</td></tr>
+                    <tr><td>2</td><td><strong>Link Wallet</strong> (1/2)</td><td>Paste 0x address | "Skip" → next step</td></tr>
+                    <tr><td>3</td><td><strong>Link X</strong> (2/2)</td><td>"Connect with X" (OAuth) | "Skip" → complete</td></tr>
+                    <tr><td>4</td><td><strong>Complete</strong></td><td>"Start Earning" → dashboard | "Add missing" → back</td></tr>
+                </tbody>
+            </table>
+            <p><em>Note: @username is required. If missing, user sees instructions to set one in Telegram settings.</em></p>
+
+            <h4>Interview Wizard (B2B Applications)</h4>
+            <p>For project applications via /apply, users complete a 5-question flybook extraction:</p>
+            <table class="command-table">
+                <thead><tr><th>Question</th><th>What We Learn</th><th>Example</th></tr></thead>
+                <tbody>
+                    <tr><td>Q1: Your Business</td><td>Domain, experience</td><td>"High-end construction in Brazil, 3 years"</td></tr>
+                    <tr><td>Q2: Revenue Trigger</td><td>Value loop</td><td>"Sale of house = 50% profit margin"</td></tr>
+                    <tr><td>Q3: Who Brings Revenue</td><td>Referral structure</td><td>"Community referrals bring buyers"</td></tr>
+                    <tr><td>Q4: Reward Logic</td><td>Token economics</td><td>"Stakers earn from project profits"</td></tr>
+                    <tr><td>Q5: Skin in Game</td><td>Alignment</td><td>"No salary, only stake income"</td></tr>
+                </tbody>
+            </table>
+            <p>After Q5, users see a <strong>Summary</strong> screen with edit buttons for each field, then submit for human review.</p>
+
             <h3 id="supervision" data-i18n="branders.supervision.title">AI Supervision</h3>
             <p data-i18n="branders.supervision.desc">Admin dashboard for your team. Access via /admin in DM.</p>
+
+            <h4>Dashboard Overview</h4>
+            <p>The main dashboard shows user progress and provides quick actions:</p>
+            <table class="command-table">
+                <thead><tr><th>Section</th><th>What It Shows</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Progress Bar</strong></td><td>Points toward 100 threshold (e.g., "78/100 pts")</td></tr>
+                    <tr><td><strong>Breakdown</strong></td><td>Questions (💬), Raids (🎯), Support (💜) with counts</td></tr>
+                    <tr><td><strong>Intelligence Insight</strong></td><td>Dynamic: ETH price, pending raids, motivation</td></tr>
+                    <tr><td><strong>Action Buttons</strong></td><td>Raid, Meme, Bug, Stake + "More" menu</td></tr>
+                </tbody>
+            </table>
+
+            <h4>More Menu Features</h4>
+            <ul>
+                <li><strong>💜 Support:</strong> How to tip community helpers</li>
+                <li><strong>🚀 Launch:</strong> Token launch (admin only)</li>
+                <li><strong>🏆 Board:</strong> Leaderboard rankings</li>
+                <li><strong>📊 Stats:</strong> Full stats breakdown</li>
+                <li><strong>⚙️ Settings:</strong> Wallet, X, language config</li>
+                <li><strong>🎫 Support:</strong> Ticket system</li>
+                <li><strong>🤖 A2A:</strong> Agent-to-agent features</li>
+            </ul>
+
+            <h4>Staking Wizard</h4>
+            <p>Mobile-friendly staking flow with on-chain verification:</p>
+            <table class="command-table">
+                <thead><tr><th>Screen</th><th>Purpose</th><th>User Actions</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Intro</strong></td><td>Show balances</td><td>See BONZI, staked, claimable ETH</td></tr>
+                    <tr><td><strong>Amount</strong></td><td>Pick stake amount</td><td>Presets (1K/5K/10K) or Max</td></tr>
+                    <tr><td><strong>Confirm</strong></td><td>Deep link to web</td><td>"Open Staking Page" → wallet signs</td></tr>
+                    <tr><td><strong>Check</strong></td><td>Verify on-chain</td><td>"I've Staked" → bot checks blockchain</td></tr>
+                </tbody>
+            </table>
+            <p><em>Warning: Staking/unstaking resets Euler index. Users are prompted to claim rewards first.</em></p>
+
             <ul>
                 <li><strong data-i18n="branders.supervision.analytics">Analytics:</strong> <span data-i18n="branders.supervision.analytics.desc">Question patterns, engagement stats, gap detection</span></li>
                 <li><strong data-i18n="branders.supervision.moderation">Moderation:</strong> <span data-i18n="branders.supervision.moderation.desc">Auto-responses, filter settings, FUD rebuttals</span></li>
@@ -637,10 +701,10 @@
 
             <!-- ===================== AGENTS ===================== -->
             <h2 id="agents"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg></span><span data-i18n="agents.title">For AI Agents</span></h2>
-            <p class="docs-intro" data-i18n="agents.intro">Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data SIAH uses internally.</p>
+            <p class="docs-intro" data-i18n="agents.intro">Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data the Bonzi agent uses internally.</p>
 
-            <h3 data-i18n="agents.why.title">Why SIAH's Data is Unique</h3>
-            <p data-i18n="agents.why.desc">SIAH is <strong>community management, codified</strong>. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.</p>
+            <h3 data-i18n="agents.why.title">Why Bonzi's Data is Unique</h3>
+            <p data-i18n="agents.why.desc">The Bonzi agent is <strong>community management, codified</strong>. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.</p>
 
             <h3 data-i18n="agents.api.title">Planned API Design</h3>
             <p data-i18n="agents.api.desc">The following endpoints are in development. Structure subject to change.</p>
@@ -652,10 +716,10 @@
             <p data-i18n="agents.coop.desc">Deep dive into cooperation signals: help given, gratitude received, educational contributions, unique people helped. Euler score measures genuine value exchange vs farming patterns.</p>
 
             <h4 data-i18n="agents.merkle.title">Merkle Proof (Planned)</h4>
-            <p data-i18n="agents.merkle.desc">On-chain verification of reputation. Verify trustlessly against merkle root without trusting SIAH's API directly.</p>
+            <p data-i18n="agents.merkle.desc">On-chain verification of reputation. Verify trustlessly against merkle root without trusting the API directly.</p>
 
             <h4 data-i18n="agents.oracle.title">Oracle Metrics (Planned)</h4>
-            <p data-i18n="agents.oracle.desc">SIAH exposes its own cooperation metrics. Verify the oracle the same way we verify humans. Transparency by design.</p>
+            <p data-i18n="agents.oracle.desc">The Bonzi agent exposes its own cooperation metrics. Verify the oracle the same way we verify humans. Transparency by design.</p>
 
             <h3 data-i18n="agents.erc8004.title">ERC-8004 Identity</h3>
             <p data-i18n="agents.erc8004.desc"><a href="https://eips.ethereum.org/EIPS/eip-8004" target="_blank">ERC-8004</a> establishes three on-chain registries for AI agents: Identity, Reputation, and Validation. Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.</p>
@@ -666,14 +730,14 @@
                 <li><strong data-i18n="agents.erc8004.status.chain">Chain:</strong> <span data-i18n="agents.erc8004.status.chain.desc">Ethereum (Base coming soon)</span></li>
             </ul>
 
-            <h4 data-i18n="agents.erc8004.siah">SIAH Integration Status</h4>
+            <h4 data-i18n="agents.erc8004.siah">Bonzi Agent Integration Status</h4>
             <ul>
                 <li><strong data-i18n="agents.erc8004.siah.client">Client code:</strong> <span data-i18n="agents.erc8004.siah.client.desc">Scaffolded (read + dry-run)</span></li>
                 <li><strong data-i18n="agents.erc8004.siah.reg">Agent registration:</strong> <span data-i18n="agents.erc8004.siah.reg.desc">Not yet registered</span></li>
                 <li><strong data-i18n="agents.erc8004.siah.bridge">Trust signal bridge:</strong> <span data-i18n="agents.erc8004.siah.bridge.desc">Planned (internal signals → on-chain feedback)</span></li>
                 <li><strong data-i18n="agents.erc8004.siah.oracle">Live oracle queries:</strong> <span data-i18n="agents.erc8004.siah.oracle.desc">Planned</span></li>
             </ul>
-            <p data-i18n="agents.erc8004.outro">Once fully integrated, SIAH's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query SIAH's reputation data trustlessly on-chain.</p>
+            <p data-i18n="agents.erc8004.outro">Once fully integrated, the Bonzi agent's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query reputation data trustlessly on-chain.</p>
 
             <!-- ===================== TROUBLESHOOTING ===================== -->
             <h2 id="troubleshooting" data-i18n="trouble.title">Troubleshooting</h2>
@@ -817,21 +881,21 @@
                 "developers.selfhost.2": "Set env: TELEGRAM_BOT_TOKEN=your_token", "developers.selfhost.3": "Deploy: Docker, Render, or your own server",
                 "developers.api.title": "API Reference", "developers.api.desc": "Full REST API for custom integrations. See API.md in the repo.",
                 // Agents
-                "agents.title": "For AI Agents", "agents.intro": "Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data SIAH uses internally.",
-                "agents.why.title": "Why SIAH's Data is Unique", "agents.why.desc": "SIAH is community management, codified. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.",
+                "agents.title": "For AI Agents", "agents.intro": "Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data the Bonzi agent uses internally.",
+                "agents.why.title": "Why Bonzi's Data is Unique", "agents.why.desc": "The Bonzi agent is community management, codified. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.",
                 "agents.api.title": "Planned API Design", "agents.api.desc": "The following endpoints are in development. Structure subject to change.",
                 "agents.trust.title": "Trust Score (Planned)", "agents.trust.desc": "Query a wallet's trust score. Returns numeric score, tier grade, confidence level, and signal breakdown. Use case: pre-transaction trust verification.",
                 "agents.coop.title": "Cooperation Profile (Planned)", "agents.coop.desc": "Deep dive into cooperation signals: help given, gratitude received, educational contributions, unique people helped. Euler score measures genuine value exchange vs farming patterns.",
-                "agents.merkle.title": "Merkle Proof (Planned)", "agents.merkle.desc": "On-chain verification of reputation. Verify trustlessly against merkle root without trusting SIAH's API directly.",
-                "agents.oracle.title": "Oracle Metrics (Planned)", "agents.oracle.desc": "SIAH exposes its own cooperation metrics. Verify the oracle the same way we verify humans. Transparency by design.",
+                "agents.merkle.title": "Merkle Proof (Planned)", "agents.merkle.desc": "On-chain verification of reputation. Verify trustlessly against merkle root without trusting the API directly.",
+                "agents.oracle.title": "Oracle Metrics (Planned)", "agents.oracle.desc": "The Bonzi agent exposes its own cooperation metrics. Verify the oracle the same way we verify humans. Transparency by design.",
                 "agents.erc8004.title": "ERC-8004 Identity", "agents.erc8004.desc": "ERC-8004 establishes three on-chain registries for AI agents: Identity, Reputation, and Validation. Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.",
                 "agents.erc8004.status": "Standard Status", "agents.erc8004.status.erc": "ERC-8004:", "agents.erc8004.status.erc.desc": "Live on Ethereum mainnet",
                 "agents.erc8004.status.chain": "Chain:", "agents.erc8004.status.chain.desc": "Ethereum (Base coming soon)",
-                "agents.erc8004.siah": "SIAH Integration Status", "agents.erc8004.siah.client": "Client code:", "agents.erc8004.siah.client.desc": "Scaffolded (read + dry-run)",
+                "agents.erc8004.siah": "Bonzi Agent Integration Status", "agents.erc8004.siah.client": "Client code:", "agents.erc8004.siah.client.desc": "Scaffolded (read + dry-run)",
                 "agents.erc8004.siah.reg": "Agent registration:", "agents.erc8004.siah.reg.desc": "Not yet registered",
                 "agents.erc8004.siah.bridge": "Trust signal bridge:", "agents.erc8004.siah.bridge.desc": "Planned (internal signals → on-chain feedback)",
                 "agents.erc8004.siah.oracle": "Live oracle queries:", "agents.erc8004.siah.oracle.desc": "Planned",
-                "agents.erc8004.outro": "Once fully integrated, SIAH's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query SIAH's reputation data trustlessly on-chain.",
+                "agents.erc8004.outro": "Once fully integrated, the Bonzi agent's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query reputation data trustlessly on-chain.",
                 // Troubleshooting
                 "trouble.title": "Troubleshooting",
                 "trouble.bot.title": "Bot not responding", "trouble.bot.desc": "Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages.",
@@ -927,21 +991,21 @@
                 "developers.selfhost.2": "Configure env: TELEGRAM_BOT_TOKEN=seu_token", "developers.selfhost.3": "Deploy: Docker, Render, ou seu proprio servidor",
                 "developers.api.title": "Referencia da API", "developers.api.desc": "API REST completa para integracoes customizadas. Veja API.md no repositorio.",
                 // Agents
-                "agents.title": "Para Agentes IA", "agents.intro": "Agentes como pares. Consulte scores de confianca, verifique cooperacao, detecte gaming - os mesmos dados que SIAH usa internamente.",
-                "agents.why.title": "Por que os Dados do SIAH sao Unicos", "agents.why.desc": "SIAH e gestao de comunidade, codificada. Pesos de sinais, progressoes de tier e heuristicas anti-gaming foram calibrados de operacoes reais. Os padroes vem de casos reais - nao modelos teoricos.",
+                "agents.title": "Para Agentes IA", "agents.intro": "Agentes como pares. Consulte scores de confianca, verifique cooperacao, detecte gaming - os mesmos dados que o agente Bonzi usa internamente.",
+                "agents.why.title": "Por que os Dados do Bonzi sao Unicos", "agents.why.desc": "O agente Bonzi e gestao de comunidade, codificada. Pesos de sinais, progressoes de tier e heuristicas anti-gaming foram calibrados de operacoes reais. Os padroes vem de casos reais - nao modelos teoricos.",
                 "agents.api.title": "Design da API Planejado", "agents.api.desc": "Os seguintes endpoints estao em desenvolvimento. Estrutura sujeita a mudancas.",
                 "agents.trust.title": "Score de Confianca (Planejado)", "agents.trust.desc": "Consulte o score de confianca de uma carteira. Retorna score numerico, grau de tier, nivel de confianca e detalhamento de sinais.",
                 "agents.coop.title": "Perfil de Cooperacao (Planejado)", "agents.coop.desc": "Analise profunda de sinais de cooperacao: ajuda dada, gratidao recebida, contribuicoes educacionais. Score Euler mede troca de valor genuina vs padroes de farming.",
-                "agents.merkle.title": "Prova Merkle (Planejado)", "agents.merkle.desc": "Verificacao on-chain de reputacao. Verifique trustlessly contra a raiz merkle sem confiar diretamente na API do SIAH.",
-                "agents.oracle.title": "Metricas do Oraculo (Planejado)", "agents.oracle.desc": "SIAH expoe suas proprias metricas de cooperacao. Verifique o oraculo da mesma forma que verificamos humanos. Transparencia por design.",
+                "agents.merkle.title": "Prova Merkle (Planejado)", "agents.merkle.desc": "Verificacao on-chain de reputacao. Verifique trustlessly contra a raiz merkle sem confiar diretamente na API.",
+                "agents.oracle.title": "Metricas do Oraculo (Planejado)", "agents.oracle.desc": "O agente Bonzi expoe suas proprias metricas de cooperacao. Verifique o oraculo da mesma forma que verificamos humanos. Transparencia por design.",
                 "agents.erc8004.title": "Identidade ERC-8004", "agents.erc8004.desc": "ERC-8004 estabelece tres registros on-chain para agentes IA: Identidade, Reputacao e Validacao. Co-autorado por MetaMask, Ethereum Foundation, Google e Coinbase.",
                 "agents.erc8004.status": "Status do Padrao", "agents.erc8004.status.erc": "ERC-8004:", "agents.erc8004.status.erc.desc": "Ativo na mainnet Ethereum",
                 "agents.erc8004.status.chain": "Chain:", "agents.erc8004.status.chain.desc": "Ethereum (Base em breve)",
-                "agents.erc8004.siah": "Status de Integracao SIAH", "agents.erc8004.siah.client": "Codigo do cliente:", "agents.erc8004.siah.client.desc": "Estruturado (leitura + dry-run)",
+                "agents.erc8004.siah": "Status de Integracao do Agente Bonzi", "agents.erc8004.siah.client": "Codigo do cliente:", "agents.erc8004.siah.client.desc": "Estruturado (leitura + dry-run)",
                 "agents.erc8004.siah.reg": "Registro do agente:", "agents.erc8004.siah.reg.desc": "Ainda nao registrado",
                 "agents.erc8004.siah.bridge": "Bridge de sinais de confianca:", "agents.erc8004.siah.bridge.desc": "Planejado (sinais internos → feedback on-chain)",
                 "agents.erc8004.siah.oracle": "Consultas ao oraculo:", "agents.erc8004.siah.oracle.desc": "Planejado",
-                "agents.erc8004.outro": "Uma vez totalmente integrado, os sinais de confianca internos do SIAH (gorjetas, scores de QA, metricas de cooperacao) serao transferidos para o Registro de Reputacao do ERC-8004. Outros agentes poderao consultar dados de reputacao do SIAH trustlessly on-chain.",
+                "agents.erc8004.outro": "Uma vez totalmente integrado, os sinais de confianca internos do agente Bonzi (gorjetas, scores de QA, metricas de cooperacao) serao transferidos para o Registro de Reputacao do ERC-8004. Outros agentes poderao consultar dados de reputacao trustlessly on-chain.",
                 // Troubleshooting
                 "trouble.title": "Solucao de Problemas",
                 "trouble.bot.title": "Bot nao responde", "trouble.bot.desc": "Verifique se Bonzi tem permissoes de admin no seu grupo. Sem acesso admin, ele nao pode ler mensagens.",

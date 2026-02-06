@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Docs • Bonzi / SIAH</title>
+  <link rel="icon" href="../bonzi-logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #A78BFA;
+      --white: #FFFFFF;
+      --black: #0A0A0A;
+      --gray: #71717A;
+      --gray-light: #F4F4F5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, system-ui, Segoe UI, Roboto, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      padding: 56px 20px;
+      max-width: 920px;
+      margin-inline: auto;
+    }
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { color: var(--purple-light); text-decoration: underline; }
+    header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    header img { width: 44px; height: 44px; border-radius: 10px; }
+    h1 { font-size: 2.2rem; letter-spacing: -0.02em; margin: 0; }
+    .sub { color: var(--gray); margin: 8px 0 28px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .card {
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(124,58,237,0.04);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .card h2 { font-size: 1.05rem; margin: 0 0 6px; }
+    .card p { margin: 0; color: #374151; }
+    .meta { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(0,0,0,0.08); color: var(--gray); font-size: 0.95rem; }
+    code { background: var(--gray-light); padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="../bonzi-logo.png" alt="Bonzi" />
+    <div>
+      <h1>Docs</h1>
+      <div class="sub">Public documentation for the Bonzi Community Bot / SIAH Oracle.</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h2><a href="API.md">API Reference</a></h2>
+      <p>Endpoints for trust queries, tipping, attestations, and agent discovery.</p>
+    </div>
+    <div class="card">
+      <h2><a href="INTEGRATION.md">Integration Guide</a></h2>
+      <p>Embed widgets, screen wallets, and integrate via ERC-8004 / A2A conventions.</p>
+    </div>
+    <div class="card">
+      <h2><a href="CPI_SPEC.md">CPI-253 Spec</a></h2>
+      <p>The 10-dimension 253-point scoring framework.</p>
+    </div>
+    <div class="card">
+      <h2><a href="RESEARCH.md">Research Notes</a></h2>
+      <p>High-level thesis and pointers to public research artifacts.</p>
+    </div>
+    <div class="card">
+      <h2><a href="WIDGET_INTEGRATION_GUIDE.md">Widget Integration</a></h2>
+      <p>Drop-in widget instructions for brand partners.</p>
+    </div>
+    <div class="card">
+      <h2><a href="HARDLOCK_MEV_WARNING.md">MEV Warning</a></h2>
+      <p>Operational safety notes for hardlock flows.</p>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div>Back to site: <a href="../">Home</a> · Manual: <a href="../manual/">manual/</a></div>
+    <div>Agent discovery: <code>/.well-known/agent.json</code> · <code>/.well-known/agent-card.json</code></div>
+  </div>
+</body>
+</html>
+

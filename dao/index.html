@@ -733,7 +733,7 @@
         <span class="sound-off">🔇</span>
     </button>
     <audio id="bg-music" preload="auto" loop>
-        <source src="../moby-god-moving.mp3" type="audio/mpeg">
+        <source src="../static/audio/placeholder.wav" type="audio/wav">
     </audio>
 
     <!-- Win98 popup for bug submission success (easter egg) -->
@@ -788,7 +788,7 @@
         // Close on overlay click
         document.getElementById('win98-overlay').addEventListener('click', closeWin98Popup);
 
-        // Sound toggle - teaser mode (Moby only)
+        // Sound toggle (placeholder audio)
         const soundToggle = document.getElementById('sound-toggle');
         const soundHint = document.getElementById('sound-hint');
         const bgMusic = document.getElementById('bg-music');

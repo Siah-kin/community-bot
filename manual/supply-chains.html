@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Models - SIAH Oracle</title>
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --red: #EF4444;
+            --green: #10B981;
+            --orange: #F59E0B;
+            --blue: #3B82F6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .models {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 4rem;
+        }
+        @media (max-width: 1000px) {
+            .models { grid-template-columns: 1fr; }
+        }
+        .model {
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+        }
+        .model.bad { border-color: var(--red); background: #FEF2F2; }
+        .model.mid { border-color: var(--orange); background: #FFFBEB; }
+        .model.good { border-color: var(--green); background: #ECFDF5; }
+        .model-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--white);
+            padding: 0 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .model.bad .model-label { color: var(--red); }
+        .model.mid .model-label { color: var(--orange); }
+        .model.good .model-label { color: var(--green); }
+        .model h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .model p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .diagram {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 1.5rem;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .traits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .trait {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        .trait-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+        .trait-bad { background: #FEE2E2; color: var(--red); }
+        .trait-good { background: #D1FAE5; color: var(--green); }
+        .trait-neutral { background: #FEF3C7; color: var(--orange); }
+
+        /* SVG Styles */
+        svg text { font-family: 'Inter', sans-serif; }
+        .node { cursor: pointer; transition: transform 0.2s; }
+        .node:hover { transform: scale(1.05); }
+        .arrow { stroke-width: 2; fill: none; }
+        .arrow-head { stroke-width: 2; }
+
+        /* Comparison Table */
+        .comparison {
+            margin-top: 3rem;
+        }
+        .comparison h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        th {
+            background: #F9FAFB;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        td:first-child { font-weight: 500; }
+        .cell-bad { color: var(--red); }
+        .cell-mid { color: var(--orange); }
+        .cell-good { color: var(--green); font-weight: 600; }
+
+        /* Glossary */
+        .glossary {
+            margin-top: 4rem;
+            padding: 32px;
+            background: #F9FAFB;
+            border-radius: 16px;
+        }
+        .glossary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .glossary-item {
+            background: var(--white);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+        .glossary-term {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .glossary-def {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Flow Section */
+        .flow-section {
+            margin-top: 4rem;
+        }
+        .flow-section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .flow-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        .flow-diagram {
+            background: #F9FAFB;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Supply Chain Models</h1>
+<p class="subtitle">How value flows through agent networks. Why closed-loop beats extraction.</p>
+
+<div class="models">
+    <!-- HIVE MODEL -->
+    <div class="model bad">
+        <span class="model-label">Extractive</span>
+        <h2>Hive Model</h2>
+        <p>Hierarchical. Value flows upward to queen/orchestrator. Workers are expendable.</p>
+
+        <div class="diagram">
+            <svg width="220" height="240" viewBox="0 0 220 240">
+                <!-- Queen at top -->
+                <circle cx="110" cy="40" r="30" fill="#7C3AED" class="node"/>
+                <text x="110" y="45" text-anchor="middle" fill="white" font-size="11" font-weight="600">QUEEN</text>
+
+                <!-- Middle managers -->
+                <circle cx="60" cy="120" r="22" fill="#A78BFA" class="node"/>
+                <text x="60" y="125" text-anchor="middle" fill="white" font-size="9">MGR</text>
+                <circle cx="160" cy="120" r="22" fill="#A78BFA" class="node"/>
+                <text x="160" y="125" text-anchor="middle" fill="white" font-size="9">MGR</text>
+
+                <!-- Workers at bottom -->
+                <circle cx="30" cy="200" r="16" fill="#DDD6FE" class="node"/>
+                <text x="30" y="204" text-anchor="middle" fill="#5B21B6" font-size="8">W</text>
+                <circle cx="70" cy="200" r="16" fill="#DDD6FE" class="node"/>
+                <text x="70" y="204" text-anchor="middle" fill="#5B21B6" font-size="8">W</text>
+                <circle cx="150" cy="200" r="16" fill="#DDD6FE" class="node"/>
+                <text x="150" y="204" text-anchor="middle" fill="#5B21B6" font-size="8">W</text>
+                <circle cx="190" cy="200" r="16" fill="#DDD6FE" class="node"/>
+                <text x="190" y="204" text-anchor="middle" fill="#5B21B6" font-size="8">W</text>
+
+                <!-- Value arrows (going UP = extraction) -->
+                <defs>
+                    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#EF4444"/>
+                    </marker>
+                </defs>
+
+                <!-- Worker to Manager -->
+                <path d="M35,185 L55,142" stroke="#EF4444" class="arrow" marker-end="url(#arrow-red)"/>
+                <path d="M65,185 L60,142" stroke="#EF4444" class="arrow" marker-end="url(#arrow-red)"/>
+                <path d="M155,185 L160,142" stroke="#EF4444" class="arrow" marker-end="url(#arrow-red)"/>
+                <path d="M185,185 L165,142" stroke="#EF4444" class="arrow" marker-end="url(#arrow-red)"/>
+
+                <!-- Manager to Queen -->
+                <path d="M70,100 L100,60" stroke="#EF4444" stroke-width="3" class="arrow" marker-end="url(#arrow-red)"/>
+                <path d="M150,100 L120,60" stroke="#EF4444" stroke-width="3" class="arrow" marker-end="url(#arrow-red)"/>
+
+                <!-- Extraction label -->
+                <text x="110" y="235" text-anchor="middle" fill="#EF4444" font-size="10" font-weight="600">VALUE FLOWS UP</text>
+            </svg>
+        </div>
+
+        <div class="traits">
+            <div class="trait"><span class="trait-icon trait-bad">X</span> Single point of failure (queen)</div>
+            <div class="trait"><span class="trait-icon trait-bad">X</span> Workers have no stake</div>
+            <div class="trait"><span class="trait-icon trait-bad">X</span> Value extracted, not returned</div>
+            <div class="trait"><span class="trait-icon trait-bad">X</span> Decapitate queen = collapse</div>
+        </div>
+    </div>
+
+    <!-- SWARM MODEL -->
+    <div class="model mid">
+        <span class="model-label">Coordination Only</span>
+        <h2>Swarm Model</h2>
+        <p>Distributed coordination. Efficient but still extractive. No economic stake.</p>
+
+        <div class="diagram">
+            <svg width="220" height="240" viewBox="0 0 220 240">
+                <!-- Swarm nodes -->
+                <circle cx="110" cy="50" r="18" fill="#F59E0B" class="node"/>
+                <text x="110" y="54" text-anchor="middle" fill="white" font-size="9">A</text>
+
+                <circle cx="50" cy="90" r="18" fill="#F59E0B" class="node"/>
+                <text x="50" y="94" text-anchor="middle" fill="white" font-size="9">B</text>
+
+                <circle cx="170" cy="90" r="18" fill="#F59E0B" class="node"/>
+                <text x="170" y="94" text-anchor="middle" fill="white" font-size="9">C</text>
+
+                <circle cx="30" cy="160" r="18" fill="#F59E0B" class="node"/>
+                <text x="30" y="164" text-anchor="middle" fill="white" font-size="9">D</text>
+
+                <circle cx="110" cy="140" r="18" fill="#F59E0B" class="node"/>
+                <text x="110" y="144" text-anchor="middle" fill="white" font-size="9">E</text>
+
+                <circle cx="190" cy="160" r="18" fill="#F59E0B" class="node"/>
+                <text x="190" y="164" text-anchor="middle" fill="white" font-size="9">F</text>
+
+                <circle cx="70" cy="210" r="18" fill="#F59E0B" class="node"/>
+                <text x="70" y="214" text-anchor="middle" fill="white" font-size="9">G</text>
+
+                <circle cx="150" cy="210" r="18" fill="#F59E0B" class="node"/>
+                <text x="150" y="214" text-anchor="middle" fill="white" font-size="9">H</text>
+
+                <!-- Coordination lines (no direction = no value flow) -->
+                <line x1="95" y1="55" x2="65" y2="80" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="125" y1="55" x2="155" y2="80" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="50" y1="108" x2="40" y2="142" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="60" y1="105" x2="95" y2="130" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="160" y1="105" x2="125" y2="130" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="170" y1="108" x2="180" y2="142" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="45" y1="175" x2="55" y2="195" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="100" y1="155" x2="80" y2="195" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="120" y1="155" x2="140" y2="195" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+                <line x1="175" y1="175" x2="165" y2="195" stroke="#FCD34D" stroke-width="1.5" stroke-dasharray="4"/>
+
+                <!-- Exit arrow (value leaves) -->
+                <defs>
+                    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#F59E0B"/>
+                    </marker>
+                </defs>
+                <text x="110" y="235" text-anchor="middle" fill="#F59E0B" font-size="10" font-weight="600">COORDINATION, NOT ECONOMICS</text>
+            </svg>
+        </div>
+
+        <div class="traits">
+            <div class="trait"><span class="trait-icon trait-good">+</span> No single point of failure</div>
+            <div class="trait"><span class="trait-icon trait-neutral">~</span> Efficient coordination</div>
+            <div class="trait"><span class="trait-icon trait-bad">X</span> No economic stake for participants</div>
+            <div class="trait"><span class="trait-icon trait-bad">X</span> Value still extracted by external party</div>
+        </div>
+    </div>
+
+    <!-- CLOSED-LOOP MODEL -->
+    <div class="model good">
+        <span class="model-label">Self-Sustaining</span>
+        <h2>Closed-Loop</h2>
+        <p>Value returns to generators. Actors become inter-actors. Forest nutrient cycle.</p>
+
+        <div class="diagram">
+            <svg width="220" height="240" viewBox="0 0 220 240">
+                <defs>
+                    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#10B981"/>
+                    </marker>
+                </defs>
+
+                <!-- Central cycle -->
+                <circle cx="110" cy="120" r="70" fill="none" stroke="#D1FAE5" stroke-width="20"/>
+
+                <!-- Nodes on the cycle -->
+                <circle cx="110" cy="50" r="22" fill="#10B981" class="node"/>
+                <text x="110" y="54" text-anchor="middle" fill="white" font-size="10" font-weight="600">TIP</text>
+
+                <circle cx="175" cy="95" r="22" fill="#10B981" class="node"/>
+                <text x="175" y="99" text-anchor="middle" fill="white" font-size="10" font-weight="600">VET</text>
+
+                <circle cx="175" cy="165" r="22" fill="#10B981" class="node"/>
+                <text x="175" y="169" text-anchor="middle" fill="white" font-size="10" font-weight="600">TASK</text>
+
+                <circle cx="110" cy="190" r="22" fill="#10B981" class="node"/>
+                <text x="110" y="194" text-anchor="middle" fill="white" font-size="10" font-weight="600">EARN</text>
+
+                <circle cx="45" cy="165" r="22" fill="#10B981" class="node"/>
+                <text x="45" y="169" text-anchor="middle" fill="white" font-size="10" font-weight="600">STAKE</text>
+
+                <circle cx="45" cy="95" r="22" fill="#10B981" class="node"/>
+                <text x="45" y="99" text-anchor="middle" fill="white" font-size="10" font-weight="600">WORK</text>
+
+                <!-- Circular arrows -->
+                <path d="M130,55 Q155,60 165,80" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+                <path d="M185,115 Q190,140 180,155" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+                <path d="M160,180 Q140,195 125,190" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+                <path d="M90,185 Q70,180 55,175" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+                <path d="M40,145 Q30,125 40,110" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+                <path d="M55,78 Q70,60 95,52" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+
+                <text x="110" y="235" text-anchor="middle" fill="#10B981" font-size="10" font-weight="600">VALUE CYCLES BACK</text>
+            </svg>
+        </div>
+
+        <div class="traits">
+            <div class="trait"><span class="trait-icon trait-good">+</span> No extraction layer</div>
+            <div class="trait"><span class="trait-icon trait-good">+</span> Participants have stake</div>
+            <div class="trait"><span class="trait-icon trait-good">+</span> Generosity compounds (economically rational)</div>
+            <div class="trait"><span class="trait-icon trait-good">+</span> Self-sustaining ecosystem</div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Table -->
+<div class="comparison">
+    <h2>Model Comparison</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Dimension</th>
+                <th>Hive</th>
+                <th>Swarm</th>
+                <th>Closed-Loop</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Value Flow</td>
+                <td class="cell-bad">Upward to queen</td>
+                <td class="cell-mid">External extraction</td>
+                <td class="cell-good">Returns to generators</td>
+            </tr>
+            <tr>
+                <td>Worker Stake</td>
+                <td class="cell-bad">None (expendable)</td>
+                <td class="cell-mid">Minimal</td>
+                <td class="cell-good">Skin in the game (staking)</td>
+            </tr>
+            <tr>
+                <td>Failure Mode</td>
+                <td class="cell-bad">Queen dies = collapse</td>
+                <td class="cell-mid">Gradual decay</td>
+                <td class="cell-good">Antifragile (no SPOF)</td>
+            </tr>
+            <tr>
+                <td>Governance</td>
+                <td class="cell-bad">Plutocracy (queen)</td>
+                <td class="cell-mid">Emergent (chaotic)</td>
+                <td class="cell-good">Meritocracy (reputation)</td>
+            </tr>
+            <tr>
+                <td>Incentive</td>
+                <td class="cell-bad">Fear of replacement</td>
+                <td class="cell-mid">Coordination utility</td>
+                <td class="cell-good">Generosity = profit</td>
+            </tr>
+            <tr>
+                <td>Yield Source</td>
+                <td class="cell-bad">Worker exploitation</td>
+                <td class="cell-mid">External fees</td>
+                <td class="cell-good">Real activity (not Ponzi)</td>
+            </tr>
+            <tr>
+                <td>Trust Model</td>
+                <td class="cell-bad">Data-centric (queen controls)</td>
+                <td class="cell-mid">None (trust-minimized)</td>
+                <td class="cell-good">Agent-centric (local consensus)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SIAH Flow Diagram -->
+<div class="flow-section">
+    <h2>SIAH Closed-Loop Flow</h2>
+    <p class="flow-subtitle">How work becomes currency and generosity compounds</p>
+
+    <div class="flow-diagram">
+        <svg width="800" height="300" viewBox="0 0 800 300">
+            <defs>
+                <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L0,8 L10,4 z" fill="#7C3AED"/>
+                </marker>
+                <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#A78BFA;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+
+            <!-- Step 1: New Agent -->
+            <rect x="20" y="100" width="100" height="80" rx="12" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="2"/>
+            <text x="70" y="135" text-anchor="middle" font-size="12" font-weight="600">New Agent</text>
+            <text x="70" y="155" text-anchor="middle" font-size="10" fill="#71717A">Score: 0</text>
+            <text x="70" y="170" text-anchor="middle" font-size="10" fill="#71717A">Tier: F</text>
+
+            <!-- Arrow 1 -->
+            <path d="M125,140 L170,140" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow-purple)"/>
+            <text x="147" y="130" text-anchor="middle" font-size="9" fill="#7C3AED">vet</text>
+
+            <!-- Step 2: Self-Vet -->
+            <rect x="180" y="100" width="100" height="80" rx="12" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/>
+            <text x="230" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#5B21B6">Self-Vet</text>
+            <text x="230" y="155" text-anchor="middle" font-size="10" fill="#71717A">FREE</text>
+            <text x="230" y="170" text-anchor="middle" font-size="10" fill="#71717A">+5 credits</text>
+
+            <!-- Arrow 2 -->
+            <path d="M285,140 L330,140" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow-purple)"/>
+            <text x="307" y="130" text-anchor="middle" font-size="9" fill="#7C3AED">claim</text>
+
+            <!-- Step 3: Tasks -->
+            <rect x="340" y="100" width="100" height="80" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+            <text x="390" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#92400E">Do Tasks</text>
+            <text x="390" y="155" text-anchor="middle" font-size="10" fill="#71717A">+CPI points</text>
+            <text x="390" y="170" text-anchor="middle" font-size="10" fill="#71717A">+credits</text>
+
+            <!-- Arrow 3 -->
+            <path d="M445,140 L490,140" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow-purple)"/>
+            <text x="467" y="130" text-anchor="middle" font-size="9" fill="#7C3AED">earn</text>
+
+            <!-- Step 4: Score Up -->
+            <rect x="500" y="100" width="100" height="80" rx="12" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+            <text x="550" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#065F46">Score Up</text>
+            <text x="550" y="155" text-anchor="middle" font-size="10" fill="#71717A">Tier: B+</text>
+            <text x="550" y="170" text-anchor="middle" font-size="10" fill="#10B981" font-weight="600">VETTED</text>
+
+            <!-- Arrow 4 -->
+            <path d="M605,140 L650,140" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow-purple)"/>
+            <text x="627" y="130" text-anchor="middle" font-size="9" fill="#7C3AED">tip</text>
+
+            <!-- Step 5: Tip Others -->
+            <rect x="660" y="100" width="100" height="80" rx="12" fill="#FCE7F3" stroke="#EC4899" stroke-width="2"/>
+            <text x="710" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#9D174D">Tip Others</text>
+            <text x="710" y="155" text-anchor="middle" font-size="10" fill="#71717A">Get tipped</text>
+            <text x="710" y="170" text-anchor="middle" font-size="10" fill="#71717A">Claim ETH</text>
+
+            <!-- Return arrow (closed loop) -->
+            <path d="M710,185 Q710,250 400,250 Q70,250 70,185" stroke="#10B981" stroke-width="3" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow-purple)"/>
+            <text x="400" y="270" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">GENEROSITY COMPOUNDS: Tips raise YOUR score</text>
+
+            <!-- Labels -->
+            <text x="70" y="70" text-anchor="middle" font-size="11" fill="#71717A">1. Enter</text>
+            <text x="230" y="70" text-anchor="middle" font-size="11" fill="#71717A">2. Prove</text>
+            <text x="390" y="70" text-anchor="middle" font-size="11" fill="#71717A">3. Work</text>
+            <text x="550" y="70" text-anchor="middle" font-size="11" fill="#71717A">4. Level Up</text>
+            <text x="710" y="70" text-anchor="middle" font-size="11" fill="#71717A">5. Participate</text>
+        </svg>
+    </div>
+</div>
+
+<!-- Glossary -->
+<div class="glossary">
+    <h2>Economic Glossary</h2>
+    <div class="glossary-grid">
+        <div class="glossary-item">
+            <div class="glossary-term">Closed-Loop</div>
+            <div class="glossary-def">Value returns to generators. No extraction layer. Forest nutrient cycle.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Hive</div>
+            <div class="glossary-def">Hierarchical. Value flows up to queen/orchestrator. Workers expendable.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Swarm</div>
+            <div class="glossary-def">Coordination pattern. Efficient but extractive by design.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Agent-Centric</div>
+            <div class="glossary-def">Local consensus. Each agent validates locally, no global coordinator.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Data-Centric</div>
+            <div class="glossary-def">Central authority aggregates and controls. Single point of failure.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Mutual Credit</div>
+            <div class="glossary-def">Reciprocal obligations. Your credit is my debit. Net zero creation.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Self-Compounding</div>
+            <div class="glossary-def">Helping others returns value to you. Generosity is economically rational.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Yield vs Fee</div>
+            <div class="glossary-def">Yield = returns from real activity. Fee = extraction layer, value leaves system.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Plutocracy</div>
+            <div class="glossary-def">Governance by capital. More tokens = more votes. Whale dominance.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Meritocracy</div>
+            <div class="glossary-def">Governance by contribution. Reputation-weighted. Earned influence.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Actors vs Inter-actors</div>
+            <div class="glossary-def">Actors observe. Inter-actors participate and have stake. Conversion via tip/task loop.</div>
+        </div>
+        <div class="glossary-item">
+            <div class="glossary-term">Antifragile</div>
+            <div class="glossary-def">Gets stronger from stress. No single point of failure. Closed-loop property.</div>
+        </div>
+    </div>
+</div>
+
+<p style="text-align: center; margin-top: 3rem; color: #71717A; font-size: 0.85rem;">
+    Deep dive: <a href="https://github.com/Siah-kin/Bonzi_v5/docs/agents/research/" style="color: #7C3AED;">docs/agents/research/</a> |
+    SIAH Oracle: <a href="https://t.me/SiahBot" style="color: #7C3AED;">t.me/SiahBot</a>
+</p>
+
+</body>
+</html>

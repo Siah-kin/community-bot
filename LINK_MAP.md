@@ -1,6 +1,6 @@
 # Site Link Architecture Map
 
-Last updated: 2026-01-18
+Last updated: 2026-02-04
 
 ## Site Structure
 
@@ -8,9 +8,11 @@ Last updated: 2026-01-18
 https://siah-kin.github.io/community-bot/
 ├── index.html              (Home - landing page)
 ├── features.html           (Features - engineering deep dive)
-├── faq.html                (Manifesto - confrontational FAQ)
+├── manifesto.html          (Manifesto - confrontational FAQ)
+├── faq.html                (Redirect → manifesto.html)
 ├── privacy.html            (Privacy Policy)
-├── research/index.html     (System Metrics - GATED)
+├── docs/                   (Documentation index)
+├── metrics/index.html      (System Metrics - GATED)
 ├── dao/index.html          (DAO Governance - under construction)
 ├── economics/index.html    (Tokenomics)
 └── manual/index.html       (Bot Documentation - GitBook style)
@@ -18,13 +20,13 @@ https://siah-kin.github.io/community-bot/
 
 ## Navigation Matrix
 
-| Page | features | research | dao | economics | manual | faq | source |
-|------|----------|----------|-----|-----------|--------|-----|--------|
+| Page | features | metrics | dao | economics | manual | manifesto | source |
+|------|----------|---------|-----|-----------|--------|-----------|--------|
 | index.html | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | features.html | - | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| faq.html | ✓ | ✓ | ✓ | ✓ | ✓ | - | ✓ |
+| manifesto.html | ✓ | ✓ | ✓ | ✓ | ✓ | - | ✓ |
 | privacy.html | ← back only | | | | | | |
-| research/index.html | ✓ | - | ✓ | ✓ | ✓ | ✓ | ✓ |
+| metrics/index.html | ✓ | - | ✓ | ✓ | ✓ | ✓ | ✓ |
 | dao/index.html | ✓ | ✓ | - | ✓ | ✓ | ✓ | ✓ |
 | economics/index.html | ✓ | ✓ | ✓ | - | ✓ | ✓ | ✓ |
 | manual/index.html | ✓ | ✓ | ✓ | ✓ | - | ✓ | ✓ |
@@ -40,11 +42,11 @@ https://siah-kin.github.io/community-bot/
 ## Internal Link Patterns
 
 ### Root-level pages
-- Use: `features.html`, `faq.html`, `privacy.html`
+- Use: `features.html`, `manifesto.html`, `privacy.html`
 - Logo links to: `#` (same page) or `index.html`
 
-### Subdirectory pages (/research/, /dao/, /economics/, /manual/)
-- Use: `../features.html`, `../faq.html`, etc.
+### Subdirectory pages (/metrics/, /dao/, /economics/, /manual/, /docs/)
+- Use: `../features.html`, `../manifesto.html`, etc.
 - Logo links to: `../`
 - Within same directory: `./`
 
@@ -53,8 +55,9 @@ https://siah-kin.github.io/community-bot/
 ### Canonical URLs (all pages have)
 - index.html: https://siah-kin.github.io/community-bot/
 - features.html: https://siah-kin.github.io/community-bot/features.html
-- faq.html: https://siah-kin.github.io/community-bot/faq.html
-- research/: https://siah-kin.github.io/community-bot/research/
+- manifesto.html: https://siah-kin.github.io/community-bot/manifesto.html
+- docs/: https://siah-kin.github.io/community-bot/docs/
+- metrics/: https://siah-kin.github.io/community-bot/metrics/
 - dao/: https://siah-kin.github.io/community-bot/dao/
 - economics/: https://siah-kin.github.io/community-bot/economics/
 - manual/: https://siah-kin.github.io/community-bot/manual/
@@ -63,15 +66,16 @@ https://siah-kin.github.io/community-bot/
 ### Priority (sitemap.xml)
 1. index.html (1.0) - Main entry point
 2. manual/ (0.9) - High-value documentation
-3. features.html, research/, economics/, faq.html (0.8)
+3. features.html, metrics/, economics/, manifesto.html (0.8)
 4. dao/ (0.7) - Under construction
+5. docs/ (0.6) - Developer docs index
 5. privacy.html (0.3) - Legal compliance
 
 ## Gated Content
 
 | Page | Gate Type | Requirement |
 |------|-----------|-------------|
-| research/ | Wallet Connect | DAO token/NFT ownership |
+| metrics/ | Wallet Connect | DAO token/NFT ownership |
 
 ## Assets
 
@@ -83,13 +87,13 @@ All pages reference:
 
 ```bash
 # Check all internal links work
-for page in index.html features.html faq.html privacy.html; do
+for page in index.html features.html manifesto.html privacy.html; do
   echo "=== $page ==="
   grep -oP 'href="[^"#]*"' "$page" | grep -v http
 done
 
 # Check subdirectory links
-for dir in research dao economics manual; do
+for dir in metrics dao economics manual docs; do
   echo "=== $dir/index.html ==="
   grep -oP 'href="[^"#]*"' "$dir/index.html" | grep -v http
 done

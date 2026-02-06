@@ -136,7 +136,7 @@ def main():
     html_files = get_html_files(base_path)
 
     print(f"Validating {len(html_files)} HTML files for footer compliance...")
-    print(f"Reference: .claude/OG_FOOTER_TEMPLATE.html\n")
+    print(f"Reference: docs/dev/OG_FOOTER_TEMPLATE.html\n")
 
     total_violations = 0
     files_with_issues = []
@@ -157,7 +157,7 @@ def main():
             print()
 
         print(f"Total: {total_violations} violations in {len(files_with_issues)} files")
-        print("\nFix these issues or update .claude/OG_FOOTER_TEMPLATE.html if pattern changed.")
+        print("\nFix these issues or update docs/dev/OG_FOOTER_TEMPLATE.html if pattern changed.")
         return 1
     else:
         print("All files pass footer validation.")

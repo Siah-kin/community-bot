@@ -1703,7 +1703,7 @@
         <span class="sound-off">🔇</span>
     </button>
     <audio id="bg-music" preload="auto" loop>
-        <source src="../moby-god-moving.mp3" type="audio/mpeg">
+        <source src="../static/audio/placeholder.wav" type="audio/wav">
     </audio>
 
     <!-- Web3 Libraries -->
@@ -1908,7 +1908,7 @@
 
         checkAuth();
 
-        // Sound toggle - teaser mode (Moby only)
+	        // Sound toggle (placeholder audio)
         const soundToggle = document.getElementById('sound-toggle');
         const soundHint = document.getElementById('sound-hint');
         const bgMusic = document.getElementById('bg-music');
@@ -1934,7 +1934,7 @@
                 soundToggle.classList.remove('muted');
                 localStorage.setItem('bonzi_music_playing', 'true');
                 if (soundHint) soundHint.style.display = 'none';
-                console.log('📢 Playing: Moby - God Moving Over the Face of the Waters');
+	                console.log('📢 Music enabled');
             } else {
                 bgMusic.pause();
                 soundToggle.classList.add('muted');

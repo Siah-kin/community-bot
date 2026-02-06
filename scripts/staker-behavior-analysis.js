@@ -88,7 +88,7 @@ const EXAMPLE_OUTPUT = {
  * 6. Calculate reinvestment rate for 180+ day cohort
  *
  * This script can be run as a cron job and output to:
- * /research/data/staker-behavior.json
+ * /metrics/data/staker-behavior.json
  *
  * The metrics page can then fetch this JSON and display live proof.
  */

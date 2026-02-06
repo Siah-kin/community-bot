@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economics - SIAH Oracle</title>
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-bg: #F5F3FF;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --red: #EF4444;
+            --green: #10B981;
+            --green-light: #D1FAE5;
+            --orange: #F59E0B;
+            --blue: #3B82F6;
+            --blue-light: #DBEAFE;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+            padding: 60px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 3rem 0 1rem;
+            letter-spacing: -0.01em;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--gray);
+        }
+        p {
+            margin-bottom: 1.25rem;
+            color: #374151;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+        .lead {
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        /* Boxes */
+        .box {
+            border-radius: 12px;
+            padding: 24px;
+            margin: 1.5rem 0;
+        }
+        .box-blue {
+            background: var(--blue-light);
+            border-left: 4px solid var(--blue);
+        }
+        .box-green {
+            background: var(--green-light);
+            border-left: 4px solid var(--green);
+        }
+        .box-purple {
+            background: var(--purple-bg);
+            border-left: 4px solid var(--purple);
+        }
+        .box-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        .box-blue .box-label { color: var(--blue); }
+        .box-green .box-label { color: var(--green); }
+        .box-purple .box-label { color: var(--purple); }
+
+        /* Formula */
+        .formula {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 1rem;
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .formula-main {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        /* Diagrams */
+        .diagram-container {
+            background: var(--gray-light);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        .diagram-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Comparison */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 2rem 0;
+        }
+        @media (max-width: 700px) {
+            .compare { grid-template-columns: 1fr; }
+        }
+        .compare-bad {
+            background: #FEF2F2;
+            border: 2px solid var(--red);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .compare-good {
+            background: #ECFDF5;
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .compare h4 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .compare-bad h4 { color: var(--red); }
+        .compare-good h4 { color: var(--green); }
+        .compare ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+        .compare li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .compare-bad li::before {
+            content: "X";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: 700;
+        }
+        .compare-good li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        /* Stats */
+        .stat-row {
+            display: flex;
+            gap: 20px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .stat {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            padding: 20px;
+            background: var(--gray-light);
+            border-radius: 12px;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--purple);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* Quote */
+        blockquote {
+            border-left: 3px solid var(--purple);
+            padding-left: 20px;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        /* Links */
+        a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #E5E7EB;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        svg text { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+
+<h1>The Economics</h1>
+<p class="subtitle">How value compounds instead of extracts. The Euler model explained.</p>
+
+<!-- Section 1: The Question -->
+<h2>The Wrong Question</h2>
+<p class="lead">Traditional finance asks: <em>"How do I extract value from markets?"</em></p>
+<p>This framing guarantees zero-sum outcomes. Your gain requires someone else's loss. Fast money concentrates in gullies. Extraction depletes participants. Boom, bust, repeat.</p>
+
+<div class="box box-green">
+    <div class="box-label">The Right Question</div>
+    <p style="margin:0; font-size: 1.1rem; font-weight: 500;">How do you encourage compounding accrued value over a longer period?</p>
+</div>
+
+<!-- Section 2: The Answer -->
+<h2>The Answer: Euler + Fee Layer</h2>
+<p>Euler counting combined with a fee layer paid in hard cash. What you get is a democratized financial system similar to social security - but without the corruption layer.</p>
+
+<div class="box box-blue">
+    <div class="box-label">Technical Mechanism</div>
+    <div class="formula">
+        <span class="formula-main">Euler_new = Euler_prev + (fee / total_LP)</span>
+    </div>
+    <div class="formula">
+        Reward = LP_balance * (Euler_current - Euler_at_entry)
+    </div>
+    <p style="margin: 12px 0 0; font-size: 0.9rem;">O(1) distribution - same gas cost whether 10 users or 10 million. Same formula for everyone. No timing advantage.</p>
+</div>
+
+<div class="stat-row">
+    <div class="stat">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Recirculates to participants</div>
+    </div>
+    <div class="stat">
+        <div class="stat-number">O(1)</div>
+        <div class="stat-label">Same cost for all</div>
+    </div>
+    <div class="stat">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Intermediaries capturing spread</div>
+    </div>
+</div>
+
+<!-- Section 3: The Metaphor -->
+<h2>Irrigation, Not Erosion</h2>
+<p>Traditional finance is erosion - fast money flows concentrate in gullies, extraction depletes the land. The Euler model is irrigation - channels distribute flow deliberately, slow capture nourishes the whole field.</p>
+
+<div class="diagram-container">
+    <div class="diagram-title">Value Flow Comparison</div>
+    <svg width="100%" height="280" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet">
+        <!-- Erosion Side -->
+        <text x="200" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#EF4444">EROSION (Traditional)</text>
+
+        <!-- Money rain -->
+        <text x="200" y="60" text-anchor="middle" font-size="12" fill="#71717A">$$$ FAST MONEY $$$</text>
+        <line x1="200" y1="70" x2="200" y2="90" stroke="#EF4444" stroke-width="2"/>
+
+        <!-- Gully -->
+        <path d="M140,100 L200,140 L260,100" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+        <text x="200" y="125" text-anchor="middle" font-size="10" fill="#EF4444">GULLIES</text>
+        <text x="200" y="138" text-anchor="middle" font-size="9" fill="#71717A">(whales)</text>
+
+        <!-- Concentrate arrow -->
+        <line x1="200" y1="150" x2="200" y2="180" stroke="#EF4444" stroke-width="2" stroke-dasharray="4"/>
+        <text x="230" y="170" font-size="9" fill="#71717A">concentrate</text>
+
+        <!-- Depleted land -->
+        <rect x="130" y="190" width="140" height="50" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+        <text x="200" y="212" text-anchor="middle" font-size="11" fill="#EF4444">DEPLETED LAND</text>
+        <text x="200" y="228" text-anchor="middle" font-size="10" fill="#71717A">(users)</text>
+
+        <text x="200" y="265" text-anchor="middle" font-size="11" fill="#EF4444" font-weight="600">Value extracted</text>
+
+        <!-- Divider -->
+        <line x1="400" y1="20" x2="400" y2="260" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8"/>
+
+        <!-- Irrigation Side -->
+        <text x="600" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#10B981">IRRIGATION (Euler)</text>
+
+        <!-- Fees -->
+        <text x="600" y="60" text-anchor="middle" font-size="12" fill="#71717A">~ ~ ~ FEES ~ ~ ~</text>
+        <line x1="600" y1="70" x2="600" y2="90" stroke="#10B981" stroke-width="2"/>
+
+        <!-- Channels -->
+        <rect x="500" y="100" width="200" height="30" rx="4" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <line x1="530" y1="100" x2="530" y2="130" stroke="#10B981" stroke-width="1"/>
+        <line x1="560" y1="100" x2="560" y2="130" stroke="#10B981" stroke-width="1"/>
+        <line x1="590" y1="100" x2="590" y2="130" stroke="#10B981" stroke-width="1"/>
+        <line x1="620" y1="100" x2="620" y2="130" stroke="#10B981" stroke-width="1"/>
+        <line x1="650" y1="100" x2="650" y2="130" stroke="#10B981" stroke-width="1"/>
+        <line x1="680" y1="100" x2="680" y2="130" stroke="#10B981" stroke-width="1"/>
+        <text x="600" y="120" text-anchor="middle" font-size="10" fill="#065F46">CHANNELS (equal flow)</text>
+
+        <!-- Distribution arrows -->
+        <line x1="530" y1="135" x2="530" y2="180" stroke="#10B981" stroke-width="1.5"/>
+        <line x1="560" y1="135" x2="560" y2="180" stroke="#10B981" stroke-width="1.5"/>
+        <line x1="590" y1="135" x2="590" y2="180" stroke="#10B981" stroke-width="1.5"/>
+        <line x1="610" y1="135" x2="610" y2="180" stroke="#10B981" stroke-width="1.5"/>
+        <line x1="640" y1="135" x2="640" y2="180" stroke="#10B981" stroke-width="1.5"/>
+        <line x1="670" y1="135" x2="670" y2="180" stroke="#10B981" stroke-width="1.5"/>
+
+        <!-- Nourished field -->
+        <rect x="500" y="190" width="200" height="50" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <text x="600" y="212" text-anchor="middle" font-size="11" fill="#065F46">NOURISHED FIELD</text>
+        <text x="600" y="228" text-anchor="middle" font-size="10" fill="#71717A">(all users)</text>
+
+        <text x="600" y="265" text-anchor="middle" font-size="11" fill="#10B981" font-weight="600">Value distributed</text>
+    </svg>
+</div>
+
+<!-- Section 4: What This Removes -->
+<h2>Removing the Corruption Layer</h2>
+<p>The issue with any envisioned democracy is corruption and plutocracy. The Euler + fee layer removes the opportunistic extraction that makes traditional systems "best of worst":</p>
+
+<div class="compare">
+    <div class="compare-bad">
+        <h4>Traditional (Removed)</h4>
+        <ul>
+            <li>Front-running (timing advantage)</li>
+            <li>MEV extraction</li>
+            <li>Whale manipulation</li>
+            <li>Insider advantages</li>
+            <li>Bureaucracy capturing spread</li>
+        </ul>
+    </div>
+    <div class="compare-good">
+        <h4>Euler Model (Enabled)</h4>
+        <ul>
+            <li>O(1) same for all - no timing edge</li>
+            <li>Fees flow to participants</li>
+            <li>Merit-based, not wealth-based</li>
+            <li>Transparent, on-chain, verifiable</li>
+            <li>No intermediary captures</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Section 5: Fairless -->
+<h2>"Fairless" - The Missing Property</h2>
+<p>The future is onchain, permissionless, trustless. But also: <strong>fairless</strong>.</p>
+
+<div class="box box-purple">
+    <div class="box-label">Key Insight</div>
+    <p style="margin:0;">Not "unfair" (extractive). Not "fair" (requires judges, can be captured). <strong>FAIRLESS</strong> - the algorithm defines distribution. No fairness debate possible.</p>
+    <p style="margin: 12px 0 0; font-size: 0.9rem; color: var(--gray);">Math is fairless. 2+2=4 isn't fair or unfair - it just is. That's the Euler model.</p>
+</div>
+
+<!-- Section 6: The Two Economies -->
+<h2>Exit Pump vs Compound</h2>
+<p>Mercenary capital enters ecosystems with no reason to accrue value - only to manipulate and farm. One model encourages exit pumps. The other encourages compounding.</p>
+
+<div class="diagram-container">
+    <div class="diagram-title">Economic Behavior Comparison</div>
+    <svg width="100%" height="380" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet">
+        <!-- Exit Pump Side -->
+        <text x="200" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#EF4444">EXIT PUMP</text>
+        <text x="200" y="50" text-anchor="middle" font-size="11" fill="#71717A">Goal: GET OUT</text>
+
+        <rect x="100" y="70" width="200" height="40" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+        <text x="200" y="95" text-anchor="middle" font-size="11">Accumulate (position)</text>
+
+        <line x1="200" y1="115" x2="200" y2="135" stroke="#EF4444" stroke-width="2"/>
+
+        <rect x="100" y="140" width="200" height="40" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+        <text x="200" y="165" text-anchor="middle" font-size="11">Coordinate (pump group)</text>
+
+        <line x1="200" y1="185" x2="200" y2="205" stroke="#EF4444" stroke-width="2"/>
+
+        <rect x="100" y="210" width="200" height="40" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+        <text x="200" y="235" text-anchor="middle" font-size="11">Pump (hype)</text>
+
+        <line x1="200" y1="255" x2="200" y2="275" stroke="#EF4444" stroke-width="2"/>
+
+        <rect x="100" y="280" width="200" height="40" rx="8" fill="#EF4444"/>
+        <text x="200" y="305" text-anchor="middle" font-size="11" fill="white" font-weight="600">EXIT (dump on retail)</text>
+
+        <text x="200" y="350" text-anchor="middle" font-size="11" fill="#71717A">Value created: NONE</text>
+        <text x="200" y="368" text-anchor="middle" font-size="10" fill="#71717A">(just redistribution)</text>
+
+        <!-- Divider -->
+        <line x1="400" y1="20" x2="400" y2="370" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8"/>
+
+        <!-- Compound Side -->
+        <text x="600" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#10B981">COMPOUND & TOKENIZE</text>
+        <text x="600" y="50" text-anchor="middle" font-size="11" fill="#71717A">Goal: STAY IN</text>
+
+        <rect x="500" y="70" width="200" height="40" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <text x="600" y="95" text-anchor="middle" font-size="11">Accumulate (LP + service)</text>
+
+        <line x1="600" y1="115" x2="600" y2="135" stroke="#10B981" stroke-width="2"/>
+
+        <rect x="500" y="140" width="200" height="40" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <text x="600" y="165" text-anchor="middle" font-size="11">Provide (value)</text>
+
+        <line x1="600" y1="185" x2="600" y2="205" stroke="#10B981" stroke-width="2"/>
+
+        <rect x="500" y="210" width="200" height="40" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <text x="600" y="235" text-anchor="middle" font-size="11">Earn fees (ETH)</text>
+
+        <line x1="600" y1="255" x2="600" y2="275" stroke="#10B981" stroke-width="2"/>
+
+        <rect x="500" y="280" width="200" height="40" rx="8" fill="#10B981"/>
+        <text x="600" y="305" text-anchor="middle" font-size="11" fill="white" font-weight="600">COMPOUND (reinvest)</text>
+
+        <!-- Loop back arrow -->
+        <path d="M705,300 Q750,300 750,175 Q750,90 700,90" stroke="#10B981" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+        <defs>
+            <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#10B981"/>
+            </marker>
+        </defs>
+
+        <text x="600" y="350" text-anchor="middle" font-size="11" fill="#065F46" font-weight="600">Value created: REAL</text>
+        <text x="600" y="368" text-anchor="middle" font-size="10" fill="#71717A">(service becomes yield)</text>
+    </svg>
+</div>
+
+<!-- Section 7: SIAH Implementation -->
+<h2>How SIAH Implements This</h2>
+<p>The Euler model is the economic primitive. SIAH is the implementation - where work becomes currency and generosity compounds.</p>
+
+<div class="diagram-container">
+    <div class="diagram-title">The Closed Loop: User Journey + Economic Layer</div>
+    <svg width="100%" height="400" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+        <defs>
+            <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                <path d="M0,0 L0,8 L10,4 z" fill="#7C3AED"/>
+            </marker>
+            <marker id="arrow-green-sm" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#10B981"/>
+            </marker>
+        </defs>
+
+        <!-- Economic Layer (top) -->
+        <text x="400" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#3B82F6">ECONOMIC LAYER (Euler Mechanism)</text>
+
+        <rect x="150" y="50" width="500" height="80" rx="12" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+
+        <!-- Fee input -->
+        <text x="200" y="75" text-anchor="middle" font-size="10" fill="#71717A">Every action</text>
+        <text x="200" y="90" text-anchor="middle" font-size="11" font-weight="600" fill="#3B82F6">FEE</text>
+
+        <line x1="250" y1="85" x2="290" y2="85" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+        <!-- Euler box -->
+        <rect x="300" y="60" width="200" height="50" rx="8" fill="white" stroke="#3B82F6" stroke-width="1"/>
+        <text x="400" y="82" text-anchor="middle" font-size="9" fill="#71717A">Euler_new = Euler_prev +</text>
+        <text x="400" y="98" text-anchor="middle" font-size="10" font-weight="600" fill="#3B82F6">(fee / total_LP)</text>
+
+        <line x1="510" y1="85" x2="550" y2="85" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+        <!-- Distribution -->
+        <text x="600" y="75" text-anchor="middle" font-size="10" fill="#71717A">98% returns</text>
+        <text x="600" y="90" text-anchor="middle" font-size="11" font-weight="600" fill="#10B981">DISTRIBUTE</text>
+
+        <!-- Connection arrows down -->
+        <line x1="200" y1="135" x2="200" y2="170" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4"/>
+        <line x1="600" y1="135" x2="600" y2="170" stroke="#A78BFA" stroke-width="2" stroke-dasharray="4"/>
+        <text x="400" y="160" text-anchor="middle" font-size="9" fill="#A78BFA">feeds</text>
+
+        <!-- User Layer (bottom) -->
+        <text x="400" y="195" text-anchor="middle" font-size="12" font-weight="700" fill="#7C3AED">USER LAYER (Your Journey)</text>
+
+        <!-- Circular flow -->
+        <circle cx="400" cy="290" r="85" fill="none" stroke="#E9D5FF" stroke-width="16"/>
+
+        <!-- Nodes -->
+        <circle cx="400" cy="205" r="28" fill="#7C3AED"/>
+        <text x="400" y="210" text-anchor="middle" font-size="11" fill="white" font-weight="600">TIP</text>
+
+        <circle cx="478" cy="240" r="28" fill="#7C3AED"/>
+        <text x="478" y="245" text-anchor="middle" font-size="11" fill="white" font-weight="600">VET</text>
+
+        <circle cx="485" cy="320" r="28" fill="#7C3AED"/>
+        <text x="485" y="325" text-anchor="middle" font-size="11" fill="white" font-weight="600">TASK</text>
+
+        <circle cx="400" cy="375" r="28" fill="#10B981"/>
+        <text x="400" y="380" text-anchor="middle" font-size="11" fill="white" font-weight="600">EARN</text>
+
+        <circle cx="315" cy="320" r="28" fill="#7C3AED"/>
+        <text x="315" y="325" text-anchor="middle" font-size="11" fill="white" font-weight="600">STAKE</text>
+
+        <circle cx="322" cy="240" r="28" fill="#7C3AED"/>
+        <text x="322" y="245" text-anchor="middle" font-size="11" fill="white" font-weight="600">WORK</text>
+
+        <!-- Flow arrows -->
+        <path d="M425,215 Q450,220 460,230" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M495,260 Q500,290 490,305" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M465,340 Q440,360 415,370" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M375,365 Q350,350 325,340" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M305,300 Q295,270 310,255" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M340,225 Q360,210 380,208" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+
+        <!-- Key insight -->
+        <rect x="550" y="350" width="220" height="45" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+        <text x="660" y="370" text-anchor="middle" font-size="10" fill="#065F46" font-weight="600">GENEROSITY COMPOUNDS</text>
+        <text x="660" y="385" text-anchor="middle" font-size="9" fill="#71717A">Tips raise YOUR score</text>
+    </svg>
+</div>
+
+<!-- Section 8: Summary -->
+<h2>Summary</h2>
+
+<div class="box box-green">
+    <div class="box-label">The Model</div>
+    <ul style="margin: 0; padding-left: 20px;">
+        <li><strong>Question:</strong> How do you encourage compounding accrued value?</li>
+        <li><strong>Answer:</strong> Euler counting + fee layer in hard cash</li>
+        <li><strong>Result:</strong> Democratized finance without corruption layer</li>
+        <li><strong>Property:</strong> Fairless - algorithm defines distribution</li>
+        <li><strong>Behavior:</strong> Compound & tokenize, not exit pump</li>
+    </ul>
+</div>
+
+<blockquote>
+    "We're not just building technology. We're building values into entities that may one day speak back."
+</blockquote>
+
+<!-- Footer -->
+<div class="footer">
+    <p>
+        Deep dive: <a href="./supply-chains.html">Supply Chain Models</a> |
+        Try it: <a href="https://t.me/SiahBot">t.me/SiahBot</a>
+    </p>
+</div>
+
+</body>
+</html>

@@ -4485,9 +4485,9 @@
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
 
-<!-- Background music - Moby God Moving (teaser mode) -->
+<!-- Background music (placeholder) -->
 <audio id="bg-music" preload="auto" loop>
-    <source src="moby-god-moving.mp3" type="audio/mpeg">
+    <source src="static/audio/placeholder.wav" type="audio/wav">
 </audio>
 
 <!-- Megaphone toggle (teaser mode - simple on/off) -->
@@ -4812,7 +4812,7 @@
                 </div>
             </div>
             <div class="system-desc">
-                <strong>The learning loop.</strong> SIAH reads your docs and answers questions 24/7. Corrections improve future answers. The oracle gets smarter with every interaction.
+                <strong>The learning loop.</strong> The Bonzi agent reads your docs and answers questions 24/7. Corrections improve future answers. The oracle gets smarter with every interaction.
             </div>
         </div>
 
@@ -6354,17 +6354,12 @@ document.getElementById('widget-symbol')?.addEventListener('input', function() {
     if (qrSymbol) qrSymbol.value = this.value;
 });
 
-// ===========================================
-// SECTION-BASED SOUNDTRACK
-// ===========================================
-// "Every generation hates something about the current generation. It was our punk song." - Ozzy
-//
-// ===========================================
-// TEASER MODE: Moby "God Moving" only
-// ===========================================
-// Simple megaphone toggle - one track, loops forever
-// When going live, swap back to full spatial audio system
-// ===========================================
+	// ===========================================
+	// AUDIO (Optional)
+	// ===========================================
+	// Public repo ships a tiny placeholder track only (no copyrighted music).
+	// If you self-host, swap in your own licensed audio and update <audio> sources.
+	// ===========================================
 
 const bgMusic = document.getElementById('bg-music');
 const soundToggle = document.getElementById('sound-toggle');
@@ -6407,7 +6402,7 @@ soundToggle.addEventListener('click', () => {
         bgMusic.volume = musicVolume;
         bgMusic.play().catch(e => console.log('Play blocked:', e));
         localStorage.setItem('bonzi_music_playing', 'true');
-        console.log('📢 Playing: Moby - God Moving Over the Face of the Waters');
+	        console.log('📢 Music enabled');
     } else {
         // Mute
         isMuted = true;

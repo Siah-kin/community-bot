@@ -1,0 +1,2 @@
+# Disable Jekyll so GitHub Pages publishes dotfolders like `.well-known/`.
+

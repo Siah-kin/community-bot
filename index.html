@@ -4188,15 +4188,21 @@
         .sponsor-logo {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .sponsor-logo img,
         .sponsor-logo svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             object-fit: contain;
             vertical-align: middle;
+            transition: transform 0.2s ease;
+        }
+
+        .sponsor-logo:hover img,
+        .sponsor-logo:hover svg {
+            transform: scale(1.1);
         }
 
         .footer-sponsor,
@@ -5312,7 +5318,7 @@
     <div class="footer-main">
         <span class="footer-sponsor"><span data-i18n="footer.sponsored">sponsored by</span>
             <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <svg width="20" height="20" viewBox="0 0 100 100">
+                <svg width="24" height="24" viewBox="0 0 100 100">
                     <rect width="100" height="100" fill="#111" rx="8"/>
                     <polygon points="50,12 50,50 22,50" fill="#E25555"/>
                     <polygon points="50,12 78,50 50,50" fill="#55B855"/>
@@ -5324,12 +5330,12 @@
         </span>
         <span class="footer-sep">·</span>
         <span class="footer-credit"><span data-i18n="footer.cofounder">by co-founder</span> <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <img src="defiants-logo.png" alt="Defiants" width="20" height="20">
+                <img src="defiants-logo.png" alt="Defiants" width="24" height="24">
                 Defiants
             </a></span>
         <span class="footer-sep">·</span>
         <span class="footer-support"><span data-i18n="footer.profits">profits fund</span> <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <img src="unidos-logo.png" alt="Unidos Projects" width="20" height="20">
+                <img src="unidos-logo.png" alt="Unidos Projects" width="24" height="24">
                 Unidos Projects
             </a></span>
     </div>

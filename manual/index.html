@@ -386,6 +386,7 @@
 
             <div class="sidebar-section">
                 <h4 data-i18n="sidebar.farmers">For Farmers</h4>
+                <a href="#your-journey" data-i18n="sidebar.journey">Your Journey</a>
                 <a href="#farmers" data-i18n="sidebar.quickstart">Quick Start</a>
                 <a href="#commands" data-i18n="sidebar.commands">Commands</a>
                 <a href="#ask-earn" data-i18n="sidebar.askearn">Ask & Earn</a>
@@ -489,6 +490,33 @@
             <h2 id="farmers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M7.97 16L5 19l7 2 7-2-2.97-3H7.97zM12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17h8v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/></svg></span><span data-i18n="farmers.title">For Farmers</span></h2>
             <p class="docs-intro" data-i18n="farmers.intro">Earn ETH through genuine contributions. Sybil-protected - only humans earn.</p>
 
+            <h3 id="your-journey" data-i18n="farmers.journey.title">Your Journey</h3>
+            <p data-i18n="farmers.journey.intro">Most platforms treat contributors like numbers. You grind raids, submit screenshots, wait for a human reviewer who doesn't know you. Approved or rejected, you're still nobody. Your work doesn't follow you anywhere.</p>
+
+            <p data-i18n="farmers.journey.different">Bonzi works differently. Every action you take builds a profile that's yours. Not a leaderboard rank. Not a badge. A portable track record of real work that any community can verify.</p>
+
+            <p data-i18n="farmers.journey.tiers_intro"><strong>You start as a Rookie.</strong> Everyone does. As you contribute, your profile grows.</p>
+
+            <table class="command-table">
+                <thead>
+                    <tr><th data-i18n="farmers.journey.th1">Tier</th><th data-i18n="farmers.journey.th2">What it means</th><th data-i18n="farmers.journey.th3">How you get there</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Rookie</strong></td><td data-i18n="farmers.journey.rookie">New contributor. Every submission reviewed.</td><td data-i18n="farmers.journey.rookie.how">Link your X account and wallet. Show up.</td></tr>
+                    <tr><td><strong>Raider</strong></td><td data-i18n="farmers.journey.raider">Consistent quality. Community vouches for you.</td><td data-i18n="farmers.journey.raider.how">Keep contributing. Build a history of good work.</td></tr>
+                    <tr><td><strong>Veteran</strong></td><td data-i18n="farmers.journey.veteran">Trusted voice. Most work approved on sight.</td><td data-i18n="farmers.journey.veteran.how">Sustained quality over time. Help others succeed.</td></tr>
+                    <tr><td><strong>Assassin</strong></td><td data-i18n="farmers.journey.assassin">Top tier. Your track record speaks for itself.</td><td data-i18n="farmers.journey.assassin.how">Consistent excellence. The system trusts your judgment.</td></tr>
+                </tbody>
+            </table>
+
+            <p data-i18n="farmers.journey.how_it_works"><strong>How it works:</strong> The system watches what you do, not what you say. Your posting patterns, your engagement quality, your consistency over weeks and months. Behavioral signals that can't be faked. A bought account looks different from a real one. A copy-paste raider looks different from someone who writes original content. The AI sees the difference.</p>
+
+            <p data-i18n="farmers.journey.portable"><strong>Your reputation is portable.</strong> When you move to another community, your track record follows you. Stored cryptographically. Verifiable by anyone. Owned by you. No platform can take it away.</p>
+
+            <div class="highlight-box">
+                <strong data-i18n="farmers.journey.point">The point:</strong> <span data-i18n="farmers.journey.point.desc">Other platforms make you prove yourself from zero every time. Here, your work compounds. The more you contribute, the faster you're trusted, the less friction you face. Do the work once. Carry the proof forever.</span>
+            </div>
+
             <h3 data-i18n="farmers.quickstart.title">Quick Start</h3>
             <ol>
                 <li data-i18n="farmers.quickstart.1">Join a community with Bonzi active</li>
@@ -535,11 +563,13 @@
             <h3 id="raid-earn" data-i18n="farmers.raidearn.title">Raid & Earn</h3>
             <p data-i18n="farmers.raidearn.desc">Auto-verified X engagement. No screenshot hell.</p>
             <ol>
-                <li data-i18n="farmers.raidearn.1">Check active raids via /raid</li>
-                <li data-i18n="farmers.raidearn.2">Post your tweet with required content</li>
-                <li data-i18n="farmers.raidearn.3">Bot verifies: tweet exists, original content, account quality</li>
-                <li data-i18n="farmers.raidearn.4">Points awarded automatically</li>
+                <li data-i18n="farmers.raidearn.1">Link your X account once</li>
+                <li data-i18n="farmers.raidearn.2">Post about the project on X. Engage with KOLs. Start conversations.</li>
+                <li data-i18n="farmers.raidearn.3">The system detects your posts automatically. No uploads needed.</li>
+                <li data-i18n="farmers.raidearn.4">AI evaluates quality: original content scores higher than reposts</li>
+                <li data-i18n="farmers.raidearn.5">Points awarded based on your tier. Higher trust = faster approvals.</li>
             </ol>
+            <p data-i18n="farmers.raidearn.quality">Quality matters more than volume. One thoughtful reply under a KOL's tweet is worth more than ten copy-paste threads. The system knows the difference.</p>
 
             <h3 id="tasks" data-i18n="farmers.tasks.title">Task System</h3>
             <p data-i18n="farmers.tasks.desc">AI-vetted quests with ETH rewards. Complete tasks, earn from the community pool.</p>
@@ -789,7 +819,7 @@
                 "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.contact": "contact",
                 "sidebar.who": "Who are you?", "sidebar.branders": "For Branders", "sidebar.farmers": "For Farmers", "sidebar.investors": "For Investors", "sidebar.stakers": "For Stakers", "sidebar.developers": "For Developers", "sidebar.agents": "For AI Agents", "sidebar.help": "Help",
                 "sidebar.launch": "Launch Your Token", "sidebar.wizard": "AI Wizard Setup", "sidebar.supervision": "AI Supervision", "sidebar.tickets": "Ticket Tool",
-                "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Raid & Earn", "sidebar.tasks": "Task System", "sidebar.claim": "Claim ETH",
+                "sidebar.journey": "Your Journey", "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Raid & Earn", "sidebar.tasks": "Task System", "sidebar.claim": "Claim ETH",
                 "sidebar.howtobuy": "How to Buy", "sidebar.tokenomics": "Token Economics",
                 "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Self-Compounding", "sidebar.metrics": "3-Tier Metrics",
                 "sidebar.widgets": "Widget Library", "sidebar.selfhost": "Self-Host Setup", "sidebar.api": "API Reference",
@@ -818,6 +848,18 @@
                 "branders.tickets.1": "User sends /ticket [issue]", "branders.tickets.2": "Team sees ticket in admin dashboard", "branders.tickets.3": "Assign to team member, track status, close loop",
                 // Farmers
                 "farmers.title": "For Farmers", "farmers.intro": "Earn ETH through genuine contributions. Sybil-protected - only humans earn.",
+                "farmers.journey.title": "Your Journey",
+                "farmers.journey.intro": "Most platforms treat contributors like numbers. You grind raids, submit screenshots, wait for a human reviewer who doesn't know you. Approved or rejected, you're still nobody. Your work doesn't follow you anywhere.",
+                "farmers.journey.different": "Bonzi works differently. Every action you take builds a profile that's yours. Not a leaderboard rank. Not a badge. A portable track record of real work that any community can verify.",
+                "farmers.journey.tiers_intro": "You start as a Rookie. Everyone does. As you contribute, your profile grows.",
+                "farmers.journey.th1": "Tier", "farmers.journey.th2": "What it means", "farmers.journey.th3": "How you get there",
+                "farmers.journey.rookie": "New contributor. Every submission reviewed.", "farmers.journey.rookie.how": "Link your X account and wallet. Show up.",
+                "farmers.journey.raider": "Consistent quality. Community vouches for you.", "farmers.journey.raider.how": "Keep contributing. Build a history of good work.",
+                "farmers.journey.veteran": "Trusted voice. Most work approved on sight.", "farmers.journey.veteran.how": "Sustained quality over time. Help others succeed.",
+                "farmers.journey.assassin": "Top tier. Your track record speaks for itself.", "farmers.journey.assassin.how": "Consistent excellence. The system trusts your judgment.",
+                "farmers.journey.how_it_works": "How it works: The system watches what you do, not what you say. Your posting patterns, your engagement quality, your consistency over weeks and months. Behavioral signals that can't be faked. A bought account looks different from a real one. A copy-paste raider looks different from someone who writes original content. The AI sees the difference.",
+                "farmers.journey.portable": "Your reputation is portable. When you move to another community, your track record follows you. Stored cryptographically. Verifiable by anyone. Owned by you. No platform can take it away.",
+                "farmers.journey.point": "The point:", "farmers.journey.point.desc": "Other platforms make you prove yourself from zero every time. Here, your work compounds. The more you contribute, the faster you're trusted, the less friction you face. Do the work once. Carry the proof forever.",
                 "farmers.quickstart.title": "Quick Start", "farmers.quickstart.1": "Join a community with Bonzi active", "farmers.quickstart.2": "Send /start to open the dashboard",
                 "farmers.quickstart.3": "Start earning: ask questions, report bugs, join raids", "farmers.quickstart.4": "Hit 100 points → claim ETH",
                 "farmers.commands.title": "Commands", "farmers.commands.th1": "Command", "farmers.commands.th2": "Description",
@@ -832,8 +874,12 @@
                 "farmers.bugearn.title": "Bug & Earn", "farmers.bugearn.desc": "Report bugs, get DAO points. Use /bug followed by description.",
                 "farmers.bugearn.verified": "+10 pts for verified bugs", "farmers.bugearn.feature": "+5 pts for feature suggestions that get implemented", "farmers.bugearn.invalid": "Invalid reports get 0 pts (no penalty)",
                 "farmers.raidearn.title": "Raid & Earn", "farmers.raidearn.desc": "Auto-verified X engagement. No screenshot hell.",
-                "farmers.raidearn.1": "Check active raids via /raid", "farmers.raidearn.2": "Post your tweet with required content",
-                "farmers.raidearn.3": "Bot verifies: tweet exists, original content, account quality", "farmers.raidearn.4": "Points awarded automatically",
+                "farmers.raidearn.1": "Link your X account once",
+                "farmers.raidearn.2": "Post about the project on X. Engage with KOLs. Start conversations.",
+                "farmers.raidearn.3": "The system detects your posts automatically. No uploads needed.",
+                "farmers.raidearn.4": "AI evaluates quality: original content scores higher than reposts",
+                "farmers.raidearn.5": "Points awarded based on your tier. Higher trust = faster approvals.",
+                "farmers.raidearn.quality": "Quality matters more than volume. One thoughtful reply under a KOL's tweet is worth more than ten copy-paste threads. The system knows the difference.",
                 "farmers.tasks.title": "Task System", "farmers.tasks.desc": "AI-vetted quests with ETH rewards. Complete tasks, earn from the community pool.",
                 "farmers.tasks.1": "View available tasks in dashboard", "farmers.tasks.2": "Submit proof of completion", "farmers.tasks.3": "AI verifies, points awarded",
                 "farmers.claim.title": "Claim ETH", "farmers.claim.1": "Earn points:", "farmers.claim.1.desc": "100+ required",

@@ -6,7 +6,6 @@
     <title>Stake BONZI - DAO Member Access</title>
     <meta name="description" content="Stake your BONZI tokens to earn ETH rewards and DAO points. Mobile-friendly, MEV-protected.">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <link rel="stylesheet" href="css/nav.css">
     <script src="js/nav-loader.js" defer></script>
@@ -21,13 +20,13 @@
             --white: #FFFFFF;
             --black: #0A0A0A;
             --gray: #71717A;
-            --green: #27ae60;
-            --red: #e74c3c;
+            --green: #10B981;
+            --red: #DC2626;
             --gold: #D4AF37;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #0A0A0A;
             color: #FAFAFA;
             min-height: 100vh;
@@ -40,7 +39,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -48,7 +47,7 @@
         header {
             text-align: center;
             margin-bottom: 2rem;
-            padding-top: 1rem;
+            padding: 160px 40px 60px;
         }
 
         .logo {
@@ -58,17 +57,20 @@
         }
 
         h1 {
-            font-size: 1.75rem;
+            font-size: 56px;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--purple-light), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            color: var(--purple-light);
         }
 
         .subtitle {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 20px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         /* Gate overlay */
@@ -105,7 +107,7 @@
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 12px;
+            border-radius: 0;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
@@ -132,8 +134,8 @@
             gap: 0.5rem;
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background: rgba(124, 58, 237, 0.08);
-            border-radius: 12px;
+            background: #1F1F23;
+            border-radius: 0;
         }
 
         .stat {
@@ -155,9 +157,9 @@
 
         /* Main card */
         .stake-card {
-            background: rgba(124, 58, 237, 0.05);
+            background: #1F1F23;
             border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -202,7 +204,7 @@
             padding-right: 4rem;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 12px;
+            border-radius: 0;
             color: white;
             font-size: 1.1rem;
             outline: none;
@@ -226,7 +228,7 @@
             color: white;
             border: none;
             padding: 0.4rem 0.8rem;
-            border-radius: 6px;
+            border-radius: 0;
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
@@ -236,7 +238,7 @@
         .action-btn {
             width: 100%;
             padding: 1rem;
-            border-radius: 12px;
+            border-radius: 0;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -273,7 +275,7 @@
             padding: 1rem;
             background: rgba(16, 185, 129, 0.1);
             border-left: 3px solid var(--green);
-            border-radius: 0 8px 8px 0;
+            border-radius: 0;
             margin-bottom: 1rem;
         }
 
@@ -290,9 +292,9 @@
 
         /* Rewards section */
         .rewards-card {
-            background: rgba(124, 58, 237, 0.05);
+            background: #1F1F23;
             border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -323,7 +325,7 @@
         .points-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
             border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -339,7 +341,7 @@
             background: linear-gradient(135deg, var(--purple), var(--purple-dark));
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 0;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -354,7 +356,7 @@
 
         .widget-embed {
             margin-top: 1rem;
-            border-radius: 12px;
+            border-radius: 0;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.2);
         }
@@ -375,7 +377,7 @@
             background: transparent;
             color: var(--purple-light);
             border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 8px;
+            border-radius: 0;
             font-size: 0.9rem;
             cursor: pointer;
             margin-top: 0.75rem;
@@ -389,7 +391,7 @@
         .vault-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
             border: 1px solid rgba(124, 58, 237, 0.4);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 1.5rem;
             margin-bottom: 1rem;
             position: relative;
@@ -428,7 +430,7 @@
             font-size: 0.65rem;
             font-weight: 700;
             padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            border-radius: 0;
             letter-spacing: 0.5px;
         }
 
@@ -462,7 +464,7 @@
             margin-bottom: 1rem;
             padding: 1rem;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
+            border-radius: 0;
         }
 
         .vault-stat {
@@ -486,7 +488,7 @@
         .vault-position {
             background: rgba(124, 58, 237, 0.1);
             border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 12px;
+            border-radius: 0;
             padding: 1rem;
             margin-bottom: 1rem;
         }
@@ -534,7 +536,7 @@
             color: var(--gray);
             padding: 0.75rem;
             background: rgba(124, 58, 237, 0.05);
-            border-radius: 8px;
+            border-radius: 0;
         }
 
         .vault-info svg {
@@ -553,7 +555,7 @@
             margin: 1.5rem 0;
             padding: 1.5rem;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
+            border-radius: 0;
         }
 
         .flywheel-label {
@@ -702,7 +704,7 @@
         /* Status messages */
         .status {
             padding: 0.75rem 1rem;
-            border-radius: 8px;
+            border-radius: 0;
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
@@ -736,12 +738,18 @@
                 padding: 2rem;
             }
 
-            h1 {
-                font-size: 2rem;
-            }
-
             .stake-card, .rewards-card, .points-card {
                 padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            header {
+                padding: 120px 24px 40px;
             }
         }
 

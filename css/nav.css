@@ -110,7 +110,7 @@ body.dark-mode .nav-divider {
 .nav-lang-select {
     background: transparent;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
+    border-radius: 0;
     padding: 6px 10px;
     font-size: 12px;
     font-weight: 600;
@@ -130,7 +130,7 @@ body.dark-mode .nav-lang-select {
     cursor: pointer;
     display: flex;
     align-items: center;
-    border-radius: 6px;
+    border-radius: 0;
 }
 
 .theme-toggle svg {
@@ -154,7 +154,7 @@ body.dark-mode .theme-toggle svg {
 .nav-connect-btn {
     background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
     border: none;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 600;

@@ -21,6 +21,8 @@
             --gray: #71717A;
             --gray-light: #F4F4F5;
             --gold: #D4AF37;
+            --red: #DC2626;
+            --green: #10B981;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -108,7 +110,7 @@
         .nav-lang-select {
             background: transparent;
             border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 6px;
+            border-radius: 0;
             padding: 6px 10px;
             font-size: 12px;
             color: rgba(0, 0, 0, 0.7);
@@ -121,7 +123,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            border-radius: 6px;
+            border-radius: 0;
         }
         .theme-toggle:hover { background: rgba(0, 0, 0, 0.05); }
         .theme-toggle svg { width: 18px; height: 18px; stroke: rgba(0, 0, 0, 0.7); }
@@ -143,7 +145,7 @@
         .nav-connect-btn {
             background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
             border: none;
-            border-radius: 8px;
+            border-radius: 0;
             padding: 10px 20px;
             font-size: 14px;
             font-weight: 600;
@@ -154,18 +156,24 @@
         .nav-connect-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3); }
 
         .hero {
-            padding: 140px 40px 40px;
+            padding: 160px 40px 60px;
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .hero h1 {
-            font-size: 48px;
+            font-size: 56px;
             margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
         }
         .hero p {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--gray);
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         /* Tier badges */
@@ -183,7 +191,7 @@
             font-size: 11px;
             font-weight: 700;
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -213,7 +221,7 @@
         }
         .metric-card {
             background: var(--gray-light);
-            border-radius: 4px;
+            border-radius: 0;
             padding: 16px 18px;
             position: relative;
             border: 1px solid rgba(0,0,0,0.04);
@@ -232,7 +240,7 @@
         .badge {
             font-size: 8px;
             padding: 2px 5px;
-            border-radius: 2px;
+            border-radius: 0;
             font-weight: 500;
             letter-spacing: 0.3px;
         }
@@ -288,7 +296,7 @@
             z-index: 10;
             background: var(--white);
             border: 2px solid var(--purple);
-            border-radius: 16px;
+            border-radius: 0;
             padding: 32px 48px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
@@ -313,7 +321,7 @@
             padding: 12px 24px;
             font-size: 14px;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 0;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
         }
@@ -355,7 +363,7 @@
         }
         body.dark-mode .hero h1 { color: var(--white); }
         body.dark-mode .metric-card {
-            background: #18181B;
+            background: #1F1F23;
             border: 1px solid rgba(255,255,255,0.05);
         }
         body.dark-mode .metric-item {
@@ -376,7 +384,7 @@
 
         @media (max-width: 768px) {
             .hero { padding: 120px 20px 30px; }
-            .hero h1 { font-size: 32px; }
+            .hero h1 { font-size: 36px; }
             .dashboard { padding: 0 20px 60px; }
             .tier-header { padding: 0 20px; flex-wrap: wrap; }
             .tier-requirement { margin-left: 0; margin-top: 8px; width: 100%; }
@@ -512,7 +520,7 @@
         .dune-embed {
             margin: 16px 0 24px;
             border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 4px;
+            border-radius: 0;
             overflow: hidden;
         }
         .dune-embed iframe {
@@ -581,12 +589,12 @@
         }
         .three-box {
             padding: 14px 16px;
-            border-radius: 3px;
+            border-radius: 0;
             border-left: 3px solid;
             background: var(--gray-light);
         }
-        body.dark-mode .three-box { background: #18181B; }
-        .three-box.technical { border-left-color: #3B82F6; }
+        body.dark-mode .three-box { background: #1F1F23; }
+        .three-box.technical { border-left-color: var(--purple); }
         .three-box.feature { border-left-color: var(--purple); }
         .three-box.advantage { border-left-color: #10B981; }
         .three-box .box-label {
@@ -597,7 +605,7 @@
             margin-bottom: 6px;
             opacity: 0.8;
         }
-        .three-box.technical .box-label { color: #3B82F6; }
+        .three-box.technical .box-label { color: var(--purple); }
         .three-box.feature .box-label { color: var(--purple); }
         .three-box.advantage .box-label { color: #10B981; }
         .three-box h4 {
@@ -618,7 +626,7 @@
             gap: 1px;
             margin: 24px 0;
             background: rgba(0,0,0,0.06);
-            border-radius: 4px;
+            border-radius: 0;
             overflow: hidden;
         }
         body.dark-mode .stats-comparison {
@@ -633,7 +641,7 @@
             background: var(--gray-light);
         }
         body.dark-mode .stats-comparison .stat {
-            background: #18181B;
+            background: #1F1F23;
         }
         .stats-comparison .stat-value {
             font-size: 20px;
@@ -656,7 +664,7 @@
             background: var(--gray-light);
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-left: 3px solid #10B981;
-            border-radius: 4px;
+            border-radius: 0;
             padding: 20px 24px;
             margin: 32px 0;
         }
@@ -707,7 +715,7 @@
             gap: 1px;
             margin-top: 16px;
             background: rgba(0,0,0,0.06);
-            border-radius: 3px;
+            border-radius: 0;
             overflow: hidden;
         }
         body.dark-mode .roi-grid {
@@ -747,7 +755,7 @@
             padding: 16px;
             background: var(--gray-light);
             border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 4px;
+            border-radius: 0;
         }
         body.dark-mode .case-study {
             background: rgba(0,0,0,0.3);
@@ -801,7 +809,7 @@
             padding: 20px;
             background: var(--gray-light);
             border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 4px;
+            border-radius: 0;
         }
         body.dark-mode .verify-widget {
             background: #18181B;
@@ -833,7 +841,7 @@
             height: 20px;
             background: var(--purple);
             color: white;
-            border-radius: 3px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -861,7 +869,7 @@
         .step-content code {
             background: rgba(139, 92, 246, 0.1);
             padding: 1px 4px;
-            border-radius: 2px;
+            border-radius: 0;
             font-family: 'Space Mono', monospace;
             font-size: 10px;
         }
@@ -870,7 +878,7 @@
             padding: 12px;
             background: #111118;
             color: #10B981;
-            border-radius: 3px;
+            border-radius: 0;
             font-family: 'Space Mono', monospace;
             font-size: 10px;
             line-height: 1.5;
@@ -893,7 +901,7 @@
             text-decoration: none;
             padding: 8px 16px;
             border: 1px solid var(--gray-light);
-            border-radius: 6px;
+            border-radius: 0;
             font-family: 'Space Mono', monospace;
             transition: all 0.2s;
         }
@@ -959,7 +967,7 @@
             margin-bottom: 24px;
             padding: 20px 24px;
             background: var(--bg-secondary);
-            border-radius: 12px;
+            border-radius: 0;
         }
         .intro-block h3 {
             font-size: 16px;
@@ -1028,7 +1036,7 @@
         .case-study-box {
             background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%);
             border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 12px;
+            border-radius: 0;
             padding: 24px;
             margin: 24px 0;
         }
@@ -1044,7 +1052,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 4px 10px;
-            border-radius: 4px;
+            border-radius: 0;
             margin-bottom: 8px;
         }
         .case-study-header h3 {
@@ -1131,7 +1139,7 @@
             background: #1a1a1a;
             color: white;
             padding: 12px 16px;
-            border-radius: 8px;
+            border-radius: 0;
             font-size: 13px;
             font-weight: 400;
             line-height: 1.5;
@@ -1154,7 +1162,7 @@
         /* Updates Card */
         .updates-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 12px;
+            border-radius: 0;
             padding: 24px;
             margin: 32px 0;
             text-align: center;
@@ -1177,7 +1185,7 @@
             background: white;
             color: #1a1a1a;
             padding: 10px 20px;
-            border-radius: 24px;
+            border-radius: 0;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
@@ -2385,60 +2393,31 @@
             .catch(err => console.log('Metrics JSON not loaded:', err));
     </script>
 
-    <footer style="background: var(--gray-light); padding: 32px 24px; margin-top: 48px; text-align: center; font-size: 13px; border-top: 1px solid rgba(0,0,0,0.08);">
-        <style>
-            body.dark-mode footer { background: #18181B; border-top-color: rgba(255,255,255,0.08); }
-            footer a { color: var(--purple); text-decoration: none; }
-            footer a:hover { text-decoration: underline; }
-            .footer-main { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px; margin-bottom: 12px; }
-            .footer-sep { opacity: 0.4; }
-            .sponsor-logo { display: inline-flex; align-items: center; gap: 6px; }
-            .sponsor-logo img, .sponsor-logo svg { vertical-align: middle; }
-            .footer-social { margin-bottom: 12px; }
-            .footer-social a { display: inline-flex; align-items: center; gap: 6px; color: var(--text); opacity: 0.8; }
-            .footer-social a:hover { opacity: 1; color: var(--purple); }
-            .footer-data { margin-bottom: 12px; opacity: 0.7; font-size: 11px; }
-            .footer-contracts { margin-bottom: 12px; font-size: 11px; }
-            .footer-contracts a { margin: 0 8px; opacity: 0.8; }
-            .footer-legal { opacity: 0.6; font-size: 11px; }
-        </style>
-
-        <div class="footer-social">
-            <a href="https://x.com/Bonzi_vista" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @bonzi_vista
-            </a>
-        </div>
-
-        <div class="footer-main">
-            <span>sponsored by
-                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                    <svg width="16" height="16" viewBox="0 0 100 100">
-                        <rect width="100" height="100" fill="#111" rx="8"/>
-                        <polygon points="50,12 50,50 22,50" fill="#E25555"/>
-                        <polygon points="50,12 78,50 50,50" fill="#55B855"/>
-                        <polygon points="22,50 50,88 50,50" fill="#4477CC"/>
-                        <polygon points="78,50 50,88 50,50" fill="#CCBB44"/>
-                    </svg>
+    <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+            <span style="color: #71717A;">sponsored by
+                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
                     Ethervista
                 </a>
             </span>
-            <span class="footer-sep">·</span>
-            <span>by co-founder <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">Defiants</a></span>
-            <span class="footer-sep">·</span>
-            <span>profits fund <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">Unidos Projects</a></span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">by co-founder
+                <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="../defiants-logo.png" alt="Defiants" width="16" height="16" onerror="this.style.display='none'">
+                    Defiants
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">profits fund
+                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="../unidos-logo.png" alt="Unidos Projects" width="16" height="16" onerror="this.style.display='none'">
+                    Unidos Projects
+                </a>
+            </span>
         </div>
-
-        <div class="footer-data">Data from Dune Analytics · Verified on-chain</div>
-
-        <div class="footer-contracts">
-            <a href="https://etherscan.io/token/0x07d1718fF05a8C53C8F05aDaEd57C0d4f29b4a21" target="_blank" rel="noopener noreferrer">VISTA Contract</a>
-            <span class="footer-sep">·</span>
-            <a href="https://etherscan.io/token/0x9C9879de87a5BfC1E07Dc12Ed26f2F4f8D2f1965" target="_blank" rel="noopener noreferrer">BONZI Contract</a>
-        </div>
-
-        <div class="footer-legal">
-            open source · mit license · <a href="../privacy.html">privacy policy</a>
+        <div style="font-size: 12px; color: #71717A;">
+            open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
         </div>
     </footer>
 </body>

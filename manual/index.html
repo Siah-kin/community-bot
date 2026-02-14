@@ -511,7 +511,7 @@
                 <li><strong data-i18n="branders.launch.1">Go to Etherfun:</strong> <span data-i18n="branders.launch.1.desc">Visit etherfun.app</span></li>
                 <li><strong data-i18n="branders.launch.2">Configure token:</strong> <span data-i18n="branders.launch.2.desc">Set name, symbol, and fee structure</span></li>
                 <li><strong data-i18n="branders.launch.3">Sign transaction:</strong> <span data-i18n="branders.launch.3.desc">~$0.05 gas on Ethereum</span></li>
-                <li><strong data-i18n="branders.launch.4">Bot auto-deploys:</strong> <span data-i18n="branders.launch.4.desc">Bonzi is automatically configured for your token</span></li>
+                <li><strong data-i18n="branders.launch.4">Connect bot:</strong> <span data-i18n="branders.launch.4.desc">Add Bonzi to your Telegram group and configure via /admin</span></li>
                 <li><strong data-i18n="branders.launch.5">Share:</strong> <span data-i18n="branders.launch.5.desc">Your community can now buy, stake, and earn</span></li>
             </ol>
 
@@ -550,20 +550,7 @@
             <p class="ui-mockup-caption">Upload PDFs, markdown, or CSV. Auto-indexed into the AI knowledge base.</p>
 
             <h4>Personality & Tone</h4>
-            <p>Configure how the AI communicates with your community.</p>
-            <table class="command-table">
-                <thead>
-                    <tr><th>Setting</th><th>Options</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Style</strong></td><td>Friendly / Professional / Concise / Technical</td></tr>
-                    <tr><td><strong>Intensity</strong></td><td>0 (Calm) to 3 (Wild)</td></tr>
-                    <tr><td><strong>Quality Mode</strong></td><td>Auto / Fast / Balanced / Detailed</td></tr>
-                    <tr><td><strong>Rate Limit</strong></td><td>10 / 20 / 50 questions per hour</td></tr>
-                    <tr><td><strong>Catchphrases</strong></td><td>Custom phrases the AI uses naturally</td></tr>
-                    <tr><td><strong>Forbidden Terms</strong></td><td>Words the AI will never say</td></tr>
-                </tbody>
-            </table>
+            <p>The AI adapts to your community's uploaded knowledge base. Answers reflect your docs, not generic responses.</p>
 
             <h3 id="dashboard" data-i18n="branders.dashboard.title">Admin Dashboard</h3>
             <p>Full control center for your community. Access via /admin in DM with the bot.</p>
@@ -592,10 +579,8 @@
 
             <h4>Analytics</h4>
             <ul>
-                <li><strong>Knowledge Gaps:</strong> Auto-detected topics where users are confused. Click to add an FAQ.</li>
-                <li><strong>Trending Confusion:</strong> 24h spike detection. See what's suddenly unclear.</li>
-                <li><strong>Top Contributors:</strong> Impact scoring across all activities.</li>
-                <li><strong>Live Pulse:</strong> Auto-refreshing activity dashboard (60s intervals, 1hr max).</li>
+                <li><strong>Knowledge Gaps:</strong> Auto-detected topics where users ask questions the bot can't answer.</li>
+                <li><strong>Top Contributors:</strong> Ranked by cooperation score across all activities.</li>
                 <li><strong>Audit Log:</strong> Every admin action tracked. Uploads, setting changes, resets.</li>
             </ul>
 
@@ -895,18 +880,8 @@
                 </tbody>
             </table>
 
-            <h4 data-i18n="farmers.tiers_title">Points by Tier</h4>
-            <table class="command-table">
-                <thead>
-                    <tr><th data-i18n="farmers.col_tier">Your Tier</th><th data-i18n="farmers.col_base_points">Base Points</th><th data-i18n="farmers.col_review_speed">Review Speed</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Rookie</strong></td><td>5-15 pts</td><td data-i18n="farmers.manual_review">Manual review (every submission)</td></tr>
-                    <tr><td><strong>Raider</strong></td><td>10-30 pts</td><td data-i18n="farmers.standard_review">Standard queue (12-24h)</td></tr>
-                    <tr><td><strong>Veteran</strong></td><td>25-50 pts</td><td data-i18n="farmers.fast_track">Fast-track (0-4h)</td></tr>
-                    <tr><td><strong>Assassin</strong></td><td>50-100 pts</td><td data-i18n="farmers.auto_approve">Auto-approved (instant)</td></tr>
-                </tbody>
-            </table>
+            <h4 data-i18n="farmers.tiers_title">Review Speed</h4>
+            <p>Higher cooperation scores mean faster reviews. New accounts go through manual review. Proven contributors get auto-approved.</p>
 
             <div class="highlight-box">
                 <strong>Quality over volume.</strong> <span data-i18n="farmers.quality_insight">A single reply with genuine engagement scores higher than ten copy-paste threads. Original analysis earns 2-3x more than reposts. The system rewards authentic community builders, not broadcast spam.</span>
@@ -987,7 +962,7 @@
             </div>
 
             <h3 id="leaderboard" data-i18n="farmers.leaderboard.title">Leaderboard</h3>
-            <p>Real-time reputation across every activity. Seven views, one ranking.</p>
+            <p>Real-time reputation across every activity. Four tabs, one ranking.</p>
 
             <div class="ui-mockup">
                 <div class="ui-mockup-header">
@@ -1015,7 +990,7 @@
                     </div>
                 </div>
             </div>
-            <p class="ui-mockup-caption">Seven views. One reputation. Your rank reflects real contribution across every activity.</p>
+            <p class="ui-mockup-caption">Four tabs. One reputation. Rank reflects real contribution.</p>
 
             <h4>Categories</h4>
             <ul>
@@ -1098,21 +1073,8 @@
                 <li><strong>Earn:</strong> Points awarded directly to your account</li>
             </ol>
 
-            <h4>Tier Unlock</h4>
-            <table class="command-table">
-                <thead>
-                    <tr><th>Tier</th><th>Task Difficulty</th><th>Max Reward</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Rookie</strong></td><td>Simple (social engagement)</td><td>15 pts</td></tr>
-                    <tr><td><strong>Raider</strong></td><td>Moderate (content, testing)</td><td>50 pts</td></tr>
-                    <tr><td><strong>Veteran</strong></td><td>Complex (design, technical)</td><td>150 pts</td></tr>
-                    <tr><td><strong>Assassin</strong></td><td>Strategic (leadership, events)</td><td>300 pts</td></tr>
-                </tbody>
-            </table>
-
             <div class="highlight-box">
-                <strong>Higher tier = harder tasks = bigger rewards.</strong> Rookies start with simple tasks. Assassins get access to high-value assignments. Progressive difficulty keeps everyone earning.
+                <strong>Start simple, grow into bigger tasks.</strong> New contributors begin with social engagement tasks. Higher cooperation scores unlock more complex assignments with bigger rewards.
             </div>
 
             <h3 id="claim" data-i18n="farmers.claim.title">Claim ETH</h3>
@@ -1187,7 +1149,7 @@
             <p class="ui-mockup-caption">Your wallet is encrypted at rest. Only you can see it.</p>
 
             <div class="highlight-box">
-                Your wallet address is encrypted with AES-256 and isolated per user. Not even admins can read it. WalletConnect supported for mobile wallets.
+                Your wallet address is encrypted and isolated per user. Not even admins can read it. WalletConnect supported for mobile wallets.
             </div>
 
             <!-- ===================== BONZI HOLDERS ===================== -->
@@ -1354,9 +1316,9 @@
                 <li><strong data-i18n="developers.widgets.price">Price Chart:</strong> <span data-i18n="developers.widgets.price.desc">Embedded price history</span></li>
             </ul>
 
-            <pre><code>&lt;!-- Basic Buy Widget --&gt;
-&lt;script src="https://bonzivista.org/widget/buy.js"&gt;&lt;/script&gt;
-&lt;div data-bonzi-buy token="0x..."&gt;&lt;/div&gt;</code></pre>
+            <pre><code>&lt;!-- Embed Widget --&gt;
+&lt;script src="https://bonzivista.org/widget/embed.js"&gt;&lt;/script&gt;
+&lt;div data-bonzi-widget token="0x..."&gt;&lt;/div&gt;</code></pre>
 
             <h3 id="self-host" data-i18n="developers.selfhost.title">Self-Host Setup</h3>
             <ol>
@@ -1376,13 +1338,13 @@
             <p data-i18n="agents.why.desc">SIAH is <strong>community management, codified</strong>. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.</p>
 
             <h3 id="vetter">Wallet Vetter (Live)</h3>
-            <p>Check any Ethereum wallet's trust score using SIAH's multi-oracle system. 8 independent signals aggregated into one anti-gameable tier.</p>
+            <p>Check any Ethereum wallet's trust score using SIAH's multi-oracle system. 13 signals aggregated into one anti-gameable tier.</p>
 
             <div class="highlight-box" style="border-left-color: var(--green);">
                 <strong>3 Ways to Use:</strong>
                 <ul style="margin-top: 8px; margin-left: 20px;">
                     <li><strong>Web Widget:</strong> <a href="../vetter/">siah-kin.github.io/community-bot/vetter/</a> (5 free queries/day)</li>
-                    <li><strong>Telegram:</strong> <code>/vetx 0x...</code> in <a href="https://t.me/Bonzivista_bot">@SiahBot</a> (unlimited)</li>
+                    <li><strong>Telegram:</strong> <code>/vetx 0x...</code> in <a href="https://t.me/Bonzivista_bot">@Bonzivista_bot</a> (unlimited)</li>
                     <li><strong>API:</strong> <code>GET /api/trust/{wallet}</code> ($0.01/query via x402)</li>
                 </ul>
             </div>
@@ -1432,17 +1394,17 @@
             <h4>External Verification Links</h4>
             <p>Every vetter result includes links to verify independently: <a href="https://bubblemaps.io" target="_blank">Bubblemaps</a>, <a href="https://debank.com" target="_blank">DeBank</a>, <a href="https://etherscan.io" target="_blank">Etherscan</a>, <a href="https://arkhamintelligence.com" target="_blank">Arkham</a>.</p>
 
-            <h3 data-i18n="agents.api.title">Planned API Design</h3>
-            <p data-i18n="agents.api.desc">The following endpoints are in development. Structure subject to change.</p>
+            <h3 data-i18n="agents.api.title">API Endpoints</h3>
+            <p data-i18n="agents.api.desc">Live endpoints for trust queries. x402-gated for paid access.</p>
 
-            <h4 data-i18n="agents.trust.title">Trust Score (Planned)</h4>
-            <p data-i18n="agents.trust.desc">Query a wallet's trust score. Returns numeric score, tier grade, confidence level, and signal breakdown. Use case: pre-transaction trust verification.</p>
+            <h4 data-i18n="agents.trust.title">Trust Score (Live)</h4>
+            <p data-i18n="agents.trust.desc">GET /api/trust/{wallet} returns numeric score, tier grade (S/A/B/C/F), confidence level, and signal breakdown across 13 signals.</p>
 
-            <h4 data-i18n="agents.coop.title">Cooperation Profile (Planned)</h4>
-            <p data-i18n="agents.coop.desc">Deep dive into cooperation signals: help given, gratitude received, educational contributions, unique people helped. Euler score measures genuine value exchange vs farming patterns.</p>
+            <h4 data-i18n="agents.coop.title">Cooperation Profile (Live)</h4>
+            <p data-i18n="agents.coop.desc">GET /api/trust/{wallet}/composite returns cooperation signals: help given, gratitude received, educational contributions, unique people helped.</p>
 
-            <h4 data-i18n="agents.merkle.title">Merkle Proof (Planned)</h4>
-            <p data-i18n="agents.merkle.desc">On-chain verification of reputation. Verify trustlessly against merkle root without trusting SIAH's API directly.</p>
+            <h4 data-i18n="agents.merkle.title">Merkle Proof (Live)</h4>
+            <p data-i18n="agents.merkle.desc">On-chain verification of reputation. Weekly Merkle roots published to Base L2. Verify trustlessly without trusting SIAH's API directly.</p>
 
             <h3 data-i18n="agents.erc8004.title">ERC-8004 Identity</h3>
             <p data-i18n="agents.erc8004.desc"><a href="https://eips.ethereum.org/EIPS/eip-8004" target="_blank">ERC-8004</a> establishes three on-chain registries for AI agents: Identity, Reputation, and Validation. Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.</p>
@@ -1693,7 +1655,7 @@
                 "branders.launch.title": "Launch Your Token", "branders.launch.1": "Go to Etherfun:", "branders.launch.1.desc": "Visit etherfun.app",
                 "branders.launch.2": "Configure token:", "branders.launch.2.desc": "Set name, symbol, and fee structure",
                 "branders.launch.3": "Sign transaction:", "branders.launch.3.desc": "~$0.05 gas on Ethereum",
-                "branders.launch.4": "Bot auto-deploys:", "branders.launch.4.desc": "Bonzi is automatically configured for your token",
+                "branders.launch.4": "Connect bot:", "branders.launch.4.desc": "Add Bonzi to your Telegram group and configure via /admin",
                 "branders.launch.5": "Share:", "branders.launch.5.desc": "Your community can now buy, stake, and earn",
                 "branders.whatyouget": "What you get:", "branders.whatyouget.desc": "VISTA-20 token on Ethervista, trading fees fund tip pool, sybil-protected rewards, AI community support.",
                 "branders.wizard.title": "AI Wizard Setup", "branders.wizard.desc": "The AI Wizard answers community questions 24/7. It learns from your docs and improves over time.",
@@ -1720,7 +1682,7 @@
                 "farmers.journey.portable": "Your reputation is portable. When you move to another community, your track record follows you. Stored cryptographically. Verifiable by anyone. Owned by you. No platform can take it away.",
                 "farmers.journey.point": "The point:", "farmers.journey.point.desc": "Other platforms make you prove yourself from zero every time. Here, your work compounds. The more you contribute, the faster you're trusted, the less friction you face. Do the work once. Carry the proof forever.",
                 "farmers.quickstart.title": "Quick Start", "farmers.quickstart.1": "Join a community with Bonzi active", "farmers.quickstart.2": "Send /start to open the dashboard",
-                "farmers.quickstart.3": "Start earning: ask questions, report bugs, join outreach campaigns", "farmers.quickstart.4": "Hit 100 points → claim ETH",
+                "farmers.quickstart.3": "Start earning: ask questions, report bugs, join outreach campaigns", "farmers.quickstart.4": "Hit 50 points → claim ETH",
                 "farmers.commands.title": "Commands", "farmers.commands.th1": "Command", "farmers.commands.th2": "Description",
                 "farmers.cmd.start": "Open the main dashboard", "farmers.cmd.ask": "Ask Bonzi a question (+1-10 pts)", "farmers.cmd.bug": "Report a bug (+10 pts if valid)",
                 "farmers.cmd.raid": "Join active outreach campaigns", "farmers.cmd.meme": "Submit to meme contests", "farmers.cmd.board": "View leaderboard",
@@ -1779,10 +1741,10 @@
                 // Agents
                 "agents.title": "For AI Agents", "agents.intro": "Agents as peers. Query trust scores, verify cooperation, detect gaming - the same data SIAH uses internally.",
                 "agents.why.title": "Why SIAH's Data is Unique", "agents.why.desc": "SIAH is community management, codified. Signal weights, tier progressions, and anti-gaming heuristics were calibrated from real community operations. The patterns come from actual edge cases - not theoretical models.",
-                "agents.api.title": "Planned API Design", "agents.api.desc": "The following endpoints are in development. Structure subject to change.",
-                "agents.trust.title": "Trust Score (Planned)", "agents.trust.desc": "Query a wallet's trust score. Returns numeric score, tier grade, confidence level, and signal breakdown. Use case: pre-transaction trust verification.",
-                "agents.coop.title": "Cooperation Profile (Planned)", "agents.coop.desc": "Deep dive into cooperation signals: help given, gratitude received, educational contributions, unique people helped. Euler score measures genuine value exchange vs farming patterns.",
-                "agents.merkle.title": "Merkle Proof (Planned)", "agents.merkle.desc": "On-chain verification of reputation. Verify trustlessly against merkle root without trusting SIAH's API directly.",
+                "agents.api.title": "API Endpoints", "agents.api.desc": "Live endpoints for trust queries. x402-gated for paid access.",
+                "agents.trust.title": "Trust Score (Live)", "agents.trust.desc": "GET /api/trust/{wallet} returns numeric score, tier grade (S/A/B/C/F), confidence level, and signal breakdown across 13 signals.",
+                "agents.coop.title": "Cooperation Profile (Live)", "agents.coop.desc": "GET /api/trust/{wallet}/composite returns cooperation signals: help given, gratitude received, educational contributions, unique people helped.",
+                "agents.merkle.title": "Merkle Proof (Live)", "agents.merkle.desc": "On-chain verification of reputation. Weekly Merkle roots published to Base L2. Verify trustlessly without trusting SIAH's API directly.",
                 "agents.erc8004.title": "ERC-8004 Identity", "agents.erc8004.desc": "ERC-8004 establishes three on-chain registries for AI agents: Identity, Reputation, and Validation. Co-authored by MetaMask, Ethereum Foundation, Google, and Coinbase.",
                 "agents.erc8004.status": "Standard Status", "agents.erc8004.status.erc": "ERC-8004:", "agents.erc8004.status.erc.desc": "Live on Ethereum mainnet",
                 "agents.erc8004.status.chain": "Chain:", "agents.erc8004.status.chain.desc": "Ethereum (Base coming soon)",
@@ -1833,7 +1795,7 @@
                 // Embaixadores
                 "farmers.title": "Para Embaixadores", "farmers.intro": "Ganhe ETH atraves de contribuicoes genuinas. Protegido contra sybil - apenas pessoas reais ganham.",
                 "farmers.quickstart.title": "Inicio Rapido", "farmers.quickstart.1": "Entre em uma comunidade com Bonzi ativo", "farmers.quickstart.2": "Envie /start para abrir o painel",
-                "farmers.quickstart.3": "Comece a ganhar: faca perguntas, reporte bugs, participe de campanhas", "farmers.quickstart.4": "Alcance 100 pontos → resgate ETH",
+                "farmers.quickstart.3": "Comece a ganhar: faca perguntas, reporte bugs, participe de campanhas", "farmers.quickstart.4": "Alcance 50 pontos → resgate ETH",
                 "farmers.commands.title": "Comandos", "farmers.commands.th1": "Comando", "farmers.commands.th2": "Descricao",
                 "farmers.cmd.start": "Abrir o painel principal", "farmers.cmd.ask": "Perguntar ao Bonzi (+1-10 pts)", "farmers.cmd.bug": "Reportar um bug (+10 pts se valido)",
                 "farmers.cmd.raid": "Participar de campanhas de divulgacao", "farmers.cmd.meme": "Participar de concursos de memes", "farmers.cmd.board": "Ver ranking",
@@ -1888,10 +1850,10 @@
                 // Agents
                 "agents.title": "Para Agentes IA", "agents.intro": "Agentes como pares. Consulte scores de confianca, verifique cooperacao, detecte gaming - os mesmos dados que SIAH usa internamente.",
                 "agents.why.title": "Por que os Dados do SIAH sao Unicos", "agents.why.desc": "SIAH e gestao de comunidade, codificada. Pesos de sinais, progressoes de tier e heuristicas anti-gaming foram calibrados de operacoes reais. Os padroes vem de casos reais - nao modelos teoricos.",
-                "agents.api.title": "Design da API Planejado", "agents.api.desc": "Os seguintes endpoints estao em desenvolvimento. Estrutura sujeita a mudancas.",
-                "agents.trust.title": "Score de Confianca (Planejado)", "agents.trust.desc": "Consulte o score de confianca de uma carteira. Retorna score numerico, grau de tier, nivel de confianca e detalhamento de sinais.",
-                "agents.coop.title": "Perfil de Cooperacao (Planejado)", "agents.coop.desc": "Analise profunda de sinais de cooperacao: ajuda dada, gratidao recebida, contribuicoes educacionais. Score Euler mede troca de valor genuina vs padroes de farming.",
-                "agents.merkle.title": "Prova Merkle (Planejado)", "agents.merkle.desc": "Verificacao on-chain de reputacao. Verifique trustlessly contra a raiz merkle sem confiar diretamente na API do SIAH.",
+                "agents.api.title": "Endpoints da API", "agents.api.desc": "Endpoints ativos para consultas de confianca. Acesso pago via x402.",
+                "agents.trust.title": "Score de Confianca (Ativo)", "agents.trust.desc": "GET /api/trust/{wallet} retorna score numerico, grau de tier (S/A/B/C/F), nivel de confianca e detalhamento de 13 sinais.",
+                "agents.coop.title": "Perfil de Cooperacao (Ativo)", "agents.coop.desc": "GET /api/trust/{wallet}/composite retorna sinais de cooperacao: ajuda dada, gratidao recebida, contribuicoes educacionais, pessoas unicas ajudadas.",
+                "agents.merkle.title": "Prova Merkle (Ativo)", "agents.merkle.desc": "Verificacao on-chain de reputacao. Raizes Merkle semanais publicadas na Base L2. Verifique trustlessly sem confiar na API do SIAH.",
                 "agents.oracle.title": "Metricas do Oraculo (Planejado)", "agents.oracle.desc": "SIAH expoe suas proprias metricas de cooperacao. Verifique o oraculo da mesma forma que verificamos humanos. Transparencia por design.",
                 "agents.erc8004.title": "Identidade ERC-8004", "agents.erc8004.desc": "ERC-8004 estabelece tres registros on-chain para agentes IA: Identidade, Reputacao e Validacao. Co-autorado por MetaMask, Ethereum Foundation, Google e Coinbase.",
                 "agents.erc8004.status": "Status do Padrao", "agents.erc8004.status.erc": "ERC-8004:", "agents.erc8004.status.erc.desc": "Ativo na mainnet Ethereum",

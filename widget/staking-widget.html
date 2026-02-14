@@ -1353,18 +1353,22 @@
             elements.btnWithdraw.addEventListener('click', withdraw);
             elements.btnClaim.addEventListener('click', claim);
 
-            // Check for existing session
+            // Check for existing session (auto-connect)
             const savedAddress = localStorage.getItem('bonzi_staking_address');
             if (savedAddress && window.ethereum) {
-                // Try to restore session
-                window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-                    if (accounts.length > 0 && accounts[0].toLowerCase() === savedAddress.toLowerCase()) {
-                        provider = new ethers.providers.Web3Provider(window.ethereum);
-                        signer = provider.getSigner();
-                        userAddress = accounts[0];
-                        onConnected();
-                    }
-                }).catch(() => {});
+                // Try to restore session using eth_accounts
+                window.ethereum.request({ method: 'eth_accounts' })
+                    .then(accounts => {
+                        if (accounts.length > 0 && accounts[0].toLowerCase() === savedAddress.toLowerCase()) {
+                            provider = new ethers.providers.Web3Provider(window.ethereum);
+                            signer = provider.getSigner();
+                            userAddress = accounts[0];
+                            onConnected();
+                        }
+                    })
+                    .catch(e => {
+                        console.warn('[AUTO-CONNECT]', e);
+                    });
             }
 
             // Refresh data periodically

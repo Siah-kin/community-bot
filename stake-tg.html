@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stake BONZI</title>
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --green: #10B981;
+            --red: #DC2626;
+            --gold: #D4AF37;
+            --bg: var(--black);
+            --text: #FAFAFA;
+            --card-bg: #1F1F23;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1rem;
+            padding-bottom: 5rem;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Compact header for Mini App */
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--purple-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--card-bg);
+        }
+
+        .stat { text-align: center; }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cards */
+        .stake-card, .rewards-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .balance {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .balance span {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        /* Input group */
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.875rem;
+            padding-right: 4rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--purple);
+        }
+
+        .input-wrapper input::placeholder {
+            color: var(--gray);
+        }
+
+        .max-btn {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .action-btn {
+            width: 100%;
+            padding: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+        }
+
+        .action-btn.primary:hover:not(:disabled) {
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .action-btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Info box */
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.875rem;
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #FBB524;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box p {
+            font-size: 0.8rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Rewards */
+        .rewards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .claimable { text-align: right; }
+
+        .claimable-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        .claimable-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        /* Status messages */
+        .status {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--red);
+        }
+
+        .status.pending {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+        }
+
+        /* Connect overlay */
+        .connect-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 2rem;
+        }
+
+        .connect-content {
+            text-align: center;
+            max-width: 320px;
+        }
+
+        .connect-content h2 {
+            color: var(--purple-light);
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .connect-content p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #3B99FC, #2D7DD2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 280px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 153, 252, 0.4);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* MEV badge */
+        .mev-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.7rem;
+            color: var(--green);
+            margin-bottom: 0.75rem;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Tab switcher */
+        .tab-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-bottom: 1rem;
+            background: rgba(124, 58, 237, 0.1);
+            padding: 3px;
+        }
+
+        .tab-btn {
+            padding: 0.6rem;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--purple);
+            color: white;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Connect overlay - WalletConnect only inside Telegram -->
+    <div class="connect-overlay" id="connectOverlay">
+        <div class="connect-content">
+            <img src="bonzi-logo.png" alt="Bonzi" class="logo">
+            <h2>Stake BONZI</h2>
+            <p>Connect your wallet to stake BONZI tokens and earn ETH rewards.</p>
+            <button class="connect-btn" id="wcConnectBtn" onclick="connectWallet()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
+                Connect Wallet
+            </button>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container" id="mainContent" style="display: none;">
+        <header>
+            <img src="bonzi-logo.png" alt="Bonzi" class="logo">
+            <h1>Stake BONZI</h1>
+            <p class="subtitle">Earn ETH rewards</p>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="totalStaked">--</div>
+                <div class="stat-label">Supply Locked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="stakedBalance">0</div>
+                <div class="stat-label">Your Staked</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="claimableEth">0.00</div>
+                <div class="stat-label">Claimable ETH</div>
+            </div>
+        </div>
+
+        <div class="mev-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            MEV Protected via Flashbots
+        </div>
+
+        <!-- Status -->
+        <div class="status hidden" id="statusMessage"></div>
+
+        <!-- Tabs: Stake / Claim / Withdraw -->
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('stake')">Stake</button>
+            <button class="tab-btn" onclick="switchTab('claim')">Claim</button>
+            <button class="tab-btn" onclick="switchTab('withdraw')">Withdraw</button>
+        </div>
+
+        <!-- STAKE tab -->
+        <div class="tab-content active" id="tab-stake">
+            <div class="stake-card">
+                <div class="card-header">
+                    <span class="card-title">Stake BONZI</span>
+                    <span class="balance">Balance: <span id="bonziBalance">0</span></span>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="number" id="stakeAmount" placeholder="0.0" min="0" step="any" inputmode="decimal">
+                        <button class="max-btn" onclick="setMax()">MAX</button>
+                    </div>
+                </div>
+
+                <button class="action-btn primary" id="stakeBtn" onclick="stake()" disabled>
+                    Enter Amount
+                </button>
+            </div>
+
+            <div class="info-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBB524" stroke-width="2" flex-shrink="0">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <p><strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days. Claim ETH rewards anytime.</p>
+            </div>
+        </div>
+
+        <!-- CLAIM tab -->
+        <div class="tab-content" id="tab-claim">
+            <div class="rewards-card">
+                <div class="rewards-header">
+                    <div>
+                        <span class="card-title">Your Rewards</span>
+                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
+                            Staked: <span id="claimStakedDisplay">0</span> BONZI
+                        </p>
+                    </div>
+                    <div class="claimable">
+                        <div class="claimable-label">Claimable</div>
+                        <div class="claimable-value" id="claimableEthDisplay">0.00 ETH</div>
+                    </div>
+                </div>
+
+                <button class="action-btn primary" id="claimBtn" onclick="claim()" disabled>
+                    Claim ETH Rewards
+                </button>
+            </div>
+        </div>
+
+        <!-- WITHDRAW tab -->
+        <div class="tab-content" id="tab-withdraw">
+            <div class="rewards-card">
+                <div class="rewards-header">
+                    <div>
+                        <span class="card-title">Withdraw BONZI</span>
+                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
+                            Staked: <span id="withdrawStakedDisplay">0</span> BONZI
+                        </p>
+                    </div>
+                    <div class="claimable">
+                        <div class="claimable-label">Lock Remaining</div>
+                        <div class="claimable-value" id="lockTimeDisplay" style="color: var(--gray); font-size: 1rem;">--</div>
+                    </div>
+                </div>
+
+                <button class="action-btn secondary" id="withdrawBtn" onclick="withdraw()" disabled>
+                    Withdraw All
+                </button>
+            </div>
+
+            <div class="info-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBB524" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <p><strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web3 Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
+    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
+    <script>
+        // ============================================================
+        // Telegram Web App Integration
+        // ============================================================
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // Apply Telegram theme colors
+        if (tg.themeParams.bg_color) {
+            document.documentElement.style.setProperty('--bg', tg.themeParams.bg_color);
+        }
+        if (tg.themeParams.text_color) {
+            document.documentElement.style.setProperty('--text', tg.themeParams.text_color);
+        }
+
+        // Read URL params for pre-population
+        const urlParams = new URLSearchParams(window.location.search);
+        const preAction = urlParams.get('action');
+        const preAmount = urlParams.get('amount');
+        const preWallet = urlParams.get('wallet');
+
+        // ============================================================
+        // Contract Config (same as stake.html)
+        // ============================================================
+        const CONTRACTS = {
+            BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+            ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
+        };
+
+        const ERC20_ABI = [
+            'function balanceOf(address) view returns (uint256)',
+            'function approve(address spender, uint256 amount) returns (bool)',
+            'function allowance(address owner, address spender) view returns (uint256)'
+        ];
+
+        const HARDSTAKE_ABI = [
+            'function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
+            'function claimShare()',
+            'function withdraw(uint256 amount)'
+        ];
+
+        const ROUTER_ABI = [
+            'function hardstake(address _contract, address _token, uint256 _amount)'
+        ];
+
+        // RPC endpoints with fallbacks
+        const RPC_ENDPOINTS = [
+            'https://eth.drpc.org',
+            'https://rpc.ankr.com/eth',
+            'https://eth.llamarpc.com',
+            'https://cloudflare-eth.com'
+        ];
+        let PUBLIC_RPC = RPC_ENDPOINTS[0];
+
+        async function findWorkingRpc() {
+            for (const rpc of RPC_ENDPOINTS) {
+                try {
+                    const testProvider = new ethers.providers.JsonRpcProvider(rpc);
+                    await testProvider.getBlockNumber();
+                    return rpc;
+                } catch (e) {
+                    console.warn('[RPC] Failed:', rpc);
+                }
+            }
+            return RPC_ENDPOINTS[0];
+        }
+
+        // ============================================================
+        // State
+        // ============================================================
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+        let bonziBalance = 0;
+        let walletConnectProvider = null;
+        let currentClaimableEth = 0;
+
+        const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
+
+        // ============================================================
+        // Tab Switching
+        // ============================================================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        // ============================================================
+        // WalletConnect
+        // ============================================================
+        async function initWalletConnect() {
+            if (!window.EthereumProvider) {
+                console.error('WalletConnect not loaded');
+                return null;
+            }
+
+            try {
+                return await window.EthereumProvider.init({
+                    projectId: WALLETCONNECT_PROJECT_ID,
+                    chains: [1],
+                    showQrModal: true,
+                    metadata: {
+                        name: 'BONZI Staking',
+                        description: 'Stake BONZI tokens to earn ETH rewards',
+                        url: 'https://siah-kin.github.io/community-bot/stake-tg.html',
+                        icons: ['https://siah-kin.github.io/community-bot/bonzi-logo.png']
+                    }
+                });
+            } catch (error) {
+                console.error('WalletConnect init failed:', error);
+                return null;
+            }
+        }
+
+        async function connectWallet() {
+            const btn = document.getElementById('wcConnectBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Connecting...';
+            btn.disabled = true;
+
+            try {
+                walletConnectProvider = await initWalletConnect();
+                if (!walletConnectProvider) {
+                    throw new Error('WalletConnect failed to initialize. Please try again.');
+                }
+
+                await walletConnectProvider.connect();
+
+                const accounts = walletConnectProvider.accounts;
+                if (!accounts || accounts.length === 0) {
+                    throw new Error('No accounts returned from WalletConnect');
+                }
+
+                userAddress = accounts[0];
+
+                // Listen for disconnect
+                walletConnectProvider.on('disconnect', () => location.reload());
+                walletConnectProvider.on('accountsChanged', () => location.reload());
+
+                // Setup read provider
+                PUBLIC_RPC = await findWorkingRpc();
+                provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
+
+                // Show main content
+                document.getElementById('connectOverlay').classList.add('hidden');
+                document.getElementById('mainContent').style.display = 'block';
+
+                // Pre-select tab from URL params
+                if (preAction === 'claim') switchTab('claim');
+                else if (preAction === 'unstake') switchTab('withdraw');
+
+                // Pre-fill amount from URL params
+                if (preAmount && preAction === 'stake') {
+                    document.getElementById('stakeAmount').value = preAmount;
+                }
+
+                await updateUI();
+
+            } catch (error) {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showStatus(error.message || 'Connection failed', 'error');
+            }
+        }
+
+        function getWalletSigner() {
+            const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
+            return wcWeb3Provider.getSigner();
+        }
+
+        // ============================================================
+        // UI Updates
+        // ============================================================
+        async function updateUI() {
+            try {
+                const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
+
+                const [balance, stakerInfo] = await Promise.all([
+                    bonziContract.balanceOf(userAddress),
+                    hardstakeContract.getStakerInfo(userAddress)
+                ]);
+
+                bonziBalance = parseFloat(ethers.utils.formatEther(balance));
+                const stakedBal = parseFloat(ethers.utils.formatEther(stakerInfo.amountStaked));
+                const claimableEth = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
+                currentClaimableEth = claimableEth;
+                const timeRemaining = stakerInfo.timeRemaining.toNumber();
+
+                // Update displays across all tabs
+                document.getElementById('bonziBalance').textContent = bonziBalance.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById('stakedBalance').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 0});
+                document.getElementById('claimableEth').textContent = claimableEth.toFixed(6);
+
+                // Claim tab
+                document.getElementById('claimStakedDisplay').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById('claimableEthDisplay').textContent = claimableEth.toFixed(6) + ' ETH';
+
+                // Withdraw tab
+                document.getElementById('withdrawStakedDisplay').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 2});
+                if (timeRemaining > 0) {
+                    const days = Math.ceil(timeRemaining / 86400);
+                    document.getElementById('lockTimeDisplay').textContent = days + 'd';
+                    document.getElementById('lockTimeDisplay').style.color = 'var(--red)';
+                } else if (stakedBal > 0) {
+                    document.getElementById('lockTimeDisplay').textContent = 'Unlocked';
+                    document.getElementById('lockTimeDisplay').style.color = 'var(--green)';
+                }
+
+                // Enable/disable buttons
+                document.getElementById('stakeBtn').disabled = bonziBalance === 0;
+                document.getElementById('claimBtn').disabled = claimableEth === 0;
+                document.getElementById('withdrawBtn').disabled = stakedBal === 0 || timeRemaining > 0;
+
+                updateStakeButton();
+
+            } catch (error) {
+                console.error('UI update error:', error);
+            }
+        }
+
+        function setMax() {
+            document.getElementById('stakeAmount').value = bonziBalance;
+            updateStakeButton();
+        }
+
+        function updateStakeButton() {
+            const amount = parseFloat(document.getElementById('stakeAmount').value) || 0;
+            const btn = document.getElementById('stakeBtn');
+
+            if (amount === 0) {
+                btn.textContent = 'Enter Amount';
+                btn.disabled = true;
+            } else if (amount > bonziBalance) {
+                btn.textContent = 'Insufficient Balance';
+                btn.disabled = true;
+            } else {
+                btn.textContent = 'Stake ' + amount.toLocaleString() + ' BONZI';
+                btn.disabled = false;
+            }
+        }
+
+        document.getElementById('stakeAmount').addEventListener('input', updateStakeButton);
+
+        // ============================================================
+        // Status Messages
+        // ============================================================
+        function showStatus(message, type = 'pending') {
+            const el = document.getElementById('statusMessage');
+            el.textContent = message;
+            el.className = 'status ' + type;
+            el.classList.remove('hidden');
+        }
+
+        function hideStatus() {
+            document.getElementById('statusMessage').classList.add('hidden');
+        }
+
+        // ============================================================
+        // Send result back to Telegram bot
+        // ============================================================
+        function sendResultToBot(action, txHash, amount) {
+            try {
+                tg.sendData(JSON.stringify({
+                    action: action,
+                    txHash: txHash,
+                    amount: amount,
+                    wallet: userAddress
+                }));
+            } catch (e) {
+                console.warn('sendData not available (not launched via bot button)');
+            }
+        }
+
+        // ============================================================
+        // Stake
+        // ============================================================
+        async function stake() {
+            const amount = document.getElementById('stakeAmount').value;
+            if (!amount || parseFloat(amount) === 0) return;
+
+            // Euler reset warning
+            if (currentClaimableEth > 0) {
+                const proceed = confirm(
+                    `You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
+                    `Staking resets your Euler index.\n` +
+                    `Claim first or lose your rewards.\n\n` +
+                    `Continue anyway?`
+                );
+                if (!proceed) return;
+            }
+
+            const amountWei = ethers.utils.parseEther(amount);
+
+            try {
+                showStatus('Requesting approval...');
+                signer = getWalletSigner();
+
+                const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, signer);
+                const allowance = await bonziContract.allowance(userAddress, CONTRACTS.ROUTER);
+
+                if (allowance.lt(amountWei)) {
+                    showStatus('Approve BONZI spending in your wallet...');
+                    const approveTx = await bonziContract.approve(CONTRACTS.ROUTER, amountWei);
+                    showStatus('Waiting for approval confirmation...');
+                    await approveTx.wait();
+                }
+
+                showStatus('Submitting stake transaction...');
+                const routerContract = new ethers.Contract(CONTRACTS.ROUTER, ROUTER_ABI, signer);
+                const stakeTx = await routerContract.hardstake(
+                    CONTRACTS.BONZI_HARDSTAKE,
+                    CONTRACTS.BONZI_TOKEN,
+                    amountWei
+                );
+
+                showStatus('Waiting for confirmation...');
+                const receipt = await stakeTx.wait();
+
+                tg.HapticFeedback.notificationOccurred('success');
+                showStatus('Staked successfully!', 'success');
+                document.getElementById('stakeAmount').value = '';
+
+                sendResultToBot('staked', receipt.transactionHash, amount);
+                await updateUI();
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Stake error:', error);
+                tg.HapticFeedback.notificationOccurred('error');
+                showStatus(error.reason || error.message || 'Transaction failed', 'error');
+            }
+        }
+
+        // ============================================================
+        // Claim
+        // ============================================================
+        async function claim() {
+            try {
+                showStatus('Claiming rewards...');
+                signer = getWalletSigner();
+
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
+                const claimTx = await hardstakeContract.claimShare();
+
+                showStatus('Waiting for confirmation...');
+                const receipt = await claimTx.wait();
+
+                tg.HapticFeedback.notificationOccurred('success');
+                showStatus('Rewards claimed!', 'success');
+
+                sendResultToBot('claimed', receipt.transactionHash, currentClaimableEth.toFixed(6));
+                await updateUI();
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Claim error:', error);
+                tg.HapticFeedback.notificationOccurred('error');
+                showStatus(error.reason || error.message || 'Claim failed', 'error');
+            }
+        }
+
+        // ============================================================
+        // Withdraw
+        // ============================================================
+        async function withdraw() {
+            // Euler reset warning
+            if (currentClaimableEth > 0) {
+                const proceed = confirm(
+                    `You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
+                    `Withdrawing resets your Euler index.\n` +
+                    `Claim first or lose your rewards.\n\n` +
+                    `Continue anyway?`
+                );
+                if (!proceed) return;
+            }
+
+            try {
+                const stakedEl = document.getElementById('stakedBalance');
+                const stakedAmount = parseFloat(stakedEl.textContent.replace(/,/g, ''));
+                if (stakedAmount === 0) return;
+
+                showStatus('Withdrawing staked BONZI...');
+                signer = getWalletSigner();
+
+                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
+                const amountWei = ethers.utils.parseEther(stakedAmount.toString());
+                const withdrawTx = await hardstakeContract.withdraw(amountWei);
+
+                showStatus('Waiting for confirmation...');
+                const receipt = await withdrawTx.wait();
+
+                tg.HapticFeedback.notificationOccurred('success');
+                showStatus('Withdrawal complete!', 'success');
+
+                sendResultToBot('withdrawn', receipt.transactionHash, stakedAmount.toString());
+                await updateUI();
+                setTimeout(hideStatus, 3000);
+
+            } catch (error) {
+                console.error('Withdraw error:', error);
+                tg.HapticFeedback.notificationOccurred('error');
+                showStatus(error.reason || error.message || 'Withdrawal failed', 'error');
+            }
+        }
+
+        // ============================================================
+        // Auto-connect on load
+        // ============================================================
+        window.addEventListener('load', async () => {
+            // If opened with pre-populated action, auto-trigger connect
+            if (preAction || preWallet) {
+                // Small delay for SDK readiness
+                setTimeout(() => connectWallet(), 500);
+            }
+        });
+    </script>
+</body>
+</html>

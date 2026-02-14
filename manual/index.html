@@ -570,8 +570,10 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px;">
                         <button class="ui-mockup-btn" style="font-size: 11px;">Tip Settings</button>
                         <button class="ui-mockup-btn" style="font-size: 11px;">Chat Bot</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Analytics</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">Data Bot</button>
                         <button class="ui-mockup-btn" style="font-size: 11px;">Agent Settings</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">Analytics</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">Guides</button>
                     </div>
                 </div>
             </div>
@@ -762,9 +764,9 @@
                 <div class="ui-mockup-body">
                     <div class="ui-mockup-msg">
                         <strong>Your Ambassador Profile</strong><br><br>
-                        <strong style="color: #D4AF37; font-size: 18px;">Raider</strong><br>
+                        <strong style="color: #D4AF37; font-size: 18px;">Participant</strong><br>
                         Fast-track review<br><br>
-                        Your campaigns skip the standard queue. Keep contributing to level up to auto-check.
+                        Your campaigns skip the standard queue. Keep contributing to level up.
                     </div>
                     <div style="margin-top: 12px;">
                         <button class="ui-mockup-btn gold">Submit First Campaign</button>
@@ -776,17 +778,19 @@
             </div>
             <p class="ui-mockup-caption">Profile complete: your tier determines review speed and point multipliers</p>
 
-            <p data-i18n="farmers.journey.tiers_intro"><strong>You start as a Rookie.</strong> Everyone does. As you contribute, your profile grows.</p>
+            <p data-i18n="farmers.journey.tiers_intro"><strong>You start as a Lurker.</strong> Everyone does. As you contribute, your profile grows.</p>
 
             <table class="command-table">
                 <thead>
-                    <tr><th data-i18n="farmers.journey.th1">Tier</th><th data-i18n="farmers.journey.th2">What it means</th><th data-i18n="farmers.journey.th3">How you get there</th></tr>
+                    <tr><th data-i18n="farmers.journey.th1">Tier</th><th data-i18n="farmers.journey.th2">Score</th><th data-i18n="farmers.journey.th2b">What it means</th><th data-i18n="farmers.journey.th3">How you get there</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Rookie</strong></td><td data-i18n="farmers.journey.rookie">New contributor. Every submission reviewed.</td><td data-i18n="farmers.journey.rookie.how">Link your X account and wallet. Show up.</td></tr>
-                    <tr><td><strong>Raider</strong></td><td data-i18n="farmers.journey.raider">Consistent quality. Community vouches for you.</td><td data-i18n="farmers.journey.raider.how">Keep contributing. Build a history of good work.</td></tr>
-                    <tr><td><strong>Veteran</strong></td><td data-i18n="farmers.journey.veteran">Trusted voice. Most work approved on sight.</td><td data-i18n="farmers.journey.veteran.how">Sustained quality over time. Help others succeed.</td></tr>
-                    <tr><td><strong>Assassin</strong></td><td data-i18n="farmers.journey.assassin">Top tier. Your track record speaks for itself.</td><td data-i18n="farmers.journey.assassin.how">Consistent excellence. The system trusts your judgment.</td></tr>
+                    <tr><td><strong>Lurker</strong></td><td>0</td><td data-i18n="farmers.journey.lurker">New member. Every submission reviewed.</td><td data-i18n="farmers.journey.lurker.how">Link your X account and wallet. Show up.</td></tr>
+                    <tr><td><strong>Participant</strong></td><td>21+</td><td data-i18n="farmers.journey.participant">Active contributor. Building a track record.</td><td data-i18n="farmers.journey.participant.how">Keep contributing. Build a history of good work.</td></tr>
+                    <tr><td><strong>Helper</strong></td><td>51+</td><td data-i18n="farmers.journey.helper">Consistent quality. Community vouches for you.</td><td data-i18n="farmers.journey.helper.how">Help others. Answer questions. Review work.</td></tr>
+                    <tr><td><strong>Trusted Helper</strong></td><td>101+</td><td data-i18n="farmers.journey.trusted_helper">Trusted voice. Most work approved on sight.</td><td data-i18n="farmers.journey.trusted_helper.how">Sustained quality over time. Eligible to review others.</td></tr>
+                    <tr><td><strong>Community Pillar</strong></td><td>201+</td><td data-i18n="farmers.journey.community_pillar">Core contributor. The system trusts your judgment.</td><td data-i18n="farmers.journey.community_pillar.how">Consistent excellence across multiple activities.</td></tr>
+                    <tr><td><strong>MVP</strong></td><td>500+</td><td data-i18n="farmers.journey.mvp">Top tier. Your track record speaks for itself.</td><td data-i18n="farmers.journey.mvp.how">Exceptional long-term contribution. Rare.</td></tr>
                 </tbody>
             </table>
 
@@ -900,7 +904,7 @@
                         /ask How does the staking reward distribution work?
                     </div>
                     <div class="ui-mockup-msg">
-                        Staking rewards are distributed proportionally based on your locked amount and duration. The protocol allocates trading fees to LP stakers weekly. Rewards compound automatically if you don't claim them.
+                        Staking rewards come from trading fees, distributed proportionally based on your locked amount. Claim anytime via the bot while your stake is locked.
                         <div style="margin-top: 12px; padding: 8px; background: rgba(124, 58, 237, 0.2); font-weight: bold; color: #7c3aed;">
                             Quality: 8/10 — +8 pts
                         </div>
@@ -962,7 +966,7 @@
             </div>
 
             <h3 id="leaderboard" data-i18n="farmers.leaderboard.title">Leaderboard</h3>
-            <p>Real-time reputation across every activity. Four tabs, one ranking.</p>
+            <p>Real-time reputation across every activity. Five tabs, one ranking.</p>
 
             <div class="ui-mockup">
                 <div class="ui-mockup-header">
@@ -974,6 +978,7 @@
                         <button class="ui-mockup-btn" style="padding: 4px 8px;">Outreach</button>
                         <button class="ui-mockup-btn" style="padding: 4px 8px;">Tips</button>
                         <button class="ui-mockup-btn" style="padding: 4px 8px;">Memes</button>
+                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Bugs</button>
                         <button class="ui-mockup-btn" style="padding: 4px 8px;">All</button>
                     </div>
                     <div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 8px;">
@@ -990,7 +995,7 @@
                     </div>
                 </div>
             </div>
-            <p class="ui-mockup-caption">Four tabs. One reputation. Rank reflects real contribution.</p>
+            <p class="ui-mockup-caption">Five tabs. One reputation. Rank reflects real contribution.</p>
 
             <h4>Categories</h4>
             <ul>
@@ -1510,8 +1515,8 @@
                 <li><strong>Anomalies.</strong> Sudden score spikes, suspicious voting patterns</li>
             </ul>
 
-            <h3>Daily Digest</h3>
-            <p>Moderators receive an automated daily summary:</p>
+            <h3>Daily Digest <span style="color: #D4AF37; font-size: 14px;">(Planned)</span></h3>
+            <p>Moderators will receive an automated daily summary:</p>
             <ul>
                 <li>Tier changes (who moved up or down)</li>
                 <li>Anomaly alerts (flagged accounts needing review)</li>
@@ -1530,10 +1535,10 @@
             </table>
 
             <!-- ===================== TOKEN LAUNCH VIA EMAIL ===================== -->
-            <h2 id="email-launch">Token Launch via Email</h2>
-            <p class="docs-intro">Launch a token without crypto knowledge. Sign up with email, configure your brand, deploy to Ethereum.</p>
+            <h2 id="email-launch">Token Launch via Email <span style="color: #D4AF37; font-size: 14px;">(Planned)</span></h2>
+            <p class="docs-intro">Launch a token without crypto knowledge. Sign up with email, configure your brand, deploy to Ethereum. Currently, token launches use <a href="#launch" style="color: #7C3AED;">etherfun.app via the bot</a>.</p>
 
-            <h3>How It Works</h3>
+            <h3>Planned Flow</h3>
             <ol>
                 <li><strong>Email signup.</strong> Create an account with your business email</li>
                 <li><strong>Wallet creation.</strong> A secure wallet is generated for you automatically</li>
@@ -1542,11 +1547,11 @@
                 <li><strong>Website widget.</strong> Embed a buy button on your existing website</li>
             </ol>
 
-            <h3>Fiat Integration</h3>
-            <p>Your customers don't need crypto either. <strong>Stripe integration</strong> lets end users buy tokens with credit card. The conversion happens behind the scenes.</p>
+            <h3>Fiat Integration (Planned)</h3>
+            <p>End users buy tokens with credit card. The conversion happens behind the scenes. This feature is in development.</p>
 
             <div class="highlight-box">
-                <strong>Zero crypto required:</strong> Brand owner signs up via email. Customer buys via credit card. Blockchain runs in the background.
+                <strong>Not yet live.</strong> Token launches currently work via Telegram bot and etherfun.app. Email-based launch and fiat onramp are in development.
             </div>
 
             <!-- ===================== HUMAN VETTING ===================== -->
@@ -1663,12 +1668,14 @@
                 "farmers.journey.title": "Your Journey",
                 "farmers.journey.intro": "Most platforms treat contributors like numbers. You do outreach campaigns, submit screenshots, wait for a reviewer who doesn't know you. Approved or rejected, you're still nobody. Your work doesn't follow you anywhere.",
                 "farmers.journey.different": "Bonzi works differently. Every action you take builds a profile that's yours. Not a leaderboard rank. Not a badge. A portable track record of real work that any community can verify.",
-                "farmers.journey.tiers_intro": "You start as a Rookie. Everyone does. As you contribute, your profile grows.",
-                "farmers.journey.th1": "Tier", "farmers.journey.th2": "What it means", "farmers.journey.th3": "How you get there",
-                "farmers.journey.rookie": "New contributor. Every submission reviewed.", "farmers.journey.rookie.how": "Link your X account and wallet. Show up.",
-                "farmers.journey.raider": "Consistent quality. Community vouches for you.", "farmers.journey.raider.how": "Keep contributing. Build a history of good work.",
-                "farmers.journey.veteran": "Trusted voice. Most work approved on sight.", "farmers.journey.veteran.how": "Sustained quality over time. Help others succeed.",
-                "farmers.journey.assassin": "Top tier. Your track record speaks for itself.", "farmers.journey.assassin.how": "Consistent excellence. The system trusts your judgment.",
+                "farmers.journey.tiers_intro": "You start as a Lurker. Everyone does. As you contribute, your profile grows.",
+                "farmers.journey.th1": "Tier", "farmers.journey.th2": "Score", "farmers.journey.th2b": "What it means", "farmers.journey.th3": "How you get there",
+                "farmers.journey.lurker": "New member. Every submission reviewed.", "farmers.journey.lurker.how": "Link your X account and wallet. Show up.",
+                "farmers.journey.participant": "Active contributor. Building a track record.", "farmers.journey.participant.how": "Keep contributing. Build a history of good work.",
+                "farmers.journey.helper": "Consistent quality. Community vouches for you.", "farmers.journey.helper.how": "Help others. Answer questions. Review work.",
+                "farmers.journey.trusted_helper": "Trusted voice. Most work approved on sight.", "farmers.journey.trusted_helper.how": "Sustained quality over time. Eligible to review others.",
+                "farmers.journey.community_pillar": "Core contributor. The system trusts your judgment.", "farmers.journey.community_pillar.how": "Consistent excellence across multiple activities.",
+                "farmers.journey.mvp": "Top tier. Your track record speaks for itself.", "farmers.journey.mvp.how": "Exceptional long-term contribution. Rare.",
                 "farmers.journey.how_it_works": "How it works: The system watches what you do, not what you say. Your posting patterns, your engagement quality, your consistency over weeks and months. Behavioral signals that can't be faked. A bought account looks different from a real one. Copied content looks different from original writing. The AI sees the difference.",
                 "farmers.journey.portable": "Your reputation is portable. When you move to another community, your track record follows you. Stored cryptographically. Verifiable by anyone. Owned by you. No platform can take it away.",
                 "farmers.journey.point": "The point:", "farmers.journey.point.desc": "Other platforms make you prove yourself from zero every time. Here, your work compounds. The more you contribute, the faster you're trusted, the less friction you face. Do the work once. Carry the proof forever.",
@@ -1771,7 +1778,7 @@
                 "branders.launch.title": "Lance Seu Token", "branders.launch.1": "Va ao Etherfun:", "branders.launch.1.desc": "Visite etherfun.app",
                 "branders.launch.2": "Configure o token:", "branders.launch.2.desc": "Defina nome, simbolo e estrutura de taxas",
                 "branders.launch.3": "Assine a transacao:", "branders.launch.3.desc": "~$0.05 de gas no Ethereum",
-                "branders.launch.4": "Bot implanta automaticamente:", "branders.launch.4.desc": "Bonzi e configurado automaticamente para seu token",
+                "branders.launch.4": "Conecte o bot:", "branders.launch.4.desc": "Adicione Bonzi ao seu grupo do Telegram e configure via /admin",
                 "branders.launch.5": "Compartilhe:", "branders.launch.5.desc": "Sua comunidade ja pode comprar, fazer stake e ganhar",
                 "branders.whatyouget": "O que voce recebe:", "branders.whatyouget.desc": "Token VISTA-20 na Ethervista, taxas de trading financiam pool de gorjetas, recompensas anti-sybil, suporte IA.",
                 "branders.wizard.title": "Configurar Assistente IA", "branders.wizard.desc": "O Assistente IA responde perguntas da comunidade 24/7. Aprende com seus docs e melhora com o tempo.",

@@ -454,7 +454,7 @@
                 <h4 data-i18n="sidebar.stakers">For Stakers</h4>
                 <a href="#stakers" data-i18n="sidebar.stakingguide">Staking Guide</a>
                 <a href="#mobile-staking" data-i18n="sidebar.mobilestaking">Mobile Staking</a>
-                <a href="#compounding" data-i18n="sidebar.compounding">Self-Compounding</a>
+                <a href="#compounding" data-i18n="sidebar.compounding">Reward Accumulation</a>
                 <a href="#fee-model" data-i18n="sidebar.metrics">Fee Model</a>
             </div>
 
@@ -1067,14 +1067,14 @@
             <h4>Task Flow</h4>
             <ol>
                 <li><strong>Browse:</strong> See available tasks filtered by your tier</li>
-                <li><strong>Claim:</strong> Lock in a task (time-limited, usually 48-72 hours)</li>
+                <li><strong>Claim:</strong> Lock in a task</li>
                 <li><strong>Complete:</strong> Submit proof (screenshot, link, or text)</li>
                 <li><strong>Verify:</strong> AI checks completion quality</li>
                 <li><strong>Earn:</strong> Points awarded directly to your account</li>
             </ol>
 
             <div class="highlight-box">
-                <strong>Start simple, grow into bigger tasks.</strong> New contributors begin with social engagement tasks. Higher cooperation scores unlock more complex assignments with bigger rewards.
+                <strong>Start simple, grow into bigger tasks.</strong> New contributors begin with social engagement tasks. Higher cooperation scores open access to more complex assignments with bigger rewards.
             </div>
 
             <h3 id="claim" data-i18n="farmers.claim.title">Claim ETH</h3>
@@ -1214,7 +1214,7 @@
             </table>
 
             <div class="highlight-box">
-                <strong>Self-compounding.</strong> Rewards fold back into your stake automatically.
+                <strong>Rewards accumulate.</strong> Trading fees add to the pool. Claim anytime while locked.
             </div>
 
             <h3 id="two-earnings" data-i18n="holders.earnings.title">Two Ways to Earn</h3>
@@ -1276,7 +1276,7 @@
 
             <!-- ===================== STAKERS ===================== -->
             <h2 id="stakers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></span><span data-i18n="stakers.title">For Stakers</span></h2>
-            <p class="docs-intro" data-i18n="stakers.intro">Stake into brand success. Self-compounding yields on Ethervista.</p>
+            <p class="docs-intro" data-i18n="stakers.intro">Earn fees from trading activity. Flat-fee yields on Ethervista.</p>
 
             <h3 data-i18n="stakers.guide.title">Staking Guide</h3>
             <ol>
@@ -1289,8 +1289,8 @@
             <h3 id="mobile-staking" data-i18n="stakers.mobile.title">Mobile Staking</h3>
             <p data-i18n="stakers.mobile.desc">BONZI holders can stake via mobile. Access through the Telegram bot dashboard - no desktop required.</p>
 
-            <h3 id="compounding" data-i18n="stakers.compounding.title">Self-Compounding</h3>
-            <p data-i18n="stakers.compounding.desc">Rewards auto-compound. No manual claiming needed. Your stake grows automatically.</p>
+            <h3 id="compounding" data-i18n="stakers.compounding.title">Reward Accumulation</h3>
+            <p data-i18n="stakers.compounding.desc">Rewards accumulate from trading fees. Claim anytime via the bot or web app.</p>
 
             <h3 id="fee-model" data-i18n="stakers.fees.title">Fee Model</h3>
             <p data-i18n="stakers.fees.desc">Ethervista uses flat fees per transaction, not percentages. Revenue scales with trade count, not trade size.</p>
@@ -1344,7 +1344,7 @@
             <div class="highlight-box" style="border-left-color: var(--green);">
                 <strong>3 Ways to Use:</strong>
                 <ul style="margin-top: 8px; margin-left: 20px;">
-                    <li><strong>Web Widget:</strong> <a href="../vetter/">siah-kin.github.io/community-bot/vetter/</a> (5 free queries/day)</li>
+                    <li><strong>Web Widget:</strong> <a href="../vetter/">siah-kin.github.io/community-bot/vetter/</a> (10 free queries/day)</li>
                     <li><strong>Telegram:</strong> <code>/vetx 0x...</code> in <a href="https://t.me/Bonzivista_bot">@Bonzivista_bot</a> (unlimited)</li>
                     <li><strong>API:</strong> <code>GET /api/trust/{wallet}</code> ($0.01/query via x402)</li>
                 </ul>
@@ -1427,14 +1427,14 @@
 
             <!-- ===================== TOKENISED BRAND ===================== -->
             <h2 id="tokenised-brand">What is a Tokenised Brand?</h2>
-            <p class="docs-intro">A token is a loyalty-equity hybrid for the web3 era. Instead of points that expire, your community earns tokens that appreciate as the brand grows.</p>
+            <p class="docs-intro">A token is a loyalty-reward system for the web3 era. Instead of points that expire, your community earns tokens through active participation.</p>
 
             <h3>How It Works</h3>
             <p>Every brand token launched through Bonzi uses the <strong>VISTA-20 standard</strong> on Ethervista. This gives you flat-fee economics from day one:</p>
             <ul>
-                <li><strong>Flat fees per transaction</strong> &mdash; $5-15 per swap, not a percentage. A $100 trade and a $10,000 trade pay the same fee.</li>
-                <li><strong>Revenue = transaction count</strong> &mdash; your income grows with community activity, not trade size.</li>
-                <li><strong>Fees split automatically</strong> &mdash; between creators, LPs, and the tip pool. No manual distribution.</li>
+                <li><strong>Flat fees per transaction.</strong> $5-15 per swap, not a percentage. A $100 trade and a $10,000 trade pay the same fee.</li>
+                <li><strong>Revenue = transaction count.</strong> Fee income scales with trade count, not trade size.</li>
+                <li><strong>Fees split automatically.</strong> Between creators, LPs, and the tip pool. No manual distribution.</li>
             </ul>
 
             <h3>Web2 Points vs Web3 Tokens</h3>
@@ -1444,11 +1444,11 @@
                 <tr><td>Only redeemable at one store</td><td>Tradeable on open markets</td></tr>
                 <tr><td>Company controls supply</td><td>Supply fixed at launch</td></tr>
                 <tr><td>Zero resale value</td><td>Market-priced, transferable</td></tr>
-                <tr><td>Loyalty is one-way</td><td>Community earns equity</td></tr>
+                <tr><td>Loyalty is one-way</td><td>Community earns rewards</td></tr>
             </table>
 
             <h3>Value Accrual</h3>
-            <p>Community activity &rarr; more transactions &rarr; more fees &rarr; token demand &rarr; everyone benefits. The loop is built into the protocol, not bolted on.</p>
+            <p>Community activity &rarr; more transactions &rarr; more fees &rarr; active participants earn from the fees their activity generates. Built into the protocol, not bolted on.</p>
 
             <!-- ===================== DAO STARTER KIT ===================== -->
             <h2 id="dao-starter-kit">DAO Starter Kit</h2>
@@ -1456,18 +1456,18 @@
 
             <h3>What You Get</h3>
             <ul>
-                <li><strong>Token</strong> &mdash; VISTA-20 token with flat-fee economics, deployed on Ethervista</li>
-                <li><strong>Bot</strong> &mdash; Telegram bot with AI moderation, tipping, promotions, and reputation tracking</li>
-                <li><strong>Governance</strong> &mdash; Human vetting, graduated sanctions, and cooperative reputation (CPI)</li>
-                <li><strong>Analytics</strong> &mdash; Real-time dashboards for whale movements, social sentiment, and on-chain metrics</li>
+                <li><strong>Token.</strong> VISTA-20 token with flat-fee economics, deployed on Ethervista</li>
+                <li><strong>Bot.</strong> Telegram bot with AI moderation, tipping, promotions, and reputation tracking</li>
+                <li><strong>Governance.</strong> Human vetting, graduated sanctions, and cooperative reputation</li>
+                <li><strong>Analytics.</strong> Real-time dashboards for whale movements, social sentiment, and on-chain metrics</li>
             </ul>
 
             <h3>Setup Flow</h3>
             <ol>
-                <li><strong>Deploy token</strong> &mdash; Launch on Ethervista via the web wizard or Telegram bot</li>
-                <li><strong>Configure bot</strong> &mdash; Add Bonzi to your Telegram group and set brand preferences</li>
-                <li><strong>Activate community</strong> &mdash; Enable Promote &amp; Earn, tipping, and leaderboards</li>
-                <li><strong>Earn</strong> &mdash; Flat fees flow automatically as your community transacts</li>
+                <li><strong>Deploy token.</strong> Launch on Ethervista via etherfun.app</li>
+                <li><strong>Configure bot.</strong> Add Bonzi to your Telegram group and set brand preferences</li>
+                <li><strong>Activate community.</strong> Enable Promote &amp; Earn, tipping, and leaderboards</li>
+                <li><strong>Earn.</strong> Flat fees flow as your community transacts</li>
             </ol>
 
             <h3>Included vs Customisable</h3>
@@ -1482,30 +1482,20 @@
 
             <!-- ===================== BRAND ADVOCATE EARNINGS ===================== -->
             <h2 id="advocate-earnings">Brand Advocate Earnings</h2>
-            <p class="docs-intro">Your reputation compounds. Every cooperation signal you send earns more as your tier grows.</p>
+            <p class="docs-intro">Your track record grows with every contribution. Better contributors get faster reviews and access to more tasks.</p>
 
-            <h3>CPI Tier Progression</h3>
-            <p>The <strong>Combined Progression Index (CPI)</strong> tracks genuine cooperation. Each positive signal raises your tier. Higher tiers unlock more features and earn higher multipliers.</p>
-            <table class="command-table">
-                <tr><th>Tier</th><th>CPI Threshold</th><th>What Unlocks</th></tr>
-                <tr><td>New</td><td>0</td><td>Basic participation</td></tr>
-                <tr><td>Participant</td><td>21</td><td>Promotion submissions</td></tr>
-                <tr><td>Helper</td><td>51</td><td>Tip pool access</td></tr>
-                <tr><td>Trusted Helper</td><td>101</td><td>Reviewer access, faster review</td></tr>
-                <tr><td>Community Pillar</td><td>201</td><td>Governance voting</td></tr>
-                <tr><td>MVP</td><td>500</td><td>Full DAO privileges</td></tr>
-            </table>
+            <h3>How You Progress</h3>
+            <p>The system tracks genuine cooperation. Each positive signal raises your standing. Higher standing means faster reviews and more access.</p>
 
-            <h3>How Earnings Compound</h3>
+            <h3>How Earnings Work</h3>
             <ul>
-                <li><strong>Cooperation signals</strong> &mdash; help others, answer questions, submit quality promotions, report bugs</li>
-                <li><strong>Multiplier effect</strong> &mdash; trusted users (tier 3+) earn 1.2x on every future signal</li>
-                <li><strong>Reviewer income</strong> &mdash; at CPI 101+, review newcomer promotions for $10 flat per review (90% to you)</li>
-                <li><strong>Anti-gaming</strong> &mdash; self-dealing, spam, and fake signals are detected and penalised automatically</li>
+                <li><strong>Cooperation signals.</strong> Help others, answer questions, submit quality promotions, report bugs</li>
+                <li><strong>Reviewer income.</strong> At score 101+, review newcomer promotions for $10 flat per review (90% to you)</li>
+                <li><strong>Anti-gaming.</strong> Self-dealing, spam, and fake signals are detected and penalised automatically</li>
             </ul>
 
             <div class="highlight-box">
-                <strong>Key insight:</strong> One genuine help signal per day compounds to Trusted Helper in ~4 months. Gaming gets you banned faster than honest participation gets you promoted.
+                <strong>Active participation required.</strong> One genuine help signal per day. Gaming gets you banned faster than honest participation gets you promoted.
             </div>
 
             <!-- ===================== ORACLE FOR MODERATORS ===================== -->
@@ -1514,10 +1504,10 @@
 
             <h3>What the Oracle Detects</h3>
             <ul>
-                <li><strong>Cooperation signals</strong> &mdash; help given, gratitude received, educational contributions</li>
-                <li><strong>Gaming attempts</strong> &mdash; self-tipping, sybil clusters, coordinated farming</li>
-                <li><strong>Churn risk</strong> &mdash; active members going quiet, engagement drops</li>
-                <li><strong>Anomalies</strong> &mdash; sudden score spikes, suspicious voting patterns</li>
+                <li><strong>Cooperation signals.</strong> Help given, gratitude received, educational contributions</li>
+                <li><strong>Gaming attempts.</strong> Self-tipping, sybil clusters, coordinated farming</li>
+                <li><strong>Churn risk.</strong> Active members going quiet, engagement drops</li>
+                <li><strong>Anomalies.</strong> Sudden score spikes, suspicious voting patterns</li>
             </ul>
 
             <h3>Daily Digest</h3>
@@ -1545,11 +1535,11 @@
 
             <h3>How It Works</h3>
             <ol>
-                <li><strong>Email signup</strong> &mdash; Create an account with your business email</li>
-                <li><strong>Wallet creation</strong> &mdash; A secure wallet is generated for you automatically</li>
-                <li><strong>Token configuration</strong> &mdash; Set your brand name, supply, fees, and LP hardlock</li>
-                <li><strong>Deploy</strong> &mdash; One-click deployment to Ethereum via Ethervista</li>
-                <li><strong>Website widget</strong> &mdash; Embed a buy button on your existing website</li>
+                <li><strong>Email signup.</strong> Create an account with your business email</li>
+                <li><strong>Wallet creation.</strong> A secure wallet is generated for you automatically</li>
+                <li><strong>Token configuration.</strong> Set your brand name, supply, fees, and LP hardlock</li>
+                <li><strong>Deploy.</strong> One-click deployment to Ethereum via Ethervista</li>
+                <li><strong>Website widget.</strong> Embed a buy button on your existing website</li>
             </ol>
 
             <h3>Fiat Integration</h3>
@@ -1577,7 +1567,7 @@
             <p>10% of reviews are randomly selected for <strong>meta-review</strong>. A second reviewer checks whether the first reviewer was fair. This keeps reviewers honest.</p>
 
             <h3>Graduated Sanctions</h3>
-            <p>Reviewers who consistently make poor decisions face the same 4-tier progressive system as regular members. No special treatment &mdash; everyone is accountable to the same rules.</p>
+            <p>Reviewers who consistently make poor decisions face the same 4-tier progressive system as regular members. No special treatment. Everyone is accountable to the same rules.</p>
 
             <h3>Privacy</h3>
             <p>Prove your tier without revealing personal data. Cryptographic commitment hashes let you demonstrate your reputation level without exposing your identity or exact score.</p>
@@ -1589,7 +1579,7 @@
             <p data-i18n="trouble.bot.desc">Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages.</p>
 
             <h3 data-i18n="trouble.claim.title">Claim not working</h3>
-            <p data-i18n="trouble.claim.desc">Verify: (1) You have 100+ points, (2) Wallet is linked, (3) Haven't claimed in last 7 days, (4) Pool has funds.</p>
+            <p data-i18n="trouble.claim.desc">Verify: (1) You meet the minimum points threshold (configurable per community), (2) Wallet is linked, (3) Pool has funds.</p>
 
             <h3 data-i18n="trouble.answers.title">Wrong answers</h3>
             <p data-i18n="trouble.answers.desc">Use feedback buttons to report. For persistent issues, use <code>/bug</code>.</p>
@@ -1643,7 +1633,7 @@
                 "sidebar.launch": "Launch Your Token", "sidebar.wizard": "AI Wizard Setup", "sidebar.supervision": "AI Supervision", "sidebar.tickets": "Ticket Tool",
                 "sidebar.journey": "Your Journey", "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Promote & Earn", "sidebar.tasks": "Task System", "sidebar.claim": "Claim ETH",
                 "sidebar.howtobuy": "How to Buy", "sidebar.tokenomics": "Token Economics",
-                "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Self-Compounding", "sidebar.metrics": "Fee Model",
+                "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Reward Accumulation", "sidebar.metrics": "Fee Model",
                 "sidebar.widgets": "Widget Library", "sidebar.selfhost": "Self-Host Setup", "sidebar.api": "API Reference",
                 "sidebar.erc8004": "ERC-8004 Overview", "sidebar.registration": "Agent Registration", "sidebar.reputation": "Reputation Queries", "sidebar.a2a": "A2A Tipping",
                 "sidebar.troubleshooting": "Troubleshooting", "sidebar.support": "Get Support",
@@ -1704,7 +1694,7 @@
                 "farmers.raidearn.quality": "Quality matters more than volume. One thoughtful reply under an influencer's post is worth more than ten copy-paste threads. The system knows the difference.",
                 "farmers.tasks.title": "Task System", "farmers.tasks.desc": "AI-vetted quests with ETH rewards. Complete tasks, earn from the community pool.",
                 "farmers.tasks.1": "View available tasks in dashboard", "farmers.tasks.2": "Submit proof of completion", "farmers.tasks.3": "AI verifies, points awarded",
-                "farmers.claim.title": "Claim ETH", "farmers.claim.1": "Earn points:", "farmers.claim.1.desc": "100+ required",
+                "farmers.claim.title": "Claim ETH", "farmers.claim.1": "Earn points:", "farmers.claim.1.desc": "50+ required (configurable per community)",
                 "farmers.claim.2": "Link wallet:", "farmers.claim.3": "Claim:", "farmers.claim.3.desc": "/claim when eligible",
                 "farmers.claim.source": "Where does ETH come from?", "farmers.claim.source.desc": "Trading fees from the token fund the tip pool. No VC money - just value created by community, returned to community.",
                 // Investors
@@ -1717,11 +1707,11 @@
                 "investors.tokenomics.lp": "LP Hardlock:", "investors.tokenomics.lp.desc": "25-75% spectrum - brands choose their commitment level",
                 "investors.tokenomics.distribution": "Distribution:", "investors.tokenomics.distribution.desc": "Higher hardlock = more community trust signals",
                 // Stakers
-                "stakers.title": "For Stakers", "stakers.intro": "Stake into brand success. Self-compounding yields on Ethervista.",
+                "stakers.title": "For Stakers", "stakers.intro": "Earn fees from trading activity. Flat-fee yields on Ethervista.",
                 "stakers.guide.title": "Staking Guide", "stakers.guide.1": "Visit ethervista.app", "stakers.guide.2": "Connect wallet",
                 "stakers.guide.3": "Choose: Hardstake (locked) or LP (liquid)", "stakers.guide.4": "Link wallet in Bonzi: /link_wallet 0x...",
                 "stakers.mobile.title": "Mobile Staking", "stakers.mobile.desc": "BONZI holders can stake via mobile. Access through the Telegram bot dashboard - no desktop required.",
-                "stakers.compounding.title": "Self-Compounding", "stakers.compounding.desc": "Rewards auto-compound. No manual claiming needed. Your stake grows automatically.",
+                "stakers.compounding.title": "Reward Accumulation", "stakers.compounding.desc": "Rewards accumulate from trading fees. Claim anytime via the bot or web app.",
                 "stakers.fees.title": "Fee Model", "stakers.fees.desc": "Ethervista uses flat fees per transaction, not percentages. Revenue scales with trade count, not trade size.",
                 "stakers.metrics.whale": "Whale:", "stakers.metrics.whale.desc": "Large holder movements",
                 "stakers.metrics.narrative": "Narrative:", "stakers.metrics.narrative.desc": "Social sentiment tracking",
@@ -1757,7 +1747,7 @@
                 // Troubleshooting
                 "trouble.title": "Troubleshooting",
                 "trouble.bot.title": "Bot not responding", "trouble.bot.desc": "Check that Bonzi has admin permissions in your group. Without admin access, it can't read messages.",
-                "trouble.claim.title": "Claim not working", "trouble.claim.desc": "Verify: (1) You have 100+ points, (2) Wallet is linked, (3) Haven't claimed in last 7 days, (4) Pool has funds.",
+                "trouble.claim.title": "Claim not working", "trouble.claim.desc": "Verify: (1) You meet the minimum points threshold (configurable per community), (2) Wallet is linked, (3) Pool has funds.",
                 "trouble.answers.title": "Wrong answers", "trouble.answers.desc": "Use feedback buttons to report. For persistent issues, use /bug.",
                 "trouble.help": "Need help?", "trouble.help.desc": "Join t.me/Bonzivista_bot or open an issue on GitHub."
             },
@@ -1813,7 +1803,7 @@
                 "farmers.raidearn.3": "Bot verifica: tweet existe, conteudo original, qualidade da conta", "farmers.raidearn.4": "Pontos concedidos automaticamente",
                 "farmers.tasks.title": "Sistema de Tarefas", "farmers.tasks.desc": "Missoes verificadas por IA com recompensas em ETH. Complete tarefas, ganhe do pool da comunidade.",
                 "farmers.tasks.1": "Veja tarefas disponiveis no painel", "farmers.tasks.2": "Envie prova de conclusao", "farmers.tasks.3": "IA verifica, pontos concedidos",
-                "farmers.claim.title": "Resgatar ETH", "farmers.claim.1": "Ganhe pontos:", "farmers.claim.1.desc": "100+ necessarios",
+                "farmers.claim.title": "Resgatar ETH", "farmers.claim.1": "Ganhe pontos:", "farmers.claim.1.desc": "50+ necessarios (configuravel por comunidade)",
                 "farmers.claim.2": "Vincule carteira:", "farmers.claim.3": "Resgate:", "farmers.claim.3.desc": "/claim quando elegivel",
                 "farmers.claim.source": "De onde vem o ETH?", "farmers.claim.source.desc": "Taxas de trading do token financiam o pool de gorjetas. Sem dinheiro de VC - apenas valor criado pela comunidade, retornado para a comunidade.",
                 // Investors
@@ -1826,11 +1816,11 @@
                 "investors.tokenomics.lp": "LP Hardlock:", "investors.tokenomics.lp.desc": "Espectro 25-75% - marcas escolhem seu nivel de compromisso",
                 "investors.tokenomics.distribution": "Distribuicao:", "investors.tokenomics.distribution.desc": "Maior hardlock = mais sinais de confianca da comunidade",
                 // Stakers
-                "stakers.title": "Para Stakers", "stakers.intro": "Faca stake no sucesso das marcas. Rendimentos auto-compostos na Ethervista.",
+                "stakers.title": "Para Stakers", "stakers.intro": "Ganhe taxas da atividade de trading. Rendimentos de taxa fixa na Ethervista.",
                 "stakers.guide.title": "Guia de Staking", "stakers.guide.1": "Visite ethervista.app", "stakers.guide.2": "Conecte a carteira",
                 "stakers.guide.3": "Escolha: Hardstake (bloqueado) ou LP (liquido)", "stakers.guide.4": "Vincule a carteira no Bonzi: /link_wallet 0x...",
                 "stakers.mobile.title": "Staking Mobile", "stakers.mobile.desc": "Holders de BONZI podem fazer stake pelo celular. Acesse pelo painel do bot no Telegram - sem necessidade de desktop.",
-                "stakers.compounding.title": "Auto-Composicao", "stakers.compounding.desc": "Recompensas auto-compostas. Sem necessidade de resgate manual. Seu stake cresce automaticamente.",
+                "stakers.compounding.title": "Acumulacao de Recompensas", "stakers.compounding.desc": "Recompensas acumulam das taxas de trading. Resgate a qualquer momento pelo bot ou web app.",
                 "stakers.fees.title": "Modelo de Taxas", "stakers.fees.desc": "Ethervista usa taxas fixas por transacao, nao porcentagens. Receita escala com contagem de transacoes, nao com tamanho.",
                 "stakers.metrics.whale": "Whale:", "stakers.metrics.whale.desc": "Movimentos de grandes holders",
                 "stakers.metrics.narrative": "Narrativa:", "stakers.metrics.narrative.desc": "Rastreamento de sentimento social",
@@ -1867,7 +1857,7 @@
                 // Troubleshooting
                 "trouble.title": "Solucao de Problemas",
                 "trouble.bot.title": "Bot nao responde", "trouble.bot.desc": "Verifique se Bonzi tem permissoes de admin no seu grupo. Sem acesso admin, ele nao pode ler mensagens.",
-                "trouble.claim.title": "Resgate nao funciona", "trouble.claim.desc": "Verifique: (1) Voce tem 100+ pontos, (2) Carteira vinculada, (3) Nao resgatou nos ultimos 7 dias, (4) Pool tem fundos.",
+                "trouble.claim.title": "Resgate nao funciona", "trouble.claim.desc": "Verifique: (1) Voce atingiu o limite minimo de pontos (configuravel por comunidade), (2) Carteira vinculada, (3) Pool tem fundos.",
                 "trouble.answers.title": "Respostas erradas", "trouble.answers.desc": "Use os botoes de feedback para reportar. Para problemas persistentes, use /bug.",
                 "trouble.help": "Precisa de ajuda?", "trouble.help.desc": "Entre em t.me/Bonzivista_bot ou abra uma issue no GitHub."
             },

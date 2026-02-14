@@ -475,6 +475,16 @@
             </div>
 
             <div class="sidebar-section">
+                <h4>Learn More</h4>
+                <a href="#tokenised-brand">What is a Tokenised Brand?</a>
+                <a href="#dao-starter-kit">DAO Starter Kit</a>
+                <a href="#advocate-earnings">Brand Advocate Earnings</a>
+                <a href="#oracle-moderators">Oracle for Moderators</a>
+                <a href="#email-launch">Token Launch via Email</a>
+                <a href="#human-vetting">Human Vetting</a>
+            </div>
+
+            <div class="sidebar-section">
                 <h4 data-i18n="sidebar.help">Help</h4>
                 <a href="#troubleshooting" data-i18n="sidebar.troubleshooting">Troubleshooting</a>
                 <a href="../index.html?contact=1" data-i18n="sidebar.support">Get Support</a>
@@ -822,7 +832,7 @@
                 <li data-i18n="farmers.quickstart.1">Join a community with Bonzi active</li>
                 <li data-i18n="farmers.quickstart.2">Send /start to open the dashboard</li>
                 <li data-i18n="farmers.quickstart.3">Start earning: ask questions, report bugs, join outreach campaigns</li>
-                <li data-i18n="farmers.quickstart.4">Hit 100 points &rarr; claim ETH</li>
+                <li data-i18n="farmers.quickstart.4">Hit 50 points &rarr; claim ETH</li>
             </ol>
 
             <h3 id="commands" data-i18n="farmers.commands.title">Commands</h3>
@@ -878,10 +888,10 @@
                 </thead>
                 <tbody>
                     <tr><td><strong>Post on X</strong></td><td data-i18n="farmers.row_post">Write original content about the project. Reply to the official post or tag the project. No minimum followers.</td><td>You</td></tr>
-                    <tr><td><strong>Auto-Detect</strong></td><td data-i18n="farmers.row_auto">System scans your X feed via OAuth. Finds your post, extracts metrics (likes, replies, quoted replies).</td><td>~5 min</td></tr>
+                    <tr><td><strong>Submit</strong></td><td data-i18n="farmers.row_auto">Use /raid with your post URL. System extracts metrics (likes, replies, quoted replies).</td><td>~1 min</td></tr>
                     <tr><td><strong>Quality Check</strong></td><td data-i18n="farmers.row_quality">AI scores originality, engagement (replies > likes), and relevance. 1-10 scale.</td><td>Instant</td></tr>
                     <tr><td><strong>Review</strong></td><td data-i18n="farmers.row_review">Tier-based: Veterans get auto-approved. Rookies get peer review. Fraud checks flag suspicious activity.</td><td>0-4h</td></tr>
-                    <tr><td><strong>Earn Points</strong></td><td data-i18n="farmers.row_earn">Points awarded based on quality score x tier multiplier. 5-50 pts per campaign.</td><td>Instant</td></tr>
+                    <tr><td><strong>Earn Points</strong></td><td data-i18n="farmers.row_earn">Points awarded based on quality score. 5-50 pts per campaign depending on tier.</td><td>Instant</td></tr>
                 </tbody>
             </table>
 
@@ -1143,9 +1153,8 @@
                     <tr><th>Requirement</th><th>Details</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Points</strong></td><td>100+ accumulated</td></tr>
+                    <tr><td><strong>Points</strong></td><td>50+ accumulated (configurable per community)</td></tr>
                     <tr><td><strong>Wallet</strong></td><td>Linked via /link_wallet</td></tr>
-                    <tr><td><strong>Cooldown</strong></td><td>7 days since last claim</td></tr>
                     <tr><td><strong>Pool</strong></td><td>Must have available funds</td></tr>
                 </tbody>
             </table>
@@ -1452,6 +1461,163 @@
                 <li><strong data-i18n="agents.erc8004.siah.oracle">Live oracle queries:</strong> <span data-i18n="agents.erc8004.siah.oracle.desc">Planned</span></li>
             </ul>
             <p data-i18n="agents.erc8004.outro">Once fully integrated, SIAH's internal trust signals (tips, QA scores, cooperation metrics) will be bridged to ERC-8004's Reputation Registry. Other agents will be able to query SIAH's reputation data trustlessly on-chain.</p>
+
+            <!-- ===================== TOKENISED BRAND ===================== -->
+            <h2 id="tokenised-brand">What is a Tokenised Brand?</h2>
+            <p class="docs-intro">A token is a loyalty-equity hybrid for the web3 era. Instead of points that expire, your community earns tokens that appreciate as the brand grows.</p>
+
+            <h3>How It Works</h3>
+            <p>Every brand token launched through Bonzi uses the <strong>VISTA-20 standard</strong> on Ethervista. This gives you flat-fee economics from day one:</p>
+            <ul>
+                <li><strong>Flat fees per transaction</strong> &mdash; $5-15 per swap, not a percentage. A $100 trade and a $10,000 trade pay the same fee.</li>
+                <li><strong>Revenue = transaction count</strong> &mdash; your income grows with community activity, not trade size.</li>
+                <li><strong>Fees split automatically</strong> &mdash; between creators, LPs, and the tip pool. No manual distribution.</li>
+            </ul>
+
+            <h3>Web2 Points vs Web3 Tokens</h3>
+            <table class="command-table">
+                <tr><th>Web2 Points</th><th>Web3 Tokens</th></tr>
+                <tr><td>Expire after 12 months</td><td>Never expire</td></tr>
+                <tr><td>Only redeemable at one store</td><td>Tradeable on open markets</td></tr>
+                <tr><td>Company controls supply</td><td>Supply fixed at launch</td></tr>
+                <tr><td>Zero resale value</td><td>Market-priced, transferable</td></tr>
+                <tr><td>Loyalty is one-way</td><td>Community earns equity</td></tr>
+            </table>
+
+            <h3>Value Accrual</h3>
+            <p>Community activity &rarr; more transactions &rarr; more fees &rarr; token demand &rarr; everyone benefits. The loop is built into the protocol, not bolted on.</p>
+
+            <!-- ===================== DAO STARTER KIT ===================== -->
+            <h2 id="dao-starter-kit">DAO Starter Kit</h2>
+            <p class="docs-intro">Deploy a token, configure your bot, activate your community, and start earning. Everything included.</p>
+
+            <h3>What You Get</h3>
+            <ul>
+                <li><strong>Token</strong> &mdash; VISTA-20 token with flat-fee economics, deployed on Ethervista</li>
+                <li><strong>Bot</strong> &mdash; Telegram bot with AI moderation, tipping, promotions, and reputation tracking</li>
+                <li><strong>Governance</strong> &mdash; Human vetting, graduated sanctions, and cooperative reputation (CPI)</li>
+                <li><strong>Analytics</strong> &mdash; Real-time dashboards for whale movements, social sentiment, and on-chain metrics</li>
+            </ul>
+
+            <h3>Setup Flow</h3>
+            <ol>
+                <li><strong>Deploy token</strong> &mdash; Launch on Ethervista via the web wizard or Telegram bot</li>
+                <li><strong>Configure bot</strong> &mdash; Add Bonzi to your Telegram group and set brand preferences</li>
+                <li><strong>Activate community</strong> &mdash; Enable Promote &amp; Earn, tipping, and leaderboards</li>
+                <li><strong>Earn</strong> &mdash; Flat fees flow automatically as your community transacts</li>
+            </ol>
+
+            <h3>Included vs Customisable</h3>
+            <table class="command-table">
+                <tr><th>Included (works out of the box)</th><th>You Customise</th></tr>
+                <tr><td>Token deployment</td><td>Fee levels (creator/LP split)</td></tr>
+                <tr><td>Telegram bot</td><td>Brand name, logo, welcome message</td></tr>
+                <tr><td>Reputation system</td><td>Which features to enable</td></tr>
+                <tr><td>Promotion tracking</td><td>Reward amounts</td></tr>
+                <tr><td>Staking infrastructure</td><td>LP hardlock percentage</td></tr>
+            </table>
+
+            <!-- ===================== BRAND ADVOCATE EARNINGS ===================== -->
+            <h2 id="advocate-earnings">Brand Advocate Earnings</h2>
+            <p class="docs-intro">Your reputation compounds. Every cooperation signal you send earns more as your tier grows.</p>
+
+            <h3>CPI Tier Progression</h3>
+            <p>The <strong>Combined Progression Index (CPI)</strong> tracks genuine cooperation. Each positive signal raises your tier. Higher tiers unlock more features and earn higher multipliers.</p>
+            <table class="command-table">
+                <tr><th>Tier</th><th>CPI Threshold</th><th>What Unlocks</th></tr>
+                <tr><td>New</td><td>0</td><td>Basic participation</td></tr>
+                <tr><td>Participant</td><td>21</td><td>Promotion submissions</td></tr>
+                <tr><td>Helper</td><td>51</td><td>Tip pool access</td></tr>
+                <tr><td>Trusted Helper</td><td>101</td><td>Reviewer access, faster review</td></tr>
+                <tr><td>Community Pillar</td><td>201</td><td>Governance voting</td></tr>
+                <tr><td>MVP</td><td>500</td><td>Full DAO privileges</td></tr>
+            </table>
+
+            <h3>How Earnings Compound</h3>
+            <ul>
+                <li><strong>Cooperation signals</strong> &mdash; help others, answer questions, submit quality promotions, report bugs</li>
+                <li><strong>Multiplier effect</strong> &mdash; trusted users (tier 3+) earn 1.2x on every future signal</li>
+                <li><strong>Reviewer income</strong> &mdash; at CPI 101+, review newcomer promotions for $10 flat per review (90% to you)</li>
+                <li><strong>Anti-gaming</strong> &mdash; self-dealing, spam, and fake signals are detected and penalised automatically</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Key insight:</strong> One genuine help signal per day compounds to Trusted Helper in ~4 months. Gaming gets you banned faster than honest participation gets you promoted.
+            </div>
+
+            <!-- ===================== ORACLE FOR MODERATORS ===================== -->
+            <h2 id="oracle-moderators">Oracle for Community Moderators</h2>
+            <p class="docs-intro">The AI oracle auto-detects cooperation signals, gaming attempts, and churn risk. Moderators focus on community, not policing.</p>
+
+            <h3>What the Oracle Detects</h3>
+            <ul>
+                <li><strong>Cooperation signals</strong> &mdash; help given, gratitude received, educational contributions</li>
+                <li><strong>Gaming attempts</strong> &mdash; self-tipping, sybil clusters, coordinated farming</li>
+                <li><strong>Churn risk</strong> &mdash; active members going quiet, engagement drops</li>
+                <li><strong>Anomalies</strong> &mdash; sudden score spikes, suspicious voting patterns</li>
+            </ul>
+
+            <h3>Daily Digest</h3>
+            <p>Moderators receive an automated daily summary:</p>
+            <ul>
+                <li>Tier changes (who moved up or down)</li>
+                <li>Anomaly alerts (flagged accounts needing review)</li>
+                <li>Sybil clusters (groups of accounts acting in concert)</li>
+                <li>Engagement trends (community health at a glance)</li>
+            </ul>
+
+            <h3>Graduated Response</h3>
+            <p>No instant bans. The system uses a 4-tier progressive response:</p>
+            <table class="command-table">
+                <tr><th>Level</th><th>Action</th><th>CPI Impact</th></tr>
+                <tr><td>1. Warning</td><td>Private notification</td><td>-5 points</td></tr>
+                <tr><td>2. Cooldown</td><td>7-day feature restriction</td><td>-15 points</td></tr>
+                <tr><td>3. Suspension</td><td>30-day ban from earning</td><td>-30 points</td></tr>
+                <tr><td>4. Permanent</td><td>Full removal</td><td>-50 points</td></tr>
+            </table>
+
+            <!-- ===================== TOKEN LAUNCH VIA EMAIL ===================== -->
+            <h2 id="email-launch">Token Launch via Email</h2>
+            <p class="docs-intro">Launch a token without crypto knowledge. Sign up with email, configure your brand, deploy to Ethereum.</p>
+
+            <h3>How It Works</h3>
+            <ol>
+                <li><strong>Email signup</strong> &mdash; Create an account with your business email</li>
+                <li><strong>Wallet creation</strong> &mdash; A secure wallet is generated for you automatically</li>
+                <li><strong>Token configuration</strong> &mdash; Set your brand name, supply, fees, and LP hardlock</li>
+                <li><strong>Deploy</strong> &mdash; One-click deployment to Ethereum via Ethervista</li>
+                <li><strong>Website widget</strong> &mdash; Embed a buy button on your existing website</li>
+            </ol>
+
+            <h3>Fiat Integration</h3>
+            <p>Your customers don't need crypto either. <strong>Stripe integration</strong> lets end users buy tokens with credit card. The conversion happens behind the scenes.</p>
+
+            <div class="highlight-box">
+                <strong>Zero crypto required:</strong> Brand owner signs up via email. Customer buys via credit card. Blockchain runs in the background.
+            </div>
+
+            <!-- ===================== HUMAN VETTING ===================== -->
+            <h2 id="human-vetting">Human Vetting (Ostrom Governance)</h2>
+            <p class="docs-intro">Experienced community members verify newcomers. Decentralised quality control based on Ostrom's commons principles.</p>
+
+            <h3>What is Human Vetting?</h3>
+            <p>When a new member submits a promotion, it goes to a queue. Experienced members (CPI &ge; 101) review it for quality. This keeps standards high without centralised moderation.</p>
+
+            <h3>Reviewer Eligibility</h3>
+            <ul>
+                <li><strong>CPI threshold:</strong> Must have CPI score of 101 or higher (Trusted Helper tier)</li>
+                <li><strong>Fee:</strong> $10 flat per review, 90% goes to the reviewer</li>
+                <li><strong>Selection:</strong> Reviewers are assigned randomly from the eligible pool</li>
+            </ul>
+
+            <h3>Quality Assurance</h3>
+            <p>10% of reviews are randomly selected for <strong>meta-review</strong>. A second reviewer checks whether the first reviewer was fair. This keeps reviewers honest.</p>
+
+            <h3>Graduated Sanctions</h3>
+            <p>Reviewers who consistently make poor decisions face the same 4-tier progressive system as regular members. No special treatment &mdash; everyone is accountable to the same rules.</p>
+
+            <h3>Privacy</h3>
+            <p>Prove your tier without revealing personal data. Cryptographic commitment hashes let you demonstrate your reputation level without exposing your identity or exact score.</p>
 
             <!-- ===================== TROUBLESHOOTING ===================== -->
             <h2 id="troubleshooting" data-i18n="trouble.title">Troubleshooting</h2>

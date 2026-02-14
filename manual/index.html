@@ -455,7 +455,7 @@
                 <a href="#stakers" data-i18n="sidebar.stakingguide">Staking Guide</a>
                 <a href="#mobile-staking" data-i18n="sidebar.mobilestaking">Mobile Staking</a>
                 <a href="#compounding" data-i18n="sidebar.compounding">Self-Compounding</a>
-                <a href="#metrics" data-i18n="sidebar.metrics">3-Tier Metrics</a>
+                <a href="#fee-model" data-i18n="sidebar.metrics">Fee Model</a>
             </div>
 
             <div class="sidebar-section">
@@ -1292,16 +1292,17 @@
             <h3 id="compounding" data-i18n="stakers.compounding.title">Self-Compounding</h3>
             <p data-i18n="stakers.compounding.desc">Rewards auto-compound. No manual claiming needed. Your stake grows automatically.</p>
 
-            <h3 id="metrics" data-i18n="stakers.metrics.title">3-Tier Metrics</h3>
-            <p data-i18n="stakers.metrics.desc">DAO members get access to 6 metric categories:</p>
-            <ul>
-                <li><strong data-i18n="stakers.metrics.whale">Whale:</strong> <span data-i18n="stakers.metrics.whale.desc">Large holder movements</span></li>
-                <li><strong data-i18n="stakers.metrics.narrative">Narrative:</strong> <span data-i18n="stakers.metrics.narrative.desc">Social sentiment tracking</span></li>
-                <li><strong data-i18n="stakers.metrics.social">Social:</strong> <span data-i18n="stakers.metrics.social.desc">Community engagement</span></li>
-                <li><strong data-i18n="stakers.metrics.onchain">Onchain:</strong> <span data-i18n="stakers.metrics.onchain.desc">Transaction patterns</span></li>
-                <li><strong data-i18n="stakers.metrics.macro">Macro:</strong> <span data-i18n="stakers.metrics.macro.desc">Market conditions</span></li>
-                <li><strong data-i18n="stakers.metrics.micro">Micro:</strong> <span data-i18n="stakers.metrics.micro.desc">Individual token metrics</span></li>
-            </ul>
+            <h3 id="fee-model" data-i18n="stakers.fees.title">Fee Model</h3>
+            <p data-i18n="stakers.fees.desc">Ethervista uses flat fees per transaction, not percentages. Revenue scales with trade count, not trade size.</p>
+            <table class="command-table">
+                <thead>
+                    <tr><th>Token</th><th>Creator Fee</th><th>LP Fee</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>BONZI</strong></td><td>20</td><td>20</td></tr>
+                    <tr><td><strong>VISTA</strong></td><td>10</td><td>15</td></tr>
+                </tbody>
+            </table>
 
             <!-- ===================== DEVELOPERS ===================== -->
             <h2 id="developers"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg></span><span data-i18n="developers.title">For Developers</span></h2>
@@ -1642,7 +1643,7 @@
                 "sidebar.launch": "Launch Your Token", "sidebar.wizard": "AI Wizard Setup", "sidebar.supervision": "AI Supervision", "sidebar.tickets": "Ticket Tool",
                 "sidebar.journey": "Your Journey", "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Promote & Earn", "sidebar.tasks": "Task System", "sidebar.claim": "Claim ETH",
                 "sidebar.howtobuy": "How to Buy", "sidebar.tokenomics": "Token Economics",
-                "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Self-Compounding", "sidebar.metrics": "3-Tier Metrics",
+                "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Self-Compounding", "sidebar.metrics": "Fee Model",
                 "sidebar.widgets": "Widget Library", "sidebar.selfhost": "Self-Host Setup", "sidebar.api": "API Reference",
                 "sidebar.erc8004": "ERC-8004 Overview", "sidebar.registration": "Agent Registration", "sidebar.reputation": "Reputation Queries", "sidebar.a2a": "A2A Tipping",
                 "sidebar.troubleshooting": "Troubleshooting", "sidebar.support": "Get Support",
@@ -1721,7 +1722,7 @@
                 "stakers.guide.3": "Choose: Hardstake (locked) or LP (liquid)", "stakers.guide.4": "Link wallet in Bonzi: /link_wallet 0x...",
                 "stakers.mobile.title": "Mobile Staking", "stakers.mobile.desc": "BONZI holders can stake via mobile. Access through the Telegram bot dashboard - no desktop required.",
                 "stakers.compounding.title": "Self-Compounding", "stakers.compounding.desc": "Rewards auto-compound. No manual claiming needed. Your stake grows automatically.",
-                "stakers.metrics.title": "3-Tier Metrics", "stakers.metrics.desc": "DAO members get access to 6 metric categories:",
+                "stakers.fees.title": "Fee Model", "stakers.fees.desc": "Ethervista uses flat fees per transaction, not percentages. Revenue scales with trade count, not trade size.",
                 "stakers.metrics.whale": "Whale:", "stakers.metrics.whale.desc": "Large holder movements",
                 "stakers.metrics.narrative": "Narrative:", "stakers.metrics.narrative.desc": "Social sentiment tracking",
                 "stakers.metrics.social": "Social:", "stakers.metrics.social.desc": "Community engagement",
@@ -1830,7 +1831,7 @@
                 "stakers.guide.3": "Escolha: Hardstake (bloqueado) ou LP (liquido)", "stakers.guide.4": "Vincule a carteira no Bonzi: /link_wallet 0x...",
                 "stakers.mobile.title": "Staking Mobile", "stakers.mobile.desc": "Holders de BONZI podem fazer stake pelo celular. Acesse pelo painel do bot no Telegram - sem necessidade de desktop.",
                 "stakers.compounding.title": "Auto-Composicao", "stakers.compounding.desc": "Recompensas auto-compostas. Sem necessidade de resgate manual. Seu stake cresce automaticamente.",
-                "stakers.metrics.title": "Metricas 3 Niveis", "stakers.metrics.desc": "Membros DAO tem acesso a 6 categorias de metricas:",
+                "stakers.fees.title": "Modelo de Taxas", "stakers.fees.desc": "Ethervista usa taxas fixas por transacao, nao porcentagens. Receita escala com contagem de transacoes, nao com tamanho.",
                 "stakers.metrics.whale": "Whale:", "stakers.metrics.whale.desc": "Movimentos de grandes holders",
                 "stakers.metrics.narrative": "Narrativa:", "stakers.metrics.narrative.desc": "Rastreamento de sentimento social",
                 "stakers.metrics.social": "Social:", "stakers.metrics.social.desc": "Engajamento da comunidade",

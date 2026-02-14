@@ -1213,6 +1213,25 @@
             return false;
         }
 
+        // EIP-6963: Modern wallet discovery
+        const discoveredProviders = [];
+        if (window.addEventListener) {
+            window.addEventListener('eip6963:announceProvider', (event) => {
+                discoveredProviders.push(event.detail);
+                console.log('[EIP-6963] Discovered:', event.detail.info.name);
+            });
+            window.dispatchEvent(new Event('eip6963:requestProvider'));
+        }
+
+        function getInjectedProvider() {
+            // Prefer MetaMask if discovered via EIP-6963
+            const metamask = discoveredProviders.find(p => p.info.rdns === 'io.metamask');
+            if (metamask) return metamask.provider;
+            // Fallback: first discovered provider, then window.ethereum
+            if (discoveredProviders.length > 0) return discoveredProviders[0].provider;
+            return window.ethereum;
+        }
+
         // Connect wallet (supports both MetaMask and WalletConnect)
         async function connectWallet(type = 'metamask', isReconnect = false) {
             const btn = document.getElementById('connectBtn');
@@ -1276,7 +1295,8 @@
 
                 } else {
                     // MetaMask / injected wallet flow
-                    if (!window.ethereum) {
+                    const injected = getInjectedProvider();
+                    if (!injected) {
                         if (isMobile()) {
                             throw new Error('No browser wallet found. Tap "WalletConnect (Mobile)" to connect your mobile wallet.');
                         }
@@ -1284,24 +1304,24 @@
                     }
 
                     // Request accounts
-                    const accounts = await window.ethereum.request({
+                    const accounts = await injected.request({
                         method: 'eth_requestAccounts'
                     });
                     userAddress = accounts[0];
                     connectionType = 'metamask';
 
                     // Check network
-                    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                    const chainId = await injected.request({ method: 'eth_chainId' });
                     if (chainId !== '0x1') {
-                        await window.ethereum.request({
+                        await injected.request({
                             method: 'wallet_switchEthereumChain',
                             params: [{ chainId: '0x1' }]
                         });
                     }
 
                     // Listen for account/network changes
-                    window.ethereum.on('accountsChanged', () => location.reload());
-                    window.ethereum.on('chainChanged', () => location.reload());
+                    injected.on('accountsChanged', () => location.reload());
+                    injected.on('chainChanged', () => location.reload());
                 }
 
                 // Setup provider (public for reads) - find working RPC
@@ -1397,7 +1417,8 @@
                 const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
                 return wcWeb3Provider.getSigner();
             } else {
-                const walletProvider = new ethers.providers.Web3Provider(window.ethereum);
+                const injected = getInjectedProvider();
+                const walletProvider = new ethers.providers.Web3Provider(injected);
                 return walletProvider.getSigner();
             }
         }
@@ -1621,12 +1642,20 @@
             if (wcRestored) return;
 
             // Then check for MetaMask auto-connect
-            if (window.ethereum && window.ethereum.selectedAddress) {
-                await connectWallet('metamask');
+            const injected = getInjectedProvider();
+            if (injected) {
+                try {
+                    const accounts = await injected.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        await connectWallet('metamask');
+                    }
+                } catch (e) {
+                    console.warn('[AUTO] Auto-connect failed:', e);
+                }
             }
 
             // On mobile without injected wallet, highlight WalletConnect button
-            if (isMobile() && !window.ethereum) {
+            if (isMobile() && !getInjectedProvider()) {
                 const wcBtn = document.getElementById('wcConnectBtn');
                 if (wcBtn) {
                     wcBtn.style.animation = 'pulse 2s infinite';

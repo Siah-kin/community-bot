@@ -41,7 +41,7 @@
 
     function getPathPrefix() {
         const path = window.location.pathname;
-        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/vetter/', '/vetter', '/dao/', '/dao', '/metrics/', '/metrics'];
+        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/research/', '/research', '/vetter/', '/vetter', '/dao/', '/dao', '/metrics/', '/metrics'];
         const isSubdir = subdirs.some((dir) => path.includes(dir));
         return isSubdir ? '../' : '';
     }
@@ -82,6 +82,7 @@
 
         if (cleanPath.includes('/manual')) return 'manual';
         if (cleanPath.includes('/economics')) return 'economics';
+        if (cleanPath.includes('/research')) return 'research';
         if (cleanPath.includes('/vetter')) return 'vetter';
         if (cleanPath.includes('/dao')) return 'dao';
         if (cleanPath.includes('/metrics')) return 'metrics';

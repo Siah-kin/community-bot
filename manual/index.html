@@ -430,7 +430,6 @@
                 <a href="#bug-earn" data-i18n="sidebar.bugearn">Bug & Earn</a>
                 <a href="#leaderboard" data-i18n="sidebar.leaderboard">Leaderboard</a>
                 <a href="#meme-earn" data-i18n="sidebar.meme">Meme Contests</a>
-                <a href="#tasks" data-i18n="sidebar.tasks">Task System</a>
                 <a href="#claim" data-i18n="sidebar.claim">Claim ETH</a>
                 <a href="#wallet" data-i18n="sidebar.wallet">Wallet & Identity</a>
             </div>
@@ -568,12 +567,12 @@
                         Top contributor: alice.eth (89 pts)
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px;">
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Tip Settings</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Chat Bot</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Data Bot</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Agent Settings</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Analytics</button>
-                        <button class="ui-mockup-btn" style="font-size: 11px;">Guides</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">💰 Rewards</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">🎯 Raids</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">💬 AI Bot</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">📊 Analytics</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">🏆 Community</button>
+                        <button class="ui-mockup-btn" style="font-size: 11px;">⚙️ Settings</button>
                     </div>
                 </div>
             </div>
@@ -581,9 +580,9 @@
 
             <h4>Analytics</h4>
             <ul>
-                <li><strong>Knowledge Gaps:</strong> Auto-detected topics where users ask questions the bot can't answer.</li>
-                <li><strong>Top Contributors:</strong> Ranked by cooperation score across all activities.</li>
-                <li><strong>Audit Log:</strong> Every admin action tracked. Uploads, setting changes, resets.</li>
+                <li><strong>Usage Stats:</strong> Total users, questions asked, documents indexed.</li>
+                <li><strong>Knowledge Base Health:</strong> Document processing success rate and engagement insights.</li>
+                <li><strong>Question Diversity:</strong> Uniqueness ratio showing how varied community questions are.</li>
             </ul>
 
             <h3 id="reputation" data-i18n="branders.reputation.title">Reputation System</h3>
@@ -626,29 +625,16 @@
                 </tbody>
             </table>
 
-            <h3 id="ambassador-setup" data-i18n="branders.ambassador.title">Ambassador Enrollment</h3>
-            <p>Enable ambassador mode so your community members can earn through outreach campaigns, content creation, and bug reports.</p>
+            <h3 id="ambassador-setup" data-i18n="branders.ambassador.title">Ambassador Setup</h3>
+            <p>Three admin actions to enable earning for your community members:</p>
 
-            <div class="ui-mockup">
-                <div class="ui-mockup-header">
-                    <div class="ui-mockup-avatar">B</div>
-                    <div class="ui-mockup-name">Agent Settings</div>
-                </div>
-                <div class="ui-mockup-body">
-                    <div class="ui-mockup-msg">
-                        <strong>Ambassador Mode</strong><br><br>
-                        Status: ACTIVE<br>
-                        Show points inline: ON<br>
-                        Milestone DMs: ON<br>
-                        Notify frequency: Every tip
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
-                        <button class="ui-mockup-btn">Toggle Mode</button>
-                        <button class="ui-mockup-btn">Notification Settings</button>
-                    </div>
-                </div>
-            </div>
-            <p class="ui-mockup-caption">One toggle activates the full ambassador system: campaigns, reviews, leaderboards.</p>
+            <ol>
+                <li><strong>Enable Leaderboard:</strong> /admin &rarr; Community &rarr; Leaderboard toggle ON</li>
+                <li><strong>Configure Raids:</strong> /admin &rarr; Raids &rarr; Set verification mode (manual, vision, or community)</li>
+                <li><strong>Set Scoring Rules:</strong> /admin &rarr; Rewards &rarr; Edit Scoring &rarr; Point values, claim threshold, jury toggle</li>
+            </ol>
+
+            <p>Once configured, community members can earn points through questions, raids, memes, and bug reports. Points convert to ETH via the tip pool.</p>
 
             <h3 id="tip-pool" data-i18n="branders.tippool.title">Tip Pool & Claims</h3>
             <p>Fund your community rewards from trading fees. Users earn points, then claim ETH from the pool.</p>
@@ -719,12 +705,12 @@
                 <tbody>
                     <tr><td><strong>Gate Enabled</strong></td><td>ON/OFF. When ON, non-holders see a prompt to buy</td></tr>
                     <tr><td><strong>Min Hold %</strong></td><td>Minimum percentage of supply required to interact</td></tr>
-                    <tr><td><strong>Gate Message</strong></td><td>Custom message shown to non-holders</td></tr>
+                    <tr><td><strong>Gate Message</strong></td><td>Custom message shown to non-holders (stored in settings)</td></tr>
                 </tbody>
             </table>
 
             <div class="highlight-box">
-                <strong>All tools accessible from one place.</strong> Send /admin to the bot in DM. Six-button grid: Tip Settings, Chat Bot, Data Bot, Agent Settings, Analytics, Guides. Every feature in this section is configurable from that panel.
+                <strong>All tools accessible from one place.</strong> Send /admin to the bot in DM. Six-button grid: Rewards, Raids, AI Bot, Analytics, Community, Settings. Every feature in this section is configurable from that panel.
             </div>
 
             <!-- ===================== AMBASSADORS ===================== -->
@@ -966,7 +952,7 @@
             </div>
 
             <h3 id="leaderboard" data-i18n="farmers.leaderboard.title">Leaderboard</h3>
-            <p>Real-time reputation across every activity. Five tabs, one ranking.</p>
+            <p>Real-time reputation across every activity. Five tabs, raids first.</p>
 
             <div class="ui-mockup">
                 <div class="ui-mockup-header">
@@ -975,11 +961,11 @@
                 </div>
                 <div class="ui-mockup-body">
                     <div style="display: flex; gap: 4px; margin-bottom: 12px; font-size: 11px;">
-                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Outreach</button>
-                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Tips</button>
+                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Raids</button>
+                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Overall</button>
+                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Questions</button>
+                        <button class="ui-mockup-btn" style="padding: 4px 8px;">ETH</button>
                         <button class="ui-mockup-btn" style="padding: 4px 8px;">Memes</button>
-                        <button class="ui-mockup-btn" style="padding: 4px 8px;">Bugs</button>
-                        <button class="ui-mockup-btn" style="padding: 4px 8px;">All</button>
                     </div>
                     <div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 8px;">
                         <div style="font-weight: bold; color: #7C3AED; font-size: 12px;">1. alice.eth</div>
@@ -995,15 +981,15 @@
                     </div>
                 </div>
             </div>
-            <p class="ui-mockup-caption">Five tabs. One reputation. Rank reflects real contribution.</p>
+            <p class="ui-mockup-caption">Five tabs. Raids first. Rank reflects real contribution.</p>
 
-            <h4>Categories</h4>
+            <h4>Tabs</h4>
             <ul>
-                <li><strong>Outreach:</strong> Points from campaigns and answering questions</li>
-                <li><strong>Tips:</strong> Points received from community tips</li>
-                <li><strong>Memes:</strong> Points from successful meme submissions</li>
-                <li><strong>Bugs:</strong> Points from verified bug reports</li>
-                <li><strong>All:</strong> Combined reputation across all categories</li>
+                <li><strong>Raids:</strong> Points from approved X outreach campaigns</li>
+                <li><strong>Overall:</strong> Combined cooperation score across all activities</li>
+                <li><strong>Questions:</strong> Points from quality questions asked to the AI</li>
+                <li><strong>ETH:</strong> Total on-chain ETH earned and claimed</li>
+                <li><strong>Memes:</strong> Points from meme contest voting (coming soon)</li>
             </ul>
 
             <div class="highlight-box">
@@ -1040,46 +1026,8 @@
                 <li><strong>Strikes:</strong> Stolen content = strike. 3 strikes = temp ban. Strikes expire after 90 days clean.</li>
             </ul>
 
-            <h3 id="tasks" data-i18n="farmers.tasks.title">Task System</h3>
-            <p data-i18n="farmers.tasks.desc">AI-verified quests from the community pool. Complete them, earn real rewards.</p>
-
-            <div class="ui-mockup">
-                <div class="ui-mockup-header">
-                    <div class="ui-mockup-avatar">B</div>
-                    <div class="ui-mockup-name">Available Tasks</div>
-                </div>
-                <div class="ui-mockup-body">
-                    <div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 8px;">
-                        <div style="font-weight: bold; color: #D4AF37; font-size: 12px;">Write a Thread</div>
-                        <div style="color: #888; font-size: 11px;">50 pts</div>
-                    </div>
-                    <div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 8px;">
-                        <div style="font-weight: bold; color: #D4AF37; font-size: 12px;">Create a Meme</div>
-                        <div style="color: #888; font-size: 11px;">25 pts</div>
-                    </div>
-                    <div style="background: #1a1a1a; border: 1px solid #333; padding: 10px; margin-bottom: 10px;">
-                        <div style="font-weight: bold; color: #D4AF37; font-size: 12px;">Test Feature & Report</div>
-                        <div style="color: #888; font-size: 11px;">35 pts</div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <button class="ui-mockup-btn">Start Task</button>
-                        <button class="ui-mockup-btn">View Completed</button>
-                    </div>
-                </div>
-            </div>
-            <p class="ui-mockup-caption">AI-verified tasks. Complete them, earn from the community pool.</p>
-
-            <h4>Task Flow</h4>
-            <ol>
-                <li><strong>Browse:</strong> See available tasks filtered by your tier</li>
-                <li><strong>Claim:</strong> Lock in a task</li>
-                <li><strong>Complete:</strong> Submit proof (screenshot, link, or text)</li>
-                <li><strong>Verify:</strong> AI checks completion quality</li>
-                <li><strong>Earn:</strong> Points awarded directly to your account</li>
-            </ol>
-
             <div class="highlight-box">
-                <strong>Start simple, grow into bigger tasks.</strong> New contributors begin with social engagement tasks. Higher cooperation scores open access to more complex assignments with bigger rewards.
+                <strong>Earn through raids, questions, memes, and bug reports.</strong> Each activity type awards points based on quality. Higher cooperation scores open access to better review queues and faster approvals.
             </div>
 
             <h3 id="claim" data-i18n="farmers.claim.title">Claim ETH</h3>
@@ -1120,7 +1068,7 @@
                     <tr><th>Requirement</th><th>Details</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Points</strong></td><td>50+ accumulated (configurable per community)</td></tr>
+                    <tr><td><strong>Points</strong></td><td>100+ accumulated (configurable by brand admin)</td></tr>
                     <tr><td><strong>Wallet</strong></td><td>Linked via /link_wallet</td></tr>
                     <tr><td><strong>Pool</strong></td><td>Must have available funds</td></tr>
                 </tbody>
@@ -1314,12 +1262,10 @@
             <p class="docs-intro" data-i18n="developers.intro">Integrate DeFi widgets. Fork the OSS. Ship faster.</p>
 
             <h3 data-i18n="developers.widgets.title">Widget Library</h3>
-            <p data-i18n="developers.widgets.desc">Drop DeFi functionality into any website:</p>
+            <p data-i18n="developers.widgets.desc">Embed token functionality into any website:</p>
             <ul>
-                <li><strong data-i18n="developers.widgets.buy">Buy Widget:</strong> <span data-i18n="developers.widgets.buy.desc">One-click token purchase</span></li>
-                <li><strong data-i18n="developers.widgets.qr">QR Codes:</strong> <span data-i18n="developers.widgets.qr.desc">Mobile-friendly payment links</span></li>
-                <li><strong data-i18n="developers.widgets.staking">Staking Display:</strong> <span data-i18n="developers.widgets.staking.desc">Show APY and TVL</span></li>
-                <li><strong data-i18n="developers.widgets.price">Price Chart:</strong> <span data-i18n="developers.widgets.price.desc">Embedded price history</span></li>
+                <li><strong data-i18n="developers.widgets.buy">Buy Widget:</strong> <span data-i18n="developers.widgets.buy.desc">One-click token purchase via embed script</span></li>
+                <li><strong data-i18n="developers.widgets.staking">Staking Mini App:</strong> <span data-i18n="developers.widgets.staking.desc">Mobile staking via Telegram Web App link</span></li>
             </ul>
 
             <pre><code>&lt;!-- Embed Widget --&gt;
@@ -1334,7 +1280,7 @@
             </ol>
 
             <h3 id="api" data-i18n="developers.api.title">API Reference</h3>
-            <p data-i18n="developers.api.desc">Full REST API for custom integrations. See <a href="https://github.com/Siah-kin/community-bot/blob/main/API.md">API.md</a> in the repo.</p>
+            <p data-i18n="developers.api.desc">Full REST API for custom integrations. See <a href="https://github.com/Siah-kin/community-bot/blob/main/docs/API.md">API.md</a> in the repo.</p>
 
             <!-- ===================== AGENTS ===================== -->
             <h2 id="agents"><span class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg></span><span data-i18n="agents.title">For AI Agents</span></h2>
@@ -1636,7 +1582,7 @@
                 "nav.features": "features", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economics", "nav.contact": "contact",
                 "sidebar.who": "Who are you?", "sidebar.branders": "For Branders", "sidebar.farmers": "For Ambassadors", "sidebar.investors": "For Investors", "sidebar.stakers": "For Stakers", "sidebar.developers": "For Developers", "sidebar.agents": "For AI Agents", "sidebar.help": "Help",
                 "sidebar.launch": "Launch Your Token", "sidebar.wizard": "AI Wizard Setup", "sidebar.supervision": "AI Supervision", "sidebar.tickets": "Ticket Tool",
-                "sidebar.journey": "Your Journey", "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Promote & Earn", "sidebar.tasks": "Task System", "sidebar.claim": "Claim ETH",
+                "sidebar.journey": "Your Journey", "sidebar.quickstart": "Quick Start", "sidebar.commands": "Commands", "sidebar.askearn": "Ask & Earn", "sidebar.bugearn": "Bug & Earn", "sidebar.raidearn": "Promote & Earn", "sidebar.claim": "Claim ETH",
                 "sidebar.howtobuy": "How to Buy", "sidebar.tokenomics": "Token Economics",
                 "sidebar.stakingguide": "Staking Guide", "sidebar.mobilestaking": "Mobile Staking", "sidebar.compounding": "Reward Accumulation", "sidebar.metrics": "Fee Model",
                 "sidebar.widgets": "Widget Library", "sidebar.selfhost": "Self-Host Setup", "sidebar.api": "API Reference",
@@ -1699,9 +1645,7 @@
                 "farmers.raidearn.4": "AI evaluates quality: original content scores higher than reposts",
                 "farmers.raidearn.5": "Points awarded based on your tier. Higher trust = faster approvals.",
                 "farmers.raidearn.quality": "Quality matters more than volume. One thoughtful reply under an influencer's post is worth more than ten copy-paste threads. The system knows the difference.",
-                "farmers.tasks.title": "Task System", "farmers.tasks.desc": "AI-vetted quests with ETH rewards. Complete tasks, earn from the community pool.",
-                "farmers.tasks.1": "View available tasks in dashboard", "farmers.tasks.2": "Submit proof of completion", "farmers.tasks.3": "AI verifies, points awarded",
-                "farmers.claim.title": "Claim ETH", "farmers.claim.1": "Earn points:", "farmers.claim.1.desc": "50+ required (configurable per community)",
+                "farmers.claim.title": "Claim ETH", "farmers.claim.1": "Earn points:", "farmers.claim.1.desc": "100+ required (configurable by brand admin)",
                 "farmers.claim.2": "Link wallet:", "farmers.claim.3": "Claim:", "farmers.claim.3.desc": "/claim when eligible",
                 "farmers.claim.source": "Where does ETH come from?", "farmers.claim.source.desc": "Trading fees from the token fund the tip pool. No VC money - just value created by community, returned to community.",
                 // Investors
@@ -1763,7 +1707,7 @@
                 "nav.features": "recursos", "nav.manual": "manual", "nav.manifesto": "manifesto", "nav.economics": "economia", "nav.contact": "contato",
                 "sidebar.who": "Quem e voce?", "sidebar.branders": "Para Marcas", "sidebar.farmers": "Para Embaixadores", "sidebar.investors": "Para Investidores", "sidebar.stakers": "Para Stakers", "sidebar.developers": "Para Desenvolvedores", "sidebar.agents": "Para Agentes IA", "sidebar.help": "Ajuda",
                 "sidebar.launch": "Lance Seu Token", "sidebar.wizard": "Configurar Assistente IA", "sidebar.supervision": "Supervisao da IA", "sidebar.tickets": "Sistema de Tickets",
-                "sidebar.quickstart": "Inicio Rapido", "sidebar.commands": "Comandos", "sidebar.askearn": "Pergunte & Ganhe", "sidebar.bugearn": "Reporte & Ganhe", "sidebar.raidearn": "Divulgue & Ganhe", "sidebar.tasks": "Sistema de Tarefas", "sidebar.claim": "Resgatar ETH",
+                "sidebar.quickstart": "Inicio Rapido", "sidebar.commands": "Comandos", "sidebar.askearn": "Pergunte & Ganhe", "sidebar.bugearn": "Reporte & Ganhe", "sidebar.raidearn": "Divulgue & Ganhe", "sidebar.claim": "Resgatar ETH",
                 "sidebar.howtobuy": "Como Comprar", "sidebar.tokenomics": "Tokenomics",
                 "sidebar.stakingguide": "Guia de Staking", "sidebar.mobilestaking": "Staking Mobile", "sidebar.compounding": "Auto-Composicao", "sidebar.metrics": "Metricas 3 Niveis",
                 "sidebar.widgets": "Biblioteca de Widgets", "sidebar.selfhost": "Hospedagem Propria", "sidebar.api": "Referencia da API",
@@ -1808,9 +1752,7 @@
                 "farmers.raidearn.title": "Divulgue & Ganhe", "farmers.raidearn.desc": "Divulgue no X. Engajamento verificado automaticamente - sem screenshots necessarios.",
                 "farmers.raidearn.1": "Verifique campanhas ativas via /raid", "farmers.raidearn.2": "Poste seu tweet com o conteudo exigido",
                 "farmers.raidearn.3": "Bot verifica: tweet existe, conteudo original, qualidade da conta", "farmers.raidearn.4": "Pontos concedidos automaticamente",
-                "farmers.tasks.title": "Sistema de Tarefas", "farmers.tasks.desc": "Missoes verificadas por IA com recompensas em ETH. Complete tarefas, ganhe do pool da comunidade.",
-                "farmers.tasks.1": "Veja tarefas disponiveis no painel", "farmers.tasks.2": "Envie prova de conclusao", "farmers.tasks.3": "IA verifica, pontos concedidos",
-                "farmers.claim.title": "Resgatar ETH", "farmers.claim.1": "Ganhe pontos:", "farmers.claim.1.desc": "50+ necessarios (configuravel por comunidade)",
+                "farmers.claim.title": "Resgatar ETH", "farmers.claim.1": "Ganhe pontos:", "farmers.claim.1.desc": "100+ necessarios (configuravel pelo admin da marca)",
                 "farmers.claim.2": "Vincule carteira:", "farmers.claim.3": "Resgate:", "farmers.claim.3.desc": "/claim quando elegivel",
                 "farmers.claim.source": "De onde vem o ETH?", "farmers.claim.source.desc": "Taxas de trading do token financiam o pool de gorjetas. Sem dinheiro de VC - apenas valor criado pela comunidade, retornado para a comunidade.",
                 // Investors

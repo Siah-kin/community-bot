@@ -807,30 +807,94 @@
             </div>
 
             <h3 data-i18n="farmers.quickstart.title">Quick Start</h3>
-            <ol>
-                <li data-i18n="farmers.quickstart.1">Join a community with Bonzi active</li>
-                <li data-i18n="farmers.quickstart.2">Send /start to open the dashboard</li>
-                <li data-i18n="farmers.quickstart.3">Start earning: ask questions, report bugs, join outreach campaigns</li>
-                <li data-i18n="farmers.quickstart.4">Hit 50 points &rarr; claim ETH</li>
-            </ol>
 
-            <h3 id="commands" data-i18n="farmers.commands.title">Commands</h3>
+            <h4>1. Find a Community with Bonzi</h4>
+            <p>Bonzi runs in Telegram groups where tokens have the bot enabled. Look for groups that mention "BONZI" or "VISTA-20" in their description. Official BONZI community: <a href="https://t.me/bonzi_community" target="_blank">@bonzi_community</a></p>
+
+            <h4>2. Send /start → See 6 Task Options</h4>
+            <p>Type <code>/start</code> in the group. The bot shows you 6 buttons:</p>
+
+            <div class="ui-mockup">
+                <div class="ui-mockup-header">
+                    <div class="ui-mockup-avatar">B</div>
+                    <div class="ui-mockup-name">Bonzi</div>
+                </div>
+                <div class="ui-mockup-body">
+                    <div class="ui-mockup-msg">
+                        Welcome! Choose what you want to do:
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <button class="ui-mockup-btn">💬 Ask AI a Question</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <button class="ui-mockup-btn">📣 Promote & Earn Points</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <button class="ui-mockup-btn">🎁 Send Tip</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <button class="ui-mockup-btn">🏆 Leaderboard</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <button class="ui-mockup-btn">🎟️ Claim DAO Tickets</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <button class="ui-mockup-btn">📊 Token Data</button>
+                    </div>
+                </div>
+            </div>
+            <p class="ui-mockup-caption">Dashboard after /start - 6 task wizards</p>
+
+            <h4>3. Pick a Task → Earn Points</h4>
+            <p><strong>Important:</strong> Don't type random commands. Always start with <code>/start</code>, then click the button for what you want to do. The bot walks you through each task step-by-step.</p>
+
             <table class="command-table">
                 <thead>
-                    <tr><th data-i18n="farmers.commands.th1">Command</th><th data-i18n="farmers.commands.th2">Description</th></tr>
+                    <tr><th>Task</th><th>How to Access</th><th>Points</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>/start</code></td><td data-i18n="farmers.cmd.start">Open the main dashboard</td></tr>
-                    <tr><td><code>/ask [question]</code></td><td data-i18n="farmers.cmd.ask">Ask Bonzi a question (+1-10 pts)</td></tr>
-                    <tr><td><code>/bug [description]</code></td><td data-i18n="farmers.cmd.bug">Report a bug (+10 pts if valid)</td></tr>
-                    <tr><td><code>/raid</code></td><td data-i18n="farmers.cmd.raid">Join active outreach campaigns</td></tr>
-                    <tr><td><code>/meme</code></td><td data-i18n="farmers.cmd.meme">Submit to meme contests</td></tr>
-                    <tr><td><code>/board</code></td><td data-i18n="farmers.cmd.board">View leaderboard</td></tr>
-                    <tr><td><code>/claim</code></td><td data-i18n="farmers.cmd.claim">Claim ETH rewards</td></tr>
-                    <tr><td><code>/link_wallet [addr]</code></td><td data-i18n="farmers.cmd.link">Link wallet for claims</td></tr>
-                    <tr><td><code>/settings</code></td><td data-i18n="farmers.cmd.settings">Configure preferences</td></tr>
+                    <tr><td><strong>Ask Question</strong></td><td><code>/start</code> → Click "Ask AI" button → Type question</td><td>1-10 pts (quality scored)</td></tr>
+                    <tr><td><strong>Promote on X</strong></td><td><code>/start</code> → Click "Promote & Earn" → Post on X → Submit screenshot</td><td>10 pts per approved post</td></tr>
+                    <tr><td><strong>Report Bug</strong></td><td>Type <code>/bug [description]</code> directly in chat</td><td>10 pts if verified</td></tr>
+                    <tr><td><strong>View Leaderboard</strong></td><td><code>/start</code> → Click "Leaderboard" button</td><td>See your rank</td></tr>
+                    <tr><td><strong>Check Balance</strong></td><td><code>/start</code> → Click "Claim DAO Tickets" → See points</td><td>View total</td></tr>
                 </tbody>
             </table>
+
+            <h4>4. Hit 50 Points → Claim ETH</h4>
+            <p>Each community sets its own threshold (default: 50 pts). Once you hit it:</p>
+            <ol>
+                <li>Link your wallet: <code>/link_wallet [your_eth_address]</code></li>
+                <li>Type <code>/claim</code> → bot sends ETH to your wallet</li>
+                <li>10% fee goes to DAO treasury</li>
+            </ol>
+
+            <div class="success-box">
+                <strong>Example:</strong> Ask 5 quality questions (7 pts each) = 35 pts. Post on X twice (10 pts each) = 20 pts. Total: 55 pts. Claim threshold met. Link wallet, type /claim, receive ETH (minus 10% DAO fee).
+            </div>
+
+            <h3 id="commands" data-i18n="farmers.commands.title">Commands</h3>
+            <p><strong>Most features are button-based</strong> - Use <code>/start</code> to see the dashboard, then click buttons. Only use these typed commands when you need shortcuts:</p>
+
+            <table class="command-table">
+                <thead>
+                    <tr><th data-i18n="farmers.commands.th1">Command</th><th data-i18n="farmers.commands.th2">What It Does</th><th>Notes</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>/start</code></td><td data-i18n="farmers.cmd.start">Open dashboard with 6 task buttons</td><td><strong>Start here</strong></td></tr>
+                    <tr><td><code>/bug [description]</code></td><td data-i18n="farmers.cmd.bug">Report a bug</td><td>+10 pts if verified. Type directly in chat.</td></tr>
+                    <tr><td><code>/claim</code></td><td data-i18n="farmers.cmd.claim">Claim ETH rewards</td><td>Requires 50+ pts (configurable per community)</td></tr>
+                    <tr><td><code>/link_wallet [addr]</code></td><td data-i18n="farmers.cmd.link">Link wallet for claims</td><td>Required before first claim. ETH address format.</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>Deprecated commands</strong> (use dashboard buttons instead):</p>
+            <ul>
+                <li><code>/ask</code> → Use <code>/start</code> then click "Ask AI" button</li>
+                <li><code>/raid</code> → Use <code>/start</code> then click "Promote & Earn" button</li>
+                <li><code>/board</code> → Use <code>/start</code> then click "Leaderboard" button</li>
+                <li><code>/meme</code> → Feature merged into Promote & Earn wizard</li>
+            </ul>
 
             <h3 id="raid-earn" data-i18n="farmers.raidearn.title">Promote & Earn</h3>
             <p data-i18n="farmers.raidearn.desc">Post on X. Get reviewed. Earn points. Simple workflow, real rewards.</p>

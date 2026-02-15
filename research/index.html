@@ -316,7 +316,10 @@
 
             <div class="advantage-box">
                 <h4>Wallet Cooperation vs. Transaction Flows</h4>
-                <p>Nansen tracks on-chain flows (wash trading unclear). Arkham tags identities (reputation opaque). CPI tracks behavioral history—helpful answers, quality contributions, staking duration, tip patterns. 10 dimensions, anti-gameable by design. 7 years of history per wallet.</p>
+                <p><strong>Nansen:</strong> Tracks token transfers and DEX swaps. Can't distinguish wash trading from organic volume.</p>
+                <p><strong>Arkham:</strong> Tags wallet identities via clustering. No behavioral data—just who owns what.</p>
+                <p><strong>CPI:</strong> Tracks 13 cooperation signals across wallet lifetime: helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB).</p>
+                <p><strong>Gaming resistance:</strong> Signal correlation required. High tips + zero questions = flagged. High staking + zero participation = weighted down. Single-signal manipulation doesn't move aggregate score.</p>
             </div>
 
             <a href="../metrics/" class="btn-primary">Deep Dive → Live Dashboards</a>

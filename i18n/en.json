@@ -231,5 +231,19 @@
   "trouble.answers.title": "Wrong answers",
   "trouble.answers.desc": "Use feedback buttons to report. For persistent issues, use /bug.",
   "trouble.help": "Need help?",
-  "trouble.help.desc": "Join t.me/Bonzivista_bot or open an issue on GitHub."
+  "trouble.help.desc": "Join t.me/Bonzivista_bot or open an issue on GitHub.",
+  "baas.hero.label": "Bot-as-a-Service",
+  "baas.hero.title": "Community infrastructure for token deployers",
+  "baas.hero.subtitle": "One Telegram bot. Sybil detection. Trust tiers earned by contribution, not purchased.",
+  "baas.cta.start": "Start Free",
+  "baas.setup.title": "How setup works",
+  "baas.pricing.title": "Pricing",
+  "baas.pricing.free": "Free",
+  "baas.pricing.starter": "Starter",
+  "baas.pricing.pro": "Pro",
+  "baas.pricing.enterprise": "Enterprise",
+  "baas.trust.title": "Trust infrastructure included",
+  "baas.status.title": "What's live",
+  "baas.cta.subscribe": "Subscribe",
+  "baas.cta.source": "View Source"
 }

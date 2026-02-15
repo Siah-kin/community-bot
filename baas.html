@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaaS - Bot-as-a-Service for Token Communities | Bonzi</title>
+    <meta name="description" content="Deploy Bonzi for your token. AI community manager with sybil detection, trust tiers, and graduated slashing. From €0/mo.">
+    <link rel="canonical" href="https://bonzivista.org/baas.html">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="css/bonzi-design.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <script src="js/nav-loader.js" defer></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #d4af37;
+            --green: #10B981;
+            --orange: #F59E0B;
+        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Dark Mode */
+        body.dark-mode { background: #0A0A0A; color: #FFFFFF; }
+        body.dark-mode .hero p { color: #A1A1AA; }
+        body.dark-mode .section { border-top-color: #27272A; }
+        body.dark-mode .section:nth-child(even) { background: #1F1F23; }
+        body.dark-mode .feature-card { background: #27272A; border-color: #3F3F46; }
+        body.dark-mode .feature-card p { color: #A1A1AA; }
+        body.dark-mode .pricing-card { background: #27272A; border-color: #3F3F46; }
+        body.dark-mode .pricing-card .price-desc { color: #A1A1AA; }
+        body.dark-mode .tech-box { background: #1F1F23; }
+        body.dark-mode .tech-box p, body.dark-mode .tech-box li { color: #A1A1AA; }
+        body.dark-mode .feature-box { background: rgba(124, 58, 237, 0.1); }
+        body.dark-mode .feature-box p { color: #A1A1AA; }
+        body.dark-mode .status-row { border-color: #27272A; }
+        body.dark-mode .status-row .status-label { color: #A1A1AA; }
+        body.dark-mode .section-desc { color: #A1A1AA; }
+
+        /* Hero */
+        .hero {
+            padding: 160px 40px 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .hero-label {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-cta {
+            padding: 14px 28px;
+            border-radius: 0;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-cta.primary { background: var(--gold); color: var(--black); }
+        .hero-cta.primary:hover { background: #c4a030; transform: translateY(-2px); }
+        .hero-cta.secondary { background: var(--purple); color: white; }
+        .hero-cta.secondary:hover { background: var(--purple-dark); transform: translateY(-2px); }
+
+        /* Sections */
+        .section {
+            padding: 80px 40px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--purple);
+            margin-bottom: 12px;
+        }
+        body.dark-mode .section-label { color: var(--purple-light); }
+        .section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .feature-card {
+            background: white;
+            padding: 24px;
+            border-radius: 0;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Technical Box */
+        .tech-box {
+            border-left: 4px solid var(--purple);
+            background: var(--gray-light);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+        }
+        .tech-box-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--purple);
+            margin-bottom: 12px;
+        }
+        .tech-box ol {
+            padding-left: 20px;
+        }
+        .tech-box li {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: var(--gray);
+        }
+        .tech-box code {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 2px 6px;
+            font-size: 13px;
+        }
+
+        /* Feature Box */
+        .feature-box {
+            border-left: 4px solid var(--purple);
+            background: rgba(124, 58, 237, 0.05);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+        }
+        .feature-box-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--purple);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-box p {
+            font-size: 15px;
+            color: var(--gray);
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .pricing-card {
+            background: white;
+            padding: 28px;
+            border-radius: 0;
+            border: 1px solid rgba(0,0,0,0.08);
+            position: relative;
+        }
+        .pricing-card.highlight {
+            border-color: var(--gold);
+            border-width: 2px;
+        }
+        .pricing-card .tier-name {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .pricing-card .price {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .pricing-card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        .pricing-card .price-desc {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .pricing-card li {
+            font-size: 14px;
+            padding: 6px 0;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+        body.dark-mode .pricing-card li { border-top-color: #3F3F46; }
+        .pricing-card li::before {
+            content: "✓ ";
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        /* Trust Tier Table */
+        .tier-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .tier-table th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--purple);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--purple);
+        }
+        .tier-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        body.dark-mode .tier-table td { border-bottom-color: #27272A; }
+        .tier-table .tier-name-cell { font-weight: 600; }
+
+        /* Status Grid */
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0;
+        }
+        .status-row {
+            display: contents;
+        }
+        .status-row .status-label {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-size: 15px;
+        }
+        .status-row .status-value {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            text-align: right;
+        }
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-badge.live { background: #10B981; color: white; }
+        .status-badge.beta { background: #F59E0B; color: white; }
+        .status-badge.coming { background: #6366F1; color: white; }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: var(--black);
+            color: white;
+        }
+        .cta-section h2 { font-size: 36px; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; opacity: 0.8; margin-bottom: 32px; }
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 32px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 0;
+            transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); }
+        .cta-btn.gold { background: var(--gold); color: var(--black); }
+        .cta-btn.purple { background: var(--purple); color: white; }
+        .cta-btn.outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+        .cta-btn.outline:hover { border-color: white; }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            background: #0a0a0a;
+        }
+        footer a { color: var(--gold); text-decoration: none; }
+        footer a:hover { color: var(--purple); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 120px 24px 60px; }
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 16px; }
+            .section { padding: 60px 20px; }
+            .section h2 { font-size: 24px; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .tier-table { font-size: 12px; }
+            .tier-table th, .tier-table td { padding: 8px 6px; }
+            .cta-section { padding: 60px 20px; }
+            .cta-section h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="nav-container"></div>
+<div id="mobile-menu-container"></div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-label" data-i18n="baas.hero.label">Bot-as-a-Service</div>
+    <h1 data-i18n="baas.hero.title">Community infrastructure for token deployers</h1>
+    <p data-i18n="baas.hero.subtitle">One Telegram bot. Sybil detection. Trust tiers earned by contribution, not purchased.</p>
+    <div class="hero-ctas">
+        <a href="https://t.me/Bonzivista_bot?start=onboard" class="hero-cta primary" data-i18n="baas.cta.start">Start Free</a>
+        <a href="#pricing" class="hero-cta secondary">See Pricing ↓</a>
+    </div>
+</div>
+
+<!-- WHAT YOU GET -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">What you get</div>
+        <h2>Four systems. One bot.</h2>
+        <p class="section-desc">Subscribe, add to your Telegram group, upload your docs. Bot handles the rest.</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>AI Community Manager</h3>
+                <p>Answers questions from your project docs. 24/7. Learns your token, your rules, your FAQ. No training required — upload and go.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Sybil-Protected Rewards</h3>
+                <p>Ask &amp; Earn, Promote &amp; Earn, Bug &amp; Earn. Each task verified before payout. Wash detection flags coordinated farming.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Trust-Gated Features</h3>
+                <p>7 tiers from Flagged to MVP. Lurkers get help only. Community Pillars get everything. Tiers are earned through verified activity.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Cooperation Analytics</h3>
+                <p>Engagement metrics, cooperation signals, CPI scores per user. See who's contributing and who's gaming. Exportable data.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW SETUP WORKS -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Setup</div>
+        <h2>Four steps. No devops.</h2>
+
+        <div class="tech-box">
+            <div class="tech-box-label">How it works</div>
+            <ol>
+                <li>Pick a tier. Card payment via Stripe, cancel anytime.</li>
+                <li>Tenant auto-provisions. Stripe webhook creates your database entry. No manual setup, no waiting.</li>
+                <li>Add <code>@Bonzivista_bot</code> to your Telegram group. Grant admin permissions.</li>
+                <li>Upload your project docs. Bot answers community questions from day one.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+    <div class="section-inner">
+        <div class="section-label">Pricing</div>
+        <h2>One rate per tier. Every feature included.</h2>
+        <p class="section-desc">No per-message fees. No hidden costs. Flat monthly rate, cancel anytime.</p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="tier-name">Free</div>
+                <div class="price">€0</div>
+                <div class="price-desc">Self-host forever</div>
+                <ul>
+                    <li>100 interactions/month</li>
+                    <li>2 knowledge documents</li>
+                    <li>Trust tiers included</li>
+                    <li>Open source codebase</li>
+                </ul>
+            </div>
+            <div class="pricing-card highlight">
+                <div class="tier-name" style="color: var(--gold);">Starter</div>
+                <div class="price">€25 <span>/mo</span></div>
+                <div class="price-desc">For active communities</div>
+                <ul>
+                    <li>500 interactions/month</li>
+                    <li>5 knowledge documents</li>
+                    <li>Cross-tenant sybil intel</li>
+                    <li>Cooperation analytics</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <div class="tier-name">Pro</div>
+                <div class="price">€50 <span>/mo</span></div>
+                <div class="price-desc">For growing projects</div>
+                <ul>
+                    <li>2,000 interactions/month</li>
+                    <li>10 knowledge documents</li>
+                    <li>Priority support</li>
+                    <li>Advanced analytics</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <div class="tier-name">Enterprise</div>
+                <div class="price">€250 <span>/mo</span></div>
+                <div class="price-desc">For established DAOs</div>
+                <ul>
+                    <li>Unlimited interactions</li>
+                    <li>50 knowledge documents</li>
+                    <li>Custom branding</li>
+                    <li>Dedicated support</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-label">Key feature</div>
+            <p>Paid tiers share cross-tenant sybil intelligence. A wallet flagged for wash trading in one community gets flagged in yours. Shared defense, private data.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST INFRASTRUCTURE -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Trust infrastructure</div>
+        <h2>Reputation earned, not purchased.</h2>
+        <p class="section-desc">Every community member starts at Tier 0. Features open through verified contribution. No pay-to-play.</p>
+
+        <div class="tech-box">
+            <div class="tech-box-label">How it works — Trust tiers</div>
+            <table class="tier-table">
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Name</th>
+                        <th>Features</th>
+                        <th>Rate limit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td class="tier-name-cell">Flagged</td>
+                        <td>Help, tickets only</td>
+                        <td>0 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="tier-name-cell">Lurker</td>
+                        <td>Ask, onboarding</td>
+                        <td>2 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="tier-name-cell">Participant</td>
+                        <td>Promote, leaderboard</td>
+                        <td>5 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="tier-name-cell">Helper</td>
+                        <td>Tips, claims, staking</td>
+                        <td>10 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="tier-name-cell">Trusted Helper</td>
+                        <td>DAO, social features</td>
+                        <td>15 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="tier-name-cell">Community Pillar</td>
+                        <td>All features</td>
+                        <td>30 RPM</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="tier-name-cell">MVP</td>
+                        <td>All features</td>
+                        <td>60 RPM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tech-box">
+            <div class="tech-box-label">How it works — Graduated slashing</div>
+            <p>First offense: 10% slash. Second: 25%. Third and beyond: 50%.</p>
+            <p style="margin-top: 8px;">Correlation penalty: +15% if multiple actors slashed in the same 24h window. Maximum: 100%. Slashed funds flow to the community pool.</p>
+        </div>
+
+        <div class="feature-box">
+            <div class="feature-box-label">
+                Key feature
+                <span class="status-badge coming">Exploring</span>
+            </div>
+            <p>Slash-to-partner: bad actor caught? Two paths. Contribute verified activity to the community branding pool, or forfeit stake.</p>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT'S LIVE -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-label">Status</div>
+        <h2>What's live.</h2>
+        <p class="section-desc">No roadmap promises. Status of every feature, verified.</p>
+
+        <div class="status-grid">
+            <div class="status-row">
+                <div class="status-label">Auto-deploy via Stripe</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">Trust tiers (7 levels)</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">AI wizard + Q&amp;A from docs</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">Sybil detection</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">ETH tip claims (10% platform fee)</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">Graduated slashing</div>
+                <div class="status-value"><span class="status-badge live">Live</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">ZK vault + Merkle proofs</div>
+                <div class="status-value"><span class="status-badge beta">In Testing</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">ERC-8004 agent bridge</div>
+                <div class="status-value"><span class="status-badge beta">In Testing</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">Slash-to-partner choice</div>
+                <div class="status-value"><span class="status-badge coming">Exploring</span></div>
+            </div>
+            <div class="status-row">
+                <div class="status-label">Per-tier algorithm access</div>
+                <div class="status-value"><span class="status-badge coming">Exploring</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FOOTER -->
+<div class="cta-section">
+    <h2>Add Bonzi to your Telegram group.</h2>
+    <p>Free tier: 100 interactions/month, no credit card. Upgrade when you're ready.</p>
+    <div class="cta-buttons">
+        <a href="https://t.me/Bonzivista_bot?start=onboard" class="cta-btn gold">Start Free</a>
+        <a href="index.html?contact=1" class="cta-btn purple">Subscribe €25/mo</a>
+        <a href="https://github.com/Siah-kin/community-bot" class="cta-btn outline" target="_blank">View Source</a>
+    </div>
+</div>
+
+<footer>
+    <p><a href="./">Bonzi</a> · Open source community infrastructure · <a href="https://github.com/Siah-kin/community-bot" target="_blank">GitHub</a></p>
+</footer>
+
+<script src="js/i18n-loader.js" defer></script>
+</body>
+</html>

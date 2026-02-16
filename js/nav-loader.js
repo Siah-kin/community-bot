@@ -83,6 +83,7 @@
         if (cleanPath.includes('/manual')) return 'manual';
         if (cleanPath.includes('/economics')) return 'economics';
         if (cleanPath.includes('/research')) return 'research';
+        if (cleanPath.includes('/whitepaper')) return 'whitepaper';
         if (cleanPath.includes('/vetter')) return 'vetter';
         if (cleanPath.includes('/dao')) return 'dao';
         if (cleanPath.includes('/metrics')) return 'metrics';

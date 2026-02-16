@@ -4386,6 +4386,30 @@
             letter-spacing: 1px;
         }
 
+        /* Language toggle - Brazil flag welcome button */
+        .lang-toggle {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: var(--gray-light);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle:hover {
+            background: var(--purple);
+            color: white;
+        }
+        body.dark-mode .lang-toggle {
+            background: #333;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body data-theme-default="dark">
@@ -6523,6 +6547,9 @@ if (window.navReady && typeof window.navReady.then === 'function') {
     document.addEventListener('nav:loaded', initNavConnect, { once: true });
 }
 </script>
+
+<!-- Brazil welcome button -->
+<a href="#" class="lang-toggle" onclick="document.getElementById('lang-select').value='pt'; document.getElementById('lang-select').dispatchEvent(new Event('change')); return false;">🇧🇷 Português</a>
 
 </body>
 </html>

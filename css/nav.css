@@ -79,6 +79,26 @@ body.dark-mode .nav-logo {
     letter-spacing: 0.4px;
 }
 
+.nav-coming-soon {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: default;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 10px;
+}
+
+body.dark-mode .nav-coming-soon {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dev mode: show coming soon as links */
+body.dev-mode .nav-coming-soon {
+    display: none;
+}
+body.dev-mode .nav-dev-link {
+    display: inline;
+}
+
 .nav-divider {
     width: 1px;
     height: 16px;

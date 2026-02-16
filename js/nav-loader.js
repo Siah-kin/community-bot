@@ -28,6 +28,7 @@
 
             applyActiveState();
             initTheme();
+            initDevMode();
             initNavInteractions();
             initMobileMenu();
             initLanguageSelect();
@@ -96,6 +97,25 @@
         if (file === 'vote.html') return 'vote';
         if (file === 'privacy.html') return 'privacy';
         return null;
+    }
+
+    function initDevMode() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('dev') === '1') {
+            localStorage.setItem('bonzi_dev', '1');
+        }
+        if (localStorage.getItem('bonzi_dev') === '1') {
+            document.body.classList.add('dev-mode');
+            // Convert coming-soon spans back to links
+            document.querySelectorAll('.nav-coming-soon').forEach((el) => {
+                const text = el.textContent.trim();
+                const link = document.createElement('a');
+                link.href = '/' + text + (text === 'stake' ? '.html' : '/');
+                link.className = 'nav-link';
+                link.textContent = text;
+                el.replaceWith(link);
+            });
+        }
     }
 
     function initTheme() {

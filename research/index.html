@@ -255,10 +255,20 @@
     </section>
 
     <div class="content">
+        <!-- Research Purpose -->
+        <div class="section">
+            <h2>What We're Researching</h2>
+            <p><strong>Core question:</strong> Can you build sustainable token economies without exit liquidity? Traditional crypto relies on new buyers paying early holders. We're testing three models where value comes from real economic activity - trading fees, rental income, and marketplace commissions - not speculation.</p>
+
+            <p><strong>The experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries.</p>
+
+            <p><strong>Why three models?</strong> One project could be luck. Three projects sharing the same trust backend = pattern. We're not building products - we're running controlled experiments to see if wallet behavior can replace identity verification.</p>
+        </div>
+
         <!-- Shared Infrastructure -->
         <div class="section">
             <h2>Shared Oracle Infrastructure</h2>
-            <p>All three models use the same trust verification backend: wallet cooperation scoring (CPI), on-chain reputation signals, and AI-powered sybil detection. This section provides high-level overviews. Deep research lives on project-specific sites.</p>
+            <p>All three models use the same trust verification backend: <strong>wallet cooperation scoring (CPI)</strong>, on-chain reputation signals, and AI-powered sybil detection. This section provides high-level overviews. Deep research lives on project-specific sites.</p>
 
             <div class="mechanism-grid">
                 <div class="mechanism">
@@ -319,9 +329,9 @@ Long-term holders
 
             <div class="advantage-box">
                 <h4>Wallet Cooperation vs. Transaction Flows</h4>
-                <p><strong>Nansen:</strong> Tracks token transfers and DEX swaps. Can't distinguish wash trading from organic volume.</p>
-                <p><strong>Arkham:</strong> Tags wallet identities via clustering. No behavioral data-just who owns what.</p>
-                <p><strong>CPI:</strong> Tracks 13 cooperation signals across wallet lifetime: helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB).</p>
+                <p><strong>Nansen</strong> (crypto analytics firm, $75M funding): Tracks token transfers and DEX swaps across blockchains. Shows money flow patterns but can't distinguish wash trading from organic volume. Used by VCs and funds for market intelligence.</p>
+                <p><strong>Arkham</strong> (intelligence platform): Tags wallet identities via clustering algorithms. Reveals who owns what (FTX wallet, Jump Trading, etc.) but provides no behavioral data - just ownership labels.</p>
+                <p><strong>CPI</strong> (our system): Tracks 13 cooperation signals across wallet lifetime - helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB). Focus: behavior over time, not single transactions.</p>
                 <p><strong>Gaming resistance:</strong> Signal correlation required. High tips + zero questions = flagged. High staking + zero participation = weighted down. Single-signal manipulation doesn't move aggregate score.</p>
             </div>
 
@@ -389,11 +399,13 @@ More DAO revenue
                 <div class="tier-title">NGO + Reputation Staking</div>
             </div>
 
-            <p>Unidos is an NGO leveraging <strong>on-chain reputation staking</strong> for newcomer vetting. <strong>Award-based authentication</strong> (UNHCR Gene Dewey Award, Lush Prize, government IDs) creates a trust transfer chain - verified members stake their reputation to vet newcomers, earning commissions on successful vets.</p>
+            <p><strong>Unidos</strong> ("United" in Spanish/Portuguese) is researching how refugees and NGO workers can pool reputation to access global remote work - without traditional identity verification that many lack. The research question: can <strong>official awards and certifications</strong> (UNHCR recognition, government IDs, NGO prizes) replace biometric surveillance as the foundation for digital identity?</p>
+
+            <p>Context: 100M+ forcibly displaced people worldwide (UNHCR 2023). Many have government documents but can't pass Western KYC checks (no credit history, unstable addresses, expired IDs). Remote work platforms require identity verification these populations can't provide. Unidos tests whether UN/NGO awards can bootstrap trust without giving up privacy or relying on centralized biometric databases.</p>
 
             <p><strong>Mechanics:</strong> Award verification - 6 official documents (UNHCR card, passport, NGO certificates) = <strong>270 baseline reputation points</strong>. Reputation staking: stake points to vouch for others, earn marketplace commissions on successful vets (3-5% of task fees). <strong>Vetting funnel:</strong> newcomers submit proof → Unidos 270pt holders verify → AI oracle confirms behavioral consistency. <strong>Slashing:</strong> fraudulent vouching loses staked points (anti-abuse mechanism).</p>
 
-            <p><strong>The moat:</strong> award-based authentication vs. self-attestation (WorldCoin, Proof of Humanity). WorldCoin relies on iris scans (privacy risk, centralized database). Proof of Humanity uses video + vouching (gameable via deepfakes, low-cost Fiverr attacks). <strong>Unidos requires official government/UNHCR documents</strong> - expensive to forge ($5K+ on black market), easy to verify via cryptographic signatures. The moat is real-world paper trail + stake-to-vouch economics.</p>
+            <p><strong>The moat:</strong> award-based authentication vs. self-attestation (WorldCoin, Proof of Humanity). WorldCoin relies on iris scans (privacy risk, centralized Worldcoin Foundation database). Proof of Humanity uses video + vouching (gameable via deepfakes, low-cost Fiverr attacks). <strong>Unidos requires official government/UNHCR documents</strong> - expensive to forge ($5K+ on black market), easy to verify via cryptographic signatures. The moat is real-world paper trail + stake-to-vouch economics.</p>
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>

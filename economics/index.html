@@ -201,30 +201,6 @@
         @media (max-width: 768px) {
             .mechanism-grid { grid-template-columns: 1fr; }
         }
-
-        /* Language toggle - Brazil flag welcome button */
-        .lang-toggle {
-            position: fixed;
-            bottom: 70px;
-            left: 20px;
-            background: var(--gray-light);
-            color: var(--black);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 1000;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .lang-toggle:hover {
-            background: var(--purple);
-            color: white;
-        }
-        body.dark-mode .lang-toggle {
-            background: #333;
-            color: #fff;
-        }
     </style>
 </head>
 <body data-theme-default="light">
@@ -610,8 +586,5 @@ Before You Trade/Tip/Collaborate
             open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
         </div>
     </footer>
-
-    <!-- Brazil welcome button -->
-    <a href="#" class="lang-toggle" onclick="document.getElementById('lang-select').value='pt'; document.getElementById('lang-select').dispatchEvent(new Event('change')); return false;">🇧🇷 Português</a>
 </body>
 </html>

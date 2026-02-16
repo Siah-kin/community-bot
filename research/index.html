@@ -144,14 +144,15 @@
         .flow-diagram {
             background: var(--black);
             color: var(--white);
-            padding: 32px;
+            padding: 48px 32px;
             border-radius: 0;
             font-family: monospace;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.6;
             overflow-x: auto;
             margin: 24px 0;
             white-space: pre;
+            text-align: center;
         }
 
         .technical-box {
@@ -282,36 +283,38 @@
                 <div class="tier-title">Meme + CPI Cooperation Scoring</div>
             </div>
 
-            <p>Bonzi is a memecoin built on Ethervista (flat ETH fees, not percentage). It's self-aware about risk-that's why we built CPI cooperation scoring as the safety layer. The positioning: "I know it's risky, but that's why we built THIS."</p>
+            <p>Bonzi is a memecoin built on <strong>Ethervista</strong> (flat ETH fees, not percentage). It's self-aware about risk - that's why we built <strong>CPI cooperation scoring</strong> as the safety layer. The positioning: "I know it's risky, but that's why we built THIS."</p>
 
-            <p>Mechanics: Euler fee model generates flat $10-15 ETH per transaction, distributed to LP providers. Protocol auto-buys and burns BONZI with a portion of fees (deflationary). Hardstake: lock tokens 14+ days for larger share of fee pool. CPI scoring gates marketing rewards based on cooperation signals-helpful answers, quality contributions, on-chain reputation.</p>
+            <p><strong>Mechanics:</strong> Euler fee model generates flat <strong>$10-15 ETH per transaction</strong>, distributed to LP providers. Protocol auto-buys and burns BONZI with a portion of fees (deflationary). <strong>Hardstake:</strong> lock tokens 14+ days for larger share of fee pool. CPI scoring gates marketing rewards based on cooperation signals - helpful answers, quality contributions, on-chain reputation.</p>
 
-            <p>The moat: wallet cooperation scoring (CPI) vs. Nansen flow analysis and Arkham identity tagging. CPI tracks 7 years of behavioral history across 13 signals. Nansen shows who's trading, Arkham shows who they are, CPI shows if they're trustworthy.</p>
+            <p><strong>The moat:</strong> wallet cooperation scoring (CPI) vs. Nansen flow analysis and Arkham identity tagging. CPI tracks <strong>7 years of behavioral history</strong> across <strong>13 signals</strong>. Nansen shows who's trading, Arkham shows who they are, <strong>CPI shows if they're trustworthy</strong>.</p>
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">Users trade BONZI
-        |
-        v
-  Flat ETH fee
-   ($10-15/tx)
-        |
-   +----+----+
-   |         |
-   v         v
-  LPs    Protocol
-  |         |
-  |         v
-  |    Auto-buy
-  |    + burn
-  |         |
-  +----+----+
-        |
-        v
-  Hardstake yield
-        |
-        v
- Long-term holders</div>
+                <div class="flow-diagram">
+Users trade BONZI
+         |
+         v
+   Flat ETH fee
+    ($10-15/tx)
+         |
+    +----+----+
+    |         |
+    v         v
+   LPs    Protocol
+    |         |
+    |         v
+    |    Auto-buy
+    |     + burn
+    |         |
+    +----+----+
+         |
+         v
+ Hardstake yield
+         |
+         v
+Long-term holders
+</div>
             </div>
 
             <div class="advantage-box">
@@ -332,15 +335,16 @@
                 <div class="tier-title">RWA Tokenization Primitive</div>
             </div>
 
-            <p>IMOBX is an RWA primitive for impact construction. Tokenized housing projects + rent-to-own financing, designed as reusable infrastructure for jurisdiction-agnostic compliance. Not just "tokenized real estate"-a framework other RWA DAOs can adopt.</p>
+            <p>IMOBX is an <strong>RWA primitive</strong> for impact construction. Tokenized housing projects + rent-to-own financing, designed as reusable infrastructure for <strong>jurisdiction-agnostic compliance</strong>. Not just "tokenized real estate" - a framework other RWA DAOs can adopt.</p>
 
-            <p>Mechanics: Dual yield model-LP trading fees (like Bonzi) + rental income from financed properties. DAO governance controls revenue allocation, project selection, and SINAPI tracking (Brazil's government construction cost index). Rent-to-own financing: tenants rent with option to buy, building equity over time. Regulatory edge: modular compliance layer adapts to local housing laws (Brazil SA structure, US DAO unincorporated, EU MiCA utility token).</p>
+            <p><strong>Mechanics:</strong> Dual yield model - <strong>LP trading fees</strong> (like Bonzi) + <strong>rental income</strong> from financed properties. DAO governance controls revenue allocation, project selection, and <strong>SINAPI tracking</strong> (Brazil's government construction cost index). Rent-to-own financing: tenants rent with option to buy, building equity over time. <strong>Regulatory edge:</strong> modular compliance layer adapts to local housing laws (Brazil SA structure, US DAO unincorporated, EU MiCA utility token).</p>
 
-            <p>The moat: SINAPI integration + Social Impact focus (SDG 11 housing goal). While other RWA protocols chase tokenized treasuries and real estate speculation, IMOBX targets grant-eligible social housing. This creates a regulatory moat-governments prefer impact projects over pure profit plays. Example: IDB $250M Social Impact Fund prioritizes affordable housing, not luxury condos.</p>
+            <p><strong>The moat:</strong> SINAPI integration + Social Impact focus (SDG 11 housing goal). While other RWA protocols chase tokenized treasuries and real estate speculation, <strong>IMOBX targets grant-eligible social housing</strong>. This creates a regulatory moat - governments prefer impact projects over pure profit plays. Example: <strong>IDB $250M Social Impact Fund</strong> prioritizes affordable housing, not luxury condos.</p>
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">Trade fees
+                <div class="flow-diagram">
+   Trade fees
         |
         v
   DAO Treasury
@@ -349,7 +353,7 @@
    |         |
    v         v
   LP    Construction
-  |     funding
+  |      funding
   |         |
   |         v
   |   Rent-to-Own
@@ -361,7 +365,8 @@
   +----+----+
         |
         v
- More DAO revenue</div>
+More DAO revenue
+</div>
             </div>
 
             <div class="advantage-box">
@@ -384,38 +389,40 @@
                 <div class="tier-title">NGO + Reputation Staking</div>
             </div>
 
-            <p>Unidos is an NGO leveraging on-chain reputation staking for newcomer vetting. Award-based authentication (UNHCR Gene Dewey Award, Lush Prize, government IDs) creates a trust transfer chain-verified members stake their reputation to vet newcomers, earning commissions on successful vets.</p>
+            <p>Unidos is an NGO leveraging <strong>on-chain reputation staking</strong> for newcomer vetting. <strong>Award-based authentication</strong> (UNHCR Gene Dewey Award, Lush Prize, government IDs) creates a trust transfer chain - verified members stake their reputation to vet newcomers, earning commissions on successful vets.</p>
 
-            <p>Mechanics: Award verification-6 official documents (UNHCR card, passport, NGO certificates) = 270 baseline reputation points. Reputation staking: stake points to vouch for others, earn marketplace commissions on successful vets (3-5% of task fees). Vetting funnel: newcomers submit proof → Unidos 270pt holders verify → AI oracle confirms behavioral consistency. Slashing: fraudulent vouching loses staked points (anti-abuse mechanism).</p>
+            <p><strong>Mechanics:</strong> Award verification - 6 official documents (UNHCR card, passport, NGO certificates) = <strong>270 baseline reputation points</strong>. Reputation staking: stake points to vouch for others, earn marketplace commissions on successful vets (3-5% of task fees). <strong>Vetting funnel:</strong> newcomers submit proof → Unidos 270pt holders verify → AI oracle confirms behavioral consistency. <strong>Slashing:</strong> fraudulent vouching loses staked points (anti-abuse mechanism).</p>
 
-            <p>The moat: award-based authentication vs. self-attestation (WorldCoin, Proof of Humanity). WorldCoin relies on iris scans (privacy risk, centralized database). Proof of Humanity uses video + vouching (gameable via deepfakes, low-cost Fiverr attacks). Unidos requires official government/UNHCR documents-expensive to forge ($5K+ on black market), easy to verify via cryptographic signatures. The moat is real-world paper trail + stake-to-vouch economics.</p>
+            <p><strong>The moat:</strong> award-based authentication vs. self-attestation (WorldCoin, Proof of Humanity). WorldCoin relies on iris scans (privacy risk, centralized database). Proof of Humanity uses video + vouching (gameable via deepfakes, low-cost Fiverr attacks). <strong>Unidos requires official government/UNHCR documents</strong> - expensive to forge ($5K+ on black market), easy to verify via cryptographic signatures. The moat is real-world paper trail + stake-to-vouch economics.</p>
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">UNHCR/Gov Awards
-    (270 points)
+                <div class="flow-diagram">
+UNHCR/Gov Awards
+   (270 points)
         |
         v
- Stake reputation
-    to vouch
+  Stake reputation
+     to vouch
         |
         v
- Newcomers vetted
+  Newcomers vetted
         |
-   +----+----+
-   |         |
-   v         v
-Success  Fraud
-   |         |
-   v         v
-Commission Slash
-(+10pts)  (-stake)
-   |
-   v
-Build reputation
-   |
-   v
-Vet more → earn more</div>
+    +----+----+
+    |         |
+    v         v
+ Success    Fraud
+    |         |
+    v         v
+Commission  Slash
+ (+10pts)  (-stake)
+    |
+    v
+ Build reputation
+    |
+    v
+Vet more → earn more
+</div>
             </div>
 
             <div class="advantage-box">

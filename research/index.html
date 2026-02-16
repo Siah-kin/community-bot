@@ -243,6 +243,30 @@
             .hero p { font-size: 16px; }
             .content { padding: 0 16px 32px; }
         }
+
+        /* Language toggle */
+        .lang-toggle {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: var(--gray-light);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle:hover {
+            background: var(--purple);
+            color: white;
+        }
+        body.dark-mode .lang-toggle {
+            background: #333;
+            color: #fff;
+        }
     </style>
 </head>
 <body data-theme-default="dark" class="dark-mode">
@@ -478,5 +502,8 @@ Vet more → earn more
             open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
         </div>
     </footer>
+
+    <!-- Brazil welcome button -->
+    <a href="../metrics/whitepaper-lite-pt.html" class="lang-toggle">🇧🇷 Whitepaper PT</a>
 </body>
 </html>

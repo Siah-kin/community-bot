@@ -24,11 +24,20 @@ class TokenGate {
     }
 
     async init() {
-        // Check if already connected (from localStorage)
+        // Check if already connected (from localStorage with 24h expiry)
         const savedWallet = localStorage.getItem('token_gate_wallet');
-        if (savedWallet) {
-            this.walletAddress = savedWallet;
-            await this.checkAccess();
+        const savedAccess = localStorage.getItem('token_gate_access');
+        const savedTimestamp = localStorage.getItem('token_gate_timestamp');
+        const isValid = savedWallet && savedAccess === 'granted' && savedTimestamp &&
+                       (Date.now() - parseInt(savedTimestamp)) < 24 * 60 * 60 * 1000;
+
+        if (isValid) {
+            // Skip gate, access already granted within 24h
+            const overlay = document.getElementById('token-gate-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+            document.body.classList.add('access-granted');
         } else {
             this.showConnectOverlay();
         }
@@ -67,13 +76,20 @@ class TokenGate {
         try {
             // Check if MetaMask is installed
             if (typeof window.ethereum === 'undefined') {
-                statusDiv.innerHTML = '⚠️ MetaMask not detected. <a href="https://metamask.io" target="_blank" style="color: #7C3AED;">Install MetaMask</a>';
+                statusDiv.innerHTML = '⚠️ MetaMask not detected. <a href="https://metamask.io" target="_blank" rel="noopener noreferrer" style="color: #7C3AED;">Install MetaMask</a>';
                 return;
             }
 
             // Request account access
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             this.walletAddress = accounts[0];
+
+            // Check network
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0x1') {
+                statusDiv.textContent = '⚠️ Switch to Ethereum Mainnet';
+                return;
+            }
 
             statusDiv.textContent = 'Checking token balance...';
 
@@ -93,21 +109,24 @@ class TokenGate {
             // Use Infura or Alchemy as provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-            // Check BONZI balance
+            // Check BONZI balance (need ≥1M tokens = 1e24 wei for 18 decimals)
             const bonziContract = new ethers.Contract(TOKEN_ADDRESSES.BONZI, TOKEN_ABI, provider);
             const bonziBalance = await bonziContract.balanceOf(this.walletAddress);
+            const bonziMin = ethers.BigNumber.from('1000000').mul(ethers.BigNumber.from('10').pow(18));
 
-            // Check VISTA balance
+            // Check VISTA balance (need any amount)
             const vistaContract = new ethers.Contract(TOKEN_ADDRESSES.VISTA, TOKEN_ABI, provider);
             const vistaBalance = await vistaContract.balanceOf(this.walletAddress);
 
-            const hasBonzi = bonziBalance.gt(0);
+            const hasBonzi = bonziBalance.gte(bonziMin);
             const hasVista = vistaBalance.gt(0);
 
             if (hasBonzi || hasVista) {
                 // Access granted
                 this.accessGranted = true;
                 localStorage.setItem('token_gate_wallet', this.walletAddress);
+                localStorage.setItem('token_gate_access', 'granted');
+                localStorage.setItem('token_gate_timestamp', Date.now().toString());
 
                 // Log access event (GDPR-friendly - no PII, just wallet + timestamp)
                 this.logAccess(hasBonzi ? 'BONZI' : 'VISTA');
@@ -118,11 +137,11 @@ class TokenGate {
                 // No tokens found
                 if (statusDiv) {
                     statusDiv.innerHTML = `
-                        ❌ No BONZI or VISTA tokens found in this wallet.
+                        ❌ Insufficient balance. Need 1M+ BONZI or any VISTA.
                         <br><br>
-                        <a href="/" style="color: #7C3AED;">← Back to homepage</a>
+                        <a href="/" style="color: #7C3AED; text-decoration: none;">← Back to homepage</a>
                         <br>
-                        <a href="/economics/#ethervista" style="color: #7C3AED;">How to buy →</a>
+                        <a href="/economics/#ethervista" style="color: #7C3AED; text-decoration: none;">How to buy →</a>
                     `;
                 }
             }

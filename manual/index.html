@@ -379,6 +379,30 @@
             flex-shrink: 0;
         }
 
+        /* Language toggle - Brazil flag welcome button */
+        .lang-toggle {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: var(--gray-light);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle:hover {
+            background: var(--purple);
+            color: white;
+        }
+        body.dark-mode .lang-toggle {
+            background: #333;
+            color: #fff;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); transition: transform 0.3s; z-index: 50; }
@@ -808,11 +832,16 @@
 
             <h3 data-i18n="farmers.quickstart.title">Quick Start</h3>
 
-            <h4>1. Find a Community with Bonzi</h4>
-            <p>Bonzi runs in Telegram groups where tokens have the bot enabled. Look for groups that mention "BONZI" or "VISTA-20" in their description. Official BONZI community: <a href="https://t.me/bonzi_community" target="_blank">@bonzi_community</a></p>
+            <h4>Step 1: Open Telegram on Your Phone</h4>
+            <p>Bonzi is a Telegram bot. If you don't have Telegram installed, download it from your app store (iOS/Android) or use the desktop version at telegram.org.</p>
 
-            <h4>2. Send /start → See 6 Task Options</h4>
-            <p>Type <code>/start</code> in the group. The bot shows you 6 buttons:</p>
+            <h4>Step 2: Join the BONZI Community</h4>
+            <p>Click this link to join: <a href="https://t.me/bonzi_community" target="_blank"><strong>t.me/bonzi_community</strong></a></p>
+            <p>You'll see a Telegram group with the bot inside. The bot's name is "Bonzi" and has a purple avatar with the letter B.</p>
+
+            <h4>Step 3: Type /start in the Chat</h4>
+            <p>In the group chat, type exactly this: <code>/start</code> and press send.</p>
+            <p>The bot will reply with a menu that looks like this:</p>
 
             <div class="ui-mockup">
                 <div class="ui-mockup-header">
@@ -843,58 +872,86 @@
                     </div>
                 </div>
             </div>
-            <p class="ui-mockup-caption">Dashboard after /start - 6 task wizards</p>
+            <p class="ui-mockup-caption">This is what you'll see after typing /start</p>
 
-            <h4>3. Pick a Task → Earn Points</h4>
-            <p><strong>Important:</strong> Don't type random commands. Always start with <code>/start</code>, then click the button for what you want to do. The bot walks you through each task step-by-step.</p>
+            <h4>Step 4: Click a Button to Do Something</h4>
+            <p><strong>Don't type more commands yet.</strong> Just tap one of the buttons you see. Here's what each button does:</p>
 
             <table class="command-table">
                 <thead>
-                    <tr><th>Task</th><th>How to Access</th><th>Points</th></tr>
+                    <tr><th>Button</th><th>What Happens</th><th>Why Click It</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Ask Question</strong></td><td><code>/start</code> → Click "Ask AI" button → Type question</td><td>1-10 pts (quality scored)</td></tr>
-                    <tr><td><strong>Promote on X</strong></td><td><code>/start</code> → Click "Promote & Earn" → Post on X → Submit screenshot</td><td>10 pts per approved post</td></tr>
-                    <tr><td><strong>Report Bug</strong></td><td>Type <code>/bug [description]</code> directly in chat</td><td>10 pts if verified</td></tr>
-                    <tr><td><strong>View Leaderboard</strong></td><td><code>/start</code> → Click "Leaderboard" button</td><td>See your rank</td></tr>
-                    <tr><td><strong>Check Balance</strong></td><td><code>/start</code> → Click "Claim DAO Tickets" → See points</td><td>View total</td></tr>
+                    <tr>
+                        <td>💬 <strong>Ask AI</strong></td>
+                        <td>Bot asks you to type a question. You type it, bot answers, you earn 1-10 points based on how good your question is.</td>
+                        <td>Easiest way to start. Ask anything about the project.</td>
+                    </tr>
+                    <tr>
+                        <td>📣 <strong>Promote & Earn</strong></td>
+                        <td>Bot shows instructions to post about BONZI on X (Twitter), then submit a screenshot. Earn 10 points if approved.</td>
+                        <td>Fastest way to earn. One post = 10 points.</td>
+                    </tr>
+                    <tr>
+                        <td>🎁 <strong>Send Tip</strong></td>
+                        <td>Bot asks who you want to tip and how much. You send points to thank someone.</td>
+                        <td>Thank someone who helped you. They get points, you build reputation.</td>
+                    </tr>
+                    <tr>
+                        <td>🏆 <strong>Leaderboard</strong></td>
+                        <td>Bot shows who has the most points. Shows your rank too.</td>
+                        <td>See where you stand. Top earners get bigger rewards.</td>
+                    </tr>
+                    <tr>
+                        <td>🎟️ <strong>Claim DAO Tickets</strong></td>
+                        <td>Bot shows your points balance. If you have 50+ points, you can claim ETH here.</td>
+                        <td>Check your balance. See if you're ready to get paid.</td>
+                    </tr>
+                    <tr>
+                        <td>📊 <strong>Token Data</strong></td>
+                        <td>Bot shows BONZI token price, trading volume, and liquidity from the blockchain.</td>
+                        <td>See live token stats. Check if it's a good time to buy/sell.</td>
+                    </tr>
                 </tbody>
             </table>
 
-            <h4>4. Hit 50 Points → Claim ETH</h4>
-            <p>Each community sets its own threshold (default: 50 pts). Once you hit it:</p>
+            <h4>Step 5: Earn 50 Points to Get Paid</h4>
+            <p>Here's the math to reach 50 points:</p>
+            <ul>
+                <li><strong>Ask 5 good questions</strong> (7 points each) = 35 points</li>
+                <li><strong>Post on X twice</strong> (10 points each) = 20 points</li>
+                <li><strong>Total:</strong> 55 points ✓ You're ready to claim!</li>
+            </ul>
+
+            <h4>Step 6: Get an Ethereum Wallet & Claim Your Money</h4>
+            <p>Once you hit 50 points (check by tapping "Claim DAO Tickets" button):</p>
             <ol>
-                <li>Link your wallet: <code>/link_wallet [your_eth_address]</code></li>
-                <li>Type <code>/claim</code> → bot sends ETH to your wallet</li>
-                <li>10% fee goes to DAO treasury</li>
+                <li><strong>Get an Ethereum wallet.</strong> If you don't have one, download MetaMask (metamask.io) or Coinbase Wallet. Copy your wallet address (it starts with 0x...).</li>
+                <li><strong>Link your wallet to the bot:</strong> Type <code>/link_wallet</code> followed by your address. Example: <code>/link_wallet 0x1234...</code></li>
+                <li><strong>Claim your ETH:</strong> Type <code>/claim</code> and press send. Bot sends ETH to your wallet within a few minutes. (The bot takes a 10% fee - 90% goes to you, 10% funds the treasury.)</li>
             </ol>
 
             <div class="success-box">
-                <strong>Example:</strong> Ask 5 quality questions (7 pts each) = 35 pts. Post on X twice (10 pts each) = 20 pts. Total: 55 pts. Claim threshold met. Link wallet, type /claim, receive ETH (minus 10% DAO fee).
+                <strong>That's it!</strong> You just earned cryptocurrency by asking questions and posting on social media. The bot handles everything - scoring your work, tracking points, sending payments. No middleman, no approval delays, no paperwork.
             </div>
 
             <h3 id="commands" data-i18n="farmers.commands.title">Commands</h3>
-            <p><strong>Most features are button-based</strong> - Use <code>/start</code> to see the dashboard, then click buttons. Only use these typed commands when you need shortcuts:</p>
-
             <table class="command-table">
                 <thead>
-                    <tr><th data-i18n="farmers.commands.th1">Command</th><th data-i18n="farmers.commands.th2">What It Does</th><th>Notes</th></tr>
+                    <tr><th data-i18n="farmers.commands.th1">Command</th><th data-i18n="farmers.commands.th2">Description</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>/start</code></td><td data-i18n="farmers.cmd.start">Open dashboard with 6 task buttons</td><td><strong>Start here</strong></td></tr>
-                    <tr><td><code>/bug [description]</code></td><td data-i18n="farmers.cmd.bug">Report a bug</td><td>+10 pts if verified. Type directly in chat.</td></tr>
-                    <tr><td><code>/claim</code></td><td data-i18n="farmers.cmd.claim">Claim ETH rewards</td><td>Requires 50+ pts (configurable per community)</td></tr>
-                    <tr><td><code>/link_wallet [addr]</code></td><td data-i18n="farmers.cmd.link">Link wallet for claims</td><td>Required before first claim. ETH address format.</td></tr>
+                    <tr><td><code>/start</code></td><td data-i18n="farmers.cmd.start">Open the main dashboard</td></tr>
+                    <tr><td><code>/ask [question]</code></td><td data-i18n="farmers.cmd.ask">Ask Bonzi a question (+1-10 pts)</td></tr>
+                    <tr><td><code>/bug [description]</code></td><td data-i18n="farmers.cmd.bug">Report a bug (+10 pts if valid)</td></tr>
+                    <tr><td><code>/raid</code></td><td data-i18n="farmers.cmd.raid">Join active outreach campaigns</td></tr>
+                    <tr><td><code>/meme</code></td><td data-i18n="farmers.cmd.meme">Submit to meme contests</td></tr>
+                    <tr><td><code>/board</code></td><td data-i18n="farmers.cmd.board">View leaderboard</td></tr>
+                    <tr><td><code>/claim</code></td><td data-i18n="farmers.cmd.claim">Claim ETH rewards</td></tr>
+                    <tr><td><code>/link_wallet [addr]</code></td><td data-i18n="farmers.cmd.link">Link wallet for claims</td></tr>
+                    <tr><td><code>/settings</code></td><td data-i18n="farmers.cmd.settings">Configure preferences</td></tr>
                 </tbody>
             </table>
-
-            <p><strong>Deprecated commands</strong> (use dashboard buttons instead):</p>
-            <ul>
-                <li><code>/ask</code> → Use <code>/start</code> then click "Ask AI" button</li>
-                <li><code>/raid</code> → Use <code>/start</code> then click "Promote & Earn" button</li>
-                <li><code>/board</code> → Use <code>/start</code> then click "Leaderboard" button</li>
-                <li><code>/meme</code> → Feature merged into Promote & Earn wizard</li>
-            </ul>
 
             <h3 id="raid-earn" data-i18n="farmers.raidearn.title">Promote & Earn</h3>
             <p data-i18n="farmers.raidearn.desc">Post on X. Get reviewed. Earn points. Simple workflow, real rewards.</p>
@@ -1953,5 +2010,8 @@
             open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
         </div>
     </footer>
+
+    <!-- Brazil welcome button -->
+    <a href="#" class="lang-toggle" onclick="document.getElementById('lang-select').value='pt'; document.getElementById('lang-select').dispatchEvent(new Event('change')); return false;">🇧🇷 Português</a>
 </body>
 </html>

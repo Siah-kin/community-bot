@@ -1,0 +1,57 @@
+name: Sync Agent Card from Live API
+
+on:
+  schedule:
+    - cron: "30 5 * * *"  # 05:30 UTC daily, 30 min after Render cron validates the card
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch and validate agent.json
+        run: |
+          TMPFILE=$(mktemp)
+          if curl -sf "https://bonzi-v5.onrender.com/.well-known/agent.json" -o "$TMPFILE"; then
+            if python3 -c "import json,sys; json.load(sys.stdin)" < "$TMPFILE"; then
+              cp "$TMPFILE" .well-known/agent.json
+              echo "agent.json fetched and validated OK"
+            else
+              echo "ERROR: agent.json is not valid JSON - skipping write"
+              exit 1
+            fi
+          else
+            echo "ERROR: Failed to fetch agent.json - skipping write"
+            exit 1
+          fi
+
+      - name: Fetch and validate agent-card.json
+        run: |
+          TMPFILE=$(mktemp)
+          if curl -sf "https://bonzi-v5.onrender.com/.well-known/agent-card.json" -o "$TMPFILE"; then
+            if python3 -c "import json,sys; json.load(sys.stdin)" < "$TMPFILE"; then
+              cp "$TMPFILE" .well-known/agent-card.json
+              echo "agent-card.json fetched and validated OK"
+            else
+              echo "ERROR: agent-card.json is not valid JSON - skipping write"
+              exit 1
+            fi
+          else
+            echo "ERROR: Failed to fetch agent-card.json - skipping write"
+            exit 1
+          fi
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .well-known/agent.json .well-known/agent-card.json
+          if git diff --quiet HEAD; then
+            echo "Agent card already up to date"
+          else
+            git commit -m "chore(a2a): sync agent card from live API [bot]"
+            git push
+          fi

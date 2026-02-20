@@ -377,6 +377,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 Connect Wallet
             </button>
+            <p id="overlayError" style="color:#DC2626; font-size:0.8rem; margin-top:1rem; display:none;"></p>
         </div>
     </div>
 
@@ -674,6 +675,11 @@
             } catch (error) {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
+                const overlayErr = document.getElementById('overlayError');
+                if (overlayErr) {
+                    overlayErr.textContent = error.message || 'Connection failed. Try opening in browser instead.';
+                    overlayErr.style.display = 'block';
+                }
                 showStatus(error.message || 'Connection failed', 'error');
             }
         }

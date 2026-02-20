@@ -394,6 +394,36 @@
             color: var(--white);
         }
 
+        /* Light mode overrides */
+        body:not(.dark-mode) {
+            background: #FFFFFF;
+            color: #0A0A0A;
+        }
+        body:not(.dark-mode) .input-section { background: #F4F4F5; }
+        body:not(.dark-mode) .input-group input {
+            background: #FFFFFF;
+            border-color: #D1D5DB;
+            color: #0A0A0A;
+        }
+        body:not(.dark-mode) .results {
+            background: #F4F4F5;
+            border-color: #E5E7EB;
+        }
+        body:not(.dark-mode) .results-header {
+            background: #FFFFFF;
+            border-bottom-color: #E5E7EB;
+        }
+        body:not(.dark-mode) .tier-info h2,
+        body:not(.dark-mode) .how-it-works h3,
+        body:not(.dark-mode) .step h4 { color: #0A0A0A; }
+        body:not(.dark-mode) .step { background: #F4F4F5; }
+        body:not(.dark-mode) .external-links { border-top-color: #E5E7EB; }
+        body:not(.dark-mode) .external-links a:hover { color: #0A0A0A; }
+        body:not(.dark-mode) footer { border-top-color: #E5E7EB; }
+        body:not(.dark-mode) footer a:hover { color: #0A0A0A; }
+        body:not(.dark-mode) .spinner { border-color: #E5E7EB; border-top-color: var(--purple); }
+        body:not(.dark-mode) .cursor { background: rgba(255,255,255,0.85); }
+
         /* Mobile */
         @media (max-width: 600px) {
             body { cursor: auto; }

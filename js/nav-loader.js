@@ -33,6 +33,7 @@
             initMobileMenu();
             initLanguageSelect();
             initContactLinks();
+            initDemoButton();
 
             document.dispatchEvent(new CustomEvent('nav:loaded'));
         } catch (err) {
@@ -100,20 +101,115 @@
     }
 
     function initDevMode() {
+        const API_BASE = 'https://bonzi-v5.onrender.com';
+        const STORAGE_KEY = 'bonzi_cockpit_key';
+
+        // ?cockpit in URL triggers the prompt
         const params = new URLSearchParams(window.location.search);
-        if (params.get('dev') === '1') {
-            localStorage.setItem('bonzi_dev', '1');
+        if (params.has('cockpit')) {
+            window.history.replaceState({}, '', window.location.pathname);
+            showCockpitPrompt();
+            return;
         }
-        if (localStorage.getItem('bonzi_dev') === '1') {
+
+        // If stored key exists, enable dev mode immediately
+        const storedKey = localStorage.getItem(STORAGE_KEY);
+        if (storedKey) {
+            enableDevMode();
+            // Lazy verify — revoke if key is stale
+            verifyKey(storedKey).then((ok) => {
+                if (!ok) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    disableDevMode();
+                }
+            });
+        }
+
+        // Clicking any coming-soon item triggers the prompt
+        document.querySelectorAll('.nav-coming-soon').forEach((el) => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', showCockpitPrompt);
+        });
+
+        function verifyKey(key) {
+            return fetch(API_BASE + '/dev/cockpit/ping', {
+                headers: { 'X-Cockpit-Key': key },
+            })
+                .then((r) => r.ok)
+                .catch(() => false);
+        }
+
+        function enableDevMode() {
             document.body.classList.add('dev-mode');
-            // Convert coming-soon spans back to links
             document.querySelectorAll('.nav-coming-soon').forEach((el) => {
                 const text = el.textContent.trim();
                 const link = document.createElement('a');
                 link.href = '/' + text + (text === 'stake' ? '.html' : '/');
                 link.className = 'nav-link';
                 link.textContent = text;
+                link.dataset.nav = text;
                 el.replaceWith(link);
+            });
+        }
+
+        function disableDevMode() {
+            document.body.classList.remove('dev-mode');
+            // Reload to restore coming-soon spans
+            window.location.reload();
+        }
+
+        function showCockpitPrompt() {
+            // Don't stack modals
+            if (document.getElementById('cockpit-modal')) return;
+
+            const modal = document.createElement('div');
+            modal.id = 'cockpit-modal';
+            modal.className = 'cockpit-modal';
+            modal.innerHTML = `
+                <div class="cockpit-modal-box">
+                    <div class="cockpit-modal-title">Cockpit Access</div>
+                    <input type="password" id="cockpit-key-input" class="cockpit-input" placeholder="Enter cockpit key" autocomplete="off" />
+                    <div class="cockpit-error" id="cockpit-error"></div>
+                    <div class="cockpit-actions">
+                        <button id="cockpit-cancel" class="cockpit-btn cockpit-btn-cancel">Cancel</button>
+                        <button id="cockpit-submit" class="cockpit-btn cockpit-btn-submit">Unlock</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            const input = document.getElementById('cockpit-key-input');
+            const error = document.getElementById('cockpit-error');
+            const submitBtn = document.getElementById('cockpit-submit');
+
+            input.focus();
+
+            const submit = async () => {
+                const key = input.value.trim();
+                if (!key) return;
+                submitBtn.textContent = '...';
+                submitBtn.disabled = true;
+                const ok = await verifyKey(key);
+                if (ok) {
+                    localStorage.setItem(STORAGE_KEY, key);
+                    modal.remove();
+                    enableDevMode();
+                } else {
+                    error.textContent = 'Invalid key';
+                    submitBtn.textContent = 'Unlock';
+                    submitBtn.disabled = false;
+                    input.value = '';
+                    input.focus();
+                }
+            };
+
+            submitBtn.addEventListener('click', submit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') submit();
+            });
+            document.getElementById('cockpit-cancel').addEventListener('click', () => modal.remove());
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
             });
         }
     }
@@ -249,5 +345,18 @@
             contactModal.classList.add('active');
             window.history.replaceState({}, '', window.location.pathname);
         }
+    }
+
+    function initDemoButton() {
+        const demoBtn = document.getElementById('nav-connect-btn');
+        if (!demoBtn) return;
+
+        demoBtn.addEventListener('click', () => {
+            if (typeof window.openSlotPanel === 'function') {
+                window.openSlotPanel();
+            } else {
+                window.location.href = '/?slot=open';
+            }
+        });
     }
 })();

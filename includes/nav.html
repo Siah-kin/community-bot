@@ -13,15 +13,16 @@
             <a href="/features.html#retail">Telegram Bot</a>
             <a href="/features.html#developer">GitHub OSS</a>
             <a href="/features.html#agent">ERC-8004 API</a>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; Vetter Tool</span>
         </div>
     </div>
     <div class="nav-dropdown">
         <a href="/manual/" class="nav-link" data-i18n="nav.manual" data-nav="manual">manual</a>
         <div class="nav-dropdown-menu">
-            <a href="/manual/#quickstart">Quick Start</a>
-            <a href="/manual/#commands">Commands</a>
-            <a href="/manual/#staking">Staking Guide</a>
-            <a href="/manual/#admin">Admin Tools</a>
+            <a href="/manual/#farmers">Get Started</a>
+            <a href="/manual/#raid-earn">Earn ETH</a>
+            <a href="/manual/#holders">Hold &amp; Stake</a>
+            <a href="/manual/#commands">All Commands</a>
         </div>
     </div>
     <div class="nav-dropdown">
@@ -42,16 +43,23 @@
             <a href="/economics/#anti-rug">Anti-Rug</a>
         </div>
     </div>
-    <span class="nav-link nav-coming-soon" data-tip="Token analysis, market research, community studies">research</span>
-    <a href="/vetter/" class="nav-link" data-nav="vetter">vetter</a>
     <div class="nav-dropdown">
-        <a href="/baas.html" class="nav-link nav-coming-soon" data-nav="baas">baas</a>
+        <a href="/research/" class="nav-link" data-nav="research">research</a>
         <div class="nav-dropdown-menu">
-            <a href="/baas.html">Bonzi-as-a-Service</a>
-            <a href="/baas.html#what-it-does">What Bonzi Does</a>
-            <a href="/baas.html#pricing">How It Works</a>
-            <a href="/baas.html#trust">Trust Tiers</a>
-            <a href="/baas.html#status">Status</a>
+            <a href="/research/#bonzi">Bonzi CPI</a>
+            <a href="/research/#imobx">IMOBX</a>
+            <a href="/research/#unidos">Unidos</a>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; VIP Access</span>
+        </div>
+    </div>
+    <div class="nav-dropdown">
+        <a href="/baas.html" class="nav-link" data-nav="baas">baas</a>
+        <div class="nav-dropdown-menu">
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; Bonzi-as-a-Service</span>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; What Bonzi Does</span>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; How It Works</span>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; Trust Tiers</span>
+            <span class="nav-locked" title="Hold BONZI or VISTA to unlock">&#128274; Status</span>
         </div>
     </div>
     <div class="nav-divider"></div>
@@ -61,6 +69,22 @@
     <div class="nav-divider"></div>
     <a href="/?contact=1" id="contact-nav-btn" class="nav-link" data-i18n="nav.contact" data-nav="contact">contact</a>
 </div>
+
+<style>
+.nav-locked {
+    display: block;
+    padding: 8px 16px;
+    color: #52525B;
+    font-size: 14px;
+    cursor: not-allowed;
+    opacity: 0.5;
+    user-select: none;
+}
+.nav-locked:hover {
+    background: transparent;
+    color: #52525B;
+}
+</style>
 
 <div class="nav-right">
     <select class="nav-lang-select" id="lang-select" aria-label="Language">

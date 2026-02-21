@@ -44,7 +44,7 @@ body.dark-mode .nav-logo {
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 8px;
     align-items: center;
 }
 
@@ -85,10 +85,33 @@ body.dark-mode .nav-logo {
     font-size: 14px;
     font-weight: 500;
     padding: 6px 10px;
+    position: relative;
+}
+
+.nav-coming-soon[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0A0A0A;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    margin-top: 4px;
 }
 
 body.dark-mode .nav-coming-soon {
     color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .nav-coming-soon[data-tip]:hover::after {
+    background: #FFFFFF;
+    color: #0A0A0A;
 }
 
 /* Dev mode: show coming soon as links */
@@ -397,4 +420,86 @@ body.dark-mode .menu-gated {
     .site-nav { padding: 0 16px; }
     .nav-logo { font-size: 16px; }
     .nav-logo-img { width: 24px; height: 24px; }
+}
+
+/* Cockpit key modal */
+.cockpit-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cockpit-modal-box {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 32px;
+    width: 340px;
+    max-width: 90vw;
+}
+
+.cockpit-modal-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7C3AED;
+    margin-bottom: 20px;
+}
+
+.cockpit-input {
+    width: 100%;
+    background: #0A0A0A;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: 'SF Mono', 'Space Mono', monospace;
+    outline: none;
+}
+
+.cockpit-input:focus {
+    border-color: #7C3AED;
+}
+
+.cockpit-error {
+    color: #DC2626;
+    font-size: 12px;
+    min-height: 20px;
+    margin-top: 8px;
+}
+
+.cockpit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: flex-end;
+}
+
+.cockpit-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+.cockpit-btn-cancel {
+    background: none;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cockpit-btn-submit {
+    background: #7C3AED;
+    color: #FFFFFF;
+}
+
+.cockpit-btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

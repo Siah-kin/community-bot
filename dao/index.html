@@ -430,8 +430,8 @@
     <!-- Cockpit Gate Overlay -->
     <div id="cockpit-gate-overlay">
         <div class="cockpit-gate-box">
-            <div class="cockpit-gate-eyebrow">Dev Access Required</div>
-            <div class="cockpit-gate-title">Dev Access Required</div>
+            <div class="cockpit-gate-eyebrow">Team Access</div>
+            <div class="cockpit-gate-title">DAO Tester Program</div>
             <div class="cockpit-gate-subtitle">This page requires a cockpit key</div>
             <div class="cockpit-gate-row">
                 <input
@@ -477,6 +477,9 @@
                 if (ok) {
                     localStorage.setItem(STORAGE_KEY, key);
                     document.getElementById('cockpit-gate-overlay').classList.add('hidden');
+                    // Cockpit key grants full access - skip wallet gate
+                    var wg = document.getElementById('walletGate');
+                    if (wg) wg.classList.add('hidden');
                     errorEl.style.display = 'none';
                 } else {
                     errorEl.style.display = 'block';
@@ -514,7 +517,7 @@
     <!-- STATS -->
     <div class="stats-row">
         <div class="stat">
-            <div class="stat-value">10</div>
+            <div class="stat-value">5</div>
             <div class="stat-label">pts per valid bug</div>
         </div>
         <div class="stat">
@@ -540,8 +543,9 @@
             <div class="technical-box" style="margin-top: 24px;">
                 <strong>Requirements (pick one):</strong>
                 <ul style="margin-top: 12px; margin-left: 20px;">
-                    <li><strong>100 VISTA</strong> staked, OR</li>
-                    <li><strong>1,000,000 BONZI</strong> staked</li>
+                    <li><strong>100 VISTA</strong> held or staked, OR</li>
+                    <li><strong>1,000,000 BONZI</strong> held or staked, OR</li>
+                    <li>Any LP position in BONZI or VISTA pools</li>
                 </ul>
                 <p style="margin-top: 16px; font-size: 13px; opacity: 0.8;">
                     Already have tokens? Use <code>/link_wallet</code> in the bot, then <code>/bug</code> to report.
@@ -549,7 +553,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 24px;">
-                <a href="https://t.me/Bonzivista_bot" class="btn-primary">Open Bonzi Bot</a>
+                <a href="/?slot=open" class="btn-primary">Win Access - Play the Slotgame</a>
             </div>
         </div>
 
@@ -677,7 +681,7 @@
                 Help verify the website works correctly across devices and browsers. Vibe coders ship fast - testers catch what we miss. Each test has specific things to look for.
             </p>
             <div class="technical-box" style="margin-bottom: 24px;">
-                <strong>How to report:</strong> Screenshot the issue, note the page URL, describe what you expected vs what happened. Send to <a href="https://t.me/Bonzivista_bot" style="color: var(--purple);">@Bonzi_Community_bot</a> with "WEBSITE BUG:" prefix.
+                <strong>How to report:</strong> Screenshot the issue, note the page URL, describe what you expected vs what happened. Send to <a href="https://t.me/Bonzivista_bot" style="color: var(--purple);">@Bonzivista_bot</a> with "WEBSITE BUG:" prefix.
             </div>
             <div class="test-cards">
                 <div class="test-card">
@@ -732,10 +736,10 @@
                     <div class="test-card-image"><i data-lucide="lock"></i></div>
                     <div class="test-card-content">
                         <h3>Wallet Gate</h3>
-                        <p>Connect wallet on Metrics page. Then visit DAO - is it unlocked? Refresh browser - still unlocked? Clear localStorage - gates return?</p>
+                        <p>Connect wallet on the DAO page. Refresh - still unlocked? Wait 24h or clear localStorage - does gate return? Test with insufficient balance.</p>
                         <div class="test-card-footer">
                             <span class="test-card-reward">+5 pts per bug</span>
-                            <a href="../metrics/" class="test-card-link">Test Metrics</a>
+                            <a href="../" class="test-card-link">Test Homepage</a>
                         </div>
                     </div>
                 </div>
@@ -838,7 +842,7 @@
     <section class="cta-section">
         <h2>Ready to Help Build Bonzi?</h2>
         <p>Open the bot. Find bugs. Earn governance rights.</p>
-        <a href="https://t.me/Bonzivista_bot" class="btn-primary">Start Testing Now</a>
+        <a href="/?slot=open" class="btn-primary">Win Bot Access - Play to Unlock</a>
     </section>
 
     <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">

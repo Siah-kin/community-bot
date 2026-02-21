@@ -5,6 +5,9 @@ on:
     - cron: "30 5 * * *"  # 05:30 UTC daily, 30 min after Render cron validates the card
   workflow_dispatch:
 
+permissions:
+  contents: write  # Required to push the updated card files
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -16,13 +19,27 @@ jobs:
         run: |
           TMPFILE=$(mktemp)
           if curl -sf "https://bonzi-v5.onrender.com/.well-known/agent.json" -o "$TMPFILE"; then
-            if python3 -c "import json,sys; json.load(sys.stdin)" < "$TMPFILE"; then
-              cp "$TMPFILE" .well-known/agent.json
-              echo "agent.json fetched and validated OK"
-            else
+            # Syntax check
+            if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$TMPFILE"; then
               echo "ERROR: agent.json is not valid JSON - skipping write"
               exit 1
             fi
+            # Schema check: require fields that must always be present in the full card
+            if ! python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1]))
+required = ['agentId', 'skills', 'name', 'version']
+missing = [k for k in required if k not in d]
+if missing:
+    print(f'ERROR: agent.json missing required fields: {missing}', file=sys.stderr)
+    sys.exit(1)
+print('Schema OK - agentId=%s version=%s' % (d['agentId'], d['version']))
+" "$TMPFILE"; then
+              echo "ERROR: agent.json failed schema validation - skipping write"
+              exit 1
+            fi
+            cp "$TMPFILE" .well-known/agent.json
+            echo "agent.json fetched, validated, and staged"
           else
             echo "ERROR: Failed to fetch agent.json - skipping write"
             exit 1
@@ -32,13 +49,27 @@ jobs:
         run: |
           TMPFILE=$(mktemp)
           if curl -sf "https://bonzi-v5.onrender.com/.well-known/agent-card.json" -o "$TMPFILE"; then
-            if python3 -c "import json,sys; json.load(sys.stdin)" < "$TMPFILE"; then
-              cp "$TMPFILE" .well-known/agent-card.json
-              echo "agent-card.json fetched and validated OK"
-            else
+            # Syntax check
+            if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$TMPFILE"; then
               echo "ERROR: agent-card.json is not valid JSON - skipping write"
               exit 1
             fi
+            # Schema check
+            if ! python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1]))
+required = ['agentId', 'skills', 'name', 'version']
+missing = [k for k in required if k not in d]
+if missing:
+    print(f'ERROR: agent-card.json missing required fields: {missing}', file=sys.stderr)
+    sys.exit(1)
+print('Schema OK - agentId=%s version=%s' % (d['agentId'], d['version']))
+" "$TMPFILE"; then
+              echo "ERROR: agent-card.json failed schema validation - skipping write"
+              exit 1
+            fi
+            cp "$TMPFILE" .well-known/agent-card.json
+            echo "agent-card.json fetched, validated, and staged"
           else
             echo "ERROR: Failed to fetch agent-card.json - skipping write"
             exit 1

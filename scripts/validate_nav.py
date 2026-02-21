@@ -15,7 +15,7 @@ from typing import Optional
 
 # Expected nav structure (source of truth from includes/nav.html)
 EXPECTED_NAV_LINKS = [
-    "features",
+    "tools",
     "manual",
     "manifesto",
     "economics",
@@ -131,7 +131,7 @@ def validate_all_pages(root_dir: Path) -> tuple:
         errors.extend(style_issues)
 
         # Check for minimum required links
-        required = ['features', 'manual', 'manifesto']
+        required = ['tools', 'manual', 'manifesto']
         for req in required:
             if req not in links:
                 errors.append(f"{page_path}: Missing required nav link '{req}'")

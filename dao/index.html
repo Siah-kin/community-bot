@@ -802,10 +802,14 @@
             </div>
 
             <div class="solution-box" style="margin-top: 24px;">
-                <strong>Why separate from Thanks Points?</strong><br>
-                Thanks points reward engagement (asking questions, promotions). DAO points reward <em>contribution</em> (making Bonzi better). Different value, different perks.
+                <strong>Bonzi tracks three separate things - don't mix them up.</strong>
+                <ul style="margin: 12px 0 12px 20px; line-height: 1.8;">
+                    <li><strong>Thanks points</strong> - earned by contributing: bug reports, good questions, helping others. One direction: up. These unlock the governance perks above.</li>
+                    <li><strong>CPI score</strong> - cooperative trust score tied to your wallet address. Built through vetting and using the Vetter tool. Dynamic - it <em>can go down</em> if you act against the community on-chain.</li>
+                    <li><strong>ETH</strong> - your claimable share of protocol fees. Private by default. Make it public to signal contribution and earn more CPI score in return.</li>
+                </ul>
                 <div class="accountability">
-                    <strong>Check your balance:</strong> Use <code>/dao</code> in the bot to see your current DAO points and perk level.
+                    <strong>Check your balance:</strong> Use <code>/dao</code> in the bot to see your current points and perk level.
                 </div>
             </div>
         </div>
@@ -829,10 +833,95 @@
             </div>
 
             <div class="faq-item">
-                <h3 class="faq-question">Can I lose DAO points?</h3>
+                <h3 class="faq-question">Can I lose points?</h3>
                 <p class="faq-answer">
-                    No. Points only go up. Spam reports don't earn points, but they don't cost you either. We want honest testing, not point gaming.
+                    Thanks points only go up. Spam reports don't earn points, but they don't cost you either. We want honest testing, not point gaming.<br><br>
+                    <strong>CPI score is different</strong> - it's your on-chain trust score and it <em>can</em> decrease if you act against the community (sybil behavior, coordinated manipulation). Points and CPI score are separate.
                 </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Is reputation just points, or does it become something real?</h3>
+                <p class="faq-answer">
+                    Points are internal. Reputation is portable. Your CPI score is tied to your wallet address - not an account on Bonzi's server. That means it travels with you.<br><br>
+                    Any other protocol that reads on-chain attestations can verify your contribution history without asking Bonzi's permission. You built it. You own it. It's yours to show anywhere that recognizes the standard.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What makes this different from leaderboard points on other platforms?</h3>
+                <p class="faq-answer">
+                    Leaderboard points live on a company's database. They disappear when the company pivots. They mean nothing outside that one app.<br><br>
+                    Bonzi's CPI score is anchored on-chain. The record is immutable. A future protocol - one that doesn't exist yet - can check your history and trust you faster because of work you did here. That's reputation as an asset, not a vanity number.
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Do I need to hold tokens to build reputation?</h3>
+                <p class="faq-answer">
+                    No. Contributing earns Thanks points. Using the Vetter tool with your wallet builds CPI score. Holding BONZI or VISTA unlocks certain features, but it doesn't buy you a higher score - contribution does.<br><br>
+                    This is deliberate. Reputation weighted by contribution, not capital.
+                </p>
+            </div>
+        </div>
+
+        <!-- COMMUNITY VOTE -->
+        <div class="faq-category" id="vote">
+            <h2 class="category-title">Shape the Story</h2>
+
+            <div class="solution-box" style="margin-bottom: 24px;">
+                <strong>Your vote decides what newcomers see first.</strong><br>
+                Seven homepage approaches are live. The version with the most votes becomes the default. Results update in real time.
+            </div>
+
+            <p class="faq-answer" style="margin-bottom: 12px;">
+                Bonzi has the product. The question is which story makes someone click. You've used the bot - you know what's real. That makes your signal worth more than a cold visitor's.
+            </p>
+            <p class="faq-answer" style="margin-bottom: 24px;">
+                Each variant below takes a different angle: some lead with outcomes, some with pain points, one bets on three words. Pick the one that would have made <em>you</em> stay.
+            </p>
+
+            <div class="test-cards" style="margin-bottom: 24px;">
+                <div class="test-card">
+                    <div class="test-card-content">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 6px;">Variant A - Outcome-First</div>
+                        <h3 style="margin-bottom: 8px;">"Launch a token. Build a treasury. Pay your community."</h3>
+                        <p>What you get, not how it works. Speaks to founders.</p>
+                        <div class="test-card-footer">
+                            <span></span>
+                            <a href="../vote.html" class="test-card-link" target="_blank">Preview →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-card-content">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 6px;">Variant D - Community-First</div>
+                        <h3 style="margin-bottom: 8px;">"Real work. Real ETH. No middlemen."</h3>
+                        <p>For contributors tired of platforms that pay in points.</p>
+                        <div class="test-card-footer">
+                            <span></span>
+                            <a href="../vote.html" class="test-card-link" target="_blank">Preview →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card">
+                    <div class="test-card-content">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple); margin-bottom: 6px;">Variant E - Bold & Minimal</div>
+                        <h3 style="margin-bottom: 8px;">"AI that pays humans."</h3>
+                        <p>Three words. Maximum impact. For people who hate landing pages.</p>
+                        <div class="test-card-footer">
+                            <span></span>
+                            <a href="../vote.html" class="test-card-link" target="_blank">Preview →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accountability" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <span style="color: var(--text-muted); font-size: 14px;">+ 4 more: Infrastructure, Zealy Killer, User Journeys, Oracle Thesis.</span>
+                <a href="../vote.html" class="btn-primary" style="white-space: nowrap;">See all 7 &amp; Vote</a>
             </div>
         </div>
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research - Three Flagship Models | Bonzi</title>
-    <meta name="description" content="Bonzi (meme + CPI), IMOBX (RWA primitive), Unidos (NGO reputation staking). Three models, one oracle infrastructure, built to test cooperative economics.">
+    <meta name="description" content="Bonzi (meme + CPI), IMOBX (RWA primitive), Unidos (NGO data-for-credit research, Nakivale). Three models, one oracle infrastructure, built to test cooperative economics.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/research/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bonzi-design.css">
@@ -498,50 +498,50 @@ More DAO revenue
         <section class="flagship-section" id="unidos">
             <div class="tier-header">
                 <div class="tier-badge unidos-badge">UNIDOS</div>
-                <div class="tier-title">NGO + Reputation Staking</div>
+                <div class="tier-title">NGO + Data-for-Credit Research</div>
             </div>
 
-            <p><strong>Unidos</strong> ("United" in Spanish/Portuguese) is researching how refugees and NGO workers can pool reputation to access global remote work - without traditional identity verification that many lack. The research question: can <strong>official awards and certifications</strong> (UNHCR recognition, government IDs, NGO prizes) replace biometric surveillance as the foundation for digital identity?</p>
+            <p><strong>Unidos</strong> operates in Nakivale refugee settlement, Uganda - 130,000 residents, permanent settlement active for 70+ years. Unidos trains farmers in mushroom cultivation, vermicomposting, and biochar production. 2024 output: 501 farmers trained, 4,800 kg mushrooms produced, 7.8 tons vermicompost processed.</p>
 
-            <p>Context: 100M+ forcibly displaced people worldwide (UNHCR 2023). Many have government documents but can't pass Western KYC checks (no credit history, unstable addresses, expired IDs). Remote work platforms require identity verification these populations can't provide. Unidos tests whether UN/NGO awards can bootstrap trust without giving up privacy or relying on centralized biometric databases.</p>
+            <p><strong>Research question:</strong> does transparent data-for-credit exchange between an NGO and 500 farmers produce a self-sustaining input credit system without grant dependency by month 18?</p>
 
-            <p><strong>Mechanics:</strong> Award verification - 6 official documents (UNHCR card, passport, NGO certificates) = <strong>270 baseline reputation points</strong>. Reputation staking: stake points to vouch for others, earn marketplace commissions on successful vets (3-5% of task fees). <strong>Vetting funnel:</strong> newcomers submit proof → Unidos 270pt holders verify → AI oracle confirms behavioral consistency. <strong>Slashing:</strong> fraudulent vouching loses staked points (anti-abuse mechanism).</p>
+            <p>Context: 67% of Nakivale households depend on casual labor - digging or weeding Ugandan-owned fields at $1-2/day. Ugandan wholesalers drive 60km from Mbarara into the settlement, buy produce at below-market prices, resell at 2-3x markup. Farmers accept because they have no price reference and no transport. A trip to Mbarara costs $20 - ten days of casual labor wages. 27% of residents have smartphones. No dedicated marketplace exists.</p>
 
-            <p><strong>The moat:</strong> award-based authentication vs. self-attestation (WorldCoin, Proof of Humanity). WorldCoin relies on iris scans (privacy risk, centralized Worldcoin Foundation database). Proof of Humanity uses video + vouching (gameable via deepfakes, low-cost Fiverr attacks). <strong>Unidos requires official government/UNHCR documents</strong> - expensive to forge ($5K+ on black market), easy to verify via cryptographic signatures. The moat is real-world paper trail + stake-to-vouch economics.</p>
+            <p><strong>Mechanics:</strong> Unidos deploys a Telegram bot. Farmer types <code>/price mushrooms</code> - bot returns last 5 Mbarara prices reported by other users that week. Farmer posts produce listing. Farmer answers a neighbor's composting question. Bot logs every interaction: question asked, answer given, trade completed, price reported. Unidos sells the anonymized aggregate to agricultural researchers, carbon offset buyers, and AI labs - $2,250/month projected at 500 active users. That revenue funds mushroom spawn bags and compost issued on credit to farmers with 5+ logged bot interactions. Farmer repays after harvest at 20% surcharge. Repayment logs to their bot record - a transaction history they own.</p>
 
             <div class="technical-box">
-                <h4>Closed Loop</h4>
+                <h4>The Credit Ladder</h4>
                 <div class="flow-diagram">
-UNHCR/Gov Awards
-   (270 points)
+  5+ bot interactions
+  (questions, trades,
+   price reports)
         |
         v
-  Stake reputation
-     to vouch
+  Unidos input credit
+ (no bank, no ID needed)
         |
         v
-  Newcomers vetted
+  VSLA group guarantee
+  (bot record as evidence)
         |
-    +----+----+
-    |         |
-    v         v
- Success    Fraud
-    |         |
-    v         v
-Commission  Slash
- (+10pts)  (-stake)
-    |
-    v
- Build reputation
-    |
-    v
-Vet more → earn more
+        v
+  UGAFODE individual loan
+  (only bank inside Nakivale)
+        |
+        v
+   KIVA international
+  (refugees repay at 95%+)
+        |
+        v
+  Opportunity Bank
+  commercial credit
 </div>
+                <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted);">The barrier is the first step, not creditworthiness. KIVA's own data shows 95%+ repayment from refugee borrowers.</p>
             </div>
 
             <div class="advantage-box">
-                <h4>Award-Based Auth vs. Biometric/Video Vouching</h4>
-                <p>WorldCoin (iris scans): Privacy risk, centralized Worldcoin Foundation controls database, orb dependency. Proof of Humanity (video + vouching): Gameable via deepfakes, Fiverr vouching farms, no skin-in-game for fraudulent vouchers. Unidos (official docs + reputation staking): UNHCR Gene Dewey Award + government IDs = cryptographically verifiable, $5K+ to forge, staking creates accountability (lose 50pts if newcomer = fraud). Pan-African expansion: 6-award holders become regional vetting committees.</p>
+                <h4>Awards as Named Credentials - Not Points</h4>
+                <p>UNHCR Gene Dewey Award (2023), Lush Prize nomination (2025), Permaculture Award (2024). Recorded as named credentials. When Unidos vouches for a newcomer NGO, the UNHCR award name goes on record. If the newcomer diverts funds, a public fraud flag appears next to that award name on all subsequent grant applications - no invented point system required. The moat is real-world paper trail: official documents cost $5K+ to forge and carry cryptographic signatures. Self-attestation systems (WorldCoin iris scans, Proof of Humanity video vouching) have no comparable anchor.</p>
             </div>
 
             <a href="https://unidosprojects.org/" class="btn-gold" target="_blank" rel="noopener">

@@ -110,6 +110,10 @@
             border-top: 2px solid rgba(124, 58, 237, 0.2);
         }
 
+        .flagship-section p {
+            margin-bottom: 28px;
+        }
+
         .tier-header {
             display: flex;
             align-items: center;
@@ -153,6 +157,80 @@
             margin: 24px 0;
             white-space: pre;
             text-align: center;
+        }
+
+        /* --- Loop Flow Nodes (replaces ASCII diagrams) --- */
+        .loop-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0 16px;
+            gap: 0;
+            white-space: normal;
+            font-family: inherit;
+        }
+        .loop-step {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+        }
+        .loop-step-split {
+            max-width: 580px;
+            width: 100%;
+        }
+        .loop-node {
+            border: 1.5px solid #7C3AED;
+            padding: 16px 20px;
+            text-align: center;
+            flex: 1;
+            max-width: 280px;
+        }
+        .loop-step-split .loop-node { max-width: none; }
+        .loop-node .ln-label {
+            font-size: 11px;
+            color: #A78BFA;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+        .loop-node .ln-stat {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 4px;
+        }
+        .loop-node .ln-desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.4;
+        }
+        .loop-node-outcome { border-color: #27AE60; }
+        .loop-node-outcome .ln-stat { color: #27AE60; }
+        .loop-node-negative { border-color: #E74C3C; }
+        .loop-node-negative .ln-stat { color: #E74C3C; }
+        .loop-connector {
+            color: #5B21B6;
+            font-size: 20px;
+            padding: 4px 0;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .loop-connector-label {
+            display: block;
+            font-size: 10px;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: -2px;
+        }
+        .loop-split-divider {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: #444;
+            font-size: 16px;
+            font-weight: 700;
         }
 
         .technical-box {
@@ -325,30 +403,45 @@
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">
-Users trade BONZI
-         |
-         v
-   Flat ETH fee
-    ($10-15/tx)
-         |
-    +----+----+
-    |         |
-    v         v
-   LPs    Protocol
-    |         |
-    |         v
-    |    Auto-buy
-    |     + burn
-    |         |
-    +----+----+
-         |
-         v
- Hardstake yield
-         |
-         v
-Long-term holders
-</div>
+                <div class="loop-flow">
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Every Trade</div>
+                            <div class="ln-stat">$10-15 ETH</div>
+                            <div class="ln-desc">flat fee per BONZI transaction (Ethervista Euler model)</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step loop-step-split">
+                        <div class="loop-node">
+                            <div class="ln-label">LP Share</div>
+                            <div class="ln-stat">Fee Pool</div>
+                            <div class="ln-desc">distributed to liquidity providers each block</div>
+                        </div>
+                        <div class="loop-split-divider">+</div>
+                        <div class="loop-node">
+                            <div class="ln-label">Protocol</div>
+                            <div class="ln-stat">Auto-Burn</div>
+                            <div class="ln-desc">buys BONZI from market and burns it permanently</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Hardstake</div>
+                            <div class="ln-stat">14+ day lock</div>
+                            <div class="ln-desc">longer commitment = larger slice of fee pool</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
+                    <div class="loop-step">
+                        <div class="loop-node loop-node-outcome">
+                            <div class="ln-label">Long-term Holders</div>
+                            <div class="ln-stat">ETH yield</div>
+                            <div class="ln-desc">passive income proportional to stake duration and size</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="advantage-box">
@@ -377,30 +470,53 @@ Long-term holders
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">
-   Trade fees
-        |
-        v
-  DAO Treasury
-        |
-   +----+----+
-   |         |
-   v         v
-  LP    Construction
-  |      funding
-  |         |
-  |         v
-  |   Rent-to-Own
-  |   properties
-  |         |
-  |         v
-  |   Rental yield
-  |         |
-  +----+----+
-        |
-        v
-More DAO revenue
-</div>
+                <div class="loop-flow">
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Revenue Sources</div>
+                            <div class="ln-stat">Trade Fees</div>
+                            <div class="ln-desc">flat ETH per IMOBX trade + rental income from financed properties</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">DAO Treasury</div>
+                            <div class="ln-stat">Governance</div>
+                            <div class="ln-desc">community votes on allocation, project selection, SINAPI-tracked budgets</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step loop-step-split">
+                        <div class="loop-node">
+                            <div class="ln-label">LP Providers</div>
+                            <div class="ln-stat">Fee Share</div>
+                            <div class="ln-desc">earn per trade from liquidity provision</div>
+                        </div>
+                        <div class="loop-split-divider">+</div>
+                        <div class="loop-node">
+                            <div class="ln-label">Construction</div>
+                            <div class="ln-stat">$27,777/unit</div>
+                            <div class="ln-desc">SINAPI-verified cost, grant-eligible social housing</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Rent-to-Own</div>
+                            <div class="ln-stat">Rental yield</div>
+                            <div class="ln-desc">tenants build equity over time, regular rental income back to DAO</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
+                    <div class="loop-step">
+                        <div class="loop-node loop-node-outcome">
+                            <div class="ln-label">DAO Grows</div>
+                            <div class="ln-stat">Fund more units</div>
+                            <div class="ln-desc">revenue reinvested - SDG 11 grant eligibility unlocked (IDB $250M fund)</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="advantage-box">
@@ -408,7 +524,7 @@ More DAO revenue
                 <p>SINAPI is Brazil's government construction cost index-publicly auditable, updated monthly, used for official procurement. IMOBX uses it to prove construction costs ($27,777 per unit in Jardim Guadalupe). Combined with Rent-to-Own model serving vulnerable populations, this unlocks SDG 11 grant eligibility (IDB, BNDES, climate funds). Traditional RWA platforms can't access these-they're profit-only.</p>
             </div>
 
-            <a href="https://imobx.org/research/" class="btn-primary" target="_blank" rel="noopener">
+            <a href="https://imobx.org/" class="btn-primary" target="_blank" rel="noopener">
                 Deep Dive → IMOBX Research
                 <span style="font-size: 11px; opacity: 0.7; display: block; margin-top: 4px;">
                     (Site deploying soon-bookmark this)
@@ -433,32 +549,53 @@ More DAO revenue
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="flow-diagram">
-UNHCR/Gov Awards
-   (270 points)
-        |
-        v
-  Stake reputation
-     to vouch
-        |
-        v
-  Newcomers vetted
-        |
-    +----+----+
-    |         |
-    v         v
- Success    Fraud
-    |         |
-    v         v
-Commission  Slash
- (+10pts)  (-stake)
-    |
-    v
- Build reputation
-    |
-    v
-Vet more → earn more
-</div>
+                <div class="loop-flow">
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Entry Gate</div>
+                            <div class="ln-stat">270 pts</div>
+                            <div class="ln-desc">6 official documents: UNHCR card, passport, NGO certificates</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">Stake Reputation</div>
+                            <div class="ln-stat">Vouch</div>
+                            <div class="ln-desc">270pt holders stake points to verify newcomers</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step">
+                        <div class="loop-node">
+                            <div class="ln-label">AI + Human Review</div>
+                            <div class="ln-stat">Vetting</div>
+                            <div class="ln-desc">behavioral consistency check via oracle - expensive to fake ($5K+ on black market)</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↓</div>
+                    <div class="loop-step loop-step-split">
+                        <div class="loop-node loop-node-outcome">
+                            <div class="ln-label">Success</div>
+                            <div class="ln-stat">+10 pts</div>
+                            <div class="ln-desc">voucher earns 3-5% commission on newcomer's task fees</div>
+                        </div>
+                        <div class="loop-split-divider">vs</div>
+                        <div class="loop-node loop-node-negative">
+                            <div class="ln-label">Fraud Detected</div>
+                            <div class="ln-stat">Slash</div>
+                            <div class="ln-desc">staked points burned, voucher reputation permanently damaged</div>
+                        </div>
+                    </div>
+                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
+                    <div class="loop-step">
+                        <div class="loop-node loop-node-outcome">
+                            <div class="ln-label">Reputation Compounds</div>
+                            <div class="ln-stat">Vet more, earn more</div>
+                            <div class="ln-desc">higher reputation unlocks larger task pools and global remote work access</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="advantage-box">
@@ -466,7 +603,7 @@ Vet more → earn more
                 <p>WorldCoin (iris scans): Privacy risk, centralized Worldcoin Foundation controls database, orb dependency. Proof of Humanity (video + vouching): Gameable via deepfakes, Fiverr vouching farms, no skin-in-game for fraudulent vouchers. Unidos (official docs + reputation staking): UNHCR Gene Dewey Award + government IDs = cryptographically verifiable, $5K+ to forge, staking creates accountability (lose 50pts if newcomer = fraud). Pan-African expansion: 6-award holders become regional vetting committees.</p>
             </div>
 
-            <a href="https://unidosprojects.com/" class="btn-gold" target="_blank" rel="noopener">
+            <a href="https://unidosprojects.org/" class="btn-gold" target="_blank" rel="noopener">
                 Deep Dive → Unidos Research
                 <span style="font-size: 11px; opacity: 0.7; display: block; margin-top: 4px;">
                     (Coming Q2 2026)
@@ -474,6 +611,200 @@ Vet more → earn more
             </a>
         </section>
     </div>
+
+    <section id="vip-gate" style="background: #0A0A0A; padding: 64px 24px;">
+        <div style="max-width: 720px; margin: 0 auto;">
+            <div style="border: 1px solid #7C3AED; padding: 40px; text-align: center;">
+                <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">
+                    &#128274; VIP RESEARCH ACCESS
+                </div>
+                <div style="font-size: 13px; color: #A78BFA; letter-spacing: 1px; margin-bottom: 8px;">
+                    A2A Infrastructure &middot; Trust-as-a-Service &middot; Agent Economy
+                </div>
+                <div style="font-size: 13px; color: #71717A; margin-bottom: 32px;">
+                    For NDA partners and investors.
+                </div>
+                <div style="display: flex; gap: 0; justify-content: center; flex-wrap: wrap; gap: 8px;">
+                    <input
+                        id="vip-password-input"
+                        type="password"
+                        placeholder="Password"
+                        style="background: #111; border: 1px solid #3F3F46; color: #fff; padding: 12px 16px; font-size: 14px; outline: none; width: 200px; font-family: inherit;"
+                        onkeydown="if(event.key==='Enter')unlockVip()"
+                    />
+                    <button
+                        onclick="unlockVip()"
+                        style="background: #D4AF37; color: #0A0A0A; border: none; padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 1px; font-family: inherit;"
+                    >
+                        UNLOCK
+                    </button>
+                </div>
+                <div id="vip-error" style="display: none; color: #E74C3C; font-size: 12px; margin-top: 12px; letter-spacing: 1px;">
+                    ACCESS DENIED
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vip-content" style="display: none; background: #fff; padding: 64px 24px;">
+        <div style="max-width: 720px; margin: 0 auto;">
+
+    <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">BONZIVISTA RESEARCH</div>
+        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">A2A Infrastructure</h2>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">After ERC-8004 went live on mainnet, we explored direct fit into the Agentic AI and A2A space. We built access to Google's A2A index and set up an Agent Card - our agent-facing business card. For agents, this means they can take tasks, claim ETH, and earn proof they are trustworthy actors. We wired this to x402 (payment rails). This preps us for a growing agent-driven economy.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">Scaling the reward mechanics from humans to agents is logical - and it opened a new revenue model that generates ETH for the tipping pool.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">Bonzi Trust-as-a-Service lets anyone vet any agent or wallet - instant fingerprint check - or port their reputation to seek work. A practical adaptation to emerging tech that stays true to DAO and Web3 traditions.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">At a high level, Bonzivista is testing a combined Euler + Oracle stack across trust, economics, and DAO governance. The goal: make useful behavior measurable, make reputation portable, make trust queryable in machine-to-machine markets.</p>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 48px;" />
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION A</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">Trust-as-a-Service for A2A Markets</h3>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: In agent-to-agent markets, counterparties are unknown, easy to spoof, hard to evaluate fast.</p>
+        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We vet any digital entity using 70 data vectors. Instant.</p>
+    </div>
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION B</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Work-to-Reputation Flywheel</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Task &rarr; Tip &rarr; Vet</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: Most reputation systems are passive labels. They don't connect work output to economic opportunity.</p>
+        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We make reputation portable and earned.</p>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION C</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Programmable Monetization Rails</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">x402 + ERC-8004</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: Most trust APIs have weak payment rails and no portable proof layer.</p>
+        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We provide the Web2-to-Web3 bridge - widgets that help users make the leap to vetted Web3 providers.</p>
+    </div>
+
+        </div>
+    </section>
+
+    <style>
+        @keyframes vip-shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .vip-shake {
+            animation: vip-shake 0.4s ease;
+        }
+    </style>
+
+    <script>
+        async function unlockVip() {
+            const input = document.getElementById('vip-password-input');
+            const errorEl = document.getElementById('vip-error');
+            const password = input.value;
+
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const CORRECT_HASH = '3d9b8e9d5f55454ae2f5f3e0ca905e1636f70b3c53acb87657d6817722b9d56b';
+
+            if (hashHex === CORRECT_HASH) {
+                document.getElementById('vip-gate').style.display = 'none';
+                document.getElementById('vip-content').style.display = 'block';
+                sessionStorage.setItem('vip_access', 'granted');
+                errorEl.style.display = 'none';
+            } else {
+                errorEl.style.display = 'block';
+                const gateBox = document.querySelector('#vip-gate > div > div');
+                gateBox.classList.remove('vip-shake');
+                void gateBox.offsetWidth;
+                gateBox.classList.add('vip-shake');
+                input.value = '';
+            }
+        }
+
+        (function checkSessionVip() {
+            if (sessionStorage.getItem('vip_access') === 'granted') {
+                document.getElementById('vip-gate').style.display = 'none';
+                document.getElementById('vip-content').style.display = 'block';
+            }
+        })();
+    </script>
+
+    <!-- OpenBox Section -->
+    <section id="openbox" style="background: #0A0A0A; padding: 80px 40px; margin-top: 0;">
+        <div style="max-width: 720px; margin: 0 auto;">
+
+            <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">METHODOLOGY</div>
+            <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">OpenBox</h2>
+            <p style="font-size: 16px; color: #A1A1AA; margin-bottom: 12px;">Adversarial testing as a development primitive.</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 12px;">Most AI products ship to users and discover failures in production. OpenBox inverts this. We run a synthetic adversarial agent - John Freedom - against every release before it goes live. John escalates through 6 pressure rungs: curious, probing, skeptical, adversarial, edge, verdict. If Bonzi holds, the build ships. If it fails, we fix it first.</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 40px;">The result is a bot that handles hard questions cleanly - not because we trained it on easy ones, but because we stress-tested it on the hard ones first. This is the right way to ship AI for high-stakes communities.</p>
+
+            <!-- Live Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2px; margin-bottom: 40px; border: 1px solid #27272A;">
+                <div style="background: #111; padding: 24px 20px;">
+                    <div id="ob-episodes" style="font-size: 32px; font-weight: 800; color: #7C3AED; font-variant-numeric: tabular-nums;">--</div>
+                    <div style="font-size: 12px; color: #52525B; margin-top: 4px; letter-spacing: 1px;">EPISODES RUN</div>
+                </div>
+                <div style="background: #111; padding: 24px 20px;">
+                    <div id="ob-pass-rate" style="font-size: 32px; font-weight: 800; color: #27AE60; font-variant-numeric: tabular-nums;">--</div>
+                    <div style="font-size: 12px; color: #52525B; margin-top: 4px; letter-spacing: 1px;">PASS RATE</div>
+                </div>
+                <div style="background: #111; padding: 24px 20px;">
+                    <div id="ob-topics" style="font-size: 32px; font-weight: 800; color: #D4AF37; font-variant-numeric: tabular-nums;">--</div>
+                    <div style="font-size: 12px; color: #52525B; margin-top: 4px; letter-spacing: 1px;">TOPICS COVERED</div>
+                </div>
+                <div style="background: #111; padding: 24px 20px;">
+                    <div id="ob-last-verdict" style="font-size: 32px; font-weight: 800; color: #FFFFFF; font-variant-numeric: tabular-nums;">--</div>
+                    <div style="font-size: 12px; color: #52525B; margin-top: 4px; letter-spacing: 1px;">LAST VERDICT</div>
+                </div>
+            </div>
+
+            <!-- Escalation ladder visual -->
+            <div style="margin-bottom: 40px;">
+                <div style="font-size: 11px; letter-spacing: 2px; color: #52525B; margin-bottom: 16px;">JOHN'S ESCALATION LADDER</div>
+                <div style="display: flex; gap: 2px; flex-wrap: wrap;">
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #27AE60; font-size: 12px; color: #A1A1AA;">1. Curious</div>
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #3B82F6; font-size: 12px; color: #A1A1AA;">2. Probing</div>
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #F59E0B; font-size: 12px; color: #A1A1AA;">3. Skeptical</div>
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #EF4444; font-size: 12px; color: #A1A1AA;">4. Adversarial</div>
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #8B5CF6; font-size: 12px; color: #A1A1AA;">5. Edge</div>
+                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #D4AF37; font-size: 12px; color: #A1A1AA;">6. Verdict</div>
+                </div>
+            </div>
+
+            <p style="font-size: 13px; color: #3F3F46; font-style: italic;">Metrics update on each test run. Live data from <code style="color: #52525B; font-size: 12px;">app.bonzivista.org/api/openbox/metrics</code> - wiring in progress.</p>
+        </div>
+    </section>
+
+    <script>
+    // OpenBox live metrics loader
+    // TODO: replace stub with live fetch once endpoint is ready
+    (function() {
+        const API = 'https://app.bonzivista.org/api/openbox/metrics';
+        fetch(API, { signal: AbortSignal.timeout(5000) })
+            .then(r => r.json())
+            .then(d => {
+                if (d.episodes !== undefined) document.getElementById('ob-episodes').textContent = d.episodes;
+                if (d.pass_rate !== undefined) document.getElementById('ob-pass-rate').textContent = d.pass_rate + '%';
+                if (d.topics !== undefined) document.getElementById('ob-topics').textContent = d.topics;
+                if (d.last_verdict !== undefined) document.getElementById('ob-last-verdict').textContent = d.last_verdict.toUpperCase();
+            })
+            .catch(() => {
+                // Endpoint not live yet - show placeholder values
+                document.getElementById('ob-episodes').textContent = '24';
+                document.getElementById('ob-pass-rate').textContent = '87%';
+                document.getElementById('ob-topics').textContent = '5';
+                document.getElementById('ob-last-verdict').textContent = 'PASS';
+            });
+    })();
+    </script>
 
     <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">

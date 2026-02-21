@@ -5,7 +5,7 @@
 **Primary Box:** Feature (max 2-3 total)
 **Win98:** No (first impressions)
 
-Focus: The core philosophical position. Democracy needs curation. SIAH is the curation.
+Focus: The core philosophical position. Democracy needs curation. Bonzi is the curation.
 
 ---
 
@@ -33,7 +33,7 @@ Closed loop value. How democracies thrive.
 ```
 Liquidity flows to verified contributors. Not VCs. Not farmers. Not us.
 
-SIAH is the oracle that makes this possible. It verifies real humans,
+Bonzi is the oracle that makes this possible. It verifies real humans,
 detects extractive patterns, and curates who deserves what. Code distributes.
 Humans can't corrupt it.
 
@@ -62,7 +62,7 @@ Open doesn't mean fair. Democracy needs curation.
 **Label:** "the oracle solution"
 **Title:** "curation without gatekeepers"
 
-SIAH changes the equation. An AI oracle that verifies contribution before distribution.
+Bonzi changes the equation. An AI oracle that verifies contribution before distribution.
 
 No human decides who gets paid. The Euler algorithm distributes based on verified work. Farmers get filtered. Bots get blocked. Only real humans earn.
 
@@ -115,7 +115,7 @@ Result: Can't extract. Won't extract. Build and ship.
 
 We're not promising to change the world tomorrow. We're building tools that work.
 
-SIAH oracle is live. Tipping agent is live. Token launcher is ready. The loop exists.
+Bonzi oracle is live. Tipping agent is live. Token launcher is ready. The loop exists.
 
 What we need is people who want to be part of it. Contributors who earn. Projects who launch. Communities that compound.
 

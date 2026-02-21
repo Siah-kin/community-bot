@@ -1,6 +1,6 @@
 # Research Notes
 
-Bonzi / SIAH is built around a simple thesis:
+Bonzi is built around a simple thesis:
 
 > Open communities get gamed. Trust must be measured from behavior, not identity.
 
@@ -13,7 +13,7 @@ This repo includes public-facing research artifacts in:
 
 ## Multi-oracle approach
 
-SIAH combines multiple signal sources and normalizes them into a composite score, designed to reduce single-signal gaming and sybil incentives.
+Bonzi combines multiple signal sources and normalizes them into a composite score, designed to reduce single-signal gaming and sybil incentives.
 
 ## Closed-loop agent economics
 

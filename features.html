@@ -9,7 +9,7 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <link rel="stylesheet" href="css/nav.css">
-    <script src="js/nav-loader.js" defer></script>
+    <script src="js/nav-loader.js?v=20260221" defer></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -340,11 +340,15 @@
         <div class="access-nav">
             <a href="#retail" class="access-btn retail">Telegram Bot</a>
             <a href="#developer" class="access-btn dev">GitHub OSS</a>
-            <a href="#enterprise" class="access-btn enterprise">BaaS $25/mo</a>
+            <a href="#enterprise" class="access-btn enterprise" style="opacity: 0.5;">BaaS -Coming Soon</a>
             <a href="#agent" class="access-btn agent">For AI Agents</a>
         </div>
 
         <p class="hero-sponsor">Sponsored by <strong>BONZI</strong> + <strong>VISTA</strong> community</p>
+
+        <div style="margin-top: 32px; padding: 16px 24px; border-left: 4px solid var(--gold); background: rgba(212,175,55,0.08); text-align: left; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 14px; color: var(--gray);">
+            <strong style="color: var(--gold);">Closed Alpha</strong> -Core features are functional. Some UI flows and AI responses are being optimized. Expect rough edges.
+        </div>
     </section>
 
     <!-- RETAIL - TELEGRAM BOT -->
@@ -380,7 +384,7 @@
                 </div>
             </div>
 
-            <div class="subsection-label">For Farmers & Contributors</div>
+            <div class="subsection-label">For Ambassadors & Contributors</div>
             <div class="feature-grid">
                 <div class="feature-card">
                     <h3>Ask & Earn</h3>
@@ -416,8 +420,8 @@
                 </div>
             </div>
 
-            <a href="https://t.me/Bonzivista_bot" class="section-cta retail" target="_blank">
-                Add @Bonzi_Community_bot
+            <a href="/?slot=open" class="section-cta retail">
+                Play to Unlock
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
             </a>
         </div>
@@ -470,38 +474,33 @@
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                 </div>
                 <div class="section-title">
-                    <h2>BaaS <span class="status-badge coming">Waitlist</span></h2>
-                    <div class="tagline">White-label the full stack. $25/month.</div>
+                    <h2>Bonzi-as-a-Service <span class="status-badge coming">Coming Soon</span></h2>
+                    <div class="tagline">Deploy Bonzi for your community. Self-host free or we run it for €25/mo.</div>
                 </div>
             </div>
 
             <div class="feature-grid">
                 <div class="feature-card">
-                    <h3>Full Oracle Access</h3>
-                    <p>SIAH intelligence layer. The same AI that powers our premium features, for your brand.</p>
+                    <h3>Same bot, your community</h3>
+                    <p>The trust scoring, sybil detection, and cooperation tracking that runs our community -running yours.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Analytics Dashboard</h3>
-                    <p>3-tier metrics: Whale, Narrative, Social, Onchain, Macro, Micro. Know your community deeply.</p>
+                    <h3>Answers from your docs</h3>
+                    <p>Upload your project docs. Bonzi answers community questions from them. No training required.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Custom Branding</h3>
-                    <p>Your logo, your voice, your personality. The bot responds as your brand, not as Bonzi.</p>
+                    <h3>Cross-community sybil intel</h3>
+                    <p>A wallet flagged for gaming in one Bonzi community gets flagged in yours. Shared defense, private data.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Multi-Community</h3>
-                    <p>Manage multiple DAOs from one panel. Shared knowledge base, separate analytics.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Priority Support</h3>
-                    <p>Direct line to the builders. Feature requests considered. Issues resolved fast.</p>
+                    <h3>Open source</h3>
+                    <p>Same code either way. No feature gates, no interaction limits. Self-host or let us handle it.</p>
                 </div>
             </div>
 
-            <a href="baas.html" class="section-cta enterprise">
-                See Plans &amp; Pricing
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+            <span class="section-cta enterprise" style="opacity: 0.5; cursor: default;">
+                Coming Soon
+            </span>
         </div>
     </section>
 
@@ -581,9 +580,9 @@
                 <a href="manual/#branders">Launch guide &rarr;</a>
             </div>
             <div class="stakeholder-card">
-                <h3>Farmers</h3>
+                <h3>Ambassadors</h3>
                 <p>Earn ETH through tasks, questions, promotions, and bug reports.</p>
-                <a href="manual/#farmers">Earning guide &rarr;</a>
+                <a href="manual/#ambassadors">Earning guide &rarr;</a>
             </div>
             <div class="stakeholder-card">
                 <h3>Investors</h3>
@@ -612,7 +611,7 @@
     <section class="cta-section">
         <h2>Ready to tokenise your brand?</h2>
         <p>Self-host free, or let us run it for you.</p>
-        <a href="https://t.me/Bonzivista_bot" class="cta-btn">Start with Telegram</a>
+        <a href="/?slot=open" class="cta-btn">Play to Unlock</a>
     </section>
 
     <footer>

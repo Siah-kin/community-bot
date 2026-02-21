@@ -1,4 +1,4 @@
-# API Reference (Bonzi / SIAH)
+# API Reference (Bonzi)
 
 This repository is a static site; the live API is hosted separately.
 

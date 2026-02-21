@@ -1,6 +1,6 @@
 # CPI-253 (Combined Progression Index) Spec
 
-**CPI-253** is a 10‑dimension scoring framework (253 points max) used by SIAH to report trust/quality in a standardized format.
+**CPI-253** is a 10‑dimension scoring framework (253 points max) used by Bonzi to report trust/quality in a standardized format.
 
 ## Dimensions (max points)
 

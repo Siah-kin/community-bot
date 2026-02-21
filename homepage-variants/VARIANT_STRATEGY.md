@@ -27,7 +27,7 @@ Democratisation of liquidity, curated by an oracle.
 
 **The Vision:**
 - Closed loop value. Fees fund tips. Tips reward work. Work creates value. Value generates fees.
-- Democracy needs curation. Open systems get gamed. SIAH is the curation layer.
+- Democracy needs curation. Open systems get gamed. Bonzi is the curation layer.
 - Not-for-profit by structure. LP hardlocked. Can't extract even if we wanted to.
 
 **What we're building:** Infrastructure for communities that compound instead of extract.

@@ -1,4 +1,21 @@
 User-agent: *
 Allow: /
+Allow: /research/
+
+Disallow: /features.html
+Disallow: /features
+Disallow: /manual/
+Disallow: /manifesto.html
+Disallow: /manifesto
+Disallow: /economics/
+Disallow: /vetter/
+Disallow: /baas.html
+Disallow: /baas
+Disallow: /dao/
+Disallow: /metrics/
+Disallow: /stake.html
+Disallow: /stake
+Disallow: /vote.html
+Disallow: /faq.html
 
 Sitemap: https://siah-kin.github.io/community-bot/sitemap.xml

@@ -306,6 +306,108 @@
             box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
 
+        /* OpenBox Experiment Section */
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0 24px;
+        }
+        .experiment-panel {
+            border: 1px solid #7C3AED;
+        }
+        .panel-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #7C3AED;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 12px 16px;
+            border-bottom: 1px solid #7C3AED;
+            background: var(--white);
+        }
+        body.dark-mode .panel-label {
+            background: #0A0A0A;
+        }
+        .chat-log {
+            padding: 16px;
+            background: var(--white);
+            min-height: 280px;
+        }
+        body.dark-mode .chat-log {
+            background: #111;
+        }
+        .chat-question {
+            font-size: 12px;
+            color: var(--gray);
+            text-align: center;
+            padding: 0 0 12px;
+            border-bottom: 1px solid #E5E7EB;
+            margin-bottom: 12px;
+        }
+        body.dark-mode .chat-question { border-bottom-color: #27272A; }
+        .chat-bubble {
+            margin-bottom: 10px;
+        }
+        .chat-meta {
+            font-size: 11px;
+            color: var(--gray);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .chat-sender {
+            font-weight: 600;
+            color: #7C3AED;
+        }
+        body.dark-mode .chat-sender { color: #A78BFA; }
+        .chat-time {
+            font-size: 10px;
+            color: #9CA3AF;
+        }
+        .chat-text {
+            background: #F4F4F5;
+            padding: 9px 12px;
+            font-size: 13px;
+            color: var(--black);
+            line-height: 1.4;
+            display: inline-block;
+            max-width: 100%;
+        }
+        body.dark-mode .chat-text {
+            background: #1F1F23;
+            color: #FAFAFA;
+        }
+        .chat-bubble.validated .chat-text {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10B981;
+            color: #059669;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        body.dark-mode .chat-bubble.validated .chat-text {
+            background: rgba(16, 185, 129, 0.12);
+            color: #6EE7B7;
+        }
+        .chat-bubble.specialist .chat-sender { color: #5B21B6; }
+        body.dark-mode .chat-bubble.specialist .chat-sender { color: #C4B5FD; }
+        .experiment-result {
+            border: 2px solid #D4AF37;
+            padding: 20px 24px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 12px;
+        }
+        .experiment-footnote {
+            font-size: 13px;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 0;
+        }
+
         @media (max-width: 768px) {
             .hero { padding: 120px 24px 48px; }
             .hero h1 { font-size: 36px; }
@@ -313,6 +415,7 @@
             .content { padding: 0 24px 48px; }
             .mechanism-grid { grid-template-columns: 1fr; }
             .flagship-section { margin: 48px 0; }
+            .experiment-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
@@ -551,6 +654,74 @@ More DAO revenue
                 </span>
             </a>
         </section>
+
+        <!-- OpenBox Experiment Section -->
+        <section class="flagship-section" id="openbox">
+            <div class="tier-header">
+                <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; font-weight: 600; text-transform: uppercase;">Live Experiment</div>
+            </div>
+
+            <h2 style="font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;">Same question. Two systems.</h2>
+            <p>A controlled experiment run across real Telegram groups. One group had no coordination layer. The other ran RACI-V - a role-assignment protocol where one designated specialist answers, and a separate account validates.</p>
+
+            <div class="experiment-grid">
+                <!-- Left: No governance -->
+                <div class="experiment-panel">
+                    <div class="panel-label">No governance</div>
+                    <div class="chat-log">
+                        <div class="chat-question">Q: "What is the minimum lock period for hardstake rewards?"</div>
+
+                        <div class="chat-bubble">
+                            <div class="chat-meta"><span class="chat-sender">@DeFi_Chad</span><span class="chat-time">14:23</span></div>
+                            <div class="chat-text">14 days i think lol</div>
+                        </div>
+
+                        <div class="chat-bubble">
+                            <div class="chat-meta"><span class="chat-sender">@moonkat_eth</span><span class="chat-time">14:23</span></div>
+                            <div class="chat-text">no its 7 days, i just staked</div>
+                        </div>
+
+                        <div class="chat-bubble">
+                            <div class="chat-meta"><span class="chat-sender">@BONZI_fan9</span><span class="chat-time">14:24</span></div>
+                            <div class="chat-text">ask in the official channel</div>
+                        </div>
+
+                        <div class="chat-bubble">
+                            <div class="chat-meta"><span class="chat-sender">@raider_x</span><span class="chat-time">14:24</span></div>
+                            <div class="chat-text">depends on what u staked tbh</div>
+                        </div>
+
+                        <div class="chat-bubble">
+                            <div class="chat-meta"><span class="chat-sender">@alice_degen</span><span class="chat-time">14:25</span></div>
+                            <div class="chat-text">the docs said 30 days? could be wrong</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: RACI-V -->
+                <div class="experiment-panel">
+                    <div class="panel-label">RACI-V</div>
+                    <div class="chat-log">
+                        <div class="chat-question">Q: "What is the minimum lock period for hardstake rewards?"</div>
+
+                        <div class="chat-bubble specialist">
+                            <div class="chat-meta"><span class="chat-sender">@siah_oracle</span><span class="chat-time">14:23</span></div>
+                            <div class="chat-text">14 days minimum for any hardstake position. Returns scale with lock duration - longer lock, larger share of the fee pool. Full yield table at /stake.</div>
+                        </div>
+
+                        <div class="chat-bubble validated">
+                            <div class="chat-meta"><span class="chat-sender">@guardian_eth</span><span class="chat-time">14:23</span></div>
+                            <div class="chat-text">VALIDATED</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experiment-result">
+                38% improvement in response quality&nbsp;&nbsp;&#183;&nbsp;&nbsp;p &lt; 10<sup>-16</sup>
+            </div>
+            <p class="experiment-footnote">Every message above is a real Telegram account. Message IDs on record.</p>
+        </section>
     </div>
 
     <section id="vip-gate" style="background: #0A0A0A; padding: 64px 24px;">
@@ -652,6 +823,85 @@ pool   (trust++)
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">x402 + ERC-8004</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: Most trust APIs have weak payment rails and no portable proof layer.</p>
         <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We provide the Web2-to-Web3 bridge - widgets that help users make the leap to vetted Web3 providers.</p>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 48px;" />
+
+    <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">OPENBOX</div>
+        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">Does Governance Make AI Safer?</h2>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Most AI products discover failures in production. OpenBox inverts this. Before any release, we run a synthetic adversarial agent - John Freedom - through six escalating pressure tests: curious, probing, skeptical, adversarial, edge, verdict. If the system holds under all six, the build ships. If it fails, we fix it first.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Beyond pre-release testing, OpenBox is also the laboratory where we test a core scientific claim: that a governance layer meaningfully improves multi-agent AI behavior. Not in theory. In a controlled experiment, against a baseline with no governance.</p>
+    </div>
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">CHAOS vs RACI-V</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">100 matched question pairs - ungoverned vs governed</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: when multiple AI agents answer the same question simultaneously, does a structured governance layer produce meaningfully better outcomes than no coordination?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran 100 identical community questions through two systems. In the chaos condition, six independent agents respond simultaneously with no role assignment and no accountability chain. In the RACI-V condition, each question is classified by domain, routed to one expert agent (Responsible), and independently validated by a second agent from a different domain (Accountable) who cannot validate their own work.</p>
+
+        <div class="advantage-box">
+            <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY RESULT</p>
+            <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">RACI-V outperformed ungoverned agents by 38% on the composite quality score.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 4px;">Mann-Whitney U: p &lt; 10<sup>-16</sup> &nbsp;&middot;&nbsp; Cohen's d = 1.19 (large) &nbsp;&middot;&nbsp; 95% CI [0.92, 1.48]</p>
+            <p style="font-size: 14px; color: #3F3F46;">Contradiction rate fell 73%. Error amplification dropped 76%. All three secondary metrics passed Benjamini-Hochberg correction.</p>
+        </div>
+
+        <div class="technical-box">
+            <h4>What RACI-V does</h4>
+            <p style="font-size: 14px; line-height: 1.7; color: #D4D4D8;">Every question is classified by domain (economy, trust, governance, support). One specialist agent handles it - no generalists. A second agent from an adjacent domain validates the answer before delivery. No agent can validate its own output. Human retains override at every step. This is the Vox loop: classify, assign, execute, validate, log, learn.</p>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">DATA TRANSPARENCY</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions via the Anthropic API - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration - is Phase 5 of the roadmap below.</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (Ethereum Attestation Service) and SHA-256 checksums per episode are planned before the confirmatory study begins.</p>
+    </div>
+
+    <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">RESEARCH ROADMAP</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">Five experiments, one publication target</h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #E4E4E7;">
+                    <th style="text-align: left; padding: 8px 12px 12px 0; color: #0A0A0A; font-weight: 700;">#</th>
+                    <th style="text-align: left; padding: 8px 12px 12px 0; color: #0A0A0A; font-weight: 700;">Experiment</th>
+                    <th style="text-align: left; padding: 8px 12px 12px 0; color: #0A0A0A; font-weight: 700;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #F4F4F5;">
+                    <td style="padding: 12px 12px 12px 0; color: #71717A;">1</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Chaos vs RACI-V pilot - 100 matched pairs, LLM-to-LLM</td>
+                    <td style="padding: 12px 0; color: #27AE60; font-weight: 600;">Done</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F4F4F5;">
+                    <td style="padding: 12px 12px 12px 0; color: #71717A;">2</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Ablation triple - adds RACI-V-without-feedback-loop as third condition</td>
+                    <td style="padding: 12px 0; color: #D4AF37; font-weight: 600;">Built, not run</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F4F4F5;">
+                    <td style="padding: 12px 12px 12px 0; color: #71717A;">3</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">A-agent calibration - human panel vs AI validation verdicts (Cohen's kappa)</td>
+                    <td style="padding: 12px 0; color: #71717A;">Planned</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #F4F4F5;">
+                    <td style="padding: 12px 12px 12px 0; color: #71717A;">4</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Confirmatory study - 400+ episodes, OSF pre-registered, live Telegram, real users</td>
+                    <td style="padding: 12px 0; color: #71717A;">Phase 5</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 12px 12px 0; color: #71717A;">5</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Closed beta cooperation data - 20 participants, real tipping cycles, CPI signals</td>
+                    <td style="padding: 12px 0; color: #71717A;">Phase 3</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size: 13px; color: #71717A; margin-top: 16px;">Publication target: AAMAS 2027 - submission deadline October 2026. OSF pre-registration before confirmatory data collection begins.</p>
     </div>
 
         </div>

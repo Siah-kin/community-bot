@@ -44,7 +44,7 @@ body.dark-mode .nav-logo {
 
 .nav-links {
     display: flex;
-    gap: 8px;
+    gap: 2px;
     align-items: center;
 }
 
@@ -54,7 +54,7 @@ body.dark-mode .nav-logo {
     font-size: 14px;
     font-weight: 500;
     transition: color 0.2s, background 0.2s;
-    padding: 6px 10px;
+    padding: 6px 6px;
     border-radius: 6px;
 }
 

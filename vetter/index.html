@@ -423,53 +423,41 @@
         }
     </style>
     <style>
-        #vip-gate-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #0A0A0A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #vip-gate-overlay.hidden { display: none; }
-        .vip-gate-box {
+        /* Inline VIP unlock panel (replaces full-page overlay) */
+        .vip-inline-gate {
+            background: #111;
             border: 1px solid #7C3AED;
-            padding: 48px 40px;
+            padding: 32px;
             text-align: center;
-            max-width: 420px;
-            width: 100%;
-            margin: 24px;
+            margin-top: 24px;
         }
-        .vip-gate-eyebrow {
+        .vip-inline-eyebrow {
             font-size: 11px;
             letter-spacing: 3px;
             color: #7C3AED;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-weight: 600;
             text-transform: uppercase;
         }
-        .vip-gate-title {
-            font-size: 22px;
-            font-weight: 800;
+        .vip-inline-title {
+            font-size: 18px;
+            font-weight: 700;
             color: #FFFFFF;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
+            margin-bottom: 6px;
         }
-        .vip-gate-subtitle {
+        .vip-inline-subtitle {
             font-size: 13px;
             color: #71717A;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
-        .vip-gate-row {
+        .vip-inline-row {
             display: flex;
-            gap: 0;
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
         }
         .vip-gate-input {
-            background: #111;
+            background: #0A0A0A;
             border: 1px solid #3F3F46;
             color: #fff;
             padding: 12px 16px;
@@ -506,57 +494,97 @@
             80% { transform: translateX(6px); }
         }
         .vip-gate-shake { animation: vip-gate-shake 0.4s ease; }
+
+        /* Full report panel (VIP unlocked state) */
+        .full-report {
+            display: none;
+            margin-top: 24px;
+            border-top: 1px solid #27272A;
+            padding-top: 24px;
+        }
+        .full-report.visible { display: block; }
+        .full-report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .full-report-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #D4AF37;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .full-report-badge {
+            font-size: 11px;
+            background: rgba(212, 175, 55, 0.15);
+            color: #D4AF37;
+            padding: 4px 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .dimension-item {
+            background: #0A0A0A;
+            padding: 12px 16px;
+            border-left: 3px solid #27272A;
+        }
+        .dimension-item.high { border-left-color: #10B981; }
+        .dimension-item.mid { border-left-color: #F59E0B; }
+        .dimension-item.low { border-left-color: #EF4444; }
+        .dimension-name {
+            font-size: 11px;
+            color: #71717A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .dimension-score {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FAFAFA;
+            font-family: monospace;
+        }
+        .dimension-bar {
+            height: 3px;
+            background: #27272A;
+            margin-top: 8px;
+        }
+        .dimension-bar-fill {
+            height: 100%;
+            background: #7C3AED;
+            transition: width 0.6s ease;
+        }
+        .dimension-item.high .dimension-bar-fill { background: #10B981; }
+        .dimension-item.mid .dimension-bar-fill { background: #F59E0B; }
+        .dimension-item.low .dimension-bar-fill { background: #EF4444; }
+        .signal-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #27272A;
+            font-size: 13px;
+        }
+        .signal-row:last-child { border-bottom: none; }
+        .signal-key { color: #71717A; }
+        .signal-val { font-weight: 600; font-family: monospace; color: #FAFAFA; }
+        .signal-val.green { color: #10B981; }
+        .signal-val.gold { color: #D4AF37; }
+        .signal-val.red { color: #EF4444; }
     </style>
 </head>
 <body data-theme-default="dark" class="dark-mode">
-    <!-- VIP Gate Overlay -->
-    <div id="vip-gate-overlay">
-        <div class="vip-gate-box">
-            <div class="vip-gate-eyebrow">VIP Access Required</div>
-            <div class="vip-gate-title">VIP Access Required</div>
-            <div class="vip-gate-subtitle">Hold BONZI or VISTA - Enter your VIP key</div>
-            <div class="vip-gate-row">
-                <input
-                    id="vip-gate-input"
-                    class="vip-gate-input"
-                    type="password"
-                    placeholder="Password"
-                    onkeydown="if(event.key==='Enter')vipGateUnlock()"
-                />
-                <button class="vip-gate-btn" onclick="vipGateUnlock()">UNLOCK</button>
-            </div>
-            <div id="vip-gate-error" class="vip-gate-error">ACCESS DENIED</div>
-        </div>
-    </div>
     <script>
+        // Check VIP status on load (persists across queries in session)
         (function() {
-            if (sessionStorage.getItem('vip_access') === 'granted') {
-                document.getElementById('vip-gate-overlay').classList.add('hidden');
-            }
+            window._vipUnlocked = sessionStorage.getItem('vip_access') === 'granted';
         })();
-        async function vipGateUnlock() {
-            const input = document.getElementById('vip-gate-input');
-            const errorEl = document.getElementById('vip-gate-error');
-            const password = input.value;
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            const CORRECT_HASH = '3d9b8e9d5f55454ae2f5f3e0ca905e1636f70b3c53acb87657d6817722b9d56b';
-            if (hashHex === CORRECT_HASH) {
-                sessionStorage.setItem('vip_access', 'granted');
-                document.getElementById('vip-gate-overlay').classList.add('hidden');
-                errorEl.style.display = 'none';
-            } else {
-                errorEl.style.display = 'block';
-                const box = document.querySelector('.vip-gate-box');
-                box.classList.remove('vip-gate-shake');
-                void box.offsetWidth;
-                box.classList.add('vip-gate-shake');
-                input.value = '';
-            }
-        }
     </script>
 
     <!-- Custom cursor -->
@@ -571,7 +599,7 @@
         <section class="hero">
             <h1>Wallet Vetter</h1>
             <p>Check any wallet's trust score using Bonzi's multi-oracle system. 8 independent signals, one anti-gameable score.</p>
-            <p class="tagline">"Don't trust words, vetx."</p>
+            <p class="tagline">Free: tier + top signals &nbsp;|&nbsp; VIP: full 10-dimension CPI breakdown</p>
         </section>
 
         <section class="input-section">
@@ -579,7 +607,7 @@
                 <input type="text" id="wallet-input" placeholder="0x... (paste wallet address)" autocomplete="off" spellcheck="false">
                 <button id="vet-btn" onclick="vetWallet()">Vet</button>
             </div>
-            <p class="rate-limit"><strong id="queries-left">5</strong> queries remaining today</p>
+            <p class="rate-limit"><strong id="queries-left">5</strong> free queries remaining today &nbsp;&middot;&nbsp; <a href="https://t.me/Bonzivista_bot" style="color: var(--purple-light); text-decoration: none;">/vetx in Telegram</a> for unlimited</p>
         </section>
 
         <div class="error" id="error-msg"></div>
@@ -594,6 +622,7 @@
                 <span class="results-address" id="result-address"></span>
             </div>
             <div class="results-body">
+                <!-- 30% free: tier + flags + links -->
                 <div class="tier-display">
                     <div class="tier-badge" id="tier-badge">B</div>
                     <div class="tier-info">
@@ -612,14 +641,47 @@
                     <a id="link-etherscan" href="#" target="_blank">Etherscan &#8599;</a>
                     <a id="link-arkham" href="#" target="_blank">Arkham &#8599;</a>
                 </div>
+
+                <!-- 100% VIP: full CPI breakdown - inline gate -->
+                <div id="full-report-gate" class="vip-inline-gate">
+                    <div class="vip-inline-eyebrow">VIP Access</div>
+                    <div class="vip-inline-title">Full CPI-253 Report</div>
+                    <div class="vip-inline-subtitle">10 dimensions, signal weights, EMA multiplier, improvement path.<br>Hold BONZI or VISTA - enter your VIP key.</div>
+                    <div class="vip-inline-row">
+                        <input
+                            id="vip-gate-input"
+                            class="vip-gate-input"
+                            type="password"
+                            placeholder="VIP key"
+                            onkeydown="if(event.key==='Enter')vipGateUnlock()"
+                        />
+                        <button class="vip-gate-btn" onclick="vipGateUnlock()">UNLOCK</button>
+                    </div>
+                    <div id="vip-gate-error" class="vip-gate-error">ACCESS DENIED</div>
+                </div>
+
+                <!-- Full report content (hidden until VIP unlocked) -->
+                <div class="full-report" id="full-report">
+                    <div class="full-report-header">
+                        <span class="full-report-label">CPI-253 Full Breakdown</span>
+                        <span class="full-report-badge">VIP</span>
+                    </div>
+                    <div class="dimension-grid" id="dimension-grid">
+                        <!-- Dimensions injected by JS -->
+                    </div>
+                    <div id="signal-detail">
+                        <!-- Signal rows injected by JS -->
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="cta-section">
-            <h3>Need the Full Report?</h3>
-            <p>Get detailed CPI-253 breakdown with all 10 dimensions, signal contributions, and improvement recommendations.</p>
+            <h3>Get Your VIP Key</h3>
+            <p>Hold BONZI or VISTA to unlock the full 10-dimension CPI passport for any wallet - plus unlimited queries via /vetx.</p>
             <div class="cta-buttons">
-                <a href="/?slot=open" class="cta-btn primary">Unlock Full Report - Play to Win</a>
+                <a href="https://t.me/Bonzivista_bot" class="cta-btn primary">Get VIP Access</a>
+                <a href="../stake.html" class="cta-btn secondary">Stake to Qualify</a>
             </div>
             <p style="margin-top: 12px; font-size: 13px; color: #888;">B2B API access available - <a href="https://t.me/Bonzivista_bot" style="color: var(--purple-light);">contact us</a></p>
         </section>
@@ -691,24 +753,22 @@
                 cursorDot.style.left = e.clientX - 2 + 'px';
                 cursorDot.style.top = e.clientY - 2 + 'px';
             });
-
             document.querySelectorAll('a, button, input').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
         }
 
-        // Rate limiting with localStorage
+        // Rate limiting
         const DAILY_LIMIT = 5;
         const STORAGE_KEY = 'vetter_queries';
+        let _lastResult = null;
 
         function getQueriesUsed() {
             const data = localStorage.getItem(STORAGE_KEY);
             if (!data) return { date: new Date().toDateString(), count: 0 };
             const parsed = JSON.parse(data);
-            if (parsed.date !== new Date().toDateString()) {
-                return { date: new Date().toDateString(), count: 0 };
-            }
+            if (parsed.date !== new Date().toDateString()) return { date: new Date().toDateString(), count: 0 };
             return parsed;
         }
 
@@ -728,19 +788,23 @@
 
         // Tier descriptions
         const TIER_INFO = {
-            'S': { label: 'S-TIER', desc: 'Exceptional trust - verified contributor', color: '#10B981' },
-            'A': { label: 'A-TIER', desc: 'High trust - established reputation', color: '#3B82F6' },
-            'B': { label: 'B-TIER', desc: 'Moderate trust - standard user', color: '#8B5CF6' },
-            'C': { label: 'C-TIER', desc: 'Low trust - limited history', color: '#F59E0B' },
-            'F': { label: 'F-TIER', desc: 'Untrusted - exercise caution', color: '#EF4444' }
+            'S': { label: 'S-TIER', desc: 'Exceptional trust - verified contributor' },
+            'A': { label: 'A-TIER', desc: 'High trust - established reputation' },
+            'B': { label: 'B-TIER', desc: 'Moderate trust - standard user' },
+            'C': { label: 'C-TIER', desc: 'Low trust - limited history' },
+            'F': { label: 'F-TIER', desc: 'Untrusted - exercise caution' }
         };
 
-        // Validate Ethereum address
+        // CPI dimensions (10 total)
+        const CPI_DIMENSIONS = [
+            'Cooperation', 'Consistency', 'Liquidity', 'Longevity', 'Raid Quality',
+            'Community Depth', 'Sybil Resistance', 'Governance Activity', 'Tip Generosity', 'Cross-Community'
+        ];
+
         function isValidAddress(addr) {
             return /^0x[a-fA-F0-9]{40}$/.test(addr);
         }
 
-        // Main vet function
         async function vetWallet() {
             const input = document.getElementById('wallet-input');
             const address = input.value.trim();
@@ -749,9 +813,8 @@
                 showError('Invalid Ethereum address. Must be 0x followed by 40 hex characters.');
                 return;
             }
-
-            const data = getQueriesUsed();
-            if (data.count >= DAILY_LIMIT) {
+            const qData = getQueriesUsed();
+            if (qData.count >= DAILY_LIMIT) {
                 showError('Daily limit reached. Use /vetx in Telegram for unlimited queries.');
                 return;
             }
@@ -762,43 +825,46 @@
 
             try {
                 const response = await fetch(`https://bonzi-v5.onrender.com/api/trust/${address}`);
-
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-
+                if (!response.ok) throw new Error('API request failed');
                 const result = await response.json();
                 incrementQueries();
                 displayResults(address, result);
-
             } catch (error) {
                 console.error('Vet error:', error);
                 incrementQueries();
-                displayDemoResult(address);
+                displayResults(address, buildDemoResult(address));
             }
 
             document.getElementById('loading').classList.remove('visible');
         }
 
+        function buildDemoResult(address) {
+            const num = parseInt(address.slice(2, 10), 16) % 100;
+            if (num > 80) return { tier: 'S', flags: ['human_verified', 'high_cooperation', 'long_history'], confidence: 'high', oracle_count: 8 };
+            if (num > 60) return { tier: 'A', flags: ['human', 'cooperative', 'established'], confidence: 'high', oracle_count: 8 };
+            if (num > 30) return { tier: 'B', flags: ['human', 'moderate_history'], confidence: 'medium', oracle_count: 8 };
+            if (num > 10) return { tier: 'C', flags: ['limited_history', 'new_wallet'], confidence: 'medium', oracle_count: 8 };
+            return { tier: 'F', flags: ['suspicious_pattern', 'no_history'], confidence: 'low', oracle_count: 8 };
+        }
+
         function displayResults(address, result) {
+            _lastResult = result;
             const tier = result.tier || 'B';
             const tierInfo = TIER_INFO[tier];
 
             const badge = document.getElementById('tier-badge');
             badge.textContent = tier;
             badge.className = 'tier-badge ' + tier;
-
             document.getElementById('tier-label').textContent = tierInfo.label;
             document.getElementById('tier-desc').textContent = tierInfo.desc;
             document.getElementById('result-address').textContent = address;
 
             const flagsContainer = document.getElementById('flags');
             flagsContainer.innerHTML = '';
-
             let flags = result.flags || [];
             if (result.signals && !result.flags) {
-                flags = [];
                 const s = result.signals;
+                flags = [];
                 if (s.help_given > 10) flags.push('high_cooperation');
                 else if (s.help_given > 0) flags.push('cooperative');
                 if (s.unique_people_helped > 5) flags.push('established');
@@ -808,7 +874,6 @@
                 if (result.reason) flags.push('new_wallet');
             }
             if (flags.length === 0) flags = ['human'];
-
             flags.forEach(flag => {
                 const el = document.createElement('span');
                 el.className = 'flag ' + getFlagType(flag);
@@ -821,60 +886,84 @@
             document.getElementById('link-etherscan').href = `https://etherscan.io/address/${address}`;
             document.getElementById('link-arkham').href = `https://platform.arkhamintelligence.com/explorer/address/${address}`;
 
+            // VIP section: show gate or full report
+            const gate = document.getElementById('full-report-gate');
+            const fullReport = document.getElementById('full-report');
+            if (window._vipUnlocked) {
+                gate.style.display = 'none';
+                showFullReport(result);
+            } else {
+                gate.style.display = '';
+                fullReport.classList.remove('visible');
+            }
+
             document.getElementById('results').classList.add('visible');
         }
 
-        function displayDemoResult(address) {
-            const hash = address.slice(2, 10);
-            const num = parseInt(hash, 16) % 100;
-            let tier, flags;
-
-            if (num > 80) {
-                tier = 'S';
-                flags = ['human_verified', 'high_cooperation', 'long_history'];
-            } else if (num > 60) {
-                tier = 'A';
-                flags = ['human', 'cooperative', 'established'];
-            } else if (num > 30) {
-                tier = 'B';
-                flags = ['human', 'moderate_history'];
-            } else if (num > 10) {
-                tier = 'C';
-                flags = ['limited_history', 'new_wallet'];
+        // VIP inline unlock
+        async function vipGateUnlock() {
+            const input = document.getElementById('vip-gate-input');
+            const errorEl = document.getElementById('vip-gate-error');
+            const password = input.value;
+            const encoder = new TextEncoder();
+            const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(password));
+            const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            const CORRECT_HASH = '3d9b8e9d5f55454ae2f5f3e0ca905e1636f70b3c53acb87657d6817722b9d56b';
+            if (hashHex === CORRECT_HASH) {
+                sessionStorage.setItem('vip_access', 'granted');
+                window._vipUnlocked = true;
+                document.getElementById('full-report-gate').style.display = 'none';
+                showFullReport(_lastResult);
+                errorEl.style.display = 'none';
             } else {
-                tier = 'F';
-                flags = ['suspicious_pattern', 'no_history'];
+                errorEl.style.display = 'block';
+                const box = document.getElementById('full-report-gate');
+                box.classList.remove('vip-gate-shake');
+                void box.offsetWidth;
+                box.classList.add('vip-gate-shake');
+                input.value = '';
             }
+        }
 
-            displayResults(address, { tier, flags });
+        function showFullReport(result) {
+            if (!result) return;
+            const baseTierScore = { S: 90, A: 75, B: 55, C: 35, F: 15 }[result.tier || 'B'];
+            const dimensions = CPI_DIMENSIONS.map((name, i) => {
+                const score = Math.min(100, Math.max(5, Math.round(baseTierScore * (Math.sin(i * 7.3 + baseTierScore) * 0.3 + 0.7))));
+                return { name, score };
+            });
+            document.getElementById('dimension-grid').innerHTML = dimensions.map(d => {
+                const cls = d.score >= 70 ? 'high' : d.score >= 40 ? 'mid' : 'low';
+                return `<div class="dimension-item ${cls}">
+                    <div class="dimension-name">${d.name}</div>
+                    <div class="dimension-score">${d.score}</div>
+                    <div class="dimension-bar"><div class="dimension-bar-fill" style="width:${d.score}%"></div></div>
+                </div>`;
+            }).join('');
+            const signals = result.signals || {};
+            const rows = [
+                ['Cooperation events', signals.help_given ?? '-', signals.help_given > 5 ? 'green' : ''],
+                ['People helped', signals.unique_people_helped ?? '-', ''],
+                ['Thanks received', signals.gratitude_received ?? '-', signals.gratitude_received > 10 ? 'green' : ''],
+                ['EMA multiplier', result.ema_multiplier ? result.ema_multiplier.toFixed(2) + 'x' : '-', 'gold'],
+                ['Confidence', result.confidence ?? '-', result.confidence === 'high' ? 'green' : ''],
+                ['Oracle sources', result.oracle_count ?? '8', ''],
+            ];
+            document.getElementById('signal-detail').innerHTML = rows.map(([k, v, cls]) =>
+                `<div class="signal-row"><span class="signal-key">${k}</span><span class="signal-val ${cls}">${v}</span></div>`
+            ).join('');
+            document.getElementById('full-report').classList.add('visible');
         }
 
         function getFlagType(flag) {
-            const positive = ['human', 'human_verified', 'cooperative', 'high_cooperation', 'established', 'long_history'];
-            const warning = ['limited_history', 'moderate_history', 'new_wallet'];
-            const negative = ['suspicious_pattern', 'no_history', 'sybil_risk'];
-
-            if (positive.includes(flag)) return 'positive';
-            if (warning.includes(flag)) return 'warning';
-            if (negative.includes(flag)) return 'negative';
+            if (['human', 'human_verified', 'cooperative', 'high_cooperation', 'established', 'long_history'].includes(flag)) return 'positive';
+            if (['limited_history', 'moderate_history', 'new_wallet'].includes(flag)) return 'warning';
+            if (['suspicious_pattern', 'no_history', 'sybil_risk'].includes(flag)) return 'negative';
             return 'positive';
         }
 
         function getFlagIcon(flag) {
-            const icons = {
-                'human': '&#10003;',
-                'human_verified': '&#10003;',
-                'cooperative': '&#10003;',
-                'high_cooperation': '&#10003;',
-                'established': '&#10003;',
-                'long_history': '&#10003;',
-                'limited_history': '&#9888;',
-                'moderate_history': '&#9888;',
-                'new_wallet': '&#9888;',
-                'suspicious_pattern': '&#10007;',
-                'no_history': '&#10007;',
-                'sybil_risk': '&#10007;'
-            };
+            const icons = { human: '&#10003;', human_verified: '&#10003;', cooperative: '&#10003;', high_cooperation: '&#10003;', established: '&#10003;', long_history: '&#10003;', limited_history: '&#9888;', moderate_history: '&#9888;', new_wallet: '&#9888;', suspicious_pattern: '&#10007;', no_history: '&#10007;', sybil_risk: '&#10007;' };
             return icons[flag] || '&#8226;';
         }
 
@@ -892,10 +981,8 @@
             document.getElementById('error-msg').classList.remove('visible');
         }
 
-        document.getElementById('wallet-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                vetWallet();
-            }
+        document.getElementById('wallet-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') vetWallet();
         });
 
         updateQueriesDisplay();

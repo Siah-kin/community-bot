@@ -403,45 +403,30 @@
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="loop-flow">
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Every Trade</div>
-                            <div class="ln-stat">$10-15 ETH</div>
-                            <div class="ln-desc">flat fee per BONZI transaction (Ethervista Euler model)</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step loop-step-split">
-                        <div class="loop-node">
-                            <div class="ln-label">LP Share</div>
-                            <div class="ln-stat">Fee Pool</div>
-                            <div class="ln-desc">distributed to liquidity providers each block</div>
-                        </div>
-                        <div class="loop-split-divider">+</div>
-                        <div class="loop-node">
-                            <div class="ln-label">Protocol</div>
-                            <div class="ln-stat">Auto-Burn</div>
-                            <div class="ln-desc">buys BONZI from market and burns it permanently</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Hardstake</div>
-                            <div class="ln-stat">14+ day lock</div>
-                            <div class="ln-desc">longer commitment = larger slice of fee pool</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
-                    <div class="loop-step">
-                        <div class="loop-node loop-node-outcome">
-                            <div class="ln-label">Long-term Holders</div>
-                            <div class="ln-stat">ETH yield</div>
-                            <div class="ln-desc">passive income proportional to stake duration and size</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="flow-diagram">
+Users trade BONZI
+         |
+         v
+   Flat ETH fee
+    ($10-15/tx)
+         |
+    +----+----+
+    |         |
+    v         v
+   LPs    Protocol
+    |         |
+    |         v
+    |    Auto-buy
+    |     + burn
+    |         |
+    +----+----+
+         |
+         v
+ Hardstake yield
+         |
+         v
+Long-term holders
+</div>
             </div>
 
             <div class="advantage-box">
@@ -470,53 +455,30 @@
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="loop-flow">
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Revenue Sources</div>
-                            <div class="ln-stat">Trade Fees</div>
-                            <div class="ln-desc">flat ETH per IMOBX trade + rental income from financed properties</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">DAO Treasury</div>
-                            <div class="ln-stat">Governance</div>
-                            <div class="ln-desc">community votes on allocation, project selection, SINAPI-tracked budgets</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step loop-step-split">
-                        <div class="loop-node">
-                            <div class="ln-label">LP Providers</div>
-                            <div class="ln-stat">Fee Share</div>
-                            <div class="ln-desc">earn per trade from liquidity provision</div>
-                        </div>
-                        <div class="loop-split-divider">+</div>
-                        <div class="loop-node">
-                            <div class="ln-label">Construction</div>
-                            <div class="ln-stat">$27,777/unit</div>
-                            <div class="ln-desc">SINAPI-verified cost, grant-eligible social housing</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Rent-to-Own</div>
-                            <div class="ln-stat">Rental yield</div>
-                            <div class="ln-desc">tenants build equity over time, regular rental income back to DAO</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
-                    <div class="loop-step">
-                        <div class="loop-node loop-node-outcome">
-                            <div class="ln-label">DAO Grows</div>
-                            <div class="ln-stat">Fund more units</div>
-                            <div class="ln-desc">revenue reinvested - SDG 11 grant eligibility unlocked (IDB $250M fund)</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="flow-diagram">
+   Trade fees
+        |
+        v
+  DAO Treasury
+        |
+   +----+----+
+   |         |
+   v         v
+  LP    Construction
+  |      funding
+  |         |
+  |         v
+  |   Rent-to-Own
+  |   properties
+  |         |
+  |         v
+  |   Rental yield
+  |         |
+  +----+----+
+        |
+        v
+More DAO revenue
+</div>
             </div>
 
             <div class="advantage-box">
@@ -549,53 +511,32 @@
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
-                <div class="loop-flow">
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Entry Gate</div>
-                            <div class="ln-stat">270 pts</div>
-                            <div class="ln-desc">6 official documents: UNHCR card, passport, NGO certificates</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">Stake Reputation</div>
-                            <div class="ln-stat">Vouch</div>
-                            <div class="ln-desc">270pt holders stake points to verify newcomers</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step">
-                        <div class="loop-node">
-                            <div class="ln-label">AI + Human Review</div>
-                            <div class="ln-stat">Vetting</div>
-                            <div class="ln-desc">behavioral consistency check via oracle - expensive to fake ($5K+ on black market)</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↓</div>
-                    <div class="loop-step loop-step-split">
-                        <div class="loop-node loop-node-outcome">
-                            <div class="ln-label">Success</div>
-                            <div class="ln-stat">+10 pts</div>
-                            <div class="ln-desc">voucher earns 3-5% commission on newcomer's task fees</div>
-                        </div>
-                        <div class="loop-split-divider">vs</div>
-                        <div class="loop-node loop-node-negative">
-                            <div class="ln-label">Fraud Detected</div>
-                            <div class="ln-stat">Slash</div>
-                            <div class="ln-desc">staked points burned, voucher reputation permanently damaged</div>
-                        </div>
-                    </div>
-                    <div class="loop-connector">↺<span class="loop-connector-label">reinforcing loop</span></div>
-                    <div class="loop-step">
-                        <div class="loop-node loop-node-outcome">
-                            <div class="ln-label">Reputation Compounds</div>
-                            <div class="ln-stat">Vet more, earn more</div>
-                            <div class="ln-desc">higher reputation unlocks larger task pools and global remote work access</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="flow-diagram">
+UNHCR/Gov Awards
+   (270 points)
+        |
+        v
+  Stake reputation
+     to vouch
+        |
+        v
+  Newcomers vetted
+        |
+    +----+----+
+    |         |
+    v         v
+ Success    Fraud
+    |         |
+    v         v
+Commission  Slash
+ (+10pts)  (-stake)
+    |
+    v
+ Build reputation
+    |
+    v
+Vet more → earn more
+</div>
             </div>
 
             <div class="advantage-box">
@@ -652,10 +593,40 @@
     <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">BONZIVISTA RESEARCH</div>
         <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">A2A Infrastructure</h2>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">After ERC-8004 went live on mainnet, we explored direct fit into the Agentic AI and A2A space. We built access to Google's A2A index and set up an Agent Card - our agent-facing business card. For agents, this means they can take tasks, claim ETH, and earn proof they are trustworthy actors. We wired this to x402 (payment rails). This preps us for a growing agent-driven economy.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">Scaling the reward mechanics from humans to agents is logical - and it opened a new revenue model that generates ETH for the tipping pool.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">Bonzi Trust-as-a-Service lets anyone vet any agent or wallet - instant fingerprint check - or port their reputation to seek work. A practical adaptation to emerging tech that stays true to DAO and Web3 traditions.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;">At a high level, Bonzivista is testing a combined Euler + Oracle stack across trust, economics, and DAO governance. The goal: make useful behavior measurable, make reputation portable, make trust queryable in machine-to-machine markets.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">After ERC-8004 went live on mainnet, we explored direct fit into the Agentic AI and A2A space. We built access to Google's A2A index and set up an Agent Card - our agent-facing business card. For agents, this means they can take tasks, claim ETH, and earn proof they are trustworthy actors. We wired this to x402 (payment rails). This preps us for a growing agent-driven economy.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Scaling the reward mechanics from humans to agents is logical - and it opened a new revenue model that generates ETH for the tipping pool.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Bonzi Trust-as-a-Service lets anyone vet any agent or wallet - instant fingerprint check - or port their reputation to seek work. A practical adaptation to emerging tech that stays true to DAO and Web3 traditions.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 28px;">At a high level, Bonzivista is testing a combined Euler + Oracle stack across trust, economics, and DAO governance. The goal: make useful behavior measurable, make reputation portable, make trust queryable in machine-to-machine markets.</p>
+        <div class="technical-box">
+            <h4>Closed Loop</h4>
+            <div class="flow-diagram">
+ Agent Card
+ (ERC-8004)
+      |
+      v
+Google A2A Index
+ (discoverable)
+      |
+      v
+  Take tasks
+  via x402
+      |
+      v
+ Claim ETH fees
+      |
+ +----+----+
+ |         |
+ v         v
+ETH    CPI score
+pool   (trust++)
+ |         |
+ +----+----+
+      |
+      v
+ Better tasks
+  → more ETH
+</div>
+        </div>
     </div>
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 48px;" />

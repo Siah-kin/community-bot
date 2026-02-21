@@ -13,9 +13,10 @@
         const prefix = getPathPrefix();
 
         try {
-            const [navRes, menuRes] = await Promise.all([
-                fetch(prefix + 'includes/nav.html'),
-                fetch(prefix + 'includes/mobile-menu.html')
+            const _v = '20260221';
+        const [navRes, menuRes] = await Promise.all([
+                fetch(prefix + 'includes/nav.html?v=' + _v),
+                fetch(prefix + 'includes/mobile-menu.html?v=' + _v)
             ]);
 
             navContainer.innerHTML = await navRes.text();

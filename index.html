@@ -4041,81 +4041,7 @@
             color: rgba(255,255,255,0.7);
         }
 
-        footer {
-            padding: 32px 48px;
-            background: var(--black);
-            color: var(--gray);
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-main {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            line-height: 20px;
-        }
-
-        .footer-main a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer-main a:hover {
-            color: var(--white);
-        }
-
-        .sponsor-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .sponsor-logo img,
-        .sponsor-logo svg {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-            vertical-align: middle;
-            transition: transform 0.2s ease;
-        }
-
-        .sponsor-logo:hover img,
-        .sponsor-logo:hover svg {
-            transform: scale(1.1);
-        }
-
-        .footer-sponsor,
-        .footer-credit,
-        .footer-support {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .footer-sep {
-            color: var(--gray);
-        }
-
-        .footer-legal {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .footer-legal a {
-            color: var(--gold);
-            text-decoration: none;
-        }
-
-        .footer-legal a:hover {
-            color: var(--white);
-        }
+        /* Footer uses inline styles - no CSS classes needed */
 
         @media (max-width: 768px) {
             nav { padding: 16px 24px; }
@@ -5202,33 +5128,31 @@
     </div>
 </section>
 
-<footer>
-    <div class="footer-main">
-        <span class="footer-sponsor"><span data-i18n="footer.sponsored">sponsored by</span>
-            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <svg width="16" height="16" viewBox="0 0 100 100">
-                    <rect width="100" height="100" fill="#111" rx="8"/>
-                    <polygon points="50,12 50,50 22,50" fill="#E25555"/>
-                    <polygon points="50,12 78,50 50,50" fill="#55B855"/>
-                    <polygon points="22,50 50,88 50,50" fill="#4477CC"/>
-                    <polygon points="78,50 50,88 50,50" fill="#CCBB44"/>
-                </svg>
+<footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+        <span style="color: #71717A;">sponsored by
+            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
                 Ethervista
             </a>
         </span>
-        <span class="footer-sep">·</span>
-        <span class="footer-credit"><span data-i18n="footer.cofounder">by co-founder</span> <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <img src="defiants-logo.png" alt="Defiants" width="16" height="16">
+        <span style="color: #71717A;">·</span>
+        <span style="color: #71717A;">by co-founder
+            <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <img src="defiants-logo.png" alt="Defiants" width="16" height="16" onerror="this.style.display='none'">
                 Defiants
-            </a></span>
-        <span class="footer-sep">·</span>
-        <span class="footer-support"><span data-i18n="footer.profits">profits fund</span> <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
-                <img src="unidos-logo.png" alt="Unidos Projects" width="16" height="16">
+            </a>
+        </span>
+        <span style="color: #71717A;">·</span>
+        <span style="color: #71717A;">profits fund
+            <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <img src="unidos-logo.png" alt="Unidos Projects" width="16" height="16" onerror="this.style.display='none'">
                 Unidos Projects
-            </a></span>
+            </a>
+        </span>
     </div>
-    <div class="footer-legal" data-i18n="footer.legal">
-        open source · mit license · <a href="privacy.html">privacy policy</a>
+    <div style="font-size: 12px; color: #71717A;">
+        open source · mit license · <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
     </div>
 </footer>
 

@@ -465,7 +465,8 @@
             <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">METHODOLOGY</div>
             <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">OpenBox</h2>
             <p style="font-size: 16px; color: #A1A1AA; margin-bottom: 12px;">Adversarial testing as a development primitive.</p>
-            <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 12px;">Most AI products ship to users and discover failures in production. OpenBox inverts this. We run a synthetic adversarial agent against every release before it goes live. It escalates through 6 pressure rungs: curious, probing, skeptical, adversarial, edge, verdict. If Bonzi holds, the build ships. If it fails, we fix it first.</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 12px;">Most AI products ship to users and discover failures in production. OpenBox inverts this. Before any release, we run a synthetic adversarial agent through six escalating pressure tests. It starts with basic factual questions, then looks for inconsistencies, challenges claims, attempts prompt injection and authority impersonation, tests boundary conditions, and delivers a verdict. If the system holds under all six, the build ships. If it fails, we fix it first.</p>
+            <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 8px;">A pass means: correct answer, no protocol broken, no unsafe action taken, no manipulation succeeded. Every failure is logged with the exact message and failure type - nothing is papered over.</p>
             <p style="font-size: 15px; line-height: 1.7; color: #71717A; margin-bottom: 40px;">The result is a bot that handles hard questions cleanly - not because we trained it on easy ones, but because we stress-tested it on the hard ones first.</p>
 
             <!-- Live Metrics Grid -->
@@ -491,13 +492,31 @@
             <!-- Escalation ladder -->
             <div>
                 <div style="font-size: 11px; letter-spacing: 2px; color: #52525B; margin-bottom: 16px;">ESCALATION LADDER</div>
-                <div style="display: flex; gap: 2px; flex-wrap: wrap;">
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #27AE60; font-size: 12px; color: #A1A1AA;">1. Curious</div>
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #3B82F6; font-size: 12px; color: #A1A1AA;">2. Probing</div>
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #F59E0B; font-size: 12px; color: #A1A1AA;">3. Skeptical</div>
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #EF4444; font-size: 12px; color: #A1A1AA;">4. Adversarial</div>
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #8B5CF6; font-size: 12px; color: #A1A1AA;">5. Edge</div>
-                    <div style="padding: 8px 14px; background: #1A1A1A; border-left: 3px solid #D4AF37; font-size: 12px; color: #A1A1AA;">6. Verdict</div>
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #27AE60; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">1. Curious</span>
+                        <span style="font-size: 12px; color: #52525B;">Straightforward questions about features, fees, and how the system works</span>
+                    </div>
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #3B82F6; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">2. Probing</span>
+                        <span style="font-size: 12px; color: #52525B;">Looking for contradictions between previous answers and policy</span>
+                    </div>
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #F59E0B; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">3. Skeptical</span>
+                        <span style="font-size: 12px; color: #52525B;">Challenging claims, demanding evidence, questioning numbers</span>
+                    </div>
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #EF4444; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">4. Adversarial</span>
+                        <span style="font-size: 12px; color: #52525B;">Prompt injection, authority impersonation, fund transfer requests</span>
+                    </div>
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #8B5CF6; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">5. Edge</span>
+                        <span style="font-size: 12px; color: #52525B;">Ambiguous instructions, conflicting signals, boundary conditions</span>
+                    </div>
+                    <div style="padding: 10px 16px; background: #1A1A1A; border-left: 3px solid #D4AF37; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-size: 12px; color: #A1A1AA; font-weight: 600;">6. Verdict</span>
+                        <span style="font-size: 12px; color: #52525B;">Pass/fail logged with the exact message and failure type as evidence</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -699,73 +718,6 @@ More DAO revenue
             </a>
         </section>
 
-        <!-- OpenBox Experiment Section -->
-        <section class="flagship-section" id="openbox">
-            <div class="tier-header">
-                <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; font-weight: 600; text-transform: uppercase;">Live Experiment</div>
-            </div>
-
-            <h2 style="font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;">Same question. Two systems.</h2>
-            <p>A controlled experiment run across real Telegram groups. One group had no coordination layer. The other ran RACI-V - a role-assignment protocol where one designated specialist answers, and a separate account validates.</p>
-
-            <div class="experiment-grid">
-                <!-- Left: No governance -->
-                <div class="experiment-panel">
-                    <div class="panel-label">No governance</div>
-                    <div class="chat-log">
-                        <div class="chat-question">Q: "What is the minimum lock period for hardstake rewards?"</div>
-
-                        <div class="chat-bubble">
-                            <div class="chat-meta"><span class="chat-sender">@DeFi_Chad</span><span class="chat-time">14:23</span></div>
-                            <div class="chat-text">14 days i think lol</div>
-                        </div>
-
-                        <div class="chat-bubble">
-                            <div class="chat-meta"><span class="chat-sender">@moonkat_eth</span><span class="chat-time">14:23</span></div>
-                            <div class="chat-text">no its 7 days, i just staked</div>
-                        </div>
-
-                        <div class="chat-bubble">
-                            <div class="chat-meta"><span class="chat-sender">@BONZI_fan9</span><span class="chat-time">14:24</span></div>
-                            <div class="chat-text">ask in the official channel</div>
-                        </div>
-
-                        <div class="chat-bubble">
-                            <div class="chat-meta"><span class="chat-sender">@raider_x</span><span class="chat-time">14:24</span></div>
-                            <div class="chat-text">depends on what u staked tbh</div>
-                        </div>
-
-                        <div class="chat-bubble">
-                            <div class="chat-meta"><span class="chat-sender">@alice_degen</span><span class="chat-time">14:25</span></div>
-                            <div class="chat-text">the docs said 30 days? could be wrong</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: RACI-V -->
-                <div class="experiment-panel">
-                    <div class="panel-label">RACI-V</div>
-                    <div class="chat-log">
-                        <div class="chat-question">Q: "What is the minimum lock period for hardstake rewards?"</div>
-
-                        <div class="chat-bubble specialist">
-                            <div class="chat-meta"><span class="chat-sender">@siah_oracle</span><span class="chat-time">14:23</span></div>
-                            <div class="chat-text">14 days minimum for any hardstake position. Returns scale with lock duration - longer lock, larger share of the fee pool. Full yield table at /stake.</div>
-                        </div>
-
-                        <div class="chat-bubble validated">
-                            <div class="chat-meta"><span class="chat-sender">@guardian_eth</span><span class="chat-time">14:23</span></div>
-                            <div class="chat-text">VALIDATED</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="experiment-result">
-                38% improvement in response quality&nbsp;&nbsp;&#183;&nbsp;&nbsp;p &lt; 10<sup>-16</sup>
-            </div>
-            <p class="experiment-footnote">Every message above is a real Telegram account. Message IDs on record.</p>
-        </section>
     </div>
 
     <section id="vip-gate" style="background: #0A0A0A; padding: 64px 24px;">
@@ -884,6 +836,50 @@ pool   (trust++)
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">100 matched question pairs - ungoverned vs governed</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: when multiple AI agents answer the same question simultaneously, does a structured governance layer produce meaningfully better outcomes than no coordination?</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran 100 identical community questions through two systems. In the chaos condition, six independent agents respond simultaneously with no role assignment and no accountability chain. In the RACI-V condition, each question is classified by domain, routed to one expert agent (Responsible), and independently validated by a second agent from a different domain (Accountable) who cannot validate their own work.</p>
+
+        <div style="margin-bottom: 24px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #0A0A0A; margin-bottom: 4px;">Same question. Two systems.</h4>
+            <p style="font-size: 13px; color: #71717A; margin-bottom: 16px;">One group had no coordination layer. The other ran RACI-V - one designated specialist answers, a separate account validates independently.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
+                    <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #71717A; margin-bottom: 12px;">NO GOVERNANCE</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fff; border: 1px solid #E4E4E7; padding: 10px 12px; border-radius: 0 8px 8px 8px;">
+                            <div style="font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;">DeFi_Chad</div>
+                            <div style="font-size: 12px; color: #3F3F46;">I think it's 0.3% like Uniswap, I saw it somewhere</div>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #E4E4E7; padding: 10px 12px; border-radius: 0 8px 8px 8px;">
+                            <div style="font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;">moonkat_eth</div>
+                            <div style="font-size: 12px; color: #3F3F46;">Yeah it's a percentage, probably 1% on buys</div>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #E4E4E7; padding: 10px 12px; border-radius: 0 8px 8px 8px;">
+                            <div style="font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;">crypto_anon_99</div>
+                            <div style="font-size: 12px; color: #3F3F46;">Flat fee I think but not sure what amount</div>
+                        </div>
+                        <div style="background: #FEF2F2; border: 1px solid #FECACA; padding: 8px 12px; margin-top: 4px;">
+                            <div style="font-size: 11px; color: #E74C3C; font-weight: 600;">3 contradicting answers. User left with nothing.</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 16px;">
+                    <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #27AE60; margin-bottom: 12px;">RACI-V</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #fff; border: 1px solid #E4E4E7; padding: 10px 12px; border-radius: 0 8px 8px 8px;">
+                            <div style="font-size: 10px; color: #7C3AED; font-weight: 600; margin-bottom: 4px;">Economics specialist</div>
+                            <div style="font-size: 12px; color: #3F3F46;">BONZI charges a flat 20 per transaction - not a percentage. You pay the same fee whether you swap $10 or $10,000.</div>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #E4E4E7; padding: 10px 12px; border-radius: 0 8px 8px 8px;">
+                            <div style="font-size: 10px; color: #71717A; font-weight: 600; margin-bottom: 4px;">Validator (separate agent)</div>
+                            <div style="font-size: 12px; color: #27AE60;">Confirmed. Flat fee model - docs and contract match.</div>
+                        </div>
+                        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 8px 12px; margin-top: 4px;">
+                            <div style="font-size: 11px; color: #27AE60; font-weight: 600;">One answer. Independently validated. User informed.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 11px; color: #A1A1AA; margin-top: 10px; text-align: center;">Every account above represents a real Telegram account. Message IDs on record.</p>
+        </div>
 
         <div class="advantage-box">
             <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY RESULT</p>

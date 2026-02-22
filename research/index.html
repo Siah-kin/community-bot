@@ -478,7 +478,7 @@
             <div class="mechanism-grid">
                 <div class="mechanism">
                     <h3>CPI Scoring</h3>
-                    <p>13 cooperation signals aggregated across all projects. One wallet = one unified reputation score.</p>
+                    <p>32 cooperation signals across 10 dimensions. One wallet = one unified reputation score. 70 sub-metrics, 253 total points.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Sybil Detection</h3>
@@ -502,7 +502,7 @@
 
             <p><strong>Mechanics:</strong> Euler fee model generates flat <strong>$10-15 ETH per transaction</strong>, distributed to LP providers. Protocol auto-buys and burns BONZI with a portion of fees (deflationary). <strong>Hardstake:</strong> lock tokens 14+ days for larger share of fee pool. CPI scoring gates marketing rewards based on cooperation signals - helpful answers, quality contributions, on-chain reputation.</p>
 
-            <p><strong>The moat:</strong> wallet cooperation scoring (CPI) vs. Nansen flow analysis and Arkham identity tagging. CPI tracks <strong>7 years of behavioral history</strong> across <strong>13 signals</strong>. Nansen shows who's trading, Arkham shows who they are, <strong>CPI shows if they're trustworthy</strong>.</p>
+            <p><strong>The moat:</strong> wallet cooperation scoring (CPI) vs. Nansen flow analysis and Arkham identity tagging. CPI tracks <strong>7 years of behavioral history</strong> across <strong>32 signals</strong>. Nansen shows who's trading, Arkham shows who they are, <strong>CPI shows if they're trustworthy</strong>.</p>
 
             <div class="technical-box">
                 <h4>Closed Loop</h4>
@@ -536,7 +536,7 @@ Long-term holders
                 <h4>Wallet Cooperation vs. Transaction Flows</h4>
                 <p><strong>Nansen</strong> (crypto analytics firm, $75M funding): Tracks token transfers and DEX swaps across blockchains. Shows money flow patterns but can't distinguish wash trading from organic volume. Used by VCs and funds for market intelligence.</p>
                 <p><strong>Arkham</strong> (intelligence platform): Tags wallet identities via clustering algorithms. Reveals who owns what (FTX wallet, Jump Trading, etc.) but provides no behavioral data - just ownership labels.</p>
-                <p><strong>CPI</strong> (our system): Tracks 13 cooperation signals across wallet lifetime - helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB). Focus: behavior over time, not single transactions.</p>
+                <p><strong>CPI</strong> (our system): Tracks 32 cooperation signals across wallet lifetime - helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB). Focus: behavior over time, not single transactions.</p>
                 <p><strong>Gaming resistance:</strong> Signal correlation required. High tips + zero questions = flagged. High staking + zero participation = weighted down. Single-signal manipulation doesn't move aggregate score.</p>
             </div>
 
@@ -703,6 +703,7 @@ More DAO revenue
         <p style="font-size: 14px; line-height: 1.7; color: #71717A; margin-bottom: 8px;">A pass means: correct answer, no protocol broken, no unsafe action taken, no manipulation succeeded. Every failure is logged with the exact message and failure type - nothing is papered over.</p>
         <p style="font-size: 14px; line-height: 1.7; color: #71717A; margin-bottom: 32px;">We built this to measure ourselves - not to market. The result is a bot that handles hard questions cleanly, because we stress-tested it on the hard ones first.</p>
 
+        <div style="font-size: 11px; color: #52525B; text-align: center; margin-bottom: 8px;">LIVE METRICS - UPDATING WHEN DEPLOYED</div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 2px; margin-bottom: 32px; border: 1px solid #27272A;">
             <div style="background: #111; padding: 20px 16px;">
                 <div id="ob-episodes" style="font-size: 28px; font-weight: 800; color: #7C3AED;">--</div>
@@ -829,11 +830,12 @@ pool   (trust++)
     <div style="margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">CHAOS vs RACI-V</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">100 matched question pairs - ungoverned vs governed</p>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">100 matched question pairs - pipeline validation (confirmatory study: 32 questions, live Telegram, OSF pre-registered)</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: when multiple AI agents answer the same question simultaneously, does a structured governance layer produce meaningfully better outcomes than no coordination?</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran 100 identical community questions through two systems. In the chaos condition, six independent agents respond simultaneously with no role assignment and no accountability chain. In the RACI-V condition, each question is classified by domain, routed to one expert agent (Responsible), and independently validated by a second agent from a different domain (Accountable) who cannot validate their own work.</p>
 
         <div style="margin-bottom: 24px;">
+            <p style="font-size: 11px; color: #A1A1AA; letter-spacing: 1px; margin-bottom: 8px;">ILLUSTRATIVE EXAMPLE - BASED ON PILOT DATA</p>
             <h4 style="font-size: 14px; font-weight: 700; color: #0A0A0A; margin-bottom: 4px;">Same question. Two systems.</h4>
             <p style="font-size: 13px; color: #71717A; margin-bottom: 16px;">One group had no coordination layer. The other ran RACI-V - one designated specialist answers, a separate account validates independently.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -878,10 +880,9 @@ pool   (trust++)
         </div>
 
         <div class="advantage-box">
-            <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY RESULT</p>
-            <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">RACI-V outperformed ungoverned agents by 38% on the composite quality score.</p>
-            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 4px;">Mann-Whitney U: p &lt; 10<sup>-16</sup> &nbsp;&middot;&nbsp; Cohen's d = 1.19 (large) &nbsp;&middot;&nbsp; 95% CI [0.92, 1.48]</p>
-            <p style="font-size: 14px; color: #3F3F46;">Contradiction rate fell 73%. Error amplification dropped 76%. All three secondary metrics passed Benjamini-Hochberg correction.</p>
+            <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">PILOT RESULT (SIMULATED)</p>
+            <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">In a controlled LLM-to-LLM pilot (210 episodes), RACI-V consistently outperformed ungoverned agents across all quality dimensions.</p>
+            <p style="font-size: 14px; color: #3F3F46;">Live validation with real Telegram users is Phase 5 of the research roadmap.</p>
         </div>
 
         <div class="technical-box">
@@ -893,7 +894,7 @@ pool   (trust++)
     <div style="margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">DATA TRANSPARENCY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions via the Anthropic API - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are pipeline validation data - synthetic episodes generated to calibrate the measurement infrastructure before live deployment. They are not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration - is Phase 5 of the roadmap below.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (Ethereum Attestation Service) and SHA-256 checksums per episode are planned before the confirmatory study begins.</p>
     </div>
@@ -1026,10 +1027,7 @@ pool   (trust++)
                 if (d.last_verdict !== undefined) document.getElementById('ob-last-verdict').textContent = d.last_verdict.toUpperCase();
             })
             .catch(() => {
-                document.getElementById('ob-episodes').textContent = '24';
-                document.getElementById('ob-pass-rate').textContent = '87%';
-                document.getElementById('ob-topics').textContent = '5';
-                document.getElementById('ob-last-verdict').textContent = 'PASS';
+                // API unreachable - leave placeholders as-is rather than show synthetic fallback data
             });
     })();
     </script>

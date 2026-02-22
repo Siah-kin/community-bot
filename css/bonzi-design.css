@@ -911,17 +911,63 @@ body.dark-mode .list-brutal li strong {
 footer {
     background: var(--black);
     color: var(--white);
-    padding: 60px 40px;
+    padding: 32px 24px;
     text-align: center;
+    font-size: 13px;
 }
 
 footer a {
-    color: var(--purple-light);
+    color: var(--white);
     text-decoration: none;
 }
 
 footer a:hover {
     text-decoration: underline;
+}
+
+.footer-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.footer-sponsor,
+.footer-credit,
+.footer-support {
+    color: #71717A;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.footer-sep {
+    color: #71717A;
+}
+
+.footer-legal {
+    font-size: 12px;
+    color: #71717A;
+}
+
+.footer-legal a {
+    color: #71717A;
+    text-decoration: none;
+}
+
+.footer-legal a:hover {
+    color: var(--white);
+}
+
+.sponsor-logo {
+    color: var(--white);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
 }
 
 /* ========================================

@@ -1,7 +1,7 @@
 {
   "$schema": "erc8004-agent-card-lite-v1",
   "type": "agent-card-lite",
-  "name": "SIAH Oracle",
+  "name": "Bonzi Oracle",
   "tagline": "Closed-loop trust layer. Actors become inter-actors.",
   "one_liner": "Work = Currency. Generosity compounds. Don't trust us, vet us.",
   "agentId": 22694,

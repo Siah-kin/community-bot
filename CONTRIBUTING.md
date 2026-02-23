@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Bonzi / SIAH.
+Thanks for helping improve Bonzi.
 
 ## Quick workflow
 

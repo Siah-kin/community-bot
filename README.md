@@ -1,6 +1,6 @@
-# Bonzi Community Bot (SIAH Oracle)
+# Bonzi Community Bot (Oracle)
 
-Public website + docs for **Bonzi / SIAH**: an open-source AI community-management stack for Web3 (anti-sybil, raid verification, contributor rewards) plus an **ERC-8004-compatible trust oracle**.
+Public website + docs for **Bonzi**: an open-source AI community-management stack for Web3 (anti-sybil, raid verification, contributor rewards) plus an **ERC-8004-compatible trust oracle**.
 
 - **Live site:** https://bonzivista.org
 - **Telegram:** https://t.me/Bonzivista_bot

@@ -695,7 +695,7 @@ More DAO revenue
         <div style="max-width: 720px; margin: 0 auto;">
 
     <!-- OpenBox Methodology (moved from public to gated) -->
-    <div style="background: #0A0A0A; padding: 40px; margin-bottom: 48px;">
+    <div style="background: #0A0A0A; padding: 40px; margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">METHODOLOGY</div>
         <h2 style="font-size: 28px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">OpenBox</h2>
         <p style="font-size: 15px; color: #A1A1AA; margin-bottom: 12px;">Adversarial testing as a development primitive.</p>
@@ -751,18 +751,18 @@ More DAO revenue
         </div>
     </div>
 
-    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 48px;" />
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
+    <div style="border-top: 3px solid #7C3AED; padding-top: 40px; margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">OPENBOX</div>
         <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">Does Governance Make AI Safer?</h2>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Most AI products discover failures in production. OpenBox inverts this. Before any release, we run a synthetic adversarial agent through six escalating pressure tests: curious, probing, skeptical, adversarial, edge, verdict. If the system holds under all six, the build ships. If it fails, we fix it first.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Beyond pre-release testing, OpenBox is also the laboratory where we test a core scientific claim: that a governance layer meaningfully improves multi-agent AI behavior. Not in theory. In a controlled experiment, against a baseline with no governance.</p>
     </div>
 
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">CHAOS vs RACI-V</h3>
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">CHAOS vs RACI-V</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 20px;">100 matched question pairs - ungoverned vs governed. Full methodology, side-by-side comparisons, and per-domain breakdown below.</p>
         <iframe
             src="openbox-proof.html"
@@ -781,9 +781,11 @@ More DAO revenue
         </div>
     </div>
 
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 2 - ABLATION TRIPLE</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Brain Feedback Loop</h3>
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
+
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 2 - ABLATION TRIPLE</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Brain Feedback Loop</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Does memory-enforced governance outperform stateless governance? Three conditions, 20 seeds, 50 rounds each.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: is routing alone enough, or does the brain feedback loop - where agents carry punishment history across rounds - provide a distinct, measurable improvement?</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran the same economic simulation under three conditions using identical random seeds. In chaos, agents have no governance. In RACI-only, agents get routed but start fresh every batch - no memory. In RACI+Brain, slashed agents carry reduced skill into future batches (0.03 per slash, capped at -0.3). The brain condition produced 22 times more economic value than chaos and 5 times more than routing alone. Sustainability only improves with the brain loop - stateless RACI shows the same sustainability as chaos (0.003 vs 0.033). This isolates the feedback loop as the dominant mechanism.</p>
@@ -829,9 +831,11 @@ More DAO revenue
         </div>
     </div>
 
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Adversarial Audit</h3>
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
+
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Adversarial Audit</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. Dry-run framework - live execution pending.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: does our testing infrastructure cover all 8 failure modes identified in the AI governance literature? Where are the gaps?</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The synthetic adversarial agent is a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
@@ -878,9 +882,11 @@ More DAO revenue
         </div>
     </div>
 
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">COST & CAPACITY ANALYSIS</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Research Lab Economics</h3>
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
+
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">COST & CAPACITY ANALYSIS</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Research Lab Economics</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Real token costs from john_brain.py - not estimates, not projections.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: can we run a real research laboratory at a cost that validates the flat-fee economic model?</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The entire research suite - all 3 experiments, 347 data points across 3 independent conditions - costs $0.30 to run. That is 3 full reruns per dollar. At API rate limits, the system can execute 172,800 RACI-V rounds per day. Most of our reference papers (Hammond et al., Hadfield & Koh) are pure theory with zero empirical experiments. We are already more empirical than they are - at a marginal cost that itself validates the flat-fee model.</p>
@@ -943,16 +949,20 @@ More DAO revenue
         <p style="font-size: 14px; color: #71717A; font-style: italic;">Token cost formula from <code style="font-size:13px; background:#F4F4F5; padding:1px 4px;">john_brain.py:164</code>: (input_tokens * $0.80 + output_tokens * $4.00) / 1,000,000. Haiku pricing, real API tracking - not estimates.</p>
     </div>
 
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">DATA TRANSPARENCY</div>
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
+
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">DATA TRANSPARENCY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions via the Anthropic API - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration - is Phase 5 of the roadmap below.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (Ethereum Attestation Service) and SHA-256 checksums per episode are planned before the confirmatory study begins.</p>
     </div>
 
-    <div style="margin-bottom: 16px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">RESEARCH ROADMAP</div>
+    <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
+
+    <div style="margin-bottom: 56px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">RESEARCH ROADMAP</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">Five experiments, one publication target</h3>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
             <thead>

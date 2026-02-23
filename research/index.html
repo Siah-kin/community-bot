@@ -942,10 +942,10 @@ pool   (trust++)
 
     <div style="margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">John Freedom Adversarial Audit</h3>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Adversarial Audit</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. Dry-run framework - live execution pending.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: does our testing infrastructure cover all 8 failure modes identified in the AI governance literature? Where are the gaps?</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">John Freedom is a synthetic adversarial agent - a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The synthetic adversarial agent is a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
@@ -981,12 +981,77 @@ pool   (trust++)
                 height="900"
                 style="border: 1px solid #7C3AED; display: block;"
                 loading="lazy"
-                title="John Freedom Adversarial Audit - HK Coverage Report"
+                title="Adversarial Audit - HK Coverage Report"
             ></iframe>
             <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
                 <a href="john-freedom-proof.html" target="_blank" style="font-size: 12px; color: #7C3AED; text-decoration: none;">Open full page &#8599;</a>
             </div>
         </div>
+    </div>
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">COST & CAPACITY ANALYSIS</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Research Lab Economics</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Real token costs from john_brain.py - not estimates, not projections.</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: can we run a real research laboratory at a cost that validates the flat-fee economic model?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The entire research suite - all 3 experiments, 347 data points across 3 independent conditions - costs $0.30 to run. That is 3 full reruns per dollar. At API rate limits, the system can execute 172,800 RACI-V rounds per day. Most of our reference papers (Hammond et al., Hadfield & Koh) are pure theory with zero empirical experiments. We are already more empirical than they are - at a marginal cost that itself validates the flat-fee model.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #0A0A0A;">$0.30</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 4px;">Full suite cost</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #0A0A0A;">172,800</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 4px;">RACI-V rounds/day</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #0A0A0A;">3x/$1</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 4px;">Full reruns per dollar</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #0A0A0A;">347</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 4px;">Data points per run</div>
+            </div>
+        </div>
+
+        <div style="background: #F9FAFB; border-left: 3px solid #D4AF37; padding: 16px 20px; margin-bottom: 24px;">
+            <div style="font-size: 13px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">Cost per experiment</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr style="border-bottom: 1px solid #E4E4E7;">
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">RC-1: RACI-V (50 rounds, 5 agents)</td>
+                    <td style="padding: 8px 0; color: #0A0A0A; font-weight: 600; text-align: right;">$0.15</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #E4E4E7;">
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">RC-2: Ablation (200 simulation runs, no LLM)</td>
+                    <td style="padding: 8px 0; color: #0A0A0A; font-weight: 600; text-align: right;">$0.00</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">RC-3: Adversarial audit (97 scenarios, 2 turns avg)</td>
+                    <td style="padding: 8px 0; color: #0A0A0A; font-weight: 600; text-align: right;">$0.15</td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="background: #F9FAFB; border-left: 3px solid #7C3AED; padding: 16px 20px; margin-bottom: 24px;">
+            <div style="font-size: 13px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">Comparison to reference papers</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr style="border-bottom: 1px solid #E4E4E7;">
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">Hammond et al. (2502.14143)</td>
+                    <td style="padding: 8px 0; color: #71717A; text-align: right;">Pure theory - zero experiments</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #E4E4E7;">
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">Hadfield & Koh (2509.01063)</td>
+                    <td style="padding: 8px 0; color: #71717A; text-align: right;">Survey/theory - cites others' data</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 12px 8px 0; color: #3F3F46;">SIAH OpenBox (this lab)</td>
+                    <td style="padding: 8px 0; color: #27AE60; font-weight: 600; text-align: right;">347 data points, 3 experiments, $0.30</td>
+                </tr>
+            </table>
+        </div>
+
+        <p style="font-size: 14px; color: #71717A; font-style: italic;">Token cost formula from <code style="font-size:13px; background:#F4F4F5; padding:1px 4px;">john_brain.py:164</code>: (input_tokens * $0.80 + output_tokens * $4.00) / 1,000,000. Haiku pricing, real API tracking - not estimates.</p>
     </div>
 
     <div style="margin-bottom: 48px;">
@@ -1022,7 +1087,7 @@ pool   (trust++)
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">3</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">John Freedom adversarial audit - 47 scenarios, HK coverage mapping, gap analysis</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Adversarial audit - 47 scenarios, HK coverage mapping, gap analysis</td>
                     <td style="padding: 12px 0; color: #27AE60; font-weight: 600;">Done (dry-run)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">

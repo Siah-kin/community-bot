@@ -35,6 +35,7 @@
             initLanguageSelect();
             initContactLinks();
             initDemoButton();
+            initBrazilButton();
 
             document.dispatchEvent(new CustomEvent('nav:loaded'));
         } catch (err) {
@@ -250,7 +251,18 @@
         select.addEventListener('change', (e) => {
             const lang = e.target.value;
             localStorage.setItem('bonzi-lang', lang);
-            if (typeof setLanguage === 'function') setLanguage(lang);
+            if (lang === 'en') {
+                // If on a translated page, go back to original
+                const url = new URL(window.location.href);
+                if (url.hostname === 'translate.goog') {
+                    window.location.href = url.searchParams.get('_x_tr_pto') || '/';
+                }
+                return;
+            }
+            // Redirect to Google Translate for non-EN languages
+            const langMap = { pt: 'pt', zh: 'zh-CN', tr: 'tr', ru: 'ru', fr: 'fr' };
+            const tl = langMap[lang] || lang;
+            window.location.href = 'https://translate.google.com/translate?sl=en&tl=' + tl + '&u=' + encodeURIComponent(window.location.href);
         });
     }
 
@@ -346,6 +358,53 @@
             contactModal.classList.add('active');
             window.history.replaceState({}, '', window.location.pathname);
         }
+    }
+
+    function initBrazilButton() {
+        // Don't double-inject if already present
+        if (document.getElementById('br-translate-btn')) return;
+
+        const btn = document.createElement('a');
+        btn.id = 'br-translate-btn';
+        btn.href = '#';
+        btn.title = 'Traduzir para Portugues';
+        btn.setAttribute('aria-label', 'Translate to Brazilian Portuguese');
+        btn.innerHTML = '\uD83C\uDDE7\uD83C\uDDF7 PT';
+        btn.style.cssText = [
+            'position: fixed',
+            'bottom: 20px',
+            'left: 20px',
+            'background: #27AE60',
+            'color: #FFFFFF',
+            'padding: 10px 16px',
+            'font-size: 13px',
+            'font-weight: 700',
+            'letter-spacing: 0.5px',
+            'text-decoration: none',
+            'z-index: 9999',
+            'display: flex',
+            'align-items: center',
+            'gap: 6px',
+            'transition: background 0.2s, transform 0.2s',
+            'box-shadow: 0 2px 8px rgba(0,0,0,0.15)',
+            'cursor: pointer',
+            'font-family: -apple-system, BlinkMacSystemFont, sans-serif'
+        ].join(';');
+
+        btn.addEventListener('mouseenter', function() {
+            this.style.background = '#1E8449';
+            this.style.transform = 'translateY(-2px)';
+        });
+        btn.addEventListener('mouseleave', function() {
+            this.style.background = '#27AE60';
+            this.style.transform = 'translateY(0)';
+        });
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'https://translate.google.com/translate?sl=en&tl=pt&u=' + encodeURIComponent(window.location.href);
+        });
+
+        document.body.appendChild(btn);
     }
 
     function initDemoButton() {

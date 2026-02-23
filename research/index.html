@@ -460,10 +460,23 @@
     </section>
 
     <div class="content">
+        <!-- Table of Contents -->
+        <div class="section" style="margin-bottom: 48px;">
+            <h2>Contents</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px;">
+                <a href="#research-purpose" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">What We're Researching</a>
+                <a href="#infrastructure" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">Shared Oracle Infrastructure</a>
+                <a href="#bonzi" style="color: #7C3AED; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Bonzi - Meme + CPI</a>
+                <a href="#imobx" style="color: #10B981; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">IMOBX - RWA Tokenization</a>
+                <a href="#unidos" style="color: #D4AF37; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Unidos - Data-for-Credit</a>
+                <a href="#glossary-public" style="color: #71717A; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">Glossary</a>
+            </div>
+        </div>
+
         <!-- Research Purpose -->
-        <div class="section">
+        <div class="section" id="research-purpose">
             <h2>What We're Researching</h2>
-            <p><strong>Core question:</strong> Can you build sustainable token economies without exit liquidity? Traditional crypto relies on new buyers paying early holders. We're testing three models where value comes from real economic activity - trading fees, rental income, and marketplace commissions - not speculation.</p>
+            <p><strong>Core question:</strong> Can you build sustainable token economies without exit liquidity (the pattern where early holders only profit when new buyers enter)? Traditional crypto relies on this cycle. We're testing three models where value comes from real economic activity - trading fees, rental income, and marketplace commissions - not speculation.</p>
 
             <p><strong>The experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries.</p>
 
@@ -473,9 +486,9 @@
         </div>
 
         <!-- Shared Infrastructure -->
-        <div class="section">
+        <div class="section" id="infrastructure">
             <h2>Shared Oracle Infrastructure</h2>
-            <p>All three models use the same trust verification backend: <strong>wallet cooperation scoring (CPI)</strong>, on-chain reputation signals, and AI-powered sybil detection. This section provides high-level overviews. Deep research lives on project-specific sites.</p>
+            <p>All three models use the same trust verification backend: <strong>wallet cooperation scoring (CPI)</strong> - a single number summarizing how cooperatively a wallet has behaved over time - on-chain reputation signals, and AI-powered sybil detection (identifying fake accounts pretending to be multiple real users). This section provides high-level overviews. Deep research lives on project-specific sites.</p>
 
             <div class="mechanism-grid">
                 <div class="mechanism">
@@ -488,7 +501,7 @@
                 </div>
                 <div class="mechanism">
                     <h3>A2A Protocol</h3>
-                    <p>ERC-8004 identity layer. Agents can query trust scores pre-transaction, enabling automated due diligence.</p>
+                    <p>ERC-8004 (an Ethereum identity standard for AI agents) identity layer. Agents can query trust scores before transacting, enabling automated due diligence.</p>
                 </div>
             </div>
         </div>
@@ -502,7 +515,7 @@
 
             <p>Bonzi is a memecoin built on <strong>Ethervista</strong> (flat ETH fees, not percentage). It's self-aware about risk - that's why we built <strong>CPI cooperation scoring</strong> as the safety layer. The positioning: "I know it's risky, but that's why we built THIS."</p>
 
-            <p><strong>Mechanics:</strong> Euler fee model generates flat <strong>$10-15 ETH per transaction</strong>, distributed to LP providers. Protocol auto-buys and burns BONZI with a portion of fees (deflationary). <strong>Hardstake:</strong> lock tokens 14+ days for larger share of fee pool. CPI scoring gates marketing rewards based on cooperation signals - helpful answers, quality contributions, on-chain reputation.</p>
+            <p><strong>Mechanics:</strong> The Euler fee model (Ethervista's flat-fee pricing formula) generates flat <strong>$10-15 ETH per transaction</strong>, distributed to LP providers (liquidity providers - people who deposit tokens so others can trade). Protocol auto-buys and burns BONZI with a portion of fees, reducing supply over time. <strong>Hardstake:</strong> lock tokens 14+ days for larger share of fee pool. CPI scoring gates marketing rewards based on cooperation signals - helpful answers, quality contributions, on-chain reputation.</p>
 
             <p><strong>The moat:</strong> wallet cooperation scoring (CPI) vs. Nansen flow analysis and Arkham identity tagging. CPI tracks <strong>7 years of behavioral history</strong> across <strong>32 signals</strong>. Nansen shows who's trading, Arkham shows who they are, <strong>CPI shows if they're trustworthy</strong>.</p>
 
@@ -536,9 +549,9 @@ Long-term holders
 
             <div class="advantage-box">
                 <h4>Wallet Cooperation vs. Transaction Flows</h4>
-                <p><strong>Nansen</strong> (crypto analytics firm, $75M funding): Tracks token transfers and DEX swaps across blockchains. Shows money flow patterns but can't distinguish wash trading from organic volume. Used by VCs and funds for market intelligence.</p>
+                <p><strong>Nansen</strong> (crypto analytics firm, $75M funding): Tracks token transfers and DEX (decentralized exchange) swaps across blockchains. Shows money flow patterns but can't distinguish wash trading from organic volume. Used by VCs and funds for market intelligence.</p>
                 <p><strong>Arkham</strong> (intelligence platform): Tags wallet identities via clustering algorithms. Reveals who owns what (FTX wallet, Jump Trading, etc.) but provides no behavioral data - just ownership labels.</p>
-                <p><strong>CPI</strong> (our system): Tracks 32 cooperation signals across wallet lifetime - helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in vector DB). Focus: behavior over time, not single transactions.</p>
+                <p><strong>CPI</strong> (our system): Tracks 32 cooperation signals across wallet lifetime - helpful answers (quality score 0-100), tip patterns (sent vs received ratio), staking duration (14-day minimum for hardstake), raid participation (verified on-chain), knowledge contributions (stored in a searchable knowledge base). Focus: behavior over time, not single transactions.</p>
                 <p><strong>Gaming resistance:</strong> Signal correlation required. High tips + zero questions = flagged. High staking + zero participation = weighted down. Single-signal manipulation doesn't move aggregate score.</p>
             </div>
 
@@ -552,11 +565,11 @@ Long-term holders
                 <div class="tier-title">RWA Tokenization Primitive</div>
             </div>
 
-            <p>IMOBX is an <strong>RWA primitive</strong> for impact construction. Tokenized housing projects + rent-to-own financing, designed as reusable infrastructure for <strong>jurisdiction-agnostic compliance</strong>. Not just "tokenized real estate" - a framework other RWA DAOs can adopt.</p>
+            <p>IMOBX is an <strong>RWA primitive</strong> (Real World Asset - a blockchain token backed by a physical asset like property) for impact construction. Tokenized housing projects + rent-to-own financing, designed as reusable infrastructure that adapts to different countries' legal frameworks. Not just "tokenized real estate" - a framework other DAOs (community-governed organizations) can adopt.</p>
 
-            <p><strong>Mechanics:</strong> Dual yield model - <strong>LP trading fees</strong> (like Bonzi) + <strong>rental income</strong> from financed properties. DAO governance controls revenue allocation, project selection, and <strong>SINAPI tracking</strong> (Brazil's government construction cost index). Rent-to-own financing: tenants rent with option to buy, building equity over time. <strong>Regulatory edge:</strong> modular compliance layer adapts to local housing laws (Brazil SA structure, US DAO unincorporated, EU MiCA utility token).</p>
+            <p><strong>Mechanics:</strong> Dual yield model - <strong>liquidity provider trading fees</strong> (like Bonzi) + <strong>rental income</strong> from financed properties. DAO governance controls revenue allocation, project selection, and <strong>SINAPI tracking</strong> (Brazil's government construction cost index). Rent-to-own financing: tenants rent with option to buy, building equity over time. <strong>Regulatory edge:</strong> modular compliance layer adapts to local housing laws (Brazil SA structure, US DAO unincorporated, EU MiCA framework - the EU's crypto asset regulation).</p>
 
-            <p><strong>The moat:</strong> SINAPI integration + Social Impact focus (SDG 11 housing goal). While other RWA protocols chase tokenized treasuries and real estate speculation, <strong>IMOBX targets grant-eligible social housing</strong>. This creates a regulatory moat - governments prefer impact projects over pure profit plays. Example: <strong>IDB $250M Social Impact Fund</strong> prioritizes affordable housing, not luxury condos.</p>
+            <p><strong>The moat:</strong> SINAPI integration + Social Impact focus (UN SDG 11 - the Sustainable Development Goal for inclusive, safe housing). While other RWA protocols chase tokenized treasuries and real estate speculation, <strong>IMOBX targets grant-eligible social housing</strong>. This creates a regulatory moat - governments prefer impact projects over pure profit plays. Example: <strong>Inter-American Development Bank's $250M Social Impact Fund</strong> prioritizes affordable housing, not luxury condos.</p>
 
             <p><strong>Stage:</strong> Pre-revenue. Architecture designed, compliance framework modeled across three jurisdictions. First pilot property targeted Q3 2026 in Jardim Guadalupe, Rio de Janeiro ($27,777 per unit at SINAPI rates). No tokenized properties exist yet - this section describes the design, not a live product.</p>
 
@@ -629,11 +642,13 @@ More DAO revenue
         |
         v
   VSLA group guarantee
-  (bot record as evidence)
+  (Village Savings & Loan -
+   bot record as evidence)
         |
         v
   UGAFODE individual loan
-  (only bank inside Nakivale)
+  (Uganda's microfinance bank -
+   only lender inside Nakivale)
         |
         v
    KIVA international
@@ -658,6 +673,26 @@ More DAO revenue
                 </span>
             </a>
         </section>
+
+        <!-- Public Glossary -->
+        <div class="section" id="glossary-public" style="margin-top: 64px; border-top: 2px solid rgba(124, 58, 237, 0.2); padding-top: 40px;">
+            <h2>Glossary</h2>
+            <div style="font-size: 14px; line-height: 1.8; color: #3F3F46;">
+                <p><strong>CPI</strong> - Combined Progression Index. A single score (0-253 points) summarizing how cooperatively a wallet has behaved across 32 signals and 10 dimensions.</p>
+                <p><strong>DAO</strong> - Decentralized Autonomous Organization. A community-governed entity where rules are enforced by code, not managers.</p>
+                <p><strong>DEX</strong> - Decentralized Exchange. A marketplace where people trade crypto directly with each other, no middleman.</p>
+                <p><strong>ERC-8004</strong> - An Ethereum standard for AI agent identity. Gives an agent a verifiable on-chain identity card.</p>
+                <p><strong>Exit liquidity</strong> - The pattern where early holders only profit when new buyers enter. Most memecoins depend on this.</p>
+                <p><strong>Flat fees</strong> - Bonzi and IMOBX charge a fixed amount per transaction ($10-15), not a percentage. Revenue grows with transaction count, not trade size.</p>
+                <p><strong>Hardstake</strong> - Locking tokens for 14+ days in exchange for a larger share of fee revenue. Rewards patience over speculation.</p>
+                <p><strong>LP (Liquidity Provider)</strong> - Someone who deposits tokens into a trading pool so others can buy and sell. Earns fees in return.</p>
+                <p><strong>RWA</strong> - Real World Asset. A blockchain token backed by something physical - in IMOBX's case, housing properties.</p>
+                <p><strong>SDG 11</strong> - UN Sustainable Development Goal 11: make cities inclusive, safe, resilient, and sustainable.</p>
+                <p><strong>SINAPI</strong> - Brazil's government construction cost index. Publicly auditable, updated monthly. IMOBX uses it to prove build costs.</p>
+                <p><strong>Sybil</strong> - A fake account pretending to be a real user. Sybil detection identifies wallets controlled by the same person gaming the system.</p>
+                <p><strong>VSLA</strong> - Village Savings and Loan Association. Community-run savings groups common in refugee settlements.</p>
+            </div>
+        </div>
 
     </div>
 
@@ -698,8 +733,24 @@ More DAO revenue
     <section id="vip-content" style="display: none; background: #fff; padding: 64px 24px;">
         <div style="max-width: 720px; margin: 0 auto;">
 
+    <!-- Gated Table of Contents -->
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">CONTENTS</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 32px;">
+            <a href="#methodology" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Methodology - OpenBox</a>
+            <a href="#exp1" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Experiment 1 - Chaos vs RACI-V</a>
+            <a href="#exp2" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Experiment 2 - Brain Feedback Loop</a>
+            <a href="#exp3" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Experiment 3 - Adversarial Audit</a>
+            <a href="#cost" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Cost & Capacity</a>
+            <a href="#transparency" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Data Transparency</a>
+            <a href="#roadmap" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Research Roadmap</a>
+            <a href="#a2a" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">A2A Infrastructure</a>
+            <a href="#glossary-gated" style="color: #71717A; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 14px;">Glossary</a>
+        </div>
+    </div>
+
     <!-- OpenBox Methodology (moved from public to gated) -->
-    <div style="background: #0A0A0A; padding: 40px; margin-bottom: 56px;">
+    <div id="methodology" style="background: #0A0A0A; padding: 40px; margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">METHODOLOGY</div>
         <h2 style="font-size: 28px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px;">OpenBox</h2>
         <p style="font-size: 15px; color: #A1A1AA; margin-bottom: 12px;">Adversarial testing as a development primitive.</p>
@@ -764,10 +815,10 @@ More DAO revenue
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Beyond pre-release testing, OpenBox is also the laboratory where we test a core scientific claim: that a governance layer meaningfully improves multi-agent AI behavior. Not in theory. In a controlled experiment, against a baseline with no governance.</p>
     </div>
 
-    <div style="margin-bottom: 56px;">
+    <div id="exp1" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">CHAOS vs RACI-V</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px;">100 matched question pairs - ungoverned vs governed. Full methodology, side-by-side comparisons, and per-domain breakdown below.</p>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px;">RACI-V (Responsible, Accountable, Consulted, Informed + Validator - a role-assignment framework for AI agents). 100 matched question pairs - ungoverned vs governed. Full methodology, side-by-side comparisons, and per-domain breakdown below.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Put simply: we asked the same question twice - once to an AI with no rules, once to an AI with governance. The governed version gave safer, more accurate answers across every category we tested.</p>
         <iframe
             src="openbox-proof.html"
@@ -788,12 +839,12 @@ More DAO revenue
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="margin-bottom: 56px;">
+    <div id="exp2" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 2 - ABLATION TRIPLE</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Brain Feedback Loop</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Does memory-enforced governance outperform stateless governance? Three conditions, 20 seeds, 50 rounds each.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: agents that remember being punished cooperate 22 times more than agents with no rules. Memory is what makes governance stick - not just having rules, but enforcing consequences that persist.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran the same economic simulation under three conditions using identical random seeds. In chaos, agents have no governance. In RACI-only, agents get routed but start fresh every batch - no memory. In RACI+Brain, slashed agents carry reduced skill into future batches (0.03 per slash, capped at -0.3). The brain condition produced 22 times more economic value than chaos and 5 times more than routing alone. Sustainability only improves with the brain loop - stateless RACI shows the same sustainability as chaos (0.003 vs 0.033). This isolates the feedback loop as the dominant mechanism.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran the same economic simulation under three conditions using identical random seeds (starting conditions that make results reproducible). In chaos, agents have no governance. In RACI-only, agents get role-assigned but start fresh every batch - no memory. In RACI+Brain, slashed agents (those penalized for dishonest behavior) carry reduced skill into future batches (0.03 per penalty, capped at -0.3). The brain condition produced 22 times more economic value than chaos and 5 times more than routing alone. Sustainability only improves with the brain loop - stateless RACI shows the same sustainability as chaos (0.003 vs 0.033). This isolates the feedback loop as the dominant mechanism.</p>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px; text-align: center;">
@@ -816,8 +867,8 @@ More DAO revenue
         <div class="advantage-box">
             <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY FINDING</p>
             <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">The brain feedback loop is the dominant mechanism - not just routing.</p>
-            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Effect size d = -13.5 (RACI Only vs RACI+Brain on eta), p &lt; 0.00001. This is simulation data from sandbox_runner.py - fully deterministic, no LLM evaluation. Effect sizes are large because the simulation stress-tests the governance mechanism. Real deployments will show smaller but directionally consistent effects.</p>
-            <p style="font-size: 14px; color: #3F3F46;">Population: 3 honest + 2 adaptive dishonest agents. Budget: 800 units. The brain models AccordionMemory writeback - agents who get slashed carry that punishment into future decisions.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Effect size d = -13.5 (a measure of how large the difference is between two groups - anything above 0.8 is considered large; ours is extreme because this is a stress test). Statistical significance p &lt; 0.00001 (less than 1 in 100,000 chance this result is random). This is simulation data - fully deterministic, no LLM evaluation. Real deployments will show smaller but directionally consistent effects.</p>
+            <p style="font-size: 14px; color: #3F3F46;">Population: 3 honest + 2 adaptive dishonest agents. Budget: 800 units. The brain models AccordionMemory writeback - our system for carrying punishment history forward so agents who behaved dishonestly face consequences in future rounds.</p>
         </div>
 
         <div style="margin-top: 24px;">
@@ -838,10 +889,10 @@ More DAO revenue
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="margin-bottom: 56px;">
+    <div id="exp3" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Adversarial Audit</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. Dry-run framework - live execution pending.</p>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes (a 2025 academic taxonomy from Stanford/Oxford identifying the 8 ways AI governance can break). Dry-run framework - live execution pending.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: we mapped every attack we could think of against the 8 ways AI governance fails according to the literature. We covered 7 out of 8. The gap we found - identity verification - tells us exactly what to build next.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The synthetic adversarial agent is a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
 
@@ -852,7 +903,7 @@ More DAO revenue
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #27AE60;">7/8</div>
-                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">HK covered</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Failure modes covered</div>
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #D4AF37;">$0.098</div>
@@ -889,7 +940,7 @@ More DAO revenue
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="margin-bottom: 56px;">
+    <div id="cost" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">COST & CAPACITY ANALYSIS</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Research Lab Economics</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Real token costs from john_brain.py - not estimates, not projections.</p>
@@ -956,17 +1007,17 @@ More DAO revenue
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="margin-bottom: 56px;">
+    <div id="transparency" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">DATA TRANSPARENCY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions via the Anthropic API - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration - is Phase 5 of the roadmap below.</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (Ethereum Attestation Service) and SHA-256 checksums per episode are planned before the confirmatory study begins.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions (one AI talking to another AI via the Anthropic API) - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration (Open Science Framework - a public research registry where you declare your hypothesis before collecting data, so you can't cherry-pick results) - is Phase 5 of the roadmap below.</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (tamper-proof fingerprints stored on Ethereum) and SHA-256 checksums (cryptographic signatures proving data hasn't been altered) per episode are planned before the confirmatory study begins.</p>
     </div>
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin-bottom: 56px;" />
 
-    <div style="margin-bottom: 56px;">
+    <div id="roadmap" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">RESEARCH ROADMAP</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">Five experiments, one publication target</h3>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
@@ -995,7 +1046,7 @@ More DAO revenue
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">4</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">A-agent calibration - human panel vs AI validation verdicts (Cohen's kappa)</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">A-agent calibration - human panel vs AI validation verdicts (Cohen's kappa - a statistical measure of how well humans and AI agree)</td>
                     <td style="padding: 12px 0; color: #71717A;">Planned</td>
                 </tr>
                 <tr>
@@ -1005,15 +1056,15 @@ More DAO revenue
                 </tr>
             </tbody>
         </table>
-        <p style="font-size: 13px; color: #71717A; margin-top: 16px;">Publication target: AAMAS 2027 - submission deadline October 2026. OSF pre-registration before confirmatory data collection begins.</p>
+        <p style="font-size: 13px; color: #71717A; margin-top: 16px;">Publication target: AAMAS 2027 (International Conference on Autonomous Agents and Multi-Agent Systems) - submission deadline October 2026. OSF pre-registration before confirmatory data collection begins.</p>
     </div>
 
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin: 48px 0;" />
 
-    <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
+    <div id="a2a" style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">NEXT FRONTIER</div>
         <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">A2A Infrastructure</h2>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The same trust scoring that governs human cooperation applies to AI agents. After ERC-8004 went live on mainnet, we registered an Agent Card - a machine-readable identity that lets other agents verify our trust score before transacting. We wired it to x402 payment rails so agents can take tasks, claim ETH, and build portable reputation. The loop: do good work, earn trust, get better work.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The same trust scoring that governs human cooperation applies to AI agents. After ERC-8004 (our Ethereum identity standard for AI agents) went live on mainnet (Ethereum's production blockchain), we registered an Agent Card - a machine-readable identity that lets other agents verify our trust score before transacting. We wired it to x402 payment rails (a protocol that lets agents pay per API call using crypto) so agents can take tasks, claim ETH, and build portable reputation. The loop: do good work, earn trust, get better work.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;"><strong>Stage:</strong> Agent Card live on mainnet. Google A2A index registered. x402 payment integration built. Trust-as-a-Service (vet any wallet or agent using 70 behavioral signals) is functional but not yet serving external clients. This section describes working infrastructure, not a shipped product.</p>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px;">
@@ -1029,6 +1080,29 @@ More DAO revenue
                 <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">PAYMENT RAILS</div>
                 <p style="font-size: 14px; color: #3F3F46; margin: 0;">x402 + ERC-8004. Agents pay per trust query ($0.001 flat), earn ETH for completed tasks. Revenue feeds the same tipping pool that rewards human contributors.</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Gated Glossary -->
+    <div id="glossary-gated" style="margin-top: 48px; border-top: 2px solid rgba(124, 58, 237, 0.2); padding-top: 32px; margin-bottom: 32px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">GLOSSARY</div>
+        <div style="font-size: 14px; line-height: 1.8; color: #3F3F46;">
+            <p><strong>Ablation study</strong> - An experiment that removes one component at a time to measure its individual contribution. We removed the brain loop to see if routing alone was enough.</p>
+            <p><strong>AccordionMemory</strong> - Our system for carrying punishment history forward. Agents penalized in past rounds face degraded performance in future rounds.</p>
+            <p><strong>Agent Card</strong> - A machine-readable identity for AI agents, stored on Ethereum via ERC-8004. Other agents can read it to verify trust before transacting.</p>
+            <p><strong>Cohen's kappa</strong> - A statistical measure of agreement between two raters (in our case, human judges vs AI validators). 1.0 = perfect agreement, 0 = random chance.</p>
+            <p><strong>Effect size (d)</strong> - How large the difference is between two groups. Above 0.8 is considered large in social science. Our d = -13.5 is extreme because the simulation is a stress test.</p>
+            <p><strong>Eta</strong> - Economic efficiency metric used in our simulations. Higher eta = more value produced per unit of budget spent.</p>
+            <p><strong>Gini coefficient</strong> - A measure of inequality (0 = perfectly equal, 1 = one agent has everything). Used to track whether governance distributes rewards fairly.</p>
+            <p><strong>Hadfield & Koh</strong> - Researchers who published "An Economy of AI Agents" (arXiv:2509.01063), identifying 8 ways AI governance can fail. Our experiments test their framework.</p>
+            <p><strong>HK1-HK8</strong> - Shorthand for Hadfield & Koh's 8 failure modes: preference misalignment, algorithmic collusion, systemic fragility, market concentration, search/matching, strategic evasion, identity/accountability, relational contracts.</p>
+            <p><strong>LLM</strong> - Large Language Model. The AI technology behind ChatGPT, Claude, etc. Our experiments use LLMs to simulate both governed and ungoverned agents.</p>
+            <p><strong>Mainnet</strong> - Ethereum's production blockchain where real money is at stake, as opposed to test networks used for development.</p>
+            <p><strong>OSF</strong> - Open Science Framework. A public registry where researchers declare hypotheses before collecting data, preventing cherry-picked results.</p>
+            <p><strong>p-value</strong> - The probability that a result occurred by random chance. p &lt; 0.00001 means less than 1 in 100,000 chance - extremely unlikely to be coincidence.</p>
+            <p><strong>RACI-V</strong> - Responsible, Accountable, Consulted, Informed + Validator. A role-assignment framework we adapted for AI agents. Each agent gets a clear role before acting.</p>
+            <p><strong>Slashing</strong> - Penalizing an agent for dishonest behavior by reducing its future capabilities. Borrowed from blockchain staking terminology.</p>
+            <p><strong>x402</strong> - A payment protocol that lets AI agents pay per API call using cryptocurrency. Named after HTTP status code 402 (Payment Required).</p>
         </div>
     </div>
 

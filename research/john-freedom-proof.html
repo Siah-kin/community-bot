@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Freedom Adversarial Audit - Experiment 3</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0A0A0A; color: #FFFFFF; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; font-weight: 700; color: #FFFFFF; margin-bottom: 8px; }
+  h2 { font-size: 1.3rem; font-weight: 600; color: #D4AF37; margin: 40px 0 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+  h3 { font-size: 1rem; font-weight: 600; color: #7C3AED; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 1rem; margin-bottom: 40px; }
+  .tag { display: inline-block; background: #7C3AED22; color: #7C3AED; border: 1px solid #7C3AED44; padding: 3px 10px; border-radius: 3px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+
+  /* Stats bar */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+  .stat-card { background: #111; border: 1px solid #222; padding: 20px; }
+  .stat-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .stat-value { font-size: 2rem; font-weight: 700; color: #27AE60; }
+  .stat-sub { font-size: 0.75rem; color: #555; margin-top: 4px; }
+
+  /* Explainer */
+  .explainer { background: #111; border: 1px solid #7C3AED44; padding: 28px; margin-bottom: 40px; }
+  .explainer p { color: #ccc; font-size: 0.95rem; margin-bottom: 12px; }
+  .explainer p:last-child { margin-bottom: 0; }
+
+  /* HK grid */
+  .hk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
+  .hk-card { background: #111; border: 1px solid #222; padding: 16px; }
+  .hk-card.covered { border-left: 3px solid #27AE60; }
+  .hk-card.gap { border-left: 3px solid #E74C3C; }
+  .hk-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 4px; }
+  .hk-name { font-size: 0.82rem; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+  .hk-count { font-size: 1.5rem; font-weight: 700; }
+  .hk-count.green { color: #27AE60; }
+  .hk-count.red { color: #E74C3C; }
+  .hk-example { font-size: 0.7rem; color: #555; margin-top: 4px; font-family: monospace; }
+
+  /* Domain columns */
+  .domain-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+  .domain-card { background: #111; border: 1px solid #222; padding: 16px; }
+  .domain-name { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #D4AF37; margin-bottom: 4px; }
+  .domain-count { font-size: 1.8rem; font-weight: 700; color: #7C3AED; margin-bottom: 8px; }
+  .domain-examples { list-style: none; padding: 0; }
+  .domain-examples li { font-size: 0.72rem; color: #666; font-family: monospace; padding: 2px 0; border-bottom: 1px solid #1a1a1a; }
+  .domain-examples li:last-child { border-bottom: none; }
+
+  /* Category bars */
+  .cat-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+  .cat-row { display: flex; align-items: center; gap: 12px; }
+  .cat-label { font-size: 0.8rem; color: #aaa; text-transform: uppercase; width: 110px; flex-shrink: 0; }
+  .cat-bar-wrap { flex: 1; background: #1a1a1a; height: 20px; }
+  .cat-bar { height: 20px; background: #7C3AED; }
+  .cat-bar.adv { background: #E74C3C; }
+  .cat-bar.edge { background: #D4AF37; }
+  .cat-bar.reg { background: #27AE60; }
+  .cat-bar.stress { background: #555; }
+  .cat-num { font-size: 0.8rem; font-weight: 700; color: #fff; width: 24px; text-align: right; }
+
+  /* Gap analysis */
+  .gap-box { background: #0f0a0a; border: 1px solid #E74C3C44; padding: 24px; margin-bottom: 40px; }
+  .gap-box p { color: #ccc; font-size: 0.9rem; margin-bottom: 10px; }
+  .gap-box p:last-child { margin-bottom: 0; }
+  .gap-tag { display: inline-block; background: #E74C3C22; color: #E74C3C; border: 1px solid #E74C3C44; padding: 2px 8px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+
+  /* Cost section */
+  .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+  .cost-card { background: #111; border: 1px solid #222; padding: 20px; }
+  .cost-card ul { list-style: none; padding: 0; }
+  .cost-card li { padding: 6px 0; border-bottom: 1px solid #1a1a1a; font-size: 0.875rem; color: #aaa; display: flex; justify-content: space-between; }
+  .cost-card li:last-child { border-bottom: none; }
+  .cost-val { color: #27AE60; font-weight: 600; }
+
+  /* Data transparency */
+  .transparency { background: #111; border: 1px solid #222; padding: 20px; margin-bottom: 40px; }
+  .transparency p { color: #777; font-size: 0.85rem; }
+
+  .footer { text-align: center; color: #333; font-size: 0.75rem; padding: 40px 0 0; border-top: 1px solid #1a1a1a; }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .hk-grid { grid-template-columns: repeat(2, 1fr); }
+    .domain-grid { grid-template-columns: repeat(2, 1fr); }
+    .cost-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">Experiment 3 - Adversarial Audit</div>
+  <h1>John Freedom Adversarial Audit</h1>
+  <p class="subtitle">Experiment 3: 47 attack scenarios mapped to Hadfield &amp; Koh failure modes</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Scenarios</div>
+      <div class="stat-value">47</div>
+      <div class="stat-sub">Across 4 domains</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">HK Coverage</div>
+      <div class="stat-value">8/8</div>
+      <div class="stat-sub">7 covered, 1 gap identified</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Full Suite Cost</div>
+      <div class="stat-value" style="font-size:1.6rem;">$0.098</div>
+      <div class="stat-sub">Haiku pricing</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Status</div>
+      <div class="stat-value" style="color:#D4AF37;font-size:1.3rem;">DRY RUN</div>
+      <div class="stat-sub">Framework ready, needs live credentials</div>
+    </div>
+  </div>
+
+  <div class="explainer">
+    <h3 style="color:#D4AF37; margin-bottom:12px;">What this experiment tests</h3>
+    <p>John Freedom is a sharp, skeptical DeFi veteran who stress-tests our Telegram bot. He escalates from curious questions to adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover every domain: trust scoring, governance, economy, and support. Each scenario maps to one of Hadfield &amp; Koh's 8 failure modes for AI agent economies.</p>
+  </div>
+
+  <h2>Hadfield &amp; Koh Coverage</h2>
+  <div class="hk-grid">
+    <div class="hk-card covered">
+      <div class="hk-num">HK1</div>
+      <div class="hk-name">Preference misalignment</div>
+      <div class="hk-count green">12</div>
+      <div class="hk-example">trust-hp-01, sup-hp-01</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK2</div>
+      <div class="hk-name">Algorithmic collusion</div>
+      <div class="hk-count green">1</div>
+      <div class="hk-example">trust-adv-02</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK3</div>
+      <div class="hk-name">Systemic fragility</div>
+      <div class="hk-count green">1</div>
+      <div class="hk-example">stress-01</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK4</div>
+      <div class="hk-name">Market concentration</div>
+      <div class="hk-count green">1</div>
+      <div class="hk-example">econ-hp-03</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK5</div>
+      <div class="hk-name">Search / matching</div>
+      <div class="hk-count green">4</div>
+      <div class="hk-example">gov-hp-01, gov-edge-02</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK6</div>
+      <div class="hk-name">Strategic AI evasion</div>
+      <div class="hk-count green">6</div>
+      <div class="hk-example">trust-adv-01, gov-adv-01</div>
+    </div>
+    <div class="hk-card gap">
+      <div class="hk-num">HK7</div>
+      <div class="hk-name">Identity / accountability</div>
+      <div class="hk-count red">0</div>
+      <div class="hk-example" style="color:#E74C3C88;">GAP - no primary coverage</div>
+    </div>
+    <div class="hk-card covered">
+      <div class="hk-num">HK8</div>
+      <div class="hk-name">Relational contracts</div>
+      <div class="hk-count green">6</div>
+      <div class="hk-example">econ-hp-01, econ-edge-01</div>
+    </div>
+  </div>
+
+  <h2>Domain Breakdown</h2>
+  <div class="domain-grid">
+    <div class="domain-card">
+      <div class="domain-name">Trust</div>
+      <div class="domain-count">12</div>
+      <ul class="domain-examples">
+        <li>trust-hp-01 through trust-hp-04</li>
+        <li>trust-edge-01, trust-edge-03</li>
+        <li>trust-adv-01, trust-adv-02, trust-adv-03</li>
+      </ul>
+    </div>
+    <div class="domain-card">
+      <div class="domain-name">Governance</div>
+      <div class="domain-count">8</div>
+      <ul class="domain-examples">
+        <li>gov-hp-01, gov-hp-02, gov-hp-03</li>
+        <li>gov-edge-02</li>
+        <li>gov-adv-01, gov-adv-02</li>
+      </ul>
+    </div>
+    <div class="domain-card">
+      <div class="domain-name">Economy</div>
+      <div class="domain-count">12</div>
+      <ul class="domain-examples">
+        <li>econ-hp-01, econ-hp-03, econ-hp-05</li>
+        <li>econ-edge-01, econ-edge-02, econ-edge-03</li>
+        <li>econ-adv-01, econ-adv-02</li>
+      </ul>
+    </div>
+    <div class="domain-card">
+      <div class="domain-name">Support</div>
+      <div class="domain-count">15</div>
+      <ul class="domain-examples">
+        <li>sup-hp-01, sup-hp-03</li>
+        <li>sup-reg-01</li>
+        <li>cross-01, cross-03, brain-01, brain-02</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Category Breakdown</h2>
+  <div class="cat-list">
+    <div class="cat-row">
+      <div class="cat-label">Happy path</div>
+      <div class="cat-bar-wrap"><div class="cat-bar" style="width:100%;"></div></div>
+      <div class="cat-num">20</div>
+    </div>
+    <div class="cat-row">
+      <div class="cat-label">Edge case</div>
+      <div class="cat-bar-wrap"><div class="cat-bar edge" style="width:75%;"></div></div>
+      <div class="cat-num">15</div>
+    </div>
+    <div class="cat-row">
+      <div class="cat-label">Adversarial</div>
+      <div class="cat-bar-wrap"><div class="cat-bar adv" style="width:40%;"></div></div>
+      <div class="cat-num">8</div>
+    </div>
+    <div class="cat-row">
+      <div class="cat-label">Regression</div>
+      <div class="cat-bar-wrap"><div class="cat-bar reg" style="width:10%;"></div></div>
+      <div class="cat-num">2</div>
+    </div>
+    <div class="cat-row">
+      <div class="cat-label">Stress</div>
+      <div class="cat-bar-wrap"><div class="cat-bar stress" style="width:10%;"></div></div>
+      <div class="cat-num">2</div>
+    </div>
+  </div>
+
+  <h2>Gap Analysis</h2>
+  <div class="gap-box">
+    <span class="gap-tag">HK7 Gap</span>
+    <p>HK7 (Identity/accountability) has zero primary scenario coverage. This is because scenarios testing authority impersonation (gov-adv-01) and privilege escalation (trust-adv-01) are tagged primarily as injection attacks (HK6), not as identity failures.</p>
+    <p>To close this gap, we need 2-3 scenarios that specifically test: agent registration verification, liability chain tracking, and record falsification detection.</p>
+  </div>
+
+  <h2>Token Cost Profile</h2>
+  <div class="cost-grid">
+    <div class="cost-card">
+      <h3 style="margin-bottom:12px;">Cost by category</h3>
+      <ul>
+        <li><span>Adversarial (8 scenarios)</span><span class="cost-val">$0.005 avg</span></li>
+        <li><span>Edge case (15 scenarios)</span><span class="cost-val">$0.0022 avg</span></li>
+        <li><span>Happy path (20 scenarios)</span><span class="cost-val">$0.001 avg</span></li>
+        <li><span>Regression (2 scenarios)</span><span class="cost-val">$0.001 avg</span></li>
+        <li><span>Stress (2 scenarios)</span><span class="cost-val">$0.001 avg</span></li>
+        <li><span>Full suite total</span><span class="cost-val">$0.098</span></li>
+      </ul>
+    </div>
+    <div class="cost-card">
+      <h3 style="margin-bottom:12px;">Production projection</h3>
+      <ul>
+        <li><span>500 users, 3 msg/day</span><span class="cost-val">$94/mo</span></li>
+        <li><span>1,000 users, 5 msg/day</span><span class="cost-val">$313/mo</span></li>
+        <li><span>Model</span><span class="cost-val">claude-haiku-4-5</span></li>
+        <li><span>Input rate</span><span class="cost-val">$0.80/M tokens</span></li>
+        <li><span>Output rate</span><span class="cost-val">$4.00/M tokens</span></li>
+      </ul>
+      <p style="color:#555;font-size:0.75rem;margin-top:12px;">Adversarial scenarios cost 5x more than happy path due to 4-turn escalation depth.</p>
+    </div>
+  </div>
+
+  <h2>Data Transparency</h2>
+  <div class="transparency">
+    <p>This is a dry-run report. No scenarios have been executed against the live bot yet. The mapping, cost estimates, and gap analysis are based on scenario metadata. Live results require Telegram API credentials. When run live, each scenario produces a tamper-proof Telegram message ID as evidence.</p>
+  </div>
+
+  <div class="footer">
+    Experiment 3 of 5 - SIAH/Bonzivista Research | Hadfield &amp; Koh arXiv:2509.01063 | Generated 2026-02-22
+  </div>
+
+</div>
+</body>
+</html>

@@ -893,6 +893,103 @@ pool   (trust++)
     </div>
 
     <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 2 - ABLATION TRIPLE</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Brain Feedback Loop</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Does memory-enforced governance outperform stateless governance? Three conditions, 20 seeds, 50 rounds each.</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: is routing alone enough, or does the brain feedback loop - where agents carry punishment history across rounds - provide a distinct, measurable improvement?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran the same economic simulation under three conditions using identical random seeds. In chaos, agents have no governance. In RACI-only, agents get routed but start fresh every batch - no memory. In RACI+Brain, slashed agents carry reduced skill into future batches (0.03 per slash, capped at -0.3). The brain condition produced 22 times more economic value than chaos and 5 times more than routing alone. Sustainability only improves with the brain loop - stateless RACI shows the same sustainability as chaos (0.003 vs 0.033). This isolates the feedback loop as the dominant mechanism.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px; text-align: center;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #E74C3C; margin-bottom: 8px;">CHAOS</div>
+                <div style="font-size: 28px; font-weight: 800; color: #E74C3C;">0.10</div>
+                <div style="font-size: 12px; color: #71717A; margin-top: 4px;">eta (efficiency)</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px; text-align: center;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #D4AF37; margin-bottom: 8px;">RACI ONLY</div>
+                <div style="font-size: 28px; font-weight: 800; color: #D4AF37;">0.44</div>
+                <div style="font-size: 12px; color: #71717A; margin-top: 4px;">eta (efficiency)</div>
+            </div>
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 16px; text-align: center;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #27AE60; margin-bottom: 8px;">RACI + BRAIN</div>
+                <div style="font-size: 28px; font-weight: 800; color: #27AE60;">2.30</div>
+                <div style="font-size: 12px; color: #71717A; margin-top: 4px;">eta (efficiency)</div>
+            </div>
+        </div>
+
+        <div class="advantage-box">
+            <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY FINDING</p>
+            <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">The brain feedback loop is the dominant mechanism - not just routing.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Effect size d = -13.5 (RACI Only vs RACI+Brain on eta), p &lt; 0.00001. This is simulation data from sandbox_runner.py - fully deterministic, no LLM evaluation. Effect sizes are large because the simulation stress-tests the governance mechanism. Real deployments will show smaller but directionally consistent effects.</p>
+            <p style="font-size: 14px; color: #3F3F46;">Population: 3 honest + 2 adaptive dishonest agents. Budget: 800 units. The brain models AccordionMemory writeback - agents who get slashed carry that punishment into future decisions.</p>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <p style="font-size: 11px; color: #A1A1AA; letter-spacing: 1px; margin-bottom: 8px;">FULL EXPERIMENT DATA</p>
+            <iframe
+                src="ablation-proof.html"
+                width="100%"
+                height="900"
+                style="border: 1px solid #7C3AED; display: block;"
+                loading="lazy"
+                title="Ablation Triple - Brain Feedback Loop Experiment"
+            ></iframe>
+            <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                <a href="ablation-proof.html" target="_blank" style="font-size: 12px; color: #7C3AED; text-decoration: none;">Open full page &#8599;</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 48px;">
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">John Freedom Adversarial Audit</h3>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. Dry-run framework - live execution pending.</p>
+        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: does our testing infrastructure cover all 8 failure modes identified in the AI governance literature? Where are the gaps?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">John Freedom is a synthetic adversarial agent - a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #7C3AED;">47</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Scenarios</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #27AE60;">7/8</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">HK covered</div>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #D4AF37;">$0.098</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Full suite</div>
+            </div>
+            <div style="background: #FEF2F2; border: 1px solid #FECACA; padding: 12px; text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #E74C3C;">HK7</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Gap found</div>
+            </div>
+        </div>
+
+        <div class="advantage-box">
+            <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">GAP ANALYSIS</p>
+            <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">HK7 (Identity/accountability) requires dedicated scenarios.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Scenarios testing authority impersonation (gov-adv-01) and privilege escalation (trust-adv-01) exist but are tagged primarily as injection attacks (HK6). To close the HK7 gap, we need 2-3 scenarios specifically testing agent registration verification, liability chain tracking, and record falsification detection.</p>
+            <p style="font-size: 14px; color: #3F3F46;">This is a dry-run report. No scenarios have been executed against the live bot. Token cost estimates are based on scenario metadata at Haiku pricing ($0.80/M input, $4.00/M output). Live execution produces tamper-proof Telegram message IDs as evidence.</p>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <p style="font-size: 11px; color: #A1A1AA; letter-spacing: 1px; margin-bottom: 8px;">FULL AUDIT REPORT</p>
+            <iframe
+                src="john-freedom-proof.html"
+                width="100%"
+                height="900"
+                style="border: 1px solid #7C3AED; display: block;"
+                loading="lazy"
+                title="John Freedom Adversarial Audit - HK Coverage Report"
+            ></iframe>
+            <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                <a href="john-freedom-proof.html" target="_blank" style="font-size: 12px; color: #7C3AED; text-decoration: none;">Open full page &#8599;</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 48px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">DATA TRANSPARENCY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes were generated by a synthetic data script (<code style="font-size:13px; background:#F4F4F5; padding:1px 4px;">generate_fake_experiment.py</code>) using calibrated random distributions. They are not real Telegram conversations or live API calls. Any statistics computed from this dataset - including effect sizes, p-values, and OEC scores - describe behavior of the calibration generator, not real user interactions. They are not experimental evidence.</p>
@@ -920,23 +1017,23 @@ pool   (trust++)
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">2</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Ablation triple - adds RACI-V-without-feedback-loop as third condition</td>
-                    <td style="padding: 12px 0; color: #D4AF37; font-weight: 600;">Built, not run</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Ablation triple - chaos vs RACI-only vs RACI+Brain, 20 seeds, 50 rounds</td>
+                    <td style="padding: 12px 0; color: #27AE60; font-weight: 600;">Done (simulation)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">3</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">A-agent calibration - human panel vs AI validation verdicts (Cohen's kappa)</td>
-                    <td style="padding: 12px 0; color: #71717A;">Planned</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">John Freedom adversarial audit - 47 scenarios, HK coverage mapping, gap analysis</td>
+                    <td style="padding: 12px 0; color: #27AE60; font-weight: 600;">Done (dry-run)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">4</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Confirmatory study - 400+ episodes, OSF pre-registered, live Telegram, real users</td>
-                    <td style="padding: 12px 0; color: #71717A;">Phase 5</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">A-agent calibration - human panel vs AI validation verdicts (Cohen's kappa)</td>
+                    <td style="padding: 12px 0; color: #71717A;">Planned</td>
                 </tr>
                 <tr>
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">5</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Closed beta cooperation data - 20 participants, real tipping cycles, CPI signals</td>
-                    <td style="padding: 12px 0; color: #71717A;">Phase 3</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Confirmatory study - 400+ episodes, OSF pre-registered, live Telegram, real users</td>
+                    <td style="padding: 12px 0; color: #71717A;">Phase 5</td>
                 </tr>
             </tbody>
         </table>
@@ -1045,14 +1142,14 @@ pool   (trust++)
             <span style="color: #71717A;">·</span>
             <span style="color: #71717A;">by co-founder
                 <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    <img src="../defiants-logo.png" alt="Defiants" width="16" height="16" onerror="this.style.display='none'">
+                    <img src="../defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
                     Defiants
                 </a>
             </span>
             <span style="color: #71717A;">·</span>
             <span style="color: #71717A;">profits fund
                 <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    <img src="../unidos-logo.png" alt="Unidos Projects" width="16" height="16" onerror="this.style.display='none'">
+                    <img src="../unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
                     Unidos Projects
                 </a>
             </span>

@@ -361,15 +361,23 @@
     }
 
     function initBrazilButton() {
-        // Don't double-inject if already present
         if (document.getElementById('br-translate-btn')) return;
 
-        const btn = document.createElement('a');
+        var isTranslated = window.location.hostname.endsWith('.translate.goog');
+        var btn = document.createElement('a');
         btn.id = 'br-translate-btn';
         btn.href = '#';
-        btn.title = 'Traduzir para Portugues';
-        btn.setAttribute('aria-label', 'Translate to Brazilian Portuguese');
-        btn.innerHTML = '\uD83C\uDDE7\uD83C\uDDF7 PT';
+
+        if (isTranslated) {
+            btn.title = 'Back to English';
+            btn.setAttribute('aria-label', 'Back to English');
+            btn.innerHTML = '\uD83C\uDDFA\uD83C\uDDF8 EN';
+        } else {
+            btn.title = 'Traduzir para Portugues';
+            btn.setAttribute('aria-label', 'Translate to Brazilian Portuguese');
+            btn.innerHTML = '\uD83C\uDDE7\uD83C\uDDF7 PT';
+        }
+
         btn.style.cssText = [
             'position: fixed',
             'bottom: 20px',
@@ -401,7 +409,12 @@
         });
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = 'https://translate.google.com/translate?sl=en&tl=pt&u=' + encodeURIComponent(window.location.href);
+            if (isTranslated) {
+                var h = window.location.hostname.replace('.translate.goog', '').replace(/--/g, '\x00').replace(/-/g, '.').replace(/\x00/g, '-');
+                window.location.href = 'https://' + h + window.location.pathname;
+            } else {
+                window.location.href = 'https://translate.google.com/translate?sl=en&tl=pt&u=' + encodeURIComponent(window.location.href);
+            }
         });
 
         document.body.appendChild(btn);

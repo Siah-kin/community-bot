@@ -230,12 +230,21 @@
 
 </div>
 
-<!-- Brazil translate button (standalone - no nav-loader on this page) -->
-<a id="br-translate-btn" href="#" title="Traduzir para Portugues" aria-label="Translate to Brazilian Portuguese"
-   style="position:fixed;bottom:20px;left:20px;background:#27AE60;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:0.5px;text-decoration:none;z-index:9999;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,sans-serif;"
-   onmouseenter="this.style.background='#1E8449';this.style.transform='translateY(-2px)'"
-   onmouseleave="this.style.background='#27AE60';this.style.transform='translateY(0)'"
-   onclick="event.preventDefault();window.location.href='https://translate.google.com/translate?sl=en&tl=pt&u='+encodeURIComponent(window.location.href)">&#127463;&#127479; PT</a>
+<!-- Brazil/English toggle button (standalone - no nav-loader on this page) -->
+<script>
+(function(){
+  var t=location.hostname.endsWith('.translate.goog');
+  var b=document.createElement('a');b.id='br-translate-btn';b.href='#';
+  b.title=t?'Back to English':'Traduzir para Portugues';
+  b.setAttribute('aria-label',t?'Back to English':'Translate to Brazilian Portuguese');
+  b.innerHTML=t?'&#127482;&#127480; EN':'&#127463;&#127479; PT';
+  b.style.cssText='position:fixed;bottom:20px;left:20px;background:#27AE60;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:0.5px;text-decoration:none;z-index:9999;display:flex;align-items:center;gap:6px;transition:background 0.2s,transform 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,sans-serif;';
+  b.onmouseenter=function(){this.style.background='#1E8449';this.style.transform='translateY(-2px)';};
+  b.onmouseleave=function(){this.style.background='#27AE60';this.style.transform='translateY(0)';};
+  b.onclick=function(e){e.preventDefault();if(t){var h=location.hostname.replace('.translate.goog','').replace(/--/g,'\x00').replace(/-/g,'.').replace(/\x00/g,'-');location.href='https://'+h+location.pathname;}else{location.href='https://translate.google.com/translate?sl=en&tl=pt&u='+encodeURIComponent(location.href);}};
+  document.body.appendChild(b);
+})();
+</script>
 
 </body>
 </html>

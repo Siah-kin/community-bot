@@ -468,6 +468,8 @@
             <p><strong>The experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries.</p>
 
             <p><strong>Why three models?</strong> One project could be luck. Three projects sharing the same trust backend = pattern. We're not building products - we're running controlled experiments to see if wallet behavior can replace identity verification.</p>
+
+            <p>Same trust engine, three stress tests. If it works for degens trading memecoins, farmers selling mushrooms in a refugee settlement, and property investors financing social housing - it works. That is the thesis. The experiments below are how we measure whether it holds.</p>
         </div>
 
         <!-- Shared Infrastructure -->
@@ -556,6 +558,8 @@ Long-term holders
 
             <p><strong>The moat:</strong> SINAPI integration + Social Impact focus (SDG 11 housing goal). While other RWA protocols chase tokenized treasuries and real estate speculation, <strong>IMOBX targets grant-eligible social housing</strong>. This creates a regulatory moat - governments prefer impact projects over pure profit plays. Example: <strong>IDB $250M Social Impact Fund</strong> prioritizes affordable housing, not luxury condos.</p>
 
+            <p><strong>Stage:</strong> Pre-revenue. Architecture designed, compliance framework modeled across three jurisdictions. First pilot property targeted Q3 2026 in Jardim Guadalupe, Rio de Janeiro ($27,777 per unit at SINAPI rates). No tokenized properties exist yet - this section describes the design, not a live product.</p>
+
             <div class="technical-box">
                 <h4>Closed Loop</h4>
                 <div class="flow-diagram">
@@ -604,11 +608,11 @@ More DAO revenue
                 <div class="tier-title">NGO + Data-for-Credit Research</div>
             </div>
 
-            <p><strong>Unidos</strong> operates in Nakivale refugee settlement, Uganda - 130,000 residents, permanent settlement active for 70+ years. Unidos trains farmers in mushroom cultivation, vermicomposting, and biochar production. 2024 output: 501 farmers trained, 4,800 kg mushrooms produced, 7.8 tons vermicompost processed.</p>
+            <p>A farmer in Nakivale refugee settlement harvests 20 kg of mushrooms. A wholesaler drives in from Mbarara, offers 2,000 UGX/kg. She accepts - she has no way to check the real price, and the bus to Mbarara costs $20, ten days of wages. The wholesaler resells at 3x in town. This happens to 130,000 people, every week, and has for 70 years.</p>
 
-            <p><strong>Research question:</strong> does transparent data-for-credit exchange between an NGO and 500 farmers produce a self-sustaining input credit system without grant dependency by month 18?</p>
+            <p><strong>Unidos</strong> trains farmers in mushroom cultivation, vermicomposting, and biochar production inside Nakivale. 2024 output: 501 farmers trained, 4,800 kg mushrooms produced, 7.8 tons vermicompost processed. 67% of households still depend on casual labor at $1-2/day. 27% have smartphones. No dedicated marketplace exists.</p>
 
-            <p>Context: 67% of Nakivale households depend on casual labor - digging or weeding Ugandan-owned fields at $1-2/day. Ugandan wholesalers drive 60km from Mbarara into the settlement, buy produce at below-market prices, resell at 2-3x markup. Farmers accept because they have no price reference and no transport. A trip to Mbarara costs $20 - ten days of casual labor wages. 27% of residents have smartphones. No dedicated marketplace exists.</p>
+            <p><strong>Research question:</strong> can transparent data-for-credit exchange between an NGO and 500 farmers produce a self-sustaining input credit system without grant dependency by month 18?</p>
 
             <p><strong>Mechanics:</strong> Unidos deploys a Telegram bot. Farmer types <code>/price mushrooms</code> - bot returns last 5 Mbarara prices reported by other users that week. Farmer posts produce listing. Farmer answers a neighbor's composting question. Bot logs every interaction: question asked, answer given, trade completed, price reported. Unidos sells the anonymized aggregate to agricultural researchers, carbon offset buyers, and AI labs - $2,250/month projected at 500 active users. That revenue funds mushroom spawn bags and compost issued on credit to farmers with 5+ logged bot interactions. Farmer repays after harvest at 20% surcharge. Repayment logs to their bot record - a transaction history they own.</p>
 
@@ -763,7 +767,8 @@ More DAO revenue
     <div style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 1 - PILOT STUDY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">CHAOS vs RACI-V</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 20px;">100 matched question pairs - ungoverned vs governed. Full methodology, side-by-side comparisons, and per-domain breakdown below.</p>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px;">100 matched question pairs - ungoverned vs governed. Full methodology, side-by-side comparisons, and per-domain breakdown below.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Put simply: we asked the same question twice - once to an AI with no rules, once to an AI with governance. The governed version gave safer, more accurate answers across every category we tested.</p>
         <iframe
             src="openbox-proof.html"
             width="100%"
@@ -787,7 +792,7 @@ More DAO revenue
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 2 - ABLATION TRIPLE</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Brain Feedback Loop</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Does memory-enforced governance outperform stateless governance? Three conditions, 20 seeds, 50 rounds each.</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: is routing alone enough, or does the brain feedback loop - where agents carry punishment history across rounds - provide a distinct, measurable improvement?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: agents that remember being punished cooperate 22 times more than agents with no rules. Memory is what makes governance stick - not just having rules, but enforcing consequences that persist.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">We ran the same economic simulation under three conditions using identical random seeds. In chaos, agents have no governance. In RACI-only, agents get routed but start fresh every batch - no memory. In RACI+Brain, slashed agents carry reduced skill into future batches (0.03 per slash, capped at -0.3). The brain condition produced 22 times more economic value than chaos and 5 times more than routing alone. Sustainability only improves with the brain loop - stateless RACI shows the same sustainability as chaos (0.003 vs 0.033). This isolates the feedback loop as the dominant mechanism.</p>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;">
@@ -837,7 +842,7 @@ More DAO revenue
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Adversarial Audit</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. Dry-run framework - live execution pending.</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: does our testing infrastructure cover all 8 failure modes identified in the AI governance literature? Where are the gaps?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: we mapped every attack we could think of against the 8 ways AI governance fails according to the literature. We covered 7 out of 8. The gap we found - identity verification - tells us exactly what to build next.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The synthetic adversarial agent is a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
@@ -888,7 +893,7 @@ More DAO revenue
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">COST & CAPACITY ANALYSIS</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Research Lab Economics</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Real token costs from john_brain.py - not estimates, not projections.</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">The question: can we run a real research laboratory at a cost that validates the flat-fee economic model?</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: our entire research lab costs less per run than a cup of coffee. Most papers we cite ran zero experiments. We ran three for thirty cents.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The entire research suite - all 3 experiments, 347 data points across 3 independent conditions - costs $0.30 to run. That is 3 full reruns per dollar. At API rate limits, the system can execute 172,800 RACI-V rounds per day. Most of our reference papers (Hammond et al., Hadfield & Koh) are pure theory with zero empirical experiments. We are already more empirical than they are - at a marginal cost that itself validates the flat-fee model.</p>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
@@ -1006,65 +1011,25 @@ More DAO revenue
     <hr style="border: none; border-top: 1px solid #E4E4E7; margin: 48px 0;" />
 
     <div style="border-top: 3px solid #7C3AED; padding-top: 32px; margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">BONZIVISTA RESEARCH</div>
+        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 16px; font-weight: 600;">NEXT FRONTIER</div>
         <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">A2A Infrastructure</h2>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">After ERC-8004 went live on mainnet, we explored direct fit into the Agentic AI and A2A space. We built access to Google's A2A index and set up an Agent Card - our agent-facing business card. For agents, this means they can take tasks, claim ETH, and earn proof they are trustworthy actors. We wired this to x402 (payment rails). This preps us for a growing agent-driven economy.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Scaling the reward mechanics from humans to agents is logical - and it opened a new revenue model that generates ETH for the tipping pool.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Bonzi Trust-as-a-Service lets anyone vet any agent or wallet - instant fingerprint check - or port their reputation to seek work. A practical adaptation to emerging tech that stays true to DAO and Web3 traditions.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 28px;">At a high level, Bonzivista is testing a combined Euler + Oracle stack across trust, economics, and DAO governance. The goal: make useful behavior measurable, make reputation portable, make trust queryable in machine-to-machine markets.</p>
-        <div class="technical-box">
-            <h4>Closed Loop</h4>
-            <div class="flow-diagram">
- Agent Card
- (ERC-8004)
-      |
-      v
-Google A2A Index
- (discoverable)
-      |
-      v
-  Take tasks
-  via x402
-      |
-      v
- Claim ETH fees
-      |
- +----+----+
- |         |
- v         v
-ETH    CPI score
-pool   (trust++)
- |         |
- +----+----+
-      |
-      v
- Better tasks
-  → more ETH
-</div>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The same trust scoring that governs human cooperation applies to AI agents. After ERC-8004 went live on mainnet, we registered an Agent Card - a machine-readable identity that lets other agents verify our trust score before transacting. We wired it to x402 payment rails so agents can take tasks, claim ETH, and build portable reputation. The loop: do good work, earn trust, get better work.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;"><strong>Stage:</strong> Agent Card live on mainnet. Google A2A index registered. x402 payment integration built. Trust-as-a-Service (vet any wallet or agent using 70 behavioral signals) is functional but not yet serving external clients. This section describes working infrastructure, not a shipped product.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">TRUST-AS-A-SERVICE</div>
+                <p style="font-size: 14px; color: #3F3F46; margin: 0;">Vet any wallet or agent against 70 behavioral signals. In agent-to-agent markets, counterparties are unknown and easy to spoof - CPI solves the pre-transaction trust check.</p>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">WORK-TO-REPUTATION</div>
+                <p style="font-size: 14px; color: #3F3F46; margin: 0;">Task, tip, vet. Most reputation systems are passive labels. Ours connects work output to economic opportunity - do the work, earn the score, port it anywhere.</p>
+            </div>
+            <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
+                <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">PAYMENT RAILS</div>
+                <p style="font-size: 14px; color: #3F3F46; margin: 0;">x402 + ERC-8004. Agents pay per trust query ($0.001 flat), earn ETH for completed tasks. Revenue feeds the same tipping pool that rewards human contributors.</p>
+            </div>
         </div>
-    </div>
-
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION A</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">Trust-as-a-Service for A2A Markets</h3>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: In agent-to-agent markets, counterparties are unknown, easy to spoof, hard to evaluate fast.</p>
-        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We vet any digital entity using 70 data vectors. Instant.</p>
-    </div>
-
-    <div style="margin-bottom: 48px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION B</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Work-to-Reputation Flywheel</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Task &rarr; Tip &rarr; Vet</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: Most reputation systems are passive labels. They don't connect work output to economic opportunity.</p>
-        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We make reputation portable and earned.</p>
-    </div>
-
-    <div style="margin-bottom: 16px;">
-        <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 8px; font-weight: 600;">APPLICATION C</div>
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Programmable Monetization Rails</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">x402 + ERC-8004</p>
-        <p style="font-size: 14px; color: #71717A; font-style: italic; margin-bottom: 16px;">Problem: Most trust APIs have weak payment rails and no portable proof layer.</p>
-        <p style="font-size: 15px; font-weight: 600; color: #0A0A0A;">We provide the Web2-to-Web3 bridge - widgets that help users make the leap to vetted Web3 providers.</p>
     </div>
 
         </div>

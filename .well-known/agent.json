@@ -40,17 +40,20 @@
     {
       "id": "batch_verify",
       "name": "Batch Verification",
-      "description": "Bulk query wallets before airdrop. Returns scores + farmer flags."
+      "description": "Bulk query wallets before airdrop. Returns scores + farmer flags.",
+      "endpoint": "POST /api/trust/composite/batch"
     },
     {
       "id": "sybil_check",
       "name": "Sybil Detection",
-      "description": "Check if wallet is flagged as duplicate account or part of sybil cluster"
+      "description": "Check if wallet is flagged as duplicate account or part of sybil cluster",
+      "endpoint": "GET /api/tenants/{tenant_id}/sybil-report"
     },
     {
       "id": "explain_score",
       "name": "Score Breakdown",
-      "description": "Full breakdown of 8 signals contributing to trust score"
+      "description": "Full breakdown of 32 signals contributing to trust score",
+      "endpoint": "GET /api/trust/explain/{user_id}"
     },
     {
       "id": "stake",
@@ -61,10 +64,10 @@
   ],
   "endpoints": {
     "telegram": "https://t.me/SiahBot",
-    "trust_api": "https://bonzi-v5.onrender.com/api/trust",
-    "tip_api": "https://bonzi-v5.onrender.com/api/tip",
-    "agent_api": "https://bonzi-v5.onrender.com/api/agent",
-    "stake_api": "https://bonzi-v5.onrender.com/api/stake"
+    "trust_api": "https://app.bonzivista.org/api/trust",
+    "tip_api": "https://app.bonzivista.org/api/tip",
+    "agent_api": "https://app.bonzivista.org/api/agent",
+    "stake_api": "https://app.bonzivista.org/api/stake"
   },
   "trust_models": [
     "reputation",
@@ -96,5 +99,5 @@
     "mainnet_identity": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
     "mainnet_reputation": "0x8004BAa17C55a88189AE136b182e5fdA19dE9b63"
   },
-  "updated": "2026-02-20T20:11:54Z"
+  "updated": "2026-02-22T00:00:00Z"
 }

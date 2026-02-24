@@ -895,14 +895,24 @@ More DAO revenue
     <div id="exp3" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">EXPERIMENT 3 - ADVERSARIAL AUDIT</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Adversarial Audit</h3>
-        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes (a 2025 academic taxonomy from Stanford/Oxford identifying the 8 ways AI governance can break). Dry-run framework - live execution pending.</p>
+        <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">47 attack scenarios mapped to Hadfield &amp; Koh's 8 AI governance failure modes. 9 executed live with tamper-proof Telegram message IDs. 38 dry-run validated, pending live execution.</p>
+
+        <!-- Status banner - prominent, not buried -->
+        <div style="background: #1F1F23; border-left: 3px solid #D4AF37; padding: 16px 20px; margin-bottom: 20px;">
+            <p style="font-size: 13px; font-weight: 700; color: #D4AF37; margin-bottom: 8px;">EXECUTION STATUS: PARTIALLY COMPLETE</p>
+            <p style="font-size: 14px; color: #A1A1AA; margin-bottom: 6px;">9 of 47 scenarios have been executed live against the bot. These 9 produce tamper-proof Telegram message IDs (3445-3479) as verifiable evidence.</p>
+            <p style="font-size: 14px; color: #A1A1AA; margin-bottom: 6px;">38 scenarios are dry-run validated (code defined, structure confirmed, cost estimated) but have not run against the live bot. This includes all 8 adversarial scenarios.</p>
+            <p style="font-size: 14px; color: #71717A;">Token cost figures below are estimates based on scenario metadata at Haiku pricing ($0.80/M input, $4.00/M output) - not measured from live execution.</p>
+        </div>
+
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: we mapped every attack we could think of against the 8 ways AI governance fails according to the literature. We covered 7 out of 8. The gap we found - identity verification - tells us exactly what to build next.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The synthetic adversarial agent is a sharp, skeptical DeFi veteran who escalates from curious questions to full adversarial attacks over 6 turns, then delivers a verdict. 47 scenarios cover trust scoring, governance, economy, and support. Each maps to one of Hadfield &amp; Koh's 8 failure modes. The dry-run audit found 7 of 8 failure modes covered, with one gap: HK7 (Identity/accountability) has zero primary scenarios because authority impersonation and privilege escalation are tagged as injection attacks (HK6), not identity failures.</p>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #7C3AED;">47</div>
-                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Scenarios</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Scenarios defined</div>
+                <div style="font-size: 10px; color: #27AE60; margin-top: 4px; font-weight: 600;">9 live / 38 dry-run</div>
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #27AE60;">7/8</div>
@@ -910,7 +920,7 @@ More DAO revenue
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #D4AF37;">$0.098</div>
-                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Full suite</div>
+                <div style="font-size: 11px; color: #71717A; margin-top: 2px;">Est. full suite cost</div>
             </div>
             <div style="background: #FEF2F2; border: 1px solid #FECACA; padding: 12px; text-align: center;">
                 <div style="font-size: 24px; font-weight: 800; color: #E74C3C;">HK7</div>
@@ -918,11 +928,18 @@ More DAO revenue
             </div>
         </div>
 
+        <!-- Live execution evidence -->
+        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 16px 20px; margin-bottom: 24px;">
+            <p style="font-size: 13px; font-weight: 700; color: #15803D; margin-bottom: 8px;">LIVE EVIDENCE - 9 SCENARIOS EXECUTED</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 6px;">Telegram message IDs 3445-3479 are on-record, tamper-proof proof of live execution. These cover trust scoring and governance scenarios from the first execution batch.</p>
+            <p style="font-size: 14px; color: #3F3F46;">Remaining 38 scenarios (including all 8 adversarial scenarios) are scheduled for live execution. Each will produce verifiable Telegram message IDs on completion.</p>
+        </div>
+
         <div class="advantage-box">
             <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">GAP ANALYSIS</p>
             <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">HK7 (Identity/accountability) requires dedicated scenarios.</p>
             <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Scenarios testing authority impersonation (gov-adv-01) and privilege escalation (trust-adv-01) exist but are tagged primarily as injection attacks (HK6). To close the HK7 gap, we need 2-3 scenarios specifically testing agent registration verification, liability chain tracking, and record falsification detection.</p>
-            <p style="font-size: 14px; color: #3F3F46;">This is a dry-run report. No scenarios have been executed against the live bot. Token cost estimates are based on scenario metadata at Haiku pricing ($0.80/M input, $4.00/M output). Live execution produces tamper-proof Telegram message IDs as evidence.</p>
+            <p style="font-size: 14px; color: #3F3F46;">Note: the adversarial scenarios that would most directly test HK7 have not been run live yet. The gap identified here is structural - from dry-run taxonomy analysis - and will be confirmed or revised once live execution completes.</p>
         </div>
 
         <div style="margin-top: 24px;">
@@ -1044,8 +1061,8 @@ More DAO revenue
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">3</td>
-                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Adversarial audit - 47 scenarios, HK coverage mapping, gap analysis</td>
-                    <td style="padding: 12px 0; color: #27AE60; font-weight: 600;">Done (dry-run)</td>
+                    <td style="padding: 12px 12px 12px 0; color: #3F3F46;">Adversarial audit - 47 scenarios defined, HK coverage mapping, gap analysis</td>
+                    <td style="padding: 12px 0; color: #D4AF37; font-weight: 600;">9/47 live, 38 dry-run</td>
                 </tr>
                 <tr style="border-bottom: 1px solid #F4F4F5;">
                     <td style="padding: 12px 12px 12px 0; color: #71717A;">4</td>

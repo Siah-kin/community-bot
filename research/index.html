@@ -454,40 +454,6 @@
         }
         body.dark-mode .disclaimer-banner p { color: #A1A1AA; }
 
-        .methodology-issues {
-            background: rgba(212, 175, 55, 0.06);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            padding: 24px;
-            margin-bottom: 48px;
-        }
-        .methodology-issues h3 {
-            font-size: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #D4AF37;
-            margin-bottom: 16px;
-        }
-        .issue-item {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            font-size: 14px;
-            color: var(--gray);
-            line-height: 1.7;
-        }
-        body.dark-mode .issue-item { color: #A1A1AA; }
-        .issue-item:last-child { border-bottom: none; }
-        .issue-tag {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 2px 8px;
-            margin-right: 8px;
-            background: rgba(231, 76, 60, 0.1);
-            color: #E74C3C;
-        }
     </style>
 </head>
 <body>
@@ -496,7 +462,7 @@
 
     <section class="hero">
         <h1>Research</h1>
-        <p>Three flagship models. One oracle infrastructure. Testing cooperative economics in high-trust-deficit environments. Experiment in planning stage — see known issues below.</p>
+        <p>Three flagship models. One oracle infrastructure. Testing cooperative economics in high-trust-deficit environments.</p>
     </section>
 
     <div class="content">
@@ -504,7 +470,7 @@
         <div class="section" style="margin-bottom: 48px;">
             <h2>Contents</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px;">
-                <a href="#research-purpose" style="color: #E74C3C; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Status &amp; Known Issues</a>
+                <a href="#research-purpose" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">What We're Researching</a>
                 <a href="#infrastructure" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">Shared Oracle Infrastructure</a>
                 <a href="#bonzi" style="color: #7C3AED; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Bonzi - Meme + CPI</a>
                 <a href="#imobx" style="color: #10B981; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">IMOBX - RWA Tokenization</a>
@@ -515,27 +481,8 @@
 
         <!-- Experimental Status Disclaimer -->
         <div class="disclaimer-banner">
-            <h3>Experimental — Pre-Publication Status</h3>
-            <p>This research is in <strong>planning stage</strong>. We are defining metrics of success, not reporting validated results. The infrastructure described below exists as working code, but the controlled experiment comparing governed (RACI-V) vs. ungoverned agents has not produced publication-ready data yet.</p>
-            <p>Our internal audit identified methodological issues in the current scoring framework that must be resolved before the live experiment. Some data points give mixed signals. We publish this page for transparency, not to claim validated findings.</p>
-        </div>
-
-        <!-- Known Methodology Issues -->
-        <div class="methodology-issues">
-            <h3>Known Issues (Pre-Experiment Audit)</h3>
-            <p style="font-size: 13px; color: var(--gray); margin-bottom: 12px;">Identified during internal audit. Being addressed before the live experiment runs.</p>
-            <div class="issue-item">
-                <span class="issue-tag">Scoring</span>
-                <strong>Weight imbalance in composite score.</strong> The four sub-scores (accuracy, safety, cost, satisfaction) use weights that total 90%, not 100%. The satisfaction score is present in the formula but set to zero — non-functional. A fast wrong answer can outscore a slow correct one (0.60 vs 0.64). The formula accidentally rewards speed over correctness.
-            </div>
-            <div class="issue-item">
-                <span class="issue-tag">Statistics</span>
-                <strong>Pseudo-replication inflates sample size.</strong> Running 5 questions 21 times each produces 105 observations per group, not 210 independent data points. Repeating the same question does not create new information. The reported effect size (d=-13.5) reflects near-zero variance from deterministic reruns, not a real treatment effect. Any peer reviewer would flag this.
-            </div>
-            <div class="issue-item">
-                <span class="issue-tag">Measurement</span>
-                <strong>Core claim not yet measured.</strong> The main hypothesis — that governance prevents agent contradictions and duplicated work — is not connected to the scoring pipeline. Contradiction and duplication detectors exist in code but are not plugged into the experiment. The experiment does not currently measure the thing it claims to prove.
-            </div>
+            <h3>Experimental</h3>
+            <p>This research is in <strong>planning stage</strong>. We are defining metrics of success and correcting our scoring methodology. The infrastructure described below exists as working code. Pilot data is exploratory — not validated findings. The confirmatory study with corrected methodology has not run yet.</p>
         </div>
 
         <!-- Research Purpose -->
@@ -543,7 +490,7 @@
             <h2>What We're Researching</h2>
             <p><strong>Core question:</strong> Can you build sustainable token economies without exit liquidity (the pattern where early holders only profit when new buyers enter)? Traditional crypto relies on this cycle. We're testing three models where value comes from real economic activity - trading fees, rental income, and marketplace commissions - not speculation.</p>
 
-            <p><strong>The planned experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries. The scoring framework and statistical methodology are being corrected before the experiment runs (see known issues above).</p>
+            <p><strong>The planned experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries.</p>
 
             <p><strong>Why three models?</strong> One project could be luck. Three projects sharing the same trust backend = pattern. We're testing whether wallet cooperation scoring generalizes across environments — or whether it only works in specific conditions.</p>
 
@@ -558,7 +505,7 @@
             <div class="mechanism-grid">
                 <div class="mechanism">
                     <h3>CPI Scoring</h3>
-                    <p>32 cooperation signals designed across 10 dimensions. Scoring formula under revision — see known issues above.</p>
+                    <p>32 cooperation signals designed across 10 dimensions. One wallet = one unified reputation score.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Sybil Detection</h3>

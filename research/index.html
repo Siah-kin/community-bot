@@ -426,6 +426,68 @@
         }
 
         /* Brazil translate button injected by nav-loader.js */
+
+        .disclaimer-banner {
+            background: rgba(231, 76, 60, 0.08);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-left: 4px solid #E74C3C;
+            padding: 24px;
+            margin-bottom: 48px;
+        }
+        .disclaimer-banner h3 {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #E74C3C;
+            margin-bottom: 12px;
+        }
+        .disclaimer-banner p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+        .disclaimer-banner p:last-child { margin-bottom: 0; }
+        body.dark-mode .disclaimer-banner {
+            background: rgba(231, 76, 60, 0.06);
+        }
+        body.dark-mode .disclaimer-banner p { color: #A1A1AA; }
+
+        .methodology-issues {
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 24px;
+            margin-bottom: 48px;
+        }
+        .methodology-issues h3 {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #D4AF37;
+            margin-bottom: 16px;
+        }
+        .issue-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        body.dark-mode .issue-item { color: #A1A1AA; }
+        .issue-item:last-child { border-bottom: none; }
+        .issue-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            margin-right: 8px;
+            background: rgba(231, 76, 60, 0.1);
+            color: #E74C3C;
+        }
     </style>
 </head>
 <body>
@@ -434,7 +496,7 @@
 
     <section class="hero">
         <h1>Research</h1>
-        <p>Three flagship models. One oracle infrastructure. Built to test cooperative economics in high-trust-deficit environments.</p>
+        <p>Three flagship models. One oracle infrastructure. Testing cooperative economics in high-trust-deficit environments. Experiment in planning stage — see known issues below.</p>
     </section>
 
     <div class="content">
@@ -442,7 +504,7 @@
         <div class="section" style="margin-bottom: 48px;">
             <h2>Contents</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px;">
-                <a href="#research-purpose" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">What We're Researching</a>
+                <a href="#research-purpose" style="color: #E74C3C; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Status &amp; Known Issues</a>
                 <a href="#infrastructure" style="color: #3F3F46; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">Shared Oracle Infrastructure</a>
                 <a href="#bonzi" style="color: #7C3AED; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Bonzi - Meme + CPI</a>
                 <a href="#imobx" style="color: #10B981; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">IMOBX - RWA Tokenization</a>
@@ -451,27 +513,52 @@
             </div>
         </div>
 
+        <!-- Experimental Status Disclaimer -->
+        <div class="disclaimer-banner">
+            <h3>Experimental — Pre-Publication Status</h3>
+            <p>This research is in <strong>planning stage</strong>. We are defining metrics of success, not reporting validated results. The infrastructure described below exists as working code, but the controlled experiment comparing governed (RACI-V) vs. ungoverned agents has not produced publication-ready data yet.</p>
+            <p>Our internal audit identified methodological issues in the current scoring framework that must be resolved before the live experiment. Some data points give mixed signals. We publish this page for transparency, not to claim validated findings.</p>
+        </div>
+
+        <!-- Known Methodology Issues -->
+        <div class="methodology-issues">
+            <h3>Known Issues (Pre-Experiment Audit)</h3>
+            <p style="font-size: 13px; color: var(--gray); margin-bottom: 12px;">Identified during internal audit. Being addressed before the live experiment runs.</p>
+            <div class="issue-item">
+                <span class="issue-tag">Scoring</span>
+                <strong>Weight imbalance in composite score.</strong> The four sub-scores (accuracy, safety, cost, satisfaction) use weights that total 90%, not 100%. The satisfaction score is present in the formula but set to zero — non-functional. A fast wrong answer can outscore a slow correct one (0.60 vs 0.64). The formula accidentally rewards speed over correctness.
+            </div>
+            <div class="issue-item">
+                <span class="issue-tag">Statistics</span>
+                <strong>Pseudo-replication inflates sample size.</strong> Running 5 questions 21 times each produces 105 observations per group, not 210 independent data points. Repeating the same question does not create new information. The reported effect size (d=-13.5) reflects near-zero variance from deterministic reruns, not a real treatment effect. Any peer reviewer would flag this.
+            </div>
+            <div class="issue-item">
+                <span class="issue-tag">Measurement</span>
+                <strong>Core claim not yet measured.</strong> The main hypothesis — that governance prevents agent contradictions and duplicated work — is not connected to the scoring pipeline. Contradiction and duplication detectors exist in code but are not plugged into the experiment. The experiment does not currently measure the thing it claims to prove.
+            </div>
+        </div>
+
         <!-- Research Purpose -->
         <div class="section" id="research-purpose">
             <h2>What We're Researching</h2>
             <p><strong>Core question:</strong> Can you build sustainable token economies without exit liquidity (the pattern where early holders only profit when new buyers enter)? Traditional crypto relies on this cycle. We're testing three models where value comes from real economic activity - trading fees, rental income, and marketplace commissions - not speculation.</p>
 
-            <p><strong>The experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries.</p>
+            <p><strong>The planned experiment:</strong> Each model targets a different trust-deficit environment (memecoins, real estate, NGO labor markets) to stress-test the same cooperation scoring infrastructure. If CPI works across all three, it's generalizable. If it only works in one, we learn the boundaries. The scoring framework and statistical methodology are being corrected before the experiment runs (see known issues above).</p>
 
-            <p><strong>Why three models?</strong> One project could be luck. Three projects sharing the same trust backend = pattern. We're not building products - we're running controlled experiments to see if wallet behavior can replace identity verification.</p>
+            <p><strong>Why three models?</strong> One project could be luck. Three projects sharing the same trust backend = pattern. We're testing whether wallet cooperation scoring generalizes across environments — or whether it only works in specific conditions.</p>
 
-            <p>Same trust engine, three stress tests. If it works for degens trading memecoins, farmers selling mushrooms in a refugee settlement, and property investors financing social housing - it works. That is the thesis. The experiments below are how we measure whether it holds.</p>
+            <p>Same trust engine, three stress tests. If it works for degens trading memecoins, farmers selling mushrooms in a refugee settlement, and property investors financing social housing - it works. That is the thesis. The experiments below describe how we plan to measure whether it holds.</p>
         </div>
 
         <!-- Shared Infrastructure -->
         <div class="section" id="infrastructure">
             <h2>Shared Oracle Infrastructure</h2>
-            <p>All three models use the same trust verification backend: <strong>wallet cooperation scoring (CPI)</strong> - a single number summarizing how cooperatively a wallet has behaved over time - on-chain reputation signals, and AI-powered sybil detection (identifying fake accounts pretending to be multiple real users). This section provides high-level overviews. Deep research lives on project-specific sites.</p>
+            <p>All three models are designed to use the same trust verification backend: <strong>wallet cooperation scoring (CPI)</strong> - a single number summarizing how cooperatively a wallet has behaved over time - on-chain reputation signals, and AI-powered sybil detection (identifying fake accounts pretending to be multiple real users). The infrastructure exists as working code; the controlled experiment to validate it has not run yet. Deep research lives on project-specific sites.</p>
 
             <div class="mechanism-grid">
                 <div class="mechanism">
                     <h3>CPI Scoring</h3>
-                    <p>32 cooperation signals across 10 dimensions. One wallet = one unified reputation score. 70 sub-metrics, 253 total points.</p>
+                    <p>32 cooperation signals designed across 10 dimensions. Scoring formula under revision — see known issues above.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Sybil Detection</h3>
@@ -870,7 +957,7 @@ More DAO revenue
         <div class="advantage-box">
             <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 12px; font-weight: 600;">KEY FINDING</p>
             <p style="font-size: 15px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px;">The brain feedback loop is the dominant mechanism - not just routing.</p>
-            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Effect size d = -13.5 (a measure of how large the difference is between two groups - anything above 0.8 is considered large; ours is extreme because this is a stress test). Statistical significance p &lt; 0.00001 (less than 1 in 100,000 chance this result is random). This is simulation data - fully deterministic, no LLM evaluation. Real deployments will show smaller but directionally consistent effects.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">Effect size d = -13.5 (a measure of how large the difference is between two groups - anything above 0.8 is considered large). <strong>Important caveat:</strong> this extreme value reflects near-zero variance from deterministic simulation reruns, not a genuine treatment effect. Repeating the same seeds produces identical outputs, so variance approaches zero and effect size inflates artificially. Real deployments with diverse inputs will produce smaller, more meaningful effect sizes. Statistical significance p &lt; 0.00001 has the same limitation — low p-values are expected when variance is near zero.</p>
             <p style="font-size: 14px; color: #3F3F46;">Population: 3 honest + 2 adaptive dishonest agents. Budget: 800 units. The brain models AccordionMemory writeback - our system for carrying punishment history forward so agents who behaved dishonestly face consequences in future rounds.</p>
         </div>
 
@@ -965,7 +1052,7 @@ More DAO revenue
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">Research Lab Economics</h3>
         <p style="font-size: 13px; letter-spacing: 1px; color: #D4AF37; margin-bottom: 16px;">Real token costs from the API tracker - not estimates, not projections.</p>
         <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">Put simply: our entire research lab costs less per run than a cup of coffee. Most papers we cite ran zero experiments. We ran three for thirty cents.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The entire research suite - all 3 experiments, 347 data points across 3 independent conditions - costs $0.30 to run. That is 3 full reruns per dollar. At API rate limits, the system can execute 172,800 RACI-V rounds per day. Most of our reference papers (Hammond et al., Hadfield & Koh) are pure theory with zero empirical experiments. We are already more empirical than they are - at a marginal cost that itself validates the flat-fee model.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">The entire research suite - all 3 experiments - costs $0.30 to run. Note: the 347 data points include repeated observations of the same questions (see known issues in the public section about pseudo-replication). The cost efficiency is real, but the independent information content per run is lower than the raw count suggests. At API rate limits, the system can execute 172,800 RACI-V rounds per day. The infrastructure supports rapid iteration — important because the scoring methodology needs correction before results are meaningful.</p>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px;">
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 12px; text-align: center;">
@@ -1030,8 +1117,9 @@ More DAO revenue
     <div id="transparency" style="margin-bottom: 56px;">
         <div style="font-size: 11px; letter-spacing: 3px; color: #7C3AED; margin-bottom: 12px; font-weight: 600;">DATA TRANSPARENCY</div>
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 16px;">What this data is - and what it is not</h3>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The 210 pilot episodes are LLM-to-LLM interactions (one AI talking to another AI via the Anthropic API) - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain, contradiction detection) are structurally real: they measure whether the governance rules were followed. The statistical significance is computed from those real measurements.</p>
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is standard methodology for exploratory AI research: establish the structural effect in a controlled setting before moving to live deployment. The confirmatory study - with real Telegram data, real users, and OSF pre-registration (Open Science Framework - a public research registry where you declare your hypothesis before collecting data, so you can't cherry-pick results) - is Phase 5 of the roadmap below.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;">The pilot episodes are LLM-to-LLM interactions (one AI talking to another AI via the Anthropic API) - not live Telegram conversations with real users. The governance metrics (role assignment, validation chain) are structurally real: they measure whether governance rules were followed. However, the contradiction and duplication detectors — the core behavioral claim — are not yet connected to scoring.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;"><strong>Known statistical limitations:</strong> The pilot used 5 questions repeated 21 times each, producing correlated observations rather than independent data points. The extreme effect size (d=-13.5) reflects near-zero variance from deterministic reruns. The composite score weights total 90%, not 100%, with the satisfaction component zeroed out. These issues are documented in the public section above and must be resolved before the confirmatory study.</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">This is exploratory data used to build the experimental framework. The confirmatory study - with diverse questions, corrected scoring, real Telegram data, real users, and OSF pre-registration (Open Science Framework - a public research registry where you declare your hypothesis before collecting data, so you can't cherry-pick results) - is Phase 5 of the roadmap below.</p>
         <p style="font-size: 14px; color: #71717A; font-style: italic;">Independent verification: on-chain anchoring of experiment hashes (tamper-proof fingerprints stored on Ethereum) and SHA-256 checksums (cryptographic signatures proving data hasn't been altered) per episode are planned before the confirmatory study begins.</p>
     </div>
 
@@ -1164,13 +1252,13 @@ More DAO revenue
         <div style="background: #F9FAFB; border-left: 4px solid #27AE60; padding: 24px; margin-bottom: 24px;">
             <p style="font-size: 13px; font-weight: 700; color: #27AE60; margin-bottom: 12px; letter-spacing: 1px;">HOW TO VALIDATE THIS YOURSELF</p>
             <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;"><strong>Download the raw data.</strong> Experiment 1's CSV is available above. Every claim on this page references specific data points you can check.</p>
-            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;"><strong>Check the statistics.</strong> Effect size d = -13.5 and p &lt; 0.00001 are from deterministic simulation data. These are structural measurements, not surveys. The numbers will reproduce identically if you run the same seeds.</p>
+            <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;"><strong>Check the statistics — we did, and found problems.</strong> Effect size d = -13.5 and p &lt; 0.00001 are from deterministic simulation reruns with near-zero variance. These numbers are artificially inflated by pseudo-replication (same 5 questions repeated 21 times). The scoring weights total 90%, not 100%. We are fixing these before the confirmatory study.</p>
             <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;"><strong>Look for what is missing.</strong> We tell you HK7 is a gap. We tell you IMOBX is pre-revenue. We tell you Unidos has trained 501 farmers but the bot marketplace does not exist yet. Honest research shows its weaknesses.</p>
             <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;"><strong>Wait for the confirmatory study.</strong> Phase 5 (400+ episodes, real users, OSF pre-registered) is the proof that matters. Everything before it is exploratory. We are transparent about that distinction because the distinction matters.</p>
             <p style="font-size: 14px; color: #3F3F46;"><strong>Compare to the literature.</strong> Hammond et al. (arXiv:2502.14143) and Hadfield & Koh (arXiv:2509.01063) are pure theory with zero empirical experiments. We ran three experiments for $0.30. The bar for empirical evidence in this field is low - we are already above it, and we built the infrastructure to keep raising it.</p>
         </div>
 
-        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;"><strong>The thesis this research tests:</strong> can the middle class finance itself without intermediaries? CPI provides the trust data. ACF ensures the governance is fair. The experiments above show that governed agents cooperate 23x more than ungoverned ones, that persistent memory is the key mechanism, and that 7 of 8 known governance failure modes are already covered. The remaining work - closing HK7, running the confirmatory study, deploying with real users - is mapped and funded. The infrastructure exists. The data supports the direction. The question is no longer "can this work?" but "how far can it scale?"</p>
+        <p style="font-size: 15px; line-height: 1.7; color: #3F3F46;"><strong>The thesis this research tests:</strong> can the middle class finance itself without intermediaries? CPI provides the trust data. ACF ensures the governance is fair. The pilot simulations suggest governed agents produce higher-value outputs than ungoverned ones, that persistent memory is the key mechanism, and that 7 of 8 known governance failure modes are covered. However: the scoring formula, statistical methodology, and core behavioral measurements need correction before these results can be cited as evidence (see known issues in the public section). The remaining work — fixing the methodology, closing HK7, running the confirmatory study with real users — is mapped. The infrastructure exists. The direction is promising. The question is whether the effects hold once the measurement tools are corrected.</p>
     </div>
 
         </div>

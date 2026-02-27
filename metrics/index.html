@@ -1489,26 +1489,26 @@
                 <tbody>
                     <tr>
                         <td data-i18n="td.staker.eth">ETH to stakers <span class="info-text" title="Real ETH from trading fees, not token emissions. Claimable anytime.">info</span></td>
-                        <td id="vista-staker-eth" class="metric-win">— ETH</td>
-                        <td id="bonzi-staker-eth" class="metric-win">— ETH</td>
+                        <td id="vista-staker-eth" class="metric-win">- ETH</td>
+                        <td id="bonzi-staker-eth" class="metric-win">- ETH</td>
                         <td class="benchmark-col"><span class="benchmark-val">&gt;0 = yield exists</span><br><span class="benchmark-ref">PEPE/SHIB/SPX: 0 ETH</span></td>
                     </tr>
                     <tr>
                         <td data-i18n="td.lp.eth">ETH to LPs <span class="info-text" title="Liquidity providers earn the largest share of trading fees.">info</span></td>
-                        <td id="vista-lp-eth" class="metric-win">— ETH</td>
-                        <td id="bonzi-lp-eth" class="metric-win">— ETH</td>
+                        <td id="vista-lp-eth" class="metric-win">- ETH</td>
+                        <td id="bonzi-lp-eth" class="metric-win">- ETH</td>
                         <td class="benchmark-col"><span class="benchmark-val">&gt;0 = LP incentive</span><br><span class="benchmark-ref">Most DEX LPs: IL only</span></td>
                     </tr>
                     <tr>
                         <td data-i18n="td.unique.claimers">Unique recipients <span class="info-text" title="Number of wallets that have actually received ETH from the protocol.">info</span></td>
-                        <td id="vista-claimers">—</td>
-                        <td id="bonzi-claimers">—</td>
+                        <td id="vista-claimers">-</td>
+                        <td id="bonzi-claimers">-</td>
                         <td class="benchmark-col"><span class="benchmark-val">Distributed &gt; concentrated</span><br><span class="benchmark-ref">Context: % of holders</span></td>
                     </tr>
                     <tr>
                         <td data-i18n="td.tenure">Avg hold time <span class="info-text" title="Longer hold times indicate conviction. Murad: 'diamond hands' who don't panic sell.">info</span></td>
-                        <td id="vista-tenure" class="metric-win">— days</td>
-                        <td id="bonzi-tenure" class="metric-win">— days</td>
+                        <td id="vista-tenure" class="metric-win">- days</td>
+                        <td id="bonzi-tenure" class="metric-win">- days</td>
                         <td class="benchmark-col"><span class="benchmark-val">&gt;90 days = conviction</span><br><span class="benchmark-ref">Avg memecoin: 14-30 days</span></td>
                     </tr>
                 </tbody>
@@ -1528,7 +1528,7 @@
                 <tbody>
                     <tr>
                         <td class="metric-label-strong">VISTA + BONZI</td>
-                        <td id="total-eth-paid" class="metric-win">— ETH</td>
+                        <td id="total-eth-paid" class="metric-win">- ETH</td>
                         <td data-i18n="td.mechanism.vista">Trading fees → stakers & LPs</td>
                         <td class="metric-win">Real yield</td>
                     </tr>
@@ -1576,15 +1576,15 @@
                     </tr>
                     <tr>
                         <td data-i18n="td.yourrank">Your rank</td>
-                        <td id="your-rank">—</td>
+                        <td id="your-rank">-</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.claimable">Claimable ETH</td>
-                        <td id="your-claimable">—</td>
+                        <td id="your-claimable">-</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.totalclaimed">Total claimed</td>
-                        <td id="your-claimed">—</td>
+                        <td id="your-claimed">-</td>
                     </tr>
                 </tbody>
             </table>
@@ -1624,23 +1624,23 @@
                 <tbody>
                     <tr>
                         <td data-i18n="td.newwallets">New wallets</td>
-                        <td>—</td>
-                        <td>—</td>
+                        <td>-</td>
+                        <td>-</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.exiting">Exiting wallets</td>
-                        <td>—</td>
-                        <td>—</td>
+                        <td>-</td>
+                        <td>-</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.netflow">Net flow</td>
-                        <td>—</td>
-                        <td>—</td>
+                        <td>-</td>
+                        <td>-</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.accumulation">Accumulation score</td>
-                        <td>—</td>
-                        <td>—</td>
+                        <td>-</td>
+                        <td>-</td>
                     </tr>
                 </tbody>
             </table>
@@ -1659,7 +1659,7 @@
                 <tbody>
                     <tr>
                         <td class="metric-label-strong" data-i18n="td.vistastake">VISTA Staking</td>
-                        <td id="vista-apy">—%</td>
+                        <td id="vista-apy">-%</td>
                         <td data-i18n="td.risk.sc">Smart contract</td>
                         <td class="benchmark-col">Variable, trading-volume dependent</td>
                     </tr>
@@ -1704,11 +1704,11 @@
                     </tr>
                     <tr>
                         <td data-i18n="td.currentgas">Current gas</td>
-                        <td id="current-gas">— gwei</td>
+                        <td id="current-gas">- gwei</td>
                     </tr>
                     <tr>
                         <td data-i18n="td.claimcost">Claim cost estimate</td>
-                        <td id="claim-cost">—</td>
+                        <td id="claim-cost">-</td>
                     </tr>
                 </tbody>
             </table>
@@ -2343,20 +2343,20 @@
                     const label = row.cells[0]?.textContent?.trim();
                     if (row.cells[1] && row.cells[2]) {
                         if (label === 'Token age') {
-                            row.cells[1].textContent = v.token_age_months ? v.token_age_months + ' months' : '—';
-                            row.cells[2].textContent = b.token_age_months ? b.token_age_months + ' months' : '—';
+                            row.cells[1].textContent = v.token_age_months ? v.token_age_months + ' months' : '-';
+                            row.cells[2].textContent = b.token_age_months ? b.token_age_months + ' months' : '-';
                         }
                         if (label === 'Top 10 holders') {
-                            row.cells[1].textContent = v.top_10_pct ? v.top_10_pct + '%' : '—';
-                            row.cells[2].textContent = b.top_10_pct ? b.top_10_pct + '%' : '—';
+                            row.cells[1].textContent = v.top_10_pct ? v.top_10_pct + '%' : '-';
+                            row.cells[2].textContent = b.top_10_pct ? b.top_10_pct + '%' : '-';
                         }
                         if (label === 'Concentration index') {
-                            row.cells[1].textContent = v.hhi_score || '—';
-                            row.cells[2].textContent = b.hhi_score || '—';
+                            row.cells[1].textContent = v.hhi_score || '-';
+                            row.cells[2].textContent = b.hhi_score || '-';
                         }
                         if (label === 'Total holders') {
-                            row.cells[1].textContent = v.total_holders ? v.total_holders.toLocaleString() : '—';
-                            row.cells[2].textContent = b.total_holders ? b.total_holders.toLocaleString() : '—';
+                            row.cells[1].textContent = v.total_holders ? v.total_holders.toLocaleString() : '-';
+                            row.cells[2].textContent = b.total_holders ? b.total_holders.toLocaleString() : '-';
                         }
                     }
                 });
@@ -2385,14 +2385,14 @@
                 const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
                 // ETH distributed
-                setEl('vista-staker-eth', v.total_eth_distributed ? v.total_eth_distributed.toFixed(2) + ' ETH' : '— ETH');
-                setEl('bonzi-staker-eth', b.total_eth_distributed ? b.total_eth_distributed.toFixed(2) + ' ETH' : '— ETH');
-                setEl('vista-lp-eth', v.lp_total_eth ? v.lp_total_eth.toFixed(2) + ' ETH' : '— ETH');
-                setEl('bonzi-lp-eth', b.lp_total_eth ? b.lp_total_eth.toFixed(2) + ' ETH' : '— ETH');
-                setEl('vista-claimers', v.unique_claimers ? v.unique_claimers.toLocaleString() : '—');
-                setEl('bonzi-claimers', b.unique_claimers ? b.unique_claimers.toLocaleString() : '—');
-                setEl('vista-tenure', v.avg_tenure_days ? v.avg_tenure_days + ' days' : '— days');
-                setEl('bonzi-tenure', b.avg_tenure_days ? b.avg_tenure_days + ' days' : '— days');
+                setEl('vista-staker-eth', v.total_eth_distributed ? v.total_eth_distributed.toFixed(2) + ' ETH' : '- ETH');
+                setEl('bonzi-staker-eth', b.total_eth_distributed ? b.total_eth_distributed.toFixed(2) + ' ETH' : '- ETH');
+                setEl('vista-lp-eth', v.lp_total_eth ? v.lp_total_eth.toFixed(2) + ' ETH' : '- ETH');
+                setEl('bonzi-lp-eth', b.lp_total_eth ? b.lp_total_eth.toFixed(2) + ' ETH' : '- ETH');
+                setEl('vista-claimers', v.unique_claimers ? v.unique_claimers.toLocaleString() : '-');
+                setEl('bonzi-claimers', b.unique_claimers ? b.unique_claimers.toLocaleString() : '-');
+                setEl('vista-tenure', v.avg_tenure_days ? v.avg_tenure_days + ' days' : '- days');
+                setEl('bonzi-tenure', b.avg_tenure_days ? b.avg_tenure_days + ' days' : '- days');
 
                 // Total ETH paid (stakers + LPs for both tokens)
                 const totalEth = (v.total_eth_distributed || 0) + (b.total_eth_distributed || 0) +

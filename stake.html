@@ -952,8 +952,8 @@
         <button onclick="window.location.href='.'" style="position: absolute; top: 20px; left: 20px; background: none; border: none; color: #7C3AED; font-size: 28px; cursor: pointer; z-index: 10000; line-height: 1; padding: 8px;" aria-label="Close">&times;</button>
         <div class="gate-content">
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
-            <h2>DAO Member Access</h2>
-            <p>This page is for BONZI holders only. Connect your wallet to verify ownership and access staking.</p>
+            <h2><span class="term" data-tip="DAO (Decentralized Autonomous Organization) - community-owned, code-enforced governance">Community Governance</span> Member Access</h2>
+            <p>This page is for BONZI holders only. Connect your wallet to verify ownership and access <span class="term" data-tip="Staking - locking your tokens for a set period to earn rewards from trading fees">token locking</span>.</p>
             <div style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 300px; margin: 0 auto;">
                 <button class="connect-btn" id="connectBtn" onclick="connectWallet('metamask')" style="margin: 0;">
                     <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
@@ -978,8 +978,8 @@
     <div class="container" id="mainContent" style="display: none;">
         <header>
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
-            <h1>Stake BONZI</h1>
-            <p class="subtitle">Earn ETH rewards + Thanks points</p>
+            <h1><span class="term" data-tip="Staking - locking your tokens for a set period to earn rewards from trading fees">Stake</span> BONZI</h1>
+            <p class="subtitle">Lock tokens to earn ETH rewards + Thanks points</p>
         </header>
 
         <!-- Protocol stats -->
@@ -990,11 +990,11 @@
             </div>
             <div class="stat">
                 <div class="stat-value" id="totalStakers">--</div>
-                <div class="stat-label">Stakers</div>
+                <div class="stat-label">Token Lockers</div>
             </div>
             <div class="stat">
                 <div class="stat-value" id="estApy">~12%</div>
-                <div class="stat-label">Est. APY</div>
+                <div class="stat-label"><span class="term" data-tip="APY (Annual Percentage Yield) - estimated yearly return on your locked tokens">Est. APY</span></div>
             </div>
         </div>
 
@@ -1003,7 +1003,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
-            MEV Protected (front-run prevention) via Flashbots
+            <span class="term" data-tip="MEV (Maximal Extractable Value) protection - prevents bots from profiting by reordering your transaction">Trade-order protection</span> via Flashbots
         </div>
 
         <!-- Status messages -->
@@ -1012,7 +1012,7 @@
         <!-- Stake card -->
         <div class="stake-card">
             <div class="card-header">
-                <span class="card-title">Stake BONZI</span>
+                <span class="card-title"><span class="term" data-tip="Staking - locking your tokens for a set period to earn rewards from trading fees">Stake</span> BONZI</span>
                 <span class="balance">Balance: <span id="bonziBalance">0</span></span>
             </div>
 
@@ -1035,7 +1035,7 @@
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
-            <p><strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days. Claim rewards anytime.</p>
+            <p><strong>14-day lock period.</strong> Locked BONZI cannot be withdrawn for 14 days. Claim rewards anytime.</p>
         </div>
 
         <!-- Rewards card -->
@@ -1064,11 +1064,11 @@
         <!-- Points card -->
         <div class="points-card">
             <div class="points-header">
-                <span class="points-title">Stake & Earn Points</span>
+                <span class="points-title">Lock & Earn Points</span>
                 <span class="points-value" id="monthlyPoints">+0 pts/mo</span>
             </div>
             <p class="points-info">
-                Earn 100 Thanks points per month while staking. Points unlock governance perks and tier benefits.
+                Earn 100 Thanks points per month while your tokens are locked. Points unlock <span class="term" data-tip="Governance perks let you vote on decisions, submit proposals, and share revenue">governance perks</span> and tier benefits.
             </p>
         </div>
 
@@ -1084,7 +1084,7 @@
                     <span class="vault-badge">AUTO</span>
                 </div>
                 <div class="vault-apy">
-                    <span class="apy-label">Est. APY</span>
+                    <span class="apy-label"><span class="term" data-tip="APY (Annual Percentage Yield) - estimated yearly return on your locked tokens">Est. APY</span></span>
                     <span class="apy-value" id="vaultApy">--</span>
                 </div>
             </div>
@@ -1095,7 +1095,7 @@
                 <div class="flywheel-visual">
                     <div class="flywheel-center">AUTO<br>COMPOUND</div>
                     <div class="flywheel-node">Deposit<br>BONZI</div>
-                    <div class="flywheel-node">Hardstake<br>Pool</div>
+                    <div class="flywheel-node"><span class="term" data-tip="Hardstake - Bonzi's locked staking pool where tokens are locked for 14 days to earn trading fee rewards">Hardstake</span><br>Pool</div>
                     <div class="flywheel-node">Earn<br>ETH</div>
                     <div class="flywheel-node">Swap to<br>BONZI</div>
                     <div class="flywheel-node">Restake<br>More</div>

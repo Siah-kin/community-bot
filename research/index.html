@@ -454,6 +454,46 @@
         }
         body.dark-mode .disclaimer-banner p { color: #A1A1AA; }
 
+        /* Tooltip spans for jargon terms */
+        .term {
+            border-bottom: 1px dotted #7C3AED;
+            cursor: help;
+            position: relative;
+        }
+        .term:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: normal;
+            z-index: 100;
+            pointer-events: none;
+            max-width: 320px;
+            line-height: 1.4;
+        }
+        .term:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            border: 5px solid transparent;
+            border-top-color: #1a1a2e;
+            z-index: 100;
+        }
+        body.dark-mode .term:hover::after {
+            background: #2d2d44;
+        }
+        body.dark-mode .term:hover::before {
+            border-top-color: #2d2d44;
+        }
+
     </style>
 </head>
 <body>
@@ -525,7 +565,7 @@
                 <div class="tier-title">Trust Scores for Wallet Behavior</div>
             </div>
 
-            <p>Bonzi is a memecoin built on <strong>Ethervista</strong> with flat ETH fees (not percentages). It's honest about the risk - that's why we built <strong>trust scoring</strong> as the safety layer. The pitch: "Yes it's risky, but that's why we built THIS."</p>
+            <p>Bonzi is a memecoin built on <strong><span class="term" data-tip="Ethervista - token trading platform with flat fees instead of percentages">Ethervista</span></strong> with flat ETH fees (not percentages). It's honest about the risk - that's why we built <strong>trust scoring</strong> as the safety layer. The pitch: "Yes it's risky, but that's why we built THIS."</p>
 
             <p><strong>How it works:</strong> Every trade generates a flat <strong>$10-15 ETH fee</strong>, split between liquidity providers (people who deposit tokens so others can trade) and the protocol. The protocol uses its share to buy and burn BONZI, reducing supply over time. <strong>Hardstake:</strong> lock tokens 14+ days for a bigger share of fees. Trust scores decide who gets marketing rewards - based on helpful answers, quality contributions, and on-chain reputation.</p>
 
@@ -543,7 +583,7 @@ Users trade BONZI
     +----+----+
     |         |
     v         v
-   LPs    Protocol
+ Depositors Protocol
     |         |
     |         v
     |    Auto-buy
@@ -579,7 +619,7 @@ Long-term holders
 
             <p>IMOBX puts housing on the blockchain. Tokenized housing projects + rent-to-own financing, designed as a reusable template that adapts to different countries' laws. Not just "digital real estate" - a framework other communities can copy and use.</p>
 
-            <p><strong>How it works:</strong> Two income streams - <strong>trading fees</strong> (like Bonzi) + <strong>rental income</strong> from financed properties. Community governance controls where money goes, which projects get built, and tracks costs against <strong>SINAPI</strong> (Brazil's official construction cost index). Tenants rent with the option to buy, building ownership over time. The compliance layer adapts to local housing laws in Brazil, the US, and Europe.</p>
+            <p><strong>How it works:</strong> Two income streams - <strong>trading fees</strong> (like Bonzi) + <strong>rental income</strong> from financed properties. Community governance controls where money goes, which projects get built, and tracks costs against <strong><span class="term" data-tip="SINAPI - Brazil's official government construction cost index, updated monthly">SINAPI</span></strong> (Brazil's official construction cost index). Tenants rent with the option to buy, building ownership over time. The compliance layer adapts to local housing laws in Brazil, the US, and Europe.</p>
 
             <p><strong>What makes it different:</strong> While other tokenized real estate projects chase speculation, <strong>IMOBX targets affordable social housing</strong> - the kind that qualifies for government grants. The <strong>Inter-American Development Bank's $250M Social Impact Fund</strong> funds affordable housing, not luxury condos. That is the market we're building for.</p>
 
@@ -596,7 +636,7 @@ Long-term holders
    +----+----+
    |         |
    v         v
-  LP    Construction
+ Pool   Construction
   |      funding
   |         |
   |         v
@@ -614,14 +654,14 @@ More DAO revenue
             </div>
 
             <div class="advantage-box">
-                <h4>SINAPI + Social Impact Grant Eligibility</h4>
-                <p>SINAPI is Brazil's government construction cost index - publicly auditable, updated monthly, used for official building projects. IMOBX uses it to prove real costs ($27,777 per unit in Jardim Guadalupe). Combined with rent-to-own for low-income families, this qualifies for development grants (IDB, BNDES, climate funds). Profit-only real estate platforms can't access these.</p>
+                <h4><span class="term" data-tip="SINAPI - Brazil's official government construction cost index, updated monthly">SINAPI</span> + Social Impact Grant Eligibility</h4>
+                <p>SINAPI is Brazil's government construction cost index - publicly auditable, updated monthly, used for official building projects. IMOBX uses it to prove real costs ($27,777 per unit in Jardim Guadalupe). Combined with rent-to-own for low-income families, this qualifies for development grants (<span class="term" data-tip="IDB - Inter-American Development Bank, multilateral development funder for Latin America">IDB</span>, <span class="term" data-tip="BNDES - Brazil's national development bank, the largest development bank in Latin America">BNDES</span>, climate funds). Profit-only real estate platforms can't access these.</p>
             </div>
 
             <a href="#infrastructure" class="btn-primary">
                 Deep Dive → IMOBX Research
                 <span style="font-size: 11px; opacity: 0.7; display: block; margin-top: 4px;">
-                    (Shared oracle infrastructure)
+                    (Shared <span class="term" data-tip="Oracle - a system that feeds real-world data into a blockchain">data feed</span> infrastructure)
                 </span>
             </a>
         </section>
@@ -690,11 +730,11 @@ More DAO revenue
         <div class="section" id="glossary-public" style="margin-top: 64px; border-top: 2px solid rgba(124, 58, 237, 0.2); padding-top: 40px;">
             <h2>Glossary</h2>
             <div style="font-size: 14px; line-height: 1.8; color: #3F3F46;">
-                <p><strong>Governance Score (ACF)</strong> - A 78-point score measuring whether a system is run fairly. Three categories: are rules enforced, are decisions auditable, are payouts traceable? Trust scores measure users - the governance score audits the system.</p>
-                <p><strong>Trust Score (CPI)</strong> - A single score (0-253 points) showing how cooperatively a wallet has behaved across 32 signals and 10 categories. Higher score = more consistent real contributions, not just trading.</p>
+                <p><strong>Governance Score (<span class="term" data-tip="ACF - Agentic Cooperation Framework, a 78-point institutional governance audit">ACF</span>)</strong> - A 78-point score measuring whether a system is run fairly. Three categories: are rules enforced, are decisions auditable, are payouts traceable? Trust scores measure users - the governance score audits the system.</p>
+                <p><strong>Trust Score (<span class="term" data-tip="CPI - Combined Progression Index, measures wallet-level cooperation across 32 signals">CPI</span>)</strong> - A single score (0-253 points) showing how cooperatively a wallet has behaved across 32 signals and 10 categories. Higher score = more consistent real contributions, not just trading.</p>
                 <p><strong>DAO</strong> - Decentralized Autonomous Organization. A community-governed entity where rules are enforced by code, not managers.</p>
                 <p><strong>DEX</strong> - Decentralized Exchange. A marketplace where people trade crypto directly with each other, no middleman.</p>
-                <p><strong>ERC-8004</strong> - An Ethereum standard for AI agent identity. Gives an agent a verifiable on-chain identity card.</p>
+                <p><strong><span class="term" data-tip="ERC-8004 - an Ethereum token standard that gives AI agents a verifiable on-chain identity">ERC-8004</span></strong> - An Ethereum standard for AI agent identity. Gives an agent a verifiable on-chain identity card.</p>
                 <p><strong>Exit liquidity</strong> - The pattern where early holders only profit when new buyers enter. Most memecoins depend on this.</p>
                 <p><strong>Flat fees</strong> - Bonzi and IMOBX charge a fixed amount per transaction ($10-15), not a percentage. Revenue grows with transaction count, not trade size.</p>
                 <p><strong>Hardstake</strong> - Locking tokens for 14+ days in exchange for a larger share of fee revenue. Rewards patience over speculation.</p>
@@ -715,13 +755,13 @@ More DAO revenue
             <div style="background: #F9FAFB; border-left: 4px solid #7C3AED; padding: 20px 24px; margin-bottom: 24px;">
                 <p style="font-size: 13px; font-weight: 700; color: #7C3AED; margin-bottom: 12px; letter-spacing: 1px;">WHAT THE DATA SUPPORTS</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>Bonzi</strong> proves that wallet behavior can be scored reliably across 32 signals, and that flat fees remove the incentive to inflate trade volume. If trust scoring works on memecoin traders - people who actively try to game every system - it works on anyone.</p>
-                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>IMOBX</strong> tests whether the same trust engine can back physical assets. If a wallet's trust score is high enough to unlock marketing rewards in Bonzi, the question becomes: is it high enough to unlock access to property investment? Same engine, higher stakes. The SINAPI integration adds government-auditable cost data that no other crypto tool provides.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>IMOBX</strong> tests whether the same trust engine can back physical assets. If a wallet's trust score is high enough to unlock marketing rewards in Bonzi, the question becomes: is it high enough to unlock access to property investment? Same engine, higher stakes. The <span class="term" data-tip="SINAPI - Brazil's official government construction cost index, updated monthly">SINAPI</span> integration adds government-auditable cost data that no other crypto tool provides.</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>Unidos</strong> tests the hardest case - people with no wallets, no credit history, and $2/day income. If 5 bot interactions can start a credit record that local banks accept, that proves behavioral data can replace traditional identity documents. The path from bot interactions to international loans is the bridge from zero infrastructure to formal finance.</p>
             </div>
 
             <div style="background: #F9FAFB; border-left: 4px solid #D4AF37; padding: 20px 24px; margin-bottom: 24px;">
                 <p style="font-size: 13px; font-weight: 700; color: #D4AF37; margin-bottom: 12px; letter-spacing: 1px;">HOW TO VET THESE CLAIMS</p>
-                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">1. <strong>Check the scoring</strong> - CPI uses 253 points across 10 dimensions. Ask: are these signals measurable? Can they be gamed? The answer is in the correlation requirement - gaming one signal while ignoring others gets flagged.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">1. <strong>Check the scoring</strong> - <span class="term" data-tip="CPI - Combined Progression Index, measures wallet-level cooperation across 32 signals">CPI</span> uses 253 points across 10 dimensions. Ask: are these signals measurable? Can they be gamed? The answer is in the correlation requirement - gaming one signal while ignoring others gets flagged.</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">2. <strong>Check the economics</strong> - Flat fees ($10-15 per trade) not percentages. Revenue scales with number of users, not size of trades. Ask: does this reward more participants or bigger whales?</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">3. <strong>Check the governance</strong> - The governance score (78 points) measures whether the system is run fairly. If trust scores measure users, the governance score audits the system itself. Ask: who watches the watchman?</p>
                 <p style="font-size: 14px; color: #3F3F46;">4. <strong>Check the stage</strong> - Bonzi is live. IMOBX is pre-revenue (pilot Q3 2026). Unidos has trained 501 farmers but the bot marketplace is not deployed. Honest staging means you know exactly what exists today versus what is planned.</p>
@@ -1125,7 +1165,7 @@ More DAO revenue
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px;">
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
                 <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">TRUST-AS-A-SERVICE</div>
-                <p style="font-size: 14px; color: #3F3F46; margin: 0;">Vet any wallet or agent against 70 behavioral signals. In agent-to-agent markets, counterparties are unknown and easy to spoof - CPI solves the pre-transaction trust check.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin: 0;">Vet any wallet or agent against 70 behavioral signals. In agent-to-agent markets, counterparties are unknown and easy to spoof - <span class="term" data-tip="CPI - Combined Progression Index, a 253-point trust score across 32 behavioral signals">CPI</span> solves the pre-transaction trust check.</p>
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
                 <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">WORK-TO-REPUTATION</div>
@@ -1133,7 +1173,7 @@ More DAO revenue
             </div>
             <div style="background: #F9FAFB; border: 1px solid #E4E4E7; padding: 16px;">
                 <div style="font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #7C3AED; margin-bottom: 8px;">PAYMENT RAILS</div>
-                <p style="font-size: 14px; color: #3F3F46; margin: 0;">x402 + ERC-8004. Agents pay per trust query ($0.001 flat), earn ETH for completed tasks. Revenue feeds the same tipping pool that rewards human contributors.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin: 0;"><span class="term" data-tip="x402 - a payment protocol that lets AI agents pay per API call using crypto">x402</span> + <span class="term" data-tip="ERC-8004 - an Ethereum standard that gives AI agents a verifiable on-chain identity">ERC-8004</span>. Agents pay per trust query ($0.001 flat), earn ETH for completed tasks. Revenue feeds the same tipping pool that rewards human contributors.</p>
             </div>
         </div>
     </div>

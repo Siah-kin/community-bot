@@ -1162,6 +1162,51 @@
         }
     </style>
     <style>
+        /* Tooltip spans for jargon terms */
+        .term {
+            border-bottom: 1px dotted #7C3AED;
+            cursor: help;
+            position: relative;
+        }
+        .term:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+            pointer-events: none;
+            max-width: 320px;
+            white-space: normal;
+            line-height: 1.4;
+        }
+        .term:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            border: 5px solid transparent;
+            border-top-color: #1a1a2e;
+            z-index: 100;
+        }
+        body.light-mode .term {
+            border-bottom-color: #7C3AED;
+        }
+        body.light-mode .term:hover::after {
+            background: #2d2d44;
+        }
+        body.light-mode .term:hover::before {
+            border-top-color: #2d2d44;
+        }
+    </style>
+    <style>
         #cockpit-gate-overlay {
             position: fixed;
             inset: 0;
@@ -1325,7 +1370,7 @@
     <!-- Page Introduction -->
     <section class="page-intro">
         <div class="intro-block highlight">
-            <p data-i18n="intro.main"><strong>VISTA</strong> and <strong>BONZI</strong> are yield-generating tokens on <a href="https://www.ethervista.app/how-it-works" target="_blank">Ethervista</a>. Every trade on the DEX generates fees that go directly to stakers and LPs - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.</p>
+            <p data-i18n="intro.main"><strong>VISTA</strong> and <strong>BONZI</strong> are yield-generating tokens on <a href="https://www.ethervista.app/how-it-works" target="_blank"><span class="term" data-tip="Ethervista - token trading platform with flat fees instead of percentages">Ethervista</span></a>. Every trade on the <span class="term" data-tip="Decentralized exchange - a trading platform with no middleman">exchange</span> generates fees that go directly to stakers and <span class="term" data-tip="Liquidity providers - people who deposit tokens into the trading pool to enable swaps">pool depositors</span> - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.</p>
         </div>
 
         <table class="comparison-mini">
@@ -1456,7 +1501,7 @@
             <div class="analysis-box">
                 <h4 data-i18n="analysis.title">Analysis</h4>
                 <p data-i18n="analysis.free.text">BONZI has a lower concentration index (374) than VISTA (690), meaning ownership is more spread out. Both are below 1500, the threshold for broad distribution. For context, highly concentrated tokens often have indices above 2500. The top 10 BONZI wallets hold 43.5% vs 65.8% for VISTA - both within acceptable ranges for established projects.</p>
-                <p class="analysis-source" data-i18n="analysis.free.source">Source: <a href="https://dune.com/queries/6591451" target="_blank">Dune Analytics - HHI Query</a> | Updated daily</p>
+                <p class="analysis-source" data-i18n="analysis.free.source">Source: <a href="https://dune.com/queries/6591451" target="_blank">Dune Analytics - <span class="term" data-tip="HHI (Herfindahl-Hirschman Index) - measures how concentrated token holdings are across wallets">Concentration Query</span></a> | Updated daily</p>
             </div>
         </div>
 
@@ -1473,7 +1518,7 @@
                 <button class="unlock-btn" onclick="connectWallet(1)" data-i18n="btn.connect">Connect Wallet</button>
             </div>
 
-            <p class="section-intro" data-i18n="tier.dao1.intro">Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.</p>
+            <p class="section-intro" data-i18n="tier.dao1.intro">Real ETH paid to holders from trading fees. Unlike most tokens, stakers and <span class="term" data-tip="Liquidity providers - people who deposit tokens into the trading pool">pool depositors</span> earn actual yield - not token emissions.</p>
 
             <!-- ETH Distributed -->
             <h3 class="section-title" data-i18n="section.eth">ETH Paid to Holders</h3>
@@ -1494,10 +1539,10 @@
                         <td class="benchmark-col"><span class="benchmark-val">&gt;0 = yield exists</span><br><span class="benchmark-ref">PEPE/SHIB/SPX: 0 ETH</span></td>
                     </tr>
                     <tr>
-                        <td data-i18n="td.lp.eth">ETH to LPs <span class="info-text" title="Liquidity providers earn the largest share of trading fees.">info</span></td>
+                        <td data-i18n="td.lp.eth">ETH to <span class="term" data-tip="Liquidity providers - people who deposit tokens into the trading pool">pool depositors</span> <span class="info-text" title="Liquidity providers earn the largest share of trading fees.">info</span></td>
                         <td id="vista-lp-eth" class="metric-win">- ETH</td>
                         <td id="bonzi-lp-eth" class="metric-win">- ETH</td>
-                        <td class="benchmark-col"><span class="benchmark-val">&gt;0 = LP incentive</span><br><span class="benchmark-ref">Most DEX LPs: IL only</span></td>
+                        <td class="benchmark-col"><span class="benchmark-val">&gt;0 = depositor incentive</span><br><span class="benchmark-ref">Most exchanges: <span class="term" data-tip="Impermanent loss - when deposited tokens lose value compared to just holding them">temporary loss</span> only</span></td>
                     </tr>
                     <tr>
                         <td data-i18n="td.unique.claimers">Unique recipients <span class="info-text" title="Number of wallets that have actually received ETH from the protocol.">info</span></td>
@@ -2025,23 +2070,23 @@
                 "nav.contact": "contact", "nav.connect": "connect",
                 "hero.title": "On-Chain Metrics",
                 "hero.subtitle": "Verifiable data for evaluating token health and holder outcomes.",
-                "intro.main": "VISTA and BONZI are yield-generating tokens on Ethervista. Every trade on the DEX generates fees that go directly to stakers and LPs - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.",
+                "intro.main": "VISTA and BONZI are yield-generating tokens on Ethervista. Every trade on the exchange generates fees that go directly to stakers and pool depositors - paid in ETH, not inflationary tokens. This page shows whether that's actually happening: how much has been paid, to whom, and how ownership is distributed. All data is on-chain and verifiable.",
                 "intro.note": "Metrics follow Murad's memecoin criteria (token age, distribution, holder conviction) and decentralization factors relevant to regulatory classification. Data from Dune Analytics.",
                 "tier.free.title": "Ownership Distribution", "tier.free.intro": "How token supply is spread across wallets. Concentrated ownership means a few wallets control price movement.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Value Distribution", "tier.dao1.req": "Hold $BONZI or $VISTA",
-                "tier.dao1.intro": "Real ETH paid to holders from trading fees. Unlike most tokens, stakers and LPs earn actual yield - not token emissions.",
+                "tier.dao1.intro": "Real ETH paid to holders from trading fees. Unlike most tokens, stakers and pool depositors earn actual yield - not token emissions.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analytics", "tier.dao2.req": "Stake $BONZI or $VISTA",
                 "unlock.title": "Value Distribution", "unlock.desc": "Connect wallet holding $BONZI or $VISTA",
                 "section.eth": "ETH Paid to Holders", "section.compare": "Comparison: ETH Paid to Holders",
                 "th.context": "Context", "th.eth.paid": "ETH Paid", "th.mechanism": "Mechanism",
                 "td.staker.eth": "ETH to stakers", "td.staker.eth.context": "From trading fees, claimable anytime",
-                "td.lp.eth": "ETH to LPs", "td.lp.eth.context": "Liquidity providers earn larger share",
+                "td.lp.eth": "ETH to pool depositors", "td.lp.eth.context": "Pool depositors earn larger share",
                 "td.unique.claimers": "Unique recipients", "td.unique.claimers.context": "Wallets that received ETH",
                 "td.tenure": "Avg hold time", "td.tenure.context": "How long positions are held",
-                "td.mechanism.vista": "Trading fees to stakers & LPs", "td.mechanism.none": "No yield mechanism",
+                "td.mechanism.vista": "Trading fees to stakers & pool depositors", "td.mechanism.none": "No yield mechanism",
                 "analysis.title": "Analysis",
                 "analysis.free.text": "BONZI has a lower concentration index (374) than VISTA (690), meaning ownership is more spread out. Both are below 1500, the threshold for broad distribution. For context, highly concentrated tokens often have indices above 2500. The top 10 BONZI wallets hold 43.5% vs 65.8% for VISTA - both within acceptable ranges for established projects.",
-                "analysis.free.source": "Source: Dune Analytics - HHI Query | Updated daily",
+                "analysis.free.source": "Source: Dune Analytics - Concentration Query | Updated daily",
                 "analysis.dao1.text": "VISTA and BONZI have distributed over 200 ETH to holders since launch. This is real yield from trading fees - not token emissions or inflationary rewards. By comparison, popular memecoins like PEPE, SHIB, and SPX6900 have no yield mechanism and pay holders nothing. The average position is held for 300+ days, indicating holders treat this as long-term participation rather than short-term speculation.",
                 "analysis.dao1.source": "Source: ETH Distribution Query | Tenure Query",
                 "unlock.title2": "Alpha Metrics", "unlock.desc2": "Connect wallet staking $BONZI or $VISTA",
@@ -2081,7 +2126,7 @@
                 "nav.contact": "contato", "nav.connect": "conectar",
                 "hero.title": "Metricas do Sistema",
                 "hero.subtitle": "Parametros ao vivo e configuracao. Tres niveis de acesso baseados em tokens.",
-                "intro.main": "<strong>VISTA</strong> e <strong>BONZI</strong> sao tokens geradores de rendimento na <a href='https://ethervista.app' target='_blank'>Ethervista</a>. Cada trade na DEX gera taxas que vao diretamente para stakers e LPs - pagas em ETH, nao tokens inflacionarios. Esta pagina mostra se isso esta realmente acontecendo: quanto foi pago, para quem, e como a propriedade esta distribuida. Todos os dados sao on-chain e verificaveis.",
+                "intro.main": "<strong>VISTA</strong> e <strong>BONZI</strong> sao tokens geradores de rendimento na <a href='https://ethervista.app' target='_blank'>Ethervista</a>. Cada trade na exchange gera taxas que vao diretamente para stakers e depositantes - pagas em ETH, nao tokens inflacionarios. Esta pagina mostra se isso esta realmente acontecendo: quanto foi pago, para quem, e como a propriedade esta distribuida. Todos os dados sao on-chain e verificaveis.",
                 "intro.note": "As metricas seguem os <a href='https://x.com/MustStopMurad' target='_blank'>criterios de memecoin do Murad</a> (idade do token, distribuicao, conviccao dos holders) e fatores de descentralizacao relevantes para classificacao regulatoria. Dados do <a href='https://dune.com' target='_blank'>Dune Analytics</a>.",
                 "compare.meme": "Maioria das memecoins", "compare.meme.desc": "Sem rendimento. Apenas valorizacao de preco.",
                 "compare.inflate": "Staking inflacionario", "compare.inflate.desc": "Recompensas em novos tokens. Dilui o fornecimento.",
@@ -2089,17 +2134,17 @@
                 "section.eth": "ETH Pago aos Holders", "section.compare": "Comparacao: ETH Pago aos Holders",
                 "th.context": "Contexto", "th.eth.paid": "ETH Pago", "th.mechanism": "Mecanismo",
                 "td.staker.eth": "ETH para stakers", "td.staker.eth.context": "Das taxas de trading, resgatavel a qualquer momento",
-                "td.lp.eth": "ETH para LPs", "td.lp.eth.context": "Provedores de liquidez ganham maior parte",
+                "td.lp.eth": "ETH para depositantes", "td.lp.eth.context": "Depositantes da pool ganham maior parte",
                 "td.unique.claimers": "Destinatarios unicos", "td.unique.claimers.context": "Carteiras que receberam ETH",
-                "td.mechanism.vista": "Taxas de trading para stakers e LPs", "td.mechanism.none": "Sem mecanismo de rendimento",
+                "td.mechanism.vista": "Taxas de trading para stakers e depositantes", "td.mechanism.none": "Sem mecanismo de rendimento",
                 "analysis.title": "Analise",
                 "analysis.free.text": "BONZI tem um indice de concentracao menor (374) que VISTA (690), significando que a propriedade e mais distribuida. Ambos estao abaixo de 1500, o limite para distribuicao ampla. Para contexto, tokens altamente concentrados geralmente tem indices acima de 2500. As 10 maiores carteiras BONZI detem 43.5% vs 65.8% para VISTA - ambos dentro de faixas aceitaveis para projetos estabelecidos.",
-                "analysis.free.source": "Fonte: Dune Analytics - Consulta HHI | Atualizado diariamente",
+                "analysis.free.source": "Fonte: Dune Analytics - Consulta de Concentracao | Atualizado diariamente",
                 "analysis.dao1.text": "VISTA e BONZI distribuiram mais de 200 ETH para holders desde o lancamento. Este e rendimento real de taxas de trading - nao emissoes de tokens ou recompensas inflacionarias. Em comparacao, memecoins populares como PEPE, SHIB e SPX6900 nao tem mecanismo de rendimento e nao pagam nada aos holders. A posicao media e mantida por mais de 300 dias, indicando que holders tratam isso como participacao de longo prazo em vez de especulacao de curto prazo.",
                 "analysis.dao1.source": "Fonte: Consulta de Distribuicao ETH | Consulta de Tempo de Posicao",
                 "tier.free.title": "Distribuicao de Propriedade", "tier.free.intro": "Como o fornecimento de tokens e distribuido entre carteiras. Propriedade concentrada significa que poucas carteiras controlam o movimento de precos.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Distribuicao de Valor", "tier.dao1.req": "Tenha $BONZI ou $VISTA",
-                "tier.dao1.intro": "ETH real pago aos holders de taxas de negociacao. Ao contrario da maioria dos tokens, stakers e LPs ganham rendimento real - nao emissoes de tokens.",
+                "tier.dao1.intro": "ETH real pago aos holders de taxas de negociacao. Ao contrario da maioria dos tokens, stakers e depositantes ganham rendimento real - nao emissoes de tokens.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Analises Alpha", "tier.dao2.req": "Stake $BONZI ou $VISTA",
                 "unlock.title": "Atividade de Staking", "unlock.desc": "Conecte carteira com $BONZI ou $VISTA",
                 "unlock.title2": "Metricas Alpha", "unlock.desc2": "Conecte carteira com stake",
@@ -2183,7 +2228,7 @@
                 "hero.subtitle": "Canli parametreler ve yapilandirma. Token varliklariniza gore uc katmanli erisim.",
                 "tier.free.title": "Sahiplik Dagilimi", "tier.free.intro": "Token arzinin cuzdanlar arasinda nasil dagildigini gosterir. Yogunlasmis sahiplik, az sayida cuzdanin fiyat hareketini kontrol ettigi anlamina gelir.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Deger Dagitimi", "tier.dao1.req": "$BONZI veya $VISTA tutun",
-                "tier.dao1.intro": "Islem ucretlerinden sahiplere odenen gercek ETH. Cogu tokenin aksine, stakerlar ve LP'ler gercek getiri kazanir - token emisyonlari degil.",
+                "tier.dao1.intro": "Islem ucretlerinden sahiplere odenen gercek ETH. Cogu tokenin aksine, stakerlar ve havuz katilimcilari gercek getiri kazanir - token emisyonlari degil.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha Analizleri", "tier.dao2.req": "$BONZI veya $VISTA stake edin",
                 "unlock.title": "Stake Aktivitesi", "unlock.desc": "Token tutan cuzdani baglayin",
                 "unlock.title2": "Alpha Metrikleri", "unlock.desc2": "Stake yapan cuzdani baglayin",
@@ -2225,7 +2270,7 @@
                 "hero.subtitle": "Параметры в реальном времени. Три уровня доступа на основе токенов.",
                 "tier.free.title": "Распределение владения", "tier.free.intro": "Как распределено предложение токенов между кошельками. Концентрированное владение означает, что несколько кошельков контролируют движение цены.",
                 "tier.dao1": "DAO-1", "tier.dao1.title": "Распределение ценности", "tier.dao1.req": "Держите $BONZI или $VISTA",
-                "tier.dao1.intro": "Реальный ETH, выплаченный холдерам из торговых комиссий. В отличие от большинства токенов, стейкеры и LP получают реальный доход - не эмиссию токенов.",
+                "tier.dao1.intro": "Реальный ETH, выплаченный холдерам из торговых комиссий. В отличие от большинства токенов, стейкеры и вкладчики пула получают реальный доход - не эмиссию токенов.",
                 "tier.dao2": "DAO-2", "tier.dao2.title": "Alpha аналитика", "tier.dao2.req": "Стейкинг $BONZI или $VISTA",
                 "unlock.title": "Активность стейкинга", "unlock.desc": "Подключите кошелек с токенами",
                 "unlock.title2": "Alpha метрики", "unlock.desc2": "Подключите кошелек со стейкингом",

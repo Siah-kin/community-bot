@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Economics - How Bonzi Works</title>
-    <meta name="description" content="Bonzi tokenomics explained - flat ETH fees, auto-burn, Euler distribution. No inflation tokens.">
+    <meta name="description" content="Bonzi token economy explained - flat ETH fees, auto-burn, Euler distribution. No inflation tokens.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/economics/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bonzi-design.css">
@@ -239,11 +239,11 @@
     <div class="content">
         <div class="section" id="ethervista">
             <h2>What is Ethervista?</h2>
-            <p>Ethervista is a DEX on Ethereum - similar to Uniswap, but with a different fee model. Instead of taking a percentage of each swap in tokens, Ethervista charges a <strong>flat fee in ETH</strong> (typically $5-$15 per transaction).</p>
+            <p>Ethervista is a <span class="term" data-tip="DEX (Decentralized Exchange) - trade tokens directly, no middleman">trading platform on Ethereum</span> - similar to Uniswap, but with a different fee model. Instead of taking a percentage of each <span class="term" data-tip="Swap - trading one token for another">trade</span> in tokens, Ethervista charges a <strong>flat fee in ETH</strong> (typically $5-$15 per transaction).</p>
             <p>This matters because:</p>
             <ul>
                 <li>Rewards are paid in ETH, not inflationary tokens</li>
-                <li>Liquidity providers benefit from transaction <em>count</em>, not token price speculation</li>
+                <li><span class="term" data-tip="Liquidity Provider - someone who deposits tokens into a trading pool">Liquidity providers</span> benefit from transaction <em>count</em>, not token price speculation</li>
                 <li>No sell pressure from people dumping reward tokens</li>
             </ul>
             <a href="https://www.blocmates.com/articles/what-is-ethervista-" target="_blank" class="source-link">→ Detailed Ethervista explainer (blocmates)</a>
@@ -254,7 +254,7 @@
             <p>Bonzi ($BONZI) was the first memecoin launched on Ethervista - the platform's mascot token. Same fee mechanics as other Ethervista pools, plus an additional burn mechanism.</p>
 
             <div class="flow-diagram">
-Someone swaps BONZI
+Someone trades BONZI
         |
         v
   Flat ETH fee taken
@@ -263,8 +263,8 @@ Someone swaps BONZI
    +----+----+
    |         |
    v         v
-  LPs     Protocol
-   |         |
+ Pool      Protocol
+ depositors   |
    |         v
    |    Auto-buy BONZI
    |    from market
@@ -275,7 +275,7 @@ Someone swaps BONZI
    |
    v
 Paid out in ETH
-to liquidity providers
+to trading pool depositors
             </div>
 
             <p>The burn is automatic and on-chain. Each transaction reduces circulating supply slightly. This has burned ~2.17% of total supply since launch.</p>
@@ -286,21 +286,21 @@ to liquidity providers
             <p>How does the contract track who gets what share of fees? It uses something called the "Euler model" - a mathematical trick to avoid recalculating every user's balance on every transaction.</p>
 
             <div class="callout">
-                <p><strong>Simplified:</strong> When you stake LP tokens, the contract records the current "Euler value" (say, 1.2). Later, fees raise it to 1.5. Your reward = your LP tokens × (1.5 - 1.2). This avoids expensive loops through all stakers, cutting gas costs ~99%.</p>
+                <p><strong>Simplified:</strong> When you stake <span class="term" data-tip="LP (Liquidity Provider) - someone who deposits tokens into a trading pool">liquidity provider</span> tokens, the contract records the current "Euler value" (say, 1.2). Later, fees raise it to 1.5. Your reward = your tokens × (1.5 - 1.2). This avoids expensive loops through all stakers, cutting gas costs ~99%.</p>
             </div>
 
-            <p>Not unique to Ethervista. Similar math exists in other DeFi protocols. The point: efficient fee distribution without running out of gas.</p>
+            <p>Not unique to Ethervista. Similar math exists in other <span class="term" data-tip="DeFi (Decentralized Finance) - financial services on blockchain">blockchain finance systems</span>. The point: efficient fee distribution without running out of gas.</p>
         </div>
 
         <div class="section" id="hardstake">
-            <h2>Hardstake / Hardlock</h2>
-            <p>Optional feature: lock your tokens or LP position for ≥14 days to earn a larger share of the fee pool. The tradeoff is obvious - you can't withdraw during the lock period.</p>
-            <p>This exists to reward committed capital over mercenary liquidity that farms and dumps.</p>
+            <h2><span class="term" data-tip="Hardstake - locking tokens for 14+ days in exchange for higher fee share">Hardstake</span> / Hardlock</h2>
+            <p>Optional feature: lock your tokens or <span class="term" data-tip="LP (Liquidity Provider) - someone who deposits tokens into a trading pool">liquidity provider</span> position for 14+ days to earn a larger share of the fee pool. The tradeoff is obvious - you can't withdraw during the lock period.</p>
+            <p>This exists to reward committed capital over mercenary <span class="term" data-tip="Liquidity - tokens deposited so others can trade">trading pool funds</span> that farm and dump.</p>
         </div>
 
         <div class="section" id="anti-rug">
             <h2>Anti-Rug Measures</h2>
-            <p>Ethervista enforces a <strong>5-day liquidity lock</strong> on new token launches. Creators cannot pull liquidity for 5 days after launch.</p>
+            <p>Ethervista enforces a <strong>5-day <span class="term" data-tip="Liquidity - tokens deposited so others can trade">trading pool</span> lock</strong> on new token launches. Creators cannot withdraw <span class="term" data-tip="Liquidity - tokens deposited so others can trade">pool funds</span> for 5 days after launch.</p>
             <p>Why 5 days? According to the team, most rug pulls happen within 2-4 days of launch. This doesn't prevent all scams, but raises the bar.</p>
             <a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank" class="source-link">→ More on Ethervista security features (Gate.io)</a>
         </div>
@@ -318,15 +318,16 @@ Users trade BONZI
    +----+----+
    |         |
    v         v
-  LPs    Treasury
-         (protocol fee)
+ Pool     Treasury
+ depositors (protocol fee)
              |
              v
     Marketing Staking Pool
              |
              v
-    AI Oracle vets quality
-    (prevents gaming/spam)
+    AI verification system
+    vets quality (prevents
+    gaming/spam)
              |
              v
     Pro-rata rewards to
@@ -341,7 +342,7 @@ Users trade BONZI
 More users trade... (loop)
             </div>
 
-            <p>The key innovation: an <strong>AI oracle</strong> evaluates contribution quality before rewards are distributed. This prevents the classic problem where marketing rewards get gamed by bots and spam.</p>
+            <p>The key innovation: an <strong><span class="term" data-tip="Oracle - feeds real-world data to the blockchain">AI verification system</span></strong> evaluates contribution quality before rewards are distributed. This prevents the classic problem where marketing rewards get gamed by bots and spam.</p>
 
             <div class="mechanism-grid">
                 <div class="mechanism">
@@ -350,7 +351,7 @@ More users trade... (loop)
                 </div>
                 <div class="mechanism">
                     <h3>Anti-Gaming</h3>
-                    <p>The oracle detects coordinated behavior, bot patterns, and artificial inflation. Rewards flow to humans doing real work, not scripts farming points.</p>
+                    <p>The AI system detects coordinated behavior, bot patterns, and artificial inflation. Rewards flow to humans doing real work, not scripts farming points.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Self-Sustaining</h3>
@@ -358,7 +359,7 @@ More users trade... (loop)
                 </div>
                 <div class="mechanism">
                     <h3>Aligned Incentives</h3>
-                    <p>Everyone benefits from ecosystem growth. LPs earn more fees. Contributors earn rewards. Users get better content. No zero-sum competition.</p>
+                    <p>Everyone benefits from ecosystem growth. <span class="term" data-tip="LP (Liquidity Provider) - someone who deposits tokens into a trading pool">Pool depositors</span> earn more fees. Contributors earn rewards. Users get better content. No zero-sum competition.</p>
                 </div>
             </div>
 
@@ -369,7 +370,7 @@ More users trade... (loop)
 
         <div class="section" id="trust-infrastructure">
             <h2>Trust Infrastructure</h2>
-            <p>The AI oracle does more than rate post-contribution quality. It provides <strong>pre-transaction trust verification</strong> - checking wallets before you interact with them.</p>
+            <p>The <span class="term" data-tip="Oracle - feeds real-world data to the blockchain">AI verification system</span> does more than rate post-contribution quality. It provides <strong><span class="term" data-tip="Checks trust scores before any tokens change hands">trust checks before trading</span></strong> - checking wallets before you interact with them.</p>
 
             <div class="flow-diagram">
 Before You Trade/Tip/Collaborate
@@ -380,10 +381,10 @@ Before You Trade/Tip/Collaborate
               |
               v
      8 signals aggregated:
-     - Sybil detection
+     - Fake-account detection
      - Cooperation history
      - On-chain behavior
-     - EigenTrust score
+     - EigenTrust score (academic trust algorithm)
      - DAO participation
      - Question quality
      - Tip patterns
@@ -402,19 +403,19 @@ Before You Trade/Tip/Collaborate
             <div class="mechanism-grid">
                 <div class="mechanism">
                     <h3>Pre-Transaction Protection</h3>
-                    <p>Check any wallet before sending funds, tipping, or collaborating. One lookup prevents losses to known bad actors, fresh wallets, or coordinated sybil networks.</p>
+                    <p>Check any wallet before sending funds, tipping, or collaborating. One lookup prevents losses to known scammers, new accounts, or <span class="term" data-tip="Sybil network - one person controlling many fake accounts to manipulate systems">networks of fake accounts</span>.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Post-Action Scoring</h3>
-                    <p>After contributions, the oracle updates reputation. Quality promotions, helpful answers, and genuine engagement build your score over time.</p>
+                    <p>After contributions, the AI system updates reputation. Quality promotions, helpful answers, and genuine engagement build your score over time.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Revenue Loop</h3>
-                    <p>Vetting queries ($0.01 via API, free tier for humans) generate revenue that funds the reward pool. The oracle pays for itself through usage.</p>
+                    <p>Vetting queries ($0.01 via API, free tier for humans) generate revenue that funds the reward pool. The system pays for itself through usage.</p>
                 </div>
                 <div class="mechanism">
                     <h3>Economic Value</h3>
-                    <p>Less money lost to scams = healthier economy. Higher trust = more collaboration. Better scoring = quality rises. The oracle makes the whole system work better.</p>
+                    <p>Less money lost to scams = healthier economy. Higher trust = more collaboration. Better scoring = quality rises. The AI verification makes the whole system work better.</p>
                 </div>
             </div>
 
@@ -428,7 +429,7 @@ Before You Trade/Tip/Collaborate
 
             <div class="question">
                 <strong>If fees are flat (not percentage), doesn't that hurt small traders?</strong>
-                <p>Yes. A $10 flat fee on a $50 swap is 20%. On a $5000 swap, it's 0.2%. This model favors larger transactions. Whether that's good or bad depends on your perspective - it discourages wash trading and bot spam, but makes the DEX less accessible for small amounts.</p>
+                <p>Yes. A $10 flat fee on a $50 <span class="term" data-tip="Swap - trading one token for another">trade</span> is 20%. On a $5000 trade, it's 0.2%. This model favors larger transactions. Whether that's good or bad depends on your perspective - it discourages <span class="term" data-tip="Wash trading - buying and selling to yourself to fake volume">fake trading</span> and automated spam, but makes the platform less accessible for small amounts.</p>
             </div>
 
             <div class="question">
@@ -438,17 +439,17 @@ Before You Trade/Tip/Collaborate
 
             <div class="question">
                 <strong>What are the risks?</strong>
-                <p>Smart contract risk (all DeFi). Impermanent loss (temporary value drop from price changes) for LPs. Volume dependency for yield. Token price can still go to zero for market reasons. The 5-day lock helps but doesn't eliminate scam risk for new tokens. DYOR (do your own research).</p>
+                <p><span class="term" data-tip="Smart contract - self-executing code on the blockchain">Smart contract</span> risk (all <span class="term" data-tip="DeFi (Decentralized Finance) - financial services on blockchain">blockchain finance</span>). <span class="term" data-tip="Impermanent loss - price divergence between paired tokens in a liquidity pool">Temporary value loss</span> from price changes for <span class="term" data-tip="LP (Liquidity Provider) - someone who deposits tokens into a trading pool">pool depositors</span>. Volume dependency for yield. Token price can still go to zero for market reasons. The 5-day lock helps but doesn't eliminate scam risk for new tokens. Do your own research.</p>
             </div>
 
             <div class="question">
-                <strong>How does the AI oracle prevent gaming of marketing rewards?</strong>
-                <p>The oracle uses 8 different signals to build a reputation score: on-chain behavior, cooperation patterns, question quality, sybil detection, and more. Gaming one signal doesn't help - you need consistent genuine participation across multiple dimensions. The system is designed to reward humans doing real work, not bots optimizing metrics.</p>
+                <strong>How does the AI verification system prevent gaming of marketing rewards?</strong>
+                <p>The system uses 8 different signals to build a reputation score: on-chain behavior, cooperation patterns, question quality, <span class="term" data-tip="Sybil detection - identifying one person running many fake accounts">fake-account detection</span>, and more. Gaming one signal doesn't help - you need consistent genuine participation across multiple dimensions. The system is designed to reward humans doing real work, not bots optimizing metrics.</p>
             </div>
 
             <div class="question">
                 <strong>Is this live yet?</strong>
-                <p>The scoring oracle is live. The treasury-to-marketing-pool flow is in governance discussion. Community will vote on activation parameters (fee percentage, minimum scores, etc.).</p>
+                <p>The scoring system is live. The treasury-to-marketing-pool flow is in governance discussion. Community will vote on activation parameters (fee percentage, minimum scores, etc.).</p>
             </div>
         </div>
 

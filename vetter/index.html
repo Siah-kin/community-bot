@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet Vetter - Trust Score Checker | Bonzi</title>
-    <meta name="description" content="Check any wallet's trust score. 5 queries/day. Powered by Bonzi multi-oracle.">
+    <meta name="description" content="Check any wallet's trust score. 5 queries/day. Powered by Bonzi multi-source verification.">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/vetter/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bonzi-design.css">
@@ -33,7 +33,11 @@
             line-height: 1.6;
             cursor: none;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+        main { flex: 1; }
 
         /* Custom cursor - matches homepage */
         .cursor {
@@ -598,8 +602,8 @@
     <main>
         <section class="hero">
             <h1>Wallet Vetter</h1>
-            <p>Check any wallet's trust score using Bonzi's multi-oracle system. 8 independent signals, one anti-gameable score.</p>
-            <p class="tagline">Free: tier + top signals &nbsp;|&nbsp; Passport: full 10-dimension CPI breakdown</p>
+            <p>Check any wallet's trust score using Bonzi's <span class="term" data-tip="Multi-oracle - verified by multiple independent data sources">multi-source verification</span> system. 8 independent signals, one anti-gameable score.</p>
+            <p class="tagline">Free: tier + top signals &nbsp;|&nbsp; Passport: full <span class="term" data-tip="CPI (Combined Progression Index) - 253-point wallet behavior score">detailed 10-category trust report</span></p>
         </section>
 
         <section class="input-section">
@@ -614,7 +618,7 @@
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>Querying 8 oracle sources...</p>
+            <p>Querying 8 verification sources...</p>
         </div>
 
         <section class="results" id="results">
@@ -642,11 +646,11 @@
                     <a id="link-arkham" href="#" target="_blank">Arkham &#8599;</a>
                 </div>
 
-                <!-- 100% VIP: full CPI breakdown - inline gate -->
+                <!-- 100% VIP: full trust score breakdown - inline gate -->
                 <div id="full-report-gate" class="vip-inline-gate">
                     <div class="vip-inline-eyebrow">Passport Access</div>
-                    <div class="vip-inline-title">Full CPI-253 Report</div>
-                    <div class="vip-inline-subtitle">10 dimensions, signal weights, EMA multiplier, improvement path.<br>Hold BONZI or VISTA - enter your passport key.</div>
+                    <div class="vip-inline-title">Full <span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span> Report</div>
+                    <div class="vip-inline-subtitle">10 categories, signal weights, trend multiplier, improvement path.<br>Hold BONZI or VISTA - enter your passport key.</div>
                     <div class="vip-inline-row">
                         <input
                             id="vip-gate-input"
@@ -663,7 +667,7 @@
                 <!-- Full report content (hidden until VIP unlocked) -->
                 <div class="full-report" id="full-report">
                     <div class="full-report-header">
-                        <span class="full-report-label">CPI-253 Full Breakdown</span>
+                        <span class="full-report-label">Full Trust Score Breakdown</span>
                         <span class="full-report-badge">PASSPORT</span>
                     </div>
                     <div class="dimension-grid" id="dimension-grid">
@@ -678,12 +682,12 @@
 
         <section class="cta-section">
             <h3>Get Your Passport</h3>
-            <p>Hold BONZI or VISTA to unlock the full 10-dimension CPI report for any wallet - plus unlimited queries via /vetx.</p>
+            <p>Hold BONZI or VISTA to unlock the full <span class="term" data-tip="CPI (Combined Progression Index) - 253-point wallet behavior score">10-category trust report</span> for any wallet - plus unlimited queries via /vetx.</p>
             <div class="cta-buttons">
                 <a href="https://t.me/Bonzivista_bot" class="cta-btn primary">Get Passport Access</a>
                 <a href="../stake.html" class="cta-btn secondary">Stake to Qualify</a>
             </div>
-            <p style="margin-top: 12px; font-size: 13px; color: #888;">B2B API access available - <a href="https://t.me/Bonzivista_bot" style="color: var(--purple-light);">contact us</a></p>
+            <p style="margin-top: 12px; font-size: 13px; color: #888;">Business API access available - <a href="https://t.me/Bonzivista_bot" style="color: var(--purple-light);">contact us</a></p>
         </section>
 
         <section class="how-it-works">
@@ -691,7 +695,7 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-icon">1</div>
-                    <h4>Multi-Oracle</h4>
+                    <h4><span class="term" data-tip="Multi-oracle - verified by multiple independent data sources">Multi-Source</span></h4>
                     <p>8 independent signals aggregated. Gaming one doesn't help.</p>
                 </div>
                 <div class="step">
@@ -701,13 +705,13 @@
                 </div>
                 <div class="step">
                     <div class="step-icon">3</div>
-                    <h4>CPI-253</h4>
-                    <p>10 dimensions scored. Industry-standard framework.</p>
+                    <h4><span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span></h4>
+                    <p>10 categories scored. Industry-standard framework.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">4</div>
-                    <h4>A2A Ready</h4>
-                    <p>ERC-8004 identity. Agents can query agents.</p>
+                    <h4><span class="term" data-tip="A2A (Agent-to-Agent) - AI systems communicating directly">AI-to-AI Ready</span></h4>
+                    <p><span class="term" data-tip="ERC-8004 - Ethereum standard for AI agent identity">Agent identity</span> built in. AI systems can query each other.</p>
                 </div>
             </div>
         </section>
@@ -947,7 +951,7 @@
                 ['Thanks received', signals.gratitude_received ?? '-', signals.gratitude_received > 10 ? 'green' : ''],
                 ['EMA multiplier', result.ema_multiplier ? result.ema_multiplier.toFixed(2) + 'x' : '-', 'gold'],
                 ['Confidence', result.confidence ?? '-', result.confidence === 'high' ? 'green' : ''],
-                ['Oracle sources', result.oracle_count ?? '8', ''],
+                ['Verification sources', result.oracle_count ?? '8', ''],
             ];
             document.getElementById('signal-detail').innerHTML = rows.map(([k, v, cls]) =>
                 `<div class="signal-row"><span class="signal-key">${k}</span><span class="signal-val ${cls}">${v}</span></div>`

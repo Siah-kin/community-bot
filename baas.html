@@ -601,7 +601,7 @@
 <div class="hero">
     <div class="hero-label">Bonzi-as-a-Service</div>
     <h1>Deploy Bonzi for your community</h1>
-    <p>The same AI that runs our community -trust scoring, sybil (fake account) detection, cooperation tracking -running yours.</p>
+    <p>The same AI that runs our community - trust scoring, <span class="term" data-tip="Sybil detection - identifying fake or duplicate accounts trying to game the system">fake-account detection</span>, cooperation tracking - running yours.</p>
     <div class="hero-ctas">
         <a href="/?slot=open" class="hero-cta primary">Try the Demo</a>
     </div>
@@ -621,7 +621,7 @@
             </div>
             <div class="feature-card">
                 <h3>Knows who's real</h3>
-                <p>Wallet clustering, activity pattern analysis, wash trading detection. Sybils get flagged before they drain your rewards pool.</p>
+                <p><span class="term" data-tip="Wallet clustering - detecting groups of crypto wallets controlled by the same person">Wallet clustering</span>, activity pattern analysis, <span class="term" data-tip="Wash trading - buying and selling to yourself to fake activity volume">wash trading</span> detection. Fake accounts get flagged before they drain your rewards pool.</p>
             </div>
             <div class="feature-card">
                 <h3>Trust through contribution</h3>
@@ -659,26 +659,26 @@
                 <details class="math-details">
                     <summary>Mods don't scale. Trust systems do.</summary>
                     <div class="math-content">
-                        <p>A human mod handles 50 messages/hour. They miss sybils. They play favorites. They go offline.</p>
+                        <p>A human mod handles 50 messages/hour. They miss fake accounts. They play favorites. They go offline.</p>
                         <p>Bonzi tracks every interaction, scores contribution quality across 68 sub-metrics, and never takes a day off.</p>
                         <div class="math-example">
                             <span class="math-label">What changes</span>
                             <p>Community of 500 members.<br>
                             3 mods at $500/mo each = $1,500/mo.<br>
-                            Bonzi hosted = €25/mo. Same coverage. Better sybil detection.</p>
+                            Bonzi hosted = €25/mo. Same coverage. Better fake-account detection.</p>
                         </div>
                     </div>
                 </details>
                 <details class="math-details">
-                    <summary>How cross-community sybil detection works</summary>
+                    <summary>How cross-community <span class="term" data-tip="Sybil detection - identifying fake or duplicate accounts trying to game the system">fake-account detection</span> works</summary>
                     <div class="math-content">
-                        <p>A wallet flagged for wash trading in one Bonzi community gets flagged in yours. Shared defense, private data.</p>
+                        <p>A wallet flagged for <span class="term" data-tip="Wash trading - buying and selling to yourself to fake activity volume">wash trading</span> in one Bonzi community gets flagged in yours. Shared defense, private data.</p>
                         <ul class="math-list">
                             <li><strong>Wallet clustering</strong> -detects coordinated accounts</li>
                             <li><strong>Activity patterns</strong> -flags copy-paste farming</li>
                             <li><strong>Cross-tenant intel</strong> -shared across all Bonzi communities</li>
                         </ul>
-                        <p>Your members' data stays private. Only sybil flags propagate.</p>
+                        <p>Your members' data stays private. Only fake-account flags propagate.</p>
                     </div>
                 </details>
             </div>
@@ -745,13 +745,13 @@
                     <tr>
                         <td>3</td>
                         <td class="tier-name-cell">Helper</td>
-                        <td>Tips, claims, staking</td>
+                        <td>Tips, claims, <span class="term" data-tip="Staking - locking tokens to earn rewards from trading fees">token locking</span></td>
                         <td>10 RPM</td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td class="tier-name-cell">Trusted Helper</td>
-                        <td>DAO, social features</td>
+                        <td><span class="term" data-tip="DAO (Decentralized Autonomous Organization) - community-owned, code-enforced governance">Governance</span>, social features</td>
                         <td>15 RPM</td>
                     </tr>
                     <tr>
@@ -771,9 +771,9 @@
         </div>
 
         <div class="tech-box">
-            <div class="tech-box-label">Graduated slashing (progressive penalties)</div>
-            <p>First offense: 10% slash. Second: 25%. Third and beyond: 50%.</p>
-            <p style="margin-top: 8px;">Correlation penalty: +15% if multiple actors slashed in the same 24h window. Slashed funds flow to the community pool.</p>
+            <div class="tech-box-label">Progressive penalties (<span class="term" data-tip="Slashing - automatically reducing a bad actor's stake or score as punishment">graduated slashing</span>)</div>
+            <p>First offense: 10% penalty. Second: 25%. Third and beyond: 50%.</p>
+            <p style="margin-top: 8px;">Correlation penalty: +15% if multiple bad actors penalized in the same 24h window. Penalized funds flow to the community pool.</p>
         </div>
     </div>
 </section>
@@ -787,15 +787,15 @@
 
         <div class="status-grid">
             <div class="status-row">
-                <div class="status-label">Trust tiers (7 levels, CPI-253 cooperation score)</div>
+                <div class="status-label">Trust tiers (7 levels, <span class="term" data-tip="CPI (Cooperation Performance Index) - a composite score measuring contribution quality across 253 signals">CPI-253 cooperation score</span>)</div>
                 <div class="status-value"><span class="status-badge live">Live</span></div>
             </div>
             <div class="status-row">
-                <div class="status-label">Sybil detection (wallet clustering + wash trading)</div>
+                <div class="status-label"><span class="term" data-tip="Sybil detection - identifying fake or duplicate accounts trying to game the system">Fake-account detection</span> (<span class="term" data-tip="Wallet clustering - detecting groups of crypto wallets controlled by the same person">wallet clustering</span> + <span class="term" data-tip="Wash trading - buying and selling to yourself to fake activity volume">wash trading</span>)</div>
                 <div class="status-value"><span class="status-badge live">Live</span></div>
             </div>
             <div class="status-row">
-                <div class="status-label">Graduated slashing (progressive penalties for bad actors)</div>
+                <div class="status-label">Progressive penalties (<span class="term" data-tip="Slashing - automatically reducing a bad actor's stake or score as punishment">graduated slashing</span>) for bad actors</div>
                 <div class="status-value"><span class="status-badge live">Live</span></div>
             </div>
             <div class="status-row">
@@ -815,11 +815,11 @@
                 <div class="status-value"><span class="status-badge beta">In Testing</span></div>
             </div>
             <div class="status-row">
-                <div class="status-label">ZK vault (privacy proofs) + Merkle proofs (tamper-proof records)</div>
+                <div class="status-label"><span class="term" data-tip="ZK (Zero Knowledge) vault - proves something is true without revealing underlying data">Privacy vault</span> + <span class="term" data-tip="Merkle proofs - cryptographic method to verify data hasn't been tampered with">tamper-proof records</span></div>
                 <div class="status-value"><span class="status-badge beta">In Testing</span></div>
             </div>
             <div class="status-row">
-                <div class="status-label">ERC-8004 agent bridge (AI identity standard)</div>
+                <div class="status-label"><span class="term" data-tip="ERC-8004 - an Ethereum standard for AI agent identity, co-authored by MetaMask, Google, and Coinbase">AI identity bridge</span> (ERC-8004 standard)</div>
                 <div class="status-value"><span class="status-badge beta">In Testing</span></div>
             </div>
         </div>

@@ -607,8 +607,8 @@
     <main>
         <section class="hero">
             <h1>Wallet Vetter</h1>
-            <p>Check any wallet's trust score using Bonzi's <span class="term" data-tip="Multi-oracle - verified by multiple independent data sources">multi-source verification</span> system. 8 independent signals, one anti-gameable score.</p>
-            <p class="tagline">Free: tier + top signals &nbsp;|&nbsp; Passport: full <span class="term" data-tip="CPI (Combined Progression Index) - 253-point wallet behavior score">detailed 10-category trust report</span></p>
+            <p>Paste a wallet address. Get a trust rating based on real activity: how long it's been active, who it's helped, what it's traded, and whether it looks like a bot.</p>
+            <p class="tagline">Free: letter grade + flags &nbsp;|&nbsp; Passport holders: full 10-category breakdown</p>
         </section>
 
         <section class="input-section">
@@ -645,17 +645,17 @@
                 </div>
 
                 <div class="external-links">
-                    <a id="link-bubblemaps" href="#" target="_blank">Bubblemaps &#8599;</a>
-                    <a id="link-debank" href="#" target="_blank">DeBank &#8599;</a>
-                    <a id="link-etherscan" href="#" target="_blank">Etherscan &#8599;</a>
-                    <a id="link-arkham" href="#" target="_blank">Arkham &#8599;</a>
+                    <a id="link-bubblemaps" href="#" target="_blank">Bubblemaps (token clusters) &#8599;</a>
+                    <a id="link-debank" href="#" target="_blank">DeBank (portfolio) &#8599;</a>
+                    <a id="link-etherscan" href="#" target="_blank">Etherscan (transactions) &#8599;</a>
+                    <a id="link-arkham" href="#" target="_blank">Arkham (wallet intel) &#8599;</a>
                 </div>
 
                 <!-- 100% VIP: full trust score breakdown - inline gate -->
                 <div id="full-report-gate" class="vip-inline-gate">
                     <div class="vip-inline-eyebrow">Passport Access</div>
-                    <div class="vip-inline-title">Full <span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span> Report</div>
-                    <div class="vip-inline-subtitle">10 categories, how each signal is weighted, trending direction, and where to improve.<br>Hold BONZI or VISTA - enter your passport key.</div>
+                    <div class="vip-inline-title">Full Trust Score Report</div>
+                    <div class="vip-inline-subtitle">See scores for all 10 categories: cooperation, consistency, trading, wallet age, content quality, community reach, bot detection, voting, tipping, and cross-group activity.<br>Hold BONZI or VISTA tokens - enter your passport key.</div>
                     <div class="vip-inline-row">
                         <input
                             id="vip-gate-input"
@@ -687,7 +687,7 @@
 
         <section class="cta-section">
             <h3>Get Your Passport</h3>
-            <p>Hold BONZI or VISTA to unlock the full <span class="term" data-tip="CPI (Combined Progression Index) - 253-point wallet behavior score">10-category trust report</span> for any wallet - plus unlimited queries via /vetx.</p>
+            <p><span class="term" data-tip="Buy BONZI or VISTA tokens on Ethervista to qualify">Hold BONZI or VISTA tokens</span> to unlock the full 10-category report for any wallet - plus unlimited queries via /vetx in Telegram.</p>
             <div class="cta-buttons">
                 <a href="https://t.me/Bonzivista_bot" class="cta-btn primary">Get Passport Access</a>
                 <a href="../stake.html" class="cta-btn secondary">Stake to Qualify</a>
@@ -700,23 +700,23 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-icon">1</div>
-                    <h4><span class="term" data-tip="Multi-oracle - verified by multiple independent data sources">Multi-Source</span></h4>
-                    <p>8 independent signals aggregated. Gaming one doesn't help.</p>
+                    <h4>What it checks</h4>
+                    <p>Wallet age, trading history, who you've helped, tip activity, voting record, and bot patterns.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">2</div>
-                    <h4>Behavioral</h4>
-                    <p>7 years of cooperation data, not just blockchain transaction history.</p>
+                    <h4>How it scores</h4>
+                    <p>Each check runs independently. Faking one doesn't fix the others. The score reflects your actual track record.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">3</div>
-                    <h4><span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span></h4>
-                    <p>10 categories scored from 8 independent data sources.</p>
+                    <h4>What you get</h4>
+                    <p>Free: letter grade (S to F) and key flags. Passport holders: full breakdown across 10 categories with trends.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">4</div>
-                    <h4><span class="term" data-tip="A2A (Agent-to-Agent) - AI systems communicating directly">AI-to-AI Ready</span></h4>
-                    <p><span class="term" data-tip="ERC-8004 - Ethereum standard for AI agent identity">Agent identity</span> built in. AI systems can query each other.</p>
+                    <h4>Who else uses it</h4>
+                    <p>Other AI systems can query trust scores directly. Built on <span class="term" data-tip="ERC-8004 - Ethereum standard for AI agent identity">an open identity standard</span> so it works beyond Bonzi.</p>
                 </div>
             </div>
         </section>
@@ -806,8 +806,8 @@
 
         // CPI dimensions (10 total)
         const CPI_DIMENSIONS = [
-            'Cooperation', 'Consistency', 'Liquidity', 'Longevity', 'Raid Quality',
-            'Community Depth', 'Fake Account Defense', 'Governance Activity', 'Tip Generosity', 'Cross-Community'
+            'Cooperation', 'Consistency', 'Trading Activity', 'Wallet Age', 'Content Quality',
+            'Community Reach', 'Bot Detection', 'Voting History', 'Tip Generosity', 'Cross-Group'
         ];
 
         function isValidAddress(addr) {

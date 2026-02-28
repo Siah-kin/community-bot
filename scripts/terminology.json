@@ -1,0 +1,151 @@
+{
+  "version": "1.0.0",
+  "description": "Public-facing terminology reference. Maps jargon to plain English with tooltip text.",
+  "source": "Bonzi_v5/src/leadership/judgment/glossary.json + water_rules.json",
+  "terms": [
+    {
+      "technical": "sybil",
+      "plain": "fake account",
+      "tooltip": "Sybil - a fake or duplicate account created to game rewards"
+    },
+    {
+      "technical": "oracle",
+      "plain": "AI verification",
+      "tooltip": "Oracle - an automated system that verifies information from outside the blockchain"
+    },
+    {
+      "technical": "multi-oracle",
+      "plain": "multiple independent sources",
+      "tooltip": "Multi-oracle - verified by multiple independent data sources"
+    },
+    {
+      "technical": "DEX",
+      "plain": "trading platform",
+      "tooltip": "DEX (Decentralized Exchange) - a trading platform where you swap tokens directly, no middleman"
+    },
+    {
+      "technical": "DeFi",
+      "plain": "token features",
+      "tooltip": "DeFi (Decentralized Finance) - financial tools built on blockchain that anyone can use"
+    },
+    {
+      "technical": "LP",
+      "plain": "pool depositor",
+      "tooltip": "LP (Liquidity Provider) - someone who deposits tokens into a trading pool and earns fees"
+    },
+    {
+      "technical": "CPI",
+      "plain": "trust score",
+      "tooltip": "CPI (Combined Progression Index) - a trust score based on wallet behavior"
+    },
+    {
+      "technical": "CPI-253",
+      "plain": "trust score",
+      "tooltip": "CPI-253 (Combined Progression Index) - 253-point wallet behavior score"
+    },
+    {
+      "technical": "tokenomics",
+      "plain": "token economy",
+      "tooltip": "Tokenomics - how a token's supply, fees, and distribution are designed"
+    },
+    {
+      "technical": "on-chain",
+      "plain": "on the blockchain",
+      "tooltip": "On-chain - recorded permanently on the blockchain where anyone can verify it"
+    },
+    {
+      "technical": "ERC-8004",
+      "plain": "agent identity standard",
+      "tooltip": "ERC-8004 - an Ethereum standard that gives AI agents a verifiable identity"
+    },
+    {
+      "technical": "x402",
+      "plain": "pay-per-query",
+      "tooltip": "x402 - a protocol for micropayments where AI systems pay per API call"
+    },
+    {
+      "technical": "DAO",
+      "plain": "community governance",
+      "tooltip": "DAO (Decentralized Autonomous Organization) - community-run governance where token holders vote"
+    },
+    {
+      "technical": "Hardstake",
+      "plain": "token locking",
+      "tooltip": "Hardstake - lock your tokens for a fixed period to earn higher rewards"
+    },
+    {
+      "technical": "MEV",
+      "plain": "trade-order manipulation",
+      "tooltip": "MEV (Maximal Extractable Value) - when someone reorders transactions to profit at your expense"
+    },
+    {
+      "technical": "smart contract",
+      "plain": "automated program",
+      "tooltip": "Smart contract - a program on the blockchain that runs automatically when conditions are met"
+    },
+    {
+      "technical": "Merkle proof",
+      "plain": "math-based proof",
+      "tooltip": "Merkle proof - a mathematical proof that data exists in a set without revealing the full set"
+    },
+    {
+      "technical": "Ethervista",
+      "plain": "trading platform",
+      "tooltip": "Ethervista - the trading platform where BONZI and VISTA tokens are traded"
+    },
+    {
+      "technical": "Euler distribution",
+      "plain": "fee distribution",
+      "tooltip": "Euler distribution - a mathematical formula that splits trading fees fairly among holders"
+    },
+    {
+      "technical": "impermanent loss",
+      "plain": "price-change risk",
+      "tooltip": "Impermanent loss - temporary reduction in value when token prices change while your funds are in a pool"
+    },
+    {
+      "technical": "A2A",
+      "plain": "AI-to-AI",
+      "tooltip": "A2A (Agent-to-Agent) - AI systems communicating directly with each other"
+    },
+    {
+      "technical": "EMA",
+      "plain": "trend multiplier",
+      "tooltip": "EMA (Exponential Moving Average) - a calculation that weights recent activity more heavily"
+    },
+    {
+      "technical": "ACF",
+      "plain": "governance framework",
+      "tooltip": "ACF (Agentic Cooperation Framework) - rules for how AI agents cooperate and make decisions"
+    },
+    {
+      "technical": "SINAPI",
+      "plain": "construction cost index",
+      "tooltip": "SINAPI - Brazil's national index for construction costs, published monthly by the government"
+    },
+    {
+      "technical": "RWA",
+      "plain": "real-world asset",
+      "tooltip": "RWA (Real World Asset) - a physical asset like property represented as a token on the blockchain"
+    },
+    {
+      "technical": "EigenTrust",
+      "plain": "reputation algorithm",
+      "tooltip": "EigenTrust - a reputation algorithm where trust scores are based on how trusted your endorsers are"
+    },
+    {
+      "technical": "whale",
+      "plain": "large holder",
+      "tooltip": "Whale - someone who holds a very large amount of tokens"
+    },
+    {
+      "technical": "seed phrase",
+      "plain": "secret recovery words",
+      "tooltip": "Seed phrase - a set of 12 or 24 words that recovers your wallet if you lose access"
+    }
+  ],
+  "replacement_guide": {
+    "description": "When writing new copy, use 'plain' column. Wrap first occurrence per section with tooltip span.",
+    "pattern": "<span class=\"term\" data-tip=\"{tooltip}\">{plain}</span>"
+  }
+}

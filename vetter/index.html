@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet Vetter - Trust Score Checker | Bonzi</title>
-    <meta name="description" content="Check any wallet's trust score. 5 queries/day. Powered by Bonzi multi-source verification.">
+    <meta name="description" content="Check any wallet's trust score. 5 free queries per day. Paste an address, get a rating from 8 independent sources.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Wallet Vetter - Trust Score Checker | Bonzi">
+    <meta property="og:description" content="Check any wallet's trust score. 5 free queries per day. Paste an address, get a rating from 8 independent sources.">
+    <meta property="og:image" content="https://siah-kin.github.io/community-bot/bonzi-logo.png">
+    <meta property="og:url" content="https://siah-kin.github.io/community-bot/vetter/">
     <link rel="canonical" href="https://siah-kin.github.io/community-bot/vetter/">
     <link rel="icon" href="../bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="../css/bonzi-design.css">
@@ -650,7 +655,7 @@
                 <div id="full-report-gate" class="vip-inline-gate">
                     <div class="vip-inline-eyebrow">Passport Access</div>
                     <div class="vip-inline-title">Full <span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span> Report</div>
-                    <div class="vip-inline-subtitle">10 categories, signal weights, trend multiplier, improvement path.<br>Hold BONZI or VISTA - enter your passport key.</div>
+                    <div class="vip-inline-subtitle">10 categories, how each signal is weighted, trending direction, and where to improve.<br>Hold BONZI or VISTA - enter your passport key.</div>
                     <div class="vip-inline-row">
                         <input
                             id="vip-gate-input"
@@ -701,12 +706,12 @@
                 <div class="step">
                     <div class="step-icon">2</div>
                     <h4>Behavioral</h4>
-                    <p>7 years of cooperation data, not just on-chain forensics.</p>
+                    <p>7 years of cooperation data, not just blockchain transaction history.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">3</div>
                     <h4><span class="term" data-tip="CPI-253 (Combined Progression Index) - 253-point wallet behavior score">Trust Score</span></h4>
-                    <p>10 categories scored. Industry-standard framework.</p>
+                    <p>10 categories scored from 8 independent data sources.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">4</div>
@@ -802,7 +807,7 @@
         // CPI dimensions (10 total)
         const CPI_DIMENSIONS = [
             'Cooperation', 'Consistency', 'Liquidity', 'Longevity', 'Raid Quality',
-            'Community Depth', 'Sybil Resistance', 'Governance Activity', 'Tip Generosity', 'Cross-Community'
+            'Community Depth', 'Fake Account Defense', 'Governance Activity', 'Tip Generosity', 'Cross-Community'
         ];
 
         function isValidAddress(addr) {
@@ -949,7 +954,7 @@
                 ['Cooperation events', signals.help_given ?? '-', signals.help_given > 5 ? 'green' : ''],
                 ['People helped', signals.unique_people_helped ?? '-', ''],
                 ['Thanks received', signals.gratitude_received ?? '-', signals.gratitude_received > 10 ? 'green' : ''],
-                ['EMA multiplier', result.ema_multiplier ? result.ema_multiplier.toFixed(2) + 'x' : '-', 'gold'],
+                ['Trend multiplier', result.ema_multiplier ? result.ema_multiplier.toFixed(2) + 'x' : '-', 'gold'],
                 ['Confidence', result.confidence ?? '-', result.confidence === 'high' ? 'green' : ''],
                 ['Verification sources', result.oracle_count ?? '8', ''],
             ];

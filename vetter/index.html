@@ -608,7 +608,7 @@
         <section class="hero">
             <h1>Wallet Vetter</h1>
             <p>Paste a wallet address. Get a trust rating based on real activity: how long it's been active, who it's helped, what it's traded, and whether it looks like a bot.</p>
-            <p class="tagline">Free: letter grade + flags &nbsp;|&nbsp; Passport holders: full 10-category breakdown</p>
+            <p class="tagline">Free: letter grade + flags &nbsp;|&nbsp; Token holders: full 10-category breakdown</p>
         </section>
 
         <section class="input-section">
@@ -653,15 +653,15 @@
 
                 <!-- 100% VIP: full trust score breakdown - inline gate -->
                 <div id="full-report-gate" class="vip-inline-gate">
-                    <div class="vip-inline-eyebrow">Passport Access</div>
+                    <div class="vip-inline-eyebrow">Token Holder Access</div>
                     <div class="vip-inline-title">Full Trust Score Report</div>
-                    <div class="vip-inline-subtitle">See scores for all 10 categories: cooperation, consistency, trading, wallet age, content quality, community reach, bot detection, voting, tipping, and cross-group activity.<br>Hold BONZI or VISTA tokens - enter your passport key.</div>
+                    <div class="vip-inline-subtitle">See scores for all 10 categories: cooperation, consistency, trading, wallet age, content quality, community reach, bot detection, voting, tipping, and cross-group activity.<br>Hold BONZI or VISTA tokens - enter your access key.</div>
                     <div class="vip-inline-row">
                         <input
                             id="vip-gate-input"
                             class="vip-gate-input"
                             type="password"
-                            placeholder="Passport key"
+                            placeholder="Access key"
                             onkeydown="if(event.key==='Enter')vipGateUnlock()"
                         />
                         <button class="vip-gate-btn" onclick="vipGateUnlock()">UNLOCK</button>
@@ -673,7 +673,7 @@
                 <div class="full-report" id="full-report">
                     <div class="full-report-header">
                         <span class="full-report-label">Full Trust Score Breakdown</span>
-                        <span class="full-report-badge">PASSPORT</span>
+                        <span class="full-report-badge">FULL REPORT</span>
                     </div>
                     <div class="dimension-grid" id="dimension-grid">
                         <!-- Dimensions injected by JS -->
@@ -711,12 +711,12 @@
                 <div class="step">
                     <div class="step-icon">3</div>
                     <h4>What you get</h4>
-                    <p>Free: letter grade (S to F) and key flags. Passport holders: full breakdown across 10 categories with trends.</p>
+                    <p>Free: letter grade (S to F) and key flags. Token holders: full breakdown across 10 categories with trends.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">4</div>
                     <h4>Who else uses it</h4>
-                    <p>Other AI systems can query trust scores directly. Built on <span class="term" data-tip="ERC-8004 - Ethereum standard for AI agent identity">an open identity standard</span> so it works beyond Bonzi.</p>
+                    <p>Other AI systems can query trust scores directly. Built on <span class="term" data-tip="AI agent identity standard">an open identity standard</span> so it works beyond Bonzi.</p>
                 </div>
             </div>
         </section>

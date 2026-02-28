@@ -437,7 +437,7 @@
         <button onclick="window.location.href='../'" style="position: absolute; top: 20px; left: 20px; background: none; border: none; color: #7C3AED; font-size: 28px; cursor: pointer; z-index: 10000; line-height: 1; padding: 8px;" aria-label="Close">&times;</button>
         <div class="cockpit-gate-box">
             <div class="cockpit-gate-eyebrow">Team Access</div>
-            <div class="cockpit-gate-title"><span class="term" data-tip="DAO (Decentralized Autonomous Organization) - community-owned, code-enforced governance">Community Governance</span> Tester Program</div>
+            <div class="cockpit-gate-title"><span class="term" data-tip="Community group with shared funds and voting">Community Governance</span> Tester Program</div>
             <div class="cockpit-gate-subtitle">This page requires a cockpit key</div>
             <div class="cockpit-gate-row">
                 <input
@@ -504,7 +504,7 @@
     <!-- Wallet Gate -->
     <div class="wallet-gate" id="walletGate">
         <button onclick="window.location.href='../'" style="position: absolute; top: 20px; left: 20px; background: none; border: none; color: #7C3AED; font-size: 28px; cursor: pointer; z-index: 10000; line-height: 1; padding: 8px;" aria-label="Close">&times;</button>
-        <h2><span class="term" data-tip="DAO (Decentralized Autonomous Organization) - community-owned, code-enforced governance">Community Governance</span> Members Only</h2>
+        <h2>Community Governance Members Only</h2>
         <p>Requires 1,000,000 $BONZI or 100 $VISTA to access the Tester Program.</p>
         <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
     </div>
@@ -515,7 +515,7 @@
     <!-- HERO -->
     <section class="dao-hero">
         <span class="warning-label">Tester Program Live</span>
-        <h1>Help Build Bonzi. Earn <span class="term" data-tip="DAO (Decentralized Autonomous Organization) - community-owned, code-enforced governance">Governance</span> Rights.</h1>
+        <h1>Help Build Bonzi. Earn Governance Rights.</h1>
         <p class="dao-intro">
             We're not asking you to trust us. We're asking you to <strong>test us</strong>. Find bugs, report issues, earn points that unlock real governance rights. No empty promises. Just code and receipts.
         </p>
@@ -812,7 +812,7 @@
                 <strong>Bonzi tracks three separate things - don't mix them up.</strong>
                 <ul style="margin: 12px 0 12px 20px; line-height: 1.8;">
                     <li><strong>Thanks points</strong> - earned by contributing: bug reports, good questions, helping others. One direction: up. These unlock the governance perks above.</li>
-                    <li><strong><span class="term" data-tip="Cooperation Performance Index - a trust score measuring your contribution quality">CPI score</span></strong> - cooperative trust score tied to your wallet address. Built through vetting and using the Vetter tool. Dynamic - it <em>can go down</em> if you act against the community <span class="term" data-tip="On-chain means recorded on the blockchain - a public, tamper-proof ledger">on-chain</span>.</li>
+                    <li><strong><span class="term" data-tip="Trust score based on your contributions">CPI score</span></strong> - cooperative trust score tied to your wallet address. Built through vetting and using the Vetter tool. Dynamic - it <em>can go down</em> if you act against the community <span class="term" data-tip="Recorded on the blockchain">on-chain</span>.</li>
                     <li><strong>ETH</strong> - your claimable share of protocol fees. Private by default. Make it public to signal contribution and earn more CPI score in return.</li>
                 </ul>
                 <div class="accountability">
@@ -843,7 +843,7 @@
                 <h3 class="faq-question">Can I lose points?</h3>
                 <p class="faq-answer">
                     Thanks points only go up. Spam reports don't earn points, but they don't cost you either. We want honest testing, not point gaming.<br><br>
-                    <strong>CPI score is different</strong> - it's your <span class="term" data-tip="On-chain means recorded on the blockchain - a public, tamper-proof ledger">on-chain</span> trust score and it <em>can</em> decrease if you act against the community (<span class="term" data-tip="Sybil attack - creating fake accounts to manipulate a system">fake-account</span> behavior, coordinated manipulation). Points and CPI score are separate.
+                    <strong>CPI score is different</strong> - it's your on-chain trust score and it <em>can</em> decrease if you act against the community (<span class="term" data-tip="Attack using fake accounts">fake-account</span> behavior, coordinated manipulation). Points and CPI score are separate.
                 </p>
             </div>
 
@@ -851,7 +851,7 @@
                 <h3 class="faq-question">Is reputation just points, or does it become something real?</h3>
                 <p class="faq-answer">
                     Points are internal. Reputation is portable. Your CPI score is tied to your wallet address - not an account on Bonzi's server. That means it travels with you.<br><br>
-                    Any other platform that reads <span class="term" data-tip="On-chain attestations - verified records stored permanently on the blockchain">on-chain attestations</span> can verify your contribution history without asking Bonzi's permission. You built it. You own it. It's yours to show anywhere that recognizes the standard.
+                    Any other platform that reads <span class="term" data-tip="Verified records on blockchain">on-chain attestations</span> can verify your contribution history without asking Bonzi's permission. You built it. You own it. It's yours to show anywhere that recognizes the standard.
                 </p>
             </div>
 
@@ -859,7 +859,7 @@
                 <h3 class="faq-question">What makes this different from leaderboard points on other platforms?</h3>
                 <p class="faq-answer">
                     Leaderboard points live on a company's database. They disappear when the company pivots. They mean nothing outside that one app.<br><br>
-                    Bonzi's CPI score is <span class="term" data-tip="Anchored on-chain means permanently recorded on the blockchain where no one can edit or delete it">anchored on-chain</span>. The record is permanent. A future platform - one that doesn't exist yet - can check your history and trust you faster because of work you did here. That's reputation as an asset, not a vanity number.
+                    Bonzi's CPI score is <span class="term" data-tip="Permanently recorded on the blockchain">anchored on-chain</span>. The record is permanent. A future platform - one that doesn't exist yet - can check your history and trust you faster because of work you did here. That's reputation as an asset, not a vanity number.
                 </p>
             </div>
 
@@ -889,15 +889,15 @@
                     <span style="font-size: 12px; color: var(--text-muted); font-weight: 400;">For those who want to understand the design, not just use it</span>
                 </summary>
                 <div style="margin-top: 20px; line-height: 1.8; color: var(--text-muted);">
-                    <p style="margin-bottom: 14px;">When you trade on Ethervista, a flat fee funds the <span class="term" data-tip="Oracle - an AI system that monitors community behavior and scores cooperation quality">trust engine</span> - the AI that watches how this community behaves. The trust engine scores cooperation. Those scores become your CPI - a trust record tied to your wallet, not your account.</p>
+                    <p style="margin-bottom: 14px;">When you trade on Ethervista, a flat fee funds the <span class="term" data-tip="AI that monitors behavior and scores trust">trust engine</span> - the AI that watches how this community behaves. The trust engine scores cooperation. Those scores become your CPI - a trust record tied to your wallet, not your account.</p>
 
-                    <p style="margin-bottom: 14px;">Unlike points on a platform, CPI doesn't disappear if Bonzi shuts down. It's <span class="term" data-tip="Anchored on-chain means permanently recorded on the blockchain where no one can edit or delete it">anchored on-chain</span>. Any other platform can read it. You earned it here; it works anywhere that checks.</p>
+                    <p style="margin-bottom: 14px;">Unlike points on a platform, CPI doesn't disappear if Bonzi shuts down. It's anchored on-chain. Any other platform can read it. You earned it here; it works anywhere that checks.</p>
 
                     <p style="margin-bottom: 14px;">The score grows with honest use. Sharing it with another protocol doesn't shrink it - that's the key. Most platforms treat your data as their asset. Here, use makes the commons richer, not poorer.</p>
 
                     <p style="margin-bottom: 14px;">The score also remembers. It's not a live counter - it's a compressed history of how you've behaved over time. A protocol reading your score next year is reading months of signals without needing to witness them.</p>
 
-                    <p><span class="term" data-tip="Zero Knowledge proof - cryptographic method that proves something is true without revealing the underlying data">Privacy proofs</span> protect the sensitive part. You can prove your score meets a threshold without revealing the number. The verifier gets what they need. You keep the rest. That's what makes long-term honest participation safe.</p>
+                    <p><span class="term" data-tip="Proves a fact without revealing the details">Privacy proofs</span> protect the sensitive part. You can prove your score meets a threshold without revealing the number. The verifier gets what they need. You keep the rest. That's what makes long-term honest participation safe.</p>
                 </div>
             </details>
         </div>
@@ -957,7 +957,7 @@
             </div>
 
             <div class="accountability" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-                <span style="color: var(--text-muted); font-size: 14px;">+ 4 more: Infrastructure, Zealy Killer, User Journeys, <span class="term" data-tip="Oracle - an AI system that monitors and scores community behavior">Trust Engine</span> Thesis.</span>
+                <span style="color: var(--text-muted); font-size: 14px;">+ 4 more: Infrastructure, Zealy Killer, User Journeys, <span class="term" data-tip="AI that scores community trust">Trust Engine</span> Thesis.</span>
                 <a href="../vote.html" class="btn-primary" style="white-space: nowrap;">See all 7 &amp; Vote</a>
             </div>
         </div>
@@ -967,7 +967,7 @@
     <!-- FINAL CTA -->
     <section class="cta-section">
         <h2>Ready to Help Build Bonzi?</h2>
-        <p>Open the bot. Find bugs. Earn <span class="term" data-tip="DAO governance rights let you vote on decisions and shape the project's future">governance rights</span>.</p>
+        <p>Open the bot. Find bugs. Earn <span class="term" data-tip="Vote on decisions, share revenue">governance rights</span>.</p>
         <a href="/?slot=open" class="btn-primary">Win Bot Access - Play to Unlock</a>
     </section>
 

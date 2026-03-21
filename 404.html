@@ -16,6 +16,45 @@
             align-items: center;
             justify-content: center;
         }
+        .gate {
+            text-align: center;
+            padding: 2rem;
+        }
+        .gate img {
+            width: 96px;
+            margin-bottom: 2rem;
+        }
+        .gate input {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #FAFAFA;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+            width: 200px;
+            text-align: center;
+            outline: none;
+        }
+        .gate input:focus {
+            border-color: var(--purple, #7C3AED);
+        }
+        .gate input::placeholder {
+            color: #52525B;
+        }
+        .gate .hint {
+            color: #52525B;
+            font-size: 0.75rem;
+            margin-top: 0.75rem;
+        }
+        .gate .error {
+            color: var(--red, #DC2626);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            visibility: hidden;
+        }
+        .gate .error.show {
+            visibility: visible;
+        }
         .holding {
             text-align: center;
             padding: 2rem;
@@ -28,12 +67,42 @@
             color: var(--gray, #71717A);
             font-size: 0.9rem;
         }
+        .hidden { display: none; }
     </style>
 </head>
 <body class="dark-mode">
-    <div class="holding">
+    <div class="gate" id="gate">
         <img src="/bonzi-logo.png" alt="Bonzi">
-        <p>Nothing to see here yet.</p>
+        <div>
+            <input type="password" id="pw" placeholder="Access code" autofocus>
+        </div>
+        <p class="error" id="err">Wrong code.</p>
+        <p class="hint">Closed alpha</p>
     </div>
+    <div class="holding hidden" id="content">
+        <img src="/bonzi-logo.png" alt="Bonzi">
+        <p>Nothing to see here.</p>
+    </div>
+    <script>
+        (function() {
+            var k = 'bonzi_alpha';
+            if (sessionStorage.getItem(k) === '1') { unlock(); return; }
+            document.getElementById('pw').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    if (this.value === 'EULER26') {
+                        sessionStorage.setItem(k, '1');
+                        unlock();
+                    } else {
+                        document.getElementById('err').classList.add('show');
+                        this.value = '';
+                    }
+                }
+            });
+            function unlock() {
+                document.getElementById('gate').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
+            }
+        })();
+    </script>
 </body>
 </html>

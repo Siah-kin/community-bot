@@ -1,4 +1,14 @@
 (() => {
+    // Gate check: redirect to slot machine if no access token
+    // Skip for dev.html (dev bypass) and index.html (is the gate)
+    const _page = location.pathname.split('/').pop() || 'index.html';
+    if (_page !== 'index.html' && _page !== 'dev.html' && _page !== '404.html') {
+        if (sessionStorage.getItem('bonzi_alpha') !== '1') {
+            location.href = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1) || '/';
+            return;
+        }
+    }
+
     const THEME_KEY = 'bonzi_theme';
     const LEGACY_THEME_KEY = 'bonzi-theme';
 

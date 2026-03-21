@@ -448,6 +448,7 @@
     (function() {
         // === DEV BYPASS: ?dev=1 loads old site ===
         if (new URLSearchParams(window.location.search).get('dev') === '1') {
+            sessionStorage.setItem('bonzi_alpha', '1');
             window.location.href = 'dev.html';
             return;
         }

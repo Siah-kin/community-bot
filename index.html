@@ -446,6 +446,12 @@
 
     <script>
     (function() {
+        // === DEV BYPASS: ?dev=1 loads old site ===
+        if (new URLSearchParams(window.location.search).get('dev') === '1') {
+            window.location.href = 'vault/pages/manifesto.html';
+            return;
+        }
+
         // === SESSION CHECK ===
         if (sessionStorage.getItem('bonzi_alpha') === '1') {
             document.getElementById('gate').classList.add('hidden');

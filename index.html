@@ -9,13 +9,355 @@
     <link rel="stylesheet" href="css/bonzi-design.css">
     <style>
         body {
-            background: var(--black, #0A0A0A);
+            background: #0A0A0A;
             color: #FAFAFA;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+        }
+        .hidden { display: none !important; }
+
+        /* === PUZZLE GATE === */
+        .puzzle-gate {
+            text-align: center;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+        .puzzle-gate .logo {
+            width: 80px;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .puzzle-gate .logo:hover { transform: scale(1.05); }
+        .puzzle-gate .logo:active { transform: scale(0.95); }
+        .tagline {
+            color: #52525B;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        /* === WIN98 SLOT MACHINE === */
+        .slot-machine {
+            width: 340px;
+            max-width: 100%;
+            margin: 0 auto 1.5rem;
+            background: #d8cef0;
+            border: 2px solid;
+            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
+            box-shadow: 2px 2px 0 #000, 4px 4px 12px rgba(124, 58, 237, 0.3);
+            overflow: hidden;
+        }
+        .win98-titlebar {
+            background: linear-gradient(90deg, #5b21b6, #8b5cf6);
+            padding: 3px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .win98-title {
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        }
+        .win98-content {
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .lcd-panel {
+            flex: 1;
+            min-width: 0;
+            background: #000;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 8px;
+        }
+        .lcd-label {
+            display: block;
+            color: #a78bfa;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
+        }
+        .lcd-screen {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+            background: #0a0a1a;
+            border: 1px solid #333;
+        }
+        .slot-reel {
+            position: relative;
+            will-change: transform;
+        }
+        .slot-reel .word {
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            padding: 0 16px;
+            font-size: 22px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #22c55e;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .slot-reel .word.hint-word {
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+        }
+        .slot-reel .word.key-word {
+            color: #d4af37;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+        }
+        .slot-bonzi-img {
+            height: 48px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        /* Lever */
+        .lever-container {
+            width: 50px;
+            background: #d8cef0;
+            border: 2px solid;
+            border-color: #8b7cb3 #ede8f5 #ede8f5 #8b7cb3;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .lever-container:active {
+            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
+        }
+        .lever-track {
+            width: 12px;
+            height: 60px;
+            background: #000;
+            border: 1px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            border-radius: 6px;
+        }
+        .lever-handle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.15s;
+        }
+        .lever-container:active .lever-handle {
+            transform: translateY(8px);
+        }
+        .lever-grip {
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(90deg, #8b7cb3, #d8cef0, #ede8f5, #d8cef0, #8b7cb3);
+            border-radius: 4px;
+        }
+        .lever-ball {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #fff, #a78bfa, #7c3aed);
+            border: 1px solid #5b21b6;
+            border-radius: 50%;
+            margin-top: 2px;
+        }
+
+        /* Bonzi logo row */
+        .bonzi-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #c8bce0;
+            border-top: 1px solid #ede8f5;
+            border-bottom: 1px solid #8b7cb3;
+        }
+        .bonzi-logo-img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: filter 0.15s ease, transform 0.15s ease;
+        }
+        .bonzi-logo-img.gold {
+            filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1);
+            transform: scale(1.1);
+        }
+
+        /* Status bar */
+        .win98-statusbar {
+            background: #d8cef0;
+            border-top: 1px solid #8b7cb3;
+            padding: 4px 8px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid #404040;
+            background: #22c55e;
+        }
+        .status-text { color: #3b1f6b; }
+        .status-divider { color: #8b7cb3; }
+        .clue-msg { color: #3b1f6b; font-style: italic; }
+
+        /* Jackpot states */
+        .slot-machine.jackpot {
+            animation: jackpot-shake 0.5s ease-in-out;
+        }
+        .slot-machine.jackpot .lcd-panel {
+            background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
+            animation: jackpot-glow 0.3s ease-in-out infinite alternate;
+        }
+        .slot-machine.jackpot .status-led {
+            background: #7c3aed;
+            animation: led-blink 0.3s infinite;
+        }
+        @keyframes jackpot-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-1deg); }
+            75% { transform: translateX(5px) rotate(1deg); }
+        }
+        @keyframes jackpot-glow {
+            from { box-shadow: 0 0 10px #7C3AED, 0 0 20px #7C3AED; }
+            to { box-shadow: 0 0 20px #A78BFA, 0 0 40px #A78BFA; }
+        }
+        @keyframes led-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* === ACCESS CODE INPUT === */
+        .access-row {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .access-row input {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-right: none;
+            color: #FAFAFA;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            width: 180px;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .access-row input:focus {
+            border-color: #7C3AED;
+        }
+        .access-row input::placeholder {
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: none;
+        }
+        .access-row button {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #52525B;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .access-row button:hover {
+            border-color: #7C3AED;
+            color: #a78bfa;
+        }
+        .error-msg {
+            color: #DC2626;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            height: 1rem;
+        }
+        .spin-count {
+            color: #333;
+            font-size: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        /* === JACKPOT PRIZE MODAL === */
+        .prize-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            display: none;
             align-items: center;
             justify-content: center;
         }
+        .prize-overlay.open { display: flex; }
+        .prize-box {
+            background: linear-gradient(135deg, #1a1025, #2d1f3d);
+            border: 3px solid #7c3aed;
+            padding: 2rem;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+        }
+        .prize-box img {
+            width: 80px;
+            margin-bottom: 1rem;
+        }
+        .prize-box h3 {
+            color: #a78bfa;
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem;
+        }
+        .prize-box .prize-desc {
+            color: #e0d4f7;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .prize-box .tg-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: #fff;
+            padding: 12px 32px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: box-shadow 0.2s;
+        }
+        .prize-box .tg-btn:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+        }
+        .prize-box .close-prize {
+            display: block;
+            margin-top: 1rem;
+            color: #52525B;
+            font-size: 0.75rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* === PRANK PAGE === */
         .holding {
             text-align: center;
             padding: 2rem;
@@ -25,84 +367,322 @@
             margin-bottom: 2rem;
         }
         .holding p {
-            color: var(--gray, #71717A);
+            color: #71717A;
             font-size: 0.9rem;
         }
-        .gate {
-            text-align: center;
-            padding: 2rem;
+
+        /* Mobile */
+        @media (max-width: 400px) {
+            .slot-machine { width: 100%; }
+            .puzzle-gate { padding: 1rem; }
         }
-        .gate img {
-            width: 96px;
-            margin-bottom: 2rem;
-        }
-        .gate input {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #FAFAFA;
-            padding: 0.6rem 1rem;
-            font-size: 0.9rem;
-            font-family: inherit;
-            width: 200px;
-            text-align: center;
-            outline: none;
-        }
-        .gate input:focus {
-            border-color: var(--purple, #7C3AED);
-        }
-        .gate input::placeholder {
-            color: #52525B;
-        }
-        .gate .hint {
-            color: #52525B;
-            font-size: 0.75rem;
-            margin-top: 0.75rem;
-        }
-        .gate .error {
-            color: var(--red, #DC2626);
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-            visibility: hidden;
-        }
-        .gate .error.show {
-            visibility: visible;
-        }
-        .hidden { display: none; }
     </style>
 </head>
-<body class="dark-mode">
-    <div class="gate" id="gate">
-        <img src="bonzi-logo.png" alt="Bonzi">
-        <div>
-            <input type="password" id="pw" placeholder="Access code" autofocus>
+<body>
+    <!-- PUZZLE GATE -->
+    <div class="puzzle-gate" id="gate">
+        <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
+        <p class="tagline">Pull the lever.</p>
+
+        <!-- Win98 Slot Machine -->
+        <div class="slot-machine" id="slot-machine">
+            <div class="win98-titlebar">
+                <span class="win98-title">&#127920; ???</span>
+            </div>
+            <div class="win98-content">
+                <div class="lcd-panel">
+                    <span class="lcd-label">FIND THE KEY</span>
+                    <div class="lcd-screen">
+                        <div class="slot-reel" id="slot-reel"></div>
+                    </div>
+                </div>
+                <button class="lever-container" id="slot-lever" aria-label="Pull lever">
+                    <div class="lever-track"></div>
+                    <div class="lever-handle">
+                        <div class="lever-grip"></div>
+                        <div class="lever-ball"></div>
+                    </div>
+                </button>
+            </div>
+            <div class="bonzi-logos" id="bonzi-logos">
+                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="0">
+                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="1">
+                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img gold" data-i="2">
+                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="3">
+                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="4">
+            </div>
+            <div class="win98-statusbar">
+                <span class="status-led"></span>
+                <span class="status-text">Ready</span>
+                <span class="status-divider">|</span>
+                <span class="clue-msg" id="clue-msg">Spin to find clues</span>
+            </div>
         </div>
-        <p class="error" id="err">Wrong code.</p>
-        <p class="hint">Closed alpha</p>
+
+        <div class="access-row">
+            <input type="text" id="pw" placeholder="access code" maxlength="12" autocomplete="off" spellcheck="false">
+            <button id="submit-btn">&#9654;</button>
+        </div>
+        <p class="error-msg" id="err">&nbsp;</p>
+        <p class="spin-count" id="spin-count"></p>
     </div>
+
+    <!-- JACKPOT PRIZE MODAL -->
+    <div class="prize-overlay" id="prize-overlay">
+        <div class="prize-box">
+            <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
+            <h3>BONZI JACKPOT!</h3>
+            <p class="prize-desc">Claim your prize on Telegram.<br>The bot has your access code.</p>
+            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=JACKPOT" target="_blank" rel="noopener">Claim on @Bonzivista_bot</a>
+            <button class="close-prize" id="close-prize">close</button>
+        </div>
+    </div>
+
+    <!-- PRANK DESTINATION -->
     <div class="holding hidden" id="content">
-        <img src="bonzi-logo.png" alt="Bonzi">
+        <img src="assets/bonzi/happy.png" alt="Bonzi">
         <p>Nothing to see here yet.</p>
     </div>
+
     <script>
-        (function() {
-            var k = 'bonzi_alpha';
-            if (sessionStorage.getItem(k) === '1') { unlock(); return; }
-            document.getElementById('pw').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    if (this.value === 'EULER26') {
-                        sessionStorage.setItem(k, '1');
-                        unlock();
-                    } else {
-                        document.getElementById('err').classList.add('show');
-                        this.value = '';
-                    }
+    (function() {
+        // === SESSION CHECK ===
+        if (sessionStorage.getItem('bonzi_alpha') === '1') {
+            document.getElementById('gate').classList.add('hidden');
+            document.getElementById('content').classList.remove('hidden');
+            return;
+        }
+
+        // === SLOT WORDS ===
+        // Clue words are purple. The rest are noise.
+        // Clues: "Euler" (mathematician), "26" (the number), "e^ipi+1=0" (his formula)
+        // Hidden clue: "Konigsberg" (his famous problem)
+        var words = [
+            'Launch', 'Brand', 'Token', 'Future', 'Dream',
+            { t: 'Euler', cls: 'hint-word' },           // CLUE
+            'Protocol', 'Chain', 'Empire', 'Vision',
+            'Node', 'Vault', 'Trust', 'Oracle', 'Layer',
+            { t: '26', cls: 'hint-word' },               // CLUE
+            'Guild', 'Arena', 'Realm', 'Bridge', 'Fund',
+            'Legacy', 'Mission', 'Manifesto', 'Network',
+            { t: 'e^i\u03C0+1=0', cls: 'hint-word' },  // CLUE (Euler's identity)
+            'Treasury', 'Forge', 'Signal', 'Archive',
+            'Lab', 'Syndicate', 'Tribe', 'Venture',
+            { t: 'K\u00F6nigsberg', cls: 'hint-word' }, // CLUE (Seven Bridges)
+            'Index', 'Hedge', 'Course', 'Platform',
+            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll - bonzi jackpot
+        ];
+
+        // Clue messages for status bar when landing on hint words
+        var clueMessages = {
+            'Euler': 'A Swiss mathematician...',
+            '26': 'Letters. A to Z.',
+            'e^i\u03C0+1=0': 'His most beautiful equation.',
+            'K\u00F6nigsberg': 'Seven bridges. One name.'
+        };
+
+        var reel = document.getElementById('slot-reel');
+        var lever = document.getElementById('slot-lever');
+        var machine = document.getElementById('slot-machine');
+        var clueEl = document.getElementById('clue-msg');
+        var errEl = document.getElementById('err');
+        var pwEl = document.getElementById('pw');
+        var submitBtn = document.getElementById('submit-btn');
+        var spinCountEl = document.getElementById('spin-count');
+        var bonziImgs = document.querySelectorAll('.bonzi-logo-img');
+        var prizeOverlay = document.getElementById('prize-overlay');
+        var tgLink = document.getElementById('tg-link');
+        var closePrize = document.getElementById('close-prize');
+        var spinning = false;
+        var pos = 0;
+        var spins = 0;
+        var cluesFound = {};
+        var wordH = 60;
+
+        // Build reel
+        words.forEach(function(w) {
+            var span = document.createElement('span');
+            span.className = 'word';
+            if (typeof w === 'object') {
+                span.classList.add(w.cls);
+                if (w.cls === 'key-word') {
+                    span.innerHTML = '<img src="bonzi-logo.png" alt="" class="slot-bonzi-img" style="filter:sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1)">';
+                } else {
+                    span.textContent = w.t;
                 }
+            } else {
+                span.textContent = w;
+            }
+            reel.appendChild(span);
+        });
+
+        var totalH = words.length * wordH;
+
+        function easeOut(t) { return 1 - Math.pow(1 - t, 5); }
+
+        // Win98 ding
+        function ding() {
+            try {
+                var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                osc.frequency.setValueAtTime(1000, ctx.currentTime + 0.1);
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        // Bonzi radar
+        function setGold(idx) {
+            bonziImgs.forEach(function(img, i) {
+                img.classList.toggle('gold', i === idx);
             });
-            function unlock() {
+        }
+
+        // Spin
+        lever.addEventListener('click', function() {
+            if (spinning) return;
+            spinning = true;
+            spins++;
+
+            machine.classList.remove('jackpot');
+
+            // Bias toward clue words after a few spins
+            var target;
+            var hintIndices = [];
+            words.forEach(function(w, i) {
+                if (typeof w === 'object' && w.cls === 'hint-word') hintIndices.push(i);
+            });
+
+            // Find jackpot index
+            var jackpotIdx = -1;
+            words.forEach(function(w, i) {
+                if (typeof w === 'object' && w.cls === 'key-word') jackpotIdx = i;
+            });
+
+            // After 5+ spins, increasing chance of jackpot. Before that, clue words.
+            var jackpotChance = Math.min(0.4, Math.max(0, (spins - 4) * 0.08));
+            var clueChance = Math.min(0.5, 0.3 + (spins * 0.04));
+
+            if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
+                target = jackpotIdx;
+            } else if (Math.random() < clueChance && hintIndices.length > 0) {
+                target = hintIndices[Math.floor(Math.random() * hintIndices.length)];
+            } else {
+                target = Math.floor(Math.random() * words.length);
+            }
+
+            var targetPos = target * wordH;
+            var rotations = 3 + Math.floor(Math.random() * 2);
+            var dist = (rotations * totalH) + targetPos - (pos % totalH);
+            var startPos = pos;
+            var duration = 3000;
+            var startTime = null;
+
+            lever.classList.add('pulled');
+            setTimeout(function() { lever.classList.remove('pulled'); }, 200);
+
+            function animate(ts) {
+                if (!startTime) startTime = ts;
+                var elapsed = ts - startTime;
+                var progress = Math.min(elapsed / duration, 1);
+                var eased = easeOut(progress);
+                pos = startPos + (dist * eased);
+                reel.style.transform = 'translateY(-' + (pos % totalH) + 'px)';
+
+                // Radar animation
+                var ci = Math.floor((pos % totalH) / wordH) % words.length;
+                setGold(ci % 5);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    pos = targetPos;
+                    reel.style.transform = 'translateY(-' + targetPos + 'px)';
+                    setGold(2); // reset
+
+                    var landed = words[target];
+                    if (typeof landed === 'object') {
+                        if (landed.cls === 'hint-word') {
+                            ding();
+                            machine.classList.add('jackpot');
+                            cluesFound[landed.t] = true;
+                            clueEl.textContent = clueMessages[landed.t] || 'Interesting...';
+                        } else if (landed.cls === 'key-word') {
+                            // JACKPOT - show prize modal with Telegram deeplink
+                            ding();
+                            machine.classList.add('jackpot');
+                            clueEl.textContent = 'JACKPOT!';
+                            bonziImgs.forEach(function(img) { img.classList.add('gold'); });
+
+                            // Generate unique prize code for deeplink
+                            var code = Date.now().toString(36).toUpperCase().slice(-4) +
+                                       Math.random().toString(36).toUpperCase().slice(2, 6);
+                            tgLink.href = 'https://t.me/Bonzivista_bot?start=JACKPOT-' + code;
+
+                            setTimeout(function() {
+                                prizeOverlay.classList.add('open');
+                            }, 600);
+
+                            setTimeout(function() { setGold(2); }, 5000);
+                        }
+                    } else {
+                        clueEl.textContent = 'Keep spinning...';
+                    }
+
+                    spinning = false;
+                }
+            }
+            requestAnimationFrame(animate);
+        });
+
+        // Auto-spin on load
+        setTimeout(function() { lever.click(); }, 500);
+
+        // Access code check
+        function tryCode() {
+            var val = pwEl.value.trim().toUpperCase();
+            if (val === 'EULER26') {
+                sessionStorage.setItem('bonzi_alpha', '1');
                 document.getElementById('gate').classList.add('hidden');
                 document.getElementById('content').classList.remove('hidden');
+            } else if (val.length > 0) {
+                errEl.textContent = 'Wrong code.';
+                pwEl.value = '';
+                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2000);
             }
-        })();
+        }
+
+        pwEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') tryCode();
+        });
+        submitBtn.addEventListener('click', tryCode);
+
+        // Easter egg: click logo 5 times for a hint
+        var logoClicks = 0;
+        document.getElementById('logo-click').addEventListener('click', function() {
+            logoClicks++;
+            if (logoClicks === 5) {
+                clueEl.textContent = 'His name. Count the alphabet.';
+                logoClicks = 0;
+            }
+        });
+
+        // Prize modal close
+        closePrize.addEventListener('click', function() {
+            prizeOverlay.classList.remove('open');
+        });
+        prizeOverlay.addEventListener('click', function(e) {
+            if (e.target === prizeOverlay) prizeOverlay.classList.remove('open');
+        });
+
+        // Console hint for the curious
+        console.log('%c Seven bridges. One mathematician. A to Z.', 'color: #7C3AED; font-size: 14px;');
+    })();
     </script>
 </body>
 </html>

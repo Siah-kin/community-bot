@@ -45,6 +45,8 @@ SKIP_FILES = [
     'faq.html',  # Redirect to manifesto.html
     'index.html',  # Holding page (closed alpha)
     '404.html',  # Holding page (closed alpha)
+    'v-faq.html',  # Archived page
+    'v-nav-test.html',  # Archived page
 ]
 
 # Directories to skip entirely (drafts, embedded widgets)

@@ -43,6 +43,8 @@ SKIP_FILES = [
     'terms.html',  # Legal page, different format
     'qr.html',  # Minimal widget
     'faq.html',  # Redirect to manifesto.html
+    'index.html',  # Holding page (closed alpha)
+    '404.html',  # Holding page (closed alpha)
 ]
 
 # Directories to skip entirely (drafts, embedded widgets)

@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
+    <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
+    <!-- Mailchimp (or other) signup URL; leave empty to hide the bar -->
+    <meta name="bonzi-notify-signup-url" content="">
     <title>Bonzi</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -59,13 +63,58 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
         .win98-title {
             color: #fff;
             font-size: 12px;
             font-weight: bold;
             text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+            flex: 1;
+            min-width: 0;
         }
+        .win98-info-btn {
+            flex-shrink: 0;
+            font-size: 12px;
+            line-height: 1;
+            padding: 2px 6px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.65);
+            background: rgba(0,0,0,0.15);
+            color: #fff;
+            border-radius: 2px;
+            font-family: Tahoma, sans-serif;
+        }
+        .win98-info-btn:hover { background: rgba(255,255,255,0.2); }
+        .notify-bar {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto 0.75rem;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: linear-gradient(90deg, #1a1520, #2d2438);
+            border: 1px solid #7c3aed;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #e9d5ff;
+        }
+        .notify-bar.hidden { display: none !important; }
+        .notify-bar-text { flex: 1; color: #a78bfa; }
+        .notify-bar-cta {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #d4af37, #c9a227);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        .notify-bar-cta:hover { filter: brightness(1.05); }
         .win98-content {
             padding: 12px;
             display: flex;
@@ -384,10 +433,16 @@
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
         <p class="tagline">Pull the lever.</p>
 
+        <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
+            <span class="notify-bar-text">Early access drops here first.</span>
+            <a id="notify-bar-link" class="notify-bar-cta" href="#" target="_blank" rel="noopener">Get notified</a>
+        </div>
+
         <!-- Win98 Slot Machine -->
         <div class="slot-machine" id="slot-machine">
             <div class="win98-titlebar">
                 <span class="win98-title">&#127920; ???</span>
+                <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
             </div>
             <div class="win98-content">
                 <div class="lcd-panel">
@@ -432,8 +487,8 @@
         <div class="prize-box">
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
             <h3>BONZI JACKPOT!</h3>
-            <p class="prize-desc">Claim your prize on Telegram.<br>The bot has your access code.</p>
-            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=JACKPOT" target="_blank" rel="noopener">Claim on @Bonzivista_bot</a>
+            <p class="prize-desc">Claim your prize on Telegram.<br>Use the link from your server-backed win.</p>
+            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=start" target="_blank" rel="noopener">Open @Bonzivista_bot</a>
             <button class="close-prize" id="close-prize">close</button>
         </div>
     </div>
@@ -550,101 +605,211 @@
             });
         }
 
-        // Spin
+        (function setupNotifyBar() {
+            var m = document.querySelector('meta[name="bonzi-notify-signup-url"]');
+            var url = (m && m.content) ? m.content.trim() : '';
+            var bar = document.getElementById('notify-bar');
+            var lk = document.getElementById('notify-bar-link');
+            if (!bar || !lk) return;
+            if (url && url.slice(0, 4).toLowerCase() === 'http') {
+                lk.href = url;
+                bar.classList.remove('hidden');
+                bar.setAttribute('aria-hidden', 'false');
+            }
+        })();
+
+        function getApiOrigin() {
+            var meta = document.querySelector('meta[name="bonzi-api-origin"]');
+            var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
+            return raw || 'https://bonzi-v5.onrender.com';
+        }
+
+        function getDeviceFingerprint() {
+            var KEY = 'bonzi_slot_fp_v1';
+            try {
+                var v = localStorage.getItem(KEY);
+                if (v && v.length >= 8) return v;
+                v = 'fp-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 18);
+                localStorage.setItem(KEY, v);
+                return v;
+            } catch (e) {
+                return 'fp-fallback-' + String(Date.now()) + Math.random().toString(36).slice(2, 14);
+            }
+        }
+
+        function postSlotAttempt() {
+            var api = getApiOrigin();
+            return fetch(api + '/api/slotgame/attempt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+            }).then(function(r) {
+                return r.json().then(function(j) {
+                    return { httpOk: r.ok, status: r.status, json: j };
+                });
+            });
+        }
+
+        function postSlotWin(attemptToken) {
+            var api = getApiOrigin();
+            return fetch(api + '/api/slotgame/win', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fingerprint: getDeviceFingerprint(),
+                    tier: 'bonzi',
+                    attempt_token: attemptToken
+                })
+            }).then(function(r) {
+                return r.json().then(function(j) {
+                    return { httpOk: r.ok, status: r.status, json: j };
+                });
+            });
+        }
+
+        var infoBtn = document.getElementById('slot-info-btn');
+        if (infoBtn) {
+            infoBtn.addEventListener('click', function(ev) {
+                ev.preventDefault();
+                var rulesUrl = getApiOrigin() + '/api/slotgame/rules';
+                var feats = 'width=480,height=620,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no';
+                var w = window.open(rulesUrl, 'slotrules', feats);
+                if (!w || typeof w.closed === 'undefined')
+                    window.open(rulesUrl, '_blank', 'noopener,noreferrer');
+            });
+        }
+
+        var lastAttemptToken = '';
+
+        // Spin — server attempt receipt first, then animation; jackpot calls /win with that receipt
         lever.addEventListener('click', function() {
             if (spinning) return;
             spinning = true;
-            spins++;
 
-            machine.classList.remove('jackpot');
+            clueEl.textContent = 'Checking server…';
 
-            // Bias toward clue words after a few spins
-            var target;
-            var hintIndices = [];
-            words.forEach(function(w, i) {
-                if (typeof w === 'object' && w.cls === 'hint-word') hintIndices.push(i);
-            });
-
-            // Find jackpot index
-            var jackpotIdx = -1;
-            words.forEach(function(w, i) {
-                if (typeof w === 'object' && w.cls === 'key-word') jackpotIdx = i;
-            });
-
-            // After 5+ spins, increasing chance of jackpot. Before that, clue words.
-            var jackpotChance = Math.min(0.4, Math.max(0, (spins - 4) * 0.08));
-            var clueChance = Math.min(0.5, 0.3 + (spins * 0.04));
-
-            if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
-                target = jackpotIdx;
-            } else if (Math.random() < clueChance && hintIndices.length > 0) {
-                target = hintIndices[Math.floor(Math.random() * hintIndices.length)];
-            } else {
-                target = Math.floor(Math.random() * words.length);
-            }
-
-            var targetPos = target * wordH;
-            var rotations = 3 + Math.floor(Math.random() * 2);
-            var dist = (rotations * totalH) + targetPos - (pos % totalH);
-            var startPos = pos;
-            var duration = 3000;
-            var startTime = null;
-
-            lever.classList.add('pulled');
-            setTimeout(function() { lever.classList.remove('pulled'); }, 200);
-
-            function animate(ts) {
-                if (!startTime) startTime = ts;
-                var elapsed = ts - startTime;
-                var progress = Math.min(elapsed / duration, 1);
-                var eased = easeOut(progress);
-                pos = startPos + (dist * eased);
-                reel.style.transform = 'translateY(-' + (pos % totalH) + 'px)';
-
-                // Radar animation
-                var ci = Math.floor((pos % totalH) / wordH) % words.length;
-                setGold(ci % 5);
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    pos = targetPos;
-                    reel.style.transform = 'translateY(-' + targetPos + 'px)';
-                    setGold(2); // reset
-
-                    var landed = words[target];
-                    if (typeof landed === 'object') {
-                        if (landed.cls === 'hint-word') {
-                            ding();
-                            machine.classList.add('jackpot');
-                            cluesFound[landed.t] = true;
-                            clueEl.textContent = clueMessages[landed.t] || 'Interesting...';
-                        } else if (landed.cls === 'key-word') {
-                            // JACKPOT - show prize modal with Telegram deeplink
-                            ding();
-                            machine.classList.add('jackpot');
-                            clueEl.textContent = 'JACKPOT!';
-                            bonziImgs.forEach(function(img) { img.classList.add('gold'); });
-
-                            // Generate unique prize code for deeplink
-                            var code = Date.now().toString(36).toUpperCase().slice(-4) +
-                                       Math.random().toString(36).toUpperCase().slice(2, 6);
-                            tgLink.href = 'https://t.me/Bonzivista_bot?start=JACKPOT-' + code;
-
-                            setTimeout(function() {
-                                prizeOverlay.classList.add('open');
-                            }, 600);
-
-                            setTimeout(function() { setGold(2); }, 5000);
-                        }
-                    } else {
-                        clueEl.textContent = 'Keep spinning...';
-                    }
-
+            postSlotAttempt().then(function(res) {
+                var j = res.json || {};
+                if (!res.httpOk || !j.success) {
                     spinning = false;
+                    clueEl.textContent = j.error || ('Spin blocked (' + res.status + ')');
+                    if (typeof j.tries_remaining === 'number' && spinCountEl) {
+                        spinCountEl.textContent = 'Tries left: ' + j.tries_remaining + ' / ' + (j.max_tries || '—');
+                    }
+                    return;
                 }
-            }
-            requestAnimationFrame(animate);
+
+                lastAttemptToken = (j.attempt_token || '').trim();
+                if (!lastAttemptToken) {
+                    spinning = false;
+                    clueEl.textContent = 'No attempt receipt from server.';
+                    return;
+                }
+
+                if (spinCountEl) {
+                    spinCountEl.textContent = 'Tries left: ' + j.tries_remaining + ' / ' + j.max_tries;
+                }
+
+                clueEl.textContent = 'Spin to find clues';
+                spins++;
+
+                machine.classList.remove('jackpot');
+
+                var target;
+                var hintIndices = [];
+                words.forEach(function(w, i) {
+                    if (typeof w === 'object' && w.cls === 'hint-word') hintIndices.push(i);
+                });
+
+                var jackpotIdx = -1;
+                words.forEach(function(w, i) {
+                    if (typeof w === 'object' && w.cls === 'key-word') jackpotIdx = i;
+                });
+
+                var jackpotChance = Math.min(0.4, Math.max(0, (spins - 4) * 0.08));
+                var clueChance = Math.min(0.5, 0.3 + (spins * 0.04));
+
+                if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
+                    target = jackpotIdx;
+                } else if (Math.random() < clueChance && hintIndices.length > 0) {
+                    target = hintIndices[Math.floor(Math.random() * hintIndices.length)];
+                } else {
+                    target = Math.floor(Math.random() * words.length);
+                }
+
+                var targetPos = target * wordH;
+                var rotations = 3 + Math.floor(Math.random() * 2);
+                var dist = (rotations * totalH) + targetPos - (pos % totalH);
+                var startPos = pos;
+                var duration = 3000;
+                var startTime = null;
+
+                lever.classList.add('pulled');
+                setTimeout(function() { lever.classList.remove('pulled'); }, 200);
+
+                function animate(ts) {
+                    if (!startTime) startTime = ts;
+                    var elapsed = ts - startTime;
+                    var progress = Math.min(elapsed / duration, 1);
+                    var eased = easeOut(progress);
+                    pos = startPos + (dist * eased);
+                    reel.style.transform = 'translateY(-' + (pos % totalH) + 'px)';
+
+                    var ci = Math.floor((pos % totalH) / wordH) % words.length;
+                    setGold(ci % 5);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        pos = targetPos;
+                        reel.style.transform = 'translateY(-' + targetPos + 'px)';
+                        setGold(2);
+
+                        var landed = words[target];
+                        if (typeof landed === 'object') {
+                            if (landed.cls === 'hint-word') {
+                                ding();
+                                machine.classList.add('jackpot');
+                                cluesFound[landed.t] = true;
+                                clueEl.textContent = clueMessages[landed.t] || 'Interesting...';
+                                spinning = false;
+                            } else if (landed.cls === 'key-word') {
+                                ding();
+                                machine.classList.add('jackpot');
+                                clueEl.textContent = 'JACKPOT — claiming…';
+                                bonziImgs.forEach(function(img) { img.classList.add('gold'); });
+
+                                postSlotWin(lastAttemptToken).then(function(wres) {
+                                    var wj = wres.json || {};
+                                    if (wres.httpOk && wj.success && wj.deep_link) {
+                                        clueEl.textContent = 'JACKPOT!';
+                                        tgLink.href = wj.deep_link;
+                                        setTimeout(function() {
+                                            prizeOverlay.classList.add('open');
+                                        }, 400);
+                                    } else {
+                                        clueEl.textContent = wj.error || 'Could not issue prize code.';
+                                        machine.classList.remove('jackpot');
+                                    }
+                                    setTimeout(function() { setGold(2); }, 5000);
+                                }).catch(function() {
+                                    clueEl.textContent = 'Network error — could not claim prize.';
+                                    machine.classList.remove('jackpot');
+                                }).finally(function() {
+                                    spinning = false;
+                                });
+                            }
+                        } else {
+                            clueEl.textContent = 'Keep spinning...';
+                            spinning = false;
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }).catch(function() {
+                spinning = false;
+                clueEl.textContent = 'Network error — try again.';
+            });
         });
 
         // Auto-spin on load

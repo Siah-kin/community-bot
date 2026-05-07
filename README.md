@@ -25,6 +25,22 @@ python3 -m http.server 8000
 open http://localhost:8000/
 ```
 
+## Slot page + email notify strip (`index.html`)
+
+- **`bonzi-api-origin`**: HTTPS base for `/api/slotgame/*` (default `https://bonzi-v5.onrender.com`).
+- **`bonzi-notify-signup-url`**: HTTPS link to your hosted signup page (Mailchimp, etc.). Leave empty to hide the bar.
+
+To patch the Mailchimp (or other) URL without editing HTML by hand:
+
+```bash
+export BONZI_NOTIFY_SIGNUP_URL='https://YOUR_HOSTED_FORM_URL'
+python3 scripts/patch_notify_meta.py
+```
+
+Then commit and push so GitHub Pages updates.
+
+**Optional (Telegram /start parity):** On the Bonzi_v5 Render service set `BONZI_PUBLIC_NOTIFY_URL` to the same HTTPS signup URL (see closed-source backend env docs).
+
 ## API (quick examples)
 
 See `docs/API.md` for the full reference.

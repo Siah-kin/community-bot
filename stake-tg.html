@@ -605,14 +605,26 @@
         // ============================================================
         // WalletConnect
         // ============================================================
+        function getWalletConnectEthereumProviderCtor() {
+            if (typeof window.EthereumProvider === 'function') {
+                return window.EthereumProvider;
+            }
+            const ns = globalThis['@walletconnect/ethereum-provider'];
+            if (ns && typeof ns.EthereumProvider === 'function') {
+                return ns.EthereumProvider;
+            }
+            return null;
+        }
+
         async function initWalletConnect() {
-            if (!window.EthereumProvider) {
+            const WCProviderCtor = getWalletConnectEthereumProviderCtor();
+            if (!WCProviderCtor) {
                 console.error('WalletConnect not loaded');
                 return null;
             }
 
             try {
-                return await window.EthereumProvider.init({
+                return await WCProviderCtor.init({
                     projectId: WALLETCONNECT_PROJECT_ID,
                     chains: [1],
                     showQrModal: true,

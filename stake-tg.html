@@ -624,6 +624,15 @@
             }
 
             try {
+                const pageUrl =
+                    (typeof window !== 'undefined' && window.location && window.location.href)
+                        ? `${window.location.origin}${window.location.pathname}`
+                        : 'https://bonzivista.org/stake-tg.html';
+                const iconUrl =
+                    (typeof window !== 'undefined' && window.location && window.location.origin)
+                        ? `${window.location.origin}/bonzi-logo.png`
+                        : 'https://siah-kin.github.io/community-bot/bonzi-logo.png';
+
                 return await WCProviderCtor.init({
                     projectId: WALLETCONNECT_PROJECT_ID,
                     chains: [1],
@@ -631,8 +640,8 @@
                     metadata: {
                         name: 'BONZI Staking',
                         description: 'Stake BONZI tokens to earn ETH rewards',
-                        url: 'https://siah-kin.github.io/community-bot/stake-tg.html',
-                        icons: ['https://siah-kin.github.io/community-bot/bonzi-logo.png']
+                        url: pageUrl,
+                        icons: [iconUrl]
                     }
                 });
             } catch (error) {

@@ -27,19 +27,24 @@ open http://localhost:8000/
 
 ## Slot page + email notify strip (`index.html`)
 
-- **`bonzi-api-origin`**: HTTPS base for `/api/slotgame/*` (default `https://bonzi-v5.onrender.com`).
-- **`bonzi-notify-signup-url`**: HTTPS link to your hosted signup page (Mailchimp, etc.). Leave empty to hide the bar.
+- **`bonzi-api-origin`**: HTTPS base where `/api/slotgame/*` lives (production default in the meta tag).
+- **`bonzi-notify-signup-url`**: Your **hosted email signup URL** — Mailchimp, Chimpmail, or any `https://` form page you control. Typical Mailchimp links use `list-manage.com`, `mailchi.mp`, or `chimp*.com`. Leave **empty** to hide the purple bar.
 
-To patch the Mailchimp (or other) URL without editing HTML by hand:
+**Quick test**
 
-```bash
-export BONZI_NOTIFY_SIGNUP_URL='https://YOUR_HOSTED_FORM_URL'
-python3 scripts/patch_notify_meta.py
-```
+1. In MailChimp/Chimpmail, copy the **hosted signup form** URL (must start with `https://`).
+2. From repo root:
+   ```bash
+   export BONZI_NOTIFY_SIGNUP_URL='https://YOUR_FORM_URL_HERE'
+   python3 scripts/patch_notify_meta.py
+   ```
+3. Confirm `index.html` meta `bonzi-notify-signup-url` now holds that URL.
+4. `python3 -m http.server 8000` → open `/` → you should see the bar and “Get notified” opens your form (not Telegram).
+5. Commit + push → wait for Pages → hard-refresh `bonzivista.org`.
 
-Then commit and push so GitHub Pages updates.
+The page **rejects** `t.me` / `telegram.me` in this field on purpose — that URL is only for email signups.
 
-**Optional (Telegram /start parity):** On the Bonzi_v5 Render service set `BONZI_PUBLIC_NOTIFY_URL` to the same HTTPS signup URL (see closed-source backend env docs).
+**Optional (aligned with the bot):** On the Bonzi backend, set `BONZI_PUBLIC_NOTIFY_URL` to the same `https://` link if your deploy uses it for `/start`-style links.
 
 ## API (quick examples)
 

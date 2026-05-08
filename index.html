@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-09-gate-restore">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
-    <!-- Email waitlist only (Mailchimp / Chimpmail hosted form, https://…). Never put t.me here—that belongs in jackpot flow. Leave empty to hide the yellow bar. -->
+    <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
     <meta name="bonzi-notify-signup-url" content="">
     <title>Bonzi Vista — Slot</title>
-    <meta name="description" content="Spin on bonzivista.org. Jackpot codes stamp in Telegram—Bonzi Buddy counts winners who finish the loop. Closed-alpha noise; Ethervista orbit.">
+    <meta name="description" content="Spin on bonzivista.org. Jackpot flows to Telegram. Closed-alpha funnel.">
     <meta property="og:title" content="Bonzi Vista">
     <meta property="og:description" content="Spin the lever; your receipt lands in Telegram. Closed-alpha funnel—not a support desk.">
     <meta property="og:type" content="website">
@@ -134,9 +136,35 @@
             border-color: #808080 #ffffff #ffffff #808080;
             padding: 8px;
         }
-        .lcd-label-stack {
+        .lcd-marquee-caption {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 6px 4px;
+        }
+        .lcd-marquee-caption .lcd-dash-line {
             display: block;
-            margin-bottom: 6px;
+            width: 100%;
+            max-width: min(260px, 100%);
+            height: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-top: 1px dashed rgba(148, 163, 184, 0.7);
+            box-sizing: border-box;
+        }
+        .lcd-marquee-lines {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .lcd-label-stack {
+            display: contents;
         }
         .lcd-line1 {
             display: block;
@@ -146,17 +174,10 @@
             font-family: 'Courier New', monospace;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(167, 139, 250, 0.75);
+            margin-bottom: 2px;
         }
-        .lcd-line2 {
-            display: block;
-            color: #d4af37;
-            font-size: 12px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            margin-top: 2px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.45);
-            min-height: 1.2em;
+        .lcd-line-tokenise {
+            margin-bottom: 0;
         }
         .lcd-screen {
             position: relative;
@@ -300,6 +321,9 @@
             background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
             animation: jackpot-glow 0.3s ease-in-out infinite alternate;
         }
+        .slot-machine.jackpot .lcd-dash-line {
+            border-top-color: rgba(253, 250, 255, 0.55);
+        }
         .slot-machine.jackpot .status-led {
             background: #7c3aed;
             animation: led-blink 0.3s infinite;
@@ -431,18 +455,110 @@
             font-family: inherit;
         }
 
-        /* === PRANK PAGE === */
+        /* === DIRECT FRONT DOOR === */
         .holding {
             text-align: center;
             padding: 2rem;
+            max-width: 460px;
         }
         .holding img {
             width: 96px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
         }
         .holding p {
             color: #71717A;
             font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .holding h1 {
+            color: #EDE9FE;
+            font-size: 2rem;
+            margin: 0.2rem 0 0.6rem;
+        }
+        .holding .lead {
+            color: #A1A1AA;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+        .frontdoor-actions {
+            display: grid;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+        .frontdoor-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            background: #18181B;
+            border: 1px solid #7C3AED;
+            color: #EDE9FE;
+            text-decoration: none;
+            padding: 0.85rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .frontdoor-btn:hover {
+            box-shadow: 0 0 0 1px #A78BFA inset;
+        }
+        .frontdoor-btn.primary {
+            background: linear-gradient(90deg, #6D28D9, #7C3AED);
+            color: #FFFFFF;
+            border-color: #7C3AED;
+        }
+        .frontdoor-footnote {
+            margin-top: 1rem;
+            color: #71717A;
+            font-size: 0.82rem;
+        }
+
+        .site-footer-slot {
+            margin-top: 1.5rem;
+            padding: 12px 8px 20px;
+            max-width: 340px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 11px;
+            color: #71717a;
+            line-height: 1.5;
+            border-top: 1px solid #27272a;
+        }
+        .site-footer-slot a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+        .site-footer-slot a:hover { text-decoration: underline; }
+        .site-footer-slot .footer-lang-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            margin: 0 4px;
+        }
+        .site-footer-slot .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; }
+        .site-footer-slot .footer-lang-btn[aria-pressed="true"] {
+            border-color: #7c3aed;
+            color: #c4b5fd;
+        }
+        .site-footer-slot .footer-lang-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .site-footer-slot .footer-lang-flag {
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: 4px 10px;
+        }
+        .site-footer-slot .footer-privacy-slot {
+            margin-top: 8px;
         }
 
         /* Mobile */
@@ -453,17 +569,16 @@
     </style>
 </head>
 <body>
-    <!-- PUZZLE GATE -->
+    <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
-        <p class="tagline">Pull the lever.</p>
+        <p class="tagline" id="gate-tagline">Pull the lever.</p>
 
         <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
-            <span class="notify-bar-text">Early access drops here first.</span>
+            <span class="notify-bar-text" id="notify-bar-msg">Early list: emails only.</span>
             <a id="notify-bar-link" class="notify-bar-cta" href="#" target="_blank" rel="noopener">Get notified</a>
         </div>
 
-        <!-- Win98 Slot Machine -->
         <div class="slot-machine" id="slot-machine">
             <div class="win98-titlebar">
                 <span class="win98-title">&#127920; ???</span>
@@ -471,10 +586,13 @@
             </div>
             <div class="win98-content">
                 <div class="lcd-panel">
-                    <span class="lcd-label-stack">
-                        <span class="lcd-line1">Tokenise your</span>
-                        <span class="lcd-line2" id="lcd-focus">attention</span>
-                    </span>
+                    <div class="lcd-marquee-caption" aria-live="polite">
+                        <span class="lcd-dash-line" aria-hidden="true"></span>
+                        <div class="lcd-marquee-lines lcd-label-stack">
+                            <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
+                        </div>
+                        <span class="lcd-dash-line" aria-hidden="true"></span>
+                    </div>
                     <div class="lcd-screen">
                         <div class="slot-reel" id="slot-reel"></div>
                     </div>
@@ -496,9 +614,9 @@
             </div>
             <div class="win98-statusbar">
                 <span class="status-led"></span>
-                <span class="status-text">Ready</span>
+                <span class="status-text" id="status-ready">Ready</span>
                 <span class="status-divider">|</span>
-                <span class="clue-msg" id="clue-msg">Purple = keypad hints • Gold reel = Telegram prize</span>
+                <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
             </div>
         </div>
 
@@ -508,23 +626,45 @@
         </div>
         <p class="error-msg" id="err">&nbsp;</p>
         <p class="spin-count" id="spin-count"></p>
+
+        <footer class="site-footer-slot">
+            <div class="footer-lang-row">
+                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
+                <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+            </div>
+            <div class="footer-privacy-slot">
+                <a href="privacy.html" id="footer-privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
 
-    <!-- JACKPOT PRIZE MODAL -->
     <div class="prize-overlay" id="prize-overlay">
         <div class="prize-box">
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
-            <h3>BONZI JACKPOT!</h3>
-            <p class="prize-desc">You cleared the <b>gold jackpot</b> reel (scroll icon) — the icons under the window flash gold together.<br>Nothing else on the reel hands out a server prize. Claim on Telegram from the link.</p>
-            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=start" target="_blank" rel="noopener">Open @Bonzivista_bot</a>
-            <button class="close-prize" id="close-prize">close</button>
+            <h3 id="prize-title">BONZI JACKPOT!</h3>
+            <p class="prize-desc" id="prize-desc"></p>
+            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=start" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
+            <button class="close-prize" id="close-prize"><span id="close-prize-label">close</span></button>
         </div>
     </div>
 
-    <!-- PRANK DESTINATION -->
+    <!-- Siah front door (unlock: access code or sessionStorage gate flag) -->
     <div class="holding hidden" id="content">
-        <img src="assets/bonzi/happy.png" alt="Bonzi">
-        <p>Nothing to see here yet.</p>
+        <img src="bonzi-logo.png" alt="Siah">
+        <h1>Siah-kin</h1>
+        <p class="lead">
+            <strong>@Siah_kin_bot</strong> is the next representation of <strong>@Bonzivista_bot</strong> from closed alpha.
+            Start with the first Thankpool activities below.
+        </p>
+        <div class="frontdoor-actions">
+            <a class="frontdoor-btn primary" href="stake-tg.html" target="_blank" rel="noopener">Stake &amp; Earn</a>
+            <a class="frontdoor-btn" href="https://t.me/Bonzivista_bot?start=raid" target="_blank" rel="noopener">Raid &amp; Earn</a>
+            <a class="frontdoor-btn" href="vetter/index.html" target="_blank" rel="noopener">Vet Raiders &amp; Earn</a>
+            <a class="frontdoor-btn" href="https://t.me/Siah_kin_bot" target="_blank" rel="noopener">Open @Siah_kin_bot</a>
+        </div>
+        <p class="frontdoor-footnote">
+            Built on active surfaces only. Higher-complexity lanes remain gated until verifier evidence is green.
+        </p>
     </div>
 
     <script>
@@ -536,16 +676,141 @@
             return;
         }
 
-        // === SESSION CHECK ===
         if (sessionStorage.getItem('bonzi_alpha') === '1') {
             document.getElementById('gate').classList.add('hidden');
             document.getElementById('content').classList.remove('hidden');
             return;
         }
 
+        var LOCALE_KEY = 'bonzi_site_lang';
+        var currentLang = 'en';
+        try {
+            var _st = (localStorage.getItem(LOCALE_KEY) || 'en').toLowerCase();
+            currentLang = (_st === 'pt-br' || _st === 'pt_br' || _st === 'pt') ? 'pt-BR' : 'en';
+        } catch (eLoc) {}
+
+        var I18N = {
+            en: {
+                tagline: 'Pull the lever.',
+                notifyMsg: 'Early list: emails only.',
+                notifyCta: 'Get notified',
+                lcdPrefix: 'Tokenise your',
+                statusIdle: 'Ready',
+                clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
+                pwPlaceholder: 'access code',
+                footerPrivacy: 'Privacy',
+                prizeTitle: 'BONZI JACKPOT!',
+                prizeDesc: 'You hit the <b>gold jackpot</b> reel (Bonzi scroll). Open Telegram with the button below.',
+                tgOpen: 'Open @Bonzivista_bot',
+                closeModal: 'close',
+                spinChecking: 'Checking…',
+                spinNoReceipt: 'No receipt from server.',
+                spinBlocked: 'Spin blocked',
+                jackpotClaiming: 'Jackpot — getting link…',
+                jackpotOk: 'Jackpot!',
+                prizeFail: 'Could not get prize link.',
+                prizeNet: 'Network error.',
+                reelInteresting: 'Interesting…',
+                reelFluff: 'No prize on this stop. Gold scroll = Telegram.',
+                spinNetErr: 'Network error — try again.',
+                triesLeft: function(a, m) { return 'Tries left: ' + a + ' / ' + m; },
+                errWrong: 'Wrong code.',
+                logoHint: 'Hint: surname + 26.',
+                infoTitle: 'Rules',
+                leverAria: 'Pull lever',
+                hints: {
+                    'Euler': 'Code hint: math name on reel (not money).',
+                    '26': 'Code hint: 26 = A–Z. Use with the other hint.',
+                    'e^i\u03C0+1=0': 'Code hint: famous formula. Same keypad game.',
+                    'K\u00F6nigsberg': 'Code hint: old bridge puzzle. Same keypad game.'
+                }
+            },
+            'pt-BR': {
+                tagline: 'Puxe a alavanca.',
+                notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
+                notifyCta: 'Avise-me',
+                lcdPrefix: 'Tokenise sua',
+                statusIdle: 'Pronto',
+                clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
+                pwPlaceholder: 'c\u00F3digo',
+                footerPrivacy: 'Privacidade',
+                prizeTitle: 'BONZI JACKPOT!',
+                prizeDesc: 'Voc\u00EA acertou o rolo <b>jackpot dourado</b> (scroll Bonzi). Abra o Telegram no bot\u00E3o abaixo.',
+                tgOpen: 'Abrir @Bonzivista_bot',
+                closeModal: 'fechar',
+                spinChecking: 'Verificando\u2026',
+                spinNoReceipt: 'Sem recibo do servidor.',
+                spinBlocked: 'Giro bloqueado',
+                jackpotClaiming: 'Jackpot \u2014 buscando link\u2026',
+                jackpotOk: 'Jackpot!',
+                prizeFail: 'N\u00E3o foi poss\u00EDvel obter o link.',
+                prizeNet: 'Erro de rede.',
+                reelInteresting: 'Interessante\u2026',
+                reelFluff: 'Sem pr\u00EAmio aqui. Scroll dourado = Telegram.',
+                spinNetErr: 'Erro de rede \u2014 tente de novo.',
+                triesLeft: function(a, m) { return 'Tentativas: ' + a + ' / ' + m; },
+                errWrong: 'C\u00F3digo errado.',
+                logoHint: 'Dica: sobrenome + 26.',
+                infoTitle: 'Regras',
+                leverAria: 'Puxar alavanca',
+                hints: {
+                    'Euler': 'Dica do c\u00F3digo: nome de matem\u00E1tico no rolo (n\u00E3o \u00E9 dinheiro).',
+                    '26': 'Dica: 26 = A\u2013Z. Junte \u00E0 outra dica.',
+                    'e^i\u03C0+1=0': 'Dica: f\u00F3rmula famosa. Mesmo jogo do teclado.',
+                    'K\u00F6nigsberg': 'Dica: quebra-cabe\u00E7a cl\u00E1ssico. Mesmo jogo do teclado.'
+                }
+            }
+        };
+
+        function getStr() {
+            return I18N[currentLang] || I18N.en;
+        }
+
+        function persistLang() {
+            try {
+                localStorage.setItem(LOCALE_KEY, currentLang === 'pt-BR' ? 'pt-br' : 'en');
+            } catch (eP) {}
+        }
+
+        function applyLang() {
+            var L = getStr();
+            document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
+            var gt = document.getElementById('gate-tagline');
+            if (gt) gt.textContent = L.tagline;
+            var nb = document.getElementById('notify-bar-msg');
+            if (nb) nb.textContent = L.notifyMsg;
+            var nlk = document.getElementById('notify-bar-link');
+            if (nlk) nlk.textContent = L.notifyCta;
+            var lp = document.getElementById('lcd-prefix');
+            if (lp) lp.textContent = L.lcdPrefix;
+            var st = document.getElementById('status-ready');
+            if (st) st.textContent = L.statusIdle;
+            var clueTmp = document.getElementById('clue-msg');
+            if (clueTmp) clueTmp.textContent = L.clueBar;
+            var pw = document.getElementById('pw');
+            if (pw) pw.placeholder = L.pwPlaceholder;
+            var fp = document.getElementById('footer-privacy');
+            if (fp) fp.textContent = L.footerPrivacy;
+            var prt = document.getElementById('prize-title');
+            if (prt) prt.textContent = L.prizeTitle;
+            var prd = document.getElementById('prize-desc');
+            if (prd) prd.innerHTML = L.prizeDesc;
+            var tglab = document.getElementById('tg-link-label');
+            if (tglab) tglab.textContent = L.tgOpen;
+            var cplab = document.getElementById('close-prize-label');
+            if (cplab) cplab.textContent = L.closeModal;
+            var ib = document.getElementById('slot-info-btn');
+            if (ib) ib.setAttribute('title', L.infoTitle);
+            var levEl = document.getElementById('slot-lever');
+            if (levEl) levEl.setAttribute('aria-label', L.leverAria);
+            var bp = document.getElementById('lang-pt-br');
+            var be = document.getElementById('lang-en');
+            if (bp) bp.setAttribute('aria-pressed', currentLang === 'pt-BR' ? 'true' : 'false');
+            if (be) be.setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+        }
+
         // === SLOT WORDS ===
-        // Purple highlights = riddles toward the OPTIONAL site bypass code (keyboard). They do NOT issue Telegram prizes.
-        // Gold reel symbol = jackpot path (server-backed PRIZE link). Not Ethervista "Euler fees" math.
+        // Purple stops = keypad bypass hints only. Gold scroll = Telegram jackpot (server-backed).
         var words = [
             'Launch', 'Brand', 'Token', 'Future', 'Dream',
             { t: 'Euler', cls: 'hint-word' },           // CLUE
@@ -559,16 +824,8 @@
             'Lab', 'Syndicate', 'Tribe', 'Venture',
             { t: 'K\u00F6nigsberg', cls: 'hint-word' }, // CLUE (Seven Bridges)
             'Index', 'Hedge', 'Course', 'Platform',
-            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll - bonzi jackpot
+            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll — jackpot
         ];
-
-        // Hint copy: puzzles for EULER26 bypass only — clarify so people don't confuse with token economics / API wins
-        var clueMessages = {
-            'Euler': 'Bypass hint: unrelated to Ethervista fees. Helps guess the keypad code.',
-            '26': 'Bypass hint: 26 = letters A–Z. Combine with another hint for the keypad.',
-            'e^i\u03C0+1=0': 'Bypass hint: famous identity (math puzzle noise). Same keypad game.',
-            'K\u00F6nigsberg': 'Bypass hint: classic math puzzle rabbit-hole. Same keypad game.'
-        };
 
         var reel = document.getElementById('slot-reel');
         var lever = document.getElementById('slot-lever');
@@ -654,6 +911,26 @@
             }
         })();
 
+        applyLang();
+        (function wireLangButtons() {
+            var langPtBtn = document.getElementById('lang-pt-br');
+            var langEnBtn = document.getElementById('lang-en');
+            if (langPtBtn) {
+                langPtBtn.addEventListener('click', function() {
+                    currentLang = 'pt-BR';
+                    persistLang();
+                    applyLang();
+                });
+            }
+            if (langEnBtn) {
+                langEnBtn.addEventListener('click', function() {
+                    currentLang = 'en';
+                    persistLang();
+                    applyLang();
+                });
+            }
+        })();
+
         function getApiOrigin() {
             var meta = document.querySelector('meta[name="bonzi-api-origin"]');
             var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
@@ -717,31 +994,20 @@
 
         var lastAttemptToken = '';
 
-        /** Rotating line under TOKENISE YOUR — shown each spin after server accepts attempt */
-        var TOKENISE_TAILS = ['attention', 'contributions', 'reputation', 'cooperation traces', 'onchain proofs'];
-        var tokeniseIx = 0;
-
-        function bumpTokeniseFocus() {
-            var el = document.getElementById('lcd-focus');
-            if (!el) return;
-            tokeniseIx = (tokeniseIx + 1) % TOKENISE_TAILS.length;
-            el.textContent = TOKENISE_TAILS[tokeniseIx];
-        }
-
         // Spin — server attempt receipt first, then animation; jackpot calls /win with that receipt
         lever.addEventListener('click', function() {
             if (spinning) return;
             spinning = true;
 
-            clueEl.textContent = 'Checking server…';
+            clueEl.textContent = getStr().spinChecking;
 
             postSlotAttempt().then(function(res) {
                 var j = res.json || {};
                 if (!res.httpOk || !j.success) {
                     spinning = false;
-                    clueEl.textContent = j.error || ('Spin blocked (' + res.status + ')');
+                    clueEl.textContent = j.error || (getStr().spinBlocked + ' (' + res.status + ')');
                     if (typeof j.tries_remaining === 'number' && spinCountEl) {
-                        spinCountEl.textContent = 'Tries left: ' + j.tries_remaining + ' / ' + (j.max_tries || '—');
+                        spinCountEl.textContent = getStr().triesLeft(j.tries_remaining, j.max_tries || '\u2014');
                     }
                     return;
                 }
@@ -749,18 +1015,16 @@
                 lastAttemptToken = (j.attempt_token || '').trim();
                 if (!lastAttemptToken) {
                     spinning = false;
-                    clueEl.textContent = 'No attempt receipt from server.';
+                    clueEl.textContent = getStr().spinNoReceipt;
                     return;
                 }
 
                 if (spinCountEl) {
-                    spinCountEl.textContent = 'Tries left: ' + j.tries_remaining + ' / ' + j.max_tries;
+                    spinCountEl.textContent = getStr().triesLeft(j.tries_remaining, j.max_tries);
                 }
 
-                clueEl.textContent = 'Purple = keypad hints • Gold reel icon = Telegram prize';
+                clueEl.textContent = getStr().clueBar;
                 spins++;
-
-                bumpTokeniseFocus();
 
                 machine.classList.remove('jackpot');
 
@@ -820,36 +1084,37 @@
                                 ding();
                                 machine.classList.add('jackpot');
                                 cluesFound[landed.t] = true;
-                                clueEl.textContent = clueMessages[landed.t] || 'Interesting...';
+                                var H = getStr().hints;
+                                clueEl.textContent = (H && H[landed.t]) ? H[landed.t] : getStr().reelInteresting;
                                 spinning = false;
                             } else if (landed.cls === 'key-word') {
                                 ding();
                                 machine.classList.add('jackpot');
-                                clueEl.textContent = 'JACKPOT — claiming…';
+                                clueEl.textContent = getStr().jackpotClaiming;
                                 bonziImgs.forEach(function(img) { img.classList.add('gold'); });
 
                                 postSlotWin(lastAttemptToken).then(function(wres) {
                                     var wj = wres.json || {};
                                     if (wres.httpOk && wj.success && wj.deep_link) {
-                                        clueEl.textContent = 'JACKPOT!';
+                                        clueEl.textContent = getStr().jackpotOk;
                                         tgLink.href = wj.deep_link;
                                         setTimeout(function() {
                                             prizeOverlay.classList.add('open');
                                         }, 400);
                                     } else {
-                                        clueEl.textContent = wj.error || 'Could not issue prize code.';
+                                        clueEl.textContent = wj.error || getStr().prizeFail;
                                         machine.classList.remove('jackpot');
                                     }
                                     setTimeout(function() { setGold(2); }, 5000);
                                 }).catch(function() {
-                                    clueEl.textContent = 'Network error — could not claim prize.';
+                                    clueEl.textContent = getStr().prizeNet;
                                     machine.classList.remove('jackpot');
                                 }).finally(function() {
                                     spinning = false;
                                 });
                             }
                         } else {
-                            clueEl.textContent = 'Reel fluff — only gold scroll jackpot → Telegram.';
+                            clueEl.textContent = getStr().reelFluff;
                             spinning = false;
                         }
                     }
@@ -857,7 +1122,7 @@
                 requestAnimationFrame(animate);
             }).catch(function() {
                 spinning = false;
-                clueEl.textContent = 'Network error — try again.';
+                clueEl.textContent = getStr().spinNetErr;
             });
         });
 
@@ -872,7 +1137,7 @@
                 document.getElementById('gate').classList.add('hidden');
                 document.getElementById('content').classList.remove('hidden');
             } else if (val.length > 0) {
-                errEl.textContent = 'Wrong code.';
+                errEl.textContent = getStr().errWrong;
                 pwEl.value = '';
                 setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2000);
             }
@@ -888,7 +1153,7 @@
         document.getElementById('logo-click').addEventListener('click', function() {
             logoClicks++;
             if (logoClicks === 5) {
-                clueEl.textContent = 'Keypad cheat sheet: surname + alphabet count.';
+                clueEl.textContent = getStr().logoHint;
                 logoClicks = 0;
             }
         });
@@ -900,9 +1165,6 @@
         prizeOverlay.addEventListener('click', function(e) {
             if (e.target === prizeOverlay) prizeOverlay.classList.remove('open');
         });
-
-        // Console hint for the curious
-        console.log('%c Seven bridges. One mathematician. A to Z.', 'color: #7C3AED; font-size: 14px;');
     })();
     </script>
 </body>

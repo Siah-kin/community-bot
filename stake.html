@@ -1231,8 +1231,16 @@
     <!-- Web3 Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <!-- WalletConnect v2 -->
-    <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
-    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
+    <script>
+        if (!window.WalletConnectProvider && window['@walletconnect/ethereum-provider']) {
+            window.WalletConnectProvider = window['@walletconnect/ethereum-provider'];
+        }
+        if (!window.EthereumProvider && window.WalletConnectProvider) {
+            window.EthereumProvider = window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
+        }
+    </script>
     <script>
         // Nav connect button wiring
         function initNavConnect() {
@@ -1328,13 +1336,23 @@
 
         // Initialize WalletConnect provider
         async function initWalletConnect() {
-            if (!window.EthereumProvider) {
+            const wcGlobal = window.WalletConnectProvider || window.EthereumProvider;
+            if (!wcGlobal && !window['@walletconnect/ethereum-provider']) {
                 console.error('WalletConnect not loaded');
                 return null;
             }
 
             try {
-                const wcProvider = await window.EthereumProvider.init({
+                const ProviderCtor = window.EthereumProvider
+                    || window.WalletConnectProvider
+                    || window['@walletconnect/ethereum-provider']
+                    || (window['@walletconnect/ethereum-provider']
+                        && window['@walletconnect/ethereum-provider'].EthereumProvider);
+                if (!ProviderCtor || typeof ProviderCtor.init !== 'function') {
+                    throw new Error('WalletConnect constructor not available');
+                }
+
+                const wcProvider = await ProviderCtor.init({
                     projectId: WALLETCONNECT_PROJECT_ID,
                     chains: [1], // Ethereum mainnet
                     showQrModal: true,

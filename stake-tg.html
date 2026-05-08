@@ -509,8 +509,16 @@
 
     <!-- Web3 Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
-    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
+    <script>
+        if (!window.WalletConnectProvider && window['@walletconnect/ethereum-provider']) {
+            window.WalletConnectProvider = window['@walletconnect/ethereum-provider'];
+        }
+        if (!window.EthereumProvider && window.WalletConnectProvider) {
+            window.EthereumProvider = window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
+        }
+    </script>
     <script>
         // ============================================================
         // Telegram Web App Integration
@@ -609,9 +617,21 @@
             if (typeof window.EthereumProvider === 'function') {
                 return window.EthereumProvider;
             }
+            if (typeof window.WalletConnectProvider === 'function') {
+                return window.WalletConnectProvider;
+            }
             const ns = globalThis['@walletconnect/ethereum-provider'];
+            if (typeof ns === 'function') {
+                return ns;
+            }
             if (ns && typeof ns.EthereumProvider === 'function') {
                 return ns.EthereumProvider;
+            }
+            if (ns && typeof ns.default === 'function') {
+                return ns.default;
+            }
+            if (ns && ns.default && typeof ns.default.EthereumProvider === 'function') {
+                return ns.default.EthereumProvider;
             }
             return null;
         }

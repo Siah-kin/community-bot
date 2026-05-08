@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
-    <!-- Mailchimp (or other) signup URL; leave empty to hide the bar -->
-    <meta name="bonzi-notify-signup-url" content="https://t.me/Bonzivista_bot">
-    <title>Bonzi</title>
+    <!-- Email waitlist only (Mailchimp / Chimpmail hosted form, https://…). Never put t.me here—that belongs in jackpot flow. Leave empty to hide the yellow bar. -->
+    <meta name="bonzi-notify-signup-url" content="">
+    <title>Bonzi Vista — Slot</title>
+    <meta name="description" content="Spin on bonzivista.org. Jackpot codes stamp in Telegram—Bonzi Buddy counts winners who finish the loop. Closed-alpha noise; Ethervista orbit.">
+    <meta property="og:title" content="Bonzi Vista">
+    <meta property="og:description" content="Spin the lever; your receipt lands in Telegram. Closed-alpha funnel—not a support desk.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/bonzi-design.css">
@@ -129,22 +134,42 @@
             border-color: #808080 #ffffff #ffffff #808080;
             padding: 8px;
         }
-        .lcd-label {
+        .lcd-label-stack {
             display: block;
-            color: #a78bfa;
+            margin-bottom: 6px;
+        }
+        .lcd-line1 {
+            display: block;
+            color: #c4b5fd;
             font-size: 11px;
             font-weight: bold;
             font-family: 'Courier New', monospace;
-            letter-spacing: 3px;
-            margin-bottom: 6px;
-            text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.75);
+        }
+        .lcd-line2 {
+            display: block;
+            color: #d4af37;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.45);
+            min-height: 1.2em;
         }
         .lcd-screen {
             position: relative;
             height: 60px;
             overflow: hidden;
             background: #0a0a1a;
-            border: 1px solid #333;
+            border: 3px solid;
+            border-color: #2a1638 #dad4ec #fdfcff #533c6e;
+            box-shadow:
+                inset 0 3px 8px rgba(0, 0, 0, 0.92),
+                inset 0 0 0 2px rgba(10, 6, 20, 0.95);
+            box-sizing: border-box;
+            border-radius: 2px;
         }
         .slot-reel {
             position: relative;
@@ -446,7 +471,10 @@
             </div>
             <div class="win98-content">
                 <div class="lcd-panel">
-                    <span class="lcd-label">FIND THE KEY</span>
+                    <span class="lcd-label-stack">
+                        <span class="lcd-line1">Tokenise your</span>
+                        <span class="lcd-line2" id="lcd-focus">attention</span>
+                    </span>
                     <div class="lcd-screen">
                         <div class="slot-reel" id="slot-reel"></div>
                     </div>
@@ -470,7 +498,7 @@
                 <span class="status-led"></span>
                 <span class="status-text">Ready</span>
                 <span class="status-divider">|</span>
-                <span class="clue-msg" id="clue-msg">Spin to find clues</span>
+                <span class="clue-msg" id="clue-msg">Purple = keypad hints • Gold reel = Telegram prize</span>
             </div>
         </div>
 
@@ -487,7 +515,7 @@
         <div class="prize-box">
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
             <h3>BONZI JACKPOT!</h3>
-            <p class="prize-desc">Claim your prize on Telegram.<br>Use the link from your server-backed win.</p>
+            <p class="prize-desc">You cleared the <b>gold jackpot</b> reel (scroll icon) — the icons under the window flash gold together.<br>Nothing else on the reel hands out a server prize. Claim on Telegram from the link.</p>
             <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=start" target="_blank" rel="noopener">Open @Bonzivista_bot</a>
             <button class="close-prize" id="close-prize">close</button>
         </div>
@@ -516,9 +544,8 @@
         }
 
         // === SLOT WORDS ===
-        // Clue words are purple. The rest are noise.
-        // Clues: "Euler" (mathematician), "26" (the number), "e^ipi+1=0" (his formula)
-        // Hidden clue: "Konigsberg" (his famous problem)
+        // Purple highlights = riddles toward the OPTIONAL site bypass code (keyboard). They do NOT issue Telegram prizes.
+        // Gold reel symbol = jackpot path (server-backed PRIZE link). Not Ethervista "Euler fees" math.
         var words = [
             'Launch', 'Brand', 'Token', 'Future', 'Dream',
             { t: 'Euler', cls: 'hint-word' },           // CLUE
@@ -535,12 +562,12 @@
             { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll - bonzi jackpot
         ];
 
-        // Clue messages for status bar when landing on hint words
+        // Hint copy: puzzles for EULER26 bypass only — clarify so people don't confuse with token economics / API wins
         var clueMessages = {
-            'Euler': 'A Swiss mathematician...',
-            '26': 'Letters. A to Z.',
-            'e^i\u03C0+1=0': 'His most beautiful equation.',
-            'K\u00F6nigsberg': 'Seven bridges. One name.'
+            'Euler': 'Bypass hint: unrelated to Ethervista fees. Helps guess the keypad code.',
+            '26': 'Bypass hint: 26 = letters A–Z. Combine with another hint for the keypad.',
+            'e^i\u03C0+1=0': 'Bypass hint: famous identity (math puzzle noise). Same keypad game.',
+            'K\u00F6nigsberg': 'Bypass hint: classic math puzzle rabbit-hole. Same keypad game.'
         };
 
         var reel = document.getElementById('slot-reel');
@@ -611,8 +638,17 @@
             var bar = document.getElementById('notify-bar');
             var lk = document.getElementById('notify-bar-link');
             if (!bar || !lk) return;
-            if (url && url.slice(0, 4).toLowerCase() === 'http') {
+            var looksTelegram = /t\.me\//i.test(url) || /telegram\.me\//i.test(url);
+            if (looksTelegram) {
+                /* Interest counts belong on email signup; Telegram deep links belong to jackpot / bot starts */
+                bar.classList.add('hidden');
+                bar.setAttribute('aria-hidden', 'true');
+                lk.href = '#';
+                return;
+            }
+            if (url && /^https?:\/\//i.test(url)) {
                 lk.href = url;
+                lk.rel = 'noopener noreferrer';
                 bar.classList.remove('hidden');
                 bar.setAttribute('aria-hidden', 'false');
             }
@@ -681,6 +717,17 @@
 
         var lastAttemptToken = '';
 
+        /** Rotating line under TOKENISE YOUR — shown each spin after server accepts attempt */
+        var TOKENISE_TAILS = ['attention', 'contributions', 'reputation', 'cooperation traces', 'onchain proofs'];
+        var tokeniseIx = 0;
+
+        function bumpTokeniseFocus() {
+            var el = document.getElementById('lcd-focus');
+            if (!el) return;
+            tokeniseIx = (tokeniseIx + 1) % TOKENISE_TAILS.length;
+            el.textContent = TOKENISE_TAILS[tokeniseIx];
+        }
+
         // Spin — server attempt receipt first, then animation; jackpot calls /win with that receipt
         lever.addEventListener('click', function() {
             if (spinning) return;
@@ -710,8 +757,10 @@
                     spinCountEl.textContent = 'Tries left: ' + j.tries_remaining + ' / ' + j.max_tries;
                 }
 
-                clueEl.textContent = 'Spin to find clues';
+                clueEl.textContent = 'Purple = keypad hints • Gold reel icon = Telegram prize';
                 spins++;
+
+                bumpTokeniseFocus();
 
                 machine.classList.remove('jackpot');
 
@@ -800,7 +849,7 @@
                                 });
                             }
                         } else {
-                            clueEl.textContent = 'Keep spinning...';
+                            clueEl.textContent = 'Reel fluff — only gold scroll jackpot → Telegram.';
                             spinning = false;
                         }
                     }
@@ -839,7 +888,7 @@
         document.getElementById('logo-click').addEventListener('click', function() {
             logoClicks++;
             if (logoClicks === 5) {
-                clueEl.textContent = 'His name. Count the alphabet.';
+                clueEl.textContent = 'Keypad cheat sheet: surname + alphabet count.';
                 logoClicks = 0;
             }
         });

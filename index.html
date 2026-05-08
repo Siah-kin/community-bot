@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-09-gate-restore">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-09-slot-home-only">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
@@ -455,7 +455,7 @@
             font-family: inherit;
         }
 
-        /* === DIRECT FRONT DOOR === */
+        /* === POST-UNLOCK (keypad bypass placeholder) === */
         .holding {
             text-align: center;
             padding: 2rem;
@@ -469,46 +469,6 @@
             color: #71717A;
             font-size: 0.9rem;
             margin: 0.5rem 0;
-        }
-        .holding h1 {
-            color: #EDE9FE;
-            font-size: 2rem;
-            margin: 0.2rem 0 0.6rem;
-        }
-        .holding .lead {
-            color: #A1A1AA;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-        .frontdoor-actions {
-            display: grid;
-            gap: 0.7rem;
-            margin-top: 1rem;
-        }
-        .frontdoor-btn {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            background: #18181B;
-            border: 1px solid #7C3AED;
-            color: #EDE9FE;
-            text-decoration: none;
-            padding: 0.85rem 1rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        .frontdoor-btn:hover {
-            box-shadow: 0 0 0 1px #A78BFA inset;
-        }
-        .frontdoor-btn.primary {
-            background: linear-gradient(90deg, #6D28D9, #7C3AED);
-            color: #FFFFFF;
-            border-color: #7C3AED;
-        }
-        .frontdoor-footnote {
-            margin-top: 1rem;
-            color: #71717A;
-            font-size: 0.82rem;
         }
 
         .site-footer-slot {
@@ -648,23 +608,10 @@
         </div>
     </div>
 
-    <!-- Siah front door (unlock: access code or sessionStorage gate flag) -->
+    <!-- PRANK / BYPASS DESTINATION (hidden until code or session) -->
     <div class="holding hidden" id="content">
-        <img src="bonzi-logo.png" alt="Siah">
-        <h1>Siah-kin</h1>
-        <p class="lead">
-            <strong>@Siah_kin_bot</strong> is the next representation of <strong>@Bonzivista_bot</strong> from closed alpha.
-            Start with the first Thankpool activities below.
-        </p>
-        <div class="frontdoor-actions">
-            <a class="frontdoor-btn primary" href="stake-tg.html" target="_blank" rel="noopener">Stake &amp; Earn</a>
-            <a class="frontdoor-btn" href="https://t.me/Bonzivista_bot?start=raid" target="_blank" rel="noopener">Raid &amp; Earn</a>
-            <a class="frontdoor-btn" href="vetter/index.html" target="_blank" rel="noopener">Vet Raiders &amp; Earn</a>
-            <a class="frontdoor-btn" href="https://t.me/Siah_kin_bot" target="_blank" rel="noopener">Open @Siah_kin_bot</a>
-        </div>
-        <p class="frontdoor-footnote">
-            Built on active surfaces only. Higher-complexity lanes remain gated until verifier evidence is green.
-        </p>
+        <img src="bonzi-logo.png" alt="Bonzi">
+        <p>Nothing to see here yet.</p>
     </div>
 
     <script>
@@ -673,12 +620,6 @@
         if (new URLSearchParams(window.location.search).get('dev') === '1') {
             sessionStorage.setItem('bonzi_alpha', '1');
             window.location.href = 'dev.html';
-            return;
-        }
-
-        if (sessionStorage.getItem('bonzi_alpha') === '1') {
-            document.getElementById('gate').classList.add('hidden');
-            document.getElementById('content').classList.remove('hidden');
             return;
         }
 

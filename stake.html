@@ -1346,8 +1346,7 @@
         async function initWalletConnect() {
             const wcGlobal = window.WalletConnectProvider || window.EthereumProvider;
             if (!wcGlobal && !window['@walletconnect/ethereum-provider']) {
-                console.error('WalletConnect not loaded');
-                return null;
+                throw new Error('WalletConnect not loaded');
             }
 
             try {
@@ -1392,10 +1391,9 @@
                 if (lastError) {
                     throw lastError;
                 }
-                return null;
             } catch (error) {
                 console.error('WalletConnect init failed:', error);
-                return null;
+                throw error;
             }
         }
 

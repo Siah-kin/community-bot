@@ -509,13 +509,8 @@
 
     <!-- Web3 Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
     <script>
-        const wcModalNs = window['@walletconnect/modal'];
-        if (!window.WalletConnectModal && wcModalNs) {
-            window.WalletConnectModal = wcModalNs.WalletConnectModal || wcModalNs.default || wcModalNs;
-        }
         const wcProviderNs = window['@walletconnect/ethereum-provider'];
         if (!window.WalletConnectProvider && wcProviderNs) {
             window.WalletConnectProvider = wcProviderNs.EthereumProvider || wcProviderNs.default || wcProviderNs;
@@ -652,8 +647,7 @@
         async function initWalletConnect() {
             const WCProviderCtor = getWalletConnectEthereumProviderCtor();
             if (!WCProviderCtor) {
-                console.error('WalletConnect not loaded');
-                return null;
+                throw new Error('WalletConnect not loaded');
             }
 
             try {
@@ -692,10 +686,9 @@
                 if (lastError) {
                     throw lastError;
                 }
-                return null;
             } catch (error) {
                 console.error('WalletConnect init failed:', error);
-                return null;
+                throw error;
             }
         }
 

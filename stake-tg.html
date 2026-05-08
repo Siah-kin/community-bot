@@ -512,8 +512,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
     <script>
-        if (!window.WalletConnectProvider && window['@walletconnect/ethereum-provider']) {
-            window.WalletConnectProvider = window['@walletconnect/ethereum-provider'];
+        const wcModalNs = window['@walletconnect/modal'];
+        if (!window.WalletConnectModal && wcModalNs) {
+            window.WalletConnectModal = wcModalNs.WalletConnectModal || wcModalNs.default || wcModalNs;
+        }
+        const wcProviderNs = window['@walletconnect/ethereum-provider'];
+        if (!window.WalletConnectProvider && wcProviderNs) {
+            window.WalletConnectProvider = wcProviderNs.EthereumProvider || wcProviderNs.default || wcProviderNs;
         }
         if (!window.EthereumProvider && window.WalletConnectProvider) {
             window.EthereumProvider = window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
@@ -540,6 +545,8 @@
         const preAction = urlParams.get('action');
         const preAmount = urlParams.get('amount');
         const preWallet = urlParams.get('wallet');
+        const IS_TELEGRAM_WEBAPP = !!(window.Telegram && window.Telegram.WebApp);
+        const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
 
         // ============================================================
         // Contract Config (same as stake.html)
@@ -599,6 +606,12 @@
         let currentClaimableEth = 0;
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
+        const WALLETCONNECT_INIT_VARIANTS = [
+            { optionalChains: [1], showQrModal: USE_QR_MODAL },
+            { chains: [1], showQrModal: USE_QR_MODAL },
+            { optionalChains: [1], showQrModal: true },
+            { chains: [1], showQrModal: true }
+        ];
 
         // ============================================================
         // Tab Switching
@@ -646,24 +659,40 @@
             try {
                 const pageUrl =
                     (typeof window !== 'undefined' && window.location && window.location.href)
-                        ? `${window.location.origin}${window.location.pathname}`
+                        ? window.location.origin
                         : 'https://bonzivista.org/stake-tg.html';
                 const iconUrl =
                     (typeof window !== 'undefined' && window.location && window.location.origin)
-                        ? `${window.location.origin}/bonzi-logo.png`
+                        ? 'https://siah-kin.github.io/community-bot/bonzi-logo.png'
                         : 'https://siah-kin.github.io/community-bot/bonzi-logo.png';
 
-                return await WCProviderCtor.init({
+                const baseConfig = {
                     projectId: WALLETCONNECT_PROJECT_ID,
-                    chains: [1],
-                    showQrModal: true,
                     metadata: {
                         name: 'BONZI Staking',
                         description: 'Stake BONZI tokens to earn ETH rewards',
                         url: pageUrl,
                         icons: [iconUrl]
                     }
-                });
+                };
+
+                let lastError = null;
+                for (const variant of WALLETCONNECT_INIT_VARIANTS) {
+                    try {
+                        return await WCProviderCtor.init({
+                            ...baseConfig,
+                            ...variant
+                        });
+                    } catch (error) {
+                        lastError = error;
+                        console.warn('WalletConnect init variant failed:', variant, error);
+                    }
+                }
+
+                if (lastError) {
+                    throw lastError;
+                }
+                return null;
             } catch (error) {
                 console.error('WalletConnect init failed:', error);
                 return null;

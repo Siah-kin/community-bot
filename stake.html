@@ -1328,6 +1328,14 @@
 
         // WalletConnect Project ID (public, for BONZI dApp)
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
+        const IS_TELEGRAM_WEBAPP = !!(window.Telegram && window.Telegram.WebApp);
+        const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
+        const WALLETCONNECT_INIT_VARIANTS = [
+            { optionalChains: [1], showQrModal: USE_QR_MODAL },
+            { chains: [1], showQrModal: USE_QR_MODAL },
+            { optionalChains: [1], showQrModal: true },
+            { chains: [1], showQrModal: true }
+        ];
 
         // Detect mobile
         function isMobile() {
@@ -1352,19 +1360,39 @@
                     throw new Error('WalletConnect constructor not available');
                 }
 
-                const wcProvider = await ProviderCtor.init({
+                const baseConfig = {
                     projectId: WALLETCONNECT_PROJECT_ID,
-                    chains: [1], // Ethereum mainnet
-                    showQrModal: true,
                     metadata: {
                         name: 'BONZI Staking',
                         description: 'Stake BONZI tokens to earn ETH rewards',
-                        url: 'https://siah-kin.github.io/community-bot/stake.html',
-                        icons: ['https://siah-kin.github.io/community-bot/bonzi-logo.png']
+                        url: window.location && window.location.origin
+                            ? window.location.origin
+                            : 'https://siah-kin.github.io',
+                        icons: [
+                            window.location && window.location.origin
+                                ? 'https://siah-kin.github.io/community-bot/bonzi-logo.png'
+                                : 'https://siah-kin.github.io/community-bot/bonzi-logo.png'
+                        ]
                     }
-                });
+                };
 
-                return wcProvider;
+                let lastError = null;
+                for (const variant of WALLETCONNECT_INIT_VARIANTS) {
+                    try {
+                        return await ProviderCtor.init({
+                            ...baseConfig,
+                            ...variant
+                        });
+                    } catch (error) {
+                        lastError = error;
+                        console.warn('WalletConnect init variant failed:', variant, error);
+                    }
+                }
+
+                if (lastError) {
+                    throw lastError;
+                }
+                return null;
             } catch (error) {
                 console.error('WalletConnect init failed:', error);
                 return null;

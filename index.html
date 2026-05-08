@@ -926,6 +926,9 @@
             infoBtn.addEventListener('click', function(ev) {
                 ev.preventDefault();
                 var rulesUrl = getApiOrigin() + '/api/slotgame/rules';
+                if (currentLang === 'pt-BR') {
+                    rulesUrl += '?lang=pt';
+                }
                 var feats = 'width=480,height=620,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no';
                 var w = window.open(rulesUrl, 'slotrules', feats);
                 if (!w || typeof w.closed === 'undefined')

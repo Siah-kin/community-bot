@@ -671,9 +671,11 @@
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
         const IS_TELEGRAM_WEBAPP = !!(tg && tg.initData && tg.initData.length > 0);
+        const HAS_TELEGRAM_WEBAPP = !!tg;
+        const IS_EXTERNAL_BROWSER_FLOW = new URLSearchParams(window.location.search).get('external') === '1';
         const TELEGRAM_PLATFORM = tg && typeof tg.platform === 'string' ? String(tg.platform).toLowerCase() : '';
         const TELEGRAM_WEB_PLATFORMS = new Set(['web', 'weba', 'webk']);
-        const SHOULD_OPEN_EXTERNAL_BROWSER = IS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
+        const SHOULD_OPEN_EXTERNAL_BROWSER = !IS_EXTERNAL_BROWSER_FLOW && HAS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
         const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
@@ -694,6 +696,42 @@
             return url.toString();
         }
 
+        // #region agent log
+        function dbgStakeEmit(hypothesisId, location, message, data) {
+            var payload = {
+                sessionId: '2ee239',
+                runId: 'debug-pre',
+                hypothesisId: hypothesisId,
+                location: location,
+                message: message,
+                data: data || {},
+                timestamp: Date.now()
+            };
+            try {
+                console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
+            } catch (e1) {}
+            fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
+                body: JSON.stringify(payload)
+            }).catch(function () {});
+        }
+        dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
+            hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
+            hasTg: !!tg,
+            initDataLen: tg && tg.initData ? tg.initData.length : 0,
+            hasTelegramBridge: HAS_TELEGRAM_WEBAPP,
+            platformRaw: tg && tg.platform != null ? String(tg.platform) : '',
+            platformNorm: TELEGRAM_PLATFORM,
+            isMiniApp: IS_TELEGRAM_WEBAPP,
+            shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
+            useQrModal: USE_QR_MODAL,
+            pageOrigin: typeof location !== 'undefined' ? location.origin : '',
+            externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
+            buildTag: '60e77f8+dbg4'
+        });
+        // #endregion
+
         // ============================================================
         // Tab Switching
         // ============================================================
@@ -708,6 +746,11 @@
         // WalletConnect (aligned with stake.html: TG uses deep links, not QR modal)
         // ============================================================
         async function initWalletConnect() {
+            dbgStakeEmit('H_initwc', 'stake-tg.html:initWalletConnect', 'init entry', {
+                USE_QR_MODAL: USE_QR_MODAL,
+                IS_TELEGRAM_WEBAPP: IS_TELEGRAM_WEBAPP,
+                platform: TELEGRAM_PLATFORM
+            });
             const wcGlobal = window.WalletConnectProvider || window.EthereumProvider;
             if (!wcGlobal && !window['@walletconnect/ethereum-provider']) {
                 // #region agent log
@@ -814,16 +857,34 @@
         async function connectWallet() {
             const btn = document.getElementById('wcConnectBtn');
             const originalText = btn.innerHTML;
+            dbgStakeEmit('H_connect_entry', 'stake-tg.html:connectWallet', 'connect clicked', {
+                shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
+                platform: TELEGRAM_PLATFORM,
+                isMiniApp: IS_TELEGRAM_WEBAPP
+            });
             // Telegram Web keeps WalletConnect Verify inside its own frame; use a normal browser there.
             if (SHOULD_OPEN_EXTERNAL_BROWSER) {
                 const browserUrl = buildBrowserFallbackUrl();
+                dbgStakeEmit('H_openlink', 'stake-tg.html:connectWallet', 'branch external browser', {
+                    platform: TELEGRAM_PLATFORM,
+                    hasOpenLink: !!(tg && typeof tg.openLink === 'function'),
+                    browserHost: (function () {
+                        try {
+                            return new URL(browserUrl).host;
+                        } catch (e) {
+                            return '';
+                        }
+                    })()
+                });
                 window.__bonziDbgLog('H6', 'stake-tg.html:connectWallet', 'telegram web redirect to browser', {
                     platform: TELEGRAM_PLATFORM,
                     browserUrl: browserUrl
                 });
                 if (tg && typeof tg.openLink === 'function') {
                     tg.openLink(browserUrl);
+                    dbgStakeEmit('H_openlink_sent', 'stake-tg.html:connectWallet', 'openLink invoked', {});
                 } else {
+                    dbgStakeEmit('H_openlink_missing', 'stake-tg.html:connectWallet', 'openLink unavailable', {});
                     showStatus('Open this page in a browser to connect your wallet.', 'error');
                 }
                 return;
@@ -870,6 +931,10 @@
                 await updateUI();
 
             } catch (error) {
+                dbgStakeEmit('H_wc_error', 'stake-tg.html:connectWallet', 'connect failure', {
+                    name: error && error.name,
+                    msg: error && error.message ? String(error.message).slice(0, 240) : 'unknown'
+                });
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 const overlayErr = document.getElementById('overlayError');

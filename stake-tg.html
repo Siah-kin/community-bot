@@ -592,16 +592,18 @@
         // ============================================================
         // Telegram Web App Integration
         // ============================================================
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
+        const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+        if (tg && tg.initData && tg.initData.length > 0) {
+            tg.ready();
+            tg.expand();
 
-        // Apply Telegram theme colors
-        if (tg.themeParams.bg_color) {
-            document.documentElement.style.setProperty('--bg', tg.themeParams.bg_color);
-        }
-        if (tg.themeParams.text_color) {
-            document.documentElement.style.setProperty('--text', tg.themeParams.text_color);
+            // Apply Telegram theme colors
+            if (tg.themeParams.bg_color) {
+                document.documentElement.style.setProperty('--bg', tg.themeParams.bg_color);
+            }
+            if (tg.themeParams.text_color) {
+                document.documentElement.style.setProperty('--text', tg.themeParams.text_color);
+            }
         }
 
         // Read URL params for pre-population
@@ -668,7 +670,10 @@
         let currentClaimableEth = 0;
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
-        const IS_TELEGRAM_WEBAPP = !!(window.Telegram && window.Telegram.WebApp);
+        const IS_TELEGRAM_WEBAPP = !!(tg && tg.initData && tg.initData.length > 0);
+        const TELEGRAM_PLATFORM = tg && typeof tg.platform === 'string' ? String(tg.platform).toLowerCase() : '';
+        const TELEGRAM_WEB_PLATFORMS = new Set(['web', 'weba', 'webk']);
+        const SHOULD_OPEN_EXTERNAL_BROWSER = IS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
         const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
@@ -676,6 +681,18 @@
             { optionalChains: [1], showQrModal: true },
             { chains: [1], showQrModal: true }
         ];
+
+        function notifyTelegramHaptic(kind) {
+            if (tg && tg.HapticFeedback && typeof tg.HapticFeedback.notificationOccurred === 'function') {
+                tg.HapticFeedback.notificationOccurred(kind);
+            }
+        }
+
+        function buildBrowserFallbackUrl() {
+            const url = new URL(window.location.href);
+            url.searchParams.set('external', '1');
+            return url.toString();
+        }
 
         // ============================================================
         // Tab Switching
@@ -797,6 +814,20 @@
         async function connectWallet() {
             const btn = document.getElementById('wcConnectBtn');
             const originalText = btn.innerHTML;
+            // Telegram Web keeps WalletConnect Verify inside its own frame; use a normal browser there.
+            if (SHOULD_OPEN_EXTERNAL_BROWSER) {
+                const browserUrl = buildBrowserFallbackUrl();
+                window.__bonziDbgLog('H6', 'stake-tg.html:connectWallet', 'telegram web redirect to browser', {
+                    platform: TELEGRAM_PLATFORM,
+                    browserUrl: browserUrl
+                });
+                if (tg && typeof tg.openLink === 'function') {
+                    tg.openLink(browserUrl);
+                } else {
+                    showStatus('Open this page in a browser to connect your wallet.', 'error');
+                }
+                return;
+            }
             btn.innerHTML = 'Connecting...';
             btn.disabled = true;
 
@@ -948,12 +979,14 @@
         // ============================================================
         function sendResultToBot(action, txHash, amount) {
             try {
-                tg.sendData(JSON.stringify({
-                    action: action,
-                    txHash: txHash,
-                    amount: amount,
-                    wallet: userAddress
-                }));
+                if (tg && typeof tg.sendData === 'function') {
+                    tg.sendData(JSON.stringify({
+                        action: action,
+                        txHash: txHash,
+                        amount: amount,
+                        wallet: userAddress
+                    }));
+                }
             } catch (e) {
                 console.warn('sendData not available (not launched via bot button)');
             }
@@ -1004,7 +1037,7 @@
                 showStatus('Waiting for confirmation...');
                 const receipt = await stakeTx.wait();
 
-                tg.HapticFeedback.notificationOccurred('success');
+                notifyTelegramHaptic('success');
                 showStatus('Staked successfully!', 'success');
                 document.getElementById('stakeAmount').value = '';
 
@@ -1014,7 +1047,7 @@
 
             } catch (error) {
                 console.error('Stake error:', error);
-                tg.HapticFeedback.notificationOccurred('error');
+                notifyTelegramHaptic('error');
                 showStatus(error.reason || error.message || 'Transaction failed', 'error');
             }
         }
@@ -1033,7 +1066,7 @@
                 showStatus('Waiting for confirmation...');
                 const receipt = await claimTx.wait();
 
-                tg.HapticFeedback.notificationOccurred('success');
+                notifyTelegramHaptic('success');
                 showStatus('Rewards claimed!', 'success');
 
                 sendResultToBot('claimed', receipt.transactionHash, currentClaimableEth.toFixed(6));
@@ -1042,7 +1075,7 @@
 
             } catch (error) {
                 console.error('Claim error:', error);
-                tg.HapticFeedback.notificationOccurred('error');
+                notifyTelegramHaptic('error');
                 showStatus(error.reason || error.message || 'Claim failed', 'error');
             }
         }
@@ -1077,7 +1110,7 @@
                 showStatus('Waiting for confirmation...');
                 const receipt = await withdrawTx.wait();
 
-                tg.HapticFeedback.notificationOccurred('success');
+                notifyTelegramHaptic('success');
                 showStatus('Withdrawal complete!', 'success');
 
                 sendResultToBot('withdrawn', receipt.transactionHash, stakedAmount.toString());
@@ -1086,7 +1119,7 @@
 
             } catch (error) {
                 console.error('Withdraw error:', error);
-                tg.HapticFeedback.notificationOccurred('error');
+                notifyTelegramHaptic('error');
                 showStatus(error.reason || error.message || 'Withdrawal failed', 'error');
             }
         }

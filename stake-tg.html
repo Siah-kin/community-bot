@@ -508,16 +508,53 @@
     </div>
 
     <!-- Web3 Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"></script>
     <script>
-        const wcProviderNs = window['@walletconnect/ethereum-provider'];
-        if (!window.WalletConnectProvider && wcProviderNs) {
-            window.WalletConnectProvider = wcProviderNs.EthereumProvider || wcProviderNs.default || wcProviderNs;
+        // #region agent log
+        window.__bonziDbgLog = function (hypothesisId, location, message, data) {
+            var payload = {
+                sessionId: '2ee239',
+                runId: 'pre-fix',
+                hypothesisId: hypothesisId,
+                location: location,
+                message: message,
+                data: data || {},
+                timestamp: Date.now()
+            };
+            try {
+                console.info('[BONZI_WC_DEBUG]', JSON.stringify(payload));
+            } catch (e1) {}
+            fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
+                body: JSON.stringify(payload)
+            }).catch(function () {});
+        };
+        // #endregion
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <!-- @walletconnect/modal has no index.umd.js on npm/CDN; TG mini-app uses deep links (showQrModal false) like stake.html -->
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"
+        onerror="window.__bonziDbgLog && window.__bonziDbgLog('H1','stake-tg.html:wc-script','ethereum-provider script onerror',{detail:'load failed'})"></script>
+    <script>
+        if (!window.WalletConnectProvider && window['@walletconnect/ethereum-provider']) {
+            window.WalletConnectProvider = window['@walletconnect/ethereum-provider'];
         }
         if (!window.EthereumProvider && window.WalletConnectProvider) {
-            window.EthereumProvider = window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
+            window.EthereumProvider =
+                window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
         }
+        // #region agent log
+        (function () {
+            var ns = window['@walletconnect/ethereum-provider'];
+            window.__bonziDbgLog('H2', 'stake-tg.html:after-shim', 'namespace snapshot', {
+                hasNs: !!ns,
+                keys: ns ? Object.keys(ns).slice(0, 12) : [],
+                typeEthereumProvider: ns ? typeof ns.EthereumProvider : 'n/a',
+                typeDefault: ns && ns.default ? typeof ns.default : 'n/a',
+                windowEthereumProvider: typeof window.EthereumProvider
+            });
+        })();
+        // #endregion
     </script>
     <script>
         // ============================================================
@@ -540,8 +577,6 @@
         const preAction = urlParams.get('action');
         const preAmount = urlParams.get('amount');
         const preWallet = urlParams.get('wallet');
-        const IS_TELEGRAM_WEBAPP = !!(window.Telegram && window.Telegram.WebApp);
-        const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
 
         // ============================================================
         // Contract Config (same as stake.html)
@@ -601,6 +636,8 @@
         let currentClaimableEth = 0;
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
+        const IS_TELEGRAM_WEBAPP = !!(window.Telegram && window.Telegram.WebApp);
+        const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
@@ -619,45 +656,47 @@
         }
 
         // ============================================================
-        // WalletConnect
+        // WalletConnect (aligned with stake.html: TG uses deep links, not QR modal)
         // ============================================================
-        function getWalletConnectEthereumProviderCtor() {
-            if (typeof window.EthereumProvider === 'function') {
-                return window.EthereumProvider;
-            }
-            if (typeof window.WalletConnectProvider === 'function') {
-                return window.WalletConnectProvider;
-            }
-            const ns = globalThis['@walletconnect/ethereum-provider'];
-            if (typeof ns === 'function') {
-                return ns;
-            }
-            if (ns && typeof ns.EthereumProvider === 'function') {
-                return ns.EthereumProvider;
-            }
-            if (ns && typeof ns.default === 'function') {
-                return ns.default;
-            }
-            if (ns && ns.default && typeof ns.default.EthereumProvider === 'function') {
-                return ns.default.EthereumProvider;
-            }
-            return null;
-        }
-
         async function initWalletConnect() {
-            const WCProviderCtor = getWalletConnectEthereumProviderCtor();
-            if (!WCProviderCtor) {
-                throw new Error('WalletConnect not loaded');
+            const wcGlobal = window.WalletConnectProvider || window.EthereumProvider;
+            if (!wcGlobal && !window['@walletconnect/ethereum-provider']) {
+                // #region agent log
+                window.__bonziDbgLog('H3', 'stake-tg.html:initWalletConnect', 'no wc global', {
+                    IS_TELEGRAM_WEBAPP: IS_TELEGRAM_WEBAPP,
+                    USE_QR_MODAL: USE_QR_MODAL
+                });
+                // #endregion
+                console.error('WalletConnect not loaded');
+                return null;
             }
 
             try {
+                const ProviderCtor =
+                    window.EthereumProvider ||
+                    window.WalletConnectProvider ||
+                    window['@walletconnect/ethereum-provider'] ||
+                    (window['@walletconnect/ethereum-provider'] &&
+                        window['@walletconnect/ethereum-provider'].EthereumProvider);
+                // #region agent log
+                window.__bonziDbgLog('H4', 'stake-tg.html:initWalletConnect', 'ProviderCtor resolved', {
+                    ctorType: typeof ProviderCtor,
+                    hasInit: ProviderCtor && typeof ProviderCtor.init === 'function',
+                    USE_QR_MODAL: USE_QR_MODAL
+                });
+                // #endregion
+                if (!ProviderCtor || typeof ProviderCtor.init !== 'function') {
+                    console.error('WalletConnect constructor not available');
+                    return null;
+                }
+
                 const pageUrl =
-                    (typeof window !== 'undefined' && window.location && window.location.href)
-                        ? window.location.origin
+                    typeof window !== 'undefined' && window.location && window.location.href
+                        ? window.location.origin + window.location.pathname
                         : 'https://bonzivista.org/stake-tg.html';
                 const iconUrl =
-                    (typeof window !== 'undefined' && window.location && window.location.origin)
-                        ? 'https://siah-kin.github.io/community-bot/bonzi-logo.png'
+                    typeof window !== 'undefined' && window.location && window.location.origin
+                        ? window.location.origin + '/bonzi-logo.png'
                         : 'https://siah-kin.github.io/community-bot/bonzi-logo.png';
 
                 const baseConfig = {
@@ -671,24 +710,41 @@
                 };
 
                 let lastError = null;
-                for (const variant of WALLETCONNECT_INIT_VARIANTS) {
+                for (let i = 0; i < WALLETCONNECT_INIT_VARIANTS.length; i++) {
+                    const variant = WALLETCONNECT_INIT_VARIANTS[i];
                     try {
-                        return await WCProviderCtor.init({
+                        const inst = await ProviderCtor.init({
                             ...baseConfig,
                             ...variant
                         });
+                        // #region agent log
+                        window.__bonziDbgLog('H5', 'stake-tg.html:initWalletConnect', 'variant ok', {
+                            variantIndex: i,
+                            showQrModal: variant.showQrModal,
+                            keys: variant.optionalChains ? 'optionalChains' : 'chains'
+                        });
+                        // #endregion
+                        return inst;
                     } catch (error) {
                         lastError = error;
                         console.warn('WalletConnect init variant failed:', variant, error);
+                        // #region agent log
+                        window.__bonziDbgLog('H5', 'stake-tg.html:initWalletConnect', 'variant fail', {
+                            variantIndex: i,
+                            name: error && error.name,
+                            msg: error && error.message ? String(error.message).slice(0, 120) : 'unknown'
+                        });
+                        // #endregion
                     }
                 }
 
                 if (lastError) {
-                    throw lastError;
+                    console.error('WalletConnect init failed:', lastError);
                 }
+                return null;
             } catch (error) {
                 console.error('WalletConnect init failed:', error);
-                throw error;
+                return null;
             }
         }
 

@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <script>
+        (function () {
+            var g = typeof globalThis !== 'undefined' ? globalThis : window;
+            if (typeof g.process === 'undefined') {
+                g.process = { env: {}, browser: true };
+            } else if (!g.process.env) {
+                g.process.env = {};
+            }
+        })();
+    </script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -523,11 +533,15 @@
             try {
                 console.info('[BONZI_WC_DEBUG]', JSON.stringify(payload));
             } catch (e1) {}
-            fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
-                body: JSON.stringify(payload)
-            }).catch(function () {});
+            try {
+                if (location.protocol === 'http:' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+                    fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
+                        body: JSON.stringify(payload)
+                    }).catch(function () {});
+                }
+            } catch (e2) {}
         };
         // #endregion
     </script>
@@ -536,22 +550,40 @@
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"
         onerror="window.__bonziDbgLog && window.__bonziDbgLog('H1','stake-tg.html:wc-script','ethereum-provider script onerror',{detail:'load failed'})"></script>
     <script>
-        if (!window.WalletConnectProvider && window['@walletconnect/ethereum-provider']) {
-            window.WalletConnectProvider = window['@walletconnect/ethereum-provider'];
-        }
-        if (!window.EthereumProvider && window.WalletConnectProvider) {
-            window.EthereumProvider =
-                window.WalletConnectProvider.EthereumProvider || window.WalletConnectProvider;
-        }
+        (function () {
+            var ns = window['@walletconnect/ethereum-provider'];
+            if (!ns) return;
+            window.WalletConnectProvider = window.WalletConnectProvider || ns;
+            var Ctor = ns.EthereumProvider;
+            if (!Ctor && ns.default && typeof ns.default.init === 'function') {
+                Ctor = ns.default;
+            }
+            if (!Ctor && ns.default && typeof ns.default.EthereumProvider === 'function') {
+                Ctor = ns.default.EthereumProvider;
+            }
+            if (typeof Ctor === 'function' && typeof Ctor.init === 'function') {
+                window.EthereumProvider = Ctor;
+            }
+        })();
         // #region agent log
         (function () {
             var ns = window['@walletconnect/ethereum-provider'];
+            var keys = [];
+            try {
+                keys = ns && typeof Reflect !== 'undefined' && Reflect.ownKeys
+                    ? Reflect.ownKeys(ns).slice(0, 16).map(String)
+                    : ns
+                      ? Object.keys(ns).slice(0, 12)
+                      : [];
+            } catch (eK) {}
             window.__bonziDbgLog('H2', 'stake-tg.html:after-shim', 'namespace snapshot', {
                 hasNs: !!ns,
-                keys: ns ? Object.keys(ns).slice(0, 12) : [],
+                keys: keys,
+                inEthereumProvider: !!(ns && 'EthereumProvider' in ns),
                 typeEthereumProvider: ns ? typeof ns.EthereumProvider : 'n/a',
-                typeDefault: ns && ns.default ? typeof ns.default : 'n/a',
-                windowEthereumProvider: typeof window.EthereumProvider
+                typeDefault: ns && ns.default !== undefined ? typeof ns.default : 'n/a',
+                windowEthereumProvider: typeof window.EthereumProvider,
+                hasWindowInit: !!(window.EthereumProvider && typeof window.EthereumProvider.init === 'function')
             });
         })();
         // #endregion
@@ -672,16 +704,30 @@
             }
 
             try {
-                const ProviderCtor =
-                    window.EthereumProvider ||
-                    window.WalletConnectProvider ||
-                    window['@walletconnect/ethereum-provider'] ||
-                    (window['@walletconnect/ethereum-provider'] &&
-                        window['@walletconnect/ethereum-provider'].EthereumProvider);
+                const ns = window['@walletconnect/ethereum-provider'];
+                let ProviderCtor =
+                    typeof window.EthereumProvider === 'function' && typeof window.EthereumProvider.init === 'function'
+                        ? window.EthereumProvider
+                        : null;
+                if (!ProviderCtor && ns && typeof ns.EthereumProvider === 'function' && typeof ns.EthereumProvider.init === 'function') {
+                    ProviderCtor = ns.EthereumProvider;
+                }
+                if (!ProviderCtor && ns && ns.default && typeof ns.default.init === 'function') {
+                    ProviderCtor = ns.default;
+                }
+                if (
+                    !ProviderCtor &&
+                    ns &&
+                    ns.default &&
+                    typeof ns.default.EthereumProvider === 'function' &&
+                    typeof ns.default.EthereumProvider.init === 'function'
+                ) {
+                    ProviderCtor = ns.default.EthereumProvider;
+                }
                 // #region agent log
                 window.__bonziDbgLog('H4', 'stake-tg.html:initWalletConnect', 'ProviderCtor resolved', {
-                    ctorType: typeof ProviderCtor,
-                    hasInit: ProviderCtor && typeof ProviderCtor.init === 'function',
+                    ctorType: ProviderCtor ? typeof ProviderCtor : 'null',
+                    hasInit: !!(ProviderCtor && typeof ProviderCtor.init === 'function'),
                     USE_QR_MODAL: USE_QR_MODAL
                 });
                 // #endregion

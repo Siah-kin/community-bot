@@ -32,7 +32,7 @@
     // Contract addresses (Ethereum Mainnet)
     const CONTRACTS = {
         BONZI: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
-        ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+        ROUTER: '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
         HARDSTAKE: '0xEE5a6F8a55B02689138c195031d09BAFDc7d278F'
     };
 

@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-desktop-inject-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-router-factory-fix-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -154,6 +154,156 @@
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+
+        /* Pool health (Dune snapshot + live RPC) */
+        .pool-overview {
+            background: linear-gradient(165deg, rgba(124, 58, 237, 0.08) 0%, var(--card-bg) 45%);
+            border: 1px solid rgba(124, 58, 237, 0.22);
+            border-radius: 14px;
+            padding: 1rem 1rem 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .pool-overview-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .pool-overview-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--purple-light);
+            letter-spacing: -0.02em;
+        }
+
+        .pool-overview-updated {
+            font-size: 0.65rem;
+            color: #52525b;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .pool-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem 0.85rem;
+        }
+
+        @media (min-width: 420px) {
+            .pool-overview-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .pool-metric {
+            min-width: 0;
+        }
+
+        .pool-metric-label {
+            display: block;
+            font-size: 0.58rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.2rem;
+            line-height: 1.25;
+        }
+
+        .pool-metric-value {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .pool-metric-value.subtle {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #a1a1aa;
+        }
+
+        .pool-weekly {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(63, 63, 70, 0.45);
+        }
+
+        .pool-weekly-caption {
+            font-size: 0.62rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+
+        .pool-weekly-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 4px;
+            min-height: 72px;
+        }
+
+        .pool-week-cell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .pool-week-label {
+            font-size: 0.55rem;
+            color: #52525b;
+            white-space: nowrap;
+        }
+
+        .pool-week-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 52px;
+        }
+
+        .pool-bar {
+            width: 6px;
+            border-radius: 2px;
+            min-height: 2px;
+            align-self: flex-end;
+        }
+
+        .pool-bar.stake {
+            background: linear-gradient(180deg, #a78bfa, #7c3aed);
+        }
+
+        .pool-bar.unstake {
+            background: #52525b;
+        }
+
+        .pool-dune-links {
+            margin-top: 0.85rem;
+            font-size: 0.72rem;
+            color: #71717a;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .pool-dune-links a {
+            color: var(--purple-light);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .pool-dune-links a:hover {
+            text-decoration: underline;
         }
 
         /* Cards */
@@ -628,7 +778,7 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-desktop-inject · use bot link (?v=…) so Telegram does not serve stale HTML</p>
+            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-pool-health · use bot link (?v=…) so Telegram does not serve stale HTML</p>
         </div>
     </div>
 
@@ -655,6 +805,62 @@
                 <div class="stat-label">Claimable ETH</div>
             </div>
         </div>
+
+        <section class="pool-overview" id="poolOverview" aria-labelledby="pool-overview-title">
+            <div class="pool-overview-head">
+                <h2 class="pool-overview-title" id="pool-overview-title">Pool health</h2>
+                <span class="pool-overview-updated" id="poolMetricsUpdated">Dune snapshot loading…</span>
+            </div>
+            <div class="pool-overview-grid">
+                <div class="pool-metric">
+                    <span class="pool-metric-label">BONZI locked · live</span>
+                    <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Pool ETH · live</span>
+                    <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Diamond hands · Dune</span>
+                    <span class="pool-metric-value subtle" id="poolDiamondHands">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Active / ever staked</span>
+                    <span class="pool-metric-value subtle" id="poolRetention">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Avg stake age</span>
+                    <span class="pool-metric-value subtle" id="poolAvgTenure">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Longest age</span>
+                    <span class="pool-metric-value subtle" id="poolMaxTenure">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">ETH to stakers · Dune</span>
+                    <span class="pool-metric-value subtle" id="poolEthDistributed">—</span>
+                </div>
+                <div class="pool-metric">
+                    <span class="pool-metric-label">Largest claim · Dune</span>
+                    <span class="pool-metric-value subtle" id="poolMaxClaim">—</span>
+                </div>
+            </div>
+            <div class="pool-weekly">
+                <div class="pool-weekly-caption">Weekly flow · stakes vs unstakes (Dune pipeline)</div>
+                <div class="pool-weekly-inner" id="poolWeeklyBars"></div>
+            </div>
+            <div class="pool-dune-links">
+                <a href="/metrics/" target="_blank" rel="noopener noreferrer">Metrics hub</a>
+                <span aria-hidden="true"> · </span>
+                <a id="linkDuneTenure" href="https://dune.com/queries/6591445" target="_blank" rel="noopener noreferrer">Tenure</a>
+                <span aria-hidden="true"> · </span>
+                <a id="linkDuneEth" href="https://dune.com/queries/6591483" target="_blank" rel="noopener noreferrer">ETH rewards</a>
+                <span aria-hidden="true"> · </span>
+                <a id="linkDuneWeekly" href="https://dune.com/queries/6591436" target="_blank" rel="noopener noreferrer">Weekly flow</a>
+                <span aria-hidden="true"> · </span>
+                <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Hardstake</a>
+            </div>
+        </section>
 
         <div class="mev-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -995,7 +1201,7 @@
         // ============================================================
         const CONTRACTS = {
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
-            ROUTER: '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+            ROUTER: '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
             BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
         };
 
@@ -1007,6 +1213,7 @@
 
         const HARDSTAKE_ABI = [
             'function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
+            'function totalStaked() view returns (uint256)',
             'function claimShare()',
             'function withdraw(uint256 amount)'
         ];
@@ -1014,6 +1221,12 @@
         const ROUTER_ABI = [
             'function hardstake(address _contract, address _token, uint256 _amount)'
         ];
+
+        var METRICS_DATA_URL =
+            typeof window !== 'undefined' && window.location && window.location.origin
+                ? window.location.origin + '/metrics/metrics-data.json'
+                : '/metrics/metrics-data.json';
+        var poolMetricsSnapshotOk = false;
 
         // RPC endpoints with fallbacks
         const RPC_ENDPOINTS = [
@@ -1443,7 +1656,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-desktop-inject-tg-cache'
+            buildTag: 'sri-window-tabs+overlay-pool-health-tg-cache'
         });
         // #endregion
 
@@ -1776,17 +1989,125 @@
             throw new Error('Wallet not connected');
         }
 
+        function renderPoolWeeklyTrend(trend) {
+            var el = document.getElementById('poolWeeklyBars');
+            if (!el) return;
+            if (!trend || !trend.length) {
+                el.innerHTML = '';
+                return;
+            }
+            var slice = trend.slice(0, 10);
+            var maxV = 1;
+            slice.forEach(function (w) {
+                maxV = Math.max(maxV, w.stakes || 0, w.unstakes || 0);
+            });
+            el.innerHTML = slice
+                .map(function (w) {
+                    var sh = Math.round(48 * ((w.stakes || 0) / maxV));
+                    var uh = Math.round(48 * ((w.unstakes || 0) / maxV));
+                    var label = (w.week || '').slice(5);
+                    var tip =
+                        (w.week || '') +
+                        ': +' +
+                        (w.stakes || 0) +
+                        ' stakes / -' +
+                        (w.unstakes || 0) +
+                        ' unstakes';
+                    return (
+                        '<div class="pool-week-cell" title="' +
+                        tip.replace(/"/g, '&quot;') +
+                        '">' +
+                        '<span class="pool-week-label">' +
+                        label +
+                        '</span>' +
+                        '<div class="pool-week-bars">' +
+                        '<span class="pool-bar stake" style="height:' +
+                        Math.max(2, sh) +
+                        'px"></span>' +
+                        '<span class="pool-bar unstake" style="height:' +
+                        Math.max(2, uh) +
+                        'px"></span>' +
+                        '</div></div>'
+                    );
+                })
+                .join('');
+        }
+
+        function applyBonziPoolSnapshot(payload, dq, updatedAt) {
+            var bonzi = payload || {};
+            var dh = document.getElementById('poolDiamondHands');
+            if (dh) {
+                var dhn = bonzi.diamond_hands;
+                var dhp = bonzi.diamond_hands_pct;
+                dh.textContent =
+                    dhn != null && dhp != null ? dhn + ' (' + dhp + '%)' : dhn != null ? String(dhn) : '—';
+            }
+            var ret = document.getElementById('poolRetention');
+            if (ret) {
+                var cs = bonzi.currently_staking;
+                var ts = bonzi.total_stakers;
+                var rp = bonzi.retention_pct;
+                ret.textContent =
+                    cs != null && ts != null
+                        ? cs + ' / ' + ts + (rp != null ? ' · ' + rp + '% kept' : '')
+                        : '—';
+            }
+            var avg = document.getElementById('poolAvgTenure');
+            if (avg) avg.textContent = bonzi.avg_tenure_days != null ? bonzi.avg_tenure_days + ' d avg' : '—';
+            var mx = document.getElementById('poolMaxTenure');
+            if (mx) mx.textContent = bonzi.max_tenure_days != null ? bonzi.max_tenure_days + ' d max' : '—';
+            var ethd = document.getElementById('poolEthDistributed');
+            if (ethd)
+                ethd.textContent =
+                    bonzi.total_eth_distributed != null ? Number(bonzi.total_eth_distributed).toFixed(2) + ' ETH' : '—';
+            var mc = document.getElementById('poolMaxClaim');
+            if (mc)
+                mc.textContent =
+                    bonzi.max_single_claim != null ? Number(bonzi.max_single_claim).toFixed(4) + ' ETH' : '—';
+            renderPoolWeeklyTrend(bonzi.weekly_trend);
+            if (dq) {
+                var lt = document.getElementById('linkDuneTenure');
+                if (lt && dq.bonzi_tenure) lt.href = 'https://dune.com/queries/' + dq.bonzi_tenure;
+                var le = document.getElementById('linkDuneEth');
+                if (le && dq.bonzi_eth_distributed) le.href = 'https://dune.com/queries/' + dq.bonzi_eth_distributed;
+                var lw = document.getElementById('linkDuneWeekly');
+                if (lw && dq.bonzi_weekly_trend) lw.href = 'https://dune.com/queries/' + dq.bonzi_weekly_trend;
+            }
+            var pu = document.getElementById('poolMetricsUpdated');
+            if (pu) pu.textContent = updatedAt ? 'Dune snapshot · ' + updatedAt : 'Dune snapshot';
+        }
+
+        async function ensurePoolMetricsSnapshot() {
+            if (poolMetricsSnapshotOk) return;
+            try {
+                var res = await fetch(METRICS_DATA_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('metrics HTTP ' + res.status);
+                var data = await res.json();
+                applyBonziPoolSnapshot(data.bonzi, data.dune_queries, data.updated);
+                poolMetricsSnapshotOk = true;
+            } catch (e) {
+                console.warn('[pool-overview] snapshot', e);
+                var pu = document.getElementById('poolMetricsUpdated');
+                if (pu) pu.textContent = 'Refresh metrics JSON · see /metrics/';
+            }
+        }
+
         // ============================================================
         // UI Updates
         // ============================================================
         async function updateUI() {
             try {
+                ensurePoolMetricsSnapshot();
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
                 const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
 
-                const [balance, stakerInfo] = await Promise.all([
+                const [balance, stakerInfo, totalLockedWei, poolEthWei] = await Promise.all([
                     bonziContract.balanceOf(userAddress),
-                    hardstakeContract.getStakerInfo(userAddress)
+                    hardstakeContract.getStakerInfo(userAddress),
+                    hardstakeContract.totalStaked().catch(function () {
+                        return ethers.BigNumber.from(0);
+                    }),
+                    provider.getBalance(CONTRACTS.BONZI_HARDSTAKE)
                 ]);
 
                 bonziBalance = parseFloat(ethers.utils.formatEther(balance));
@@ -1794,6 +2115,18 @@
                 const claimableEth = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
                 currentClaimableEth = claimableEth;
                 const timeRemaining = stakerInfo.timeRemaining.toNumber();
+
+                var totalLocked = parseFloat(ethers.utils.formatEther(totalLockedWei));
+                var poolEthBal = parseFloat(ethers.utils.formatEther(poolEthWei));
+                document.getElementById('totalStaked').textContent = totalLocked.toLocaleString(undefined, {
+                    maximumFractionDigits: 0
+                });
+                var pl = document.getElementById('poolLiveTotalStaked');
+                if (pl)
+                    pl.textContent =
+                        totalLocked.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' BONZI';
+                var pe = document.getElementById('poolEthBalanceLive');
+                if (pe) pe.textContent = poolEthBal.toFixed(4) + ' ETH';
 
                 // Update displays across all tabs
                 document.getElementById('bonziBalance').textContent = bonziBalance.toLocaleString(undefined, {maximumFractionDigits: 2});

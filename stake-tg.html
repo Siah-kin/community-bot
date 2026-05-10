@@ -381,6 +381,51 @@
             transform: none;
         }
 
+        .connect-hint-exchange {
+            font-size: 0.72rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            line-height: 1.45;
+            text-align: left;
+        }
+
+        #wcWalletShortcuts {
+            margin-top: 0.75rem;
+            text-align: center;
+        }
+
+        #wcWalletShortcuts .wallet-shortcuts-label {
+            font-size: 0.68rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .wallet-shortcuts-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .wallet-shortcut-btn {
+            display: block;
+            text-align: center;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--white);
+            background: rgba(124, 58, 237, 0.22);
+            border: 1px solid rgba(124, 58, 237, 0.45);
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .wallet-shortcut-btn:active {
+            opacity: 0.85;
+        }
+
         /* MEV badge */
         .mev-badge {
             display: inline-flex;
@@ -439,6 +484,17 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 Connect Wallet
             </button>
+            <p class="connect-hint-exchange">
+                Self-custody wallets only (e.g. MetaMask, Trust Wallet, Binance Web3 Wallet). Normal exchange spot balances cannot connect—withdraw to your own wallet on the correct network first.
+            </p>
+            <div id="wcWalletShortcuts" style="display: none;" aria-live="polite">
+                <p class="wallet-shortcuts-label">Open your wallet app (WalletConnect link):</p>
+                <div class="wallet-shortcuts-row">
+                    <a id="wcLinkMetamask" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">MetaMask</a>
+                    <a id="wcLinkTrust" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Trust Wallet</a>
+                    <a id="wcLinkBinance" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Binance Web3 Wallet</a>
+                </div>
+            </div>
             <p id="overlayError" style="color:#DC2626; font-size:0.8rem; margin-top:1rem; display:none;"></p>
         </div>
     </div>
@@ -797,6 +853,76 @@
             if (!btn) return;
             btn.innerHTML = CONNECT_BTN_DEFAULT_HTML || 'Connect Wallet';
             btn.disabled = false;
+            hideWcWalletShortcuts();
+        }
+
+        function hideWcWalletShortcuts() {
+            var box = document.getElementById('wcWalletShortcuts');
+            if (box) {
+                box.style.display = 'none';
+            }
+            ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    el.href = 'javascript:void(0)';
+                    el.setAttribute('aria-disabled', 'true');
+                }
+            });
+        }
+
+        function showWcWalletShortcuts(uri) {
+            if (!uri || typeof uri !== 'string') {
+                return;
+            }
+            try {
+                var enc = encodeURIComponent(uri);
+                var mm = document.getElementById('wcLinkMetamask');
+                var tw = document.getElementById('wcLinkTrust');
+                var bn = document.getElementById('wcLinkBinance');
+                if (mm) {
+                    mm.href = 'https://metamask.app.link/wc?uri=' + enc;
+                    mm.removeAttribute('aria-disabled');
+                }
+                if (tw) {
+                    tw.href = 'https://link.trustwallet.com/wc?uri=' + enc;
+                    tw.removeAttribute('aria-disabled');
+                }
+                if (bn) {
+                    bn.href = 'https://link.binance.com/wc?uri=' + enc;
+                    bn.removeAttribute('aria-disabled');
+                }
+                var box = document.getElementById('wcWalletShortcuts');
+                if (box) {
+                    box.style.display = 'block';
+                }
+                dbgStakeEmit('H_wc_shortcuts', 'stake-tg.html:wcShortcuts', 'display_uri links set', { uriLen: uri.length });
+            } catch (eSh) {}
+        }
+
+        var wcDisplayUriHandler = null;
+        function attachWcDisplayUri(provider) {
+            if (!provider || typeof provider.on !== 'function') {
+                return;
+            }
+            try {
+                if (typeof provider.off === 'function' && wcDisplayUriHandler) {
+                    provider.off('display_uri', wcDisplayUriHandler);
+                }
+            } catch (eOff) {}
+            wcDisplayUriHandler = function (uri) {
+                showWcWalletShortcuts(uri);
+            };
+            provider.on('display_uri', wcDisplayUriHandler);
+        }
+
+        function detachWcDisplayUri(provider) {
+            if (!provider || typeof provider.off !== 'function' || !wcDisplayUriHandler) {
+                return;
+            }
+            try {
+                provider.off('display_uri', wcDisplayUriHandler);
+            } catch (eD) {}
+            wcDisplayUriHandler = null;
         }
 
         function closeConnectOverlay() {
@@ -852,7 +978,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+wc-init-timeout'
+            buildTag: 'sri-window-tabs+wc-wallet-shortcuts'
         });
         // #endregion
 
@@ -1023,6 +1149,7 @@
                 }
                 return;
             }
+            hideWcWalletShortcuts();
             btn.innerHTML = 'Connecting...';
             btn.disabled = true;
 
@@ -1048,6 +1175,8 @@
                     throw new Error('WalletConnect failed to initialize. Please try again.');
                 }
 
+                attachWcDisplayUri(walletConnectProvider);
+
                 var connectTimeoutId = null;
                 var connectTimeoutPromise = new Promise(function (_, reject) {
                     connectTimeoutId = setTimeout(function () {
@@ -1068,6 +1197,9 @@
                 }
 
                 userAddress = accounts[0];
+
+                detachWcDisplayUri(walletConnectProvider);
+                hideWcWalletShortcuts();
 
                 // Listen for disconnect
                 walletConnectProvider.on('disconnect', () => location.reload());
@@ -1102,6 +1234,7 @@
                         walletConnectProvider.disconnect();
                     }
                 } catch (eDisc) {}
+                detachWcDisplayUri(walletConnectProvider);
                 resetWalletConnectButton(btn);
                 const overlayErr = document.getElementById('overlayError');
                 if (overlayErr) {

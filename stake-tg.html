@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="trim-pool-vet-lock-below-btn-20260509" />
+    <meta name="bonzi-stake-tg-deploy" content="lp-hardstake-wallet-split-hero-20260509" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -219,6 +219,21 @@
             color: #52525b;
             font-weight: 500;
             line-height: 1.2;
+        }
+
+        .metrics-section-kicker {
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #71717a;
+            margin: 0.2rem 0 0.42rem;
+            text-align: center;
+        }
+
+        .metrics-your-wrap {
+            margin-top: 0.72rem;
+            padding-top: 0.62rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .stake-alert-banner {
@@ -975,6 +990,7 @@
 
         <!-- Hero metrics -->
         <div class="stats-bar metrics-hero-wrap">
+            <p class="metrics-section-kicker">Pool snapshot</p>
             <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
                 <div class="metric-tile">
                     <div class="metric-tile-label">Yield (pool)</div>
@@ -982,19 +998,34 @@
                     <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield · pool-wide</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Staked %</div>
-                    <div class="metric-tile-value" id="metricStakedSupplyPct">—</div>
-                    <div class="metric-tile-sub">Supply Locked</div>
+                    <div class="metric-tile-label">Wallets staking</div>
+                    <div class="metric-tile-value" id="metricStakingWallets">—</div>
+                    <div class="metric-tile-sub" id="metricStakingWalletsSub">Indexer aggregate</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Your stake</div>
-                    <div class="metric-tile-value" id="stakedBalance">0</div>
-                    <div class="metric-tile-sub">BONZI</div>
+                    <div class="metric-tile-label">LP · % supply</div>
+                    <div class="metric-tile-value" id="metricLpSupplyPct">—</div>
+                    <div class="metric-tile-sub">Pair vault · BONZI/WETH</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Claimable</div>
-                    <div class="metric-tile-value is-claim" id="claimableEth">0.000</div>
-                    <div class="metric-tile-sub">ETH rewards</div>
+                    <div class="metric-tile-label">Staked · % supply</div>
+                    <div class="metric-tile-value" id="metricHardstakePct">—</div>
+                    <div class="metric-tile-sub">Hardstake lock</div>
+                </div>
+            </div>
+            <div class="metrics-your-wrap">
+                <p class="metrics-section-kicker">Your wallet</p>
+                <div class="metrics-hero-grid" role="group" aria-label="Your staking position">
+                    <div class="metric-tile">
+                        <div class="metric-tile-label">Your stake</div>
+                        <div class="metric-tile-value" id="stakedBalance">0</div>
+                        <div class="metric-tile-sub">BONZI</div>
+                    </div>
+                    <div class="metric-tile">
+                        <div class="metric-tile-label">Claimable</div>
+                        <div class="metric-tile-value is-claim" id="claimableEth">0.000</div>
+                        <div class="metric-tile-sub">ETH rewards</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1110,6 +1141,10 @@
         <section class="faq-section" aria-labelledby="faq-section-title">
             <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
             <div class="faq-list">
+                <details class="faq-item">
+                    <summary><span class="faq-question">What is LP % vs staked %?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer"><strong>LP · % supply</strong> counts BONZI sitting in the on-chain liquidity pair vault (tradable reserves). <strong>Staked · % supply</strong> counts BONZI locked in the hardstake contract — different bucket, both use the same minted supply as denominator. After you connect, those two percentages re-read directly from Ethereum. <strong>Wallets staking</strong> comes from the published metrics slice (<code style="font-size:0.65rem">staking_analytics.json</code>) until someone regenerates the file.</div>
+                </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">What is BONZI Staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
                     <div class="faq-answer">Lock your BONZI tokens to secure the network and earn ETH rewards directly from protocol activity.</div>
@@ -1431,7 +1466,8 @@
         const CONTRACTS = {
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
             ROUTER: '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
-            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53'
+            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
+            BONZI_LP: '0x970cf9b7346fbaea0588f03356a104100eb675e2'
         };
 
         const ERC20_ABI = [
@@ -1451,6 +1487,12 @@
 
         const ROUTER_ABI = [
             'function hardstake(address _contract, address _token, uint256 _amount)'
+        ];
+
+        const UNISWAP_V2_PAIR_ABI = [
+            'function token0() view returns (address)',
+            'function token1() view returns (address)',
+            'function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)'
         ];
 
         var STAKING_ANALYTICS_URL =
@@ -2222,12 +2264,20 @@
 
         function syncPoolSnapshotTrio(data) {
             var oc = data.onchain_live || {};
+            var agg = data.aggregate_claims_optional || {};
             var roi = data.roi_pool_aggregate_illustrative || {};
             var wl = data.wallet_lens_10m_supply_illustrative || {};
-            var supplyTxt =
-                oc.locked_percent_of_supply_rounded != null
-                    ? Number(oc.locked_percent_of_supply_rounded).toFixed(2) + '%'
+            var lpTxt =
+                oc.pair_bonzi_percent_of_supply_rounded != null
+                    ? Number(oc.pair_bonzi_percent_of_supply_rounded).toFixed(2) + '%'
                     : '—';
+            var hkTxt =
+                oc.hardstake_percent_of_supply_rounded != null
+                    ? Number(oc.hardstake_percent_of_supply_rounded).toFixed(2) + '%'
+                    : oc.locked_percent_of_supply_rounded != null
+                      ? Number(oc.locked_percent_of_supply_rounded).toFixed(2) + '%'
+                      : '—';
+            var wallets = agg.currently_staking_wallets_aggregate;
             var aprTitle = '';
             var aprTxt = '—';
             var aprSub = 'Est. yield · backward pool pacing';
@@ -2289,8 +2339,17 @@
 
             setAprHero(aprTxt, aprTitle || '');
 
-            var supplyHero = document.getElementById('metricStakedSupplyPct');
-            if (supplyHero && supplyTxt !== '—') supplyHero.textContent = supplyTxt;
+            var lpEl = document.getElementById('metricLpSupplyPct');
+            if (lpEl) lpEl.textContent = lpTxt;
+            var hkEl = document.getElementById('metricHardstakePct');
+            if (hkEl) hkEl.textContent = hkTxt;
+            var wEl = document.getElementById('metricStakingWallets');
+            if (wEl) wEl.textContent = wallets != null ? String(wallets) : '—';
+            var wSub = document.getElementById('metricStakingWalletsSub');
+            if (wSub) {
+                var src = agg.source != null ? String(agg.source) : 'metrics slice';
+                wSub.textContent = 'Indexer · ' + src.replace(/_/g, ' ');
+            }
         }
 
         function applyStakingAnalytics(data) {
@@ -2344,8 +2403,37 @@
                 var tokenSupply = parseFloat(ethers.utils.formatEther(tokenSupplyWei));
                 var lockedPct = tokenSupply > 0 ? (100 * totalLocked) / tokenSupply : 0;
 
-                var pctHs = document.getElementById('metricStakedSupplyPct');
-                if (pctHs) pctHs.textContent = lockedPct.toFixed(2) + '%';
+                var lpBonziTokens = NaN;
+                var lpPctSupply = NaN;
+                try {
+                    var pairC = new ethers.Contract(CONTRACTS.BONZI_LP, UNISWAP_V2_PAIR_ABI, provider);
+                    var t0 = await pairC.token0();
+                    var t1 = await pairC.token1();
+                    var reserves = await pairC.getReserves();
+                    var r0 = reserves[0];
+                    var r1 = reserves[1];
+                    var bnAddr = CONTRACTS.BONZI_TOKEN.toLowerCase();
+                    var bonziWei =
+                        String(t0).toLowerCase() === bnAddr
+                            ? r0
+                            : String(t1).toLowerCase() === bnAddr
+                              ? r1
+                              : null;
+                    if (bonziWei != null) {
+                        lpBonziTokens = parseFloat(ethers.utils.formatEther(bonziWei));
+                        lpPctSupply =
+                            tokenSupply > 0 && !isNaN(lpBonziTokens)
+                                ? (100 * lpBonziTokens) / tokenSupply
+                                : NaN;
+                    }
+                } catch (lpErr) {
+                    console.warn('[LP] reserves read:', lpErr);
+                }
+
+                var lpTile = document.getElementById('metricLpSupplyPct');
+                if (lpTile && !isNaN(lpPctSupply)) lpTile.textContent = lpPctSupply.toFixed(2) + '%';
+                var hkTile = document.getElementById('metricHardstakePct');
+                if (hkTile) hkTile.textContent = lockedPct.toFixed(2) + '%';
 
                 // Update displays across all tabs
                 document.getElementById('bonziBalance').textContent = formatWalletTokenAmount(bonziBalance, 8);

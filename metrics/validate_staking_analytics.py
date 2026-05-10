@@ -83,6 +83,12 @@ def validate_file(
     lc = data.get("onchain_live") or {}
     if lc.get("locked_percent_of_supply_rounded") is None:
         errors.append("onchain_live.locked_percent_of_supply_rounded is required.")
+    hs = lc.get("hardstake_percent_of_supply_rounded")
+    lp = lc.get("locked_percent_of_supply_rounded")
+    if hs is not None and lp is not None and round(float(hs), 4) != round(float(lp), 4):
+        errors.append(
+            "onchain_live.hardstake_percent_of_supply_rounded must match locked_percent_of_supply_rounded."
+        )
 
     if freshness_hours is not None and gen:
         try:

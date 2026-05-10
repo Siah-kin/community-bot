@@ -852,6 +852,74 @@
             dbgStakeEmit(hypothesisId, location, message, snapshotWalletConnectModal());
         }
 
+        var walletConnectModalWatchStarted = false;
+
+        function watchWalletConnectModalHost() {
+            if (walletConnectModalWatchStarted || typeof MutationObserver === 'undefined') {
+                return;
+            }
+            walletConnectModalWatchStarted = true;
+
+            function attachModalAttrObserver(modal) {
+                if (!modal || modal.__bonziModalObserved) {
+                    return;
+                }
+                modal.__bonziModalObserved = true;
+                emitWalletConnectModalSnapshot('H8', 'stake-tg.html:watchWalletConnectModalHost', 'modal host observed');
+                new MutationObserver(function () {
+                    emitWalletConnectModalSnapshot('H8', 'stake-tg.html:watchWalletConnectModalHost', 'modal host attrs changed');
+                }).observe(modal, {
+                    attributes: true,
+                    attributeFilter: ['open', 'active']
+                });
+            }
+
+            attachModalAttrObserver(document.querySelector('wcm-modal'));
+
+            var root = document.body || document.documentElement;
+            if (!root) {
+                return;
+            }
+            new MutationObserver(function () {
+                attachModalAttrObserver(document.querySelector('wcm-modal'));
+            }).observe(root, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        function attachWalletConnectDebugHooks(provider) {
+            if (!provider || provider.__bonziDebugHooksAttached || typeof provider.on !== 'function') {
+                return;
+            }
+            provider.__bonziDebugHooksAttached = true;
+
+            provider.on('display_uri', function (uri) {
+                dbgStakeEmit('H8', 'stake-tg.html:provider', 'display_uri event', {
+                    uriLen: uri ? String(uri).length : 0,
+                    uriPrefix: uri ? String(uri).slice(0, 24) : '',
+                    modal: snapshotWalletConnectModal()
+                });
+            });
+            provider.on('connect', function (payload) {
+                dbgStakeEmit('H8', 'stake-tg.html:provider', 'connect event', {
+                    chainId: payload && payload.chainId != null ? String(payload.chainId) : '',
+                    modal: snapshotWalletConnectModal()
+                });
+            });
+            provider.on('disconnect', function () {
+                dbgStakeEmit('H8', 'stake-tg.html:provider', 'disconnect event', {
+                    modal: snapshotWalletConnectModal()
+                });
+            });
+            provider.on('accountsChanged', function (accounts) {
+                dbgStakeEmit('H8', 'stake-tg.html:provider', 'accountsChanged event', {
+                    accountsCount: Array.isArray(accounts) ? accounts.length : 0,
+                    modal: snapshotWalletConnectModal()
+                });
+            });
+        }
+
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
             hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
             hasTg: !!tg,
@@ -1041,10 +1109,12 @@
             btn.disabled = true;
 
             try {
+                watchWalletConnectModalHost();
                 walletConnectProvider = await initWalletConnect();
                 if (!walletConnectProvider) {
                     throw new Error('WalletConnect failed to initialize. Please try again.');
                 }
+                attachWalletConnectDebugHooks(walletConnectProvider);
 
                 var connectTimeoutId = null;
                 var modalProbeShortId = null;

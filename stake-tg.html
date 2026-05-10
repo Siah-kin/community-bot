@@ -986,14 +986,14 @@
         <!-- Stats -->
         <div class="stats-bar">
             <div class="stat">
-                <div class="stat-value" id="totalStaked">--</div>
-                <div class="stat-label">Rewards pool</div>
-                <div class="stat-hint">% supply · staking contract</div>
+                <div class="stat-value" id="pctHardstakeHero">--</div>
+                <div class="stat-label">Hardstake</div>
+                <div class="stat-hint">% supply · pooled side (Ethervista pair)</div>
             </div>
             <div class="stat">
-                <div class="stat-value" id="lpBonziPct">--</div>
-                <div class="stat-label">DEX pair</div>
-                <div class="stat-hint">% supply · for swaps</div>
+                <div class="stat-value" id="pctLpLockHero">--</div>
+                <div class="stat-label">LP</div>
+                <div class="stat-hint">% supply · staking lock · ETH rewards</div>
             </div>
             <div class="stat">
                 <div class="stat-value" id="stakedBalance">0</div>
@@ -1004,8 +1004,12 @@
                 <div class="stat-label">Claimable ETH</div>
             </div>
             <p class="stats-bar-hint">
-                <strong>Two buckets</strong> vs 1B supply: rewards pool (staking contract) · DEX pair (swaps). <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>
-                · not exchange wallets.
+                <strong>Hardstake</strong> (larger %) = BONZI in the main pair vault (see
+                <a href="https://etherscan.io/token/0xD6175692026BcD7Cb12A515e39cF0256eF35cb86?a=0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">BONZI at pair</a>).
+                That vault also holds WETH; on Etherscan the <strong>USD mix</strong> is often near half BONZI / half WETH — that is <em>not</em> the same as &ldquo;% of 1B supply&rdquo;.
+                <strong>LP</strong> (smaller %) = BONZI in the
+                <a href="https://etherscan.io/token/0xD6175692026BcD7Cb12A515e39cF0256eF35cb86?a=0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">staking lock</a>
+                (Claim/Withdraw here). <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>.
             </p>
         </div>
 
@@ -1110,15 +1114,19 @@
             </div>
             <details class="tier-details" open>
                 <summary>Live · Ethereum balances</summary>
-                <span class="tier-sub">Pairs with “Rewards pool” &amp; “DEX pair” tiles — token amounts.</span>
+                <span class="tier-sub">
+                    Same two % as the hero tiles, with live BONZI wei. On the pair’s
+                    <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Etherscan portfolio</a>,
+                    BONZI vs WETH USD often tracks near 50/50 — compare to &ldquo;% of 1B supply&rdquo; above.
+                </span>
                 <div class="pool-overview-grid">
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Rewards pool · contract BONZI</span>
-                        <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
+                        <span class="pool-metric-label">Hardstake · pair BONZI reserve</span>
+                        <span class="pool-metric-value" id="poolLpBonziLive">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">DEX pair reserve · BONZI</span>
-                        <span class="pool-metric-value" id="poolLpBonziLive">—</span>
+                        <span class="pool-metric-label">LP · staking lock BONZI</span>
+                        <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
                     </div>
                     <div class="pool-metric">
                         <span class="pool-metric-label">Both venues combined</span>
@@ -2584,12 +2592,13 @@
                     console.warn('[LP] reserves read:', lpErr);
                 }
 
-                var lpEl = document.getElementById('lpBonziPct');
-                if (lpEl)
-                    lpEl.textContent =
+                var pctHs = document.getElementById('pctHardstakeHero');
+                var pctLp = document.getElementById('pctLpLockHero');
+                if (pctHs)
+                    pctHs.textContent =
                         typeof lpPct === 'number' && !isNaN(lpPct) ? lpPct.toFixed(1) + '%' : '—';
+                if (pctLp) pctLp.textContent = lockedPct.toFixed(1) + '%';
 
-                document.getElementById('totalStaked').textContent = lockedPct.toFixed(1) + '%';
                 var pl = document.getElementById('poolLiveTotalStaked');
                 if (pl)
                     pl.textContent =
@@ -2616,7 +2625,7 @@
                         combined.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
                         ' BONZI · ' +
                         cp.toFixed(1) +
-                        '% supply (hardstake + this pair — still excludes CEX, etc.)';
+                        '% supply (Hardstake pair + LP staking lock · excludes CEX)';
                 } else if (pch) {
                     pch.textContent = '—';
                 }

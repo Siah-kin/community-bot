@@ -333,7 +333,16 @@ def build_payload(
 
     eth_per_bonzi_pair_mid: float | None = None
     staking_tvl_eth_proxy_from_pair_mid: float | None = None
+    # ETH-mid APR = (backward ETH/year pace) / (locked BONZI × pair-implied ETH per BONZI).
+    # When the pair's WETH side is thin vs BONZI reserves, implied ETH/BONZI is tiny and TVL_ETH
+    # understates locked value — %-yield blows up without being a fair user APR. Omit from hero.
+    TVL_ETH_PROXY_MIN_FOR_PCT_PUBLIC = 10.0
+    ETH_PER_BONZI_PAIR_ILLIQUID_BELOW = 1e-7
+
     annualized_pool_reward_yield_estimate_eth_mid_proxy_pct: float | None = None
+    annualized_yield_eth_mid_proxy_pct_computed_optional: float | None = None
+    eth_mid_proxy_unreliable_for_hero_pct = False
+    eth_mid_proxy_unreliable_public_reason: str | None = None
     try:
         eth_per_bonzi_pair_mid = _pair_implied_eth_per_bonzi_tokens(rpc)
     except (OSError, RuntimeError, ValueError, IndexError, TypeError):
@@ -359,6 +368,20 @@ def build_payload(
                 * 100.0,
                 6,
             )
+            thin_tvl = staking_tvl_eth_proxy_from_pair_mid < TVL_ETH_PROXY_MIN_FOR_PCT_PUBLIC
+            thin_pair = eth_per_bonzi_pair_mid < ETH_PER_BONZI_PAIR_ILLIQUID_BELOW
+            if thin_tvl or thin_pair:
+                annualized_yield_eth_mid_proxy_pct_computed_optional = (
+                    annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
+                )
+                annualized_pool_reward_yield_estimate_eth_mid_proxy_pct = None
+                eth_mid_proxy_unreliable_for_hero_pct = True
+                eth_mid_proxy_unreliable_public_reason = (
+                    "APR percent not shown: the main BONZI/WETH pair has very little WETH next to "
+                    "BONZI reserves, so 'ETH value of locked BONZI' from that mid (~"
+                    + f"{staking_tvl_eth_proxy_from_pair_mid:.2f}"
+                    + " ETH here) is not a fair TVL denominator. Use pool ETH/year pace instead."
+                )
 
     bonzi_qty_1000: float | None = None
     if bonzi_usd and bonzi_usd > 0:
@@ -480,9 +503,17 @@ def build_payload(
             "annualized_pool_reward_yield_estimate_eth_mid_proxy_pct": (
                 annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
             ),
+            "annualized_yield_eth_mid_proxy_pct_computed_optional": (
+                annualized_yield_eth_mid_proxy_pct_computed_optional
+            ),
+            "eth_mid_proxy_unreliable_for_hero_pct": eth_mid_proxy_unreliable_for_hero_pct,
+            "eth_mid_proxy_unreliable_public_reason_optional": eth_mid_proxy_unreliable_public_reason,
+            "pool_aggregate_eth_reward_pace_per_year_illustrative": annualized_pool_eth_pace_estimate,
+            "pool_aggregate_eth_claimed_total_optional": total_eth_claimed_f,
             "eth_mid_apr_method_note_public": (
-                "ETH mid from main BONZI/WETH pair reserves; linear annualized ETH disburse ÷ "
-                "ETH notional of locked BONZI at that mid. Backward pace only; not a forecast."
+                "ETH mid from main BONZI/WETH pair reserves; headline % = linear annual ETH paid (indexer/Dune "
+                "cumulative ÷ pool age × 365) ÷ ETH notional of locked BONZI implied by pair mid. Thin WETH vs "
+                "BONZI in the pair makes that denominator unreliable — we omit the % and show ETH/year pace instead."
             ),
             "realized_vs_estimated_clarifier": (
                 "realized_aggregate = summed claims from indexer (Dune) in metrics slice; "

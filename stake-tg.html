@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-router-factory-fix-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="elegant-shell-lock-faq-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -31,7 +31,7 @@
             --purple-light: #A78BFA;
             --purple-dark: #5B21B6;
             --white: #FFFFFF;
-            --black: #0A0A0A;
+            --black: #0f0f0f;
             --gray: #71717A;
             --green: #10B981;
             --red: #DC2626;
@@ -66,9 +66,23 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 550px;
             margin: 0 auto;
             width: 100%;
+        }
+
+        .stake-shell {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1.15rem 0.95rem 1.25rem;
+            box-shadow: 0 28px 64px rgba(0, 0, 0, 0.5);
+        }
+
+        .stake-shell header {
+            margin-bottom: 1.15rem;
         }
 
         .site-footer {
@@ -79,7 +93,7 @@
             margin-right: -1rem;
             margin-bottom: -1rem;
             box-sizing: border-box;
-            background: #0a0a0a;
+            background: #0f0f0f;
             padding: 24px 16px calc(24px + env(safe-area-inset-bottom, 0px));
             text-align: center;
             font-size: 13px;
@@ -131,22 +145,127 @@
             font-size: 14px;
         }
 
-        /* Stats bar */
-        .stats-bar {
+        .header-brand-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--gray);
+            margin: 0.15rem 0 0;
+        }
+
+        header .logo + .header-brand-tag {
+            margin-top: 0;
+        }
+
+        header h1 + .subtitle {
+            margin-top: 0.35rem;
+        }
+
+        /* Metrics hero — 2×2 tiles (matches product mock) */
+        .stats-bar.metrics-hero-wrap {
+            display: block;
+            padding: 0.65rem 0.5rem 0.75rem;
+            background: transparent;
+        }
+
+        .metrics-hero-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            gap: 0.55rem;
+        }
+
+        .metric-tile {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 0.75rem 0.68rem 0.68rem;
+            text-align: center;
+            min-height: 5.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.14rem;
+        }
+
+        .metric-tile-label {
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray);
+        }
+
+        .metric-tile-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            line-height: 1.15;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .metric-tile-value.is-apr {
+            color: var(--purple-light);
+        }
+
+        .metric-tile-value.is-claim {
+            color: var(--green);
+        }
+
+        .metric-tile-sub {
+            font-size: 0.52rem;
+            color: #52525b;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .metrics-meta-line {
+            margin: 0.5rem 0 0;
+            text-align: center;
+            font-size: 0.58rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .metrics-meta-line strong,
+        .metrics-meta-line .metric-stakers-num {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .stake-alert-banner {
+            display: flex;
+            align-items: flex-start;
             gap: 0.5rem;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            background: var(--card-bg);
+            margin: 0 0 1rem;
+            padding: 0.72rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.74rem;
+            line-height: 1.42;
+            background: linear-gradient(135deg, #ffd700 0%, #ffb800 55%, #e3a008 100%);
+            border: 1px solid rgba(100, 70, 0, 0.35);
+            color: #0a0a0a;
         }
 
-        @media (min-width: 440px) {
-            .stats-bar {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        .stake-alert-banner svg {
+            flex-shrink: 0;
+            margin-top: 0.08rem;
+            color: #0a0a0a;
+            stroke: #0a0a0a;
         }
 
+        .stake-alert-banner strong {
+            color: #0a0a0a;
+            font-weight: 800;
+        }
+
+        #claimingWarning strong {
+            font-weight: 800;
+        }
+
+        /* Legacy stat (unused in hero) kept for any script refs */
         .stat { text-align: center; }
 
         .stat-value {
@@ -173,73 +292,13 @@
         }
 
         .stats-bar-hint {
-            grid-column: 1 / -1;
-            margin: 0;
-            padding: 0.55rem 0.25rem 0;
+            margin: 0.6rem 0 0;
+            padding: 0.5rem 0.2rem 0;
             border-top: 1px solid rgba(63, 63, 70, 0.35);
-            font-size: 0.62rem;
+            font-size: 0.58rem;
             line-height: 1.45;
             color: #71717a;
             text-align: center;
-        }
-
-        /* Public staking snapshot · three headline facts */
-        .pool-snapshot-trio-wrap {
-            grid-column: 1 / -1;
-            padding: 0.65rem 0.55rem 0.7rem;
-            border-radius: 12px;
-            background:
-                radial-gradient(ellipse at 78% -30%, rgba(124, 58, 237, 0.12), transparent 55%),
-                linear-gradient(145deg, rgba(212, 175, 55, 0.09), rgba(24, 24, 27, 0.95));
-            border: 1px solid rgba(212, 175, 55, 0.28);
-            margin-top: 0.15rem;
-        }
-
-        .pool-snapshot-trio {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.4rem 0.5rem;
-            text-align: center;
-        }
-
-        @media (max-width: 380px) {
-            .pool-snapshot-trio {
-                grid-template-columns: 1fr;
-                gap: 0.55rem;
-            }
-        }
-
-        .pool-snap-cell {
-            padding: 0.15rem 0.1rem;
-        }
-
-        .pool-snap-value {
-            font-family: ui-monospace, 'Cascadia Code', monospace;
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--gold);
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            word-break: break-word;
-        }
-
-        .pool-snap-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--purple-light);
-            margin-top: 0.25rem;
-        }
-
-        .pool-snap-micro {
-            font-size: 0.52rem;
-            color: #71717a;
-            margin-top: 0.12rem;
-            line-height: 1.35;
-            text-transform: none;
-            letter-spacing: 0;
-            font-weight: 500;
         }
 
         /* Pool health (Dune snapshot + live RPC) */
@@ -442,6 +501,67 @@
             color: #71717a;
             margin: 0.6rem 0 0.35rem;
             text-align: center;
+        }
+
+        .apr-how-details {
+            margin-top: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .apr-how-details summary {
+            font-size: 0.68rem;
+        }
+
+        .vet-data-panel {
+            margin-top: 0.55rem;
+            padding: 0.65rem 0.72rem;
+            border-radius: 11px;
+            border: 1px solid rgba(124, 58, 237, 0.35);
+            background: rgba(124, 58, 237, 0.06);
+        }
+
+        .vet-data-panel h2 {
+            margin: 0 0 0.35rem;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--purple-light);
+        }
+
+        .vet-data-panel-kicker {
+            margin: 0 0 0.45rem;
+            font-size: 0.61rem;
+            line-height: 1.42;
+            color: #a1a1aa;
+        }
+
+        .vet-data-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.35rem 0.65rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .vet-data-links a {
+            color: var(--gold);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .vet-data-links a:hover,
+        .vet-data-links a:focus {
+            text-decoration: underline;
+        }
+
+        .vet-data-ts {
+            flex-basis: 100%;
+            margin-top: 0.38rem;
+            font-size: 0.56rem;
+            font-weight: 500;
+            color: #71717a;
         }
 
         .tier-details {
@@ -726,6 +846,13 @@
             margin-bottom: 0.75rem;
         }
 
+        .stake-shell .stake-card,
+        .stake-shell .rewards-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+        }
+
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -842,6 +969,45 @@
             font-size: 0.8rem;
             color: var(--gray);
             line-height: 1.5;
+        }
+
+        .stake-lock-notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.62rem;
+            margin-bottom: 0.72rem;
+            padding: 0.78rem 0.85rem;
+            border-radius: 12px;
+            background: rgba(24, 22, 20, 0.96);
+            border: 1px solid rgba(58, 52, 46, 0.55);
+            border-left: 3px solid #fbbf24;
+        }
+
+        .stake-lock-notice .stake-lock-icon {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid #f59e0b;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.02rem;
+        }
+
+        .stake-lock-notice .stake-lock-icon svg {
+            display: block;
+        }
+
+        .stake-lock-notice .stake-lock-copy {
+            font-size: 0.74rem;
+            line-height: 1.45;
+            color: #d4d4d8;
+        }
+
+        .stake-lock-notice .stake-lock-copy strong {
+            color: #fafafa;
         }
 
         /* Rewards */
@@ -1141,12 +1307,14 @@
             margin-bottom: 1rem;
             background: rgba(124, 58, 237, 0.1);
             padding: 3px;
+            border-radius: 14px;
         }
 
         .tab-btn {
             padding: 0.6rem;
             background: transparent;
             border: none;
+            border-radius: 11px;
             color: var(--gray);
             font-size: 0.85rem;
             font-weight: 600;
@@ -1161,6 +1329,158 @@
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        .faq-section {
+            margin: 1rem 0 0.85rem;
+        }
+
+        .faq-section-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(250, 250, 250, 0.95);
+            margin-bottom: 0.55rem;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        details.faq-item {
+            margin: 0;
+            padding: 0;
+            border: 1px solid rgba(63, 63, 70, 0.55);
+            border-radius: 11px;
+            background: rgba(15, 15, 17, 0.75);
+            overflow: clip;
+        }
+
+        details.faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.65rem 0.72rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.65rem;
+        }
+
+        details.faq-item summary .faq-question {
+            flex: 1;
+            text-align: left;
+        }
+
+        details.faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.faq-item .faq-marker {
+            flex-shrink: 0;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--purple-light);
+            line-height: 1;
+            min-width: 1.05rem;
+            text-align: center;
+        }
+
+        details.faq-item[open] summary .faq-marker {
+            letter-spacing: 0;
+        }
+
+        details.faq-item:not([open]) summary .faq-marker::before {
+            content: '+';
+        }
+
+        details.faq-item[open] summary .faq-marker::before {
+            content: '−';
+        }
+
+        details.faq-item .faq-answer {
+            padding: 0 0.72rem 0.72rem;
+            font-size: 0.73rem;
+            line-height: 1.46;
+            color: #a1a1aa;
+            border-top: 1px solid rgba(63, 63, 70, 0.45);
+            padding-top: 0.55rem;
+            margin-top: 0;
+        }
+
+        .stake-low-cta-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0.85rem 0 1rem;
+        }
+
+        .cta-ticket {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 0.94rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: #24a1de;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .cta-ticket:active {
+            filter: brightness(0.95);
+        }
+
+        .cta-buy {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 1rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 0.92rem;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            color: #0a0a0a;
+            background: linear-gradient(135deg, #ffd700 0%, #ddb020 52%, #b8860b 100%);
+            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.32);
+            box-sizing: border-box;
+            animation: bonzi-buy-pulse 2.4s ease-in-out infinite;
+        }
+
+        .cta-buy:active {
+            filter: brightness(0.94);
+            transform: scale(0.99);
+        }
+
+        @keyframes bonzi-buy-pulse {
+            0%,
+            100% {
+                box-shadow:
+                    0 4px 18px rgba(212, 175, 55, 0.32),
+                    0 0 0 0 rgba(255, 215, 0, 0.22);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow:
+                    0 8px 28px rgba(255, 215, 0, 0.42),
+                    0 0 28px rgba(255, 184, 0, 0.18);
+                transform: scale(1.015);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1196,59 +1516,84 @@
 
     <!-- Main content -->
     <div class="container" id="mainContent" style="display: none;">
+        <div class="stake-shell">
         <header>
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
+            <p class="header-brand-tag">Bonzi</p>
             <h1>Stake BONZI</h1>
             <p class="subtitle">Earn ETH rewards</p>
         </header>
 
-        <!-- Stats -->
-        <div class="stats-bar">
-            <div class="stat">
-                <div class="stat-value" id="pctHardstakeHero">--</div>
-                <div class="stat-label">Hardstake</div>
-                <div class="stat-hint">% supply · pooled side (Ethervista pair)</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="pctLpLockHero">--</div>
-                <div class="stat-label">LP</div>
-                <div class="stat-hint">% supply · staking lock · ETH rewards</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="stakedBalance">0</div>
-                <div class="stat-label">Your staked</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="claimableEth">0.00</div>
-                <div class="stat-label">Claimable ETH</div>
-            </div>
-            <div class="pool-snapshot-trio-wrap">
-                <div class="pool-snapshot-trio" role="group" aria-label="Public staking snapshot">
-                    <div class="pool-snap-cell">
-                        <div class="pool-snap-value" data-pool-snap="staker-wallets">—</div>
-                        <div class="pool-snap-label">Stakers</div>
-                        <div class="pool-snap-micro">Wallets · Dune rollup</div>
-                    </div>
-                    <div class="pool-snap-cell">
-                        <div class="pool-snap-value" data-pool-snap="supply-pct">—</div>
-                        <div class="pool-snap-label">Lock % supply</div>
-                        <div class="pool-snap-micro">BONZI on lock contract</div>
-                    </div>
-                    <div class="pool-snap-cell">
-                        <div class="pool-snap-value" data-pool-snap="apr-pct">—</div>
-                        <div class="pool-snap-label">APR % rough</div>
-                        <div class="pool-snap-micro">Backward · not promised</div>
-                    </div>
+        <!-- Hero metrics -->
+        <div class="stats-bar metrics-hero-wrap">
+            <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
+                <div class="metric-tile">
+                    <div class="metric-tile-label">Yield (pool)</div>
+                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">—</div>
+                    <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield · pool-wide</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-tile-label">Staked %</div>
+                    <div class="metric-tile-value" id="metricStakedSupplyPct">—</div>
+                    <div class="metric-tile-sub">Supply Locked</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-tile-label">Your stake</div>
+                    <div class="metric-tile-value" id="stakedBalance">0</div>
+                    <div class="metric-tile-sub">BONZI</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-tile-label">Claimable</div>
+                    <div class="metric-tile-value is-claim" id="claimableEth">0.000</div>
+                    <div class="metric-tile-sub">ETH rewards</div>
                 </div>
             </div>
-            <p class="stats-bar-hint">
-                <strong>Pair vault</strong> = pooled BONZI (with WETH). <strong>Lock</strong> = this page stake / claim
-                (<a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">contract</a>).
-                <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Dex chart</a>.
+            <p class="metrics-meta-line">
+                <span class="metric-stakers-num" id="metricStakersInline">—</span>
+                staking wallets · Dune rollup
             </p>
+            <p class="stats-bar-hint">
+                Pair vault (pooled BONZI + WETH) lives under <strong>Optional reads · Live balances</strong>.
+                <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>
+                ·
+                <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Lock contract</a>
+            </p>
+            <details class="tier-details apr-how-details">
+                <summary>How we estimate pool yield</summary>
+                <p id="metricAprExplanation" class="tier-sub tier-sub-short" style="margin-top: 0.35rem"></p>
+            </details>
+            <section class="vet-data-panel" id="vet-data" aria-labelledby="vet-data-title">
+                <h2 id="vet-data-title">Vet the data</h2>
+                <p class="vet-data-panel-kicker">
+                    Vetting-first: totals and yield notes trace to machine-readable payloads and Ethereum calls.
+                    Rebuild from community-bot <code style="font-size:0.62rem;color:#a78bfa">metrics/</code>
+                    (<code style="font-size:0.62rem;color:#a78bfa">build_staking_analytics.py</code>);
+                    validators run before publish — no Dashboard keys shipped to Pages.
+                </p>
+                <div class="vet-data-links">
+                    <a href="/metrics/staking_analytics.json">staking_analytics.json</a>
+                    <span style="color: #52525b" aria-hidden="true">·</span>
+                    <a href="/metrics/metrics-data.json">metrics-data.json</a>
+                    <span style="color: #52525b" aria-hidden="true">·</span>
+                    <a href="/metrics/">Metrics hub</a>
+                    <span style="color: #52525b" aria-hidden="true">·</span>
+                    <a href="/metrics/DUNE_QUERIES.md">Dune query IDs (md)</a>
+                </div>
+                <p class="vet-data-ts" aria-live="polite">
+                    <span id="vetProofTimestamp"></span>
+                </p>
+            </section>
         </div>
 
         <p class="action-block-kicker">Your wallet · stake, claim, withdraw</p>
+
+        <div class="stake-alert-banner" role="status">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <p id="claimingWarning"><strong>Action Required:</strong> Please <strong>Claim</strong> your ETH rewards before adding to or withdrawing from your stake to prevent reward reset.</p>
+        </div>
 
         <!-- Status -->
         <div class="status hidden" id="statusMessage"></div>
@@ -1275,19 +1620,24 @@
                     </div>
                 </div>
 
+                <div class="stake-lock-notice" role="note">
+                    <span class="stake-lock-icon" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 7v6l4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    <div class="stake-lock-copy">
+                        <strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days.<br>
+                        Claim ETH rewards anytime.
+                    </div>
+                </div>
+
                 <button class="action-btn primary" id="stakeBtn" onclick="stake()" disabled>
                     Enter Amount
                 </button>
             </div>
 
-            <div class="info-box">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBB524" stroke-width="2" flex-shrink="0">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <p><strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days. Claim ETH rewards anytime.</p>
-            </div>
         </div>
 
         <!-- CLAIM tab -->
@@ -1341,6 +1691,48 @@
                 </svg>
                 <p><strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.</p>
             </div>
+        </div>
+
+        <section class="faq-section" aria-labelledby="faq-section-title">
+            <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary><span class="faq-question">What is BONZI Staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">Lock your BONZI tokens to secure the network and earn ETH rewards directly from protocol activity.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="faq-question">How are rewards paid?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">ETH rewards accrue in real time. Claim them from the <strong>Claim</strong> tab above when you are ready (wallet transaction required).</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="faq-question">Is there a lock period?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">Yes, there is a <strong>14-day withdrawal lock</strong> for staked BONZI to ensure pool stability. Claiming ETH does not reset that timer.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">
+                        The hero uses <strong>backward pool pacing</strong> from public <code style="font-size:0.65rem">staking_analytics.json</code> plus onchain reads — not a fixed 48h window and not a personal APR promise.
+                        When the pair is too thin for a fair %-headline, we show pool ETH/year pace instead. See <strong>How we estimate pool yield</strong> and <strong>Vet the data</strong>.
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <div class="stake-low-cta-stack">
+            <a class="cta-ticket" href="https://t.me/Bonzivista_bot" target="_blank" rel="noopener noreferrer" id="telegramFaqBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Open a Ticket for Support
+            </a>
+            <a class="cta-buy" href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" id="ctaBuyBonziTokens">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                Buy $BONZI Tokens
+            </a>
         </div>
 
         <section class="pool-overview" id="poolOverview" aria-labelledby="pool-panel-title">
@@ -1436,7 +1828,7 @@
                 <summary class="analytics-summary">Json proofs · deep cut</summary>
                 <p class="analytics-note" id="stakingAnalyticsMeta">Loading…</p>
                 <p class="analytics-note" style="margin:0 0 0.65rem;font-size:0.65rem;line-height:1.4;color:#71717a;">
-                    Same wallets / supply % / APR row as above — backed by staking_analytics.json.
+                    Same hero row fields (yield, staked %, stakers) · from staking_analytics.json.
                 </p>
                 <details class="tier-details tier-details-inner">
                     <summary>Supply duplicate check · optional</summary>
@@ -1460,6 +1852,7 @@
             </details>
             <p class="mev-foot">MEV‑safe routing when available · numbers are informational</p>
         </section>
+        </div><!-- /.stake-shell -->
     </div>
 
     <!-- Web3 Scripts -->
@@ -1546,6 +1939,47 @@
         // ============================================================
         const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
         var CONNECT_BTN_DEFAULT_HTML = '';
+
+        function resolveWalletDisplayLocale() {
+            try {
+                if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code) {
+                    var lc = String(tg.initDataUnsafe.user.language_code).toLowerCase();
+                    var map = {
+                        de: 'de-DE',
+                        fr: 'fr-FR',
+                        es: 'es-ES',
+                        it: 'it-IT',
+                        nl: 'nl-NL',
+                        nb: 'nb-NO'
+                    };
+                    if (map[lc]) return map[lc];
+                    if (lc.indexOf('pt') === 0) return 'pt-BR';
+                    if (lc.length === 2) return lc + '-' + lc.toUpperCase();
+                    return lc;
+                }
+            } catch (eIg) {}
+            try {
+                return navigator.language || 'en-US';
+            } catch (eNav) {
+                return 'en-US';
+            }
+        }
+
+        function formatWalletTokenAmount(n, maxFrac) {
+            if (n === null || n === undefined || typeof n !== 'number' || isNaN(n)) return '0';
+            var frac = maxFrac !== undefined ? maxFrac : 8;
+            try {
+                return n.toLocaleString(resolveWalletDisplayLocale(), {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: Math.min(Math.max(0, frac), 18)
+                });
+            } catch (err) {
+                return n.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: Math.min(Math.max(0, frac), 18)
+                });
+            }
+        }
 
         function normalizeStakeOverlayLang(raw) {
             var s = String(raw || '')
@@ -2661,6 +3095,8 @@
                     : '—';
             var stakersTxt = wallets != null ? String(wallets) : '—';
             var aprTitle = '';
+            var aprTxt = '—';
+            var aprSub = 'Est. yield · backward pool pacing';
             var aprRaw =
                 roi.annualized_pool_reward_yield_estimate_pct != null
                     ? roi.annualized_pool_reward_yield_estimate_pct
@@ -2669,41 +3105,98 @@
                       : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
                         ? wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional
                         : null;
+            var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
+            var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
             var aprSrc =
                 roi.annualized_pool_reward_yield_estimate_pct != null
-                    ? 'USD TVL proxy · backward'
+                    ? 'USD TVL proxy · backward pace'
                     : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
-                      ? 'ETH mid from pair reserves · backward'
+                      ? 'ETH mid from pair · backward pace'
                       : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
                         ? 'CoinGecko · reference stake'
                         : '';
-            if (aprRaw != null) {
-                aprTitle =
-                    aprSrc +
-                    '. Backward pace from indexer + pool math — not personal return.';
-            }
-            var aprTxt = '—';
+
             if (aprRaw != null && !isNaN(Number(aprRaw))) {
                 aprTxt = Number(aprRaw).toFixed(2) + '%';
+                aprSub = 'Est. yield · pool-wide (not yours)';
+                aprTitle =
+                    aprSrc +
+                    '. Indexer totals plus denominators in “How we estimate”. Not personal return.';
+            } else if (paceEth != null && !isNaN(Number(paceEth))) {
+                aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
+                aprTitle =
+                    'Pool-wide backward pace = cumulative ETH claimed (metrics slice) ÷ pool age (days) × 365.';
+                aprSub =
+                    unreliable || roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct == null
+                        ? 'No %-headline · thin pair TVL proxy'
+                        : 'Historical pool payout pace';
+                if (
+                    unreliable &&
+                    roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
+                    !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
+                ) {
+                    aprTitle +=
+                        ' Pair-mid % would be ~' +
+                        Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional).toFixed(1) +
+                        '% — omitted as misleading.';
+                }
             }
 
-            function setSnap(key, txt, isApr) {
-                var nodes = document.querySelectorAll('[data-pool-snap="' + key + '"]');
-                nodes.forEach(function (n) {
-                    n.textContent = txt;
-                    if (isApr) n.title = aprTitle || '';
-                });
+            function setAprHero(txt, titleAttr) {
+                var aprHero = document.getElementById('metricAprHero');
+                if (aprHero) {
+                    aprHero.textContent = txt;
+                    aprHero.title = titleAttr || '';
+                }
             }
-            setSnap('staker-wallets', stakersTxt, false);
-            setSnap('supply-pct', supplyTxt, false);
-            setSnap('apr-pct', aprTxt, true);
+
+            var subEl = document.getElementById('metricAprHeroSub');
+            if (subEl) subEl.textContent = aprSub;
+
+            setAprHero(aprTxt, aprTitle || '');
+
+            var expl = document.getElementById('metricAprExplanation');
+            if (expl) {
+                var bits = [];
+                if (roi.eth_mid_apr_method_note_public)
+                    bits.push(roi.eth_mid_apr_method_note_public);
+                if (roi.eth_mid_proxy_unreliable_public_reason_optional)
+                    bits.push(roi.eth_mid_proxy_unreliable_public_reason_optional);
+                if (roi.pool_age_days_est != null) {
+                    bits.push(
+                        'Indexer aggregate: ~' +
+                            String(roi.pool_age_days_est) +
+                            'd since launch baseline; ~' +
+                            (roi.pool_aggregate_eth_claimed_total_optional != null
+                                ? Number(roi.pool_aggregate_eth_claimed_total_optional).toFixed(4)
+                                : '—') +
+                            ' ETH cum. claimed.'
+                    );
+                }
+                if (typeof data.methodology_public === 'string' && data.methodology_public.trim())
+                    bits.push(data.methodology_public);
+                expl.textContent = bits.join(' ');
+            }
+
+            var supplyHero = document.getElementById('metricStakedSupplyPct');
+            if (supplyHero && supplyTxt !== '—') supplyHero.textContent = supplyTxt;
+            var stakerLine = document.getElementById('metricStakersInline');
+            if (stakerLine) stakerLine.textContent = stakersTxt;
         }
 
         function applyStakingAnalytics(data) {
+            if (!data) return;
+            syncPoolSnapshotTrio(data);
+            var vetTs = document.getElementById('vetProofTimestamp');
+            if (vetTs) {
+                var g = data.generated_at_utc != null ? String(data.generated_at_utc).trim() : '';
+                vetTs.textContent = g
+                    ? 'Proof bundle stamped (UTC): ' + g + ' — open staking_analytics.json or hard-refresh if a CDN shows an old body.'
+                    : '';
+            }
             var meta = document.getElementById('stakingAnalyticsMeta');
             var lock = document.getElementById('stakingAnalyticsLocked');
-            if (!data || !meta || !lock) return;
-            syncPoolSnapshotTrio(data);
+            if (!meta || !lock) return;
             var c = data.contracts || {};
             var oc = data.onchain_live || {};
             var roi = data.roi_pool_aggregate_illustrative || {};
@@ -2808,7 +3301,7 @@
                             s +=
                                 ' ' +
                                 Number(b.total_eth_distributed_snapshot).toFixed(2) +
-                                ' ETH (VISTA pool aggregate — different product).';
+                                ' ETH (different token — VISTA).';
                         }
                         s += '</li>';
                     });
@@ -2828,6 +3321,11 @@
                 stakingAnalyticsOk = true;
             } catch (e) {
                 console.warn('[staking-analytics]', e);
+                var vt = document.getElementById('vetProofTimestamp');
+                if (vt && !vt.textContent) {
+                    vt.textContent =
+                        'Could not load staking_analytics.json — check /metrics/staking_analytics.json at this origin or deploy drift.';
+                }
                 var meta = document.getElementById('stakingAnalyticsMeta');
                 if (meta) {
                     meta.textContent =
@@ -2899,12 +3397,8 @@
                     console.warn('[LP] reserves read:', lpErr);
                 }
 
-                var pctHs = document.getElementById('pctHardstakeHero');
-                var pctLp = document.getElementById('pctLpLockHero');
-                if (pctHs)
-                    pctHs.textContent =
-                        typeof lpPct === 'number' && !isNaN(lpPct) ? lpPct.toFixed(1) + '%' : '—';
-                if (pctLp) pctLp.textContent = lockedPct.toFixed(1) + '%';
+                var pctHs = document.getElementById('metricStakedSupplyPct');
+                if (pctHs) pctHs.textContent = lockedPct.toFixed(2) + '%';
 
                 var pl = document.getElementById('poolLiveTotalStaked');
                 if (pl)
@@ -2941,16 +3435,16 @@
                 if (pe) pe.textContent = poolEthBal.toFixed(4) + ' ETH';
 
                 // Update displays across all tabs
-                document.getElementById('bonziBalance').textContent = bonziBalance.toLocaleString(undefined, {maximumFractionDigits: 2});
-                document.getElementById('stakedBalance').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 0});
-                document.getElementById('claimableEth').textContent = claimableEth.toFixed(6);
+                document.getElementById('bonziBalance').textContent = formatWalletTokenAmount(bonziBalance, 8);
+                document.getElementById('stakedBalance').textContent = formatWalletTokenAmount(stakedBal, 2);
+                document.getElementById('claimableEth').textContent = claimableEth.toFixed(3);
 
                 // Claim tab
-                document.getElementById('claimStakedDisplay').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById('claimStakedDisplay').textContent = formatWalletTokenAmount(stakedBal, 4);
                 document.getElementById('claimableEthDisplay').textContent = claimableEth.toFixed(6) + ' ETH';
 
                 // Withdraw tab
-                document.getElementById('withdrawStakedDisplay').textContent = stakedBal.toLocaleString(undefined, {maximumFractionDigits: 2});
+                document.getElementById('withdrawStakedDisplay').textContent = formatWalletTokenAmount(stakedBal, 4);
                 if (timeRemaining > 0) {
                     const days = Math.ceil(timeRemaining / 86400);
                     document.getElementById('lockTimeDisplay').textContent = days + 'd';
@@ -2988,7 +3482,7 @@
                 btn.textContent = 'Insufficient Balance';
                 btn.disabled = true;
             } else {
-                btn.textContent = 'Stake ' + amount.toLocaleString() + ' BONZI';
+                btn.textContent = 'Stake ' + formatWalletTokenAmount(amount, 8) + ' BONZI';
                 btn.disabled = false;
             }
         }

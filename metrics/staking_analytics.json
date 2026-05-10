@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-05-10T21:39:03Z",
+  "generated_at_utc": "2026-05-10T22:36:08Z",
   "snapshot_date": "2026-05-10",
   "chain_id": 1,
   "access_model": "public_json_only",
@@ -59,7 +59,7 @@
     "usd_monthly_yield_proxy_optional": null
   },
   "roi_pool_aggregate_illustrative": {
-    "snapshot_datetime_utc": "2026-05-10T21:39:03Z",
+    "snapshot_datetime_utc": "2026-05-10T22:36:08Z",
     "usd_notional": 1000,
     "bonzi_units_representing_1000_usd": null,
     "historical_aggregate_label": "Cumulative ETH paid to claiming stakers vs rough TVL proxy (live locks \u00d7 CoinGecko BONZI). Not your personal IRR. Does not imply future returns.",
@@ -69,8 +69,13 @@
     "annualized_pool_reward_yield_estimate_pct": null,
     "eth_per_bonzi_pair_reserve_mid": 1.763421499684781e-08,
     "staking_tvl_eth_proxy_from_pair_mid": 0.998108743436,
-    "annualized_pool_reward_yield_estimate_eth_mid_proxy_pct": 77.317656,
-    "eth_mid_apr_method_note_public": "ETH mid from main BONZI/WETH pair reserves; linear annualized ETH disburse \u00f7 ETH notional of locked BONZI at that mid. Backward pace only; not a forecast.",
+    "annualized_pool_reward_yield_estimate_eth_mid_proxy_pct": null,
+    "annualized_yield_eth_mid_proxy_pct_computed_optional": 77.317656,
+    "eth_mid_proxy_unreliable_for_hero_pct": true,
+    "eth_mid_proxy_unreliable_public_reason_optional": "APR percent not shown: the main BONZI/WETH pair has very little WETH next to BONZI reserves, so 'ETH value of locked BONZI' from that mid (~1.00 ETH here) is not a fair TVL denominator. Use pool ETH/year pace instead.",
+    "pool_aggregate_eth_reward_pace_per_year_illustrative": 0.771714285714,
+    "pool_aggregate_eth_claimed_total_optional": 1.11,
+    "eth_mid_apr_method_note_public": "ETH mid from main BONZI/WETH pair reserves; headline % = linear annual ETH paid (indexer/Dune cumulative \u00f7 pool age \u00d7 365) \u00f7 ETH notional of locked BONZI implied by pair mid. Thin WETH vs BONZI in the pair makes that denominator unreliable \u2014 we omit the % and show ETH/year pace instead.",
     "realized_vs_estimated_clarifier": "realized_aggregate = summed claims from indexer (Dune) in metrics slice; annualized estimate = (realized_reward_usd / tvl_proxy_usd) prorated to one year via pool_age_days_est."
   },
   "benchmarks_illustrative": [

@@ -15,17 +15,6 @@
             }
         })();
     </script>
-    <script>
-        window.__bonziPendingConnect = false;
-        window.connectWallet = window.connectWallet || function () {
-            window.__bonziPendingConnect = true;
-            var b = document.getElementById('wcConnectBtn');
-            if (b) {
-                b.disabled = true;
-                b.textContent = 'Loading...';
-            }
-        };
-    </script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -47,21 +36,87 @@
             --card-bg: #1F1F23;
         }
 
+        html {
+            height: 100%;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
-            min-height: 100vh;
+            min-height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
             padding: 1rem;
-            padding-bottom: 5rem;
+            box-sizing: border-box;
+        }
+
+        .page-main {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 0;
         }
 
         .container {
             max-width: 500px;
             margin: 0 auto;
+            width: 100%;
         }
 
-        /* Compact header for Mini App */
+        .site-footer {
+            flex-shrink: 0;
+            width: calc(100% + 2rem);
+            max-width: none;
+            margin-left: -1rem;
+            margin-right: -1rem;
+            margin-bottom: -1rem;
+            box-sizing: border-box;
+            background: #0a0a0a;
+            padding: 24px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+            text-align: center;
+            font-size: 13px;
+            margin-top: auto;
+        }
+
+        .footer-block--stealth {
+            display: none;
+        }
+
+        html.footer-mode-stealth .footer-block--public {
+            display: none !important;
+        }
+
+        html.footer-mode-stealth .footer-block--stealth {
+            display: block !important;
+        }
+
+        .footer-stealth-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .footer-stealth-meta {
+            font-size: 12px;
+            color: #71717a;
+            line-height: 1.5;
+            max-width: 420px;
+            margin: 0 auto 10px;
+        }
+
+        .footer-cc-icon {
+            display: inline-block;
+            vertical-align: -3px;
+            margin: 0 4px;
+        }
+
         header {
             text-align: center;
             margin-bottom: 1.5rem;
@@ -296,17 +351,6 @@
             padding: 2rem;
         }
 
-        /* WalletConnect modal host: keep it above the connect overlay so the QR/session UI can appear. */
-        wcm-modal {
-            position: fixed !important;
-            inset: 0 !important;
-            display: block !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            z-index: 10001 !important;
-            pointer-events: auto !important;
-        }
-
         .connect-content {
             text-align: center;
             max-width: 320px;
@@ -399,6 +443,19 @@
     </style>
 </head>
 <body>
+    <script>
+        (function () {
+            try {
+                var v = (new URLSearchParams(window.location.search).get('footer') || '').toLowerCase();
+                if (v === 'stealth' || v === 'quiet') {
+                    document.documentElement.classList.add('footer-mode-stealth');
+                } else if (v === 'public') {
+                    document.documentElement.classList.remove('footer-mode-stealth');
+                }
+            } catch (e0) {}
+        })();
+    </script>
+    <div class="page-main">
     <!-- Connect overlay - WalletConnect only inside Telegram -->
     <div class="connect-overlay" id="connectOverlay">
         <button type="button" onclick="closeConnectOverlay()" style="position: absolute; top: 20px; left: 20px; background: none; border: none; color: #7C3AED; font-size: 28px; cursor: pointer; z-index: 10000; line-height: 1; padding: 8px;" aria-label="Close">&times;</button>
@@ -748,7 +805,7 @@
             HAS_TELEGRAM_WEBAPP &&
             (TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM) ||
                 (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
-        const USE_QR_MODAL = IS_EXTERNAL_BROWSER_FLOW || !IS_TELEGRAM_WEBAPP;
+        const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
@@ -792,27 +849,6 @@
             return url.toString();
         }
 
-        function getInjectedMetaMaskProvider() {
-            try {
-                var eth = typeof window !== 'undefined' ? window.ethereum : null;
-                if (!eth) {
-                    return null;
-                }
-                if (Array.isArray(eth.providers)) {
-                    var meta = eth.providers.find(function (p) {
-                        return !!(p && p.isMetaMask);
-                    });
-                    if (meta) {
-                        return meta;
-                    }
-                }
-                if (eth.isMetaMask) {
-                    return eth;
-                }
-            } catch (e) {}
-            return null;
-        }
-
         // #region agent log
         function dbgStakeEmit(hypothesisId, location, message, data) {
             var payload = {
@@ -828,130 +864,6 @@
                 console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
             } catch (e1) {}
         }
-
-        function snapshotWalletConnectModal() {
-            try {
-                var modal = document.querySelector('wcm-modal');
-                var shadow = modal && modal.shadowRoot ? modal.shadowRoot : null;
-                var overlay = shadow ? shadow.querySelector('#wcm-modal') : null;
-                var container = shadow ? shadow.querySelector('.wcm-container') : null;
-                var router = shadow ? shadow.querySelector('wcm-modal-router, wcm-qrcode-view, wcm-mobile-qr-connecting-view, wcm-connect-wallet-view') : null;
-
-                function rectData(el) {
-                    if (!el || typeof el.getBoundingClientRect !== 'function') return null;
-                    var r = el.getBoundingClientRect();
-                    return {
-                        width: Math.round(r.width),
-                        height: Math.round(r.height),
-                        top: Math.round(r.top),
-                        left: Math.round(r.left)
-                    };
-                }
-
-                function styleData(el) {
-                    if (!el || typeof window.getComputedStyle !== 'function') return null;
-                    var s = window.getComputedStyle(el);
-                    return {
-                        display: s.display,
-                        visibility: s.visibility,
-                        opacity: s.opacity,
-                        position: s.position,
-                        zIndex: s.zIndex
-                    };
-                }
-
-                return {
-                    hasModal: !!modal,
-                    modalOpen: !!(modal && modal.open),
-                    modalActive: !!(modal && modal.active),
-                    hasShadowRoot: !!shadow,
-                    routerTag: router ? router.tagName.toLowerCase() : '',
-                    hostRect: rectData(modal),
-                    hostStyle: styleData(modal),
-                    overlayRect: rectData(overlay),
-                    overlayStyle: styleData(overlay),
-                    containerRect: rectData(container),
-                    containerStyle: styleData(container)
-                };
-            } catch (e) {
-                return {
-                    snapshotError: e && e.message ? String(e.message).slice(0, 160) : 'unknown'
-                };
-            }
-        }
-
-        function emitWalletConnectModalSnapshot(hypothesisId, location, message) {
-            dbgStakeEmit(hypothesisId, location, message, snapshotWalletConnectModal());
-        }
-
-        var walletConnectModalWatchStarted = false;
-
-        function watchWalletConnectModalHost() {
-            if (walletConnectModalWatchStarted || typeof MutationObserver === 'undefined') {
-                return;
-            }
-            walletConnectModalWatchStarted = true;
-
-            function attachModalAttrObserver(modal) {
-                if (!modal || modal.__bonziModalObserved) {
-                    return;
-                }
-                modal.__bonziModalObserved = true;
-                emitWalletConnectModalSnapshot('H8', 'stake-tg.html:watchWalletConnectModalHost', 'modal host observed');
-                new MutationObserver(function () {
-                    emitWalletConnectModalSnapshot('H8', 'stake-tg.html:watchWalletConnectModalHost', 'modal host attrs changed');
-                }).observe(modal, {
-                    attributes: true,
-                    attributeFilter: ['open', 'active']
-                });
-            }
-
-            attachModalAttrObserver(document.querySelector('wcm-modal'));
-
-            var root = document.body || document.documentElement;
-            if (!root) {
-                return;
-            }
-            new MutationObserver(function () {
-                attachModalAttrObserver(document.querySelector('wcm-modal'));
-            }).observe(root, {
-                childList: true,
-                subtree: true
-            });
-        }
-
-        function attachWalletConnectDebugHooks(provider) {
-            if (!provider || provider.__bonziDebugHooksAttached || typeof provider.on !== 'function') {
-                return;
-            }
-            provider.__bonziDebugHooksAttached = true;
-
-            provider.on('display_uri', function (uri) {
-                dbgStakeEmit('H8', 'stake-tg.html:provider', 'display_uri event', {
-                    uriLen: uri ? String(uri).length : 0,
-                    uriPrefix: uri ? String(uri).slice(0, 24) : '',
-                    modal: snapshotWalletConnectModal()
-                });
-            });
-            provider.on('connect', function (payload) {
-                dbgStakeEmit('H8', 'stake-tg.html:provider', 'connect event', {
-                    chainId: payload && payload.chainId != null ? String(payload.chainId) : '',
-                    modal: snapshotWalletConnectModal()
-                });
-            });
-            provider.on('disconnect', function () {
-                dbgStakeEmit('H8', 'stake-tg.html:provider', 'disconnect event', {
-                    modal: snapshotWalletConnectModal()
-                });
-            });
-            provider.on('accountsChanged', function (accounts) {
-                dbgStakeEmit('H8', 'stake-tg.html:provider', 'accountsChanged event', {
-                    accountsCount: Array.isArray(accounts) ? accounts.length : 0,
-                    modal: snapshotWalletConnectModal()
-                });
-            });
-        }
-
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
             hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
             hasTg: !!tg,
@@ -966,7 +878,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs'
+            buildTag: 'sri-window-tabs+footer-sticky'
         });
         // #endregion
 
@@ -1104,14 +1016,12 @@
 
         async function connectWallet() {
             const btn = document.getElementById('wcConnectBtn');
-            const originalText = CONNECT_BTN_DEFAULT_HTML || btn.innerHTML;
+            const originalText = btn.innerHTML;
             dbgStakeEmit('H_connect_entry', 'stake-tg.html:connectWallet', 'connect clicked', {
                 shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
                 platform: TELEGRAM_PLATFORM,
                 isMiniApp: IS_TELEGRAM_WEBAPP
             });
-            btn.innerHTML = 'Connecting...';
-            btn.disabled = true;
             // Telegram Web keeps WalletConnect Verify inside its own frame; use a normal browser there.
             if (SHOULD_OPEN_EXTERNAL_BROWSER) {
                 const browserUrl = buildBrowserFallbackUrl();
@@ -1139,96 +1049,26 @@
                 }
                 return;
             }
-
-            const injectedMetaMask = getInjectedMetaMaskProvider();
-            if (injectedMetaMask) {
-                dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask branch detected', {
-                    hasRequest: !!(injectedMetaMask && typeof injectedMetaMask.request === 'function'),
-                    hasOn: !!(injectedMetaMask && typeof injectedMetaMask.on === 'function')
-                });
-                try {
-                    provider = new ethers.providers.Web3Provider(injectedMetaMask, 'any');
-                    signer = provider.getSigner();
-                    const accounts = await injectedMetaMask.request({ method: 'eth_requestAccounts' });
-                    if (!accounts || !accounts.length) {
-                        throw new Error('MetaMask did not return an account');
-                    }
-                    userAddress = accounts[0];
-                    walletConnectProvider = null;
-
-                    if (typeof injectedMetaMask.on === 'function') {
-                        injectedMetaMask.on('disconnect', () => location.reload());
-                        injectedMetaMask.on('accountsChanged', () => location.reload());
-                        injectedMetaMask.on('chainChanged', () => location.reload());
-                    }
-
-                    document.getElementById('connectOverlay').classList.add('hidden');
-                    document.getElementById('mainContent').style.display = 'block';
-
-                    if (preAction === 'claim') switchTab('claim');
-                    else if (preAction === 'unstake') switchTab('withdraw');
-
-                    if (preAmount && preAction === 'stake') {
-                        document.getElementById('stakeAmount').value = preAmount;
-                    }
-
-                    await updateUI();
-                    dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask connected', {
-                        addressTail: userAddress ? String(userAddress).slice(-6) : ''
-                    });
-                    return;
-                } catch (metaError) {
-                    dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask connect failed', {
-                        name: metaError && metaError.name,
-                        msg: metaError && metaError.message ? String(metaError.message).slice(0, 240) : 'unknown'
-                    });
-                    resetWalletConnectButton(btn);
-                    const overlayErr = document.getElementById('overlayError');
-                    if (overlayErr) {
-                        overlayErr.textContent = metaError.message || 'MetaMask connection failed. Try again.';
-                        overlayErr.style.display = 'block';
-                    }
-                    showStatus(metaError.message || 'MetaMask connection failed', 'error');
-                    return;
-                }
-            }
+            btn.innerHTML = 'Connecting...';
+            btn.disabled = true;
 
             try {
-                watchWalletConnectModalHost();
                 walletConnectProvider = await initWalletConnect();
                 if (!walletConnectProvider) {
                     throw new Error('WalletConnect failed to initialize. Please try again.');
                 }
-                attachWalletConnectDebugHooks(walletConnectProvider);
 
                 var connectTimeoutId = null;
-                var modalProbeShortId = null;
-                var modalProbeLongId = null;
                 var connectTimeoutPromise = new Promise(function (_, reject) {
-                    modalProbeShortId = setTimeout(function () {
-                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'modal probe +1200ms');
-                    }, 1200);
-                    modalProbeLongId = setTimeout(function () {
-                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'modal probe +3000ms');
-                    }, 3000);
                     connectTimeoutId = setTimeout(function () {
-                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect timeout snapshot');
                         reject(new Error('Wallet connection timed out. Tap Connect again or open in an external browser.'));
                     }, WALLETCONNECT_CONNECT_TIMEOUT_MS);
                 });
                 try {
-                    emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect call start');
                     await Promise.race([walletConnectProvider.connect(), connectTimeoutPromise]);
-                    emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect promise resolved');
                 } finally {
                     if (connectTimeoutId !== null) {
                         clearTimeout(connectTimeoutId);
-                    }
-                    if (modalProbeShortId !== null) {
-                        clearTimeout(modalProbeShortId);
-                    }
-                    if (modalProbeLongId !== null) {
-                        clearTimeout(modalProbeLongId);
                     }
                 }
 
@@ -1238,7 +1078,6 @@
                 }
 
                 userAddress = accounts[0];
-                signer = new ethers.providers.Web3Provider(walletConnectProvider).getSigner();
 
                 // Listen for disconnect
                 walletConnectProvider.on('disconnect', () => location.reload());
@@ -1264,7 +1103,6 @@
                 await updateUI();
 
             } catch (error) {
-                emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect failure snapshot');
                 dbgStakeEmit('H_wc_error', 'stake-tg.html:connectWallet', 'connect failure', {
                     name: error && error.name,
                     msg: error && error.message ? String(error.message).slice(0, 240) : 'unknown'
@@ -1285,19 +1123,8 @@
         }
 
         function getWalletSigner() {
-            if (signer) {
-                return signer;
-            }
-            if (walletConnectProvider) {
-                signer = new ethers.providers.Web3Provider(walletConnectProvider).getSigner();
-                return signer;
-            }
-            const injectedMetaMask = getInjectedMetaMaskProvider();
-            if (injectedMetaMask) {
-                signer = new ethers.providers.Web3Provider(injectedMetaMask, 'any').getSigner();
-                return signer;
-            }
-            throw new Error('No connected wallet signer available');
+            const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
+            return wcWeb3Provider.getSigner();
         }
 
         // ============================================================
@@ -1539,19 +1366,12 @@
         }
 
         window.switchTab = switchTab;
-        var pendingConnectBeforeReady = window.__bonziPendingConnect === true;
         window.connectWallet = connectWallet;
         window.closeConnectOverlay = closeConnectOverlay;
         window.stake = stake;
         window.claim = claim;
         window.withdraw = withdraw;
         window.setMax = setMax;
-        if (pendingConnectBeforeReady) {
-            window.__bonziPendingConnect = false;
-            setTimeout(function () {
-                connectWallet();
-            }, 0);
-        }
 
         // ============================================================
         // Auto-connect on load
@@ -1564,32 +1384,55 @@
             }
         });
     </script>
+    </div><!-- /.page-main -->
 
-<footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
-    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
-        <span style="color: #71717A;">sponsored by
-            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
-                Ethervista
-            </a>
-        </span>
-        <span style="color: #71717A;">·</span>
-        <span style="color: #71717A;">by co-founder
-            <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                <img src="defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
-                Defiants
-            </a>
-        </span>
-        <span style="color: #71717A;">·</span>
-        <span style="color: #71717A;">profits fund
-            <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                <img src="unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
-                Unidos Projects
-            </a>
-        </span>
+<!-- Footer: default public (sponsors). Stealth: add ?footer=stealth or ?footer=quiet (no sponsor names). ?footer=public forces public. -->
+<footer class="site-footer" aria-label="Site footer">
+    <div class="footer-block footer-block--public">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+            <span style="color: #71717A;">sponsored by
+                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                    Ethervista
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">by co-founder
+                <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Defiants
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">profits fund
+                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Unidos Projects
+                </a>
+            </span>
+        </div>
+        <div style="font-size: 12px; color: #71717A;">
+            open source · mit license · <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        </div>
     </div>
-    <div style="font-size: 12px; color: #71717A;">
-        open source · mit license · <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+    <div class="footer-block footer-block--stealth">
+        <a class="footer-stealth-brand" href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
+            <img src="bonzi-logo.png" alt="" width="28" height="28" style="border-radius: 6px;">
+            Bonzivista.org
+        </a>
+        <p class="footer-stealth-meta">
+            MIT License (software)
+            <span aria-hidden="true"> · </span>
+            Community Take Over™
+            <span aria-hidden="true"> · </span>
+            <a href="https://creativecommons.org" target="_blank" rel="noopener noreferrer" style="color: #a1a1aa; text-decoration: none; white-space: nowrap;" title="Creative Commons">
+                <svg class="footer-cc-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="none" stroke="#a1a1aa" stroke-width="1.5"/><text x="12" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#a1a1aa" font-family="system-ui,sans-serif">CC</text></svg>
+                Creative Commons
+            </a>
+        </p>
+        <div style="font-size: 12px; color: #71717A;">
+            <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        </div>
     </div>
 </footer>
 </body>

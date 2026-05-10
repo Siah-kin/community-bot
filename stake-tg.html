@@ -374,6 +374,49 @@
             background: #52525b;
         }
 
+        .pool-contract-rows {
+            margin-top: 0.65rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .pool-contract-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.55rem;
+            background: rgba(24, 24, 27, 0.9);
+            border-radius: 8px;
+            border: 1px solid rgba(63, 63, 70, 0.45);
+            font-size: 0.74rem;
+        }
+
+        .pool-contract-row-label {
+            color: #a1a1aa;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .pool-contract-row a {
+            color: var(--purple-light);
+            font-family:
+                ui-monospace,
+                'Cascadia Code',
+                monospace;
+            font-weight: 600;
+            font-size: 0.71rem;
+            text-decoration: none;
+            text-align: right;
+            word-break: break-all;
+        }
+
+        .pool-contract-row a:hover {
+            text-decoration: underline;
+            color: var(--gold);
+        }
+
         .pool-dune-links {
             margin-top: 0.85rem;
             font-size: 0.72rem;
@@ -1313,10 +1356,19 @@
                         <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
                     </div>
                 </div>
-                <div class="pool-dune-links" style="margin-top: 0.6rem;">
-                    <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Staking contract</a>
-                    <span aria-hidden="true"> · </span>
-                    <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Pair</a>
+                <div class="pool-contract-rows" aria-label="Pool and staking contracts">
+                    <div class="pool-contract-row">
+                        <span class="pool-contract-row-label">Pair</span>
+                        <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2"
+                            target="_blank" rel="noopener noreferrer"
+                            title="BONZI/WETH pair">0x970…75e2 · Exp</a>
+                    </div>
+                    <div class="pool-contract-row">
+                        <span class="pool-contract-row-label">Hardlocked</span>
+                        <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53"
+                            target="_blank" rel="noopener noreferrer"
+                            title="BONZI hardstake staking lock (claim ETH here)">0x361…1a53 · Exp</a>
+                    </div>
                 </div>
             </details>
 

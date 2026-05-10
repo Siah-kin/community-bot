@@ -1207,13 +1207,14 @@
 
         const ERC20_ABI = [
             'function balanceOf(address) view returns (uint256)',
+            'function totalSupply() view returns (uint256)',
             'function approve(address spender, uint256 amount) returns (bool)',
             'function allowance(address owner, address spender) view returns (uint256)'
         ];
 
         const HARDSTAKE_ABI = [
             'function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
-            'function totalStaked() view returns (uint256)',
+            'function totalStaked(address token) view returns (uint256)',
             'function claimShare()',
             'function withdraw(uint256 amount)'
         ];
@@ -2101,10 +2102,11 @@
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
                 const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
 
-                const [balance, stakerInfo, totalLockedWei, poolEthWei] = await Promise.all([
+                const [balance, tokenSupplyWei, stakerInfo, totalLockedWei, poolEthWei] = await Promise.all([
                     bonziContract.balanceOf(userAddress),
+                    bonziContract.totalSupply(),
                     hardstakeContract.getStakerInfo(userAddress),
-                    hardstakeContract.totalStaked().catch(function () {
+                    hardstakeContract.totalStaked(CONTRACTS.BONZI_TOKEN).catch(function () {
                         return ethers.BigNumber.from(0);
                     }),
                     provider.getBalance(CONTRACTS.BONZI_HARDSTAKE)
@@ -2117,14 +2119,17 @@
                 const timeRemaining = stakerInfo.timeRemaining.toNumber();
 
                 var totalLocked = parseFloat(ethers.utils.formatEther(totalLockedWei));
+                var tokenSupply = parseFloat(ethers.utils.formatEther(tokenSupplyWei));
+                var lockedPct = tokenSupply > 0 ? (100 * totalLocked) / tokenSupply : 0;
                 var poolEthBal = parseFloat(ethers.utils.formatEther(poolEthWei));
-                document.getElementById('totalStaked').textContent = totalLocked.toLocaleString(undefined, {
-                    maximumFractionDigits: 0
-                });
+                document.getElementById('totalStaked').textContent = lockedPct.toFixed(1) + '%';
                 var pl = document.getElementById('poolLiveTotalStaked');
                 if (pl)
                     pl.textContent =
-                        totalLocked.toLocaleString(undefined, { maximumFractionDigits: 0 }) + ' BONZI';
+                        totalLocked.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
+                        ' BONZI · ' +
+                        lockedPct.toFixed(1) +
+                        '%';
                 var pe = document.getElementById('poolEthBalanceLive');
                 if (pe) pe.textContent = poolEthBal.toFixed(4) + ' ETH';
 

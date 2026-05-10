@@ -77,7 +77,7 @@ CONTRACTS = {
     },
     # Ethervista Protocol (shared infrastructure)
     'protocol': {
-        'router': '0xCEDd366065A146a039B92Db35756ecD7688FCC77',
+        'router': '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
         'factory': '0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4',
         'token_factory': '0x1a97A037A120Db530dDCe8370e24EaD0FE9cf5d0',
         'hardlock_universal': '0xF6B510928ab880507246CD6946b7F061Eb8A9C78',
@@ -586,6 +586,21 @@ def main():
         json.dump(metrics, f, indent=2)
 
     print(f"\nSaved to {output_path}")
+
+    try:
+        import subprocess
+        import sys
+
+        bs = Path(__file__).resolve().parent / "build_staking_analytics.py"
+        if bs.is_file():
+            r = subprocess.run([sys.executable, str(bs)], cwd=str(bs.parent), check=False)
+            if r.returncode != 0:
+                print(f"Warning: build_staking_analytics.py exited {r.returncode} (staking_analytics.json not refreshed)")
+            else:
+                print("Merged staking_analytics.json (run validate_staking_analytics.py before publish).")
+    except Exception as e:
+        print(f"Note: staking analytics merge skipped: {e}")
+
     print(f"\n=== SIGNALS ===")
     for signal in metrics['market_context'].get('signals', []):
         print(f"  {signal}")

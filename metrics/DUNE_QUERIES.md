@@ -244,7 +244,7 @@ QUERIES = {
 ### Ethervista Protocol (Shared Infrastructure)
 | Contract | Address | Significance |
 |----------|---------|--------------|
-| Router | `0xCEDd366065A146a039B92Db35756ecD7688FCC77` | All swaps route through here |
+| Router (factory.router for BONZI hardstake factory) | `0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a` | hardstake / swaps per deployed factory |
 | Factory | `0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4` | Creates new trading pairs |
 | Token Factory | `0x1a97A037A120Db530dDCe8370e24EaD0FE9cf5d0` | Safe token deployment (Etherfun) |
 | Hardlock Universal | `0xF6B510928ab880507246CD6946b7F061Eb8A9C78` | LP locking for all tokens |

@@ -45,6 +45,8 @@ SKIP_FILES = [
     'faq.html',  # Redirect to manifesto.html
     'index.html',  # Holding page (closed alpha)
     '404.html',  # Holding page (closed alpha)
+    'privacy.html',  # Redirect page -> /legal/privacy.html
+    'stake-tg.html',  # Telegram mini-app surface; not a normal website footer page
 ]
 
 # Directories to skip entirely (drafts, embedded widgets)

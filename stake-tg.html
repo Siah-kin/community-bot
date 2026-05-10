@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-router-factory-fix-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="staking-analytics-json-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -304,6 +304,115 @@
 
         .pool-dune-links a:hover {
             text-decoration: underline;
+        }
+
+        .analytics-panel {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            border-radius: 12px;
+            font-size: 0.82rem;
+            color: var(--gray);
+        }
+
+        .analytics-summary {
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--purple-light);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .analytics-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .analytics-note {
+            margin: 0.6rem 0 0.85rem;
+            font-size: 0.72rem;
+            line-height: 1.45;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        @media (max-width: 380px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .analytics-metric {
+            background: var(--card-bg);
+            padding: 0.55rem 0.65rem;
+            border-radius: 8px;
+        }
+
+        .analytics-metric-label {
+            display: block;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #71717a;
+        }
+
+        .analytics-metric-value {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.86rem;
+            word-break: break-word;
+        }
+
+        .analytics-sub {
+            font-size: 0.76rem;
+            color: var(--purple-light);
+            margin: 0.75rem 0 0.35rem;
+            font-weight: 700;
+        }
+
+        .analytics-table-wrap {
+            overflow-x: auto;
+            font-size: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(82, 82, 91, 0.35);
+        }
+
+        .analytics-table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .analytics-table-wrap th,
+        .analytics-table-wrap td {
+            padding: 0.35rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(82, 82, 91, 0.25);
+        }
+
+        .analytics-table-wrap a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .analytics-roi,
+        .analytics-bench {
+            font-size: 0.74rem;
+            line-height: 1.5;
+            padding: 0.5rem;
+            background: rgba(31, 31, 35, 0.9);
+            border-radius: 8px;
+            border: 1px solid rgba(82, 82, 91, 0.3);
+        }
+
+        .analytics-roi strong {
+            color: var(--gold);
         }
 
         /* Cards */
@@ -860,6 +969,21 @@
                 <span aria-hidden="true"> · </span>
                 <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Hardstake</a>
             </div>
+            <details class="analytics-panel" id="stakingAnalyticsPanel">
+                <summary class="analytics-summary">Staking analytics (public snapshot)</summary>
+                <p class="analytics-note" id="stakingAnalyticsMeta">
+                    Loading generated JSON from /metrics/staking_analytics.json (no API keys in-page).
+                </p>
+                <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
+                <h3 class="analytics-sub">Top stakers (on-chain aggregate)</h3>
+                <div id="stakingTopStakers" class="analytics-table-wrap"></div>
+                <h3 class="analytics-sub">Top ETH earners (lifetime)</h3>
+                <div id="stakingTopEarners" class="analytics-table-wrap"></div>
+                <h3 class="analytics-sub">ROI snapshot (pool-level, not personal)</h3>
+                <div id="stakingRoiBlock" class="analytics-roi"></div>
+                <h3 class="analytics-sub">Benchmarks (context only)</h3>
+                <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
+            </details>
         </section>
 
         <div class="mev-badge">
@@ -1213,6 +1337,7 @@
         ];
 
         const HARDSTAKE_ABI = [
+            'function totalSupply() view returns (uint256)',
             'function getStakerInfo(address) view returns (uint256 amountStaked, uint256 timeRemaining, uint256 claimableShare)',
             'function totalStaked(address token) view returns (uint256)',
             'function claimShare()',
@@ -1227,7 +1352,12 @@
             typeof window !== 'undefined' && window.location && window.location.origin
                 ? window.location.origin + '/metrics/metrics-data.json'
                 : '/metrics/metrics-data.json';
+        var STAKING_ANALYTICS_URL =
+            typeof window !== 'undefined' && window.location && window.location.origin
+                ? window.location.origin + '/metrics/staking_analytics.json'
+                : '/metrics/staking_analytics.json';
         var poolMetricsSnapshotOk = false;
+        var stakingAnalyticsOk = false;
 
         // RPC endpoints with fallbacks
         const RPC_ENDPOINTS = [
@@ -1657,7 +1787,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-pool-health-tg-cache'
+            buildTag: 'sri-window-tabs+staking-analytics-json-20260510'
         });
         // #endregion
 
@@ -2093,12 +2223,168 @@
             }
         }
 
+        function truncateAddr(a) {
+            if (!a || typeof a !== 'string' || a.length < 12) return a || '—';
+            return a.slice(0, 6) + '…' + a.slice(-4);
+        }
+
+        function renderLeaderboard(elId, rows, emptyMsg) {
+            var el = document.getElementById(elId);
+            if (!el) return;
+            if (!rows || !rows.length) {
+                el.innerHTML = '<p class="analytics-note">' + emptyMsg + '</p>';
+                return;
+            }
+            var h =
+                '<table><thead><tr><th>#</th><th>Address</th><th>Value</th></tr></thead><tbody>';
+            rows.forEach(function (r, i) {
+                var addr = (r.address_canonical || r.address || '').toLowerCase();
+                var link = r.etherscan_url || ('https://etherscan.io/address/' + addr);
+                var amt =
+                    r.staked_tokens != null
+                        ? Number(r.staked_tokens).toLocaleString() + ' BONZI'
+                        : r.eth_earned_eth != null
+                          ? Number(r.eth_earned_eth).toFixed(6) + ' ETH'
+                          : '—';
+                h +=
+                    '<tr><td>' +
+                    (r.rank != null ? r.rank : i + 1) +
+                    '</td><td><a href="' +
+                    link +
+                    '" target="_blank" rel="noopener noreferrer">' +
+                    truncateAddr(addr) +
+                    '</a></td><td>' +
+                    amt +
+                    '</td></tr>';
+            });
+            h += '</tbody></table>';
+            el.innerHTML = h;
+        }
+
+        function applyStakingAnalytics(data) {
+            var meta = document.getElementById('stakingAnalyticsMeta');
+            var lock = document.getElementById('stakingAnalyticsLocked');
+            if (!data || !meta || !lock) return;
+            var c = data.contracts || {};
+            var oc = data.onchain_live || {};
+            var roi = data.roi_pool_aggregate_illustrative || {};
+            meta.textContent =
+                'Generated ' +
+                (data.generated_at_utc || '—') +
+                ' · factory router ' +
+                (c.factory_router_equals_expected === true ? 'matches expected' : 'MISMATCH — do not rely');
+            lock.innerHTML =
+                '<div class="analytics-metric"><span class="analytics-metric-label">Locked % of supply (JSON snapshot)</span>' +
+                '<span class="analytics-metric-value">' +
+                (oc.locked_percent_of_supply_rounded != null ? oc.locked_percent_of_supply_rounded + '%' : '—') +
+                '</span></div>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">Pool BONZI aggregate</span>' +
+                '<span class="analytics-metric-value">' +
+                (oc.pool_total_staked_tokens != null ? Number(oc.pool_total_staked_tokens).toLocaleString() : '—') +
+                '</span></div>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI total supply</span>' +
+                '<span class="analytics-metric-value">' +
+                (oc.total_supply_tokens != null ? Number(oc.total_supply_tokens).toLocaleString() : '—') +
+                '</span></div>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">On-chain read path</span>' +
+                '<span class="analytics-metric-value">' +
+                String(oc.pool_aggregate_read_method || '—').replace(/_/g, ' ') +
+                '</span></div>';
+
+            var lb = data.leaderboards || {};
+            renderLeaderboard(
+                'stakingTopStakers',
+                lb.top_stakers_by_amount,
+                'Leaderboard rows ship when Dune / indexer export is merged into staking_analytics.json (public addresses only).'
+            );
+            renderLeaderboard(
+                'stakingTopEarners',
+                lb.top_eth_earners_lifetime,
+                'Lifetime ETH earners await the same pipeline (claim/reward attribution).'
+            );
+
+            var rb = document.getElementById('stakingRoiBlock');
+            if (rb) {
+                rb.innerHTML =
+                    '<p><strong>Snapshot</strong> ' +
+                    (roi.snapshot_datetime_utc || '—') +
+                    '</p>' +
+                    '<p><strong>Pool aggregate only</strong> — not your wallet. ' +
+                    (roi.historical_aggregate_label || '') +
+                    '</p>' +
+                    '<p>$1,000 USD notional → <strong>' +
+                    (roi.bonzi_units_representing_1000_usd != null
+                        ? roi.bonzi_units_representing_1000_usd + ' BONZI'
+                        : 'needs CoinGecko BONZI/USD') +
+                    '</strong>.</p>' +
+                    '<p>TVL proxy (USD): ' +
+                    (roi.tvl_proxy_usd != null ? '$' + roi.tvl_proxy_usd : '—') +
+                    ' · Lifetime rewards ÷ TVL proxy (unitless): ' +
+                    (roi.lifetime_reward_usd_vs_tvl_proxy != null ? roi.lifetime_reward_usd_vs_tvl_proxy : '—') +
+                    '</p>' +
+                    '<p>Annualized <em>estimated</em> pool yield %: ' +
+                    (roi.annualized_pool_reward_yield_estimate_pct != null
+                        ? roi.annualized_pool_reward_yield_estimate_pct + '%'
+                        : '—') +
+                    '</p>' +
+                    '<p style="font-size:0.68rem;color:#71717a;">' +
+                    (roi.realized_vs_estimated_clarifier || '') +
+                    '</p>';
+            }
+
+            var bb = document.getElementById('stakingBenchmarkBlock');
+            if (bb) {
+                var benches = data.benchmarks_illustrative || [];
+                if (!benches.length) {
+                    bb.textContent = 'No benchmark rows.';
+                } else {
+                    var s = '<ul style="margin:0;padding-left:1.1rem;">';
+                    benches.forEach(function (b) {
+                        s += '<li><strong>' + (b.label || b.id) + '</strong> — ';
+                        if (b.typical_yield_apr_approx_pct_low != null) {
+                            s +=
+                                'approx ' +
+                                b.typical_yield_apr_approx_pct_low +
+                                '–' +
+                                b.typical_yield_apr_approx_pct_high +
+                                '% APR band. ';
+                        }
+                        if (b.total_eth_distributed_snapshot != null) {
+                            s += Number(b.total_eth_distributed_snapshot).toFixed(2) + ' ETH (snapshot metric). ';
+                        }
+                        s += (b.note_public || '') + '</li>';
+                    });
+                    s += '</ul>';
+                    bb.innerHTML = s;
+                }
+            }
+        }
+
+        async function ensureStakingAnalyticsSnapshot() {
+            if (stakingAnalyticsOk) return;
+            try {
+                var res = await fetch(STAKING_ANALYTICS_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('staking_analytics HTTP ' + res.status);
+                var data = await res.json();
+                applyStakingAnalytics(data);
+                stakingAnalyticsOk = true;
+            } catch (e) {
+                console.warn('[staking-analytics]', e);
+                var meta = document.getElementById('stakingAnalyticsMeta');
+                if (meta) {
+                    meta.textContent =
+                        'staking_analytics.json unavailable — generate via metrics/build_staking_analytics.py and publish.';
+                }
+            }
+        }
+
         // ============================================================
         // UI Updates
         // ============================================================
         async function updateUI() {
             try {
                 ensurePoolMetricsSnapshot();
+                ensureStakingAnalyticsSnapshot();
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
                 const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
 
@@ -2106,9 +2392,14 @@
                     bonziContract.balanceOf(userAddress),
                     bonziContract.totalSupply(),
                     hardstakeContract.getStakerInfo(userAddress),
-                    hardstakeContract.totalStaked(CONTRACTS.BONZI_TOKEN).catch(function () {
-                        return ethers.BigNumber.from(0);
-                    }),
+                    hardstakeContract
+                        .totalSupply()
+                        .catch(function () {
+                            return hardstakeContract.totalStaked(CONTRACTS.BONZI_TOKEN);
+                        })
+                        .catch(function () {
+                            return ethers.BigNumber.from(0);
+                        }),
                     provider.getBalance(CONTRACTS.BONZI_HARDSTAKE)
                 ]);
 
@@ -2364,6 +2655,8 @@
         // Auto-connect on load
         // ============================================================
         window.addEventListener('load', async () => {
+            ensurePoolMetricsSnapshot();
+            ensureStakingAnalyticsSnapshot();
             // If opened with pre-populated action, auto-trigger connect
             if (preAction || preWallet) {
                 // Small delay for SDK readiness

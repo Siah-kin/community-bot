@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-i18n-ui4-zh-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-i18n-ui5-no-notice-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -541,26 +541,6 @@
             font-weight: 600;
         }
 
-        .connect-notice-card {
-            background: transparent;
-            border: 1px dashed rgba(63, 63, 70, 0.6);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-top: 24px;
-            margin-bottom: 0;
-            text-align: left;
-            width: 100%;
-            max-width: 320px;
-            box-sizing: border-box;
-        }
-
-        .connect-notice-card p {
-            margin: 0;
-            font-size: 12px;
-            color: #a1a1aa;
-            line-height: 1.6;
-        }
-
         .connect-overlay-error {
             color: #dc2626;
             font-size: 0.8rem;
@@ -648,10 +628,7 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <div class="notice-card connect-notice-card">
-                <p id="stakeOverlayNotice"></p>
-            </div>
-            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-i18n-ui4-zh · use bot link (?v=…) so Telegram does not serve stale HTML</p>
+            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-i18n-ui5-no-notice · use bot link (?v=…) so Telegram does not serve stale HTML</p>
         </div>
     </div>
 
@@ -905,8 +882,6 @@
                 connectBtn: 'Connect Wallet',
                 connecting: 'Connecting…',
                 divider: 'or connect directly',
-                noticeHtml:
-                    '<strong>Note:</strong> Self-custody only (MetaMask, Trust Wallet, Binance Web3). Exchange spot balances cannot connect—withdraw to your own wallet on the correct network first.',
                 waiting: 'Waiting…',
                 openApp: 'Open app →',
                 closeAria: 'Close',
@@ -918,8 +893,6 @@
                 connectBtn: 'Conectar carteira',
                 connecting: 'Conectando…',
                 divider: 'ou conectar direto',
-                noticeHtml:
-                    '<strong>Nota:</strong> Apenas carteiras de autocustódia (MetaMask, Trust Wallet, Binance Web3). Saldos em corretoras não conectam aqui — transfira para sua carteira na rede correta antes.',
                 waiting: 'Aguardando…',
                 openApp: 'Abrir app →',
                 closeAria: 'Fechar',
@@ -931,8 +904,6 @@
                 connectBtn: '连接钱包',
                 connecting: '连接中…',
                 divider: '或直接连接',
-                noticeHtml:
-                    '<strong>提示：</strong>仅支持自托管钱包（MetaMask、Trust Wallet、Binance Web3）。交易所账户余额无法在此连接——请先提现到您在正确网络上的自有钱包。',
                 waiting: '等待中…',
                 openApp: '打开应用 →',
                 closeAria: '关闭',
@@ -953,13 +924,11 @@
             var titleEl = document.getElementById('stakeOverlayTitle');
             var subEl = document.getElementById('stakeOverlaySubtitle');
             var divEl = document.getElementById('stakeOverlayDivider');
-            var noticeEl = document.getElementById('stakeOverlayNotice');
             var closeBtn = document.getElementById('connectOverlayCloseBtn');
             var labelEl = document.getElementById('wcConnectBtnLabel');
             if (titleEl) titleEl.textContent = d.title;
             if (subEl) subEl.textContent = d.subtitle;
             if (divEl) divEl.textContent = d.divider;
-            if (noticeEl) noticeEl.innerHTML = d.noticeHtml;
             if (closeBtn) closeBtn.setAttribute('aria-label', d.closeAria);
             if (labelEl) labelEl.textContent = d.connectBtn;
             ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
@@ -1270,7 +1239,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-i18n-ui4-zh-tg-cache'
+            buildTag: 'sri-window-tabs+overlay-i18n-ui5-no-notice-tg-cache'
         });
         // #endregion
 

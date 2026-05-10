@@ -443,7 +443,7 @@
 
                 <div class="input-group">
                     <div class="input-wrapper">
-                        <input type="number" id="stakeAmount" placeholder="0.0" min="0" step="any" inputmode="decimal">
+                        <input type="number" id="stakeAmount" name="stakeAmount" autocomplete="transaction-amount" placeholder="0.0" min="0" step="any" inputmode="decimal">
                         <button class="max-btn" onclick="setMax()">MAX</button>
                     </div>
                 </div>
@@ -520,12 +520,12 @@
     <!-- Web3 Scripts -->
     <script>
         // #region agent log
-        window.__bonziDbgLog = function (hypothesisId, location, message, data) {
+        window.__bonziDbgLog = function (hypothesisId, locLabel, message, data) {
             var payload = {
                 sessionId: '2ee239',
                 runId: 'pre-fix',
                 hypothesisId: hypothesisId,
-                location: location,
+                location: locLabel,
                 message: message,
                 data: data || {},
                 timestamp: Date.now()
@@ -534,7 +534,8 @@
                 console.info('[BONZI_WC_DEBUG]', JSON.stringify(payload));
             } catch (e1) {}
             try {
-                if (location.protocol === 'http:' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+                var winLoc = typeof window !== 'undefined' && window.location ? window.location : null;
+                if (winLoc && winLoc.protocol === 'http:' && (winLoc.hostname === 'localhost' || winLoc.hostname === '127.0.0.1')) {
                     fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
@@ -673,10 +674,38 @@
         const IS_TELEGRAM_WEBAPP = !!(tg && tg.initData && tg.initData.length > 0);
         const HAS_TELEGRAM_WEBAPP = !!tg;
         const IS_EXTERNAL_BROWSER_FLOW = new URLSearchParams(window.location.search).get('external') === '1';
-        const TELEGRAM_PLATFORM = tg && typeof tg.platform === 'string' ? String(tg.platform).toLowerCase() : '';
+
+        function parseTelegramPlatformFromLocation() {
+            try {
+                var combined = (window.location.hash || '') + '&' + (window.location.search || '');
+                var m = /[#&?]tgWebAppPlatform=([^&]+)/.exec(combined);
+                if (m && m[1]) {
+                    return decodeURIComponent(m[1].replace(/\+/g, ' ')).toLowerCase().trim();
+                }
+            } catch (e) {}
+            return '';
+        }
+
+        function resolveTelegramPlatform(webApp) {
+            var raw = '';
+            if (webApp && typeof webApp.platform === 'string') {
+                raw = String(webApp.platform).toLowerCase().trim();
+            }
+            if (raw && raw !== 'unknown') {
+                return raw;
+            }
+            var fromLoc = parseTelegramPlatformFromLocation();
+            if (fromLoc) {
+                return fromLoc;
+            }
+            return raw || '';
+        }
+
+        const TELEGRAM_PLATFORM = resolveTelegramPlatform(tg);
         const TELEGRAM_WEB_PLATFORMS = new Set(['web', 'weba', 'webk']);
-        const SHOULD_OPEN_EXTERNAL_BROWSER = !IS_EXTERNAL_BROWSER_FLOW && HAS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
-        const USE_QR_MODAL = !IS_TELEGRAM_WEBAPP;
+        const SHOULD_OPEN_EXTERNAL_BROWSER =
+            !IS_EXTERNAL_BROWSER_FLOW && HAS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
+        const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
@@ -710,11 +739,16 @@
             try {
                 console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
             } catch (e1) {}
-            fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
-                body: JSON.stringify(payload)
-            }).catch(function () {});
+            try {
+                var loc = typeof location !== 'undefined' ? location : {};
+                if (loc.protocol === 'http:' && (loc.hostname === 'localhost' || loc.hostname === '127.0.0.1')) {
+                    fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
+                        body: JSON.stringify(payload)
+                    }).catch(function () {});
+                }
+            } catch (e2) {}
         }
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
             hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
@@ -722,13 +756,14 @@
             initDataLen: tg && tg.initData ? tg.initData.length : 0,
             hasTelegramBridge: HAS_TELEGRAM_WEBAPP,
             platformRaw: tg && tg.platform != null ? String(tg.platform) : '',
+            platformFromHash: parseTelegramPlatformFromLocation(),
             platformNorm: TELEGRAM_PLATFORM,
             isMiniApp: IS_TELEGRAM_WEBAPP,
             shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: '60e77f8+dbg4'
+            buildTag: '60e77f8+dbg5'
         });
         // #endregion
 

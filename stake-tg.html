@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-mm-scheme-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-wc-recover-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -615,7 +615,7 @@
             <img src="bonzi-logo.png" alt="Bonzi" class="logo connect-logo-lg">
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
             <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
-            <button class="connect-btn" id="wcConnectBtn" onclick="connectWallet()">
+            <button type="button" class="connect-btn" id="wcConnectBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 <span id="wcConnectBtnLabel">Connect Wallet</span>
             </button>
@@ -628,7 +628,7 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-mm-scheme · use bot link (?v=…) so Telegram does not serve stale HTML</p>
+            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-wc-recover · use bot link (?v=…) so Telegram does not serve stale HTML</p>
         </div>
     </div>
 
@@ -885,7 +885,9 @@
                 waiting: 'Waiting…',
                 openApp: 'Open app →',
                 closeAria: 'Close',
-                overlayErrFallback: 'Connection failed. Try opening in browser instead.'
+                overlayErrFallback: 'Connection failed. Try opening in browser instead.',
+                connectCancelled: 'Connection cancelled. Tap Connect to try again.',
+                connectStalled: 'Connection stalled. Tap Connect to try again.'
             },
             pt: {
                 title: 'Stake de BONZI',
@@ -896,7 +898,9 @@
                 waiting: 'Aguardando…',
                 openApp: 'Abrir app →',
                 closeAria: 'Fechar',
-                overlayErrFallback: 'Falha na conexão. Tente abrir no navegador.'
+                overlayErrFallback: 'Falha na conexão. Tente abrir no navegador.',
+                connectCancelled: 'Conexão cancelada. Toque em Conectar para tentar de novo.',
+                connectStalled: 'Conexão travada. Toque em Conectar para tentar de novo.'
             },
             zh: {
                 title: '质押 BONZI',
@@ -907,7 +911,9 @@
                 waiting: '等待中…',
                 openApp: '打开应用 →',
                 closeAria: '关闭',
-                overlayErrFallback: '连接失败。请尝试在浏览器中打开本页。'
+                overlayErrFallback: '连接失败。请尝试在浏览器中打开本页。',
+                connectCancelled: '已取消连接。请再次点击连接重试。',
+                connectStalled: '连接卡住。请再次点击连接重试。'
             }
         };
 
@@ -1040,6 +1046,8 @@
         let bonziBalance = 0;
         let walletConnectProvider = null;
         let currentClaimableEth = 0;
+        var wcConnectInFlight = false;
+        var wcConnectUiWatchdogId = null;
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
         const WALLETCONNECT_CONNECT_TIMEOUT_MS = 90000;
@@ -1095,6 +1103,64 @@
             { optionalChains: [1], showQrModal: true },
             { chains: [1], showQrModal: true }
         ];
+
+        function clearWcConnectUiWatchdog() {
+            if (wcConnectUiWatchdogId !== null) {
+                clearTimeout(wcConnectUiWatchdogId);
+                wcConnectUiWatchdogId = null;
+            }
+        }
+
+        function scheduleWcConnectUiWatchdog(btn) {
+            clearWcConnectUiWatchdog();
+            var maxMs = WALLETCONNECT_INIT_TIMEOUT_MS + WALLETCONNECT_CONNECT_TIMEOUT_MS + 8000;
+            wcConnectUiWatchdogId = setTimeout(function () {
+                wcConnectUiWatchdogId = null;
+                var b = btn || document.getElementById('wcConnectBtn');
+                if (!b || !b.disabled) return;
+                dbgStakeEmit('H_wc_watchdog', 'stake-tg.html:watchdog', 'connect UI stalled', { maxMs: maxMs });
+                try {
+                    if (walletConnectProvider && typeof walletConnectProvider.disconnect === 'function') {
+                        walletConnectProvider.disconnect();
+                    }
+                } catch (eW) {}
+                detachWcDisplayUri(walletConnectProvider);
+                resetWcWalletShortcutWaiting();
+                resetWalletConnectButton(b);
+                wcConnectInFlight = false;
+                var oe = document.getElementById('overlayError');
+                if (oe) {
+                    var pack = STAKE_OVERLAY_I18N[STAKE_OVERLAY_LANG];
+                    oe.textContent =
+                        pack && pack.connectStalled
+                            ? pack.connectStalled
+                            : 'Connection stalled. Tap Connect to try again.';
+                    oe.style.display = 'block';
+                }
+            }, maxMs);
+        }
+
+        window.addEventListener(
+            'pageshow',
+            function (ev) {
+                if (!ev.persisted) return;
+                var btn = document.getElementById('wcConnectBtn');
+                var overlay = document.getElementById('connectOverlay');
+                if (!btn || !overlay || overlay.classList.contains('hidden') || !btn.disabled) return;
+                dbgStakeEmit('H_wc_pageshow', 'stake-tg.html:pageshow', 'bfcache restore reset', {});
+                clearWcConnectUiWatchdog();
+                wcConnectInFlight = false;
+                try {
+                    if (walletConnectProvider && typeof walletConnectProvider.disconnect === 'function') {
+                        walletConnectProvider.disconnect();
+                    }
+                } catch (ePs) {}
+                detachWcDisplayUri(walletConnectProvider);
+                resetWcWalletShortcutWaiting();
+                resetWalletConnectButton(btn);
+            },
+            false
+        );
 
         function notifyTelegramHaptic(kind) {
             if (tg && tg.HapticFeedback && typeof tg.HapticFeedback.notificationOccurred === 'function') {
@@ -1154,6 +1220,7 @@
                 if (el) {
                     el.href = 'javascript:void(0)';
                     el.setAttribute('aria-disabled', 'true');
+                    el.removeAttribute('data-wc-shortcut-ready');
                     el.classList.remove('wallet-shortcut-open');
                     el.classList.add('wallet-shortcut-waiting');
                 }
@@ -1175,18 +1242,21 @@
                 var bn = document.getElementById('wcLinkBinance');
                 if (mm) {
                     mm.href = metaMaskWalletConnectHref(enc);
+                    mm.setAttribute('data-wc-shortcut-ready', '1');
                     mm.removeAttribute('aria-disabled');
                     mm.classList.remove('wallet-shortcut-waiting');
                     mm.classList.add('wallet-shortcut-open');
                 }
                 if (tw) {
                     tw.href = 'https://link.trustwallet.com/wc?uri=' + enc;
+                    tw.setAttribute('data-wc-shortcut-ready', '1');
                     tw.removeAttribute('aria-disabled');
                     tw.classList.remove('wallet-shortcut-waiting');
                     tw.classList.add('wallet-shortcut-open');
                 }
                 if (bn) {
                     bn.href = 'https://link.binance.com/wc?uri=' + enc;
+                    bn.setAttribute('data-wc-shortcut-ready', '1');
                     bn.removeAttribute('aria-disabled');
                     bn.classList.remove('wallet-shortcut-waiting');
                     bn.classList.add('wallet-shortcut-open');
@@ -1278,7 +1348,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-mm-scheme-tg-cache'
+            buildTag: 'sri-window-tabs+overlay-wc-recover-tg-cache'
         });
         // #endregion
 
@@ -1416,6 +1486,7 @@
 
         async function connectWallet() {
             const btn = document.getElementById('wcConnectBtn');
+            if (!btn) return;
             dbgStakeEmit('H_connect_entry', 'stake-tg.html:connectWallet', 'connect clicked', {
                 shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
                 platform: TELEGRAM_PLATFORM,
@@ -1448,6 +1519,32 @@
                 }
                 return;
             }
+
+            if (wcConnectInFlight) {
+                dbgStakeEmit('H_wc_cancel', 'stake-tg.html:connectWallet', 'user cancelled in-flight connect', {});
+                clearWcConnectUiWatchdog();
+                try {
+                    if (walletConnectProvider && typeof walletConnectProvider.disconnect === 'function') {
+                        walletConnectProvider.disconnect();
+                    }
+                } catch (eCancel) {}
+                detachWcDisplayUri(walletConnectProvider);
+                resetWcWalletShortcutWaiting();
+                resetWalletConnectButton(btn);
+                wcConnectInFlight = false;
+                const ox = document.getElementById('overlayError');
+                if (ox) {
+                    var packCan = STAKE_OVERLAY_I18N[STAKE_OVERLAY_LANG];
+                    ox.textContent =
+                        packCan && packCan.connectCancelled
+                            ? packCan.connectCancelled
+                            : 'Connection cancelled. Tap Connect to try again.';
+                    ox.style.display = 'block';
+                }
+                return;
+            }
+
+            wcConnectInFlight = true;
             resetWcWalletShortcutWaiting();
             btn.disabled = true;
             var lblConn = document.getElementById('wcConnectBtnLabel');
@@ -1457,6 +1554,7 @@
             } else {
                 btn.innerHTML = connectingText;
             }
+            scheduleWcConnectUiWatchdog(btn);
 
             try {
                 var initTimeoutId = null;
@@ -1528,7 +1626,6 @@
                 }
 
                 await updateUI();
-
             } catch (error) {
                 dbgStakeEmit('H_wc_error', 'stake-tg.html:connectWallet', 'connect failure', {
                     name: error && error.name,
@@ -1549,8 +1646,25 @@
                     overlayErr.style.display = 'block';
                 }
                 showStatus(error.message || 'Connection failed', 'error');
+            } finally {
+                wcConnectInFlight = false;
+                clearWcConnectUiWatchdog();
             }
         }
+
+        window.connectWallet = connectWallet;
+        (function wireWcConnectButton() {
+            var wb = document.getElementById('wcConnectBtn');
+            if (!wb || wb.dataset.wcWireConnect === '1') return;
+            wb.dataset.wcWireConnect = '1';
+            wb.addEventListener(
+                'click',
+                function () {
+                    connectWallet();
+                },
+                false
+            );
+        })();
 
         function getWalletSigner() {
             const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);

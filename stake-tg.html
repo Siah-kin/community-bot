@@ -703,8 +703,17 @@
 
         const TELEGRAM_PLATFORM = resolveTelegramPlatform(tg);
         const TELEGRAM_WEB_PLATFORMS = new Set(['web', 'weba', 'webk']);
+        var IS_TELEGRAM_EMBEDDED = false;
+        try {
+            IS_TELEGRAM_EMBEDDED = typeof window !== 'undefined' && window.self !== window.top;
+        } catch (eEmb) {
+            IS_TELEGRAM_EMBEDDED = true;
+        }
         const SHOULD_OPEN_EXTERNAL_BROWSER =
-            !IS_EXTERNAL_BROWSER_FLOW && HAS_TELEGRAM_WEBAPP && TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM);
+            !IS_EXTERNAL_BROWSER_FLOW &&
+            HAS_TELEGRAM_WEBAPP &&
+            (TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM) ||
+                (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
         const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
@@ -739,16 +748,6 @@
             try {
                 console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
             } catch (e1) {}
-            try {
-                var loc = typeof location !== 'undefined' ? location : {};
-                if (loc.protocol === 'http:' && (loc.hostname === 'localhost' || loc.hostname === '127.0.0.1')) {
-                    fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
-                        body: JSON.stringify(payload)
-                    }).catch(function () {});
-                }
-            } catch (e2) {}
         }
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
             hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
@@ -758,12 +757,13 @@
             platformRaw: tg && tg.platform != null ? String(tg.platform) : '',
             platformFromHash: parseTelegramPlatformFromLocation(),
             platformNorm: TELEGRAM_PLATFORM,
+            isEmbedded: IS_TELEGRAM_EMBEDDED,
             isMiniApp: IS_TELEGRAM_WEBAPP,
             shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: '60e77f8+dbg5'
+            buildTag: '60e77f8+dbg6'
         });
         // #endregion
 

@@ -183,6 +183,65 @@
             text-align: center;
         }
 
+        /* Public staking snapshot · three headline facts */
+        .pool-snapshot-trio-wrap {
+            grid-column: 1 / -1;
+            padding: 0.65rem 0.55rem 0.7rem;
+            border-radius: 12px;
+            background:
+                radial-gradient(ellipse at 78% -30%, rgba(124, 58, 237, 0.12), transparent 55%),
+                linear-gradient(145deg, rgba(212, 175, 55, 0.09), rgba(24, 24, 27, 0.95));
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            margin-top: 0.15rem;
+        }
+
+        .pool-snapshot-trio {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem 0.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 380px) {
+            .pool-snapshot-trio {
+                grid-template-columns: 1fr;
+                gap: 0.55rem;
+            }
+        }
+
+        .pool-snap-cell {
+            padding: 0.15rem 0.1rem;
+        }
+
+        .pool-snap-value {
+            font-family: ui-monospace, 'Cascadia Code', monospace;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .pool-snap-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--purple-light);
+            margin-top: 0.25rem;
+        }
+
+        .pool-snap-micro {
+            font-size: 0.52rem;
+            color: #71717a;
+            margin-top: 0.12rem;
+            line-height: 1.35;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 500;
+        }
+
         /* Pool health (Dune snapshot + live RPC) */
         .pool-overview {
             background: linear-gradient(165deg, rgba(124, 58, 237, 0.08) 0%, var(--card-bg) 45%);
@@ -497,6 +556,104 @@
             margin: 0;
             padding-left: 1.05rem;
             line-height: 1.45;
+        }
+
+        /* Pool vitals + 10M reference stake lens */
+        .analytics-pulse-shell {
+            padding: 0.65rem;
+            margin-bottom: 0.85rem;
+            background: radial-gradient(
+                ellipse at 85% -20%,
+                rgba(124, 58, 237, 0.12),
+                transparent 55%
+            ),
+                rgba(15, 15, 17, 0.95);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            font-size: 0.71rem;
+            line-height: 1.5;
+        }
+
+        .pulse-kicker {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--purple-light);
+            margin: 0 0 0.6rem;
+        }
+
+        .pulse-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.55rem 0.75rem;
+        }
+
+        @media (max-width: 420px) {
+            .pulse-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pulse-pane {
+            background: rgba(24, 24, 27, 0.75);
+            border-radius: 8px;
+            padding: 0.5rem 0.58rem;
+            border: 1px solid rgba(82, 82, 91, 0.25);
+        }
+
+        .pulse-pane h4 {
+            margin: 0 0 0.45rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .pulse-meter {
+            margin: 0.35rem 0 0;
+        }
+
+        .pulse-meter-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.64rem;
+            color: #a1a1aa;
+            margin-bottom: 0.2rem;
+        }
+
+        .pulse-track {
+            height: 8px;
+            border-radius: 99px;
+            background: rgba(63, 63, 70, 0.6);
+            overflow: hidden;
+        }
+
+        .pulse-fill-lock {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #7c3aed, #27ae60);
+            min-width: 2px;
+        }
+
+        .pulse-fill-people {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #d4af37, #e74c3c);
+            opacity: 0.9;
+            min-width: 2px;
+        }
+
+        .pulse-lens-numbers {
+            font-family:
+                ui-monospace,
+                'Cascadia Code',
+                monospace;
+            font-size: 0.68rem;
+            color: var(--text);
+            margin: 0.35rem 0 0;
         }
 
         /* Cards */
@@ -1003,6 +1160,25 @@
                 <div class="stat-value" id="claimableEth">0.00</div>
                 <div class="stat-label">Claimable ETH</div>
             </div>
+            <div class="pool-snapshot-trio-wrap">
+                <div class="pool-snapshot-trio" role="group" aria-label="Public staking snapshot">
+                    <div class="pool-snap-cell">
+                        <div class="pool-snap-value" data-pool-snap="staker-wallets">—</div>
+                        <div class="pool-snap-label">Staker wallets</div>
+                        <div class="pool-snap-micro">Indexer aggregate · not user count</div>
+                    </div>
+                    <div class="pool-snap-cell">
+                        <div class="pool-snap-value" data-pool-snap="supply-pct">—</div>
+                        <div class="pool-snap-label">Staked % supply</div>
+                        <div class="pool-snap-micro">BONZI in staking lock · on-chain</div>
+                    </div>
+                    <div class="pool-snap-cell">
+                        <div class="pool-snap-value" data-pool-snap="apr-pct">—</div>
+                        <div class="pool-snap-label">APR %</div>
+                        <div class="pool-snap-micro">Historical pace proxy · not a quote</div>
+                    </div>
+                </div>
+            </div>
             <p class="stats-bar-hint">
                 <strong>Hardstake</strong> (larger %) = BONZI in the main pair vault (see
                 <a href="https://etherscan.io/token/0xD6175692026BcD7Cb12A515e39cF0256eF35cb86?a=0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">BONZI at pair</a>).
@@ -1194,6 +1370,26 @@
                 <summary class="analytics-summary">Open data snapshot · benchmarks</summary>
                 <p class="analytics-note" id="stakingAnalyticsMeta">Loading…</p>
                 <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
+                <div id="stakingHealthPulse" class="analytics-pulse-shell analytics-note" style="margin-top:0">
+                    <p class="pulse-kicker" style="margin-bottom:0.45rem;">Public snapshot · same trio as above</p>
+                    <div class="pool-snapshot-trio">
+                        <div class="pool-snap-cell">
+                            <div class="pool-snap-value" data-pool-snap="staker-wallets">—</div>
+                            <div class="pool-snap-label">Staker wallets</div>
+                            <div class="pool-snap-micro">Indexer aggregate</div>
+                        </div>
+                        <div class="pool-snap-cell">
+                            <div class="pool-snap-value" data-pool-snap="supply-pct">—</div>
+                            <div class="pool-snap-label">Staked % supply</div>
+                            <div class="pool-snap-micro">Staking lock</div>
+                        </div>
+                        <div class="pool-snap-cell">
+                            <div class="pool-snap-value" data-pool-snap="apr-pct">—</div>
+                            <div class="pool-snap-label">APR %</div>
+                            <div class="pool-snap-micro">Hist. pace</div>
+                        </div>
+                    </div>
+                </div>
                 <h3 class="analytics-sub">Top wallets by stake</h3>
                 <div id="stakingTopStakers" class="analytics-table-wrap"></div>
                 <h3 class="analytics-sub">Top ETH earned (lifetime)</h3>
@@ -2394,10 +2590,64 @@
             el.innerHTML = h;
         }
 
+        function syncPoolSnapshotTrio(data) {
+            var agg = data.aggregate_claims_optional || {};
+            var oc = data.onchain_live || {};
+            var roi = data.roi_pool_aggregate_illustrative || {};
+            var wl = data.wallet_lens_10m_supply_illustrative || {};
+            var wallets = agg.currently_staking_wallets_aggregate;
+            var supplyTxt =
+                oc.locked_percent_of_supply_rounded != null
+                    ? Number(oc.locked_percent_of_supply_rounded).toFixed(2) + '%'
+                    : '—';
+            var stakersTxt = wallets != null ? String(wallets) : '—';
+            var aprTitle = '';
+            var aprRaw =
+                roi.annualized_pool_reward_yield_estimate_pct != null
+                    ? roi.annualized_pool_reward_yield_estimate_pct
+                    : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
+                      ? roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
+                      : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
+                        ? wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional
+                        : null;
+            var aprSrc =
+                roi.annualized_pool_reward_yield_estimate_pct != null
+                    ? 'USD TVL proxy · backward'
+                    : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
+                      ? 'ETH mid from pair reserves · backward'
+                      : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
+                        ? 'CoinGecko · reference stake'
+                        : '';
+            if (aprRaw != null) {
+                var m =
+                    (roi.eth_mid_apr_method_note_public || '') +
+                    (roi.realized_vs_estimated_clarifier
+                        ? ' ' + roi.realized_vs_estimated_clarifier
+                        : '');
+                aprTitle = aprSrc + (m ? ' — ' + m : '');
+            }
+            var aprTxt = '—';
+            if (aprRaw != null && !isNaN(Number(aprRaw))) {
+                aprTxt = Number(aprRaw).toFixed(2) + '%';
+            }
+
+            function setSnap(key, txt, isApr) {
+                var nodes = document.querySelectorAll('[data-pool-snap="' + key + '"]');
+                nodes.forEach(function (n) {
+                    n.textContent = txt;
+                    if (isApr) n.title = aprTitle || '';
+                });
+            }
+            setSnap('staker-wallets', stakersTxt, false);
+            setSnap('supply-pct', supplyTxt, false);
+            setSnap('apr-pct', aprTxt, true);
+        }
+
         function applyStakingAnalytics(data) {
             var meta = document.getElementById('stakingAnalyticsMeta');
             var lock = document.getElementById('stakingAnalyticsLocked');
             if (!data || !meta || !lock) return;
+            syncPoolSnapshotTrio(data);
             var c = data.contracts || {};
             var oc = data.onchain_live || {};
             var roi = data.roi_pool_aggregate_illustrative || {};
@@ -2444,9 +2694,23 @@
                     roi.tvl_proxy_usd != null ||
                     roi.lifetime_reward_usd_vs_tvl_proxy != null ||
                     roi.annualized_pool_reward_yield_estimate_pct != null;
+                var ethMidApr = roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct;
                 if (!hasUsdRoi) {
+                    var extra = '';
+                    if (ethMidApr != null) {
+                        extra =
+                            '<p class="analytics-note" style="margin-top:0;"><strong>APR % (ETH mid proxy)</strong>: ' +
+                            Number(ethMidApr).toFixed(2) +
+                            '% — ' +
+                            (roi.eth_mid_apr_method_note_public || 'Backward pace from pair reserves.') +
+                            '</p>';
+                    }
                     rb.innerHTML =
-                        '<p class="analytics-note">USD ROI is paused until this file carries a steady public BONZI/USD quote. Amounts shown above in ETH and BONZI still come from chain + your wallet.</p>';
+                        '<p class="analytics-note">' +
+                        'No steady public BONZI/USD at snapshot time. Pool-level spacing still uses on-chain ' +
+                        'BONZI totals and indexer ETH paid.' +
+                        '</p>' +
+                        extra;
                 } else {
                     rb.innerHTML =
                         '<p class="analytics-note">' +

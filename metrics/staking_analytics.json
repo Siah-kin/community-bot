@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-05-10T19:54:52Z",
+  "generated_at_utc": "2026-05-10T21:39:03Z",
   "snapshot_date": "2026-05-10",
   "chain_id": 1,
   "access_model": "public_json_only",
@@ -38,8 +38,28 @@
     "top_eth_earners_source": "pending_dune",
     "leaderboard_truncation_notice": "When populated, explorer links truncate display; addresses are lowercase 0x hex. No private wallets\u2014public chain only."
   },
+  "pool_health_pulse_illustrative": {
+    "router_factory_match_observed": true,
+    "bonzi_supply_locked_pct": 5.660069,
+    "dune_aggregate_currently_staking_wallets_optional": 8,
+    "dune_aggregate_unique_claimer_wallets_optional": 21,
+    "concentration_explainer_public": "On explorers, circulating supply sometimes sits behind a modest count of labelled addresses; wallets here are indexer aggregates and not a census of humans."
+  },
+  "wallet_lens_10m_supply_illustrative": {
+    "reference_bonzi_units": 10000000.0,
+    "supply_fraction_pct": 1.0,
+    "share_of_live_staking_pool_pct": 17.667629,
+    "share_method_note_public": null,
+    "linearized_eth_yield_note_public": "Straight-line extrapolation from cumulative indexer ETH paid \u00f7 staking pool age \u00d7 365 \u00d7 your share of today's pool total \u2014 backward pace only; contract math differs from a savings APR.",
+    "daily_mean_eth_claimed_pace_aggregate": 0.0021142857142857144,
+    "annualized_pool_eth_disburse_pace_estimate": 0.771714285714,
+    "annualized_eth_for_reference_stake_linear": 0.13634361706503,
+    "monthly_eth_for_reference_stake_linear": 0.01136196808875,
+    "usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional": null,
+    "usd_monthly_yield_proxy_optional": null
+  },
   "roi_pool_aggregate_illustrative": {
-    "snapshot_datetime_utc": "2026-05-10T19:54:52Z",
+    "snapshot_datetime_utc": "2026-05-10T21:39:03Z",
     "usd_notional": 1000,
     "bonzi_units_representing_1000_usd": null,
     "historical_aggregate_label": "Cumulative ETH paid to claiming stakers vs rough TVL proxy (live locks \u00d7 CoinGecko BONZI). Not your personal IRR. Does not imply future returns.",
@@ -47,6 +67,10 @@
     "lifetime_reward_usd_vs_tvl_proxy": null,
     "pool_age_days_est": 525,
     "annualized_pool_reward_yield_estimate_pct": null,
+    "eth_per_bonzi_pair_reserve_mid": 1.763421499684781e-08,
+    "staking_tvl_eth_proxy_from_pair_mid": 0.998108743436,
+    "annualized_pool_reward_yield_estimate_eth_mid_proxy_pct": 77.317656,
+    "eth_mid_apr_method_note_public": "ETH mid from main BONZI/WETH pair reserves; linear annualized ETH disburse \u00f7 ETH notional of locked BONZI at that mid. Backward pace only; not a forecast.",
     "realized_vs_estimated_clarifier": "realized_aggregate = summed claims from indexer (Dune) in metrics slice; annualized estimate = (realized_reward_usd / tvl_proxy_usd) prorated to one year via pool_age_days_est."
   },
   "benchmarks_illustrative": [

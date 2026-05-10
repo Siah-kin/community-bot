@@ -32,6 +32,14 @@ HARDSTAKE = "0x3618158bb8d07111e476f4de28676dff050d1a53"
 FACTORY = "0x9a27cb5ae0B2cEe0bb71f9A85C0D60f3920757B4"
 ROUTER_EXPECTED_CANONICAL = "0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a"
 
+# Bonzi/WETH Univ2-style pair (Ethervista) — ETH/BONZI mid only, not USD.
+BONZI_PAIR = "0x970cf9b7346fbaea0588f03356a104100eb675e2".lower()
+WETH_MAINNET = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+
+SEL_PAIR_TOKEN0 = "0x0dfe1681"  # token0()
+SEL_PAIR_TOKEN1 = "0xd21220a7"  # token1()
+SEL_PAIR_GET_RESERVES = "0x0902f1ac"  # getReserves()
+
 # Verified keccak selectors (Ethereum)
 # Ethervista HARDSTAKE template: pool aggregate is public `totalSupply` (not ERC20 — staked wei).
 # Fallback: some deployments may expose `totalStaked(address)`.
@@ -47,6 +55,9 @@ DEFAULT_RPC_URLS = (
     "https://eth.llamarpc.com",
     "https://cloudflare-eth.com",
 )
+
+# Public lens: ~1% of 1B supply (supply share != share of staking pool).
+REFERENCE_STAKE_BONZI_UNITS = 10_000_000.0
 
 
 def _rpc_call(rpc_url: str, to: str, data: str, timeout: int = 20) -> str:
@@ -77,6 +88,41 @@ def _rpc_call(rpc_url: str, to: str, data: str, timeout: int = 20) -> str:
 
 def _hex_to_int(h: str) -> int:
     return int(h, 16)
+
+
+def _decode_address_words(result_hex: str) -> str:
+    hx = result_hex[2:] if result_hex.startswith("0x") else result_hex
+    word = hx[-64:] if len(hx) >= 64 else hx
+    return ("0x" + word[-40:]).lower()
+
+
+def _decode_reserves_two_uints(result_hex: str) -> tuple[int, int]:
+    """Abi-encoded reserve0, reserve1 (each 32-byte word)."""
+    hx = result_hex[2:] if result_hex.startswith("0x") else result_hex
+    if len(hx) < 128:
+        raise ValueError("bad getReserves length")
+    return int(hx[0:64], 16), int(hx[64:128], 16)
+
+
+def _pair_implied_eth_per_bonzi_tokens(rpc: str) -> float | None:
+    """Rough mid: WETH_reserve / BONZI_reserve (18-decimal floats)."""
+    try:
+        t0 = _decode_address_words(_rpc_call(rpc, BONZI_PAIR, SEL_PAIR_TOKEN0))
+        t1 = _decode_address_words(_rpc_call(rpc, BONZI_PAIR, SEL_PAIR_TOKEN1))
+        r0, r1 = _decode_reserves_two_uints(_rpc_call(rpc, BONZI_PAIR, SEL_PAIR_GET_RESERVES))
+    except (OSError, RuntimeError, ValueError, IndexError):
+        return None
+    tok = TOKEN.lower()
+    weth_l = WETH_MAINNET.lower()
+    if t0 == tok and t1 == weth_l:
+        bonzi_wei, eth_wei = r0, r1
+    elif t1 == tok and t0 == weth_l:
+        bonzi_wei, eth_wei = r1, r0
+    else:
+        return None
+    if bonzi_wei <= 0:
+        return None
+    return (eth_wei / 10**18) / (bonzi_wei / 10**18)
 
 
 def _pick_working_rpc(urls: list[str]) -> str:
@@ -200,6 +246,120 @@ def build_payload(
             # Pool-aggregate illustrative: cumulative rewards USD / proxy TVL USD / years
             annualized_yield_estimate_pct = round((rewarded_usd / tvl_proxy_usd) / years * 100, 4)
 
+    share_of_live_staking_pool_pct: float | None = None
+    reference_vs_pool_note: str | None = None
+    if supply_tokens > 0 and staked_tokens > 0:
+        raw_share = 100.0 * (REFERENCE_STAKE_BONZI_UNITS / staked_tokens)
+        if REFERENCE_STAKE_BONZI_UNITS > staked_tokens:
+            reference_vs_pool_note = (
+                "Reference exceeds live staking aggregate; pacing below uses the whole pool slice."
+            )
+            share_of_live_staking_pool_pct = None
+        else:
+            share_of_live_staking_pool_pct = round(raw_share, 6)
+
+    # Linear historical pace: cumulative claimed ETH / pool age — not forward guidance.
+    daily_mean_eth_claimed: float | None = None
+    annualized_pool_eth_pace_estimate: float | None = None
+    linear_monthly_eth_for_reference_stake: float | None = None
+    linear_annual_eth_for_reference_stake: float | None = None
+    linear_yield_usd_apr_proxy_on_reference_pct: float | None = None
+    linear_monthly_usd_yield_proxy_reference: float | None = None
+    if (
+        total_eth_claimed_f is not None
+        and pool_age_days
+        and pool_age_days >= 8
+        and staked_tokens > 0
+    ):
+        daily_mean_eth_claimed = total_eth_claimed_f / float(pool_age_days)
+        annualized_pool_eth_pace_estimate = round(daily_mean_eth_claimed * 365.0, 12)
+        if REFERENCE_STAKE_BONZI_UNITS <= staked_tokens:
+            stake_frac = REFERENCE_STAKE_BONZI_UNITS / staked_tokens
+            linear_annual_eth_for_reference_stake = round(
+                daily_mean_eth_claimed * 365.0 * stake_frac, 14
+            )
+            linear_monthly_eth_for_reference_stake = round(
+                (linear_annual_eth_for_reference_stake or 0) / 12.0, 14
+            )
+        else:
+            linear_annual_eth_for_reference_stake = annualized_pool_eth_pace_estimate
+            linear_monthly_eth_for_reference_stake = round(
+                (annualized_pool_eth_pace_estimate or 0) / 12.0, 14
+            )
+            if reference_vs_pool_note is None:
+                reference_vs_pool_note = (
+                    "Live pool smaller than reference; pacing uses entire pool disbursement baseline."
+                )
+        if eth_usd and bonzi_usd and bonzi_usd > 0 and linear_monthly_eth_for_reference_stake:
+            principal_usd = REFERENCE_STAKE_BONZI_UNITS * bonzi_usd
+            annual_eth = linear_monthly_eth_for_reference_stake * 12.0
+            linear_yield_usd_apr_proxy_on_reference_pct = round(
+                (annual_eth * eth_usd / principal_usd) * 100.0, 6
+            )
+            linear_monthly_usd_yield_proxy_reference = round(
+                linear_monthly_eth_for_reference_stake * eth_usd, 4
+            )
+
+    pool_health_pulse: dict[str, Any] = {
+        "router_factory_match_observed": router_live.lower() == expected_lower,
+        "bonzi_supply_locked_pct": round(locked_pct, 6),
+        "dune_aggregate_currently_staking_wallets_optional": currently_staking,
+        "dune_aggregate_unique_claimer_wallets_optional": unique_claimers,
+        "concentration_explainer_public": (
+            "On explorers, circulating supply sometimes sits behind a modest count of labelled "
+            "addresses; wallets here are indexer aggregates and not a census of humans."
+        ),
+    }
+
+    wallet_lens_illustrative: dict[str, Any] = {
+        "reference_bonzi_units": REFERENCE_STAKE_BONZI_UNITS,
+        "supply_fraction_pct": round((REFERENCE_STAKE_BONZI_UNITS / supply_tokens) * 100, 8)
+        if supply_tokens > 0
+        else None,
+        "share_of_live_staking_pool_pct": share_of_live_staking_pool_pct,
+        "share_method_note_public": reference_vs_pool_note,
+        "linearized_eth_yield_note_public": (
+            "Straight-line extrapolation from cumulative indexer ETH paid ÷ staking pool age × 365 × "
+            "your share of today's pool total — backward pace only; contract math differs from a "
+            "savings APR."
+        ),
+        "daily_mean_eth_claimed_pace_aggregate": daily_mean_eth_claimed,
+        "annualized_pool_eth_disburse_pace_estimate": annualized_pool_eth_pace_estimate,
+        "annualized_eth_for_reference_stake_linear": linear_annual_eth_for_reference_stake,
+        "monthly_eth_for_reference_stake_linear": linear_monthly_eth_for_reference_stake,
+        "usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional": linear_yield_usd_apr_proxy_on_reference_pct,
+        "usd_monthly_yield_proxy_optional": linear_monthly_usd_yield_proxy_reference,
+    }
+
+    eth_per_bonzi_pair_mid: float | None = None
+    staking_tvl_eth_proxy_from_pair_mid: float | None = None
+    annualized_pool_reward_yield_estimate_eth_mid_proxy_pct: float | None = None
+    try:
+        eth_per_bonzi_pair_mid = _pair_implied_eth_per_bonzi_tokens(rpc)
+    except (OSError, RuntimeError, ValueError, IndexError, TypeError):
+        eth_per_bonzi_pair_mid = None
+    if (
+        eth_per_bonzi_pair_mid
+        and eth_per_bonzi_pair_mid > 0
+        and staked_tokens > 0
+    ):
+        staking_tvl_eth_proxy_from_pair_mid = round(
+            staked_tokens * eth_per_bonzi_pair_mid, 12
+        )
+        if (
+            annualized_pool_eth_pace_estimate is not None
+            and annualized_pool_eth_pace_estimate >= 0
+            and staking_tvl_eth_proxy_from_pair_mid > 0
+        ):
+            annualized_pool_reward_yield_estimate_eth_mid_proxy_pct = round(
+                (
+                    float(annualized_pool_eth_pace_estimate)
+                    / float(staking_tvl_eth_proxy_from_pair_mid)
+                )
+                * 100.0,
+                6,
+            )
+
     bonzi_qty_1000: float | None = None
     if bonzi_usd and bonzi_usd > 0:
         bonzi_qty_1000 = round(1000.0 / bonzi_usd, 8)
@@ -301,6 +461,8 @@ def build_payload(
                 "0x hex. No private wallets—public chain only."
             ),
         },
+        "pool_health_pulse_illustrative": pool_health_pulse,
+        "wallet_lens_10m_supply_illustrative": wallet_lens_illustrative,
         "roi_pool_aggregate_illustrative": {
             "snapshot_datetime_utc": generated_iso,
             "usd_notional": 1000,
@@ -313,6 +475,15 @@ def build_payload(
             "lifetime_reward_usd_vs_tvl_proxy": reward_to_tvl_lifetime_raw,
             "pool_age_days_est": pool_age_days,
             "annualized_pool_reward_yield_estimate_pct": annualized_yield_estimate_pct,
+            "eth_per_bonzi_pair_reserve_mid": eth_per_bonzi_pair_mid,
+            "staking_tvl_eth_proxy_from_pair_mid": staking_tvl_eth_proxy_from_pair_mid,
+            "annualized_pool_reward_yield_estimate_eth_mid_proxy_pct": (
+                annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
+            ),
+            "eth_mid_apr_method_note_public": (
+                "ETH mid from main BONZI/WETH pair reserves; linear annualized ETH disburse ÷ "
+                "ETH notional of locked BONZI at that mid. Backward pace only; not a forecast."
+            ),
             "realized_vs_estimated_clarifier": (
                 "realized_aggregate = summed claims from indexer (Dune) in metrics slice; "
                 "annualized estimate = (realized_reward_usd / tvl_proxy_usd) prorated "

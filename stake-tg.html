@@ -796,6 +796,62 @@
                 console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
             } catch (e1) {}
         }
+
+        function snapshotWalletConnectModal() {
+            try {
+                var modal = document.querySelector('wcm-modal');
+                var shadow = modal && modal.shadowRoot ? modal.shadowRoot : null;
+                var overlay = shadow ? shadow.querySelector('#wcm-modal') : null;
+                var container = shadow ? shadow.querySelector('.wcm-container') : null;
+                var router = shadow ? shadow.querySelector('wcm-modal-router, wcm-qrcode-view, wcm-mobile-qr-connecting-view, wcm-connect-wallet-view') : null;
+
+                function rectData(el) {
+                    if (!el || typeof el.getBoundingClientRect !== 'function') return null;
+                    var r = el.getBoundingClientRect();
+                    return {
+                        width: Math.round(r.width),
+                        height: Math.round(r.height),
+                        top: Math.round(r.top),
+                        left: Math.round(r.left)
+                    };
+                }
+
+                function styleData(el) {
+                    if (!el || typeof window.getComputedStyle !== 'function') return null;
+                    var s = window.getComputedStyle(el);
+                    return {
+                        display: s.display,
+                        visibility: s.visibility,
+                        opacity: s.opacity,
+                        position: s.position,
+                        zIndex: s.zIndex
+                    };
+                }
+
+                return {
+                    hasModal: !!modal,
+                    modalOpen: !!(modal && modal.open),
+                    modalActive: !!(modal && modal.active),
+                    hasShadowRoot: !!shadow,
+                    routerTag: router ? router.tagName.toLowerCase() : '',
+                    hostRect: rectData(modal),
+                    hostStyle: styleData(modal),
+                    overlayRect: rectData(overlay),
+                    overlayStyle: styleData(overlay),
+                    containerRect: rectData(container),
+                    containerStyle: styleData(container)
+                };
+            } catch (e) {
+                return {
+                    snapshotError: e && e.message ? String(e.message).slice(0, 160) : 'unknown'
+                };
+            }
+        }
+
+        function emitWalletConnectModalSnapshot(hypothesisId, location, message) {
+            dbgStakeEmit(hypothesisId, location, message, snapshotWalletConnectModal());
+        }
+
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
             hasTgApi: !!(window.Telegram && window.Telegram.WebApp),
             hasTg: !!tg,
@@ -991,16 +1047,33 @@
                 }
 
                 var connectTimeoutId = null;
+                var modalProbeShortId = null;
+                var modalProbeLongId = null;
                 var connectTimeoutPromise = new Promise(function (_, reject) {
+                    modalProbeShortId = setTimeout(function () {
+                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'modal probe +1200ms');
+                    }, 1200);
+                    modalProbeLongId = setTimeout(function () {
+                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'modal probe +3000ms');
+                    }, 3000);
                     connectTimeoutId = setTimeout(function () {
+                        emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect timeout snapshot');
                         reject(new Error('Wallet connection timed out. Tap Connect again or open in an external browser.'));
                     }, WALLETCONNECT_CONNECT_TIMEOUT_MS);
                 });
                 try {
+                    emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect call start');
                     await Promise.race([walletConnectProvider.connect(), connectTimeoutPromise]);
+                    emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect promise resolved');
                 } finally {
                     if (connectTimeoutId !== null) {
                         clearTimeout(connectTimeoutId);
+                    }
+                    if (modalProbeShortId !== null) {
+                        clearTimeout(modalProbeShortId);
+                    }
+                    if (modalProbeLongId !== null) {
+                        clearTimeout(modalProbeLongId);
                     }
                 }
 
@@ -1035,6 +1108,7 @@
                 await updateUI();
 
             } catch (error) {
+                emitWalletConnectModalSnapshot('H7', 'stake-tg.html:connectWallet', 'connect failure snapshot');
                 dbgStakeEmit('H_wc_error', 'stake-tg.html:connectWallet', 'connect failure', {
                     name: error && error.name,
                     msg: error && error.message ? String(error.message).slice(0, 240) : 'unknown'

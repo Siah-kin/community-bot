@@ -472,10 +472,29 @@
             margin-top: 0.15rem;
         }
 
+        .tier-sub-short {
+            margin-bottom: 0.55rem;
+            max-width: 40rem;
+            line-height: 1.42;
+        }
+
         .tier-details[open] summary {
             margin-bottom: 0.45rem;
             border-bottom: 1px solid rgba(63, 63, 70, 0.4);
             padding-bottom: 0.35rem;
+        }
+
+        .tier-details-inner {
+            margin-top: 0.4rem;
+            padding: 0.35rem 0.5rem 0.45rem;
+            border-radius: 8px;
+            border: 1px solid rgba(63, 63, 70, 0.35);
+            background: rgba(9, 9, 11, 0.55);
+        }
+
+        .tier-details-inner summary {
+            font-size: 0.72rem;
+            font-weight: 600;
         }
 
         .mev-foot {
@@ -1207,28 +1226,25 @@
                 <div class="pool-snapshot-trio" role="group" aria-label="Public staking snapshot">
                     <div class="pool-snap-cell">
                         <div class="pool-snap-value" data-pool-snap="staker-wallets">—</div>
-                        <div class="pool-snap-label">Staker wallets</div>
-                        <div class="pool-snap-micro">Indexer aggregate · not user count</div>
+                        <div class="pool-snap-label">Stakers</div>
+                        <div class="pool-snap-micro">Wallets · Dune rollup</div>
                     </div>
                     <div class="pool-snap-cell">
                         <div class="pool-snap-value" data-pool-snap="supply-pct">—</div>
-                        <div class="pool-snap-label">Staked % supply</div>
-                        <div class="pool-snap-micro">BONZI in staking lock · on-chain</div>
+                        <div class="pool-snap-label">Lock % supply</div>
+                        <div class="pool-snap-micro">BONZI on lock contract</div>
                     </div>
                     <div class="pool-snap-cell">
                         <div class="pool-snap-value" data-pool-snap="apr-pct">—</div>
-                        <div class="pool-snap-label">APR %</div>
-                        <div class="pool-snap-micro">Historical pace proxy · not a quote</div>
+                        <div class="pool-snap-label">APR % rough</div>
+                        <div class="pool-snap-micro">Backward · not promised</div>
                     </div>
                 </div>
             </div>
             <p class="stats-bar-hint">
-                <strong>Hardstake</strong> (larger %) = BONZI in the main pair vault (see
-                <a href="https://etherscan.io/token/0xD6175692026BcD7Cb12A515e39cF0256eF35cb86?a=0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">BONZI at pair</a>).
-                That vault also holds WETH; on Etherscan the <strong>USD mix</strong> is often near half BONZI / half WETH — that is <em>not</em> the same as &ldquo;% of 1B supply&rdquo;.
-                <strong>LP</strong> (smaller %) = BONZI in the
-                <a href="https://etherscan.io/token/0xD6175692026BcD7Cb12A515e39cF0256eF35cb86?a=0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">staking lock</a>
-                (Claim/Withdraw here). <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>.
+                <strong>Pair vault</strong> = pooled BONZI (with WETH). <strong>Lock</strong> = this page stake / claim
+                (<a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">contract</a>).
+                <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Dex chart</a>.
             </p>
         </div>
 
@@ -1329,30 +1345,28 @@
 
         <section class="pool-overview" id="poolOverview" aria-labelledby="pool-panel-title">
             <div class="pool-overview-head">
-                <h2 class="pool-overview-title" id="pool-panel-title">Extra detail · optional</h2>
+                <h2 class="pool-overview-title" id="pool-panel-title">Optional reads</h2>
             </div>
-            <details class="tier-details" open>
-                <summary>Live · Ethereum balances</summary>
-                <span class="tier-sub">
-                    Same two % as the hero tiles, with live BONZI wei. On the pair’s
-                    <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Etherscan portfolio</a>,
-                    BONZI vs WETH USD often tracks near 50/50 — compare to &ldquo;% of 1B supply&rdquo; above.
-                </span>
+            <details class="tier-details">
+                <summary>Live balances</summary>
+                <p class="tier-sub tier-sub-short">
+                    On-chain wei. Vault “%” in dollars on Etherscan = mix inside the pair — not % of total BONZI supply shown above.
+                </p>
                 <div class="pool-overview-grid">
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Hardstake · pair BONZI reserve</span>
+                        <span class="pool-metric-label">Pair vault BONZI</span>
                         <span class="pool-metric-value" id="poolLpBonziLive">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">LP · staking lock BONZI</span>
+                        <span class="pool-metric-label">Staking lock BONZI</span>
                         <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Both venues combined</span>
+                        <span class="pool-metric-label">Combined</span>
                         <span class="pool-metric-value subtle" id="poolCombinedHint">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">ETH sitting on staking contract</span>
+                        <span class="pool-metric-label">ETH on lock contract</span>
                         <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
                     </div>
                 </div>
@@ -1375,31 +1389,31 @@
             <details class="tier-details">
                 <summary>Dune · behaviour snapshot</summary>
                 <span class="tier-sub">
-                    <span id="poolMetricsUpdated" style="display:block;margin-top:0.2rem;color:#71717a;">Dune snapshot loading…</span>
+                    <span id="poolMetricsUpdated" style="display:block;margin-top:0.2rem;color:#71717a;">Loading…</span>
                 </span>
                 <div class="pool-overview-grid">
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Never withdrew · share of wallets</span>
+                        <span class="pool-metric-label">Diamond hands · wallet share</span>
                         <span class="pool-metric-value subtle" id="poolDiamondHands">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Still staking · ever tried</span>
+                        <span class="pool-metric-label">Still staking</span>
                         <span class="pool-metric-value subtle" id="poolRetention">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Avg stake age</span>
+                        <span class="pool-metric-label">Avg lock age</span>
                         <span class="pool-metric-value subtle" id="poolAvgTenure">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Longest age</span>
+                        <span class="pool-metric-label">Oldest streak</span>
                         <span class="pool-metric-value subtle" id="poolMaxTenure">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">ETH paid to stakers (cumulative)</span>
+                        <span class="pool-metric-label">ETH paid (stakers, total)</span>
                         <span class="pool-metric-value subtle" id="poolEthDistributed">—</span>
                     </div>
                     <div class="pool-metric">
-                        <span class="pool-metric-label">Largest single claim</span>
+                        <span class="pool-metric-label">Biggest one claim</span>
                         <span class="pool-metric-value subtle" id="poolMaxClaim">—</span>
                     </div>
                 </div>
@@ -1419,39 +1433,32 @@
             </details>
 
             <details class="analytics-panel tier-details" id="stakingAnalyticsPanel">
-                <summary class="analytics-summary">Open data snapshot · benchmarks</summary>
+                <summary class="analytics-summary">Json proofs · deep cut</summary>
                 <p class="analytics-note" id="stakingAnalyticsMeta">Loading…</p>
-                <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
-                <div id="stakingHealthPulse" class="analytics-pulse-shell analytics-note" style="margin-top:0">
-                    <p class="pulse-kicker" style="margin-bottom:0.45rem;">Public snapshot · same trio as above</p>
-                    <div class="pool-snapshot-trio">
-                        <div class="pool-snap-cell">
-                            <div class="pool-snap-value" data-pool-snap="staker-wallets">—</div>
-                            <div class="pool-snap-label">Staker wallets</div>
-                            <div class="pool-snap-micro">Indexer aggregate</div>
-                        </div>
-                        <div class="pool-snap-cell">
-                            <div class="pool-snap-value" data-pool-snap="supply-pct">—</div>
-                            <div class="pool-snap-label">Staked % supply</div>
-                            <div class="pool-snap-micro">Staking lock</div>
-                        </div>
-                        <div class="pool-snap-cell">
-                            <div class="pool-snap-value" data-pool-snap="apr-pct">—</div>
-                            <div class="pool-snap-label">APR %</div>
-                            <div class="pool-snap-micro">Hist. pace</div>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="analytics-sub">Top wallets by stake</h3>
-                <div id="stakingTopStakers" class="analytics-table-wrap"></div>
-                <h3 class="analytics-sub">Top ETH earned (lifetime)</h3>
-                <div id="stakingTopEarners" class="analytics-table-wrap"></div>
-                <h3 class="analytics-sub">Pool ROI (illustrative · not personal)</h3>
-                <div id="stakingRoiBlock" class="analytics-roi"></div>
-                <h3 class="analytics-sub">Other yields (reference only)</h3>
-                <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
+                <p class="analytics-note" style="margin:0 0 0.65rem;font-size:0.65rem;line-height:1.4;color:#71717a;">
+                    Same wallets / supply % / APR row as above — backed by staking_analytics.json.
+                </p>
+                <details class="tier-details tier-details-inner">
+                    <summary>Supply duplicate check · optional</summary>
+                    <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
+                </details>
+                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
+                    <summary>Wallet tables (needs export)</summary>
+                    <h3 class="analytics-sub">Top wallets by stake</h3>
+                    <div id="stakingTopStakers" class="analytics-table-wrap"></div>
+                    <h3 class="analytics-sub">Top ETH earned (lifetime)</h3>
+                    <div id="stakingTopEarners" class="analytics-table-wrap"></div>
+                </details>
+                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
+                    <summary>ROI note · optional</summary>
+                    <div id="stakingRoiBlock" class="analytics-roi"></div>
+                </details>
+                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
+                    <summary>Benchmarks · not Bonzi APR</summary>
+                    <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
+                </details>
             </details>
-            <p class="mev-foot">Routing can use Flashbots-style protection · not a return guarantee</p>
+            <p class="mev-foot">MEV‑safe routing when available · numbers are informational</p>
         </section>
     </div>
 
@@ -2586,7 +2593,7 @@
                 if (lw && dq.bonzi_weekly_trend) lw.href = 'https://dune.com/queries/' + dq.bonzi_weekly_trend;
             }
             var pu = document.getElementById('poolMetricsUpdated');
-            if (pu) pu.textContent = updatedAt ? 'Dune snapshot · ' + updatedAt : 'Dune snapshot';
+            if (pu) pu.textContent = updatedAt ? 'Dune rollup · as of ' + updatedAt : 'Dune rollup';
         }
 
         async function ensurePoolMetricsSnapshot() {
@@ -2671,12 +2678,9 @@
                         ? 'CoinGecko · reference stake'
                         : '';
             if (aprRaw != null) {
-                var m =
-                    (roi.eth_mid_apr_method_note_public || '') +
-                    (roi.realized_vs_estimated_clarifier
-                        ? ' ' + roi.realized_vs_estimated_clarifier
-                        : '');
-                aprTitle = aprSrc + (m ? ' — ' + m : '');
+                aprTitle =
+                    aprSrc +
+                    '. Backward pace from indexer + pool math — not personal return.';
             }
             var aprTxt = '—';
             if (aprRaw != null && !isNaN(Number(aprRaw))) {
@@ -2705,24 +2709,23 @@
             var roi = data.roi_pool_aggregate_illustrative || {};
             var routerOk = c.factory_router_equals_expected === true;
             meta.textContent =
-                'Snapshot time ' +
                 (data.generated_at_utc || '—') +
-                ' · Router safety check · ' +
-                (routerOk ? 'passed (factory → router)' : 'FAILED · do not use these figures');
+                ' · Router ' +
+                (routerOk ? 'OK' : 'FAIL — do not trust numbers');
             lock.innerHTML =
-                '<div class="analytics-metric"><span class="analytics-metric-label">% of all BONZI supply</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">Lock % of supply</span>' +
                 '<span class="analytics-metric-value">' +
                 (oc.locked_percent_of_supply_rounded != null ? oc.locked_percent_of_supply_rounded + '%' : '—') +
                 '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI in this hardstake</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI in lock pool</span>' +
                 '<span class="analytics-metric-value">' +
                 (oc.pool_total_staked_tokens != null ? Number(oc.pool_total_staked_tokens).toLocaleString() : '—') +
                 '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI total supply</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">Total supply</span>' +
                 '<span class="analytics-metric-value">' +
                 (oc.total_supply_tokens != null ? Number(oc.total_supply_tokens).toLocaleString() : '—') +
                 '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">How we read the pool</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">On-chain read</span>' +
                 '<span class="analytics-metric-value">' +
                 String(oc.pool_aggregate_read_method || '—').replace(/_/g, ' ') +
                 '</span></div>';
@@ -2731,12 +2734,12 @@
             renderLeaderboard(
                 'stakingTopStakers',
                 lb.top_stakers_by_amount,
-                'Wallet rankings show here after a public export (addresses only) lands in staking_analytics.json.'
+                'Empty until a wallet export is published in staking_analytics.json.'
             );
             renderLeaderboard(
                 'stakingTopEarners',
                 lb.top_eth_earners_lifetime,
-                'Same export will rank lifetime ETH claimed per wallet.'
+                'Same — needs export file.'
             );
 
             var rb = document.getElementById('stakingRoiBlock');
@@ -2751,48 +2754,36 @@
                     var extra = '';
                     if (ethMidApr != null) {
                         extra =
-                            '<p class="analytics-note" style="margin-top:0;"><strong>APR % (ETH mid proxy)</strong>: ' +
+                            '<p class="analytics-note" style="margin-top:0.35rem;"><strong>APR rough</strong> ' +
                             Number(ethMidApr).toFixed(2) +
-                            '% — ' +
-                            (roi.eth_mid_apr_method_note_public || 'Backward pace from pair reserves.') +
+                            '% — ETH mid from pair × past payout pace. Not a quote.' +
                             '</p>';
                     }
                     rb.innerHTML =
                         '<p class="analytics-note">' +
-                        'No steady public BONZI/USD at snapshot time. Pool-level spacing still uses on-chain ' +
-                        'BONZI totals and indexer ETH paid.' +
+                        'No live BONZI/USD in this snapshot. Figures still use chain totals + indexer ETH.' +
                         '</p>' +
                         extra;
                 } else {
                     rb.innerHTML =
                         '<p class="analytics-note">' +
-                        '<strong>' +
                         (roi.snapshot_datetime_utc || '—') +
-                        '</strong> · Pool-level math · not your personal return.' +
-                        '</p>' +
-                        '<ul style="margin:0.35rem 0 0;padding-left:1.1rem;line-height:1.45;font-size:0.78rem;">' +
-                        '<li>$1,000 buys <strong>' +
+                        ' · Pool-level only · not personal.</p>' +
+                        '<ul style="margin:0.25rem 0 0;padding-left:1rem;font-size:0.74rem;line-height:1.4;">' +
+                        '<li>$1k ≈ <strong>' +
                         (roi.bonzi_units_representing_1000_usd != null
                             ? roi.bonzi_units_representing_1000_usd + ' BONZI'
                             : '—') +
-                        '</strong> at snapshot pricing.</li>' +
-                        '<li>TVL stand-in (USD): ' +
-                        (roi.tvl_proxy_usd != null ? '$' + roi.tvl_proxy_usd : '—') +
+                        '</strong></li>' +
+                        '<li>TVL ~ $' +
+                        (roi.tvl_proxy_usd != null ? roi.tvl_proxy_usd : '—') +
                         '</li>' +
-                        '<li>Cumulative rewards ÷ TVL: ' +
-                        (roi.lifetime_reward_usd_vs_tvl_proxy != null
-                            ? roi.lifetime_reward_usd_vs_tvl_proxy
-                            : '—') +
-                        '</li>' +
-                        '<li>Annualized history-based guess: ' +
+                        '<li>APR guess ' +
                         (roi.annualized_pool_reward_yield_estimate_pct != null
                             ? roi.annualized_pool_reward_yield_estimate_pct + '%'
                             : '—') +
                         '</li>' +
-                        '</ul>' +
-                        '<p class="analytics-note" style="margin-top:0.45rem;font-size:0.68rem;">' +
-                        (roi.realized_vs_estimated_clarifier || '') +
-                        '</p>';
+                        '</ul>';
                 }
             }
 
@@ -2941,7 +2932,7 @@
                         combined.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
                         ' BONZI · ' +
                         cp.toFixed(1) +
-                        '% supply (Hardstake pair + LP staking lock · excludes CEX)';
+                        '% supply · pair vault + lock (off CEX)';
                 } else if (pch) {
                     pch.textContent = '—';
                 }

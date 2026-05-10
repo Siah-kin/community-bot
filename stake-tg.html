@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="staking-analytics-json-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-router-factory-fix-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -134,11 +134,17 @@
         /* Stats bar */
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 0.5rem;
             margin-bottom: 1rem;
             padding: 0.75rem;
             background: var(--card-bg);
+        }
+
+        @media (min-width: 440px) {
+            .stats-bar {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .stat { text-align: center; }
@@ -154,6 +160,27 @@
             color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+
+        .stat-hint {
+            font-size: 0.54rem;
+            color: #71717a;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-top: 0.2rem;
+            line-height: 1.25;
+            font-weight: 500;
+        }
+
+        .stats-bar-hint {
+            grid-column: 1 / -1;
+            margin: 0;
+            padding: 0.55rem 0.25rem 0;
+            border-top: 1px solid rgba(63, 63, 70, 0.35);
+            font-size: 0.62rem;
+            line-height: 1.45;
+            color: #71717a;
+            text-align: center;
         }
 
         /* Pool health (Dune snapshot + live RPC) */
@@ -306,6 +333,57 @@
             text-decoration: underline;
         }
 
+        .action-block-kicker {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #71717a;
+            margin: 0.6rem 0 0.35rem;
+            text-align: center;
+        }
+
+        .tier-details {
+            margin-top: 0.55rem;
+            border: 1px solid rgba(63, 63, 70, 0.5);
+            border-radius: 10px;
+            padding: 0.4rem 0.55rem 0.55rem;
+            background: rgba(10, 10, 10, 0.35);
+        }
+
+        .tier-details summary {
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--purple-light);
+            list-style: none;
+        }
+
+        .tier-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .tier-details .tier-sub {
+            font-size: 0.58rem;
+            color: #71717a;
+            font-weight: 500;
+            display: block;
+            margin-top: 0.15rem;
+        }
+
+        .tier-details[open] summary {
+            margin-bottom: 0.45rem;
+            border-bottom: 1px solid rgba(63, 63, 70, 0.4);
+            padding-bottom: 0.35rem;
+        }
+
+        .mev-foot {
+            text-align: center;
+            font-size: 0.6rem;
+            color: #71717a;
+            margin: 0.85rem 0 0;
+            line-height: 1.35;
+        }
+
         .analytics-panel {
             margin-top: 1rem;
             padding: 0.75rem;
@@ -413,6 +491,12 @@
 
         .analytics-roi strong {
             color: var(--gold);
+        }
+
+        .analytics-bench-list {
+            margin: 0;
+            padding-left: 1.05rem;
+            line-height: 1.45;
         }
 
         /* Cards */
@@ -903,95 +987,29 @@
         <div class="stats-bar">
             <div class="stat">
                 <div class="stat-value" id="totalStaked">--</div>
-                <div class="stat-label">Supply Locked</div>
+                <div class="stat-label">Rewards pool</div>
+                <div class="stat-hint">% supply · staking contract</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="lpBonziPct">--</div>
+                <div class="stat-label">DEX pair</div>
+                <div class="stat-hint">% supply · for swaps</div>
             </div>
             <div class="stat">
                 <div class="stat-value" id="stakedBalance">0</div>
-                <div class="stat-label">Your Staked</div>
+                <div class="stat-label">Your staked</div>
             </div>
             <div class="stat">
                 <div class="stat-value" id="claimableEth">0.00</div>
                 <div class="stat-label">Claimable ETH</div>
             </div>
+            <p class="stats-bar-hint">
+                <strong>Two buckets</strong> vs 1B supply: rewards pool (staking contract) · DEX pair (swaps). <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>
+                · not exchange wallets.
+            </p>
         </div>
 
-        <section class="pool-overview" id="poolOverview" aria-labelledby="pool-overview-title">
-            <div class="pool-overview-head">
-                <h2 class="pool-overview-title" id="pool-overview-title">Pool health</h2>
-                <span class="pool-overview-updated" id="poolMetricsUpdated">Dune snapshot loading…</span>
-            </div>
-            <div class="pool-overview-grid">
-                <div class="pool-metric">
-                    <span class="pool-metric-label">BONZI locked · live</span>
-                    <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Pool ETH · live</span>
-                    <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Diamond hands · Dune</span>
-                    <span class="pool-metric-value subtle" id="poolDiamondHands">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Active / ever staked</span>
-                    <span class="pool-metric-value subtle" id="poolRetention">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Avg stake age</span>
-                    <span class="pool-metric-value subtle" id="poolAvgTenure">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Longest age</span>
-                    <span class="pool-metric-value subtle" id="poolMaxTenure">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">ETH to stakers · Dune</span>
-                    <span class="pool-metric-value subtle" id="poolEthDistributed">—</span>
-                </div>
-                <div class="pool-metric">
-                    <span class="pool-metric-label">Largest claim · Dune</span>
-                    <span class="pool-metric-value subtle" id="poolMaxClaim">—</span>
-                </div>
-            </div>
-            <div class="pool-weekly">
-                <div class="pool-weekly-caption">Weekly flow · stakes vs unstakes (Dune pipeline)</div>
-                <div class="pool-weekly-inner" id="poolWeeklyBars"></div>
-            </div>
-            <div class="pool-dune-links">
-                <a href="/metrics/" target="_blank" rel="noopener noreferrer">Metrics hub</a>
-                <span aria-hidden="true"> · </span>
-                <a id="linkDuneTenure" href="https://dune.com/queries/6591445" target="_blank" rel="noopener noreferrer">Tenure</a>
-                <span aria-hidden="true"> · </span>
-                <a id="linkDuneEth" href="https://dune.com/queries/6591483" target="_blank" rel="noopener noreferrer">ETH rewards</a>
-                <span aria-hidden="true"> · </span>
-                <a id="linkDuneWeekly" href="https://dune.com/queries/6591436" target="_blank" rel="noopener noreferrer">Weekly flow</a>
-                <span aria-hidden="true"> · </span>
-                <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Hardstake</a>
-            </div>
-            <details class="analytics-panel" id="stakingAnalyticsPanel">
-                <summary class="analytics-summary">Staking analytics (public snapshot)</summary>
-                <p class="analytics-note" id="stakingAnalyticsMeta">
-                    Loading generated JSON from /metrics/staking_analytics.json (no API keys in-page).
-                </p>
-                <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
-                <h3 class="analytics-sub">Top stakers (on-chain aggregate)</h3>
-                <div id="stakingTopStakers" class="analytics-table-wrap"></div>
-                <h3 class="analytics-sub">Top ETH earners (lifetime)</h3>
-                <div id="stakingTopEarners" class="analytics-table-wrap"></div>
-                <h3 class="analytics-sub">ROI snapshot (pool-level, not personal)</h3>
-                <div id="stakingRoiBlock" class="analytics-roi"></div>
-                <h3 class="analytics-sub">Benchmarks (context only)</h3>
-                <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
-            </details>
-        </section>
-
-        <div class="mev-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            MEV Protected (front-run prevention) via Flashbots
-        </div>
+        <p class="action-block-kicker">Your wallet · stake, claim, withdraw</p>
 
         <!-- Status -->
         <div class="status hidden" id="statusMessage"></div>
@@ -1085,6 +1103,100 @@
                 <p><strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.</p>
             </div>
         </div>
+
+        <section class="pool-overview" id="poolOverview" aria-labelledby="pool-panel-title">
+            <div class="pool-overview-head">
+                <h2 class="pool-overview-title" id="pool-panel-title">Extra detail · optional</h2>
+            </div>
+            <details class="tier-details" open>
+                <summary>Live · Ethereum balances</summary>
+                <span class="tier-sub">Pairs with “Rewards pool” &amp; “DEX pair” tiles — token amounts.</span>
+                <div class="pool-overview-grid">
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Rewards pool · contract BONZI</span>
+                        <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">DEX pair reserve · BONZI</span>
+                        <span class="pool-metric-value" id="poolLpBonziLive">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Both venues combined</span>
+                        <span class="pool-metric-value subtle" id="poolCombinedHint">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">ETH sitting on staking contract</span>
+                        <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
+                    </div>
+                </div>
+                <div class="pool-dune-links" style="margin-top: 0.6rem;">
+                    <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Staking contract</a>
+                    <span aria-hidden="true"> · </span>
+                    <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Pair</a>
+                </div>
+            </details>
+
+            <details class="tier-details">
+                <summary>Dune · behaviour snapshot</summary>
+                <span class="tier-sub">
+                    <span id="poolMetricsUpdated" style="display:block;margin-top:0.2rem;color:#71717a;">Dune snapshot loading…</span>
+                </span>
+                <div class="pool-overview-grid">
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Never withdrew · share of wallets</span>
+                        <span class="pool-metric-value subtle" id="poolDiamondHands">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Still staking · ever tried</span>
+                        <span class="pool-metric-value subtle" id="poolRetention">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Avg stake age</span>
+                        <span class="pool-metric-value subtle" id="poolAvgTenure">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Longest age</span>
+                        <span class="pool-metric-value subtle" id="poolMaxTenure">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">ETH paid to stakers (cumulative)</span>
+                        <span class="pool-metric-value subtle" id="poolEthDistributed">—</span>
+                    </div>
+                    <div class="pool-metric">
+                        <span class="pool-metric-label">Largest single claim</span>
+                        <span class="pool-metric-value subtle" id="poolMaxClaim">—</span>
+                    </div>
+                </div>
+                <div class="pool-weekly">
+                    <div class="pool-weekly-caption">Weekly stakes vs unstakes</div>
+                    <div class="pool-weekly-inner" id="poolWeeklyBars"></div>
+                </div>
+                <div class="pool-dune-links">
+                    <a href="/metrics/" target="_blank" rel="noopener noreferrer">Metrics hub</a>
+                    <span aria-hidden="true"> · </span>
+                    <a id="linkDuneTenure" href="https://dune.com/queries/6591445" target="_blank" rel="noopener noreferrer">Tenure</a>
+                    <span aria-hidden="true"> · </span>
+                    <a id="linkDuneEth" href="https://dune.com/queries/6591483" target="_blank" rel="noopener noreferrer">ETH rewards</a>
+                    <span aria-hidden="true"> · </span>
+                    <a id="linkDuneWeekly" href="https://dune.com/queries/6591436" target="_blank" rel="noopener noreferrer">Weekly flow</a>
+                </div>
+            </details>
+
+            <details class="analytics-panel tier-details" id="stakingAnalyticsPanel">
+                <summary class="analytics-summary">Open data snapshot · benchmarks</summary>
+                <p class="analytics-note" id="stakingAnalyticsMeta">Loading…</p>
+                <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
+                <h3 class="analytics-sub">Top wallets by stake</h3>
+                <div id="stakingTopStakers" class="analytics-table-wrap"></div>
+                <h3 class="analytics-sub">Top ETH earned (lifetime)</h3>
+                <div id="stakingTopEarners" class="analytics-table-wrap"></div>
+                <h3 class="analytics-sub">Pool ROI (illustrative · not personal)</h3>
+                <div id="stakingRoiBlock" class="analytics-roi"></div>
+                <h3 class="analytics-sub">Other yields (reference only)</h3>
+                <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
+            </details>
+            <p class="mev-foot">Routing can use Flashbots-style protection · not a return guarantee</p>
+        </section>
     </div>
 
     <!-- Web3 Scripts -->
@@ -1327,6 +1439,8 @@
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
             ROUTER: '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
             BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
+            // Uniswap-V2-style pair (same listing as stake.html / Dexscreener)
+            BONZI_LP: '0x970cf9b7346fbaea0588f03356a104100eb675e2'
         };
 
         const ERC20_ABI = [
@@ -1346,6 +1460,13 @@
 
         const ROUTER_ABI = [
             'function hardstake(address _contract, address _token, uint256 _amount)'
+        ];
+
+        /** Standard constant-product pair — BONZI side read for “people numbers.” */
+        const UNISWAP_V2_PAIR_ABI = [
+            'function token0() view returns (address)',
+            'function token1() view returns (address)',
+            'function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)'
         ];
 
         var METRICS_DATA_URL =
@@ -1787,7 +1908,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+staking-analytics-json-20260510'
+            buildTag: 'sri-stagger-actions-first-20260511'
         });
         // #endregion
 
@@ -2171,7 +2292,11 @@
                 var dhn = bonzi.diamond_hands;
                 var dhp = bonzi.diamond_hands_pct;
                 dh.textContent =
-                    dhn != null && dhp != null ? dhn + ' (' + dhp + '%)' : dhn != null ? String(dhn) : '—';
+                    dhn != null && dhp != null
+                        ? dhn + ' · ' + dhp + '% never withdrew (of wallets staking here)'
+                        : dhn != null
+                          ? String(dhn)
+                          : '—';
             }
             var ret = document.getElementById('poolRetention');
             if (ret) {
@@ -2180,7 +2305,7 @@
                 var rp = bonzi.retention_pct;
                 ret.textContent =
                     cs != null && ts != null
-                        ? cs + ' / ' + ts + (rp != null ? ' · ' + rp + '% kept' : '')
+                        ? cs + ' / ' + ts + ' wallets' + (rp != null ? ' · ' + rp + '% still staking' : '')
                         : '—';
             }
             var avg = document.getElementById('poolAvgTenure');
@@ -2268,17 +2393,18 @@
             var c = data.contracts || {};
             var oc = data.onchain_live || {};
             var roi = data.roi_pool_aggregate_illustrative || {};
+            var routerOk = c.factory_router_equals_expected === true;
             meta.textContent =
-                'Generated ' +
+                'Snapshot time ' +
                 (data.generated_at_utc || '—') +
-                ' · factory router ' +
-                (c.factory_router_equals_expected === true ? 'matches expected' : 'MISMATCH — do not rely');
+                ' · Router safety check · ' +
+                (routerOk ? 'passed (factory → router)' : 'FAILED · do not use these figures');
             lock.innerHTML =
-                '<div class="analytics-metric"><span class="analytics-metric-label">Locked % of supply (JSON snapshot)</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">% of all BONZI supply</span>' +
                 '<span class="analytics-metric-value">' +
                 (oc.locked_percent_of_supply_rounded != null ? oc.locked_percent_of_supply_rounded + '%' : '—') +
                 '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">Pool BONZI aggregate</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI in this hardstake</span>' +
                 '<span class="analytics-metric-value">' +
                 (oc.pool_total_staked_tokens != null ? Number(oc.pool_total_staked_tokens).toLocaleString() : '—') +
                 '</span></div>' +
@@ -2286,7 +2412,7 @@
                 '<span class="analytics-metric-value">' +
                 (oc.total_supply_tokens != null ? Number(oc.total_supply_tokens).toLocaleString() : '—') +
                 '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">On-chain read path</span>' +
+                '<div class="analytics-metric"><span class="analytics-metric-label">How we read the pool</span>' +
                 '<span class="analytics-metric-value">' +
                 String(oc.pool_aggregate_read_method || '—').replace(/_/g, ' ') +
                 '</span></div>';
@@ -2295,64 +2421,81 @@
             renderLeaderboard(
                 'stakingTopStakers',
                 lb.top_stakers_by_amount,
-                'Leaderboard rows ship when Dune / indexer export is merged into staking_analytics.json (public addresses only).'
+                'Wallet rankings show here after a public export (addresses only) lands in staking_analytics.json.'
             );
             renderLeaderboard(
                 'stakingTopEarners',
                 lb.top_eth_earners_lifetime,
-                'Lifetime ETH earners await the same pipeline (claim/reward attribution).'
+                'Same export will rank lifetime ETH claimed per wallet.'
             );
 
             var rb = document.getElementById('stakingRoiBlock');
             if (rb) {
-                rb.innerHTML =
-                    '<p><strong>Snapshot</strong> ' +
-                    (roi.snapshot_datetime_utc || '—') +
-                    '</p>' +
-                    '<p><strong>Pool aggregate only</strong> — not your wallet. ' +
-                    (roi.historical_aggregate_label || '') +
-                    '</p>' +
-                    '<p>$1,000 USD notional → <strong>' +
-                    (roi.bonzi_units_representing_1000_usd != null
-                        ? roi.bonzi_units_representing_1000_usd + ' BONZI'
-                        : 'needs CoinGecko BONZI/USD') +
-                    '</strong>.</p>' +
-                    '<p>TVL proxy (USD): ' +
-                    (roi.tvl_proxy_usd != null ? '$' + roi.tvl_proxy_usd : '—') +
-                    ' · Lifetime rewards ÷ TVL proxy (unitless): ' +
-                    (roi.lifetime_reward_usd_vs_tvl_proxy != null ? roi.lifetime_reward_usd_vs_tvl_proxy : '—') +
-                    '</p>' +
-                    '<p>Annualized <em>estimated</em> pool yield %: ' +
-                    (roi.annualized_pool_reward_yield_estimate_pct != null
-                        ? roi.annualized_pool_reward_yield_estimate_pct + '%'
-                        : '—') +
-                    '</p>' +
-                    '<p style="font-size:0.68rem;color:#71717a;">' +
-                    (roi.realized_vs_estimated_clarifier || '') +
-                    '</p>';
+                var hasUsdRoi =
+                    roi.bonzi_units_representing_1000_usd != null ||
+                    roi.tvl_proxy_usd != null ||
+                    roi.lifetime_reward_usd_vs_tvl_proxy != null ||
+                    roi.annualized_pool_reward_yield_estimate_pct != null;
+                if (!hasUsdRoi) {
+                    rb.innerHTML =
+                        '<p class="analytics-note">USD ROI is paused until this file carries a steady public BONZI/USD quote. Amounts shown above in ETH and BONZI still come from chain + your wallet.</p>';
+                } else {
+                    rb.innerHTML =
+                        '<p class="analytics-note">' +
+                        '<strong>' +
+                        (roi.snapshot_datetime_utc || '—') +
+                        '</strong> · Pool-level math · not your personal return.' +
+                        '</p>' +
+                        '<ul style="margin:0.35rem 0 0;padding-left:1.1rem;line-height:1.45;font-size:0.78rem;">' +
+                        '<li>$1,000 buys <strong>' +
+                        (roi.bonzi_units_representing_1000_usd != null
+                            ? roi.bonzi_units_representing_1000_usd + ' BONZI'
+                            : '—') +
+                        '</strong> at snapshot pricing.</li>' +
+                        '<li>TVL stand-in (USD): ' +
+                        (roi.tvl_proxy_usd != null ? '$' + roi.tvl_proxy_usd : '—') +
+                        '</li>' +
+                        '<li>Cumulative rewards ÷ TVL: ' +
+                        (roi.lifetime_reward_usd_vs_tvl_proxy != null
+                            ? roi.lifetime_reward_usd_vs_tvl_proxy
+                            : '—') +
+                        '</li>' +
+                        '<li>Annualized history-based guess: ' +
+                        (roi.annualized_pool_reward_yield_estimate_pct != null
+                            ? roi.annualized_pool_reward_yield_estimate_pct + '%'
+                            : '—') +
+                        '</li>' +
+                        '</ul>' +
+                        '<p class="analytics-note" style="margin-top:0.45rem;font-size:0.68rem;">' +
+                        (roi.realized_vs_estimated_clarifier || '') +
+                        '</p>';
+                }
             }
 
             var bb = document.getElementById('stakingBenchmarkBlock');
             if (bb) {
                 var benches = data.benchmarks_illustrative || [];
                 if (!benches.length) {
-                    bb.textContent = 'No benchmark rows.';
+                    bb.innerHTML = '';
                 } else {
-                    var s = '<ul style="margin:0;padding-left:1.1rem;">';
+                    var s = '<ul class="analytics-bench-list">';
                     benches.forEach(function (b) {
-                        s += '<li><strong>' + (b.label || b.id) + '</strong> — ';
+                        s += '<li><strong>' + (b.label || b.id) + '</strong>';
                         if (b.typical_yield_apr_approx_pct_low != null) {
                             s +=
-                                'approx ' +
+                                ': ~' +
                                 b.typical_yield_apr_approx_pct_low +
                                 '–' +
                                 b.typical_yield_apr_approx_pct_high +
-                                '% APR band. ';
+                                '% APR (general market reference).';
                         }
                         if (b.total_eth_distributed_snapshot != null) {
-                            s += Number(b.total_eth_distributed_snapshot).toFixed(2) + ' ETH (snapshot metric). ';
+                            s +=
+                                ' ' +
+                                Number(b.total_eth_distributed_snapshot).toFixed(2) +
+                                ' ETH (VISTA pool aggregate — different product).';
                         }
-                        s += (b.note_public || '') + '</li>';
+                        s += '</li>';
                     });
                     s += '</ul>';
                     bb.innerHTML = s;
@@ -2373,7 +2516,7 @@
                 var meta = document.getElementById('stakingAnalyticsMeta');
                 if (meta) {
                     meta.textContent =
-                        'staking_analytics.json unavailable — generate via metrics/build_staking_analytics.py and publish.';
+                        'staking_analytics.json missing — regenerate in community-bot metrics/ before publish.';
                 }
             }
         }
@@ -2413,6 +2556,39 @@
                 var tokenSupply = parseFloat(ethers.utils.formatEther(tokenSupplyWei));
                 var lockedPct = tokenSupply > 0 ? (100 * totalLocked) / tokenSupply : 0;
                 var poolEthBal = parseFloat(ethers.utils.formatEther(poolEthWei));
+
+                var lpBonziTokens = NaN;
+                var lpPct = NaN;
+                try {
+                    var pairC = new ethers.Contract(CONTRACTS.BONZI_LP, UNISWAP_V2_PAIR_ABI, provider);
+                    var t0 = await pairC.token0();
+                    var t1 = await pairC.token1();
+                    var reserves = await pairC.getReserves();
+                    var r0 = reserves[0];
+                    var r1 = reserves[1];
+                    var bnAddr = CONTRACTS.BONZI_TOKEN.toLowerCase();
+                    var bonziWei =
+                        String(t0).toLowerCase() === bnAddr
+                            ? r0
+                            : String(t1).toLowerCase() === bnAddr
+                              ? r1
+                              : null;
+                    if (bonziWei != null) {
+                        lpBonziTokens = parseFloat(ethers.utils.formatEther(bonziWei));
+                        lpPct =
+                            tokenSupply > 0 && !isNaN(lpBonziTokens)
+                                ? (100 * lpBonziTokens) / tokenSupply
+                                : NaN;
+                    }
+                } catch (lpErr) {
+                    console.warn('[LP] reserves read:', lpErr);
+                }
+
+                var lpEl = document.getElementById('lpBonziPct');
+                if (lpEl)
+                    lpEl.textContent =
+                        typeof lpPct === 'number' && !isNaN(lpPct) ? lpPct.toFixed(1) + '%' : '—';
+
                 document.getElementById('totalStaked').textContent = lockedPct.toFixed(1) + '%';
                 var pl = document.getElementById('poolLiveTotalStaked');
                 if (pl)
@@ -2421,6 +2597,30 @@
                         ' BONZI · ' +
                         lockedPct.toFixed(1) +
                         '%';
+                var pb = document.getElementById('poolLpBonziLive');
+                if (pb) {
+                    if (!isNaN(lpBonziTokens) && lpBonziTokens >= 0) {
+                        pb.textContent =
+                            lpBonziTokens.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
+                            ' BONZI · ' +
+                            (!isNaN(lpPct) ? lpPct.toFixed(1) + '% supply' : '—');
+                    } else {
+                        pb.textContent = '—';
+                    }
+                }
+                var pch = document.getElementById('poolCombinedHint');
+                if (pch && !isNaN(lpBonziTokens) && lpBonziTokens >= 0) {
+                    var combined = totalLocked + lpBonziTokens;
+                    var cp = tokenSupply > 0 ? (100 * combined) / tokenSupply : 0;
+                    pch.textContent =
+                        combined.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
+                        ' BONZI · ' +
+                        cp.toFixed(1) +
+                        '% supply (hardstake + this pair — still excludes CEX, etc.)';
+                } else if (pch) {
+                    pch.textContent = '—';
+                }
+
                 var pe = document.getElementById('poolEthBalanceLive');
                 if (pe) pe.textContent = poolEthBal.toFixed(4) + ' ETH';
 

@@ -546,49 +546,40 @@
         };
         // #endregion
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <!-- @walletconnect/modal has no index.umd.js on npm/CDN; TG mini-app uses deep links (showQrModal false) like stake.html -->
-    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.2/dist/index.umd.js"
-        onerror="window.__bonziDbgLog && window.__bonziDbgLog('H1','stake-tg.html:wc-script','ethereum-provider script onerror',{detail:'load failed'})"></script>
-    <script>
-        (function () {
-            var ns = window['@walletconnect/ethereum-provider'];
-            if (!ns) return;
-            window.WalletConnectProvider = window.WalletConnectProvider || ns;
-            var Ctor = ns.EthereumProvider;
-            if (!Ctor && ns.default && typeof ns.default.init === 'function') {
-                Ctor = ns.default;
-            }
-            if (!Ctor && ns.default && typeof ns.default.EthereumProvider === 'function') {
-                Ctor = ns.default.EthereumProvider;
-            }
-            if (typeof Ctor === 'function' && typeof Ctor.init === 'function') {
-                window.EthereumProvider = Ctor;
-            }
-        })();
-        // #region agent log
-        (function () {
-            var ns = window['@walletconnect/ethereum-provider'];
-            var keys = [];
-            try {
-                keys = ns && typeof Reflect !== 'undefined' && Reflect.ownKeys
-                    ? Reflect.ownKeys(ns).slice(0, 16).map(String)
-                    : ns
-                      ? Object.keys(ns).slice(0, 12)
-                      : [];
-            } catch (eK) {}
-            window.__bonziDbgLog('H2', 'stake-tg.html:after-shim', 'namespace snapshot', {
-                hasNs: !!ns,
-                keys: keys,
-                inEthereumProvider: !!(ns && 'EthereumProvider' in ns),
-                typeEthereumProvider: ns ? typeof ns.EthereumProvider : 'n/a',
-                typeDefault: ns && ns.default !== undefined ? typeof ns.default : 'n/a',
-                windowEthereumProvider: typeof window.EthereumProvider,
-                hasWindowInit: !!(window.EthereumProvider && typeof window.EthereumProvider.init === 'function')
-            });
-        })();
-        // #endregion
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+        <!-- Load WalletConnect as an ESM bundle so Buffer/process dependencies are resolved before init. -->
+        <script type="module">
+            window.__bonziWalletConnectReady = (async function () {
+                window.__bonziDbgLog('H1', 'stake-tg.html:wc-module', 'walletconnect module load start', {});
+                const bufferModule = await import('https://esm.sh/buffer@6.0.3?bundle');
+                const bufferCtor = bufferModule && (bufferModule.Buffer || (bufferModule.default && bufferModule.default.Buffer));
+                if (bufferCtor && typeof window.Buffer === 'undefined') {
+                    window.Buffer = bufferCtor;
+                }
+
+                const module = await import('https://esm.sh/@walletconnect/ethereum-provider@2.11.2?bundle');
+                const ProviderCtor =
+                    module && typeof module.EthereumProvider === 'function' && typeof module.EthereumProvider.init === 'function'
+                        ? module.EthereumProvider
+                        : module && module.default && typeof module.default.EthereumProvider === 'function' && typeof module.default.EthereumProvider.init === 'function'
+                          ? module.default.EthereumProvider
+                          : module && typeof module.default === 'function' && typeof module.default.init === 'function'
+                            ? module.default
+                            : null;
+                if (ProviderCtor) {
+                    window.WalletConnectProvider = window.WalletConnectProvider || ProviderCtor;
+                    window.EthereumProvider = ProviderCtor;
+                }
+                window['@walletconnect/ethereum-provider'] = module;
+                window.__bonziDbgLog('H2', 'stake-tg.html:wc-module', 'walletconnect module ready', {
+                    hasBuffer: typeof window.Buffer === 'function',
+                    moduleKeys: Object.keys(module || {}).slice(0, 8),
+                    hasWindowInit: !!(window.EthereumProvider && typeof window.EthereumProvider.init === 'function')
+                });
+                return module;
+            })();
+            window.__bonziWalletConnectReady.catch(function () {});
+        </script>
     <script>
         // ============================================================
         // Telegram Web App Integration
@@ -793,7 +784,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: '60e77f8+dbg7'
+            buildTag: '60e77f8+dbg8'
         });
         // #endregion
 
@@ -816,6 +807,20 @@
                 IS_TELEGRAM_WEBAPP: IS_TELEGRAM_WEBAPP,
                 platform: TELEGRAM_PLATFORM
             });
+            if (window.__bonziWalletConnectReady && typeof window.__bonziWalletConnectReady.then === 'function') {
+                try {
+                    await window.__bonziWalletConnectReady;
+                } catch (readyError) {
+                    dbgStakeEmit('H3', 'stake-tg.html:initWalletConnect', 'walletconnect module failed', {
+                        detail:
+                            readyError && readyError.message
+                                ? String(readyError.message).slice(0, 160)
+                                : String(readyError || 'unknown')
+                    });
+                    console.error('WalletConnect module failed', readyError);
+                    return null;
+                }
+            }
             const wcGlobal = window.WalletConnectProvider || window.EthereumProvider;
             if (!wcGlobal && !window['@walletconnect/ethereum-provider']) {
                 // #region agent log

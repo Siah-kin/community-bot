@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Telegram / in-app browsers cache HTML aggressively; bot menu URLs should append ?v= (see Bonzi resolve_stake_mini_app_url). -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="bonzi-stake-tg-deploy" content="wc-shortcuts-ui2-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -422,11 +427,17 @@
             cursor: pointer;
         }
 
-        .wallet-shortcut-btn:active {
-            opacity: 0.85;
+        .wallet-shortcut-btn.wallet-shortcut-waiting {
+            opacity: 0.45;
+            pointer-events: none;
         }
 
-        /* MEV badge */
+        .deploy-fingerprint {
+            font-size: 0.65rem;
+            color: #52525b;
+            margin: -0.25rem 0 0.75rem;
+            letter-spacing: 0.02em;
+        }
         .mev-badge {
             display: inline-flex;
             align-items: center;
@@ -479,6 +490,7 @@
         <div class="connect-content">
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
             <h2>Stake BONZI</h2>
+            <p class="deploy-fingerprint" id="stakeHtmlDeployRev">deploy wc-shortcuts-ui2 — use bot link (?v=…) so Telegram does not serve old HTML</p>
             <p>Connect your wallet to stake BONZI tokens and earn ETH rewards.</p>
             <button class="connect-btn" id="wcConnectBtn" onclick="connectWallet()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
@@ -487,12 +499,12 @@
             <p class="connect-hint-exchange">
                 Self-custody wallets only (e.g. MetaMask, Trust Wallet, Binance Web3 Wallet). Normal exchange spot balances cannot connect—withdraw to your own wallet on the correct network first.
             </p>
-            <div id="wcWalletShortcuts" style="display: none;" aria-live="polite">
-                <p class="wallet-shortcuts-label">Open your wallet app (WalletConnect link):</p>
+            <div id="wcWalletShortcuts" aria-live="polite">
+                <p class="wallet-shortcuts-label">MetaMask · Trust · Binance Web3 — links activate after you tap Connect (WalletConnect handoff).</p>
                 <div class="wallet-shortcuts-row">
-                    <a id="wcLinkMetamask" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">MetaMask</a>
-                    <a id="wcLinkTrust" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Trust Wallet</a>
-                    <a id="wcLinkBinance" class="wallet-shortcut-btn" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Binance Web3 Wallet</a>
+                    <a id="wcLinkMetamask" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">MetaMask</a>
+                    <a id="wcLinkTrust" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Trust Wallet</a>
+                    <a id="wcLinkBinance" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true">Binance Web3 Wallet</a>
                 </div>
             </div>
             <p id="overlayError" style="color:#DC2626; font-size:0.8rem; margin-top:1rem; display:none;"></p>
@@ -853,21 +865,22 @@
             if (!btn) return;
             btn.innerHTML = CONNECT_BTN_DEFAULT_HTML || 'Connect Wallet';
             btn.disabled = false;
-            hideWcWalletShortcuts();
+            resetWcWalletShortcutWaiting();
         }
 
-        function hideWcWalletShortcuts() {
-            var box = document.getElementById('wcWalletShortcuts');
-            if (box) {
-                box.style.display = 'none';
-            }
+        function resetWcWalletShortcutWaiting() {
             ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) {
                     el.href = 'javascript:void(0)';
                     el.setAttribute('aria-disabled', 'true');
+                    el.classList.add('wallet-shortcut-waiting');
                 }
             });
+            var box = document.getElementById('wcWalletShortcuts');
+            if (box) {
+                box.style.display = 'block';
+            }
         }
 
         function showWcWalletShortcuts(uri) {
@@ -882,14 +895,17 @@
                 if (mm) {
                     mm.href = 'https://metamask.app.link/wc?uri=' + enc;
                     mm.removeAttribute('aria-disabled');
+                    mm.classList.remove('wallet-shortcut-waiting');
                 }
                 if (tw) {
                     tw.href = 'https://link.trustwallet.com/wc?uri=' + enc;
                     tw.removeAttribute('aria-disabled');
+                    tw.classList.remove('wallet-shortcut-waiting');
                 }
                 if (bn) {
                     bn.href = 'https://link.binance.com/wc?uri=' + enc;
                     bn.removeAttribute('aria-disabled');
+                    bn.classList.remove('wallet-shortcut-waiting');
                 }
                 var box = document.getElementById('wcWalletShortcuts');
                 if (box) {
@@ -978,7 +994,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+wc-wallet-shortcuts'
+            buildTag: 'sri-window-tabs+wc-shortcuts-ui2-tg-cache'
         });
         // #endregion
 
@@ -1149,7 +1165,7 @@
                 }
                 return;
             }
-            hideWcWalletShortcuts();
+            resetWcWalletShortcutWaiting();
             btn.innerHTML = 'Connecting...';
             btn.disabled = true;
 
@@ -1199,7 +1215,7 @@
                 userAddress = accounts[0];
 
                 detachWcDisplayUri(walletConnectProvider);
-                hideWcWalletShortcuts();
+                resetWcWalletShortcutWaiting();
 
                 // Listen for disconnect
                 walletConnectProvider.on('disconnect', () => location.reload());
@@ -1235,6 +1251,7 @@
                     }
                 } catch (eDisc) {}
                 detachWcDisplayUri(walletConnectProvider);
+                resetWcWalletShortcutWaiting();
                 resetWalletConnectButton(btn);
                 const overlayErr = document.getElementById('overlayError');
                 if (overlayErr) {

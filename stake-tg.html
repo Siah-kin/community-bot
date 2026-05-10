@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-i18n-ui5-no-notice-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-mm-scheme-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -628,7 +628,7 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-i18n-ui5-no-notice · use bot link (?v=…) so Telegram does not serve stale HTML</p>
+            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-mm-scheme · use bot link (?v=…) so Telegram does not serve stale HTML</p>
         </div>
     </div>
 
@@ -1102,6 +1102,45 @@
             }
         }
 
+        /** Telegram embedded WebViews often resolve metamask.app.link to the download site; app scheme opens the app. */
+        function metaMaskWalletConnectHref(encodedUri) {
+            var ua = navigator.userAgent || '';
+            var isMobileUa =
+                /Mobile|Android|iPhone|iPod|iPad|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            if (HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW && isMobileUa) {
+                return 'metamask://wc?uri=' + encodedUri;
+            }
+            return 'https://metamask.app.link/wc?uri=' + encodedUri;
+        }
+
+        function wireMetaMaskShortcutClickForTelegram() {
+            var mm = document.getElementById('wcLinkMetamask');
+            if (!mm || mm.dataset.mmTelegramWire === '1') return;
+            mm.dataset.mmTelegramWire = '1';
+            mm.addEventListener(
+                'click',
+                function (ev) {
+                    if (mm.classList.contains('wallet-shortcut-waiting')) return;
+                    var href = mm.getAttribute('href') || '';
+                    if (!href || href.indexOf('javascript:') === 0) return;
+                    if (href.indexOf('metamask://') === 0) return;
+                    if (
+                        HAS_TELEGRAM_WEBAPP &&
+                        tg &&
+                        typeof tg.openLink === 'function' &&
+                        !IS_EXTERNAL_BROWSER_FLOW &&
+                        href.indexOf('http') === 0
+                    ) {
+                        ev.preventDefault();
+                        tg.openLink(href);
+                    }
+                },
+                false
+            );
+        }
+
+        wireMetaMaskShortcutClickForTelegram();
+
         function resetWalletConnectButton(btn) {
             if (!btn) return;
             btn.innerHTML = CONNECT_BTN_DEFAULT_HTML || 'Connect Wallet';
@@ -1135,7 +1174,7 @@
                 var tw = document.getElementById('wcLinkTrust');
                 var bn = document.getElementById('wcLinkBinance');
                 if (mm) {
-                    mm.href = 'https://metamask.app.link/wc?uri=' + enc;
+                    mm.href = metaMaskWalletConnectHref(enc);
                     mm.removeAttribute('aria-disabled');
                     mm.classList.remove('wallet-shortcut-waiting');
                     mm.classList.add('wallet-shortcut-open');
@@ -1239,7 +1278,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-i18n-ui5-no-notice-tg-cache'
+            buildTag: 'sri-window-tabs+overlay-mm-scheme-tg-cache'
         });
         // #endregion
 

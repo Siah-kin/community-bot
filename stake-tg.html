@@ -296,6 +296,17 @@
             padding: 2rem;
         }
 
+        /* WalletConnect modal host: keep it above the connect overlay so the QR/session UI can appear. */
+        wcm-modal {
+            position: fixed !important;
+            inset: 0 !important;
+            display: block !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 10001 !important;
+            pointer-events: auto !important;
+        }
+
         .connect-content {
             text-align: center;
             max-width: 320px;

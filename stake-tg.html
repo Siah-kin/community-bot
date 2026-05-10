@@ -734,6 +734,8 @@
 
         const WALLETCONNECT_PROJECT_ID = '3a8170812b534d0ff9d794f19a901d64';
         const WALLETCONNECT_CONNECT_TIMEOUT_MS = 90000;
+        /** Init (SDK ProviderCtor.init) can hang in embedded WebViews; connect() timeout alone does not cover it. */
+        const WALLETCONNECT_INIT_TIMEOUT_MS = 60000;
         const IS_TELEGRAM_WEBAPP = !!(tg && tg.initData && tg.initData.length > 0);
         const HAS_TELEGRAM_WEBAPP = !!tg;
         const IS_EXTERNAL_BROWSER_FLOW = new URLSearchParams(window.location.search).get('external') === '1';
@@ -850,7 +852,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+footer-sponsor-cto'
+            buildTag: 'sri-window-tabs+wc-init-timeout'
         });
         // #endregion
 
@@ -1025,7 +1027,23 @@
             btn.disabled = true;
 
             try {
-                walletConnectProvider = await initWalletConnect();
+                var initTimeoutId = null;
+                var initTimeoutPromise = new Promise(function (_, reject) {
+                    initTimeoutId = setTimeout(function () {
+                        reject(
+                            new Error(
+                                'WalletConnect setup timed out. Try again or open this page in Chrome/Safari (use Open in browser from Telegram).'
+                            )
+                        );
+                    }, WALLETCONNECT_INIT_TIMEOUT_MS);
+                });
+                try {
+                    walletConnectProvider = await Promise.race([initWalletConnect(), initTimeoutPromise]);
+                } finally {
+                    if (initTimeoutId !== null) {
+                        clearTimeout(initTimeoutId);
+                    }
+                }
                 if (!walletConnectProvider) {
                     throw new Error('WalletConnect failed to initialize. Please try again.');
                 }

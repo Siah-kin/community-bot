@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="elegant-shell-lock-faq-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="trim-pool-vet-lock-below-btn-20260509" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -221,20 +221,6 @@
             line-height: 1.2;
         }
 
-        .metrics-meta-line {
-            margin: 0.5rem 0 0;
-            text-align: center;
-            font-size: 0.58rem;
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        .metrics-meta-line strong,
-        .metrics-meta-line .metric-stakers-num {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
         .stake-alert-banner {
             display: flex;
             align-items: flex-start;
@@ -291,209 +277,6 @@
             font-weight: 500;
         }
 
-        .stats-bar-hint {
-            margin: 0.6rem 0 0;
-            padding: 0.5rem 0.2rem 0;
-            border-top: 1px solid rgba(63, 63, 70, 0.35);
-            font-size: 0.58rem;
-            line-height: 1.45;
-            color: #71717a;
-            text-align: center;
-        }
-
-        /* Pool health (Dune snapshot + live RPC) */
-        .pool-overview {
-            background: linear-gradient(165deg, rgba(124, 58, 237, 0.08) 0%, var(--card-bg) 45%);
-            border: 1px solid rgba(124, 58, 237, 0.22);
-            border-radius: 14px;
-            padding: 1rem 1rem 0.85rem;
-            margin-bottom: 1rem;
-        }
-
-        .pool-overview-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 0.75rem;
-            margin-bottom: 0.85rem;
-            flex-wrap: wrap;
-        }
-
-        .pool-overview-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--purple-light);
-            letter-spacing: -0.02em;
-        }
-
-        .pool-overview-updated {
-            font-size: 0.65rem;
-            color: #52525b;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .pool-overview-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.65rem 0.85rem;
-        }
-
-        @media (min-width: 420px) {
-            .pool-overview-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .pool-metric {
-            min-width: 0;
-        }
-
-        .pool-metric-label {
-            display: block;
-            font-size: 0.58rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 0.2rem;
-            line-height: 1.25;
-        }
-
-        .pool-metric-value {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text);
-            line-height: 1.2;
-            word-break: break-word;
-        }
-
-        .pool-metric-value.subtle {
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #a1a1aa;
-        }
-
-        .pool-weekly {
-            margin-top: 1rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(63, 63, 70, 0.45);
-        }
-
-        .pool-weekly-caption {
-            font-size: 0.62rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 0.5rem;
-        }
-
-        .pool-weekly-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 4px;
-            min-height: 72px;
-        }
-
-        .pool-week-cell {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            min-width: 0;
-        }
-
-        .pool-week-label {
-            font-size: 0.55rem;
-            color: #52525b;
-            white-space: nowrap;
-        }
-
-        .pool-week-bars {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 3px;
-            height: 52px;
-        }
-
-        .pool-bar {
-            width: 6px;
-            border-radius: 2px;
-            min-height: 2px;
-            align-self: flex-end;
-        }
-
-        .pool-bar.stake {
-            background: linear-gradient(180deg, #a78bfa, #7c3aed);
-        }
-
-        .pool-bar.unstake {
-            background: #52525b;
-        }
-
-        .pool-contract-rows {
-            margin-top: 0.65rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .pool-contract-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 0.55rem;
-            background: rgba(24, 24, 27, 0.9);
-            border-radius: 8px;
-            border: 1px solid rgba(63, 63, 70, 0.45);
-            font-size: 0.74rem;
-        }
-
-        .pool-contract-row-label {
-            color: #a1a1aa;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .pool-contract-row a {
-            color: var(--purple-light);
-            font-family:
-                ui-monospace,
-                'Cascadia Code',
-                monospace;
-            font-weight: 600;
-            font-size: 0.71rem;
-            text-decoration: none;
-            text-align: right;
-            word-break: break-all;
-        }
-
-        .pool-contract-row a:hover {
-            text-decoration: underline;
-            color: var(--gold);
-        }
-
-        .pool-dune-links {
-            margin-top: 0.85rem;
-            font-size: 0.72rem;
-            color: #71717a;
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        .pool-dune-links a {
-            color: var(--purple-light);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .pool-dune-links a:hover {
-            text-decoration: underline;
-        }
-
         .action-block-kicker {
             font-size: 0.62rem;
             text-transform: uppercase;
@@ -501,341 +284,6 @@
             color: #71717a;
             margin: 0.6rem 0 0.35rem;
             text-align: center;
-        }
-
-        .apr-how-details {
-            margin-top: 0.5rem;
-            border-radius: 10px;
-        }
-
-        .apr-how-details summary {
-            font-size: 0.68rem;
-        }
-
-        .vet-data-panel {
-            margin-top: 0.55rem;
-            padding: 0.65rem 0.72rem;
-            border-radius: 11px;
-            border: 1px solid rgba(124, 58, 237, 0.35);
-            background: rgba(124, 58, 237, 0.06);
-        }
-
-        .vet-data-panel h2 {
-            margin: 0 0 0.35rem;
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--purple-light);
-        }
-
-        .vet-data-panel-kicker {
-            margin: 0 0 0.45rem;
-            font-size: 0.61rem;
-            line-height: 1.42;
-            color: #a1a1aa;
-        }
-
-        .vet-data-links {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.35rem 0.65rem;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .vet-data-links a {
-            color: var(--gold);
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .vet-data-links a:hover,
-        .vet-data-links a:focus {
-            text-decoration: underline;
-        }
-
-        .vet-data-ts {
-            flex-basis: 100%;
-            margin-top: 0.38rem;
-            font-size: 0.56rem;
-            font-weight: 500;
-            color: #71717a;
-        }
-
-        .tier-details {
-            margin-top: 0.55rem;
-            border: 1px solid rgba(63, 63, 70, 0.5);
-            border-radius: 10px;
-            padding: 0.4rem 0.55rem 0.55rem;
-            background: rgba(10, 10, 10, 0.35);
-        }
-
-        .tier-details summary {
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--purple-light);
-            list-style: none;
-        }
-
-        .tier-details summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .tier-details .tier-sub {
-            font-size: 0.58rem;
-            color: #71717a;
-            font-weight: 500;
-            display: block;
-            margin-top: 0.15rem;
-        }
-
-        .tier-sub-short {
-            margin-bottom: 0.55rem;
-            max-width: 40rem;
-            line-height: 1.42;
-        }
-
-        .tier-details[open] summary {
-            margin-bottom: 0.45rem;
-            border-bottom: 1px solid rgba(63, 63, 70, 0.4);
-            padding-bottom: 0.35rem;
-        }
-
-        .tier-details-inner {
-            margin-top: 0.4rem;
-            padding: 0.35rem 0.5rem 0.45rem;
-            border-radius: 8px;
-            border: 1px solid rgba(63, 63, 70, 0.35);
-            background: rgba(9, 9, 11, 0.55);
-        }
-
-        .tier-details-inner summary {
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .mev-foot {
-            text-align: center;
-            font-size: 0.6rem;
-            color: #71717a;
-            margin: 0.85rem 0 0;
-            line-height: 1.35;
-        }
-
-        .analytics-panel {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background: rgba(10, 10, 10, 0.6);
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            border-radius: 12px;
-            font-size: 0.82rem;
-            color: var(--gray);
-        }
-
-        .analytics-summary {
-            cursor: pointer;
-            font-weight: 700;
-            color: var(--purple-light);
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .analytics-summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .analytics-note {
-            margin: 0.6rem 0 0.85rem;
-            font-size: 0.72rem;
-            line-height: 1.45;
-        }
-
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        @media (max-width: 380px) {
-            .analytics-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .analytics-metric {
-            background: var(--card-bg);
-            padding: 0.55rem 0.65rem;
-            border-radius: 8px;
-        }
-
-        .analytics-metric-label {
-            display: block;
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #71717a;
-        }
-
-        .analytics-metric-value {
-            font-weight: 700;
-            color: var(--text);
-            font-size: 0.86rem;
-            word-break: break-word;
-        }
-
-        .analytics-sub {
-            font-size: 0.76rem;
-            color: var(--purple-light);
-            margin: 0.75rem 0 0.35rem;
-            font-weight: 700;
-        }
-
-        .analytics-table-wrap {
-            overflow-x: auto;
-            font-size: 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(82, 82, 91, 0.35);
-        }
-
-        .analytics-table-wrap table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .analytics-table-wrap th,
-        .analytics-table-wrap td {
-            padding: 0.35rem 0.5rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(82, 82, 91, 0.25);
-        }
-
-        .analytics-table-wrap a {
-            color: var(--purple-light);
-            text-decoration: none;
-        }
-
-        .analytics-roi,
-        .analytics-bench {
-            font-size: 0.74rem;
-            line-height: 1.5;
-            padding: 0.5rem;
-            background: rgba(31, 31, 35, 0.9);
-            border-radius: 8px;
-            border: 1px solid rgba(82, 82, 91, 0.3);
-        }
-
-        .analytics-roi strong {
-            color: var(--gold);
-        }
-
-        .analytics-bench-list {
-            margin: 0;
-            padding-left: 1.05rem;
-            line-height: 1.45;
-        }
-
-        /* Pool vitals + 10M reference stake lens */
-        .analytics-pulse-shell {
-            padding: 0.65rem;
-            margin-bottom: 0.85rem;
-            background: radial-gradient(
-                ellipse at 85% -20%,
-                rgba(124, 58, 237, 0.12),
-                transparent 55%
-            ),
-                rgba(15, 15, 17, 0.95);
-            border-radius: 10px;
-            border: 1px solid rgba(212, 175, 55, 0.22);
-            font-size: 0.71rem;
-            line-height: 1.5;
-        }
-
-        .pulse-kicker {
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: var(--purple-light);
-            margin: 0 0 0.6rem;
-        }
-
-        .pulse-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.55rem 0.75rem;
-        }
-
-        @media (max-width: 420px) {
-            .pulse-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .pulse-pane {
-            background: rgba(24, 24, 27, 0.75);
-            border-radius: 8px;
-            padding: 0.5rem 0.58rem;
-            border: 1px solid rgba(82, 82, 91, 0.25);
-        }
-
-        .pulse-pane h4 {
-            margin: 0 0 0.45rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .pulse-meter {
-            margin: 0.35rem 0 0;
-        }
-
-        .pulse-meter-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.64rem;
-            color: #a1a1aa;
-            margin-bottom: 0.2rem;
-        }
-
-        .pulse-track {
-            height: 8px;
-            border-radius: 99px;
-            background: rgba(63, 63, 70, 0.6);
-            overflow: hidden;
-        }
-
-        .pulse-fill-lock {
-            display: block;
-            height: 100%;
-            border-radius: inherit;
-            background: linear-gradient(90deg, #7c3aed, #27ae60);
-            min-width: 2px;
-        }
-
-        .pulse-fill-people {
-            display: block;
-            height: 100%;
-            border-radius: inherit;
-            background: linear-gradient(90deg, #d4af37, #e74c3c);
-            opacity: 0.9;
-            min-width: 2px;
-        }
-
-        .pulse-lens-numbers {
-            font-family:
-                ui-monospace,
-                'Cascadia Code',
-                monospace;
-            font-size: 0.68rem;
-            color: var(--text);
-            margin: 0.35rem 0 0;
         }
 
         /* Cards */
@@ -975,7 +423,8 @@
             display: flex;
             align-items: flex-start;
             gap: 0.62rem;
-            margin-bottom: 0.72rem;
+            margin-top: 0.72rem;
+            margin-bottom: 0;
             padding: 0.78rem 0.85rem;
             border-radius: 12px;
             background: rgba(24, 22, 20, 0.96);
@@ -1548,41 +997,6 @@
                     <div class="metric-tile-sub">ETH rewards</div>
                 </div>
             </div>
-            <p class="metrics-meta-line">
-                <span class="metric-stakers-num" id="metricStakersInline">—</span>
-                staking wallets · Dune rollup
-            </p>
-            <p class="stats-bar-hint">
-                Pair vault (pooled BONZI + WETH) lives under <strong>Optional reads · Live balances</strong>.
-                <a href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Chart</a>
-                ·
-                <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Lock contract</a>
-            </p>
-            <details class="tier-details apr-how-details">
-                <summary>How we estimate pool yield</summary>
-                <p id="metricAprExplanation" class="tier-sub tier-sub-short" style="margin-top: 0.35rem"></p>
-            </details>
-            <section class="vet-data-panel" id="vet-data" aria-labelledby="vet-data-title">
-                <h2 id="vet-data-title">Vet the data</h2>
-                <p class="vet-data-panel-kicker">
-                    Vetting-first: totals and yield notes trace to machine-readable payloads and Ethereum calls.
-                    Rebuild from community-bot <code style="font-size:0.62rem;color:#a78bfa">metrics/</code>
-                    (<code style="font-size:0.62rem;color:#a78bfa">build_staking_analytics.py</code>);
-                    validators run before publish — no Dashboard keys shipped to Pages.
-                </p>
-                <div class="vet-data-links">
-                    <a href="/metrics/staking_analytics.json">staking_analytics.json</a>
-                    <span style="color: #52525b" aria-hidden="true">·</span>
-                    <a href="/metrics/metrics-data.json">metrics-data.json</a>
-                    <span style="color: #52525b" aria-hidden="true">·</span>
-                    <a href="/metrics/">Metrics hub</a>
-                    <span style="color: #52525b" aria-hidden="true">·</span>
-                    <a href="/metrics/DUNE_QUERIES.md">Dune query IDs (md)</a>
-                </div>
-                <p class="vet-data-ts" aria-live="polite">
-                    <span id="vetProofTimestamp"></span>
-                </p>
-            </section>
         </div>
 
         <p class="action-block-kicker">Your wallet · stake, claim, withdraw</p>
@@ -1620,6 +1034,10 @@
                     </div>
                 </div>
 
+                <button class="action-btn primary" id="stakeBtn" onclick="stake()" disabled>
+                    Enter Amount
+                </button>
+
                 <div class="stake-lock-notice" role="note">
                     <span class="stake-lock-icon" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1632,10 +1050,6 @@
                         Claim ETH rewards anytime.
                     </div>
                 </div>
-
-                <button class="action-btn primary" id="stakeBtn" onclick="stake()" disabled>
-                    Enter Amount
-                </button>
             </div>
 
         </div>
@@ -1711,8 +1125,8 @@
                 <details class="faq-item">
                     <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
                     <div class="faq-answer">
-                        The hero uses <strong>backward pool pacing</strong> from public <code style="font-size:0.65rem">staking_analytics.json</code> plus onchain reads — not a fixed 48h window and not a personal APR promise.
-                        When the pair is too thin for a fair %-headline, we show pool ETH/year pace instead. See <strong>How we estimate pool yield</strong> and <strong>Vet the data</strong>.
+                        The hero uses <strong>backward pool pacing</strong> from the published <code style="font-size:0.65rem">staking_analytics.json</code> plus onchain reads. It is pool-wide, not a personal quote.
+                        When the pair is too thin for a fair percent headline, we show pool ETH per year pace instead.
                     </div>
                 </details>
             </div>
@@ -1734,124 +1148,6 @@
                 Buy $BONZI Tokens
             </a>
         </div>
-
-        <section class="pool-overview" id="poolOverview" aria-labelledby="pool-panel-title">
-            <div class="pool-overview-head">
-                <h2 class="pool-overview-title" id="pool-panel-title">Optional reads</h2>
-            </div>
-            <details class="tier-details">
-                <summary>Live balances</summary>
-                <p class="tier-sub tier-sub-short">
-                    On-chain wei. Vault “%” in dollars on Etherscan = mix inside the pair — not % of total BONZI supply shown above.
-                </p>
-                <div class="pool-overview-grid">
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Pair vault BONZI</span>
-                        <span class="pool-metric-value" id="poolLpBonziLive">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Staking lock BONZI</span>
-                        <span class="pool-metric-value" id="poolLiveTotalStaked">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Combined</span>
-                        <span class="pool-metric-value subtle" id="poolCombinedHint">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">ETH on lock contract</span>
-                        <span class="pool-metric-value" id="poolEthBalanceLive">—</span>
-                    </div>
-                </div>
-                <div class="pool-contract-rows" aria-label="Pool and staking contracts">
-                    <div class="pool-contract-row">
-                        <span class="pool-contract-row-label">Pair</span>
-                        <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2"
-                            target="_blank" rel="noopener noreferrer"
-                            title="BONZI/WETH pair">0x970…75e2 · Exp</a>
-                    </div>
-                    <div class="pool-contract-row">
-                        <span class="pool-contract-row-label">Hardlocked</span>
-                        <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53"
-                            target="_blank" rel="noopener noreferrer"
-                            title="BONZI hardstake staking lock (claim ETH here)">0x361…1a53 · Exp</a>
-                    </div>
-                </div>
-            </details>
-
-            <details class="tier-details">
-                <summary>Dune · behaviour snapshot</summary>
-                <span class="tier-sub">
-                    <span id="poolMetricsUpdated" style="display:block;margin-top:0.2rem;color:#71717a;">Loading…</span>
-                </span>
-                <div class="pool-overview-grid">
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Diamond hands · wallet share</span>
-                        <span class="pool-metric-value subtle" id="poolDiamondHands">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Still staking</span>
-                        <span class="pool-metric-value subtle" id="poolRetention">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Avg lock age</span>
-                        <span class="pool-metric-value subtle" id="poolAvgTenure">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Oldest streak</span>
-                        <span class="pool-metric-value subtle" id="poolMaxTenure">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">ETH paid (stakers, total)</span>
-                        <span class="pool-metric-value subtle" id="poolEthDistributed">—</span>
-                    </div>
-                    <div class="pool-metric">
-                        <span class="pool-metric-label">Biggest one claim</span>
-                        <span class="pool-metric-value subtle" id="poolMaxClaim">—</span>
-                    </div>
-                </div>
-                <div class="pool-weekly">
-                    <div class="pool-weekly-caption">Weekly stakes vs unstakes</div>
-                    <div class="pool-weekly-inner" id="poolWeeklyBars"></div>
-                </div>
-                <div class="pool-dune-links">
-                    <a href="/metrics/" target="_blank" rel="noopener noreferrer">Metrics hub</a>
-                    <span aria-hidden="true"> · </span>
-                    <a id="linkDuneTenure" href="https://dune.com/queries/6591445" target="_blank" rel="noopener noreferrer">Tenure</a>
-                    <span aria-hidden="true"> · </span>
-                    <a id="linkDuneEth" href="https://dune.com/queries/6591483" target="_blank" rel="noopener noreferrer">ETH rewards</a>
-                    <span aria-hidden="true"> · </span>
-                    <a id="linkDuneWeekly" href="https://dune.com/queries/6591436" target="_blank" rel="noopener noreferrer">Weekly flow</a>
-                </div>
-            </details>
-
-            <details class="analytics-panel tier-details" id="stakingAnalyticsPanel">
-                <summary class="analytics-summary">Json proofs · deep cut</summary>
-                <p class="analytics-note" id="stakingAnalyticsMeta">Loading…</p>
-                <p class="analytics-note" style="margin:0 0 0.65rem;font-size:0.65rem;line-height:1.4;color:#71717a;">
-                    Same hero row fields (yield, staked %, stakers) · from staking_analytics.json.
-                </p>
-                <details class="tier-details tier-details-inner">
-                    <summary>Supply duplicate check · optional</summary>
-                    <div class="analytics-grid" id="stakingAnalyticsLocked"></div>
-                </details>
-                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
-                    <summary>Wallet tables (needs export)</summary>
-                    <h3 class="analytics-sub">Top wallets by stake</h3>
-                    <div id="stakingTopStakers" class="analytics-table-wrap"></div>
-                    <h3 class="analytics-sub">Top ETH earned (lifetime)</h3>
-                    <div id="stakingTopEarners" class="analytics-table-wrap"></div>
-                </details>
-                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
-                    <summary>ROI note · optional</summary>
-                    <div id="stakingRoiBlock" class="analytics-roi"></div>
-                </details>
-                <details class="tier-details tier-details-inner" style="margin-top:0.5rem;">
-                    <summary>Benchmarks · not Bonzi APR</summary>
-                    <div id="stakingBenchmarkBlock" class="analytics-bench"></div>
-                </details>
-            </details>
-            <p class="mev-foot">MEV‑safe routing when available · numbers are informational</p>
-        </section>
         </div><!-- /.stake-shell -->
     </div>
 
@@ -2135,9 +1431,7 @@
         const CONTRACTS = {
             BONZI_TOKEN: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
             ROUTER: '0x9bD63C5D44fF28390df1EaaFD4eB4BD73E94A72a',
-            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
-            // Uniswap-V2-style pair (same listing as stake.html / Dexscreener)
-            BONZI_LP: '0x970cf9b7346fbaea0588f03356a104100eb675e2'
+            BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53'
         };
 
         const ERC20_ABI = [
@@ -2159,22 +1453,10 @@
             'function hardstake(address _contract, address _token, uint256 _amount)'
         ];
 
-        /** Standard constant-product pair — BONZI side read for “people numbers.” */
-        const UNISWAP_V2_PAIR_ABI = [
-            'function token0() view returns (address)',
-            'function token1() view returns (address)',
-            'function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)'
-        ];
-
-        var METRICS_DATA_URL =
-            typeof window !== 'undefined' && window.location && window.location.origin
-                ? window.location.origin + '/metrics/metrics-data.json'
-                : '/metrics/metrics-data.json';
         var STAKING_ANALYTICS_URL =
             typeof window !== 'undefined' && window.location && window.location.origin
                 ? window.location.origin + '/metrics/staking_analytics.json'
                 : '/metrics/staking_analytics.json';
-        var poolMetricsSnapshotOk = false;
         var stakingAnalyticsOk = false;
 
         // RPC endpoints with fallbacks
@@ -2938,162 +2220,14 @@
             throw new Error('Wallet not connected');
         }
 
-        function renderPoolWeeklyTrend(trend) {
-            var el = document.getElementById('poolWeeklyBars');
-            if (!el) return;
-            if (!trend || !trend.length) {
-                el.innerHTML = '';
-                return;
-            }
-            var slice = trend.slice(0, 10);
-            var maxV = 1;
-            slice.forEach(function (w) {
-                maxV = Math.max(maxV, w.stakes || 0, w.unstakes || 0);
-            });
-            el.innerHTML = slice
-                .map(function (w) {
-                    var sh = Math.round(48 * ((w.stakes || 0) / maxV));
-                    var uh = Math.round(48 * ((w.unstakes || 0) / maxV));
-                    var label = (w.week || '').slice(5);
-                    var tip =
-                        (w.week || '') +
-                        ': +' +
-                        (w.stakes || 0) +
-                        ' stakes / -' +
-                        (w.unstakes || 0) +
-                        ' unstakes';
-                    return (
-                        '<div class="pool-week-cell" title="' +
-                        tip.replace(/"/g, '&quot;') +
-                        '">' +
-                        '<span class="pool-week-label">' +
-                        label +
-                        '</span>' +
-                        '<div class="pool-week-bars">' +
-                        '<span class="pool-bar stake" style="height:' +
-                        Math.max(2, sh) +
-                        'px"></span>' +
-                        '<span class="pool-bar unstake" style="height:' +
-                        Math.max(2, uh) +
-                        'px"></span>' +
-                        '</div></div>'
-                    );
-                })
-                .join('');
-        }
-
-        function applyBonziPoolSnapshot(payload, dq, updatedAt) {
-            var bonzi = payload || {};
-            var dh = document.getElementById('poolDiamondHands');
-            if (dh) {
-                var dhn = bonzi.diamond_hands;
-                var dhp = bonzi.diamond_hands_pct;
-                dh.textContent =
-                    dhn != null && dhp != null
-                        ? dhn + ' · ' + dhp + '% never withdrew (of wallets staking here)'
-                        : dhn != null
-                          ? String(dhn)
-                          : '—';
-            }
-            var ret = document.getElementById('poolRetention');
-            if (ret) {
-                var cs = bonzi.currently_staking;
-                var ts = bonzi.total_stakers;
-                var rp = bonzi.retention_pct;
-                ret.textContent =
-                    cs != null && ts != null
-                        ? cs + ' / ' + ts + ' wallets' + (rp != null ? ' · ' + rp + '% still staking' : '')
-                        : '—';
-            }
-            var avg = document.getElementById('poolAvgTenure');
-            if (avg) avg.textContent = bonzi.avg_tenure_days != null ? bonzi.avg_tenure_days + ' d avg' : '—';
-            var mx = document.getElementById('poolMaxTenure');
-            if (mx) mx.textContent = bonzi.max_tenure_days != null ? bonzi.max_tenure_days + ' d max' : '—';
-            var ethd = document.getElementById('poolEthDistributed');
-            if (ethd)
-                ethd.textContent =
-                    bonzi.total_eth_distributed != null ? Number(bonzi.total_eth_distributed).toFixed(2) + ' ETH' : '—';
-            var mc = document.getElementById('poolMaxClaim');
-            if (mc)
-                mc.textContent =
-                    bonzi.max_single_claim != null ? Number(bonzi.max_single_claim).toFixed(4) + ' ETH' : '—';
-            renderPoolWeeklyTrend(bonzi.weekly_trend);
-            if (dq) {
-                var lt = document.getElementById('linkDuneTenure');
-                if (lt && dq.bonzi_tenure) lt.href = 'https://dune.com/queries/' + dq.bonzi_tenure;
-                var le = document.getElementById('linkDuneEth');
-                if (le && dq.bonzi_eth_distributed) le.href = 'https://dune.com/queries/' + dq.bonzi_eth_distributed;
-                var lw = document.getElementById('linkDuneWeekly');
-                if (lw && dq.bonzi_weekly_trend) lw.href = 'https://dune.com/queries/' + dq.bonzi_weekly_trend;
-            }
-            var pu = document.getElementById('poolMetricsUpdated');
-            if (pu) pu.textContent = updatedAt ? 'Dune rollup · as of ' + updatedAt : 'Dune rollup';
-        }
-
-        async function ensurePoolMetricsSnapshot() {
-            if (poolMetricsSnapshotOk) return;
-            try {
-                var res = await fetch(METRICS_DATA_URL, { cache: 'no-store' });
-                if (!res.ok) throw new Error('metrics HTTP ' + res.status);
-                var data = await res.json();
-                applyBonziPoolSnapshot(data.bonzi, data.dune_queries, data.updated);
-                poolMetricsSnapshotOk = true;
-            } catch (e) {
-                console.warn('[pool-overview] snapshot', e);
-                var pu = document.getElementById('poolMetricsUpdated');
-                if (pu) pu.textContent = 'Refresh metrics JSON · see /metrics/';
-            }
-        }
-
-        function truncateAddr(a) {
-            if (!a || typeof a !== 'string' || a.length < 12) return a || '—';
-            return a.slice(0, 6) + '…' + a.slice(-4);
-        }
-
-        function renderLeaderboard(elId, rows, emptyMsg) {
-            var el = document.getElementById(elId);
-            if (!el) return;
-            if (!rows || !rows.length) {
-                el.innerHTML = '<p class="analytics-note">' + emptyMsg + '</p>';
-                return;
-            }
-            var h =
-                '<table><thead><tr><th>#</th><th>Address</th><th>Value</th></tr></thead><tbody>';
-            rows.forEach(function (r, i) {
-                var addr = (r.address_canonical || r.address || '').toLowerCase();
-                var link = r.etherscan_url || ('https://etherscan.io/address/' + addr);
-                var amt =
-                    r.staked_tokens != null
-                        ? Number(r.staked_tokens).toLocaleString() + ' BONZI'
-                        : r.eth_earned_eth != null
-                          ? Number(r.eth_earned_eth).toFixed(6) + ' ETH'
-                          : '—';
-                h +=
-                    '<tr><td>' +
-                    (r.rank != null ? r.rank : i + 1) +
-                    '</td><td><a href="' +
-                    link +
-                    '" target="_blank" rel="noopener noreferrer">' +
-                    truncateAddr(addr) +
-                    '</a></td><td>' +
-                    amt +
-                    '</td></tr>';
-            });
-            h += '</tbody></table>';
-            el.innerHTML = h;
-        }
-
         function syncPoolSnapshotTrio(data) {
-            var agg = data.aggregate_claims_optional || {};
             var oc = data.onchain_live || {};
             var roi = data.roi_pool_aggregate_illustrative || {};
             var wl = data.wallet_lens_10m_supply_illustrative || {};
-            var wallets = agg.currently_staking_wallets_aggregate;
             var supplyTxt =
                 oc.locked_percent_of_supply_rounded != null
                     ? Number(oc.locked_percent_of_supply_rounded).toFixed(2) + '%'
                     : '—';
-            var stakersTxt = wallets != null ? String(wallets) : '—';
             var aprTitle = '';
             var aprTxt = '—';
             var aprSub = 'Est. yield · backward pool pacing';
@@ -3121,7 +2255,7 @@
                 aprSub = 'Est. yield · pool-wide (not yours)';
                 aprTitle =
                     aprSrc +
-                    '. Indexer totals plus denominators in “How we estimate”. Not personal return.';
+                    '. Pool-wide headline from staking_analytics.json, not a personal return promise.';
             } else if (paceEth != null && !isNaN(Number(paceEth))) {
                 aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
                 aprTitle =
@@ -3155,160 +2289,13 @@
 
             setAprHero(aprTxt, aprTitle || '');
 
-            var expl = document.getElementById('metricAprExplanation');
-            if (expl) {
-                var bits = [];
-                if (roi.eth_mid_apr_method_note_public)
-                    bits.push(roi.eth_mid_apr_method_note_public);
-                if (roi.eth_mid_proxy_unreliable_public_reason_optional)
-                    bits.push(roi.eth_mid_proxy_unreliable_public_reason_optional);
-                if (roi.pool_age_days_est != null) {
-                    bits.push(
-                        'Indexer aggregate: ~' +
-                            String(roi.pool_age_days_est) +
-                            'd since launch baseline; ~' +
-                            (roi.pool_aggregate_eth_claimed_total_optional != null
-                                ? Number(roi.pool_aggregate_eth_claimed_total_optional).toFixed(4)
-                                : '—') +
-                            ' ETH cum. claimed.'
-                    );
-                }
-                if (typeof data.methodology_public === 'string' && data.methodology_public.trim())
-                    bits.push(data.methodology_public);
-                expl.textContent = bits.join(' ');
-            }
-
             var supplyHero = document.getElementById('metricStakedSupplyPct');
             if (supplyHero && supplyTxt !== '—') supplyHero.textContent = supplyTxt;
-            var stakerLine = document.getElementById('metricStakersInline');
-            if (stakerLine) stakerLine.textContent = stakersTxt;
         }
 
         function applyStakingAnalytics(data) {
             if (!data) return;
             syncPoolSnapshotTrio(data);
-            var vetTs = document.getElementById('vetProofTimestamp');
-            if (vetTs) {
-                var g = data.generated_at_utc != null ? String(data.generated_at_utc).trim() : '';
-                vetTs.textContent = g
-                    ? 'Proof bundle stamped (UTC): ' + g + ' — open staking_analytics.json or hard-refresh if a CDN shows an old body.'
-                    : '';
-            }
-            var meta = document.getElementById('stakingAnalyticsMeta');
-            var lock = document.getElementById('stakingAnalyticsLocked');
-            if (!meta || !lock) return;
-            var c = data.contracts || {};
-            var oc = data.onchain_live || {};
-            var roi = data.roi_pool_aggregate_illustrative || {};
-            var routerOk = c.factory_router_equals_expected === true;
-            meta.textContent =
-                (data.generated_at_utc || '—') +
-                ' · Router ' +
-                (routerOk ? 'OK' : 'FAIL — do not trust numbers');
-            lock.innerHTML =
-                '<div class="analytics-metric"><span class="analytics-metric-label">Lock % of supply</span>' +
-                '<span class="analytics-metric-value">' +
-                (oc.locked_percent_of_supply_rounded != null ? oc.locked_percent_of_supply_rounded + '%' : '—') +
-                '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">BONZI in lock pool</span>' +
-                '<span class="analytics-metric-value">' +
-                (oc.pool_total_staked_tokens != null ? Number(oc.pool_total_staked_tokens).toLocaleString() : '—') +
-                '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">Total supply</span>' +
-                '<span class="analytics-metric-value">' +
-                (oc.total_supply_tokens != null ? Number(oc.total_supply_tokens).toLocaleString() : '—') +
-                '</span></div>' +
-                '<div class="analytics-metric"><span class="analytics-metric-label">On-chain read</span>' +
-                '<span class="analytics-metric-value">' +
-                String(oc.pool_aggregate_read_method || '—').replace(/_/g, ' ') +
-                '</span></div>';
-
-            var lb = data.leaderboards || {};
-            renderLeaderboard(
-                'stakingTopStakers',
-                lb.top_stakers_by_amount,
-                'Empty until a wallet export is published in staking_analytics.json.'
-            );
-            renderLeaderboard(
-                'stakingTopEarners',
-                lb.top_eth_earners_lifetime,
-                'Same — needs export file.'
-            );
-
-            var rb = document.getElementById('stakingRoiBlock');
-            if (rb) {
-                var hasUsdRoi =
-                    roi.bonzi_units_representing_1000_usd != null ||
-                    roi.tvl_proxy_usd != null ||
-                    roi.lifetime_reward_usd_vs_tvl_proxy != null ||
-                    roi.annualized_pool_reward_yield_estimate_pct != null;
-                var ethMidApr = roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct;
-                if (!hasUsdRoi) {
-                    var extra = '';
-                    if (ethMidApr != null) {
-                        extra =
-                            '<p class="analytics-note" style="margin-top:0.35rem;"><strong>APR rough</strong> ' +
-                            Number(ethMidApr).toFixed(2) +
-                            '% — ETH mid from pair × past payout pace. Not a quote.' +
-                            '</p>';
-                    }
-                    rb.innerHTML =
-                        '<p class="analytics-note">' +
-                        'No live BONZI/USD in this snapshot. Figures still use chain totals + indexer ETH.' +
-                        '</p>' +
-                        extra;
-                } else {
-                    rb.innerHTML =
-                        '<p class="analytics-note">' +
-                        (roi.snapshot_datetime_utc || '—') +
-                        ' · Pool-level only · not personal.</p>' +
-                        '<ul style="margin:0.25rem 0 0;padding-left:1rem;font-size:0.74rem;line-height:1.4;">' +
-                        '<li>$1k ≈ <strong>' +
-                        (roi.bonzi_units_representing_1000_usd != null
-                            ? roi.bonzi_units_representing_1000_usd + ' BONZI'
-                            : '—') +
-                        '</strong></li>' +
-                        '<li>TVL ~ $' +
-                        (roi.tvl_proxy_usd != null ? roi.tvl_proxy_usd : '—') +
-                        '</li>' +
-                        '<li>APR guess ' +
-                        (roi.annualized_pool_reward_yield_estimate_pct != null
-                            ? roi.annualized_pool_reward_yield_estimate_pct + '%'
-                            : '—') +
-                        '</li>' +
-                        '</ul>';
-                }
-            }
-
-            var bb = document.getElementById('stakingBenchmarkBlock');
-            if (bb) {
-                var benches = data.benchmarks_illustrative || [];
-                if (!benches.length) {
-                    bb.innerHTML = '';
-                } else {
-                    var s = '<ul class="analytics-bench-list">';
-                    benches.forEach(function (b) {
-                        s += '<li><strong>' + (b.label || b.id) + '</strong>';
-                        if (b.typical_yield_apr_approx_pct_low != null) {
-                            s +=
-                                ': ~' +
-                                b.typical_yield_apr_approx_pct_low +
-                                '–' +
-                                b.typical_yield_apr_approx_pct_high +
-                                '% APR (general market reference).';
-                        }
-                        if (b.total_eth_distributed_snapshot != null) {
-                            s +=
-                                ' ' +
-                                Number(b.total_eth_distributed_snapshot).toFixed(2) +
-                                ' ETH (different token — VISTA).';
-                        }
-                        s += '</li>';
-                    });
-                    s += '</ul>';
-                    bb.innerHTML = s;
-                }
-            }
         }
 
         async function ensureStakingAnalyticsSnapshot() {
@@ -3321,16 +2308,6 @@
                 stakingAnalyticsOk = true;
             } catch (e) {
                 console.warn('[staking-analytics]', e);
-                var vt = document.getElementById('vetProofTimestamp');
-                if (vt && !vt.textContent) {
-                    vt.textContent =
-                        'Could not load staking_analytics.json — check /metrics/staking_analytics.json at this origin or deploy drift.';
-                }
-                var meta = document.getElementById('stakingAnalyticsMeta');
-                if (meta) {
-                    meta.textContent =
-                        'staking_analytics.json missing — regenerate in community-bot metrics/ before publish.';
-                }
             }
         }
 
@@ -3339,12 +2316,11 @@
         // ============================================================
         async function updateUI() {
             try {
-                ensurePoolMetricsSnapshot();
                 ensureStakingAnalyticsSnapshot();
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, provider);
                 const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, provider);
 
-                const [balance, tokenSupplyWei, stakerInfo, totalLockedWei, poolEthWei] = await Promise.all([
+                const [balance, tokenSupplyWei, stakerInfo, totalLockedWei] = await Promise.all([
                     bonziContract.balanceOf(userAddress),
                     bonziContract.totalSupply(),
                     hardstakeContract.getStakerInfo(userAddress),
@@ -3355,8 +2331,7 @@
                         })
                         .catch(function () {
                             return ethers.BigNumber.from(0);
-                        }),
-                    provider.getBalance(CONTRACTS.BONZI_HARDSTAKE)
+                        })
                 ]);
 
                 bonziBalance = parseFloat(ethers.utils.formatEther(balance));
@@ -3368,71 +2343,9 @@
                 var totalLocked = parseFloat(ethers.utils.formatEther(totalLockedWei));
                 var tokenSupply = parseFloat(ethers.utils.formatEther(tokenSupplyWei));
                 var lockedPct = tokenSupply > 0 ? (100 * totalLocked) / tokenSupply : 0;
-                var poolEthBal = parseFloat(ethers.utils.formatEther(poolEthWei));
-
-                var lpBonziTokens = NaN;
-                var lpPct = NaN;
-                try {
-                    var pairC = new ethers.Contract(CONTRACTS.BONZI_LP, UNISWAP_V2_PAIR_ABI, provider);
-                    var t0 = await pairC.token0();
-                    var t1 = await pairC.token1();
-                    var reserves = await pairC.getReserves();
-                    var r0 = reserves[0];
-                    var r1 = reserves[1];
-                    var bnAddr = CONTRACTS.BONZI_TOKEN.toLowerCase();
-                    var bonziWei =
-                        String(t0).toLowerCase() === bnAddr
-                            ? r0
-                            : String(t1).toLowerCase() === bnAddr
-                              ? r1
-                              : null;
-                    if (bonziWei != null) {
-                        lpBonziTokens = parseFloat(ethers.utils.formatEther(bonziWei));
-                        lpPct =
-                            tokenSupply > 0 && !isNaN(lpBonziTokens)
-                                ? (100 * lpBonziTokens) / tokenSupply
-                                : NaN;
-                    }
-                } catch (lpErr) {
-                    console.warn('[LP] reserves read:', lpErr);
-                }
 
                 var pctHs = document.getElementById('metricStakedSupplyPct');
                 if (pctHs) pctHs.textContent = lockedPct.toFixed(2) + '%';
-
-                var pl = document.getElementById('poolLiveTotalStaked');
-                if (pl)
-                    pl.textContent =
-                        totalLocked.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
-                        ' BONZI · ' +
-                        lockedPct.toFixed(1) +
-                        '%';
-                var pb = document.getElementById('poolLpBonziLive');
-                if (pb) {
-                    if (!isNaN(lpBonziTokens) && lpBonziTokens >= 0) {
-                        pb.textContent =
-                            lpBonziTokens.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
-                            ' BONZI · ' +
-                            (!isNaN(lpPct) ? lpPct.toFixed(1) + '% supply' : '—');
-                    } else {
-                        pb.textContent = '—';
-                    }
-                }
-                var pch = document.getElementById('poolCombinedHint');
-                if (pch && !isNaN(lpBonziTokens) && lpBonziTokens >= 0) {
-                    var combined = totalLocked + lpBonziTokens;
-                    var cp = tokenSupply > 0 ? (100 * combined) / tokenSupply : 0;
-                    pch.textContent =
-                        combined.toLocaleString(undefined, { maximumFractionDigits: 0 }) +
-                        ' BONZI · ' +
-                        cp.toFixed(1) +
-                        '% supply · pair vault + lock (off CEX)';
-                } else if (pch) {
-                    pch.textContent = '—';
-                }
-
-                var pe = document.getElementById('poolEthBalanceLive');
-                if (pe) pe.textContent = poolEthBal.toFixed(4) + ' ETH';
 
                 // Update displays across all tabs
                 document.getElementById('bonziBalance').textContent = formatWalletTokenAmount(bonziBalance, 8);
@@ -3665,7 +2578,6 @@
         // Auto-connect on load
         // ============================================================
         window.addEventListener('load', async () => {
-            ensurePoolMetricsSnapshot();
             ensureStakingAnalyticsSnapshot();
             // If opened with pre-populated action, auto-trigger connect
             if (preAction || preWallet) {

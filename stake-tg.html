@@ -15,6 +15,17 @@
             }
         })();
     </script>
+    <script>
+        window.__bonziPendingConnect = false;
+        window.connectWallet = window.connectWallet || function () {
+            window.__bonziPendingConnect = true;
+            var b = document.getElementById('wcConnectBtn');
+            if (b) {
+                b.disabled = true;
+                b.textContent = 'Loading...';
+            }
+        };
+    </script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -726,7 +737,7 @@
             HAS_TELEGRAM_WEBAPP &&
             (TELEGRAM_WEB_PLATFORMS.has(TELEGRAM_PLATFORM) ||
                 (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
-        const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
+        const USE_QR_MODAL = IS_EXTERNAL_BROWSER_FLOW || !IS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
@@ -937,7 +948,7 @@
 
         async function connectWallet() {
             const btn = document.getElementById('wcConnectBtn');
-            const originalText = btn.innerHTML;
+            const originalText = CONNECT_BTN_DEFAULT_HTML || btn.innerHTML;
             dbgStakeEmit('H_connect_entry', 'stake-tg.html:connectWallet', 'connect clicked', {
                 shouldOpenExternal: SHOULD_OPEN_EXTERNAL_BROWSER,
                 platform: TELEGRAM_PLATFORM,
@@ -1287,12 +1298,19 @@
         }
 
         window.switchTab = switchTab;
+        var pendingConnectBeforeReady = window.__bonziPendingConnect === true;
         window.connectWallet = connectWallet;
         window.closeConnectOverlay = closeConnectOverlay;
         window.stake = stake;
         window.claim = claim;
         window.withdraw = withdraw;
         window.setMax = setMax;
+        if (pendingConnectBeforeReady) {
+            window.__bonziPendingConnect = false;
+            setTimeout(function () {
+                connectWallet();
+            }, 0);
+        }
 
         // ============================================================
         // Auto-connect on load

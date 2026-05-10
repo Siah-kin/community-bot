@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="overlay-wc-recover-20260510" />
+    <meta name="bonzi-stake-tg-deploy" content="overlay-desktop-inject-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -628,7 +628,7 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-wc-recover · use bot link (?v=…) so Telegram does not serve stale HTML</p>
+            <p class="footer-debug" id="stakeHtmlDeployRev">deploy overlay-desktop-inject · use bot link (?v=…) so Telegram does not serve stale HTML</p>
         </div>
     </div>
 
@@ -1104,6 +1104,81 @@
             { chains: [1], showQrModal: true }
         ];
 
+        function preferInjectedEthereum() {
+            return (
+                !IS_TELEGRAM_WEBAPP &&
+                typeof window.ethereum !== 'undefined' &&
+                window.ethereum &&
+                typeof window.ethereum.request === 'function'
+            );
+        }
+
+        async function abortWalletConnectSessionSilently() {
+            clearWcConnectUiWatchdog();
+            try {
+                if (walletConnectProvider && typeof walletConnectProvider.disconnect === 'function') {
+                    await walletConnectProvider.disconnect();
+                }
+            } catch (eA) {}
+            detachWcDisplayUri(walletConnectProvider);
+            walletConnectProvider = null;
+            resetWcWalletShortcutWaiting();
+        }
+
+        async function ensureEthereumMainnetInjected(eth) {
+            var cid = await eth.request({ method: 'eth_chainId' });
+            var hex = typeof cid === 'string' ? cid.toLowerCase() : '';
+            if (hex === '0x1' || hex === '0x01') return;
+            try {
+                await eth.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x1' }]
+                });
+            } catch (eSw) {
+                throw new Error('Please switch to Ethereum mainnet in your wallet.');
+            }
+        }
+
+        async function finalizeStakeSessionAfterConnect() {
+            document.getElementById('connectOverlay').classList.add('hidden');
+            document.getElementById('mainContent').style.display = 'block';
+            if (preAction === 'claim') switchTab('claim');
+            else if (preAction === 'unstake') switchTab('withdraw');
+            if (preAmount && preAction === 'stake') {
+                document.getElementById('stakeAmount').value = preAmount;
+            }
+            await updateUI();
+        }
+
+        async function connectInjectedEthereumCore() {
+            var eth = window.ethereum;
+            if (!eth || typeof eth.request !== 'function') {
+                throw new Error('No browser wallet found. Install MetaMask or connect with WalletConnect.');
+            }
+            dbgStakeEmit('H_eth_inject', 'stake-tg.html:inject', 'eth_requestAccounts', {});
+            await eth.request({ method: 'eth_requestAccounts' });
+            await ensureEthereumMainnetInjected(eth);
+            var web3p = new ethers.providers.Web3Provider(eth, 'any');
+            var accounts = await web3p.listAccounts();
+            if (!accounts || accounts.length === 0) {
+                throw new Error('Wallet returned no accounts.');
+            }
+            userAddress = accounts[0];
+            detachWcDisplayUri(walletConnectProvider);
+            walletConnectProvider = null;
+            resetWcWalletShortcutWaiting();
+            provider = web3p;
+            if (typeof eth.on === 'function') {
+                eth.on('accountsChanged', function () {
+                    location.reload();
+                });
+                eth.on('chainChanged', function () {
+                    location.reload();
+                });
+            }
+            await finalizeStakeSessionAfterConnect();
+        }
+
         function clearWcConnectUiWatchdog() {
             if (wcConnectUiWatchdogId !== null) {
                 clearTimeout(wcConnectUiWatchdogId);
@@ -1218,6 +1293,7 @@
             ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) {
+                    el.onclick = null;
                     el.href = 'javascript:void(0)';
                     el.setAttribute('aria-disabled', 'true');
                     el.removeAttribute('data-wc-shortcut-ready');
@@ -1241,11 +1317,30 @@
                 var tw = document.getElementById('wcLinkTrust');
                 var bn = document.getElementById('wcLinkBinance');
                 if (mm) {
-                    mm.href = metaMaskWalletConnectHref(enc);
-                    mm.setAttribute('data-wc-shortcut-ready', '1');
-                    mm.removeAttribute('aria-disabled');
-                    mm.classList.remove('wallet-shortcut-waiting');
-                    mm.classList.add('wallet-shortcut-open');
+                    if (preferInjectedEthereum()) {
+                        mm.href = 'javascript:void(0)';
+                        mm.setAttribute('data-wc-shortcut-ready', '1');
+                        mm.removeAttribute('aria-disabled');
+                        mm.classList.remove('wallet-shortcut-waiting');
+                        mm.classList.add('wallet-shortcut-open');
+                        mm.onclick = function (ev) {
+                            ev.preventDefault();
+                            dbgStakeEmit('H_mm_mirror_desktop', 'stake-tg.html:mmMirror', 'desktop injected mirror', {});
+                            abortWalletConnectSessionSilently().then(function () {
+                                wcConnectInFlight = false;
+                                var b = document.getElementById('wcConnectBtn');
+                                if (b) resetWalletConnectButton(b);
+                                connectWallet();
+                            });
+                        };
+                    } else {
+                        mm.onclick = null;
+                        mm.href = metaMaskWalletConnectHref(enc);
+                        mm.setAttribute('data-wc-shortcut-ready', '1');
+                        mm.removeAttribute('aria-disabled');
+                        mm.classList.remove('wallet-shortcut-waiting');
+                        mm.classList.add('wallet-shortcut-open');
+                    }
                 }
                 if (tw) {
                     tw.href = 'https://link.trustwallet.com/wc?uri=' + enc;
@@ -1348,7 +1443,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'sri-window-tabs+overlay-wc-recover-tg-cache'
+            buildTag: 'sri-window-tabs+overlay-desktop-inject-tg-cache'
         });
         // #endregion
 
@@ -1557,6 +1652,11 @@
             scheduleWcConnectUiWatchdog(btn);
 
             try {
+                if (preferInjectedEthereum()) {
+                    await connectInjectedEthereumCore();
+                    return;
+                }
+
                 var initTimeoutId = null;
                 var initTimeoutPromise = new Promise(function (_, reject) {
                     initTimeoutId = setTimeout(function () {
@@ -1667,8 +1767,13 @@
         })();
 
         function getWalletSigner() {
-            const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
-            return wcWeb3Provider.getSigner();
+            if (walletConnectProvider) {
+                return new ethers.providers.Web3Provider(walletConnectProvider).getSigner();
+            }
+            if (provider && typeof provider.getSigner === 'function') {
+                return provider.getSigner();
+            }
+            throw new Error('Wallet not connected');
         }
 
         // ============================================================

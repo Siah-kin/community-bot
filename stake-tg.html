@@ -792,6 +792,27 @@
             return url.toString();
         }
 
+        function getInjectedMetaMaskProvider() {
+            try {
+                var eth = typeof window !== 'undefined' ? window.ethereum : null;
+                if (!eth) {
+                    return null;
+                }
+                if (Array.isArray(eth.providers)) {
+                    var meta = eth.providers.find(function (p) {
+                        return !!(p && p.isMetaMask);
+                    });
+                    if (meta) {
+                        return meta;
+                    }
+                }
+                if (eth.isMetaMask) {
+                    return eth;
+                }
+            } catch (e) {}
+            return null;
+        }
+
         // #region agent log
         function dbgStakeEmit(hypothesisId, location, message, data) {
             var payload = {
@@ -1089,6 +1110,8 @@
                 platform: TELEGRAM_PLATFORM,
                 isMiniApp: IS_TELEGRAM_WEBAPP
             });
+            btn.innerHTML = 'Connecting...';
+            btn.disabled = true;
             // Telegram Web keeps WalletConnect Verify inside its own frame; use a normal browser there.
             if (SHOULD_OPEN_EXTERNAL_BROWSER) {
                 const browserUrl = buildBrowserFallbackUrl();
@@ -1116,8 +1139,59 @@
                 }
                 return;
             }
-            btn.innerHTML = 'Connecting...';
-            btn.disabled = true;
+
+            const injectedMetaMask = getInjectedMetaMaskProvider();
+            if (injectedMetaMask) {
+                dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask branch detected', {
+                    hasRequest: !!(injectedMetaMask && typeof injectedMetaMask.request === 'function'),
+                    hasOn: !!(injectedMetaMask && typeof injectedMetaMask.on === 'function')
+                });
+                try {
+                    provider = new ethers.providers.Web3Provider(injectedMetaMask, 'any');
+                    signer = provider.getSigner();
+                    const accounts = await injectedMetaMask.request({ method: 'eth_requestAccounts' });
+                    if (!accounts || !accounts.length) {
+                        throw new Error('MetaMask did not return an account');
+                    }
+                    userAddress = accounts[0];
+                    walletConnectProvider = null;
+
+                    if (typeof injectedMetaMask.on === 'function') {
+                        injectedMetaMask.on('disconnect', () => location.reload());
+                        injectedMetaMask.on('accountsChanged', () => location.reload());
+                        injectedMetaMask.on('chainChanged', () => location.reload());
+                    }
+
+                    document.getElementById('connectOverlay').classList.add('hidden');
+                    document.getElementById('mainContent').style.display = 'block';
+
+                    if (preAction === 'claim') switchTab('claim');
+                    else if (preAction === 'unstake') switchTab('withdraw');
+
+                    if (preAmount && preAction === 'stake') {
+                        document.getElementById('stakeAmount').value = preAmount;
+                    }
+
+                    await updateUI();
+                    dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask connected', {
+                        addressTail: userAddress ? String(userAddress).slice(-6) : ''
+                    });
+                    return;
+                } catch (metaError) {
+                    dbgStakeEmit('H_meta', 'stake-tg.html:connectWallet', 'MetaMask connect failed', {
+                        name: metaError && metaError.name,
+                        msg: metaError && metaError.message ? String(metaError.message).slice(0, 240) : 'unknown'
+                    });
+                    resetWalletConnectButton(btn);
+                    const overlayErr = document.getElementById('overlayError');
+                    if (overlayErr) {
+                        overlayErr.textContent = metaError.message || 'MetaMask connection failed. Try again.';
+                        overlayErr.style.display = 'block';
+                    }
+                    showStatus(metaError.message || 'MetaMask connection failed', 'error');
+                    return;
+                }
+            }
 
             try {
                 watchWalletConnectModalHost();
@@ -1164,6 +1238,7 @@
                 }
 
                 userAddress = accounts[0];
+                signer = new ethers.providers.Web3Provider(walletConnectProvider).getSigner();
 
                 // Listen for disconnect
                 walletConnectProvider.on('disconnect', () => location.reload());
@@ -1210,8 +1285,19 @@
         }
 
         function getWalletSigner() {
-            const wcWeb3Provider = new ethers.providers.Web3Provider(walletConnectProvider);
-            return wcWeb3Provider.getSigner();
+            if (signer) {
+                return signer;
+            }
+            if (walletConnectProvider) {
+                signer = new ethers.providers.Web3Provider(walletConnectProvider).getSigner();
+                return signer;
+            }
+            const injectedMetaMask = getInjectedMetaMaskProvider();
+            if (injectedMetaMask) {
+                signer = new ethers.providers.Web3Provider(injectedMetaMask, 'any').getSigner();
+                return signer;
+            }
+            throw new Error('No connected wallet signer available');
         }
 
         // ============================================================

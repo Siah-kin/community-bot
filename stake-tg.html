@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="lp-tile-label-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="withdraw-partial-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1154,8 +1154,15 @@
                     </div>
                 </div>
 
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="number" id="withdrawAmount" name="withdrawAmount" autocomplete="transaction-amount" placeholder="0.0" min="0" step="any" inputmode="decimal" disabled>
+                        <button type="button" class="max-btn" onclick="setMaxWithdraw()">MAX</button>
+                    </div>
+                </div>
+
                 <button class="action-btn secondary" id="withdrawBtn" onclick="withdraw()" disabled>
-                    Withdraw All
+                    Enter amount
                 </button>
             </div>
 
@@ -1562,6 +1569,9 @@
         let bonziBalance = 0;
         let walletConnectProvider = null;
         let currentClaimableEth = 0;
+        /** On-chain staked BONZI (wei) for withdraw MAX and validation */
+        let lastStakedAmountWei = ethers.BigNumber.from(0);
+        let lastWithdrawLockSeconds = 0;
         var wcConnectInFlight = false;
         var wcConnectUiWatchdogId = null;
 
@@ -1684,6 +1694,9 @@
             else if (preAction === 'unstake') switchTab('withdraw');
             if (preAmount && preAction === 'stake') {
                 document.getElementById('stakeAmount').value = preAmount;
+            }
+            if (preAmount && preAction === 'unstake') {
+                document.getElementById('withdrawAmount').value = preAmount;
             }
             await updateUI();
         }
@@ -2269,6 +2282,9 @@
                 if (preAmount && preAction === 'stake') {
                     document.getElementById('stakeAmount').value = preAmount;
                 }
+                if (preAmount && preAction === 'unstake') {
+                    document.getElementById('withdrawAmount').value = preAmount;
+                }
 
                 await updateUI();
             } catch (error) {
@@ -2470,6 +2486,8 @@
                 const claimableEth = parseFloat(ethers.utils.formatEther(stakerInfo.claimableShare));
                 currentClaimableEth = claimableEth;
                 const timeRemaining = stakerInfo.timeRemaining.toNumber();
+                lastStakedAmountWei = ethers.BigNumber.from(stakerInfo.amountStaked);
+                lastWithdrawLockSeconds = timeRemaining;
 
                 var totalLocked = parseFloat(ethers.utils.formatEther(vaultBonziWei));
                 var tokenSupply = parseFloat(ethers.utils.formatEther(tokenSupplyWei));
@@ -2527,12 +2545,19 @@
                     document.getElementById('lockTimeDisplay').style.color = 'var(--green)';
                 }
 
-                // Enable/disable buttons
+                var wAmtEl = document.getElementById('withdrawAmount');
+                if (wAmtEl) {
+                    wAmtEl.disabled = timeRemaining > 0 || stakedBal === 0;
+                    if (stakedBal === 0) {
+                        wAmtEl.value = '';
+                    }
+                }
+
                 document.getElementById('stakeBtn').disabled = bonziBalance === 0;
                 document.getElementById('claimBtn').disabled = claimableEth === 0;
-                document.getElementById('withdrawBtn').disabled = stakedBal === 0 || timeRemaining > 0;
 
                 updateStakeButton();
+                updateWithdrawButton();
 
             } catch (error) {
                 console.error('UI update error:', error);
@@ -2561,6 +2586,57 @@
         }
 
         document.getElementById('stakeAmount').addEventListener('input', updateStakeButton);
+
+        function setMaxWithdraw() {
+            if (!lastStakedAmountWei || lastStakedAmountWei.isZero()) return;
+            document.getElementById('withdrawAmount').value = ethers.utils.formatEther(lastStakedAmountWei);
+            updateWithdrawButton();
+        }
+
+        function updateWithdrawButton() {
+            var btn = document.getElementById('withdrawBtn');
+            if (!btn) return;
+
+            if (lastWithdrawLockSeconds > 0) {
+                btn.textContent = 'Locked';
+                btn.disabled = true;
+                return;
+            }
+
+            if (!lastStakedAmountWei || lastStakedAmountWei.isZero()) {
+                btn.textContent = 'Enter amount';
+                btn.disabled = true;
+                return;
+            }
+
+            var wInput = document.getElementById('withdrawAmount');
+            var raw = (wInput && wInput.value ? String(wInput.value) : '').trim();
+            if (!raw || parseFloat(raw) === 0) {
+                btn.textContent = 'Enter amount';
+                btn.disabled = true;
+                return;
+            }
+
+            var amtWei;
+            try {
+                amtWei = ethers.utils.parseEther(raw);
+            } catch (eW) {
+                btn.textContent = 'Invalid amount';
+                btn.disabled = true;
+                return;
+            }
+
+            if (amtWei.gt(lastStakedAmountWei)) {
+                btn.textContent = 'More than staked';
+                btn.disabled = true;
+                return;
+            }
+
+            btn.textContent = 'Withdraw ' + formatWalletTokenAmount(parseFloat(raw), 8) + ' BONZI';
+            btn.disabled = false;
+        }
+
+        document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawButton);
 
         // ============================================================
         // Status Messages
@@ -2688,35 +2764,50 @@
         async function withdraw() {
             // Euler reset warning
             if (currentClaimableEth > 0) {
-                const proceed = confirm(
+                var proceed = confirm(
                     `You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
-                    `Withdrawing resets your Euler index.\n` +
-                    `Claim first or lose your rewards.\n\n` +
-                    `Continue anyway?`
+                        `Withdrawing resets your Euler index.\n` +
+                        `Claim first or lose your rewards.\n\n` +
+                        `Continue anyway?`
                 );
                 if (!proceed) return;
             }
 
-            try {
-                const stakedEl = document.getElementById('stakedBalance');
-                const stakedAmount = parseFloat(stakedEl.textContent.replace(/,/g, ''));
-                if (stakedAmount === 0) return;
+            var raw = (document.getElementById('withdrawAmount').value || '').trim();
+            if (!raw || parseFloat(raw) === 0) return;
 
-                showStatus('Withdrawing staked BONZI...');
+            var amountWei;
+            try {
+                amountWei = ethers.utils.parseEther(raw);
+            } catch (eP) {
+                showStatus('Invalid amount', 'error');
+                return;
+            }
+
+            if (amountWei.isZero()) return;
+            if (!lastStakedAmountWei || amountWei.gt(lastStakedAmountWei)) {
+                showStatus('Amount is more than you have staked', 'error');
+                return;
+            }
+
+            try {
+                showStatus('Withdrawing BONZI...');
                 signer = getWalletSigner();
 
-                const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
-                const amountWei = ethers.utils.parseEther(stakedAmount.toString());
-                const withdrawTx = await hardstakeContract.withdraw(amountWei);
+                var hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
+                var withdrawTx = await hardstakeContract.withdraw(amountWei);
 
                 showStatus('Waiting for confirmation...');
-                const receipt = await withdrawTx.wait();
+                var receipt = await withdrawTx.wait();
 
                 notifyTelegramHaptic('success');
                 showStatus('Withdrawal complete!', 'success');
 
-                sendResultToBot('withdrawn', receipt.transactionHash, stakedAmount.toString());
+                var amtOut = ethers.utils.formatEther(amountWei);
+                sendResultToBot('withdrawn', receipt.transactionHash, amtOut);
+                document.getElementById('withdrawAmount').value = '';
                 await updateUI();
+                updateWithdrawButton();
                 setTimeout(hideStatus, 3000);
 
             } catch (error) {

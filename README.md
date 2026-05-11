@@ -15,7 +15,7 @@ Public checkpoints only; no secrets. **Production** vs **GitHub Pages** hosts th
 
 - **Site:** https://bonzivista.org and https://siah-kin.github.io/community-bot/
 - **Stake mini-app:** https://bonzivista.org/stake-tg.html · Pages: https://siah-kin.github.io/community-bot/stake-tg.html
-- **FAQ bundle:** https://bonzivista.org/stake-faq-i18n.json · https://siah-kin.github.io/community-bot/stake-faq-i18n.json (**tracked on `main`** — `git pull` before auditing stale checkouts.)
+- **FAQ bundle:** https://bonzivista.org/stake-faq-i18n.json · https://siah-kin.github.io/community-bot/stake-faq-i18n.json (**tracked on `main`** — `git pull` before auditing stale checkouts; introduced in `f49027b`.)
 - **Source (MIT):** https://github.com/Siah-kin/community-bot
 - **Telegram:** https://t.me/bonzivista_bot · **Community FAQ:** https://t.me/Bonzivision
 - **Ethervista primer:** https://www.ethervista.app/how-it-works

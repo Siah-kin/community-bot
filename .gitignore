@@ -1,5 +1,7 @@
+# Local Mailchimp / hosted signup one-liner (see scripts/patch_notify_meta.py)
+scripts/bonzi_notify_signup_url.local.txt
+
 .DS_Store
-.env
 *.env
 metrics/.env
 knowledge_base_complete.md

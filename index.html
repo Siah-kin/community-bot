@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-09-slot-home-only">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-11-mailchimp-notify-slot-jsonparse">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
@@ -891,22 +891,32 @@
             }
         }
 
-        function postSlotAttempt() {
-            var api = getApiOrigin();
-            return fetch(api + '/api/slotgame/attempt', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
-            }).then(function(r) {
-                return r.json().then(function(j) {
+        function _slotFetchJson(url, init) {
+            return fetch(url, init).then(function (r) {
+                return r.text().then(function (text) {
+                    var j;
+                    try {
+                        j = JSON.parse(text);
+                    } catch (eParse) {
+                        throw eParse;
+                    }
                     return { httpOk: r.ok, status: r.status, json: j };
                 });
             });
         }
 
+        function postSlotAttempt() {
+            var api = getApiOrigin();
+            return _slotFetchJson(api + '/api/slotgame/attempt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+            });
+        }
+
         function postSlotWin(attemptToken) {
             var api = getApiOrigin();
-            return fetch(api + '/api/slotgame/win', {
+            return _slotFetchJson(api + '/api/slotgame/win', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -914,10 +924,6 @@
                     tier: 'bonzi',
                     attempt_token: attemptToken
                 })
-            }).then(function(r) {
-                return r.json().then(function(j) {
-                    return { httpOk: r.ok, status: r.status, json: j };
-                });
             });
         }
 

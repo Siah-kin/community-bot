@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-11-mailchimp-notify-slot-jsonparse">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-11-slot-notify-slotgame-warmdoc">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
@@ -122,6 +122,47 @@
             font-size: 11px;
         }
         .notify-bar-cta:hover { filter: brightness(1.05); }
+
+        /* Bottom email CTA (Mailchimp hosted form) */
+        .notify-bottom {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 1.5rem;
+            padding: 1.5rem 1rem 2rem;
+            text-align: center;
+            border-top: 1px solid #27272a;
+        }
+        .notify-bottom-title {
+            color: #EDE9FE;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .notify-bottom-sub {
+            color: #A1A1AA;
+            font-size: 0.9rem;
+            margin: 0 0 1rem;
+            line-height: 1.5;
+        }
+        .notify-bottom-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37, #c9a227);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.65rem 1.35rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        .notify-bottom-cta:hover { filter: brightness(1.06); }
+        .notify-bottom-pending {
+            color: #71717A;
+            font-size: 0.85rem;
+            margin: 0.75rem 0 0;
+            line-height: 1.45;
+        }
         .win98-content {
             padding: 12px;
             display: flex;
@@ -598,6 +639,13 @@
         </footer>
     </div>
 
+    <section class="notify-bottom" id="notify-bottom" aria-label="Email updates">
+        <h2 class="notify-bottom-title" id="notify-bottom-title">Get Notified</h2>
+        <p class="notify-bottom-sub" id="notify-bottom-sub">Leave your Email for Updates</p>
+        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Get notified</a>
+        <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
+    </section>
+
     <div class="prize-overlay" id="prize-overlay">
         <div class="prize-box">
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
@@ -634,7 +682,14 @@
             en: {
                 tagline: 'Pull the lever.',
                 notifyMsg: 'Early list: emails only.',
+                notifyMsgPending:
+                    'Get notified about future updates. Leave your email — the signup form opens here once the list URL is published.',
                 notifyCta: 'Get notified',
+                notifyBottomTitle: 'Get Notified',
+                notifyBottomSub: 'Leave your Email for Updates',
+                notifyBottomCta: 'Get notified',
+                notifyBottomPending:
+                    'The signup form will show here after you add your Mailchimp hosted form URL to bonzi-notify-signup-url.',
                 lcdPrefix: 'Tokenise your',
                 statusIdle: 'Ready',
                 clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
@@ -669,7 +724,14 @@
             'pt-BR': {
                 tagline: 'Puxe a alavanca.',
                 notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
+                notifyMsgPending:
+                    'Avise-me sobre pr\u00F3ximas atualiza\u00E7\u00F5es. Deixe seu e-mail quando o formul\u00E1rio do Mailchimp estiver publicado.',
                 notifyCta: 'Avise-me',
+                notifyBottomTitle: 'Avise-me',
+                notifyBottomSub: 'Deixe seu e-mail para atualiza\u00E7\u00F5es.',
+                notifyBottomCta: 'Quero receber',
+                notifyBottomPending:
+                    'O formul\u00E1rio aparece aqui depois de publicar a URL do Mailchimp em bonzi-notify-signup-url.',
                 lcdPrefix: 'Tokenise sua',
                 statusIdle: 'Pronto',
                 clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
@@ -713,15 +775,91 @@
             } catch (eP) {}
         }
 
+        function notifySignupUrlIsBlockedTelegram(u) {
+            if (!u) return false;
+            var s = String(u).trim();
+            var low = s.toLowerCase();
+            if (low.indexOf('tg:') === 0 || low.indexOf('telegram:') === 0) return true;
+            try {
+                var pu = new URL(s);
+                if (pu.protocol === 'tg:' || pu.protocol === 'telegram:') return true;
+                if (pu.protocol !== 'https:') return false;
+                var h = (pu.hostname || '').toLowerCase();
+                return h === 't.me' || h === 'telegram.me' || h === 'web.telegram.org';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function notifySignupUrlIsAllowedHttps(u) {
+            return typeof u === 'string' && /^https:\/\//i.test(u.trim());
+        }
+
+        function refreshNotifyBottom(url, looksTelegram, L) {
+            var sec = document.getElementById('notify-bottom');
+            var title = document.getElementById('notify-bottom-title');
+            var sub = document.getElementById('notify-bottom-sub');
+            var cta = document.getElementById('notify-bottom-cta');
+            var pend = document.getElementById('notify-bottom-pending');
+            if (!sec || !title || !sub || !cta || !pend) return;
+            title.textContent = L.notifyBottomTitle;
+            sub.textContent = L.notifyBottomSub;
+            if (looksTelegram) {
+                sec.classList.add('hidden');
+                return;
+            }
+            sec.classList.remove('hidden');
+            if (url && notifySignupUrlIsAllowedHttps(url)) {
+                cta.href = url;
+                cta.textContent = L.notifyBottomCta;
+                cta.classList.remove('hidden');
+                pend.textContent = '';
+                pend.classList.add('hidden');
+                return;
+            }
+            cta.classList.add('hidden');
+            pend.textContent = L.notifyBottomPending;
+            pend.classList.remove('hidden');
+        }
+
+        function refreshNotifyBar() {
+            var L = getStr();
+            var m = document.querySelector('meta[name="bonzi-notify-signup-url"]');
+            var url = (m && m.content) ? m.content.trim() : '';
+            var looksTelegram = notifySignupUrlIsBlockedTelegram(url);
+
+            var bar = document.getElementById('notify-bar');
+            var lk = document.getElementById('notify-bar-link');
+            var msgEl = document.getElementById('notify-bar-msg');
+            if (bar && lk && msgEl) {
+                if (looksTelegram) {
+                    bar.classList.add('hidden');
+                    bar.setAttribute('aria-hidden', 'true');
+                    lk.href = '#';
+                } else if (notifySignupUrlIsAllowedHttps(url)) {
+                    msgEl.textContent = L.notifyMsg;
+                    lk.textContent = L.notifyCta;
+                    lk.href = url;
+                    lk.rel = 'noopener noreferrer';
+                    lk.style.display = '';
+                    bar.classList.remove('hidden');
+                    bar.setAttribute('aria-hidden', 'false');
+                } else {
+                    msgEl.textContent = L.notifyMsgPending;
+                    lk.style.display = 'none';
+                    bar.classList.remove('hidden');
+                    bar.setAttribute('aria-hidden', 'false');
+                }
+            }
+
+            refreshNotifyBottom(url, looksTelegram, L);
+        }
+
         function applyLang() {
             var L = getStr();
             document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
             var gt = document.getElementById('gate-tagline');
             if (gt) gt.textContent = L.tagline;
-            var nb = document.getElementById('notify-bar-msg');
-            if (nb) nb.textContent = L.notifyMsg;
-            var nlk = document.getElementById('notify-bar-link');
-            if (nlk) nlk.textContent = L.notifyCta;
             var lp = document.getElementById('lcd-prefix');
             if (lp) lp.textContent = L.lcdPrefix;
             var st = document.getElementById('status-ready');
@@ -748,6 +886,7 @@
             var be = document.getElementById('lang-en');
             if (bp) bp.setAttribute('aria-pressed', currentLang === 'pt-BR' ? 'true' : 'false');
             if (be) be.setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+            refreshNotifyBar();
         }
 
         // === SLOT WORDS ===
@@ -830,28 +969,6 @@
             });
         }
 
-        (function setupNotifyBar() {
-            var m = document.querySelector('meta[name="bonzi-notify-signup-url"]');
-            var url = (m && m.content) ? m.content.trim() : '';
-            var bar = document.getElementById('notify-bar');
-            var lk = document.getElementById('notify-bar-link');
-            if (!bar || !lk) return;
-            var looksTelegram = /t\.me\//i.test(url) || /telegram\.me\//i.test(url);
-            if (looksTelegram) {
-                /* Interest counts belong on email signup; Telegram deep links belong to jackpot / bot starts */
-                bar.classList.add('hidden');
-                bar.setAttribute('aria-hidden', 'true');
-                lk.href = '#';
-                return;
-            }
-            if (url && /^https?:\/\//i.test(url)) {
-                lk.href = url;
-                lk.rel = 'noopener noreferrer';
-                bar.classList.remove('hidden');
-                bar.setAttribute('aria-hidden', 'false');
-            }
-        })();
-
         applyLang();
         (function wireLangButtons() {
             var langPtBtn = document.getElementById('lang-pt-br');
@@ -907,7 +1024,8 @@
 
         function postSlotAttempt() {
             var api = getApiOrigin();
-            return _slotFetchJson(api + '/api/slotgame/attempt', {
+            var url = api + '/api/slotgame/attempt';
+            return _slotFetchJson(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
@@ -916,7 +1034,8 @@
 
         function postSlotWin(attemptToken) {
             var api = getApiOrigin();
-            return _slotFetchJson(api + '/api/slotgame/win', {
+            var url = api + '/api/slotgame/win';
+            return _slotFetchJson(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1070,7 +1189,7 @@
                     }
                 }
                 requestAnimationFrame(animate);
-            }).catch(function() {
+            }).catch(function () {
                 spinning = false;
                 clueEl.textContent = getStr().spinNetErr;
             });

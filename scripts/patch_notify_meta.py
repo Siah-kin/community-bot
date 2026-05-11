@@ -13,7 +13,7 @@ Or supply a readable file containing one non-comment HTTPS line::
   export BONZI_NOTIFY_SIGNUP_FILE=scripts/bonzi_notify_signup_url.local.txt
   python3 scripts/patch_notify_meta.py
 
-Does not print the URL. Exits 1 if env/file missing or not https:// (Telegram URLs are rejected).
+Does not print the URL. Exits 1 if env/file missing or not https:// (Telegram / tg: destinations rejected).
 
 """
 
@@ -23,6 +23,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 _ROOT = Path(__file__).resolve().parents[1]
 _INDEX = _ROOT / "index.html"
@@ -30,6 +31,22 @@ _PATTERN = re.compile(
     r'(<meta\s+name="bonzi-notify-signup-url"\s+content=")([^"]*)("\s*/?>)',
     re.IGNORECASE,
 )
+
+
+def _is_blocked_telegram_or_tg_scheme(raw: str) -> bool:
+    """Reject Telegram web hosts and tg:/telegram: schemes (email-signup meta only)."""
+    s = raw.strip()
+    low = s.lower()
+    if low.startswith("tg:") or low.startswith("telegram:"):
+        return True
+    if not low.startswith("https://"):
+        return False
+    try:
+        parsed = urlparse(s)
+        host = (parsed.hostname or "").lower()
+        return host in ("t.me", "telegram.me", "web.telegram.org")
+    except ValueError:
+        return False
 
 
 def _resolve_notify_url_raw() -> str:
@@ -75,10 +92,10 @@ def main() -> int:
         print("Notify URL must start with https://", file=sys.stderr)
         return 1
 
-    lc = raw.lower()
-    if "t.me/" in lc or "telegram.me/" in lc:
+    if _is_blocked_telegram_or_tg_scheme(raw):
         print(
-            "Telegram URLs are blocked for this meta (notify bar is for email signup only).",
+            "Telegram (or tg:) destinations are blocked for this meta "
+            "(notify bar is for https email signup only).",
             file=sys.stderr,
         )
         return 1

@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="lp-hardstake-wallet-split-hero-20260509" />
+    <meta name="bonzi-stake-tg-deploy" content="yield-hero-thinpair-pace-only-20260509b" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1160,8 +1160,8 @@
                 <details class="faq-item">
                     <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
                     <div class="faq-answer">
-                        The hero uses <strong>backward pool pacing</strong> from the published <code style="font-size:0.65rem">staking_analytics.json</code> plus onchain reads. It is pool-wide, not a personal quote.
-                        When the pair is too thin for a fair percent headline, we show pool ETH per year pace instead.
+                        The hero shows one line. The analytics file carries <strong>three different “percent” ghosts</strong> you should never mix up: (~77%) pair-implied APR (thin WETH legs make it unreliable), (~76%) USD TVL back-calculation using CoinGecko, and (~0.77 ETH/yr) <strong>cumulative indexer ETH × 365 ÷ pool-age days</strong> (straight-line disburse pace—not a promised APR).
+                        When the snapshot sets <strong>thin pair unreliability</strong>, we <strong>withhold %-headlines</strong> and stick to that ETH/year pacing number so Telegram users get one coherent story.
                     </div>
                 </details>
             </div>
@@ -2281,16 +2281,19 @@
             var aprTitle = '';
             var aprTxt = '—';
             var aprSub = 'Est. yield · backward pool pacing';
-            var aprRaw =
-                roi.annualized_pool_reward_yield_estimate_pct != null
-                    ? roi.annualized_pool_reward_yield_estimate_pct
-                    : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
-                      ? roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
-                      : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
-                        ? wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional
-                        : null;
             var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
             var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
+            /** Thin pair: JSON keeps USD TVL % (~76) and ghost pair-mid % (~77)—never use them as the hero %-headline. */
+            var skipPctHeadline = unreliable === true;
+            var aprRaw = skipPctHeadline
+                ? null
+                : roi.annualized_pool_reward_yield_estimate_pct != null
+                  ? roi.annualized_pool_reward_yield_estimate_pct
+                  : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
+                    ? roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct
+                    : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
+                      ? wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional
+                      : null;
             var aprSrc =
                 roi.annualized_pool_reward_yield_estimate_pct != null
                     ? 'USD TVL proxy · backward pace'
@@ -2300,30 +2303,47 @@
                         ? 'CoinGecko · reference stake'
                         : '';
 
-            if (aprRaw != null && !isNaN(Number(aprRaw))) {
+            function applyEthYearPace(mentionUsdGhost) {
+                aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
+                aprTitle =
+                    'Pool-wide backward pace: cumulative indexer ETH claimed (metrics slice), divided by pool age in days, times 365. Not a promised APR.';
+                if (unreliable) {
+                    aprSub = 'Backward pace · %-APR headlines withheld';
+                    if (
+                        roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
+                        !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
+                    ) {
+                        aprTitle +=
+                            ' Omitting misleading pair-mid % (~' +
+                            Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional).toFixed(1) +
+                            '%).';
+                    }
+                    if (
+                        mentionUsdGhost &&
+                        roi.annualized_pool_reward_yield_estimate_pct != null &&
+                        !isNaN(Number(roi.annualized_pool_reward_yield_estimate_pct))
+                    ) {
+                        var u = roi.annualized_pool_reward_yield_estimate_pct;
+                        aprTitle +=
+                            ' Omitting CoinGecko TVL-ratio % (~' + Number(u).toFixed(1) + '%)—same snapshot.';
+                    }
+                } else {
+                    aprSub = 'Historical pool disburse pace · pool-wide (not yours)';
+                }
+            }
+
+            if (!unreliable && aprRaw != null && !isNaN(Number(aprRaw))) {
                 aprTxt = Number(aprRaw).toFixed(2) + '%';
                 aprSub = 'Est. yield · pool-wide (not yours)';
                 aprTitle =
                     aprSrc +
                     '. Pool-wide headline from staking_analytics.json, not a personal return promise.';
             } else if (paceEth != null && !isNaN(Number(paceEth))) {
-                aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
+                applyEthYearPace(true);
+            } else if (unreliable) {
+                aprSub = 'Thin pair — %-yields withheld; open JSON pace field';
                 aprTitle =
-                    'Pool-wide backward pace = cumulative ETH claimed (metrics slice) ÷ pool age (days) × 365.';
-                aprSub =
-                    unreliable || roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct == null
-                        ? 'No %-headline · thin pair TVL proxy'
-                        : 'Historical pool payout pace';
-                if (
-                    unreliable &&
-                    roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
-                    !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
-                ) {
-                    aprTitle +=
-                        ' Pair-mid % would be ~' +
-                        Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional).toFixed(1) +
-                        '% — omitted as misleading.';
-                }
+                    'No pool ETH/year pace computed in bundle; withholding %-headlines until metrics refresh.';
             }
 
             function setAprHero(txt, titleAttr) {

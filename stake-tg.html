@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="withdraw-partial-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="buy-cta-ethervista-token-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -898,6 +898,27 @@
             margin-top: 0;
         }
 
+        /* Always-visible Ethervista doc link (FAQ + CTAs); not tucked inside a closed <details>. */
+        a.ethervista-how-bar {
+            display: block;
+            text-align: center;
+            padding: 12px 14px;
+            margin: 10px 0 4px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #e9d5ff;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.45);
+            border-radius: 12px;
+            text-decoration: none;
+            box-sizing: border-box;
+            line-height: 1.35;
+        }
+
+        a.ethervista-how-bar:active {
+            filter: brightness(0.92);
+        }
+
         .stake-low-cta-stack {
             display: flex;
             flex-direction: column;
@@ -1202,6 +1223,12 @@
                     </div>
                 </details>
             </div>
+            <a
+                class="ethervista-how-bar"
+                href="https://www.ethervista.app/how-it-works"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Ethervista — how it works (official)</a>
         </section>
 
         <div class="stake-low-cta-stack">
@@ -1212,7 +1239,7 @@
                 </svg>
                 Open a Ticket for Support
             </a>
-            <a class="cta-buy" href="https://dexscreener.com/ethereum/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" id="ctaBuyBonziTokens">
+            <a class="cta-buy" href="https://www.ethervista.app/token/0xd6175692026bcd7cb12a515e39cf0256ef35cb86" target="_blank" rel="noopener noreferrer" id="ctaBuyBonziTokens">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -2853,7 +2880,7 @@
 <footer class="site-footer" aria-label="Site footer">
     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
         <span style="color: #71717A;">sponsored by
-            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
                 <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
                 Ethervista
             </a>

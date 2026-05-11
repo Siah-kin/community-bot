@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="tdesktop-miniapp-open-external-browser-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="desktop-open-external-browser-v2-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1649,17 +1649,38 @@
 
         const TELEGRAM_PLATFORM = resolveTelegramPlatform(tg);
         /** Web + Telegram Desktop native: embedded WebView breaks WalletConnect; MetaMask app.link resolves to download on non-mobile UA. Open system browser (external=1) like Telegram Web does. */
-        const TELEGRAM_OPEN_EXTERNAL_PLATFORMS = new Set(['web', 'weba', 'webk', 'tdesktop', 'macos']);
+        const TELEGRAM_OPEN_EXTERNAL_PLATFORMS = new Set([
+            'web',
+            'weba',
+            'webk',
+            'tdesktop',
+            'desktop',
+            'macos',
+            'windows',
+            'win32',
+            'linux'
+        ]);
         var IS_TELEGRAM_EMBEDDED = false;
         try {
             IS_TELEGRAM_EMBEDDED = typeof window !== 'undefined' && window.self !== window.top;
         } catch (eEmb) {
             IS_TELEGRAM_EMBEDDED = true;
         }
+        function isDesktopTelegramRuntime() {
+            var platform = TELEGRAM_PLATFORM || '';
+            if (TELEGRAM_OPEN_EXTERNAL_PLATFORMS.has(platform)) return true;
+            var ua = '';
+            try {
+                ua = String(navigator.userAgent || '');
+            } catch (eUa) {}
+            var mobile = /Mobile|Android|iPhone|iPod|iPad|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+            var desktopOs = /Windows NT|Macintosh|Mac OS X|Linux x86_64|X11/i.test(ua);
+            return HAS_TELEGRAM_WEBAPP && desktopOs && !mobile;
+        }
         const SHOULD_OPEN_EXTERNAL_BROWSER =
             !IS_EXTERNAL_BROWSER_FLOW &&
             HAS_TELEGRAM_WEBAPP &&
-            (TELEGRAM_OPEN_EXTERNAL_PLATFORMS.has(TELEGRAM_PLATFORM) ||
+            (isDesktopTelegramRuntime() ||
                 (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
         const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
         const WALLETCONNECT_INIT_VARIANTS = [
@@ -2008,7 +2029,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'tdesktop-miniapp-open-external-browser-20260511'
+            buildTag: 'desktop-open-external-browser-v2-20260511'
         });
         // #endregion
 
@@ -2171,10 +2192,17 @@
                     browserUrl: browserUrl
                 });
                 if (tg && typeof tg.openLink === 'function') {
-                    tg.openLink(browserUrl);
+                    try {
+                        tg.openLink(browserUrl, { try_instant_view: false });
+                    } catch (eOpenLinkOpts) {
+                        tg.openLink(browserUrl);
+                    }
                     dbgStakeEmit('H_openlink_sent', 'stake-tg.html:connectWallet', 'openLink invoked', {});
                 } else {
                     dbgStakeEmit('H_openlink_missing', 'stake-tg.html:connectWallet', 'openLink unavailable', {});
+                    try {
+                        window.open(browserUrl, '_blank', 'noopener,noreferrer');
+                    } catch (eWinOpen) {}
                     showStatus('Open this page in a browser to connect your wallet.', 'error');
                 }
                 return;

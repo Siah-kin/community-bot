@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="yield-hero-thinpair-pace-only-20260509b" />
+    <meta name="bonzi-stake-tg-deploy" content="metrics-tile-order-staked-then-lp-20260510" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1003,14 +1003,14 @@
                     <div class="metric-tile-sub" id="metricStakingWalletsSub">Indexer aggregate</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">LP · % supply</div>
-                    <div class="metric-tile-value" id="metricLpSupplyPct">—</div>
-                    <div class="metric-tile-sub">Pair vault · BONZI/WETH</div>
-                </div>
-                <div class="metric-tile">
                     <div class="metric-tile-label">Staked · % supply</div>
                     <div class="metric-tile-value" id="metricHardstakePct">—</div>
                     <div class="metric-tile-sub">Hardstake lock</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-tile-label">LP · % supply</div>
+                    <div class="metric-tile-value" id="metricLpSupplyPct">—</div>
+                    <div class="metric-tile-sub">Pair vault · BONZI/WETH</div>
                 </div>
             </div>
             <div class="metrics-your-wrap">
@@ -1143,7 +1143,7 @@
             <div class="faq-list">
                 <details class="faq-item">
                     <summary><span class="faq-question">What is LP % vs staked %?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer"><strong>LP · % supply</strong> counts BONZI sitting in the on-chain liquidity pair vault (tradable reserves). <strong>Staked · % supply</strong> counts BONZI locked in the hardstake contract — different bucket, both use the same minted supply as denominator. After you connect, those two percentages re-read directly from Ethereum. <strong>Wallets staking</strong> comes from the published metrics slice (<code style="font-size:0.65rem">staking_analytics.json</code>) until someone regenerates the file.</div>
+                    <div class="faq-answer"><strong>LP · % supply</strong> counts BONZI sitting in the on-chain liquidity pair vault (tradable reserves). <strong>Staked · % supply</strong> counts BONZI locked in the hardstake contract — different bucket, both use the same minted supply as denominator. On the dashboard, <strong>Staked · % supply</strong> sits first so the normally smaller lock share stays left as you read across. After you connect, those two percentages re-read directly from Ethereum. <strong>Wallets staking</strong> comes from the published metrics slice (<code style="font-size:0.65rem">staking_analytics.json</code>) until someone regenerates the file.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">What is BONZI Staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>

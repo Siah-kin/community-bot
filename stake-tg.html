@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="plain-stake-copy-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="lp-tile-label-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1034,11 +1034,11 @@
                     </div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">HARDLOCK (% of supply)</div>
+                    <div class="metric-tile-label">LP (% of supply)</div>
                     <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
                     <div class="metric-tile-sub metric-tile-sub-row">
-                        <span>BONZI in HARDLOCK pool (trading liquidity, not the stake lock)</span>
-                        <a class="metric-explorer-link" href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" title="HARDLOCK vault (BONZI/WETH) on Etherscan" aria-label="HARDLOCK BONZI WETH vault on Etherscan">
+                        <span>BONZI HARDLOCK pool (trading liquidity)</span>
+                        <a class="metric-explorer-link" href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" title="BONZI and WETH pool vault on Etherscan" aria-label="BONZI and WETH pool vault on Etherscan">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </a>
                     </div>
@@ -2342,7 +2342,7 @@
             var aprSub = 'Est. yield from past pool activity';
             var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
             var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
-            /** Thin HARDLOCK: file may carry TVL-derived percents we do not use as the hero headline. */
+            /** Thin LP side: file may carry TVL-style percents we do not use as the hero headline. */
             var skipPctHeadline = unreliable === true;
             var aprRaw = skipPctHeadline
                 ? null
@@ -2357,7 +2357,7 @@
                 roi.annualized_pool_reward_yield_estimate_pct != null
                     ? 'USD TVL proxy, backward pace'
                     : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
-                      ? 'ETH mid from HARDLOCK, backward pace'
+                      ? 'ETH mid from LP pool, backward pace'
                       : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
                         ? 'CoinGecko, reference stake'
                         : '';
@@ -2373,7 +2373,7 @@
                         !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
                     ) {
                         aprTitle +=
-                            ' Omitting misleading HARDLOCK-mid % (~' +
+                            ' Omitting misleading LP-mid percent (~' +
                             Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional).toFixed(1) +
                             '%).';
                     }
@@ -2499,7 +2499,7 @@
                                 : NaN;
                     }
                 } catch (lpErr) {
-                    console.warn('[HARDLOCK] reserves read:', lpErr);
+                    console.warn('[LP] reserves read:', lpErr);
                 }
 
                 var lpTile = document.getElementById('metricLpSupplyPct');

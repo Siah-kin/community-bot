@@ -1,0 +1,243 @@
+{
+  "group_split_index": 7,
+  "en": {
+    "page_title": "BONZI Staking FAQ (reference surface)",
+    "lang_label": "Language",
+    "group_money_title": "Before you tap",
+    "group_screen_title": "Reading the screen",
+    "claim_banner": "Action Required: claim ETH rewards before you add to or withdraw stake so nothing resets by surprise.",
+    "faq": [
+      {
+        "q": "What happens when I tap \"Connect Wallet\"?",
+        "a": "That button only proves which address you control so **Stake**, **Claim**, and **Withdraw** can talk to your wallet. You still pay normal network fees whenever you confirm a move on-chain."
+      },
+      {
+        "q": "How do **Stake**, **Claim**, and **Withdraw** fit together?",
+        "a": "**Stake** locks BONZI into the pool. **Claim** moves accrued ETH rewards to your wallet when you choose; **Withdraw** pulls staked tokens out once rules finish. Gas applies each time your wallet confirms a transaction."
+      },
+      {
+        "q": "Why does the gold **Action Required** bar mention claiming first?",
+        "a": "Treat it like clearing a tray before you slide the furniture: skipping **Claim** before you change **Stake** or **Withdraw** can spill rewards you were counting on.",
+        "links": [{ "href": "#claim-first", "text": "Reminder bar anchor" }]
+      },
+      {
+        "q": "What does smaller copy about **14 days** mean?",
+        "a": "Staked BONZI waits about fourteen days before full principal exits, keeping the aisle calm instead of jittery. Claiming ETH is its own rhythm, so skim the muted footnote under the buttons anytime numbers confuse you."
+      },
+      {
+        "q": "Why **claim rewards before reshuffling stake**?",
+        "a": "Some stake moves drop rewards you have not pulled yet, which is why the bright warning strip keeps repeating the rule."
+      },
+      {
+        "q": "Is this **Bonzivista** or **Ethervista**?",
+        "a": "You opened Bonzivista staking inside this shell; Ethervista is where trades and fee plumbing live. Saying both names keeps screenshots from arguing past each other.",
+        "links": [{ "href": "https://ethervista.app", "text": "ethervista.app" }]
+      },
+      {
+        "q": "Where do I get human help?",
+        "a": "Use **`https://t.me/bonzivista_bot`** for live walkthroughs and **`https://t.me/Bonzivision`** for the pinned FAQ archive. Never paste seed phrases or \"verify wallet\" codes with strangers.",
+        "links": [
+          { "href": "https://t.me/bonzivista_bot", "text": "bonzivista_bot" },
+          { "href": "https://t.me/Bonzivision", "text": "@Bonzivision" }
+        ]
+      },
+      {
+        "q": "Do **APR**, **Supply Locked**, **Your Stake**, and **ETH Rewards** describe only me?",
+        "a": "Most hero tiles talk about the **whole pool** like a shop window until you connect. **Your Stake** (and parts of **ETH Rewards**) feel personal after your wallet links; refresh if tiles look stale."
+      },
+      {
+        "q": "Where does ETH come from for **ETH Rewards**?",
+        "a": "Market trading fees fall into the shared tip jar that feeds this pool, not from magic yield. You only hold the coins in your wallet after you run **Claim**."
+      },
+      {
+        "q": "Why does **Yield** read like ETH per year?",
+        "a": "Teams total what already dropped into the tip jar since launch, divide by pool age for a daily pace, then scale to a year so the **entire room** can picture the speed. It is not your personal paycheck or a locked promise for next year.",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "staking_analytics.json" }]
+      },
+      {
+        "q": "How should I read **APR** when it looks odd?",
+        "a": "Tiles read refreshed JSON plus live pool checks; when liquidity is thin a fat percent can mislead, so you may see an ETH-per-year pace instead. Read the methodology line in the analytics file if you want receipts.",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "Methodology" }]
+      },
+      {
+        "q": "What is **Vet the Data**?",
+        "a": "That footer lists the public JSON files behind the graphics so you can match dates and totals to whatever marketing posts claim.",
+        "links": [{ "href": "https://bonzivista.org/metrics/metrics-data.json", "text": "metrics-data.json" }]
+      },
+      {
+        "q": "How do I double-check payouts on-chain?",
+        "a": "Open the staking contract on a block explorer and follow internal ETH transfers like reading a cash-register tape.",
+        "links": [{ "href": "https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53#internaltx", "text": "Etherscan internal tx" }]
+      },
+      {
+        "q": "Why do outside charts show huge lifetime ETH for a few wallets?",
+        "a": "Picture a bake sale where two neighbours buy half the cookies because they arrived earliest with the biggest trays; concentrated stakes show up that way. It only describes early size and timing, not instant proof of wrongdoing."
+      },
+      {
+        "q": "**Diamond hands**, headlines, and scams: what should I remember?",
+        "a": "Dashboards use **diamond hands** to mean wallets that never fully unstaked, not automatically the richest earners. Trust only official **`https://t.me/bonzivista_bot`** and **`https://t.me/Bonzivision`** links from your team, never random DMs.",
+        "links": [{ "href": "https://t.me/Bonzivision", "text": "Bonzivision FAQ" }]
+      }
+    ]
+  },
+  "pt": {
+    "page_title": "FAQ de staking BONZI (referencia)",
+    "lang_label": "Idioma",
+    "group_money_title": "Antes de tocar",
+    "group_screen_title": "Lendo a tela",
+    "claim_banner": "Ação necessária: resgate ETH antes de adicionar ou retirar stake para nada ser reiniciado.",
+    "faq": [
+      {
+        "q": "O que acontece ao tocar em \"Connect Wallet\"?",
+        "a": "O botão prova qual endereço é seu para **Stake**, **Claim** e **Withdraw** conversarem com a carteira. Cada confirmação on-chain ainda paga taxa de rede."
+      },
+      {
+        "q": "Como **Stake**, **Claim** e **Withdraw** se encaixam?",
+        "a": "**Stake** tranca BONZI na pool. **Claim** manda ETH acumulado para sua carteira quando quiser. **Withdraw** retira o principal depois que as regras de tempo acabam. Gas entra em cada envio confirmado."
+      },
+      {
+        "q": "Por que a faixa dourada **Action Required** fala de claim primeiro?",
+        "a": "É como esvaziar a bandeja antes de empurrar a mesa: mudar **Stake** ou **Withdraw** sem **Claim** pode derrubar recompensas que você ainda somava.",
+        "links": [{ "href": "#claim-first", "text": "Barra de aviso" }]
+      },
+      {
+        "q": "O texto menor sobre **14 days** significa o quê?",
+        "a": "BONZI em stake espera cerca de catorze dias antes do principal sair inteiro, para o corredor não tremer a cada hora. Reclamar ETH segue outro ritmo; leia a nota discreta sob os botões quando o relógio confundir."
+      },
+      {
+        "q": "Por que reclamar antes de mexer no stake?",
+        "a": "Alguns movimentos apagam recompensas não reclamadas, por isso a faixa brilhante repete a regra."
+      },
+      {
+        "q": "Isso é **Bonzivista** ou **Ethervista**?",
+        "a": "Você abriu staking Bonzivista neste shell; Ethervista é onde os trades e as taxas nascem. Dois nomes evitam briga de print.",
+        "links": [{ "href": "https://ethervista.app", "text": "ethervista.app" }]
+      },
+      {
+        "q": "Onde peco ajuda humana?",
+        "a": "Use **`https://t.me/bonzivista_bot`** para passo a passo ao vivo e **`https://t.me/Bonzivision`** para o FAQ fixado. Nunca cole seed nem codigos de \"verificar carteira\" com estranhos.",
+        "links": [
+          { "href": "https://t.me/bonzivista_bot", "text": "bonzivista_bot" },
+          { "href": "https://t.me/Bonzivision", "text": "@Bonzivision" }
+        ]
+      },
+      {
+        "q": "**APR**, **Supply Locked**, **Your Stake** e **ETH Rewards** falam só de mim?",
+        "a": "A maioria dos cartões descreve o **pool inteiro** como cartaz de vitrine até você conectar. **Your Stake** (e partes de **ETH Rewards**) ficam pessoais depois que a carteira entra; atualize se parecer velho."
+      },
+      {
+        "q": "De onde vem o ETH em **ETH Rewards**?",
+        "a": "Taxas de negociação caem no pote compartilhado que alimenta esta pool, não de \"rendimento mágico\". Só depois do **Claim** o ETH fica na sua carteira."
+      },
+      {
+        "q": "Por que **Yield** parece ETH por ano?",
+        "a": "Somamos o que já caiu no pote desde o lançamento, dividimos pela idade da pool para achar ritmo diário e escalamos para um ano para o **salão todo** enxergar velocidade. Não é seu envelope pessoal nem promessa trancada.",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "staking_analytics.json" }]
+      },
+      {
+        "q": "Como ler **APR** quando parece estranho?",
+        "a": "Os cartões leem JSON atualizado e checagens on-chain; liquidez fina pode distorcer um percentual enorme, então aparece ritmo em ETH/ano. Leia a linha de metodologia no arquivo se quiser recibo.",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "Metodologia" }]
+      },
+      {
+        "q": "O que é **Vet the Data**?",
+        "a": "O rodapé lista os JSON públicos por trás dos gráficos para você bater datas e totais com posts de marketing.",
+        "links": [{ "href": "https://bonzivista.org/metrics/metrics-data.json", "text": "metrics-data.json" }]
+      },
+      {
+        "q": "Como conferir pagamentos na cadeia?",
+        "a": "Abra o contrato de staking no explorador e siga transferências internas de ETH como fita de caixa.",
+        "links": [{ "href": "https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53#internaltx", "text": "Etherscan" }]
+      },
+      {
+        "q": "Por que graficos de fora mostram ETH enorme para poucos enderecos?",
+        "a": "Imagine venda de bolos onde dois vizinhos levam metade porque chegaram cedo com bandejas grandes; stakes grandes cedo aparecem assim. So descreve timing e tamanho, nao veredicto instantaneo."
+      },
+      {
+        "q": "**Diamond hands**, manchetes e golpes?",
+        "a": "O painel usa **diamond hands** para carteiras que nunca saíram totalmente do stake, não automaticamente quem mais ganhou. Confie só em **`https://t.me/bonzivista_bot`** e **`https://t.me/Bonzivision`** oficiais, nunca DM aleatória.",
+        "links": [{ "href": "https://t.me/Bonzivision", "text": "FAQ Bonzivision" }]
+      }
+    ]
+  },
+  "zh-CN": {
+    "page_title": "BONZI 质押常见问题（参考页）",
+    "lang_label": "语言",
+    "group_money_title": "动手前先看清",
+    "group_screen_title": "读懂屏幕",
+    "claim_banner": "行动提示：在加仓或撤质押前请先领取 ETH 奖励，避免意外被重置。",
+    "faq": [
+      {
+        "q": "点击 **Connect Wallet** 会怎样？",
+        "a": "只是证明地址归你，**Stake / Claim / Withdraw** 才能与钱包通信。每次链上确认都要付网络费与 gas。"
+      },
+      {
+        "q": "**Stake / Claim / Withdraw** 分别做什么？",
+        "a": "**Stake** 把 BONZI 锁进池子。**Claim** 把累计 ETH 奖励提到你的钱包。**Withdraw** 在时间规则满足后撤出本金。每次发送都要付 gas。"
+      },
+      {
+        "q": "金色 **Action Required** 为何强调先 Claim？",
+        "a": "像先清空托盘再挪桌子：没 **Claim** 就改 **Stake** 或 **Withdraw**，手上累计的奖励可能没了。",
+        "links": [{ "href": "#claim-first", "text": "提醒条" }]
+      },
+      {
+        "q": "小字里的 **14 days** 是什么？",
+        "a": "质押的本金要离开大约需要十四天缓冲，走廊才不会每小时乱晃。领取 ETH 是另一条节奏；数字看不懂就看按钮脚注。"
+      },
+      {
+        "q": "为何要“先领奖再调整质押”？",
+        "a": "有些操作会清掉你还未领取的收益，所以亮色提示条反复强调。"
+      },
+      {
+        "q": "**Bonzivista** 和 **Ethervista**？",
+        "a": "你打开的是 Bonzivista 质押壳；费率与交易出生在 Ethervista。名字分开，截图才不会打架。",
+        "links": [{ "href": "https://ethervista.app", "text": "ethervista.app" }]
+      },
+      {
+        "q": "真人客服在哪？",
+        "a": "**`https://t.me/bonzivista_bot`** 走实时指引；**`https://t.me/Bonzivision`** 查置顶 FAQ。勿向陌生人交出助记词或“验证钱包”。",
+        "links": [
+          { "href": "https://t.me/bonzivista_bot", "text": "bonzivista_bot" },
+          { "href": "https://t.me/Bonzivision", "text": "@Bonzivision" }
+        ]
+      },
+      {
+        "q": "**APR / Supply Locked / Your Stake / ETH Rewards** 都只说我吗？",
+        "a": "多数是整池告示，像你店橱窗。**Your Stake** 和部分 ETH 数值连上钱包才贴你个人；卡住就刷新。"
+      },
+      {
+        "q": "**ETH Rewards** 里的 ETH 从哪来？",
+        "a": "市场买卖手续费掉入共享小费罐再流进池子，不是什么魔法收益。只有你 **Claim** 后 ETH 才真正进钱包。"
+      },
+      {
+        "q": "**Yield** 为啥像每年多少 ETH？",
+        "a": "把历史上已入账的 ETH 先加总，再按池存活天数拉出日均，再乘以约 365，让**整间房**读懂速度。**不是私人工资单，也不算锁死明年的承诺**。",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "staking_analytics.json" }]
+      },
+      {
+        "q": "**APR** 看起来怪怎么读？",
+        "a": "数字来自刷新后的 JSON 与链上检查；池子太薄时大百分比会骗人，可能改看 ETH/年。需要收据就看分析文件里的方法说明。",
+        "links": [{ "href": "https://bonzivista.org/metrics/staking_analytics.json", "text": "方法说明" }]
+      },
+      {
+        "q": "**Vet the Data** 是什么？",
+        "a": "页脚列出支撑图表的公开 JSON，让你对日期和总额，别被营销口号带跑。",
+        "links": [{ "href": "https://bonzivista.org/metrics/metrics-data.json", "text": "metrics-data.json" }]
+      },
+      {
+        "q": "链上怎么复查？",
+        "a": "打开质押合约在浏览器里查内部转账，就像对收银小票。",
+        "links": [{ "href": "https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53#internaltx", "text": "Etherscan" }]
+      },
+      {
+        "q": "为什么外站显示少数地址终身 ETH 很高？",
+        "a": "像小区义卖，最早端着大盘来买的人拿走一半：**早进场且金额大**，名单就显高。这只描述时间与体量，不等于立刻有罪无罪。"
+      },
+      {
+        "q": "**钻石手**、标题党、诈骗？",
+        "a": "仪表盘说 **钻石手**通常指从没完全解除质押的人数，并不等于赚得最多。只信官方的 **`bonzivista_bot`** 和 **`https://t.me/Bonzivision`**，别信私信里的“热心人”。",
+        "links": [{ "href": "https://t.me/Bonzivision", "text": "Bonzivision FAQ" }]
+      }
+    ]
+  }
+}

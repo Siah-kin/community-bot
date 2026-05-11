@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="desktop-open-external-browser-v2-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="plain-stake-copy-20260511" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -149,7 +149,7 @@
             margin-top: 0.35rem;
         }
 
-        /* Metrics hero — 2×2 tiles (matches product mock) */
+        /* Metrics hero: 2x2 tiles (matches product mock) */
         .stats-bar.metrics-hero-wrap {
             display: block;
             padding: 0.65rem 0.5rem 0.75rem;
@@ -898,38 +898,6 @@
             margin-top: 0;
         }
 
-        .faq-external-ref {
-            margin: 0.75rem 0 0;
-            padding: 0.55rem 0.65rem;
-            border-radius: 10px;
-            border: 1px solid rgba(63, 63, 70, 0.4);
-            background: rgba(15, 15, 17, 0.35);
-            font-size: 0.65rem;
-            line-height: 1.5;
-            color: #71717a;
-            text-align: center;
-        }
-
-        .faq-external-ref a {
-            color: #a78bfa;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 0.2rem;
-            max-width: 100%;
-            word-break: break-word;
-        }
-
-        .faq-external-ref a:hover,
-        .faq-external-ref a:focus-visible {
-            text-decoration: underline;
-            outline: none;
-        }
-
-        .faq-external-ref strong {
-            color: #a1a1aa;
-            font-weight: 600;
-        }
-
         .stake-low-cta-stack {
             display: flex;
             flex-direction: column;
@@ -1022,9 +990,9 @@
             <div id="wcWalletShortcuts" aria-live="polite">
                 <div class="connect-divider" id="stakeOverlayDivider">or connect directly</div>
                 <div class="wallet-shortcuts-container">
-                    <a id="wcLinkMetamask" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app →">MetaMask</a>
-                    <a id="wcLinkTrust" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app →">Trust Wallet</a>
-                    <a id="wcLinkBinance" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app →">Binance Web3 Wallet</a>
+                    <a id="wcLinkMetamask" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app">MetaMask</a>
+                    <a id="wcLinkTrust" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app">Trust Wallet</a>
+                    <a id="wcLinkBinance" class="wallet-shortcut-btn wallet-shortcut-waiting" href="javascript:void(0)" target="_blank" rel="noopener noreferrer" aria-disabled="true" data-waiting="Waiting…" data-open="Open app">Binance Web3 Wallet</a>
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
@@ -1047,29 +1015,29 @@
             <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
                 <div class="metric-tile">
                     <div class="metric-tile-label">Yield (pool)</div>
-                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">—</div>
-                    <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield · pool-wide</div>
+                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
+                    <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield (whole pool)</div>
                 </div>
                 <div class="metric-tile">
                     <div class="metric-tile-label">Wallets staking</div>
-                    <div class="metric-tile-value" id="metricStakingWallets">—</div>
-                    <div class="metric-tile-sub" id="metricStakingWalletsSub">Indexer aggregate</div>
+                    <div class="metric-tile-value" id="metricStakingWallets">--</div>
+                    <div class="metric-tile-sub" id="metricStakingWalletsSub">From public staking metrics file</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Staked · % supply</div>
-                    <div class="metric-tile-value" id="metricHardstakePct">—</div>
+                    <div class="metric-tile-label">Staked (% of supply)</div>
+                    <div class="metric-tile-value" id="metricHardstakePct">--</div>
                     <div class="metric-tile-sub metric-tile-sub-row">
-                        <span>BONZI inside HARDSTAKE (lock)</span>
+                        <span>BONZI in HARDSTAKE escrow</span>
                         <a class="metric-explorer-link" href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer" title="HARDSTAKE on Etherscan" aria-label="HARDSTAKE contract on Etherscan">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </a>
                     </div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">HARDLOCK · % supply</div>
-                    <div class="metric-tile-value" id="metricLpSupplyPct">—</div>
+                    <div class="metric-tile-label">HARDLOCK (% of supply)</div>
+                    <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
                     <div class="metric-tile-sub metric-tile-sub-row">
-                        <span>BONZI in HARDLOCK (AMM vault · not stake lock)</span>
+                        <span>BONZI in HARDLOCK pool (trading liquidity, not the stake lock)</span>
                         <a class="metric-explorer-link" href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" title="HARDLOCK vault (BONZI/WETH) on Etherscan" aria-label="HARDLOCK BONZI WETH vault on Etherscan">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                         </a>
@@ -1093,7 +1061,7 @@
             </div>
         </div>
 
-        <p class="action-block-kicker">Your wallet · stake, claim, withdraw</p>
+        <p class="action-block-kicker">Your wallet: stake, claim, withdraw</p>
 
         <div class="stake-alert-banner" role="status">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1205,20 +1173,12 @@
             <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
             <div class="faq-list">
                 <details class="faq-item">
-                    <summary><span class="faq-question">Is staking ~15% of supply?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer"><strong>No.</strong> A round <strong>~15%</strong> number on charts often matches <strong>BONZI in HARDLOCK</strong> (tradable vault; see tile <strong>HARDLOCK · % supply</strong>). Tokens in <strong>HARDSTAKE</strong> escrow are another bucket (~<strong>5–6%</strong> of minted supply on Ethereum mainnet: <code>HARDSTAKE</code>&#39;s bookkeeping lines up with <code>BONZI.balanceOf(HARDSTAKE)</code>; when your wallet connects we use that custody read — same numerator you can replay with JSON-RPC against the explorer-linked addresses).</div>
-                </details>
-                <details class="faq-item">
-                    <summary><span class="faq-question">What is HARDLOCK % vs staked %?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer"><strong>HARDLOCK · % supply</strong> counts BONZI sitting in the on-chain HARDLOCK vault (AMM side — usually the larger share). <strong>Staked · % supply</strong> counts BONZI held inside the HARDSTAKE contract — different bucket; both divide by the same <code>BONZI.totalSupply()</code>. The dashboard shows <strong>Staked · % supply</strong> first, then <strong>HARDLOCK · % supply</strong>. After you connect, both percentages refresh from Ethereum. <strong>Wallets staking</strong> comes from the published metrics slice (<code style="font-size:0.65rem">staking_analytics.json</code>) until someone regenerates the file.</div>
-                </details>
-                <details class="faq-item">
                     <summary><span class="faq-question">What is BONZI Staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
                     <div class="faq-answer">Lock your BONZI tokens to secure the network and earn ETH rewards directly from protocol activity.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Ethervista’s docs (external)—not Bonzi’s guide</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer"><strong>Bonzi staking “how it works” for this mini-app</strong> is the flow on this page—tabs, banners, and FAQs here. The link below leaves Bonzivista: it is <strong>Ethervista’s third-party protocol documentation</strong> (how their launchpad/AMM stack is explained on their site)—useful context, not our operator playbook. Opens <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">ethervista.app · How it works (external)</a>.</div>
+                    <summary><span class="faq-question">Ethervista and this page</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">This screen is Bonzivista staking (tabs above). Ethervista is separate software and branding. Their overview is here if you want it: <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">ethervista.app (how it works)</a>.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">How are rewards paid?</span><span class="faq-marker" aria-hidden="true"></span></summary>
@@ -1231,19 +1191,11 @@
                 <details class="faq-item">
                     <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
                     <div class="faq-answer">
-                        The hero shows one line. The analytics file carries <strong>three different “percent” ghosts</strong> you should never mix up: (~77%) HARDLOCK-implied APR (thin WETH legs next to reserves make it unreliable), (~76%) USD TVL back-calculation using CoinGecko, and (~0.77 ETH/yr) <strong>cumulative indexer ETH × 365 ÷ pool-age days</strong> (straight-line disburse pace—not a promised APR).
-                        When the snapshot flags <strong>thin HARDLOCK liquidity</strong>, we <strong>withhold %-headlines</strong> and stick to that ETH/year pacing number so Telegram users get one coherent story.
+                        Numbers come from the public staking metrics JSON and often include more than one type of percent. Some of those mixes are misleading when liquidity is thin, so sometimes this page shows <strong>how much ETH was paid over time</strong> (ETH per year, a backward pace), not a big percent headline. When metrics look stable we may show one pool-wide percent instead. Connecting your wallet does not change those pool tiles; they stay file-based until refreshed.
                     </div>
                 </details>
             </div>
         </section>
-
-        <p class="faq-external-ref" role="note">
-            <strong>External reference</strong> — Ethervista protocol docs (not Bonzivista’s onboarding).<br>
-            <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer" title="Third-party Ethervista documentation at ethervista.app. Not Bonzivista’s staking guide.">
-                https://www.ethervista.app/how-it-works →
-            </a>
-        </p>
 
         <div class="stake-low-cta-stack">
             <a class="cta-ticket" href="https://t.me/Bonzivista_bot" target="_blank" rel="noopener noreferrer" id="telegramFaqBtn">
@@ -1431,7 +1383,7 @@
                 connecting: 'Connecting…',
                 divider: 'or connect directly',
                 waiting: 'Waiting…',
-                openApp: 'Open app →',
+                openApp: 'Open app',
                 closeAria: 'Close',
                 overlayErrFallback: 'Connection failed. Try opening in browser instead.',
                 connectCancelled: 'Connection cancelled. Tap Connect to try again.',
@@ -1444,7 +1396,7 @@
                 connecting: 'Conectando…',
                 divider: 'ou conectar direto',
                 waiting: 'Aguardando…',
-                openApp: 'Abrir app →',
+                openApp: 'Abrir app',
                 closeAria: 'Fechar',
                 overlayErrFallback: 'Falha na conexão. Tente abrir no navegador.',
                 connectCancelled: 'Conexão cancelada. Toque em Conectar para tentar de novo.',
@@ -1457,7 +1409,7 @@
                 connecting: '连接中…',
                 divider: '或直接连接',
                 waiting: '等待中…',
-                openApp: '打开应用 →',
+                openApp: '打开应用',
                 closeAria: '关闭',
                 overlayErrFallback: '连接失败。请尝试在浏览器中打开本页。',
                 connectCancelled: '已取消连接。请再次点击连接重试。',
@@ -2377,20 +2329,20 @@
             var lpTxt =
                 oc.pair_bonzi_percent_of_supply_rounded != null
                     ? Number(oc.pair_bonzi_percent_of_supply_rounded).toFixed(2) + '%'
-                    : '—';
+                    : '--';
             var hkTxt =
                 oc.hardstake_percent_of_supply_rounded != null
                     ? Number(oc.hardstake_percent_of_supply_rounded).toFixed(2) + '%'
                     : oc.locked_percent_of_supply_rounded != null
                       ? Number(oc.locked_percent_of_supply_rounded).toFixed(2) + '%'
-                      : '—';
+                      : '--';
             var wallets = agg.currently_staking_wallets_aggregate;
             var aprTitle = '';
-            var aprTxt = '—';
-            var aprSub = 'Est. yield · backward pool pacing';
+            var aprTxt = '--';
+            var aprSub = 'Est. yield from past pool activity';
             var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
             var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
-            /** Thin HARDLOCK: JSON keeps USD TVL % (~76) and ghost reserve-mid % (~77)—never use them as the hero %-headline. */
+            /** Thin HARDLOCK: file may carry TVL-derived percents we do not use as the hero headline. */
             var skipPctHeadline = unreliable === true;
             var aprRaw = skipPctHeadline
                 ? null
@@ -2403,19 +2355,19 @@
                       : null;
             var aprSrc =
                 roi.annualized_pool_reward_yield_estimate_pct != null
-                    ? 'USD TVL proxy · backward pace'
+                    ? 'USD TVL proxy, backward pace'
                     : roi.annualized_pool_reward_yield_estimate_eth_mid_proxy_pct != null
-                      ? 'ETH mid from HARDLOCK · backward pace'
+                      ? 'ETH mid from HARDLOCK, backward pace'
                       : wl.usd_apr_proxy_pct_on_reference_stake_coin_gecko_optional != null
-                        ? 'CoinGecko · reference stake'
+                        ? 'CoinGecko, reference stake'
                         : '';
 
             function applyEthYearPace(mentionUsdGhost) {
                 aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
                 aprTitle =
-                    'Pool-wide backward pace: cumulative indexer ETH claimed (metrics slice), divided by pool age in days, times 365. Not a promised APR.';
+                    'Rough ETH paid per year across the pool, inferred from indexed payouts and pool age. This is pacing, not a promise.';
                 if (unreliable) {
-                    aprSub = 'Backward pace · %-APR headlines withheld';
+                    aprSub = 'ETH per year (we skip flashy % headlines when data is thin)';
                     if (
                         roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
                         !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
@@ -2432,25 +2384,25 @@
                     ) {
                         var u = roi.annualized_pool_reward_yield_estimate_pct;
                         aprTitle +=
-                            ' Omitting CoinGecko TVL-ratio % (~' + Number(u).toFixed(1) + '%)—same snapshot.';
+                            ' Omitting CoinGecko-style TVL percent (~' + Number(u).toFixed(1) + '%) from same snapshot.';
                     }
                 } else {
-                    aprSub = 'Historical pool disburse pace · pool-wide (not yours)';
+                    aprSub = 'Historical pool payout pace, whole pool (not your wallet)';
                 }
             }
 
             if (!unreliable && aprRaw != null && !isNaN(Number(aprRaw))) {
                 aprTxt = Number(aprRaw).toFixed(2) + '%';
-                aprSub = 'Est. yield · pool-wide (not yours)';
+                aprSub = 'Est. yield, whole pool (not your wallet)';
                 aprTitle =
                     aprSrc +
-                    '. Pool-wide headline from staking_analytics.json, not a personal return promise.';
+                    '. Pool-wide number from staking_analytics.json, not your personal outcome.';
             } else if (paceEth != null && !isNaN(Number(paceEth))) {
                 applyEthYearPace(true);
             } else if (unreliable) {
-                aprSub = 'Thin HARDLOCK — %-yields withheld; open JSON pace field';
+                aprSub = 'Pool data is thin; check the metrics file for details';
                 aprTitle =
-                    'No pool ETH/year pace computed in bundle; withholding %-headlines until metrics refresh.';
+                    'No ETH-per-year pace in this file yet; refresh metrics before showing a big percent.';
             }
 
             function setAprHero(txt, titleAttr) {
@@ -2471,11 +2423,11 @@
             var hkEl = document.getElementById('metricHardstakePct');
             if (hkEl) hkEl.textContent = hkTxt;
             var wEl = document.getElementById('metricStakingWallets');
-            if (wEl) wEl.textContent = wallets != null ? String(wallets) : '—';
+            if (wEl) wEl.textContent = wallets != null ? String(wallets) : '--';
             var wSub = document.getElementById('metricStakingWalletsSub');
             if (wSub) {
                 var src = agg.source != null ? String(agg.source) : 'metrics slice';
-                wSub.textContent = 'Indexer · ' + src.replace(/_/g, ' ');
+                wSub.textContent = 'From public metrics: ' + src.replace(/_/g, ' ');
             }
         }
 
@@ -2792,7 +2744,7 @@
                 if (m && el) {
                     var tag = m.getAttribute('content') || 'unknown';
                     el.textContent =
-                        'deploy ' + tag + ' · Telegram caches HTML; stake link from bot should include ?v= (cache bust).';
+                        'deploy ' + tag + '. Telegram may cache HTML; use ?v= on the stake link to force refresh.';
                 }
             } catch (eDep) {}
 
@@ -2814,25 +2766,18 @@
                 <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
                 Ethervista
             </a>
-            <span style="color: #52525b; margin: 0 0.15rem;">·</span>
-            <a href="https://www.ethervista.app/how-it-works"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="Third-party Ethervista protocol documentation at ethervista.app. Not Bonzivista’s staking guide."
-               style="color: #a1a1aa; font-size: 11px; text-decoration: none;"
-            >Ethervista (external docs) →</a>
         </span>
     </div>
     <div class="footer-cto-row">
         <span style="color: #71717A;">CTO</span>
-        <span style="color: #52525b;">·</span>
+        <span style="color: #52525b;"> | </span>
         <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
             <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
             Bonzivista.org
         </a>
     </div>
     <div style="font-size: 12px; color: #71717A;">
-        mit license · <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        mit license, <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
     </div>
 </footer>
 </body>

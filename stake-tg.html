@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="rewards-pacing-faq-20260511" />
+    <meta name="bonzi-stake-tg-deploy" content="faq-refresh-plain-20260223" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -259,6 +259,15 @@
             margin: 0.45rem 0 0;
             padding: 0 0.2rem;
             text-align: center;
+        }
+
+        .pool-history-title {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #fafafa;
+            margin-bottom: 0.35rem;
         }
 
         .metrics-your-wrap {
@@ -549,6 +558,57 @@
             background: rgba(124, 58, 237, 0.15);
             border: 1px solid rgba(124, 58, 237, 0.3);
             color: var(--purple-light);
+        }
+
+        .report-bug-strip {
+            background: rgba(39, 39, 42, 0.75);
+            border: 1px solid rgba(220, 38, 38, 0.45);
+            border-radius: 12px;
+            padding: 0.85rem 0.95rem;
+            margin-bottom: 0.85rem;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            color: #e4e4e7;
+        }
+
+        .report-bug-strip .report-bug-title {
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 0.55rem;
+        }
+
+        .report-bug-strip .report-bug-steps {
+            margin: 0.45rem 0 0.6rem;
+            padding-left: 1.15rem;
+        }
+
+        .report-bug-caption-hint {
+            font-size: 0.74rem;
+            color: var(--gray);
+            margin-bottom: 0.55rem;
+            word-break: break-word;
+        }
+
+        .report-bug-strip .report-bug-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 0.95rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: #fff !important;
+            box-sizing: border-box;
+            border: 1px solid rgba(167, 139, 250, 0.5);
+        }
+
+        .report-bug-strip .report-bug-cta:active {
+            filter: brightness(0.93);
+            transform: scale(0.99);
         }
 
         /* Connect overlay */
@@ -982,6 +1042,18 @@
             transform: scale(0.99);
         }
 
+        .main-shell-lang {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: -0.4rem auto 1rem;
+            max-width: 320px;
+        }
+
+        .main-shell-lang.lang-btn-main {
+            min-width: 44px;
+        }
+
         @keyframes bonzi-buy-pulse {
             0%,
             100% {
@@ -1035,26 +1107,31 @@
         <div class="stake-shell">
         <header>
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
-            <h1>Stake BONZI</h1>
-            <p class="subtitle">Earn ETH rewards</p>
+            <h1 id="mainShellH1">Stake BONZI</h1>
+            <p id="mainShellSubtitle" class="subtitle">Earn ETH rewards</p>
+            <div class="main-shell-lang connect-overlay-lang" role="group" aria-label="Page language">
+                <button type="button" class="lang-btn lang-btn-main" data-lang="en" id="mainLangBtnEn">EN</button>
+                <button type="button" class="lang-btn lang-btn-main" data-lang="pt" id="mainLangBtnPt">PT</button>
+                <button type="button" class="lang-btn lang-btn-main" data-lang="zh" id="mainLangBtnZh">&#x4E2D;&#x6587;</button>
+            </div>
         </header>
 
         <!-- Hero metrics -->
         <div class="stats-bar metrics-hero-wrap">
-            <p class="metrics-section-kicker">Pool snapshot</p>
+            <p id="metricsKickerPool" class="metrics-section-kicker">Pool snapshot</p>
             <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Yield (pool)</div>
+                    <div id="metricLabelYieldPool" class="metric-tile-label">Yield (pool)</div>
                     <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
                     <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield (whole pool)</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Wallets staking</div>
+                    <div id="metricLabelWalletsStaking" class="metric-tile-label">Wallets staking</div>
                     <div class="metric-tile-value" id="metricStakingWallets">--</div>
                     <div class="metric-tile-sub" id="metricStakingWalletsSub">From public staking metrics file</div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">Staked (% of supply)</div>
+                    <div id="metricLabelStakedPct" class="metric-tile-label">Staked (% of supply)</div>
                     <div class="metric-tile-value" id="metricHardstakePct">--</div>
                     <div class="metric-tile-sub metric-tile-sub-row">
                         <span>BONZI in HARDSTAKE escrow</span>
@@ -1064,7 +1141,7 @@
                     </div>
                 </div>
                 <div class="metric-tile">
-                    <div class="metric-tile-label">LP (% of supply)</div>
+                    <div id="metricLabelLpPct" class="metric-tile-label">LP (% of supply)</div>
                     <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
                     <div class="metric-tile-sub metric-tile-sub-row">
                         <span>BONZI HARDLOCK pool (trading liquidity)</span>
@@ -1075,10 +1152,10 @@
                 </div>
             </div>
             <div class="metrics-your-wrap">
-                <p class="metrics-section-kicker">Your wallet</p>
+                <p id="metricsKickerYour" class="metrics-section-kicker">Your wallet</p>
                 <div class="metrics-hero-grid" role="group" aria-label="Your staking position">
                     <div class="metric-tile">
-                        <div class="metric-tile-label">Your stake</div>
+                        <div id="metricLabelYourStake" class="metric-tile-label">Your stake</div>
                         <div class="metric-tile-value" id="stakedBalance">0</div>
                         <div class="metric-tile-sub">BONZI</div>
                     </div>
@@ -1102,8 +1179,20 @@
             <p id="claimingWarning"><strong>Action Required:</strong> Please <strong>Claim</strong> your ETH rewards before adding to or withdrawing from your stake to prevent reward reset.</p>
         </div>
 
-        <!-- Status -->
-        <div class="status hidden" id="statusMessage"></div>
+        <!-- Status + report loop (shown after wallet errors) -->
+        <div class="status-wrap">
+            <div class="status hidden" id="statusMessage"></div>
+            <div class="report-bug-strip hidden" id="reportBugStrip" role="region" aria-labelledby="reportBugTitle">
+                <p class="report-bug-title" id="reportBugTitle">Send us this error</p>
+                <ol class="report-bug-steps">
+                    <li>Screenshot this screen. Include the red message.</li>
+                    <li>Tap <strong>Report with screenshot</strong> to open Bonzi bot.</li>
+                    <li>In Telegram, attach the screenshot and write details in the <strong>photo caption</strong> (wallet app, chain, steps). Telegram needs a caption, not photo-only.</li>
+                </ol>
+                <p class="report-bug-caption-hint hidden" id="reportBugDeployHint"></p>
+                <a class="report-bug-cta" id="reportBugLink" href="https://t.me/Bonzivista_bot?start=report_bug" target="_blank" rel="noopener noreferrer">Report with screenshot</a>
+            </div>
+        </div>
 
         <!-- Tabs: Stake / Claim / Withdraw -->
         <div class="tab-bar">
@@ -1211,34 +1300,36 @@
             <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
             <div class="faq-list">
                 <details class="faq-item">
-                    <summary><span class="faq-question">What is BONZI Staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Lock your BONZI tokens to secure the network and earn ETH rewards directly from protocol activity.</div>
+                    <summary><span class="faq-question">What is BONZI staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">You lock BONZI in HARDSTAKE. While it stays locked, your share of the pool can earn ETH from trading fees that flow through Ethervista. This page is Bonzivista’s staking workflow (connect wallet, stake, claim, withdraw).</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Ethervista and this page</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">This screen is Bonzivista staking (tabs above). Ethervista is separate software and branding. Their overview is here if you want it: <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">ethervista.app (how it works)</a>.</div>
+                    <summary><span class="faq-question">How does Ethervista relate to this page?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">Ethervista ships the routers and pool contracts Bonzi plugs into on Ethereum mainnet. Bonzivista only hosts this staking screen inside Telegram/browser. Want the official vendor story? Read <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">Ethervista: how it works</a>.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">How are rewards paid?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">ETH rewards accrue in real time. Claim them from the <strong>Claim</strong> tab above when you are ready (wallet transaction required).</div>
+                    <div class="faq-answer">ETH builds up against your stake over time. When you tap <strong>Claim</strong>, one wallet transaction sends whatever is currently owed into your wallet. Nothing auto-sends unless you confirm that claim.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">Is there a lock period?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Yes, there is a <strong>14-day withdrawal lock</strong> for staked BONZI to ensure pool stability. Claiming ETH does not reset that timer.</div>
+                    <div class="faq-answer">Yes. Withdrawals wait <strong>14 days</strong> after you stake (or restake) before BONZI can leave the pool. Claiming ETH does not restart that countdown.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">
-                        Numbers come from the public staking metrics JSON and often include more than one type of percent. Some of those mixes are misleading when liquidity is thin, so sometimes this page shows <strong>how much ETH was paid over time</strong> (ETH per year, a backward pace), not a big percent headline. When metrics look stable we may show one pool-wide percent instead. Connecting your wallet does not change those pool tiles; they stay file-based until refreshed.
-                    </div>
+                    <div class="faq-answer">When the backing numbers look solid we may show one pool-wide percent for the Yield tile. When data is noisy we instead show ETH paid over time converted to ETH per year (<strong>pacing only</strong>, whole pool math, not “your locked rate”). Connecting your wallet does not rewrite those headline tiles.</div>
                 </details>
                 <details class="faq-item">
                     <summary><span class="faq-question">Why does Yield show small ETH/year when posts quote huge totals?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">
-                        The Yield tile prefers <strong>historical pacing in ETH</strong>. The public snapshot sums <strong>cumulative ETH that hit claim-events</strong> for this Bonzi HARDSTAKE indexer slice (Dune-fed in our metrics hub), divides by tracked pool age in days since launch, multiplies by <strong>365</strong>. That yields a blunt &quot;if the latest average repeats&quot; ETH/year pace for the whole pool, not hype and not locked-in APR.
-                        Loud marketing lines (six-figure totals) are commonly <strong>US dollars</strong>, another token, blended Ethervista products, broader time windows, or LP fees counted outside our slice. Confirm <strong>denomination</strong> (ETH versus USD versus BONZI) and <strong>scope</strong> before stacking them beside this pacing line.
-                        Full builder script: repo path <strong>metrics/build_staking_analytics.py</strong>; contract proof: HARDSTAKE on-chain events and Etherscan.
-                    </div>
+                    <div class="faq-answer">This page favors plain ETH pacing for the HARDSTAKE pool slice we index. Loud posts mix US dollars, other tokens, longer time spans, blended products, or fees outside Bonzi staking. Compare apples to apples first: denomination (ETH vs USD) plus what pool or product they counted.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="faq-question">Which blockchain is this?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">Ethereum mainnet (chain ID 1). If your wallet is on another chain, reconnect on Ethereum.</div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="faq-question">Why claim before staking more or withdrawing?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer">Adding stake or pulling BONZI changes your internal reward index math. Grab pending ETH rewards first so nothing gets reset unexpectedly (same warning banner on this page).</div>
                 </details>
             </div>
             <a
@@ -1250,7 +1341,7 @@
         </section>
 
         <div class="stake-low-cta-stack">
-            <a class="cta-ticket" href="https://t.me/Bonzivista_bot" target="_blank" rel="noopener noreferrer" id="telegramFaqBtn">
+            <a class="cta-ticket" href="https://t.me/Bonzivista_bot?start=support" target="_blank" rel="noopener noreferrer" id="telegramFaqBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -2351,7 +2442,7 @@
                         error.message || STAKE_OVERLAY_I18N[STAKE_OVERLAY_LANG].overlayErrFallback;
                     overlayErr.style.display = 'block';
                 }
-                showStatus(error.message || 'Connection failed', 'error');
+                showStatus(formatWalletRevertForUser(error.message || error), 'error');
             } finally {
                 wcConnectInFlight = false;
                 clearWcConnectUiWatchdog();
@@ -2519,19 +2610,21 @@
                     !isNaN(paceP)
                 ) {
                     var dmean = totalEth / days;
-                    rm.textContent =
-                        'Indexed HARDSTAKE slice (public JSON): about ' +
+                    rm.innerHTML =
+                        '<strong class="pool-history-title">Pool history</strong>' +
+                        '<span>About ' +
                         totalEth.toFixed(2) +
-                        ' ETH summed on claims, over about ' +
+                        ' ETH is in our public reward tally so far, over about ' +
                         Math.round(days) +
-                        ' tracked days (~' +
+                        ' days (roughly ' +
                         dmean.toFixed(4) +
-                        ' ETH/day). Yield tile ~' +
+                        ' ETH per day on average). The Yield number (' +
                         paceP.toFixed(2) +
-                        ' ETH/year = that daily average scaled to 365 (whole pool pacing, not a promise). Big social totals are usually USD or wider scope than this ETH tally.';
+                        ' ETH/year) is that daily pace stretched to one year for the whole pool together; it is pacing math, not a promise. Big numbers you see in posts are often dollars or count a wider picture than this tally.</span>';
                 } else {
-                    rm.textContent =
-                        'Reward pacing note loads with staking_analytics.json. See FAQ about ETH pacing versus headline USD totals.';
+                    rm.innerHTML =
+                        '<strong class="pool-history-title">Pool history</strong>' +
+                        '<span>These friendly totals show up after the staking numbers file loads.</span>';
                 }
             }
         }
@@ -2730,15 +2823,100 @@
         // ============================================================
         // Status Messages
         // ============================================================
-        function showStatus(message, type = 'pending') {
-            const el = document.getElementById('statusMessage');
-            el.textContent = message;
+        function formatWalletRevertForUser(rawErr) {
+            var base = '';
+            try {
+                if (typeof rawErr === 'string') base = rawErr;
+                else if (rawErr && rawErr.message) base = String(rawErr.message);
+                else if (rawErr && rawErr.reason) base = String(rawErr.reason);
+                else if (rawErr != null) base = String(rawErr);
+            } catch (_eFmt) {
+                base = '';
+            }
+            if (!base || !base.trim()) base = 'Transaction failed.';
+            var code =
+                typeof rawErr === 'object' && rawErr !== null ? rawErr.code : undefined;
+            var gloss = null;
+
+            if (
+                code === 'CALL_EXCEPTION' ||
+                /transferhelper|transferfrom|transfer-from|call revert|execution reverted/i.test(
+                    base
+                )
+            ) {
+                gloss =
+                    'This deposit did not go through our router (often allowance balance or router mismatch). Retry Approve, try slightly less BONZI, confirm Ethereum mainnet. If stuck, screenshot the Technical line.';
+            } else if (
+                code === 4001 ||
+                code === 'ACTION_REJECTED' ||
+                /user rejected|user denied|^user denied transaction$/i.test(lower)
+            ) {
+                gloss = 'The wallet declined or dismissed the popup (not a Bonzi servers error).';
+            } else if (/nonce|replacement transaction|replacement underpriced/i.test(lower)) {
+                gloss =
+                    'A stuck transaction nonce in your wallet blocked this tx. Clear or speed up pending items in Phantom / MetaMask, then retry.';
+            } else if (/timed out|timeout|confirmation timed/i.test(lower)) {
+                gloss =
+                    'Blockchain confirmation stalled. Inspect pending transactions in explorer or retry after one minute.';
+            }
+
+            if (!gloss) return base;
+            return gloss + '\n\nTechnical: ' + base;
+        }
+
+        /** Race tx.wait vs timeout minutes (default four). Caller sets pending label beforehand. */
+        async function waitTxReceipt(waitPromise, timeoutMs) {
+            var ms = timeoutMs === undefined ? 240000 : timeoutMs;
+            return Promise.race([
+                waitPromise,
+                new Promise(function (_, reject) {
+                    setTimeout(function () {
+                        reject(
+                            new Error(
+                                'Confirmation timed out after ' + Math.max(1, Math.round(ms / 60000)) + ' min.'
+                            )
+                        );
+                    }, ms);
+                }),
+            ]);
+        }
+
+        function showStatus(message, type = 'pending', opts) {
+            opts = opts || {};
+            var el = document.getElementById('statusMessage');
+            var strip = document.getElementById('reportBugStrip');
+            el.textContent = message || '';
             el.className = 'status ' + type;
             el.classList.remove('hidden');
+
+            var textStr = typeof message === 'string' ? message : '';
+            var pendingLooksBlocked =
+                /timeout|timed out|rejected|denied|canceled|failed\b|nonce|replacement/i.test(textStr);
+
+            var showStrip =
+                type === 'error' ||
+                opts.forceReportStrip === true ||
+                (type === 'pending' && (opts.pendingBlocked === true || pendingLooksBlocked));
+
+            if (strip) {
+                if (showStrip) strip.classList.remove('hidden');
+                else strip.classList.add('hidden');
+            }
         }
 
         function hideStatus() {
             document.getElementById('statusMessage').classList.add('hidden');
+            var strip = document.getElementById('reportBugStrip');
+            if (strip) strip.classList.add('hidden');
+        }
+
+        function initReportBugDeployHint() {
+            var meta = document.querySelector('meta[name=\"bonzi-stake-tg-deploy\"]');
+            var hintEl = document.getElementById('reportBugDeployHint');
+            if (meta && meta.content && hintEl) {
+                hintEl.textContent = 'Paste in your screenshot caption if you can: deploy_tag ' + meta.content;
+                hintEl.classList.remove('hidden');
+            }
         }
 
         // ============================================================
@@ -2790,7 +2968,7 @@
                     showStatus('Approve BONZI spending in your wallet...');
                     const approveTx = await bonziContract.approve(CONTRACTS.ROUTER, amountWei);
                     showStatus('Waiting for approval confirmation...');
-                    await approveTx.wait();
+                    await waitTxReceipt(approveTx.wait());
                 }
 
                 showStatus('Submitting stake transaction...');
@@ -2802,7 +2980,7 @@
                 );
 
                 showStatus('Waiting for confirmation...');
-                const receipt = await stakeTx.wait();
+                const receipt = await waitTxReceipt(stakeTx.wait());
 
                 notifyTelegramHaptic('success');
                 showStatus('Staked successfully!', 'success');
@@ -2815,7 +2993,7 @@
             } catch (error) {
                 console.error('Stake error:', error);
                 notifyTelegramHaptic('error');
-                showStatus(error.reason || error.message || 'Transaction failed', 'error');
+                showStatus(formatWalletRevertForUser(error.reason || error.message || error), 'error');
             }
         }
 
@@ -2831,7 +3009,7 @@
                 const claimTx = await hardstakeContract.claimShare();
 
                 showStatus('Waiting for confirmation...');
-                const receipt = await claimTx.wait();
+                const receipt = await waitTxReceipt(claimTx.wait());
 
                 notifyTelegramHaptic('success');
                 showStatus('Rewards claimed!', 'success');
@@ -2843,7 +3021,7 @@
             } catch (error) {
                 console.error('Claim error:', error);
                 notifyTelegramHaptic('error');
-                showStatus(error.reason || error.message || 'Claim failed', 'error');
+                showStatus(formatWalletRevertForUser(error.reason || error.message || error), 'error');
             }
         }
 
@@ -2887,7 +3065,7 @@
                 var withdrawTx = await hardstakeContract.withdraw(amountWei);
 
                 showStatus('Waiting for confirmation...');
-                var receipt = await withdrawTx.wait();
+                var receipt = await waitTxReceipt(withdrawTx.wait());
 
                 notifyTelegramHaptic('success');
                 showStatus('Withdrawal complete!', 'success');
@@ -2902,7 +3080,7 @@
             } catch (error) {
                 console.error('Withdraw error:', error);
                 notifyTelegramHaptic('error');
-                showStatus(error.reason || error.message || 'Withdrawal failed', 'error');
+                showStatus(formatWalletRevertForUser(error.reason || error.message || error), 'error');
             }
         }
 
@@ -2927,6 +3105,8 @@
                         'deploy ' + tag + '. Telegram may cache HTML; use ?v= on the stake link to force refresh.';
                 }
             } catch (eDep) {}
+
+            initReportBugDeployHint();
 
             ensureStakingAnalyticsSnapshot();
             // If opened with pre-populated action, auto-trigger connect

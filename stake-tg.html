@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-tg-inapp-wallet-default-20260224" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-tg-wallet-desktop-qr-fallback-20260512" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -252,22 +252,34 @@
             text-align: center;
         }
 
-        .metrics-rewards-math {
+        /* Pool snapshot: optional math explainer */
+        .pool-history-details {
+            margin: 0.55rem 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.025);
+            text-align: left;
+        }
+
+        .pool-history-details summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.55rem 0.72rem;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #fafafa;
+            letter-spacing: 0.02em;
+        }
+
+        .pool-history-details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .pool-history-body {
             font-size: 0.71rem;
             line-height: 1.48;
             color: #a1a1aa;
-            margin: 0.45rem 0 0;
-            padding: 0 0.2rem;
-            text-align: center;
-        }
-
-        .pool-history-title {
-            display: block;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #fafafa;
-            margin-bottom: 0.35rem;
+            padding: 0 0.72rem 0.72rem;
         }
 
         .metrics-your-wrap {
@@ -824,6 +836,23 @@
             font-weight: 600;
         }
 
+        /* Telegram Desktop/Web: contextual copy — Connect stays in Telegram; MM shortcut hidden */
+        .connect-desktop-wc-hint {
+            font-size: 0.72rem;
+            line-height: 1.45;
+            color: #a1a1aa;
+            margin: -4px auto 14px;
+            max-width: 320px;
+            text-align: left;
+            padding: 0 2px;
+        }
+
+        .connect-desktop-wc-hint code {
+            font-size: 0.68rem;
+            color: var(--purple-light);
+            word-break: break-word;
+        }
+
         .connect-overlay-error {
             color: #dc2626;
             font-size: 0.8rem;
@@ -1085,6 +1114,9 @@
             <img src="bonzi-logo.png" alt="Bonzi" class="logo connect-logo-lg">
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
             <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
+            <p id="wcConnectDesktopHint" class="connect-desktop-wc-hint hidden" role="note">
+                <strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported). MetaMask shortcuts are off here — Telegram WebView often redirects them to metamask.io/download. To use MetaMask as a desktop extension, open this page with <code>?wallet_external=1</code> plus your Mini App URL parameters (browser hand-off is opt-in).
+            </p>
             <button type="button" class="connect-btn" id="wcConnectBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 <span id="wcConnectBtnLabel">Connect Wallet</span>
@@ -1151,6 +1183,10 @@
                     </div>
                 </div>
             </div>
+            <details class="pool-history-details">
+                <summary class="pool-history-summary">Pool history (click to open)</summary>
+                <div class="pool-history-body" id="metricsRewardsExplainer" aria-live="polite"></div>
+            </details>
             <div class="metrics-your-wrap">
                 <p id="metricsKickerYour" class="metrics-section-kicker">Your wallet</p>
                 <div class="metrics-hero-grid" role="group" aria-label="Your staking position">
@@ -1166,7 +1202,6 @@
                     </div>
                 </div>
             </div>
-            <p class="metrics-rewards-math" id="metricsRewardsExplainer" aria-live="polite"></p>
         </div>
 
         <p class="action-block-kicker">Your wallet: stake, claim, withdraw</p>
@@ -1786,7 +1821,9 @@
             HAS_TELEGRAM_WEBAPP &&
             (isDesktopTelegramRuntime() ||
                 (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
-        const USE_QR_MODAL = !HAS_TELEGRAM_WEBAPP;
+        const USE_QR_MODAL =
+            !HAS_TELEGRAM_WEBAPP ||
+            (HAS_TELEGRAM_WEBAPP && isDesktopTelegramRuntime() && !WALLET_EXTERNAL_BROWSER_ESCAPE);
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
@@ -1936,15 +1973,23 @@
             }
         }
 
-        /** Telegram embedded WebViews often resolve metamask.app.link to the download site; app scheme opens the app. */
+        /** Mobile Telegram Mini App: `metamask://` opens the MetaMask mobile app.
+         * Plain browser (`external` flow or non-Telegram): universal HTTPS link OK.
+         * Telegram Desktop/Web Mini App (no `wallet_external`): never `metamask.app.link` (often lands on download page). */
         function metaMaskWalletConnectHref(encodedUri) {
-            var ua = navigator.userAgent || '';
+            var ua = '';
+            try {
+                ua = String(navigator.userAgent || '');
+            } catch (eUa) {}
             var isMobileUa =
                 /Mobile|Android|iPhone|iPod|iPad|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
             if (HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW && isMobileUa) {
                 return 'metamask://wc?uri=' + encodedUri;
             }
-            return 'https://metamask.app.link/wc?uri=' + encodedUri;
+            if (!HAS_TELEGRAM_WEBAPP || IS_EXTERNAL_BROWSER_FLOW) {
+                return 'https://metamask.app.link/wc?uri=' + encodedUri;
+            }
+            return '';
         }
 
         function wireMetaMaskShortcutClickForTelegram() {
@@ -1986,6 +2031,8 @@
             ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
                 var el = document.getElementById(id);
                 if (el) {
+                    el.style.display = '';
+                    el.removeAttribute('aria-hidden');
                     el.onclick = null;
                     el.href = 'javascript:void(0)';
                     el.setAttribute('aria-disabled', 'true');
@@ -2011,6 +2058,8 @@
                 var bn = document.getElementById('wcLinkBinance');
                 if (mm) {
                     if (preferInjectedEthereum()) {
+                        mm.style.display = '';
+                        mm.removeAttribute('aria-hidden');
                         mm.href = 'javascript:void(0)';
                         mm.setAttribute('data-wc-shortcut-ready', '1');
                         mm.removeAttribute('aria-disabled');
@@ -2028,11 +2077,24 @@
                         };
                     } else {
                         mm.onclick = null;
-                        mm.href = metaMaskWalletConnectHref(enc);
-                        mm.setAttribute('data-wc-shortcut-ready', '1');
-                        mm.removeAttribute('aria-disabled');
-                        mm.classList.remove('wallet-shortcut-waiting');
-                        mm.classList.add('wallet-shortcut-open');
+                        var mmHref = metaMaskWalletConnectHref(enc);
+                        if (!mmHref) {
+                            mm.href = 'javascript:void(0)';
+                            mm.style.display = 'none';
+                            mm.setAttribute('aria-hidden', 'true');
+                            mm.setAttribute('aria-disabled', 'true');
+                            mm.removeAttribute('data-wc-shortcut-ready');
+                            mm.classList.remove('wallet-shortcut-open');
+                            mm.classList.add('wallet-shortcut-waiting');
+                        } else {
+                            mm.style.display = '';
+                            mm.removeAttribute('aria-hidden');
+                            mm.href = mmHref;
+                            mm.setAttribute('data-wc-shortcut-ready', '1');
+                            mm.removeAttribute('aria-disabled');
+                            mm.classList.remove('wallet-shortcut-waiting');
+                            mm.classList.add('wallet-shortcut-open');
+                        }
                     }
                 }
                 if (tw) {
@@ -2590,47 +2652,45 @@
 
             var rm = document.getElementById('metricsRewardsExplainer');
             if (rm) {
-                var totalAgg =
+                var totalAgg2 =
                     agg.total_eth_distributed_aggregate != null
                         ? Number(agg.total_eth_distributed_aggregate)
                         : null;
-                var totalRoi =
+                var totalRoi2 =
                     roi.pool_aggregate_eth_claimed_total_optional != null
                         ? Number(roi.pool_aggregate_eth_claimed_total_optional)
                         : null;
-                var totalEth =
-                    totalAgg != null && !isNaN(totalAgg) ? totalAgg : totalRoi;
-                var days =
+                var totalEth2 =
+                    totalAgg2 != null && !isNaN(totalAgg2) ? totalAgg2 : totalRoi2;
+                var days2 =
                     roi.pool_age_days_est != null ? Number(roi.pool_age_days_est) : null;
-                var paceP =
+                var paceP2 =
                     roi.pool_aggregate_eth_reward_pace_per_year_illustrative != null
                         ? Number(roi.pool_aggregate_eth_reward_pace_per_year_illustrative)
                         : null;
                 if (
-                    totalEth != null &&
-                    !isNaN(totalEth) &&
-                    days != null &&
-                    !isNaN(days) &&
-                    days >= 8 &&
-                    paceP != null &&
-                    !isNaN(paceP)
+                    totalEth2 != null &&
+                    !isNaN(totalEth2) &&
+                    days2 != null &&
+                    !isNaN(days2) &&
+                    days2 >= 8 &&
+                    paceP2 != null &&
+                    !isNaN(paceP2)
                 ) {
-                    var dmean = totalEth / days;
+                    var dmean2 = totalEth2 / days2;
                     rm.innerHTML =
-                        '<strong class="pool-history-title">Pool history</strong>' +
                         '<span>About ' +
-                        totalEth.toFixed(2) +
+                        totalEth2.toFixed(2) +
                         ' ETH is in our public reward tally so far, over about ' +
-                        Math.round(days) +
+                        Math.round(days2) +
                         ' days (roughly ' +
-                        dmean.toFixed(4) +
+                        dmean2.toFixed(4) +
                         ' ETH per day on average). The Yield number (' +
-                        paceP.toFixed(2) +
+                        paceP2.toFixed(2) +
                         ' ETH/year) is that daily pace stretched to one year for the whole pool together; it is pacing math, not a promise. Big numbers you see in posts are often dollars or count a wider picture than this tally.</span>';
                 } else {
                     rm.innerHTML =
-                        '<strong class="pool-history-title">Pool history</strong>' +
-                        '<span>These friendly totals show up after the staking numbers file loads.</span>';
+                        '<span>These totals load after the public staking metrics file arrives.</span>';
                 }
             }
         }

@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-tg-wallet-desktop-qr-fallback-20260512" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-tg-prod-no-local-ingest-20260512" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1399,8 +1399,6 @@
         // #region agent log
         window.__bonziDbgLog = function (hypothesisId, locLabel, message, data) {
             var payload = {
-                sessionId: '2ee239',
-                runId: 'pre-fix',
                 hypothesisId: hypothesisId,
                 location: locLabel,
                 message: message,
@@ -1408,20 +1406,8 @@
                 timestamp: Date.now()
             };
             try {
-                console.info('[BONZI_WC_DEBUG]', JSON.stringify(payload));
+                console.info('[bonzi-wc]', JSON.stringify(payload));
             } catch (e1) {}
-            try {
-                var winLoc = typeof window !== 'undefined' && window.location ? window.location : null;
-                if (winLoc && winLoc.protocol === 'http:' && (winLoc.hostname === 'localhost' || winLoc.hostname === '127.0.0.1')) {
-                    fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
-                        method: 'POST',
-                        mode: 'cors',
-                        credentials: 'omit',
-                        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
-                        body: JSON.stringify(payload)
-                    }).catch(function () {});
-                }
-            } catch (e2) {}
         };
         // #endregion
     </script>
@@ -1975,7 +1961,8 @@
 
         /** Mobile Telegram Mini App: `metamask://` opens the MetaMask mobile app.
          * Plain browser (`external` flow or non-Telegram): universal HTTPS link OK.
-         * Telegram Desktop/Web Mini App (no `wallet_external`): never `metamask.app.link` (often lands on download page). */
+         * Telegram Desktop/Web Mini App: use HTTPS universal link + `tg.openLink` so MetaMask can pair
+         * (extension or app). Prior build returned '' here and hid MetaMask on desktop. */
         function metaMaskWalletConnectHref(encodedUri) {
             var ua = '';
             try {
@@ -1987,6 +1974,17 @@
                 return 'metamask://wc?uri=' + encodedUri;
             }
             if (!HAS_TELEGRAM_WEBAPP || IS_EXTERNAL_BROWSER_FLOW) {
+                return 'https://metamask.app.link/wc?uri=' + encodedUri;
+            }
+            if (
+                HAS_TELEGRAM_WEBAPP &&
+                !IS_EXTERNAL_BROWSER_FLOW &&
+                typeof isDesktopTelegramRuntime === 'function' &&
+                isDesktopTelegramRuntime()
+            ) {
+                dbgStakeEmit('H_mm_desktop_handoff', 'metaMaskWalletConnectHref', 'desktop tg metamask link', {
+                    platform: TELEGRAM_PLATFORM
+                });
                 return 'https://metamask.app.link/wc?uri=' + encodedUri;
             }
             return '';
@@ -2172,8 +2170,6 @@
         // #region agent log
         function dbgStakeEmit(hypothesisId, location, message, data) {
             var payload = {
-                sessionId: '2ee239',
-                runId: 'debug-pre',
                 hypothesisId: hypothesisId,
                 location: location,
                 message: message,
@@ -2181,7 +2177,7 @@
                 timestamp: Date.now()
             };
             try {
-                console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
+                console.info('[bonzi-stake]', JSON.stringify(payload));
             } catch (e1) {}
         }
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {

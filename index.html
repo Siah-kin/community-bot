@@ -4,10 +4,11 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-12-slot-elegant-warm-no-autospin">
-    <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
+    <meta name="bonzi-slot-ui-rev" content="2026-05-12-first-party-waitlist">
+    <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
-    <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
+    <!-- Default: first-party waitlist (embedded form → POST /api/public/waitlist). Optional legacy: set non-empty https URL to open an external hosted form instead. -->
+    <meta name="bonzi-waitlist-mode" content="first_party">
     <meta name="bonzi-notify-signup-url" content="">
     <title>Bonzi Vista — Slot</title>
     <meta name="description" content="Spin on bonzivista.org. Jackpot flows to Telegram. Closed-alpha funnel.">
@@ -162,6 +163,60 @@
             font-size: 0.85rem;
             margin: 0.75rem 0 0;
             line-height: 1.45;
+        }
+        .notify-waitlist-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 320px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .notify-waitlist-form .waitlist-field-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .notify-waitlist-form input[type="email"] {
+            flex: 1 1 180px;
+            min-width: 0;
+            padding: 0.55rem 0.65rem;
+            border-radius: 4px;
+            border: 1px solid #3f3f46;
+            background: #18181b;
+            color: #fafafa;
+            font-size: 0.95rem;
+        }
+        .notify-waitlist-form button[type="submit"] {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #d4af37, #c9a227);
+            color: #0a0a0a;
+            border: none;
+            font-weight: 700;
+            padding: 0.55rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .notify-waitlist-form button[type="submit"]:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+        .notify-waitlist-thanks {
+            color: #86efac;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 0;
+            text-align: center;
+        }
+        .honeypot {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
         .win98-content {
             padding: 12px;
@@ -650,11 +705,19 @@
         </footer>
     </div>
 
-    <section class="notify-bottom" id="notify-bottom" aria-label="Email updates">
-        <h2 class="notify-bottom-title" id="notify-bottom-title">Get Notified</h2>
-        <p class="notify-bottom-sub" id="notify-bottom-sub">Leave your Email for Updates</p>
-        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Get notified</a>
+    <section class="notify-bottom" id="email-updates" aria-label="Email updates">
+        <h2 class="notify-bottom-title" id="notify-bottom-title">Email updates</h2>
+        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist — one field, our database only.</p>
+        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Join the list</a>
         <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
+        <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
+            <div class="waitlist-field-row">
+                <input type="email" id="waitlist-email" name="email" maxlength="254" required autocomplete="email" inputmode="email" aria-required="true">
+                <button type="submit" id="waitlist-submit">Join</button>
+            </div>
+            <input type="text" name="website" id="waitlist-hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </form>
+        <p class="notify-waitlist-thanks hidden" id="waitlist-thanks" role="status"></p>
     </section>
 
     <div class="prize-overlay" id="prize-overlay">
@@ -696,9 +759,13 @@
                 notifyMsgPending: '',
                 notifyCta: 'Get notified',
                 notifyBottomTitle: 'Email updates',
-                notifyBottomSub: 'Same page — hosted form opens with the next publish.',
+                notifyBottomSub: 'Bonzi waitlist — one field, our database only.',
                 notifyBottomCta: 'Join the list',
-                notifyBottomPending: 'Opening soon.',
+                notifyBottomPending: '',
+                waitlistThanks: "You're on the list.",
+                waitlistErr: 'Could not save. Try again in a moment.',
+                waitlistJoin: 'Join',
+                waitlistEmailPh: 'Email',
                 lcdPrefix: 'Tokenise your',
                 statusIdle: 'Ready',
                 statusStarting: 'Waking up…',
@@ -738,9 +805,13 @@
                 notifyMsgPending: '',
                 notifyCta: 'Avise-me',
                 notifyBottomTitle: 'Atualiza\u00E7\u00F5es por e-mail',
-                notifyBottomSub: 'Nesta mesma p\u00E1gina — formul\u00E1rio na pr\u00F3xima publica\u00E7\u00E3o.',
-                notifyBottomCta: 'Quero receber',
-                notifyBottomPending: 'Em breve.',
+                notifyBottomSub: 'Lista Bonzi — um campo, nosso banco s\u00F3.',
+                notifyBottomCta: 'Quero entrar',
+                notifyBottomPending: '',
+                waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
+                waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
+                waitlistJoin: 'Entrar',
+                waitlistEmailPh: 'E-mail',
                 lcdPrefix: 'Tokenise sua',
                 statusIdle: 'Pronto',
                 statusStarting: 'Acordando\u2026',
@@ -807,7 +878,7 @@
         }
 
         function refreshNotifyBottom(url, looksTelegram, L) {
-            var sec = document.getElementById('notify-bottom');
+            var sec = document.getElementById('email-updates');
             var title = document.getElementById('notify-bottom-title');
             var sub = document.getElementById('notify-bottom-sub');
             var cta = document.getElementById('notify-bottom-cta');
@@ -820,7 +891,11 @@
                 return;
             }
             sec.classList.remove('hidden');
+            var form = document.getElementById('waitlist-form');
+            var thanks = document.getElementById('waitlist-thanks');
             if (url && notifySignupUrlIsAllowedHttps(url)) {
+                if (form) form.classList.add('hidden');
+                if (thanks) thanks.classList.add('hidden');
                 cta.href = url;
                 cta.textContent = L.notifyBottomCta;
                 cta.classList.remove('hidden');
@@ -829,8 +904,17 @@
                 return;
             }
             cta.classList.add('hidden');
-            pend.textContent = L.notifyBottomPending;
-            pend.classList.remove('hidden');
+            pend.textContent = L.notifyBottomPending || '';
+            if (L.notifyBottomPending) {
+                pend.classList.remove('hidden');
+            } else {
+                pend.classList.add('hidden');
+            }
+            if (thanks) {
+                thanks.textContent = '';
+                thanks.classList.add('hidden');
+            }
+            if (form) form.classList.remove('hidden');
         }
 
         function refreshNotifyBar() {
@@ -899,6 +983,10 @@
             var be = document.getElementById('lang-en');
             if (bp) bp.setAttribute('aria-pressed', currentLang === 'pt-BR' ? 'true' : 'false');
             if (be) be.setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+            var wem = document.getElementById('waitlist-email');
+            if (wem) wem.placeholder = L.waitlistEmailPh;
+            var wsb = document.getElementById('waitlist-submit');
+            if (wsb) wsb.textContent = L.waitlistJoin;
             refreshNotifyBar();
         }
 
@@ -1289,6 +1377,53 @@
         });
 
         scheduleRulesHealthProbe();
+
+        (function wireWaitlistForm() {
+            var form = document.getElementById('waitlist-form');
+            if (!form) return;
+            form.addEventListener('submit', function(ev) {
+                ev.preventDefault();
+                var em = document.getElementById('waitlist-email');
+                var hp = document.getElementById('waitlist-hp');
+                if (!em) return;
+                var email = (em.value || '').trim();
+                if (!email) return;
+                var api = getApiOrigin();
+                var btn = document.getElementById('waitlist-submit');
+                if (btn) btn.disabled = true;
+                fetch(api + '/api/public/waitlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        source: 'slot_home',
+                        website: hp ? hp.value : ''
+                    })
+                }).then(function(r) {
+                    return r.text().then(function(t) {
+                        var j = {};
+                        try { j = JSON.parse(t); } catch (eJ) { j = {}; }
+                        return { ok: r.ok, j: j };
+                    });
+                }).then(function(res) {
+                    if (btn) btn.disabled = false;
+                    if (res.ok && res.j && res.j.success) {
+                        form.classList.add('hidden');
+                        var th = document.getElementById('waitlist-thanks');
+                        if (th) {
+                            th.textContent = getStr().waitlistThanks;
+                            th.classList.remove('hidden');
+                        }
+                    } else {
+                        var err = (res.j && res.j.error) ? res.j.error : getStr().waitlistErr;
+                        window.alert(err);
+                    }
+                }).catch(function() {
+                    if (btn) btn.disabled = false;
+                    window.alert(getStr().waitlistErr);
+                });
+            });
+        })();
 
         // Access code check
         function tryCode() {

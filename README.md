@@ -62,38 +62,19 @@ python3 -m http.server 8000
 open http://localhost:8000/
 ```
 
-## Slot page + email notify strip (`index.html`)
+## Slot page + first-party waitlist (`index.html`)
 
-- **`bonzi-api-origin`**: HTTPS base where `/api/slotgame/*` lives (production default in the meta tag).
-- **`bonzi-notify-signup-url`**: Your **hosted email signup URL** — Mailchimp, Chimpmail, or any `https://` form page you control. Typical Mailchimp links use `list-manage.com`, `mailchi.mp`, or `chimp*.com`. Leave **empty** to hide the purple bar.
+- **`bonzi-api-origin`**: HTTPS base where `/api/slotgame/*` and **`/api/public/waitlist`** live (Bonzi_v5 webhook host).
+- **Default:** `bonzi-waitlist-mode` is **`first_party`**. The footer shows an inline email field that **POSTs JSON** to **`{bonzi-api-origin}/api/public/waitlist`** and stores rows in **Postgres** (`public_email_waitlist`) on the backend. No third-party form host.
+- **Legacy override:** If you set **`bonzi-notify-signup-url`** to an external **`https://`** page (hosted form elsewhere), the footer switches to a single **Join** link and hides the inline form. Use `scripts/patch_notify_meta.py` the same way as before **only** when you intentionally want that override.
 
-**Quick test**
+**Quick test (first-party)**
 
-1. In MailChimp/Chimpmail, copy the **hosted signup form** URL (must start with `https://`).
-2. From repo root, either export the URL:
+1. Ensure Bonzi_v5 production has **`USE_POSTGRES=true`** and a working **`DATABASE_URL`**.
+2. `python3 -m http.server 8000` in this repo → open `/` → submit an email → expect HTTP 200 from `https://<your-api-host>/api/public/waitlist` (check browser devtools Network).
+3. On Render shell: `SELECT email_normalized, source, created_at FROM public_email_waitlist ORDER BY created_at DESC LIMIT 5;`
 
-   ```bash
-   export BONZI_NOTIFY_SIGNUP_URL='https://YOUR_FORM_URL_HERE'
-   python3 scripts/patch_notify_meta.py
-   ```
-
-   or put **one HTTPS line** in a gitignored file (helps avoid pasting URLs into shell history):
-
-   ```bash
-   printf '%s\n' 'https://YOUR_FORM_URL_HERE' > scripts/bonzi_notify_signup_url.local.txt
-   export BONZI_NOTIFY_SIGNUP_FILE=scripts/bonzi_notify_signup_url.local.txt
-   python3 scripts/patch_notify_meta.py
-   ```
-
-   The script also **blocks** `t.me` / `telegram.me` so Telegram links cannot be committed here by mistake.
-
-3. Confirm `index.html` meta `bonzi-notify-signup-url` now holds that URL.
-4. `python3 -m http.server 8000` → open `/` → you should see the bar and “Get notified” opens your form (not Telegram).
-5. Commit + push → wait for Pages → hard-refresh `bonzivista.org`.
-
-The page **rejects** Telegram hosts in this field on purpose (`index.html` + patch script guard) — that URL is only for email signups.
-
-**Optional (aligned with the bot):** In Render for Bonzi_v5, set `BONZI_PUBLIC_NOTIFY_URL` to the same `https://` link (Blueprint lists the key next to `SLOTGAME_PUBLIC_RULES_ORIGIN` in `render.yaml`) so `/start` can show **Get notified**.
+**Telegram `/start` CTA:** By default the bot uses **`https://bonzivista.org/#email-updates`** so **Get notified** scrolls users to this section. Override with **`BONZI_PUBLIC_NOTIFY_URL`** on Render if needed; set **`BONZI_PUBLIC_SITE_ORIGIN`** if the public site hostname changes. Set **`BONZI_PUBLIC_NOTIFY_DISABLED=1`** to remove the button entirely.
 
 ## API (quick examples)
 

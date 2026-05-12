@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Patch ``bonzi-notify-signup-url`` in ``index.html`` before GitHub Pages deploy.
+"""Patch ``bonzi-notify-signup-url`` in ``index.html`` for a legacy **external** hosted form.
+
+Leave the meta **empty** to keep the default **first-party** waitlist (inline form POSTs to
+Bonzi_v5 ``/api/public/waitlist``). Use this script only when you intentionally want a
+third-party ``https://`` signup page linked from the slot footer.
 
 Usage (HTTPS only; matches front-end guard in ``index.html``):
 

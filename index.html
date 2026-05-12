@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-11-slot-notify-slotgame-warmdoc">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-12-slot-elegant-warm-no-autospin">
     <!-- HTTPS API origin (same host as /api/slotgame/win). Override per fork if needed. -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Email waitlist: paste your Mailchimp or Chimpmail hosted form URL as https://… or use scripts/patch_notify_meta.py + BONZI_NOTIFY_SIGNUP_URL. Leave empty = bar hidden. Do not put Telegram links here (jackpot flow only). -->
@@ -562,6 +562,17 @@
             margin-top: 8px;
         }
 
+        .lever-container.lever-disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.25);
+            cursor: not-allowed;
+        }
+        .slot-machine.api-warming .status-led {
+            background: #d97706;
+            box-shadow: 0 0 6px rgba(217, 119, 6, 0.9);
+        }
+
         /* Mobile */
         @media (max-width: 400px) {
             .slot-machine { width: 100%; }
@@ -582,7 +593,7 @@
 
         <div class="slot-machine" id="slot-machine">
             <div class="win98-titlebar">
-                <span class="win98-title">&#127920; ???</span>
+                <span class="win98-title">&#127920; Bonzi Slot</span>
                 <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
             </div>
             <div class="win98-content">
@@ -682,16 +693,16 @@
             en: {
                 tagline: 'Pull the lever.',
                 notifyMsg: 'Early list: emails only.',
-                notifyMsgPending:
-                    'Get notified about future updates. Leave your email — the signup form opens here once the list URL is published.',
+                notifyMsgPending: '',
                 notifyCta: 'Get notified',
-                notifyBottomTitle: 'Get Notified',
-                notifyBottomSub: 'Leave your Email for Updates',
-                notifyBottomCta: 'Get notified',
-                notifyBottomPending:
-                    'The signup form will show here after you add your Mailchimp hosted form URL to bonzi-notify-signup-url.',
+                notifyBottomTitle: 'Email updates',
+                notifyBottomSub: 'Same page — hosted form opens with the next publish.',
+                notifyBottomCta: 'Join the list',
+                notifyBottomPending: 'Opening soon.',
                 lcdPrefix: 'Tokenise your',
                 statusIdle: 'Ready',
+                statusStarting: 'Waking up…',
+                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
                 clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
                 pwPlaceholder: 'access code',
                 footerPrivacy: 'Privacy',
@@ -724,16 +735,16 @@
             'pt-BR': {
                 tagline: 'Puxe a alavanca.',
                 notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
-                notifyMsgPending:
-                    'Avise-me sobre pr\u00F3ximas atualiza\u00E7\u00F5es. Deixe seu e-mail quando o formul\u00E1rio do Mailchimp estiver publicado.',
+                notifyMsgPending: '',
                 notifyCta: 'Avise-me',
-                notifyBottomTitle: 'Avise-me',
-                notifyBottomSub: 'Deixe seu e-mail para atualiza\u00E7\u00F5es.',
+                notifyBottomTitle: 'Atualiza\u00E7\u00F5es por e-mail',
+                notifyBottomSub: 'Nesta mesma p\u00E1gina — formul\u00E1rio na pr\u00F3xima publica\u00E7\u00E3o.',
                 notifyBottomCta: 'Quero receber',
-                notifyBottomPending:
-                    'O formul\u00E1rio aparece aqui depois de publicar a URL do Mailchimp em bonzi-notify-signup-url.',
+                notifyBottomPending: 'Em breve.',
                 lcdPrefix: 'Tokenise sua',
                 statusIdle: 'Pronto',
+                statusStarting: 'Acordando\u2026',
+                serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente de novo em alguns segundos.',
                 clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
                 pwPlaceholder: 'c\u00F3digo',
                 footerPrivacy: 'Privacidade',
@@ -847,8 +858,8 @@
                 } else {
                     msgEl.textContent = L.notifyMsgPending;
                     lk.style.display = 'none';
-                    bar.classList.remove('hidden');
-                    bar.setAttribute('aria-hidden', 'false');
+                    bar.classList.add('hidden');
+                    bar.setAttribute('aria-hidden', 'true');
                 }
             }
 
@@ -862,10 +873,12 @@
             if (gt) gt.textContent = L.tagline;
             var lp = document.getElementById('lcd-prefix');
             if (lp) lp.textContent = L.lcdPrefix;
+            var machineEl = document.getElementById('slot-machine');
+            var warmingNow = machineEl && machineEl.classList.contains('api-warming');
             var st = document.getElementById('status-ready');
-            if (st) st.textContent = L.statusIdle;
+            if (st) st.textContent = warmingNow ? L.statusStarting : L.statusIdle;
             var clueTmp = document.getElementById('clue-msg');
-            if (clueTmp) clueTmp.textContent = L.clueBar;
+            if (clueTmp) clueTmp.textContent = warmingNow ? L.serviceWarmingClue : L.clueBar;
             var pw = document.getElementById('pw');
             if (pw) pw.placeholder = L.pwPlaceholder;
             var fp = document.getElementById('footer-privacy');
@@ -920,6 +933,7 @@
         var tgLink = document.getElementById('tg-link');
         var closePrize = document.getElementById('close-prize');
         var spinning = false;
+        var apiWarmPoll = null;
         var pos = 0;
         var spins = 0;
         var cluesFound = {};
@@ -1008,6 +1022,73 @@
             }
         }
 
+        function setApiWarmUi(on) {
+            var L = getStr();
+            var st = document.getElementById('status-ready');
+            if (on) {
+                machine.classList.add('api-warming');
+                lever.classList.add('lever-disabled');
+                lever.setAttribute('aria-disabled', 'true');
+                if (st) st.textContent = L.statusStarting;
+                clueEl.textContent = L.serviceWarmingClue;
+            } else {
+                machine.classList.remove('api-warming');
+                lever.classList.remove('lever-disabled');
+                lever.removeAttribute('aria-disabled');
+                if (st) st.textContent = L.statusIdle;
+                clueEl.textContent = L.clueBar;
+            }
+        }
+
+        function fetchSlotRulesHealth() {
+            var api = getApiOrigin();
+            return fetch(api + '/api/slotgame/rules.json').then(function(r) {
+                return r.text().then(function(text) {
+                    var j = null;
+                    try {
+                        j = JSON.parse(text);
+                    } catch (eIgn) {
+                        j = null;
+                    }
+                    return { ok: r.ok, status: r.status, json: j };
+                });
+            });
+        }
+
+        function startWarmPolling() {
+            if (apiWarmPoll) return;
+            apiWarmPoll = setInterval(function() {
+                if (!machine.classList.contains('api-warming')) {
+                    clearInterval(apiWarmPoll);
+                    apiWarmPoll = null;
+                    return;
+                }
+                fetchSlotRulesHealth().then(function(res) {
+                    var j = res.json || {};
+                    if (res.ok && j.warming !== true && j.ok !== false) {
+                        setApiWarmUi(false);
+                        clearInterval(apiWarmPoll);
+                        apiWarmPoll = null;
+                    }
+                }).catch(function() {});
+            }, 12000);
+        }
+
+        function scheduleRulesHealthProbe() {
+            fetchSlotRulesHealth().then(function(res) {
+                var j = res.json || {};
+                if (!res.ok || j.warming === true || j.ok === false) {
+                    setApiWarmUi(true);
+                    startWarmPolling();
+                } else {
+                    setApiWarmUi(false);
+                }
+            }).catch(function() {
+                setApiWarmUi(true);
+                startWarmPolling();
+            });
+        }
+
         function _slotFetchJson(url, init) {
             return fetch(url, init).then(function (r) {
                 return r.text().then(function (text) {
@@ -1066,6 +1147,7 @@
         // Spin — server attempt receipt first, then animation; jackpot calls /win with that receipt
         lever.addEventListener('click', function() {
             if (spinning) return;
+            if (lever.classList.contains('lever-disabled')) return;
             spinning = true;
 
             clueEl.textContent = getStr().spinChecking;
@@ -1074,6 +1156,17 @@
                 var j = res.json || {};
                 if (!res.httpOk || !j.success) {
                     spinning = false;
+                    if (j.warming === true || res.status === 503) {
+                        setApiWarmUi(true);
+                        startWarmPolling();
+                        return;
+                    }
+                    var errLow = String(j.error || '').toLowerCase();
+                    if (errLow.indexOf('still starting') !== -1) {
+                        setApiWarmUi(true);
+                        startWarmPolling();
+                        return;
+                    }
                     clueEl.textContent = j.error || (getStr().spinBlocked + ' (' + res.status + ')');
                     if (typeof j.tries_remaining === 'number' && spinCountEl) {
                         spinCountEl.textContent = getStr().triesLeft(j.tries_remaining, j.max_tries || '\u2014');
@@ -1195,8 +1288,7 @@
             });
         });
 
-        // Auto-spin on load
-        setTimeout(function() { lever.click(); }, 500);
+        scheduleRulesHealthProbe();
 
         // Access code check
         function tryCode() {

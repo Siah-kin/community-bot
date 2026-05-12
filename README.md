@@ -1,8 +1,16 @@
 # Bonzi Community Bot (Oracle)
 
-Public website + docs for **Bonzi**: an open-source AI community-management stack for Web3 (anti-sybil, raid verification, contributor rewards) plus an **ERC-8004-compatible trust oracle**.
+**What this repo is:** the **public website** for Bonzi Vista (GitHub Pages): static HTML/CSS/JS, manuals, the **MIT-licensed** BONZI staking mini-app client, slot landing page, metrics, widgets, and ERC-8004 **discovery** files under `.well-known/`.
+
+**What this repo is not:** the Telegram bot runtime, admin dashboard, RAG stack, or trust engine **source code**—those live in private product infrastructure. Forking this repo gives you the **public site and open clients**, not a copy-paste of the full product backend.
+
+**GitHub About text:** keep it aligned with [docs/REPO_ABOUT.md](docs/REPO_ABOUT.md). Do not use legacy wording that claims this repo *is* the full AI bot with RAG and dashboards.
+
+**Agent discovery JSON** (`.well-known/agent*.json`) may be **auto-synced from the live API**; treat listed skills as **API surface / intent**, not a warranty that every path is live or row-proven for your tenant until you verify it.
 
 - **Live site:** https://bonzivista.org
+
+**GitHub Pages priority:** Every push to `main` should refresh the public site. This repo ships [`.github/workflows/pages.yml`](.github/workflows/pages.yml): turn it on under **Settings → Pages → Build and deployment → Source: GitHub Actions**. That runs a deploy on each `main` push with **concurrency** so overlapping pushes **finish** in order instead of cancelling mid-upload (set `cancel-in-progress: false`). If Pages looks stuck after a push, open **Actions** for the latest **Deploy GitHub Pages** run, confirm it is green, then hard-refresh `bonzivista.org` (CDN can cache HTML briefly). If you still use **Deploy from a branch** (`main` / root), pushes update Pages without Actions; pick **one** source in Settings to avoid duplicate or failed workflows. From Bonzi_v5, run `scripts/development/publish_public_pages_mirror.sh` to copy `data/static/tg/*` and push `main` in one step.
 - **Telegram:** https://t.me/Bonzivista_bot
 - **X:** https://x.com/Bonzi_vista
 - **Ethervista:** https://www.ethervista.app/how-it-works

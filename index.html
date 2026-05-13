@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-13-win98-neon-stack">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-win98-mock-parity-v1">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form → POST /api/public/waitlist). Optional legacy: set non-empty https URL to open an external hosted form instead. -->
@@ -21,32 +21,34 @@
     <link rel="stylesheet" href="css/bonzi-design.css">
     <style>
         body {
-            background: #0A0A0A;
-            color: #FAFAFA;
+            background: #000000;
+            color: #0a0a0a;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
             margin: 0;
         }
         .hidden { display: none !important; }
 
         :root {
-            --win98-sheet: rgb(216, 206, 240);
-            --title-start: #4c1d95;
-            --title-end: #7c3aed;
-            --btn-purple: #4c1d95;
-            --btn-purple-hover: #5b21b6;
+            --win98-face: #dcd6f7;
+            --win98-title: #6a329f;
+            --win98-btn: #6a329f;
+            --win98-btn-deep: #4b1999;
+            --neon-outer: rgba(106, 50, 159, 0.55);
+            --reel-lime: #00ff00;
         }
 
         /* === PUZZLE GATE === */
         .puzzle-gate {
             text-align: center;
             padding: 2rem;
-            max-width: 380px;
+            max-width: 480px;
             width: 100%;
+            box-sizing: border-box;
         }
         .puzzle-gate .logo {
             width: 80px;
@@ -57,9 +59,10 @@
         .puzzle-gate .logo:hover { transform: scale(1.05); }
         .puzzle-gate .logo:active { transform: scale(0.95); }
         .tagline {
-            color: #52525B;
-            font-size: 0.8rem;
-            margin-bottom: 2rem;
+            color: #f4f4f5;
+            font-size: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 1.75rem;
         }
 
         /* === WIN98 NEON STACK === */
@@ -73,18 +76,12 @@
 
         .win98-neon-window {
             box-sizing: border-box;
-            width: 336px;
+            width: min(460px, calc(100vw - 32px));
             max-width: 100%;
-            background: var(--win98-sheet);
-            border: 2px solid;
-            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
+            background: var(--win98-face);
+            border: 2px outset #f0f0f0;
             overflow: hidden;
-            animation: neonPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-            0%, 100% { box-shadow: 2px 2px 0 #000, 0 0 12px rgba(124, 58, 237, 0.35); }
-            50% { box-shadow: 2px 2px 0 #000, 0 0 22px rgba(124, 58, 237, 0.52); }
+            box-shadow: 0 0 20px 2px var(--neon-outer);
         }
 
         .win98-neon-window > #slot-machine {
@@ -105,107 +102,194 @@
         .win98-neon-body .access-row { margin-top: 0; }
 
         .win98-neon-body .access-row input {
-            background: #0a0a0a;
-            border: 2px inset #6b7280;
+            flex: 1 1 auto;
+            min-width: 0;
+            box-sizing: border-box;
+            width: auto;
+            max-width: none;
+            background: #ffffff;
+            color: #0a0a0a;
+            border: 2px inset #ffffff;
+            border-color: #404040 #ffffff #ffffff #404040;
+            padding: 0.45rem 0.65rem;
+            font-size: 12px;
+            text-align: center;
+            text-transform: none;
+            letter-spacing: normal;
+            outline: none;
         }
 
-        .win98-neon-body .spin-count { margin-top: 0.85rem; }
+        .win98-neon-body .access-row input:focus {
+            border-color: #404040 #ffffff #ffffff #404040;
+        }
+
+        .win98-neon-body .access-row input::placeholder {
+            color: #8a8a8a;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .win98-neon-body .spin-count {
+            margin-top: 0.85rem;
+            color: #3f3f46;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
         .win98-neon-body-updates .notify-bottom {
             margin: 0 auto;
-            padding: 0 0 0.75rem;
+            padding: 0.5rem 0 0.25rem;
             border-top: none;
-            max-width: 320px;
+            max-width: 100%;
+        }
+
+        .win98-neon-body-updates #notify-bottom-title {
+            font-size: 13px;
+            font-weight: 400;
+            font-family: 'Courier New', Courier, monospace;
+            color: #0a0a0a;
+            margin: 0 0 0.35rem;
+            letter-spacing: 0;
+        }
+
+        .win98-neon-body-updates #notify-bottom-sub {
+            font-size: 11px;
+            color: #4a4a55;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0 0 0.75rem;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"] {
+            background: #ffffff !important;
+            color: #0a0a0a !important;
+            border: 2px inset #ffffff !important;
+            border-color: #404040 #ffffff #ffffff #404040 !important;
+            border-radius: 0 !important;
+            font-family: 'Courier New', Courier, monospace !important;
+            font-size: 12px !important;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"]::placeholder {
+            color: #8a8a8a;
         }
 
         .win98-neon-body .access-row #submit-btn {
-            background: var(--btn-purple);
-            border: 2px outset #e9d5ff;
-            border-right-color: #3b0764;
-            border-bottom-color: #3b0764;
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%);
+            border: 2px outset #d8c4ff;
+            border-right-color: #2d0f52;
+            border-bottom-color: #2d0f52;
             color: #fff;
-            padding: 0.6rem 0.95rem;
-            font-size: 12px;
+            padding: 0.5rem 0.95rem;
+            font-size: 11px;
             font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Tahoma', 'MS Sans Serif', sans-serif;
             min-width: 4.75rem;
         }
 
-        .win98-neon-body .access-row #submit-btn:hover { background: var(--btn-purple-hover); }
+        .win98-neon-body .access-row #submit-btn:hover { filter: brightness(1.08); }
 
         .win98-neon-body .access-row #submit-btn:active { border-style: inset; }
 
         #waitlist-submit {
-            background: var(--btn-purple) !important;
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%) !important;
             color: #fff !important;
-            border: 2px outset #e9d5ff !important;
-            border-right-color: #3b0764 !important;
-            border-bottom-color: #3b0764 !important;
-            font-family: 'Segoe UI', Tahoma, sans-serif !important;
+            border: 2px outset #d8c4ff !important;
+            border-right-color: #2d0f52 !important;
+            border-bottom-color: #2d0f52 !important;
+            font-family: 'Tahoma', 'MS Sans Serif', sans-serif !important;
             font-weight: bold !important;
+            border-radius: 0 !important;
         }
 
-        #waitlist-submit:hover { background: var(--btn-purple-hover) !important; }
+        #waitlist-submit:hover { filter: brightness(1.08) !important; }
 
         #waitlist-submit:active { border-style: inset !important; }
 
         .win98-neon-site-decor {
             box-sizing: border-box;
-            width: 336px;
+            width: min(460px, calc(100vw - 32px));
             max-width: 100%;
             margin: 0 auto 1.25rem;
-            padding: 0 1rem;
+            padding: 0 16px;
             pointer-events: none;
         }
 
         .win98-winamp-stripe {
-            background: linear-gradient(#2d2438, #1a1520);
-            border: 2px solid #4b5563;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-            color: #c4b5fd;
-            padding: 8px 10px;
-            text-align: left;
-            line-height: 1.35;
+            display: flex;
+            align-items: stretch;
+            flex-direction: row;
+            height: 32px;
+            border: 1px solid #5a6270;
+            background: var(--win98-face);
             margin-bottom: 10px;
+            box-sizing: border-box;
+            font-size: 11px;
+            overflow: hidden;
         }
 
-        .win98-winamp-stripe strong {
-            color: #e9d5ff;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+        .win98-winamp-stripe .winamp-brand {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            background: #2244cc;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
             font-weight: bold;
+            font-size: 11px;
+        }
+
+        .win98-winamp-stripe .winamp-lcd {
+            flex: 1;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 8px;
+            border-left: 1px solid #2d2d2d;
+        }
+
+        .win98-winamp-stripe .winamp-time {
+            font-family: 'Courier New', Courier, monospace;
+            color: #7cfc00;
+            font-weight: bold;
+            letter-spacing: 0.04em;
         }
 
         .win98-meta-lines {
             pointer-events: auto;
             text-align: center;
             font-size: 10px;
-            color: #71717a;
+            color: #9ca3af;
             line-height: 1.55;
             font-family: 'Courier New', Courier, monospace;
         }
 
         .win98-meta-lines a {
-            color: #a78bfa;
-            text-decoration: none;
+            color: #c4b5fd;
+            text-decoration: underline;
         }
 
-        .win98-meta-lines a:hover { text-decoration: underline; }
+        .win98-meta-lines a:hover { filter: brightness(1.08); }
+
+        #gate .footer-privacy-slot a,
+        #gate .footer-privacy-slot #footer-privacy {
+            color: #c4b5fd;
+            text-decoration: underline;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
         /* === WIN98 SLOT MACHINE === */
         .slot-machine {
-            width: 336px;
+            width: 100%;
             max-width: 100%;
-            margin: 0 auto 1.5rem;
-            background: #d8cef0;
-            border: 2px solid;
-            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
-            box-shadow: 2px 2px 0 #000, 4px 4px 12px rgba(124, 58, 237, 0.3);
+            margin: 0 auto;
+            background: var(--win98-face);
+            border: none;
             overflow: hidden;
         }
         .win98-titlebar {
-            background: linear-gradient(90deg, var(--title-start), var(--title-end));
-            padding: 3px 4px;
+            background: var(--win98-title);
+            padding: 3px 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -213,11 +297,13 @@
         }
         .win98-title {
             color: #fff;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+            font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
             flex: 1;
             min-width: 0;
+            text-shadow: none;
+            text-align: left;
         }
         .win98-info-btn {
             flex-shrink: 0;
@@ -235,7 +321,7 @@
         .notify-bar {
             box-sizing: border-box;
             width: 100%;
-            max-width: 336px;
+            max-width: min(460px, calc(100vw - 32px));
             margin: 0 auto 0.75rem;
             padding: 8px 10px;
             display: flex;
@@ -379,15 +465,7 @@
             padding: 6px 4px;
         }
         .lcd-marquee-caption .lcd-dash-line {
-            display: block;
-            width: 100%;
-            max-width: min(260px, 100%);
-            height: 0;
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-top: 1px dashed rgba(148, 163, 184, 0.7);
-            box-sizing: border-box;
+            border-top: 1px dashed rgba(255, 255, 255, 0.55);
         }
         .lcd-marquee-lines {
             display: flex;
@@ -402,12 +480,12 @@
         }
         .lcd-line1 {
             display: block;
-            color: #c4b5fd;
+            color: #ffffff;
             font-size: 11px;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(167, 139, 250, 0.75);
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 1px;
+            text-shadow: none;
             margin-bottom: 2px;
         }
         .lcd-line-tokenise {
@@ -417,14 +495,12 @@
             position: relative;
             height: 60px;
             overflow: hidden;
-            background: #0a0a1a;
-            border: 3px solid;
-            border-color: #2a1638 #dad4ec #fdfcff #533c6e;
-            box-shadow:
-                inset 0 3px 8px rgba(0, 0, 0, 0.92),
-                inset 0 0 0 2px rgba(10, 6, 20, 0.95);
+            background: #000000;
+            border: 2px solid;
+            border-color: #404040 #ffffff #ffffff #404040;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.5);
             box-sizing: border-box;
-            border-radius: 2px;
+            border-radius: 0;
         }
         .slot-reel {
             position: relative;
@@ -437,14 +513,17 @@
             padding: 0 16px;
             font-size: 22px;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
-            color: #22c55e;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: var(--reel-lime);
             white-space: nowrap;
             text-align: center;
+            text-shadow: 0 0 6px rgba(0, 255, 0, 0.45);
         }
         .slot-reel .word.hint-word {
-            color: #a78bfa;
-            text-shadow: 0 0 8px rgba(167, 139, 250, 0.6);
+            color: #c4b5fd;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-shadow: 0 0 6px rgba(196, 181, 253, 0.6);
         }
         .slot-reel .word.key-word {
             color: #d4af37;
@@ -459,9 +538,9 @@
         /* Lever */
         .lever-container {
             width: 50px;
-            background: #d8cef0;
+            background: var(--win98-face);
             border: 2px solid;
-            border-color: #8b7cb3 #ede8f5 #ede8f5 #8b7cb3;
+            border-color: #8b7cb3 #f5f0ff #f5f0ff #8b7cb3;
             padding: 8px;
             cursor: pointer;
             display: flex;
@@ -475,7 +554,7 @@
         .lever-track {
             width: 12px;
             height: 60px;
-            background: #000;
+            background: #4a4a4a;
             border: 1px solid;
             border-color: #808080 #ffffff #ffffff #808080;
             border-radius: 6px;
@@ -511,9 +590,9 @@
             align-items: center;
             gap: 8px;
             padding: 8px 12px;
-            background: #c8bce0;
-            border-top: 1px solid #ede8f5;
-            border-bottom: 1px solid #8b7cb3;
+            background: var(--win98-face);
+            border-top: 1px solid #a89bc4;
+            border-bottom: 1px solid #8b7eb8;
         }
         .bonzi-logo-img {
             width: 24px;
@@ -528,24 +607,26 @@
 
         /* Status bar */
         .win98-statusbar {
-            background: #d8cef0;
-            border-top: 1px solid #8b7cb3;
-            padding: 4px 8px;
+            background: var(--win98-face);
+            border-top: 2px inset #b8b0d4;
+            padding: 5px 8px;
             font-size: 11px;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-family: 'Courier New', Courier, monospace;
         }
         .status-led {
-            width: 8px;
-            height: 8px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
-            border: 1px solid #404040;
+            border: 1px solid #333;
             background: #22c55e;
+            flex-shrink: 0;
         }
-        .status-text { color: #3b1f6b; }
-        .status-divider { color: #8b7cb3; }
-        .clue-msg { color: #3b1f6b; font-style: italic; }
+        .status-text { color: #1a1a1a; }
+        .status-divider { color: #6b5a7a; }
+        .clue-msg { color: #2d1b4e; font-style: italic; }
 
         /* Jackpot states */
         .slot-machine.jackpot {
@@ -708,7 +789,7 @@
         .site-footer-slot {
             margin-top: 1.25rem;
             padding: 12px 8px 20px;
-            max-width: 336px;
+            max-width: min(460px, calc(100vw - 32px));
             width: 100%;
             box-sizing: border-box;
             text-align: center;
@@ -782,13 +863,12 @@
         .funnel-msg-dlg {
             width: 320px;
             max-width: min(320px, calc(100vw - 28px));
-            background: #d8cef0;
-            border: 2px solid;
-            border-color: #ede8f5 #5b21b6 #5b21b6 #ede8f5;
-            box-shadow: 4px 4px 0 #111, 0 0 20px rgba(124, 58, 237, 0.45);
+            background: var(--win98-face);
+            border: 2px outset #f0f0f0;
+            box-shadow: 4px 4px 0 #111, 0 0 20px rgba(106, 50, 159, 0.4);
         }
         .funnel-msg-titlebar {
-            background: linear-gradient(90deg, var(--title-start), var(--title-end));
+            background: var(--win98-title);
             color: #fff;
             font-size: 12px;
             font-weight: bold;
@@ -836,7 +916,7 @@
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
-        <p class="tagline" id="gate-tagline">Pull the lever.</p>
+        <p class="tagline" id="gate-tagline">Pull lever to spin.</p>
 
         <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
             <span class="notify-bar-text" id="notify-bar-msg">Early list: emails only.</span>
@@ -907,14 +987,14 @@
                 </div>
                 <div class="win98-neon-body win98-neon-body-updates">
                     <section class="notify-bottom" id="email-updates" aria-label="Email updates">
-                        <h2 class="notify-bottom-title" id="notify-bottom-title">Email updates</h2>
+                        <h2 class="notify-bottom-title" id="notify-bottom-title">Enter email for updates.</h2>
                         <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist — one field, our database only.</p>
                         <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Join the list</a>
                         <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
                         <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
                             <div class="waitlist-field-row">
                                 <input type="email" id="waitlist-email" name="email" maxlength="254" required autocomplete="email" inputmode="email" aria-required="true">
-                                <button type="submit" id="waitlist-submit">Join</button>
+                                <button type="submit" id="waitlist-submit">Submit</button>
                             </div>
                             <input type="text" name="website" id="waitlist-hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
                         </form>
@@ -935,13 +1015,14 @@
         </footer>
     </div>
 
-    <div class="win98-neon-site-decor">
-        <div class="win98-winamp-stripe" aria-hidden="true"><strong>Winamp</strong><br><span style="opacity:0.82">00:00 - STOPPED</span></div>
+        <div class="win98-neon-site-decor">
+        <div class="win98-winamp-stripe" aria-hidden="true">
+            <span class="winamp-brand">Winamp</span>
+            <span class="winamp-lcd"><span class="winamp-time">00:00 - STOPPED</span></span>
+        </div>
         <nav class="win98-meta-lines" aria-label="Site credits">
             sponsored by Ethervista | CTO | bonzivista.org<br>
-            <a href="https://opensource.org/licenses/MIT" rel="noopener noreferrer">MIT license</a>
-            &#183;
-            <a href="privacy.html">privacy</a>
+            <a href="https://opensource.org/licenses/MIT" rel="noopener noreferrer">mit license</a>, <a href="privacy.html">privacy policy</a>
         </nav>
     </div>
 
@@ -998,7 +1079,7 @@
                 notifyMsg: 'Early list: emails only.',
                 notifyMsgPending: '',
                 notifyCta: 'Get notified',
-                notifyBottomTitle: 'Email updates',
+                notifyBottomTitle: 'Enter email for updates.',
                 notifyBottomSub: 'Bonzi waitlist — one field, our database only.',
                 notifyBottomCta: 'Join the list',
                 notifyBottomPending: '',
@@ -1010,12 +1091,12 @@
                 waitlistErr: 'Could not save. Try again in a moment.',
                 waitlistModalTitle: 'Bonzi Vista',
                 waitlistModalOk: 'OK',
-                waitlistJoin: 'Join',
+                waitlistJoin: 'Submit',
                 waitlistEmailPh: 'username@msn.com',
                 lcdPrefix: 'Tokenise your',
                 statusIdle: 'Ready',
-                statusStarting: 'Waking up…',
-                serviceWarmingClue: 'System warming up. Please wait.',
+                statusStarting: 'Waking up...',
+                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
                 clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
                 pwPlaceholder: 'access code',
                 footerPrivacy: 'Privacy',
@@ -1050,7 +1131,7 @@
                 notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
                 notifyMsgPending: '',
                 notifyCta: 'Avise-me',
-                notifyBottomTitle: 'Atualiza\u00E7\u00F5es por e-mail',
+                notifyBottomTitle: 'Digite o e-mail para atualiza\u00E7\u00F5es.',
                 notifyBottomSub: 'Lista Bonzi — um campo, nosso banco s\u00F3.',
                 notifyBottomCta: 'Quero entrar',
                 notifyBottomPending: '',
@@ -1062,12 +1143,12 @@
                 waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
                 waitlistModalTitle: 'Bonzi Vista',
                 waitlistModalOk: 'OK',
-                waitlistJoin: 'Entrar',
+                waitlistJoin: 'Enviar',
                 waitlistEmailPh: 'usuario@exemplo.com',
                 lcdPrefix: 'Tokenise sua',
                 statusIdle: 'Pronto',
-                statusStarting: 'Acordando\u2026',
-                serviceWarmingClue: 'Sistema aquecendo. Aguarde.',
+                statusStarting: 'Acordando...',
+                serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente a alavanca de novo em alguns segundos.',
                 clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
                 pwPlaceholder: 'c\u00F3digo',
                 footerPrivacy: 'Privacidade',
@@ -1239,9 +1320,9 @@
                 swt.textContent = '\uD83C\uDFB0 ' + L.winSlotTitle;
             }
             var awt = document.getElementById('access-win-title');
-            if (awt && L.winAccessTitle) awt.textContent = L.winAccessTitle;
+            if (awt && L.winAccessTitle) awt.textContent = '\uD83D\uDD11 ' + L.winAccessTitle;
             var uwt = document.getElementById('updates-win-title');
-            if (uwt && L.winUpdatesTitle) uwt.textContent = L.winUpdatesTitle;
+            if (uwt && L.winUpdatesTitle) uwt.textContent = '\uD83D\uDCE3 ' + L.winUpdatesTitle;
             var sbtn = document.getElementById('submit-btn');
             if (sbtn && L.accessSubmitLabel) sbtn.textContent = L.accessSubmitLabel;
             var lp = document.getElementById('lcd-prefix');

@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-playlist-titles">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-slot-minimal-green-serif">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -440,6 +440,69 @@
             letter-spacing: 0.04em;
         }
 
+        /* Slot + waitlist panes: no outer Win98 frame (black page + green copy only). */
+        .win98-neon-window[data-pane="slot"],
+        .win98-neon-window[data-pane="updates"] {
+            border: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .win98-neon-window[data-pane="slot"] #slot-machine {
+            background: transparent;
+        }
+
+        .win98-neon-window[data-pane="updates"] .win98-titlebar {
+            display: none !important;
+        }
+
+        .win98-neon-window[data-pane="slot"] .bonzi-logos {
+            background: #0a0a0a;
+            border-top: 1px solid #262626;
+            border-bottom: 1px solid #262626;
+        }
+
+        .win98-neon-window[data-pane="slot"] .win98-statusbar {
+            background: #0a0a0a;
+            border-top: 1px solid #333333;
+        }
+
+        .win98-neon-window[data-pane="slot"] .status-text { color: #86efac; }
+        .win98-neon-window[data-pane="slot"] .status-divider { color: #3f3f46; }
+        .win98-neon-window[data-pane="slot"] .clue-msg { color: #5cb85c; font-style: normal; }
+
+        .slot-info-minimal {
+            margin-left: auto;
+            flex-shrink: 0;
+            background: transparent;
+            border: 1px solid #2d6b2d;
+            color: #7cfc00;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 2px 10px;
+            cursor: pointer;
+            border-radius: 0;
+        }
+
+        .slot-info-minimal:hover {
+            filter: brightness(1.15);
+            border-color: #7cfc00;
+        }
+
+        /* Slot reel: bold serif + neon lime + glow (match Launch reference). */
+        .win98-neon-window[data-pane="slot"] .lcd-panel-slot {
+            background: transparent;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .win98-neon-window[data-pane="slot"] .win98-content {
+            background: #000000;
+            padding: 10px 12px;
+        }
+
         /* === WIN98 SLOT MACHINE === */
         .slot-machine {
             width: 100%;
@@ -685,19 +748,24 @@
             height: 60px;
             line-height: 60px;
             padding: 0 16px;
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: 700;
             font-family: Georgia, 'Times New Roman', Times, serif;
-            color: var(--reel-lime);
+            color: #00ff00;
             white-space: nowrap;
             text-align: center;
-            text-shadow: 0 0 6px rgba(0, 255, 0, 0.45);
+            -webkit-font-smoothing: antialiased;
+            text-shadow:
+                0 0 2px #00ff00,
+                0 0 8px #00ff00,
+                0 0 14px rgba(0, 255, 0, 0.55);
         }
         .slot-reel .word.hint-word {
             color: #c4b5fd;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 18px;
-            text-shadow: 0 0 6px rgba(196, 181, 253, 0.6);
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: 700;
+            font-size: 22px;
+            text-shadow: 0 0 6px rgba(196, 181, 253, 0.65), 0 0 12px rgba(167, 139, 250, 0.35);
         }
         .slot-reel .word.key-word {
             color: #d4af37;
@@ -809,9 +877,6 @@
         .slot-machine.jackpot .lcd-panel {
             background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
             animation: jackpot-glow 0.3s ease-in-out infinite alternate;
-        }
-        .slot-machine.jackpot .lcd-dash-line {
-            border-top-color: rgba(253, 250, 255, 0.55);
         }
         .slot-machine.jackpot .status-led {
             background: #7c3aed;
@@ -1090,19 +1155,8 @@
         <div class="win98-neon-stack">
             <div class="win98-neon-window" data-pane="slot">
                 <div class="slot-machine" id="slot-machine">
-                    <div class="win98-titlebar">
-                        <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
-                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
-                    </div>
                     <div class="win98-content">
-                        <div class="lcd-panel">
-                            <div class="lcd-marquee-caption" aria-live="polite">
-                                <span class="lcd-dash-line" aria-hidden="true"></span>
-                                <div class="lcd-marquee-lines lcd-label-stack">
-                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
-                                </div>
-                                <span class="lcd-dash-line" aria-hidden="true"></span>
-                            </div>
+                        <div class="lcd-panel lcd-panel-slot">
                             <div class="lcd-screen">
                                 <div class="slot-reel" id="slot-reel"></div>
                             </div>
@@ -1127,6 +1181,7 @@
                         <span class="status-text" id="status-ready">Ready</span>
                         <span class="status-divider">|</span>
                         <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
+                        <button type="button" id="slot-info-btn" class="slot-info-minimal" title="Rules">Rules</button>
                     </div>
                 </div>
             </div>
@@ -1530,18 +1585,12 @@
             document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
             var gt = document.getElementById('gate-tagline');
             if (gt) gt.textContent = L.tagline;
-            var swt = document.getElementById('slot-win-title');
-            if (swt && L.winSlotTitle) {
-                swt.textContent = '\uD83C\uDFB0 ' + L.winSlotTitle;
-            }
             var awt = document.getElementById('access-win-title');
             if (awt && L.winAccessTitle) awt.textContent = '\uD83D\uDD11 ' + L.winAccessTitle;
             var uwt = document.getElementById('updates-win-title');
             if (uwt && L.winUpdatesTitle) uwt.textContent = '\uD83D\uDCE3 ' + L.winUpdatesTitle;
             var sbtn = document.getElementById('submit-btn');
             if (sbtn && L.accessSubmitLabel) sbtn.textContent = L.accessSubmitLabel;
-            var lp = document.getElementById('lcd-prefix');
-            if (lp) lp.textContent = L.lcdPrefix;
             var machineEl = document.getElementById('slot-machine');
             var warmingNow = machineEl && machineEl.classList.contains('api-warming');
             var st = document.getElementById('status-ready');
@@ -1563,7 +1612,10 @@
             var cplab = document.getElementById('close-prize-label');
             if (cplab) cplab.textContent = L.closeModal;
             var ib = document.getElementById('slot-info-btn');
-            if (ib) ib.setAttribute('title', L.infoTitle);
+            if (ib && L.infoTitle) {
+                ib.setAttribute('title', L.infoTitle);
+                ib.textContent = L.infoTitle;
+            }
             var levEl = document.getElementById('slot-lever');
             if (levEl) levEl.setAttribute('aria-label', L.leverAria);
             var bp = document.getElementById('lang-pt-br');

@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-ratm-mp3">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-updates-terminal-skin">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -149,41 +149,102 @@
             font-family: 'Courier New', Courier, monospace;
         }
 
+        /* Updates pane: CRT/terminal skin inside the same Win98 window chrome (balances with other boxes). */
+        .win98-neon-body-updates {
+            background: #0a0a0a;
+            color: #7cfc00;
+            padding: 12px 14px 14px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
         .win98-neon-body-updates .notify-bottom {
             margin: 0 auto;
-            padding: 0.5rem 0 0.25rem;
+            padding: 0.35rem 0 0.25rem;
             border-top: none;
             max-width: 100%;
+            text-align: center;
         }
 
         .win98-neon-body-updates #notify-bottom-title {
             font-size: 13px;
             font-weight: 400;
             font-family: 'Courier New', Courier, monospace;
-            color: #0a0a0a;
+            color: #7cfc00;
             margin: 0 0 0.35rem;
-            letter-spacing: 0;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 6px rgba(124, 252, 0, 0.35);
         }
 
         .win98-neon-body-updates #notify-bottom-sub {
             font-size: 11px;
-            color: #4a4a55;
+            color: #5cb85c;
             font-family: 'Courier New', Courier, monospace;
             margin: 0 0 0.75rem;
+            line-height: 1.45;
+        }
+
+        .win98-neon-body-updates .notify-bottom-cta {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            padding: 0.45rem 0.85rem;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            color: #0a0a0a !important;
+            text-decoration: none;
+            background: #7cfc00;
+            border: 2px outset #5cb85c;
+            border-right-color: #1a3d1a;
+            border-bottom-color: #1a3d1a;
+            border-radius: 0;
+        }
+
+        .win98-neon-body-updates .notify-bottom-cta:hover {
+            filter: brightness(1.06);
+        }
+
+        .win98-neon-body-updates #notify-bottom-pending {
+            color: #5cb85c !important;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .win98-neon-body-updates .notify-waitlist-form input[type="email"] {
-            background: #ffffff !important;
-            color: #0a0a0a !important;
-            border: 2px inset #ffffff !important;
-            border-color: #404040 #ffffff #ffffff #404040 !important;
+            background: #000000 !important;
+            color: #7cfc00 !important;
+            border: 1px solid #2d6b2d !important;
             border-radius: 0 !important;
             font-family: 'Courier New', Courier, monospace !important;
             font-size: 12px !important;
+            box-shadow: inset 0 0 0 1px #0f1f0f;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"]:focus {
+            outline: 1px solid #7cfc00;
+            outline-offset: 1px;
         }
 
         .win98-neon-body-updates .notify-waitlist-form input[type="email"]::placeholder {
-            color: #8a8a8a;
+            color: #3d6b3d !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit {
+            background: #0a0a0a !important;
+            color: #7cfc00 !important;
+            border: 2px outset #2d6b2d !important;
+            border-right-color: #142814 !important;
+            border-bottom-color: #142814 !important;
+            font-family: 'Courier New', Courier, monospace !important;
+            font-weight: bold !important;
+            border-radius: 0 !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit:hover {
+            filter: brightness(1.12);
+            background: #111811 !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit:active {
+            border-style: inset !important;
         }
 
         .win98-neon-body .access-row #submit-btn {
@@ -1060,7 +1121,7 @@
                 <div class="win98-neon-body win98-neon-body-updates">
                     <section class="notify-bottom" id="email-updates" aria-label="Email updates">
                         <h2 class="notify-bottom-title" id="notify-bottom-title">Enter email for updates.</h2>
-                        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist — one field, our database only.</p>
+                        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist - one field, our database only.</p>
                         <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Open signup</a>
                         <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
                         <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
@@ -1176,7 +1237,7 @@
                 notifyMsgPending: '',
                 notifyCta: 'Get notified',
                 notifyBottomTitle: 'Enter email for updates.',
-                notifyBottomSub: 'Bonzi waitlist — one field, our database only.',
+                notifyBottomSub: 'Bonzi waitlist - one field, our database only.',
                 notifyBottomCta: 'Open signup',
                 notifyBottomPending: '',
                 winSlotTitle: 'Bonzi slot',
@@ -1236,7 +1297,7 @@
                 notifyMsgPending: '',
                 notifyCta: 'Avise-me',
                 notifyBottomTitle: 'Digite o e-mail para atualiza\u00E7\u00F5es.',
-                notifyBottomSub: 'Lista Bonzi — um campo, nosso banco s\u00F3.',
+                notifyBottomSub: 'Lista Bonzi - um campo, nosso banco s\u00F3.',
                 notifyBottomCta: 'Abrir cadastro',
                 notifyBottomPending: '',
                 winSlotTitle: 'Bonzi slot',

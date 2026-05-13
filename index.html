@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-footer-order-mit-repo">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-player-demo-wav">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -278,12 +278,55 @@
             flex-shrink: 0;
             display: flex;
             align-items: center;
-            padding: 0 10px;
+            gap: 6px;
+            padding: 0 8px;
             background: #2244cc;
             color: #ffffff;
             font-family: Arial, sans-serif;
             font-weight: bold;
             font-size: 11px;
+        }
+
+        .win98-winamp-stripe .winamp-brand .winamp-logo-img {
+            display: block;
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .win98-winamp-stripe .winamp-transport {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 6px;
+            border-left: 1px solid #3d4a6b;
+            background: linear-gradient(#e8eaf0 0%, #d4d8e0 45%, #c8ccd6 100%);
+        }
+
+        .win98-winamp-stripe .winamp-btn {
+            font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+            font-size: 10px;
+            line-height: 1;
+            min-width: 26px;
+            height: 22px;
+            padding: 0 5px;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #5a6270;
+            border-bottom-color: #5a6270;
+            background: var(--win98-face);
+            color: #0a0a0a;
+            cursor: pointer;
+        }
+
+        .win98-winamp-stripe .winamp-btn:active {
+            border-style: inset;
+            border-top-color: #5a6270;
+            border-left-color: #5a6270;
         }
 
         .win98-winamp-stripe .winamp-lcd {
@@ -294,6 +337,7 @@
             justify-content: flex-end;
             padding: 0 8px;
             border-left: 1px solid #2d2d2d;
+            min-width: 0;
         }
 
         .win98-winamp-stripe .winamp-time {
@@ -937,6 +981,8 @@
 </head>
 <body class="bonzi-slot-page">
     <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
+    <!-- Homage stripe: demo audio (synthetic tone, wav). Replace with licensed MP3 in sounds/ if preferred. -->
+    <audio id="winamp-player" preload="metadata"><source src="sounds/winamp-demo.wav" type="audio/wav"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
@@ -1059,9 +1105,16 @@
                 </div>
             </footer>
 
-            <div class="win98-winamp-stripe" aria-hidden="true">
-                <span class="winamp-brand">Winamp</span>
-                <span class="winamp-lcd"><span class="winamp-time">00:00 - STOPPED</span></span>
+            <div class="win98-winamp-stripe" role="group" aria-label="">
+                <div class="winamp-brand">
+                    <img src="assets/winamp-logo.png" alt="" class="winamp-logo-img" width="22" height="22">
+                    <span aria-hidden="true">Winamp</span>
+                </div>
+                <div class="winamp-transport">
+                    <button type="button" class="winamp-btn" id="winamp-play" aria-pressed="false">&#9654;</button>
+                    <button type="button" class="winamp-btn" id="winamp-stop">&#9632;</button>
+                </div>
+                <span class="winamp-lcd"><span class="winamp-time">00:00 / 00:00 — STOPPED</span></span>
             </div>
         </div>
     </div>
@@ -1107,6 +1160,7 @@
         }
 
         var LOCALE_KEY = 'bonzi_site_lang';
+        var bonziWinampLangRefresh = null;
         var currentLang = 'en';
         try {
             var _st = (localStorage.getItem(LOCALE_KEY) || 'en').toLowerCase();
@@ -1160,6 +1214,13 @@
                 logoHint: 'Hint: surname + 26.',
                 infoTitle: 'Rules',
                 leverAria: 'Pull lever',
+                winampGroupAria: 'Retro-style demo audio player',
+                winampPlay: 'Play demo',
+                winampPause: 'Pause',
+                winampStop: 'Stop',
+                winampStopped: 'STOPPED',
+                winampPlayState: 'PLAY',
+                winampPauseState: 'PAUSE',
                 hints: {
                     'Euler': 'Code hint: math name on reel (not money).',
                     '26': 'Code hint: 26 = A–Z. Use with the other hint.',
@@ -1213,6 +1274,13 @@
                 logoHint: 'Dica: sobrenome + 26.',
                 infoTitle: 'Regras',
                 leverAria: 'Puxar alavanca',
+                winampGroupAria: 'Reprodutor demo em estilo retr\u00F4',
+                winampPlay: 'Reproduzir demo',
+                winampPause: 'Pausar',
+                winampStop: 'Parar',
+                winampStopped: 'PARADO',
+                winampPlayState: 'TOCAR',
+                winampPauseState: 'PAUSA',
                 hints: {
                     'Euler': 'Dica do c\u00F3digo: nome de matem\u00E1tico no rolo (n\u00E3o \u00E9 dinheiro).',
                     '26': 'Dica: 26 = A-Z. Junte \u00E0 outra dica.',
@@ -1409,6 +1477,7 @@
                 fhd.textContent = L.waitlistModalTitle;
             }
             refreshNotifyBar();
+            if (typeof bonziWinampLangRefresh === 'function') bonziWinampLangRefresh();
         }
 
         // === SLOT WORDS ===
@@ -1817,6 +1886,83 @@
         });
 
         scheduleRulesHealthProbe();
+
+        (function wireWinampStripe() {
+            var stripe = document.querySelector('.win98-winamp-stripe');
+            var audio = document.getElementById('winamp-player');
+            var lcd = stripe ? stripe.querySelector('.winamp-time') : null;
+            var playBtn = document.getElementById('winamp-play');
+            var stopBtn = document.getElementById('winamp-stop');
+            if (!stripe || !audio || !lcd || !playBtn || !stopBtn) return;
+
+            function durSec() {
+                var d = audio.duration;
+                return (typeof d === 'number' && isFinite(d)) ? d : 0;
+            }
+
+            function fmt(sec) {
+                sec = Math.max(0, Math.floor(sec || 0));
+                var mo = Math.floor(sec / 60);
+                var s = sec % 60;
+                function pad(n) { return (n < 10 ? '0' : '') + n; }
+                return pad(mo) + ':' + pad(s);
+            }
+
+            function lcdPaint(stateTok) {
+                var L = getStr();
+                var st = stateTok !== undefined ? stateTok : L.winampStopped;
+                lcd.textContent = fmt(audio.currentTime) + ' / ' + fmt(durSec()) + ' - ' + st;
+            }
+
+            function updateWinampStripe() {
+                var L = getStr();
+                stripe.setAttribute('aria-label', L.winampGroupAria);
+                stopBtn.setAttribute('aria-label', L.winampStop);
+                if (audio.paused) {
+                    playBtn.innerHTML = '&#9654;';
+                    playBtn.setAttribute('aria-pressed', 'false');
+                    playBtn.setAttribute('aria-label', L.winampPlay);
+                } else {
+                    playBtn.innerHTML = '&#10074;&#10074;';
+                    playBtn.setAttribute('aria-pressed', 'true');
+                    playBtn.setAttribute('aria-label', L.winampPause);
+                }
+                if (audio.paused && audio.currentTime < 0.05) lcdPaint(L.winampStopped);
+                else if (audio.paused) lcdPaint(L.winampPauseState);
+                else lcdPaint(L.winampPlayState);
+            }
+
+            bonziWinampLangRefresh = updateWinampStripe;
+
+            updateWinampStripe();
+
+            playBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    var p = audio.play();
+                    if (p && typeof p.catch === 'function') p.catch(function() {});
+                } else {
+                    audio.pause();
+                }
+            });
+
+            stopBtn.addEventListener('click', function() {
+                audio.pause();
+                audio.currentTime = 0;
+                lcdPaint(getStr().winampStopped);
+                updateWinampStripe();
+            });
+
+            audio.addEventListener('play', function() { lcdPaint(getStr().winampPlayState); updateWinampStripe(); });
+            audio.addEventListener('pause', updateWinampStripe);
+            audio.addEventListener('timeupdate', function() {
+                if (!audio.paused) lcdPaint(getStr().winampPlayState);
+            });
+            audio.addEventListener('loadedmetadata', updateWinampStripe);
+            audio.addEventListener('ended', function() {
+                lcdPaint(getStr().winampStopped);
+                updateWinampStripe();
+            });
+        })();
 
         (function wireWaitlistForm() {
             var form = document.getElementById('waitlist-form');

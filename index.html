@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-13-stake-footer-nav-scope-push">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-footer-order-mit-repo">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -1036,16 +1036,8 @@
                 </div>
             </div>
 
-            <!-- Same structure as stake-tg.html site-footer (logos + links) -->
+            <!-- Footer stack: CTO, sponsor, repo license + privacy (operator order) -->
             <footer class="site-footer slot-stake-footer" aria-label="Site footer">
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
-                    <span style="color: #71717A;">sponsored by
-                        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                            <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
-                            Ethervista
-                        </a>
-                    </span>
-                </div>
                 <div class="footer-cto-row">
                     <span style="color: #71717A;">CTO</span>
                     <span style="color: #52525b;"> | </span>
@@ -1054,8 +1046,16 @@
                         Bonzivista.org
                     </a>
                 </div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+                    <span style="color: #71717A;">sponsored by
+                        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                            <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                            Ethervista
+                        </a>
+                    </span>
+                </div>
                 <div style="font-size: 12px; color: #71717A;">
-                    <span id="footer-mit-lic">mit license</span>, <a href="privacy.html" id="footer-privacy" style="color: #71717A; text-decoration: none;">privacy policy</a>
+                    <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" id="footer-mit-repo" style="color: #71717A; text-decoration: none;"><span id="footer-mit-lic">mit license</span></a><span aria-hidden="true">, </span><a href="privacy.html" id="footer-privacy" style="color: #71717A; text-decoration: none;">privacy policy</a>
                 </div>
             </footer>
 
@@ -1215,7 +1215,7 @@
                 leverAria: 'Puxar alavanca',
                 hints: {
                     'Euler': 'Dica do c\u00F3digo: nome de matem\u00E1tico no rolo (n\u00E3o \u00E9 dinheiro).',
-                    '26': 'Dica: 26 = A\u2013Z. Junte \u00E0 outra dica.',
+                    '26': 'Dica: 26 = A-Z. Junte \u00E0 outra dica.',
                     'e^i\u03C0+1=0': 'Dica: f\u00F3rmula famosa. Mesmo jogo do teclado.',
                     'K\u00F6nigsberg': 'Dica: quebra-cabe\u00E7a cl\u00E1ssico. Mesmo jogo do teclado.'
                 }

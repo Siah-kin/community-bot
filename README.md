@@ -2,7 +2,7 @@
 
 **What this repo is:** the **public website** for Bonzi Vista (GitHub Pages): static HTML/CSS/JS, manuals, the **MIT-licensed** BONZI staking mini-app client, slot landing page, metrics, widgets, and ERC-8004 **discovery** files under `.well-known/`.
 
-**What this repo is not:** the Telegram bot runtime, admin dashboard, RAG stack, or trust engine **source code**—those live in private product infrastructure. Forking this repo gives you the **public site and open clients**, not a copy-paste of the full product backend.
+**What this repo is not:** the Telegram bot runtime, admin dashboard, RAG stack, or trust engine **source code**; those live in private product infrastructure. Forking this repo gives you the **public site and open clients**, not a copy-paste of the full product backend.
 
 **GitHub About (sidebar):** paste the sentence from [docs/REPO_ABOUT.md](docs/REPO_ABOUT.md). Repo **Description** lives only in GitHub Settings, not in git. Do not recycle legacy lines that claim this repo *is* the full bot stack with RAG and dashboards.
 
@@ -14,8 +14,8 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live site](https://img.shields.io/badge/site-bonzivista.org-7c3aed.svg)](https://bonzivista.org/)
-[![Slot funnel — source](https://img.shields.io/badge/slot%20funnel-index.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/index.html)
-[![Staking mini-app — source](https://img.shields.io/badge/staking%20client-stake--tg.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/stake-tg.html)
+[![Slot funnel (source)](https://img.shields.io/badge/slot%20funnel-index.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/index.html)
+[![Staking mini-app (source)](https://img.shields.io/badge/staking%20client-stake--tg.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/stake-tg.html)
 
 Three things outsiders can sanity-check **without** your private backend repo:
 
@@ -38,7 +38,7 @@ Public checkpoints only; no secrets. **Production** vs **GitHub Pages** hosts th
 
 - **Site:** https://bonzivista.org and https://siah-kin.github.io/community-bot/
 - **Stake mini-app:** https://bonzivista.org/stake-tg.html · Pages: https://siah-kin.github.io/community-bot/stake-tg.html
-- **FAQ bundle:** https://bonzivista.org/stake-faq-i18n.json · https://siah-kin.github.io/community-bot/stake-faq-i18n.json (**tracked on `main`** — `git pull` before auditing stale checkouts; introduced in `f49027b`.)
+- **FAQ bundle:** https://bonzivista.org/stake-faq-i18n.json · https://siah-kin.github.io/community-bot/stake-faq-i18n.json (**tracked on `main`** ;  `git pull` before auditing stale checkouts; introduced in `f49027b`.)
 - **Source (MIT):** https://github.com/Siah-kin/community-bot
 - **Telegram:** https://t.me/bonzivista_bot · **Community FAQ:** https://t.me/Bonzivision
 - **Ethervista primer:** https://www.ethervista.app/how-it-works

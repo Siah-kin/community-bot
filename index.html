@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-player-demo-wav">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-footer-order-winamp-first">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -268,7 +268,8 @@
             height: 32px;
             border: 1px solid #5a6270;
             background: var(--win98-face);
-            margin-top: 12px;
+            margin-top: 0;
+            margin-bottom: 0;
             box-sizing: border-box;
             font-size: 11px;
             overflow: hidden;
@@ -868,7 +869,8 @@
         }
 
         .slot-footer-lang {
-            padding: 8px 0 0;
+            padding: 14px 0 0;
+            margin-top: 4px;
             text-align: center;
             font-size: 11px;
             color: #71717a;
@@ -1075,14 +1077,19 @@
         </div>
 
         <div class="slot-footer-zone">
-            <div class="slot-footer-lang">
-                <div class="footer-lang-row">
-                    <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
-                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+            <div class="win98-winamp-stripe" role="group" aria-label="">
+                <div class="winamp-brand">
+                    <img src="assets/winamp-logo.png" alt="" class="winamp-logo-img" width="22" height="22">
+                    <span aria-hidden="true">Winamp</span>
                 </div>
+                <div class="winamp-transport">
+                    <button type="button" class="winamp-btn" id="winamp-play" aria-pressed="false">&#9654;</button>
+                    <button type="button" class="winamp-btn" id="winamp-stop">&#9632;</button>
+                </div>
+                <span class="winamp-lcd"><span class="winamp-time">00:00 / 00:00 - STOPPED</span></span>
             </div>
 
-            <!-- Footer stack: CTO, sponsor, repo license + privacy (operator order) -->
+            <!-- CTO, sponsor, MIT + privacy -->
             <footer class="site-footer slot-stake-footer" aria-label="Site footer">
                 <div class="footer-cto-row">
                     <span style="color: #71717A;">CTO</span>
@@ -1105,16 +1112,11 @@
                 </div>
             </footer>
 
-            <div class="win98-winamp-stripe" role="group" aria-label="">
-                <div class="winamp-brand">
-                    <img src="assets/winamp-logo.png" alt="" class="winamp-logo-img" width="22" height="22">
-                    <span aria-hidden="true">Winamp</span>
+            <div class="slot-footer-lang">
+                <div class="footer-lang-row">
+                    <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
+                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
                 </div>
-                <div class="winamp-transport">
-                    <button type="button" class="winamp-btn" id="winamp-play" aria-pressed="false">&#9654;</button>
-                    <button type="button" class="winamp-btn" id="winamp-stop">&#9632;</button>
-                </div>
-                <span class="winamp-lcd"><span class="winamp-time">00:00 / 00:00 — STOPPED</span></span>
             </div>
         </div>
     </div>

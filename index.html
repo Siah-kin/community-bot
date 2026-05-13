@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-12-first-party-waitlist">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-13-waitlist-modal">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form → POST /api/public/waitlist). Optional legacy: set non-empty https URL to open an external hosted form instead. -->
@@ -628,7 +628,64 @@
             box-shadow: 0 0 6px rgba(217, 119, 6, 0.9);
         }
 
-        /* Mobile */
+        /* Waitlist inline error modal (retro window, no alert()) */
+        .funnel-msg-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.85);
+            z-index: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .funnel-msg-overlay.hidden { display: none !important; }
+        .funnel-msg-dlg {
+            width: 320px;
+            max-width: min(320px, calc(100vw - 28px));
+            background: #d8cef0;
+            border: 2px solid;
+            border-color: #ede8f5 #5b21b6 #5b21b6 #ede8f5;
+            box-shadow: 4px 4px 0 #111, 0 0 20px rgba(124, 58, 237, 0.45);
+        }
+        .funnel-msg-titlebar {
+            background: linear-gradient(90deg, #5b21b6, #8b5cf6);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+        .funnel-msg-close {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            padding: 0 6px 2px;
+            font-family: Tahoma, sans-serif;
+        }
+        .funnel-msg-body-wrap { padding: 12px 14px; font-size: 12px; color: #1e1033; line-height: 1.45; }
+        #funnel-msg-text { margin: 0; font-family: 'Courier New', monospace; }
+        .funnel-msg-actions button {
+            padding: 4px 16px;
+            font-size: 12px;
+            font-family: Tahoma, sans-serif;
+            background: #5b21b6;
+            color: #fff;
+            border: 2px outset #ede8f5;
+            border-right-color: #4c1d95;
+            border-bottom-color: #4c1d95;
+            cursor: pointer;
+        }
+        .funnel-msg-actions button:active {
+            border-style: inset;
+        }
         @media (max-width: 400px) {
             .slot-machine { width: 100%; }
             .puzzle-gate { padding: 1rem; }
@@ -720,12 +777,27 @@
         <p class="notify-waitlist-thanks hidden" id="waitlist-thanks" role="status"></p>
     </section>
 
+    <div id="funnel-msg-overlay" class="funnel-msg-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="funnel-msg-heading">
+        <div class="funnel-msg-dlg">
+            <div class="funnel-msg-titlebar">
+                <span id="funnel-msg-heading">Bonzi Vista</span>
+                <button type="button" id="funnel-msg-close-btn" class="funnel-msg-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="funnel-msg-body-wrap">
+                <p id="funnel-msg-text"></p>
+            </div>
+            <div class="funnel-msg-actions">
+                <button type="button" id="funnel-msg-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
     <div class="prize-overlay" id="prize-overlay">
         <div class="prize-box">
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
             <h3 id="prize-title">BONZI JACKPOT!</h3>
             <p class="prize-desc" id="prize-desc"></p>
-            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=start" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
+            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
             <button class="close-prize" id="close-prize"><span id="close-prize-label">close</span></button>
         </div>
     </div>
@@ -764,6 +836,8 @@
                 notifyBottomPending: '',
                 waitlistThanks: "You're on the list.",
                 waitlistErr: 'Could not save. Try again in a moment.',
+                waitlistModalTitle: 'Bonzi Vista',
+                waitlistModalOk: 'OK',
                 waitlistJoin: 'Join',
                 waitlistEmailPh: 'Email',
                 lcdPrefix: 'Tokenise your',
@@ -810,6 +884,8 @@
                 notifyBottomPending: '',
                 waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
                 waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
+                waitlistModalTitle: 'Bonzi Vista',
+                waitlistModalOk: 'OK',
                 waitlistJoin: 'Entrar',
                 waitlistEmailPh: 'E-mail',
                 lcdPrefix: 'Tokenise sua',
@@ -850,6 +926,33 @@
         function getStr() {
             return I18N[currentLang] || I18N.en;
         }
+
+        function hideFunnelMsgModal() {
+            var ov = document.getElementById('funnel-msg-overlay');
+            if (ov) ov.classList.add('hidden');
+        }
+
+        function showFunnelMsgModal(title, msg) {
+            var ov = document.getElementById('funnel-msg-overlay');
+            var hd = document.getElementById('funnel-msg-heading');
+            var tx = document.getElementById('funnel-msg-text');
+            if (!ov || !hd || !tx) return;
+            hd.textContent = title || 'Bonzi Vista';
+            tx.textContent = msg || '';
+            ov.classList.remove('hidden');
+        }
+
+        (function wireFunnelMsgModal() {
+            var ov = document.getElementById('funnel-msg-overlay');
+            if (!ov) return;
+            ov.addEventListener('click', function(ev) {
+                if (ev.target === ov) hideFunnelMsgModal();
+            });
+            var bx = document.getElementById('funnel-msg-close-btn');
+            var ok = document.getElementById('funnel-msg-ok');
+            if (bx) bx.addEventListener('click', hideFunnelMsgModal);
+            if (ok) ok.addEventListener('click', hideFunnelMsgModal);
+        })();
 
         function persistLang() {
             try {
@@ -987,6 +1090,13 @@
             if (wem) wem.placeholder = L.waitlistEmailPh;
             var wsb = document.getElementById('waitlist-submit');
             if (wsb) wsb.textContent = L.waitlistJoin;
+            var fld = document.getElementById('funnel-msg-ok');
+            if (fld && L.waitlistModalOk) fld.textContent = L.waitlistModalOk;
+            var fox = document.getElementById('funnel-msg-overlay');
+            var fhd = document.getElementById('funnel-msg-heading');
+            if (fhd && fox && fox.classList.contains('hidden')) {
+                fhd.textContent = L.waitlistModalTitle;
+            }
             refreshNotifyBar();
         }
 
@@ -1416,11 +1526,11 @@
                         }
                     } else {
                         var err = (res.j && res.j.error) ? res.j.error : getStr().waitlistErr;
-                        window.alert(err);
+                        showFunnelMsgModal(getStr().waitlistModalTitle, err);
                     }
                 }).catch(function() {
                     if (btn) btn.disabled = false;
-                    window.alert(getStr().waitlistErr);
+                    showFunnelMsgModal(getStr().waitlistModalTitle, getStr().waitlistErr);
                 });
             });
         })();

@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-waitlist-ui-no-gold-external">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-13-stake-footer-nav-scope-push">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -20,7 +20,7 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <style>
-        body {
+        body.bonzi-slot-page {
             background: #000000;
             color: #0a0a0a;
             min-height: 100vh;
@@ -30,6 +30,20 @@
             justify-content: center;
             font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
             margin: 0;
+        }
+        /* bonzi-design.css sets `nav { position:fixed; top:0; light background }` for marketing pages — kill on slot for any descendant <nav> */
+        body.bonzi-slot-page nav {
+            position: static !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            z-index: auto !important;
+            background: transparent !important;
+            border: none !important;
+            border-bottom: none !important;
+            padding: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
         .hidden { display: none !important; }
 
@@ -204,13 +218,47 @@
 
         #waitlist-submit:active { border-style: inset !important; }
 
-        .win98-neon-site-decor {
+        .slot-footer-zone {
             box-sizing: border-box;
             width: min(460px, calc(100vw - 32px));
             max-width: 100%;
-            margin: 0 auto 1.25rem;
-            padding: 0 16px;
-            pointer-events: none;
+            margin: 1.25rem auto 0;
+            padding: 0 16px 1rem;
+        }
+
+        .slot-footer-zone .slot-stake-footer.site-footer {
+            box-sizing: border-box;
+            width: 100%;
+            background: #0f0f0f;
+            padding: 20px 16px 22px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 13px;
+            border-top: 1px solid #27272a;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            color: #a1a1aa;
+            font-size: 13px;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a:hover {
+            text-decoration: underline;
         }
 
         .win98-winamp-stripe {
@@ -220,7 +268,7 @@
             height: 32px;
             border: 1px solid #5a6270;
             background: var(--win98-face);
-            margin-bottom: 10px;
+            margin-top: 12px;
             box-sizing: border-box;
             font-size: 11px;
             overflow: hidden;
@@ -253,29 +301,6 @@
             color: #7cfc00;
             font-weight: bold;
             letter-spacing: 0.04em;
-        }
-
-        .win98-meta-lines {
-            pointer-events: auto;
-            text-align: center;
-            font-size: 10px;
-            color: #9ca3af;
-            line-height: 1.55;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .win98-meta-lines a {
-            color: #c4b5fd;
-            text-decoration: underline;
-        }
-
-        .win98-meta-lines a:hover { filter: brightness(1.08); }
-
-        #gate .footer-privacy-slot a,
-        #gate .footer-privacy-slot #footer-privacy {
-            color: #c4b5fd;
-            text-decoration: underline;
-            font-family: 'Courier New', Courier, monospace;
         }
 
         /* === WIN98 SLOT MACHINE === */
@@ -798,24 +823,14 @@
             margin: 0.5rem 0;
         }
 
-        .site-footer-slot {
-            margin-top: 1.25rem;
-            padding: 12px 8px 20px;
-            max-width: min(460px, calc(100vw - 32px));
-            width: 100%;
-            box-sizing: border-box;
+        .slot-footer-lang {
+            padding: 8px 0 0;
             text-align: center;
             font-size: 11px;
             color: #71717a;
             line-height: 1.5;
-            border-top: 1px solid #27272a;
         }
-        .site-footer-slot a {
-            color: #a78bfa;
-            text-decoration: none;
-        }
-        .site-footer-slot a:hover { text-decoration: underline; }
-        .site-footer-slot .footer-lang-btn {
+        .slot-footer-lang .footer-lang-btn {
             display: inline-block;
             background: transparent;
             border: 1px solid #3f3f46;
@@ -827,25 +842,22 @@
             font-family: inherit;
             margin: 0 4px;
         }
-        .site-footer-slot .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; }
-        .site-footer-slot .footer-lang-btn[aria-pressed="true"] {
+        .slot-footer-lang .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; }
+        .slot-footer-lang .footer-lang-btn[aria-pressed="true"] {
             border-color: #7c3aed;
             color: #c4b5fd;
         }
-        .site-footer-slot .footer-lang-row {
+        .slot-footer-lang .footer-lang-row {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
             flex-wrap: wrap;
         }
-        .site-footer-slot .footer-lang-flag {
+        .slot-footer-lang .footer-lang-flag {
             font-size: 1.25rem;
             line-height: 1;
             padding: 4px 10px;
-        }
-        .site-footer-slot .footer-privacy-slot {
-            margin-top: 8px;
         }
 
         .lever-container.lever-disabled {
@@ -923,7 +935,7 @@
         }
     </style>
 </head>
-<body>
+<body class="bonzi-slot-page">
     <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
@@ -1016,26 +1028,42 @@
             </div>
         </div>
 
-        <footer class="site-footer-slot">
-            <div class="footer-lang-row">
-                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
-                <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+        <div class="slot-footer-zone">
+            <div class="slot-footer-lang">
+                <div class="footer-lang-row">
+                    <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
+                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+                </div>
             </div>
-            <div class="footer-privacy-slot">
-                <a href="privacy.html" id="footer-privacy">Privacy</a>
-            </div>
-        </footer>
-    </div>
 
-        <div class="win98-neon-site-decor">
-        <div class="win98-winamp-stripe" aria-hidden="true">
-            <span class="winamp-brand">Winamp</span>
-            <span class="winamp-lcd"><span class="winamp-time">00:00 - STOPPED</span></span>
+            <!-- Same structure as stake-tg.html site-footer (logos + links) -->
+            <footer class="site-footer slot-stake-footer" aria-label="Site footer">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+                    <span style="color: #71717A;">sponsored by
+                        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                            <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                            Ethervista
+                        </a>
+                    </span>
+                </div>
+                <div class="footer-cto-row">
+                    <span style="color: #71717A;">CTO</span>
+                    <span style="color: #52525b;"> | </span>
+                    <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
+                        <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
+                        Bonzivista.org
+                    </a>
+                </div>
+                <div style="font-size: 12px; color: #71717A;">
+                    <span id="footer-mit-lic">mit license</span>, <a href="privacy.html" id="footer-privacy" style="color: #71717A; text-decoration: none;">privacy policy</a>
+                </div>
+            </footer>
+
+            <div class="win98-winamp-stripe" aria-hidden="true">
+                <span class="winamp-brand">Winamp</span>
+                <span class="winamp-lcd"><span class="winamp-time">00:00 - STOPPED</span></span>
+            </div>
         </div>
-        <nav class="win98-meta-lines" aria-label="Site credits">
-            sponsored by Ethervista | CTO | bonzivista.org<br>
-            <a href="https://opensource.org/licenses/MIT" rel="noopener noreferrer">mit license</a>, <a href="privacy.html">privacy policy</a>
-        </nav>
     </div>
 
     <div id="funnel-msg-overlay" class="funnel-msg-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="funnel-msg-heading">
@@ -1111,7 +1139,8 @@
                 serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
                 clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
                 pwPlaceholder: 'access code',
-                footerPrivacy: 'Privacy',
+                footerMitLic: 'mit license',
+                footerPrivacy: 'privacy policy',
                 prizeTitle: 'BONZI JACKPOT!',
                 prizeDesc: 'You hit the <b>gold jackpot</b> reel (Bonzi scroll). Open Telegram with the button below.',
                 tgOpen: 'Open @Bonzivista_bot',
@@ -1163,7 +1192,8 @@
                 serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente a alavanca de novo em alguns segundos.',
                 clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
                 pwPlaceholder: 'c\u00F3digo',
-                footerPrivacy: 'Privacidade',
+                footerMitLic: 'licen\u00E7a mit',
+                footerPrivacy: 'pol\u00EDtica de privacidade',
                 prizeTitle: 'BONZI JACKPOT!',
                 prizeDesc: 'Voc\u00EA acertou o rolo <b>jackpot dourado</b> (scroll Bonzi). Abra o Telegram no bot\u00E3o abaixo.',
                 tgOpen: 'Abrir @Bonzivista_bot',
@@ -1348,7 +1378,9 @@
             var pw = document.getElementById('pw');
             if (pw) pw.placeholder = L.pwPlaceholder;
             var fp = document.getElementById('footer-privacy');
-            if (fp) fp.textContent = L.footerPrivacy;
+            if (fp && L.footerPrivacy) fp.textContent = L.footerPrivacy;
+            var fmit = document.getElementById('footer-mit-lic');
+            if (fmit && L.footerMitLic) fmit.textContent = L.footerMitLic;
             var prt = document.getElementById('prize-title');
             if (prt) prt.textContent = L.prizeTitle;
             var prd = document.getElementById('prize-desc');

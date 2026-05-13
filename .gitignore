@@ -17,3 +17,4 @@ node_modules/
 # Avoid committing copyrighted/bloat audio by accident
 *.mp3
 !sounds/rage-against-the-machine-killing-in-the-name.mp3
+!sounds/black-sabbath-children-of-the-grave.mp3

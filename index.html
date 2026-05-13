@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-updates-terminal-skin">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-playlist-titles">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -326,7 +326,8 @@
             display: flex;
             align-items: stretch;
             flex-direction: row;
-            height: 32px;
+            min-height: 44px;
+            height: auto;
             border: 1px solid #5a6270;
             background: var(--win98-face);
             margin-top: 0;
@@ -391,15 +392,45 @@
             border-left-color: #5a6270;
         }
 
+        .win98-winamp-stripe .winamp-btn-skip {
+            min-width: 30px;
+            font-size: 9px;
+            letter-spacing: -0.02em;
+            padding: 0 4px;
+        }
+
         .win98-winamp-stripe .winamp-lcd {
             flex: 1;
             background: #0a0a0a;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            padding: 0 8px;
+            padding: 4px 8px 4px 6px;
             border-left: 1px solid #2d2d2d;
             min-width: 0;
+        }
+
+        .win98-winamp-stripe .winamp-lcd-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .win98-winamp-stripe .winamp-track-title {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 1.15;
+            color: #9fdc6a;
+            text-align: right;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .win98-winamp-stripe .winamp-time {
@@ -1044,8 +1075,8 @@
 </head>
 <body class="bonzi-slot-page">
     <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
-    <!-- Homage stripe: primary MP3 + WAV fallback (see sounds/README.md). -->
-    <audio id="winamp-player" preload="metadata"><source src="sounds/rage-against-the-machine-killing-in-the-name.mp3" type="audio/mpeg"><source src="sounds/winamp-demo.wav" type="audio/wav"></audio>
+    <!-- Winamp stripe: see WINAMP_PLAYLIST in script (MP3 + WAV fallback). -->
+    <audio id="winamp-player" preload="metadata"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
@@ -1144,10 +1175,17 @@
                     <span aria-hidden="true">Winamp</span>
                 </div>
                 <div class="winamp-transport">
+                    <button type="button" class="winamp-btn winamp-btn-skip" id="winamp-prev">|&lt;&lt;</button>
                     <button type="button" class="winamp-btn" id="winamp-play" aria-pressed="false">&#9654;</button>
                     <button type="button" class="winamp-btn" id="winamp-stop">&#9632;</button>
+                    <button type="button" class="winamp-btn winamp-btn-skip" id="winamp-next">&gt;&gt;|</button>
                 </div>
-                <span class="winamp-lcd"><span class="winamp-time">00:00 / 00:00 - STOPPED</span></span>
+                <div class="winamp-lcd">
+                    <div class="winamp-lcd-stack">
+                        <span class="winamp-track-title" id="winamp-track-title"></span>
+                        <span class="winamp-time" id="winamp-time-line">00:00 / 00:00 - STOPPED</span>
+                    </div>
+                </div>
             </div>
 
             <!-- CTO, sponsor, MIT + privacy -->
@@ -1278,9 +1316,11 @@
                 infoTitle: 'Rules',
                 leverAria: 'Pull lever',
                 winampGroupAria: 'Retro-style demo audio player',
-                winampPlay: 'Play demo',
+                winampPlay: 'Play',
                 winampPause: 'Pause',
                 winampStop: 'Stop',
+                winampPrev: 'Previous track',
+                winampNext: 'Next track',
                 winampStopped: 'STOPPED',
                 winampPlayState: 'PLAY',
                 winampPauseState: 'PAUSE',
@@ -1338,9 +1378,11 @@
                 infoTitle: 'Regras',
                 leverAria: 'Puxar alavanca',
                 winampGroupAria: 'Reprodutor demo em estilo retr\u00F4',
-                winampPlay: 'Reproduzir demo',
+                winampPlay: 'Reproduzir',
                 winampPause: 'Pausar',
                 winampStop: 'Parar',
+                winampPrev: 'Faixa anterior',
+                winampNext: 'Pr\u00F3xima faixa',
                 winampStopped: 'PARADO',
                 winampPlayState: 'TOCAR',
                 winampPauseState: 'PAUSA',
@@ -1951,12 +1993,23 @@
         scheduleRulesHealthProbe();
 
         (function wireWinampStripe() {
+            var WINAMP_PLAYLIST = [
+                { src: 'sounds/rage-against-the-machine-killing-in-the-name.mp3', title: 'Rage Against the Machine - Killing in the Name' },
+                { src: 'sounds/black-sabbath-children-of-the-grave.mp3', title: 'Black Sabbath - Children of the Grave' },
+                { src: 'sounds/winamp-demo.wav', title: 'Bonzi demo tone (synth WAV)' }
+            ];
+
             var stripe = document.querySelector('.win98-winamp-stripe');
             var audio = document.getElementById('winamp-player');
-            var lcd = stripe ? stripe.querySelector('.winamp-time') : null;
+            var timeLine = document.getElementById('winamp-time-line');
+            var titleEl = document.getElementById('winamp-track-title');
             var playBtn = document.getElementById('winamp-play');
             var stopBtn = document.getElementById('winamp-stop');
-            if (!stripe || !audio || !lcd || !playBtn || !stopBtn) return;
+            var prevBtn = document.getElementById('winamp-prev');
+            var nextBtn = document.getElementById('winamp-next');
+            if (!stripe || !audio || !timeLine || !titleEl || !playBtn || !stopBtn || !prevBtn || !nextBtn) return;
+
+            var winampTrackIndex = 0;
 
             function durSec() {
                 var d = audio.duration;
@@ -1974,13 +2027,40 @@
             function lcdPaint(stateTok) {
                 var L = getStr();
                 var st = stateTok !== undefined ? stateTok : L.winampStopped;
-                lcd.textContent = fmt(audio.currentTime) + ' / ' + fmt(durSec()) + ' - ' + st;
+                timeLine.textContent = fmt(audio.currentTime) + ' / ' + fmt(durSec()) + ' - ' + st;
+            }
+
+            function loadTrackAbs(idx, opts) {
+                opts = opts || {};
+                var autoAfterLoad = !!opts.autoplay;
+                var n = WINAMP_PLAYLIST.length;
+                if (n < 1) return;
+                winampTrackIndex = ((idx % n) + n) % n;
+                var tr = WINAMP_PLAYLIST[winampTrackIndex];
+                var wasPlaying = !audio.paused;
+                audio.pause();
+                audio.src = tr.src;
+                audio.load();
+                titleEl.textContent = tr.title;
+                if (autoAfterLoad || wasPlaying) {
+                    var pr = audio.play();
+                    if (pr && typeof pr.catch === 'function') pr.catch(function() {});
+                } else {
+                    lcdPaint(getStr().winampStopped);
+                }
+                updateWinampStripe();
+            }
+
+            function loadTrackDelta(delta) {
+                loadTrackAbs(winampTrackIndex + delta, {});
             }
 
             function updateWinampStripe() {
                 var L = getStr();
-                stripe.setAttribute('aria-label', L.winampGroupAria);
+                stripe.setAttribute('aria-label', L.winampGroupAria + ' - ' + (titleEl.textContent || ''));
                 stopBtn.setAttribute('aria-label', L.winampStop);
+                prevBtn.setAttribute('aria-label', L.winampPrev);
+                nextBtn.setAttribute('aria-label', L.winampNext);
                 if (audio.paused) {
                     playBtn.innerHTML = '&#9654;';
                     playBtn.setAttribute('aria-pressed', 'false');
@@ -1997,7 +2077,10 @@
 
             bonziWinampLangRefresh = updateWinampStripe;
 
-            updateWinampStripe();
+            loadTrackAbs(0, { autoplay: false });
+
+            prevBtn.addEventListener('click', function() { loadTrackDelta(-1); });
+            nextBtn.addEventListener('click', function() { loadTrackDelta(1); });
 
             playBtn.addEventListener('click', function() {
                 if (audio.paused) {
@@ -2022,8 +2105,7 @@
             });
             audio.addEventListener('loadedmetadata', updateWinampStripe);
             audio.addEventListener('ended', function() {
-                lcdPaint(getStr().winampStopped);
-                updateWinampStripe();
+                loadTrackAbs(winampTrackIndex + 1, { autoplay: true });
             });
         })();
 

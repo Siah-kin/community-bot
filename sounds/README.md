@@ -8,12 +8,16 @@ Place a short, low-bitrate clip you have rights to use at:
 
 Until the file exists, the page falls back to a short synthesized tone in script.
 
-## Winamp strip (`rage-against-the-machine-killing-in-the-name.mp3`)
+## Winamp strip playlist
 
-The homepage `<audio id="winamp-player">` loads **`sounds/rage-against-the-machine-killing-in-the-name.mp3`** first, then falls back to **`sounds/winamp-demo.wav`**.
+The footer player uses in-page **`WINAMP_PLAYLIST`** (see `index.html`): ordered tracks with **shown titles** on the LCD, **|<<** / **>>|** for previous/next, wraparound queue, auto-advance on track end.
 
-Only ship audio you have the rights to redistribute on a public site. Source of truth on the operator machine may live under the Bonzi_v5 tree; this repo keeps a copy under `sounds/` for GitHub Pages.
+| File | Shown title |
+|------|----------------|
+| `sounds/rage-against-the-machine-killing-in-the-name.mp3` | Rage Against the Machine - Killing in the Name |
+| `sounds/black-sabbath-children-of-the-grave.mp3` | Black Sabbath - Children of the Grave |
+| `sounds/winamp-demo.wav` | Bonzi demo tone (synth WAV) |
 
-## Winamp fallback (`winamp-demo.wav`)
+`.gitignore` only allows these tracked MP3s by name; add `!sounds/your-file.mp3` when you add another licensed file and extend the playlist in script.
 
-Short in-repo sine tone used if the MP3 source is missing or unsupported.
+Only ship audio you have the rights to redistribute on a public site.

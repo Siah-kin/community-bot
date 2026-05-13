@@ -1,14 +1,14 @@
 # GitHub repo “About” (paste into Settings → General → Description)
 
-Use **one short line** here. This repo is the **public Pages site** (slot + stake client + waitlist), not the closed backend.
+Use **one short line** here. Match the README lead: hardstake mini-app, slot game, waitlist, ticket tool on Pages.
 
 ## Recommended Description (fits GitHub About field)
 
-**Bonzi Vista public site: staking mini-app (MIT), slot funnel, waitlist — support via @Bonzivista_bot /ticket. Hosted APIs elsewhere.**
+**Bonzi Vista (GitHub Pages): hardstake Telegram mini-app, slot game, waitlist, ticket tool — @Bonzivista_bot.**
 
 ## Do **not** use (legacy)
 
-“Full AI bot + RAG + admin dashboard in this repo” is wrong: runtime lives in **Bonzi_v5**.
+One-line repo descriptions that claim the **full bot runtime**, RAG stack, or admin dashboards ship **from this tree** are inaccurate.
 
 ## Optional Topics (examples)
 

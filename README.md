@@ -1,6 +1,8 @@
 # Bonzi Vista public site (`community-bot`)
 
-**What this is:** the **public website** for Bonzi Vista, hosted on **GitHub Pages**: static HTML, CSS, and JavaScript. Visitors get the slot landing page, the **MIT-licensed** BONZI staking mini-app in the browser, manuals, and other public pages.
+**In this repo:** Bonzi **hardstake** Telegram mini-app, **slot game**, **waitlist**, and **ticket tool** (Telegram), plus static pages for **GitHub Pages**.
+
+**What this is:** HTML, CSS, and JavaScript for **bonzivista.org** — the flows above and linked manuals.
 
 **Live site:** https://bonzivista.org
 

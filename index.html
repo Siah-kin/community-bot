@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-13-waitlist-modal">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-13-win98-neon-stack">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form → POST /api/public/waitlist). Optional legacy: set non-empty https URL to open an external hosted form instead. -->
@@ -33,11 +33,19 @@
         }
         .hidden { display: none !important; }
 
+        :root {
+            --win98-sheet: rgb(216, 206, 240);
+            --title-start: #4c1d95;
+            --title-end: #7c3aed;
+            --btn-purple: #4c1d95;
+            --btn-purple-hover: #5b21b6;
+        }
+
         /* === PUZZLE GATE === */
         .puzzle-gate {
             text-align: center;
             padding: 2rem;
-            max-width: 400px;
+            max-width: 380px;
             width: 100%;
         }
         .puzzle-gate .logo {
@@ -54,9 +62,139 @@
             margin-bottom: 2rem;
         }
 
+        /* === WIN98 NEON STACK === */
+        .win98-neon-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .win98-neon-window {
+            box-sizing: border-box;
+            width: 336px;
+            max-width: 100%;
+            background: var(--win98-sheet);
+            border: 2px solid;
+            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
+            overflow: hidden;
+            animation: neonPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 2px 2px 0 #000, 0 0 12px rgba(124, 58, 237, 0.35); }
+            50% { box-shadow: 2px 2px 0 #000, 0 0 22px rgba(124, 58, 237, 0.52); }
+        }
+
+        .win98-neon-window > #slot-machine {
+            margin: 0 auto;
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .win98-neon-body {
+            padding: 12px;
+            box-sizing: border-box;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .win98-neon-body .access-row { margin-top: 0; }
+
+        .win98-neon-body .access-row input {
+            background: #0a0a0a;
+            border: 2px inset #6b7280;
+        }
+
+        .win98-neon-body .spin-count { margin-top: 0.85rem; }
+
+        .win98-neon-body-updates .notify-bottom {
+            margin: 0 auto;
+            padding: 0 0 0.75rem;
+            border-top: none;
+            max-width: 320px;
+        }
+
+        .win98-neon-body .access-row #submit-btn {
+            background: var(--btn-purple);
+            border: 2px outset #e9d5ff;
+            border-right-color: #3b0764;
+            border-bottom-color: #3b0764;
+            color: #fff;
+            padding: 0.6rem 0.95rem;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            min-width: 4.75rem;
+        }
+
+        .win98-neon-body .access-row #submit-btn:hover { background: var(--btn-purple-hover); }
+
+        .win98-neon-body .access-row #submit-btn:active { border-style: inset; }
+
+        #waitlist-submit {
+            background: var(--btn-purple) !important;
+            color: #fff !important;
+            border: 2px outset #e9d5ff !important;
+            border-right-color: #3b0764 !important;
+            border-bottom-color: #3b0764 !important;
+            font-family: 'Segoe UI', Tahoma, sans-serif !important;
+            font-weight: bold !important;
+        }
+
+        #waitlist-submit:hover { background: var(--btn-purple-hover) !important; }
+
+        #waitlist-submit:active { border-style: inset !important; }
+
+        .win98-neon-site-decor {
+            box-sizing: border-box;
+            width: 336px;
+            max-width: 100%;
+            margin: 0 auto 1.25rem;
+            padding: 0 1rem;
+            pointer-events: none;
+        }
+
+        .win98-winamp-stripe {
+            background: linear-gradient(#2d2438, #1a1520);
+            border: 2px solid #4b5563;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: #c4b5fd;
+            padding: 8px 10px;
+            text-align: left;
+            line-height: 1.35;
+            margin-bottom: 10px;
+        }
+
+        .win98-winamp-stripe strong {
+            color: #e9d5ff;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-weight: bold;
+        }
+
+        .win98-meta-lines {
+            pointer-events: auto;
+            text-align: center;
+            font-size: 10px;
+            color: #71717a;
+            line-height: 1.55;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .win98-meta-lines a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+
+        .win98-meta-lines a:hover { text-decoration: underline; }
+
         /* === WIN98 SLOT MACHINE === */
         .slot-machine {
-            width: 340px;
+            width: 336px;
             max-width: 100%;
             margin: 0 auto 1.5rem;
             background: #d8cef0;
@@ -66,7 +204,7 @@
             overflow: hidden;
         }
         .win98-titlebar {
-            background: linear-gradient(90deg, #5b21b6, #8b5cf6);
+            background: linear-gradient(90deg, var(--title-start), var(--title-end));
             padding: 3px 4px;
             display: flex;
             justify-content: space-between;
@@ -97,7 +235,7 @@
         .notify-bar {
             box-sizing: border-box;
             width: 100%;
-            max-width: 340px;
+            max-width: 336px;
             margin: 0 auto 0.75rem;
             padding: 8px 10px;
             display: flex;
@@ -568,9 +706,9 @@
         }
 
         .site-footer-slot {
-            margin-top: 1.5rem;
+            margin-top: 1.25rem;
             padding: 12px 8px 20px;
-            max-width: 340px;
+            max-width: 336px;
             width: 100%;
             box-sizing: border-box;
             text-align: center;
@@ -650,7 +788,7 @@
             box-shadow: 4px 4px 0 #111, 0 0 20px rgba(124, 58, 237, 0.45);
         }
         .funnel-msg-titlebar {
-            background: linear-gradient(90deg, #5b21b6, #8b5cf6);
+            background: linear-gradient(90deg, var(--title-start), var(--title-end));
             color: #fff;
             font-size: 12px;
             font-weight: bold;
@@ -688,11 +826,13 @@
         }
         @media (max-width: 400px) {
             .slot-machine { width: 100%; }
+            .win98-neon-window { width: 100%; }
             .puzzle-gate { padding: 1rem; }
         }
     </style>
 </head>
 <body>
+    <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
@@ -703,53 +843,86 @@
             <a id="notify-bar-link" class="notify-bar-cta" href="#" target="_blank" rel="noopener">Get notified</a>
         </div>
 
-        <div class="slot-machine" id="slot-machine">
-            <div class="win98-titlebar">
-                <span class="win98-title">&#127920; Bonzi Slot</span>
-                <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
-            </div>
-            <div class="win98-content">
-                <div class="lcd-panel">
-                    <div class="lcd-marquee-caption" aria-live="polite">
-                        <span class="lcd-dash-line" aria-hidden="true"></span>
-                        <div class="lcd-marquee-lines lcd-label-stack">
-                            <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
-                        </div>
-                        <span class="lcd-dash-line" aria-hidden="true"></span>
+        <div class="win98-neon-stack">
+            <div class="win98-neon-window" data-pane="slot">
+                <div class="slot-machine" id="slot-machine">
+                    <div class="win98-titlebar">
+                        <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
+                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
                     </div>
-                    <div class="lcd-screen">
-                        <div class="slot-reel" id="slot-reel"></div>
+                    <div class="win98-content">
+                        <div class="lcd-panel">
+                            <div class="lcd-marquee-caption" aria-live="polite">
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                                <div class="lcd-marquee-lines lcd-label-stack">
+                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
+                                </div>
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                            </div>
+                            <div class="lcd-screen">
+                                <div class="slot-reel" id="slot-reel"></div>
+                            </div>
+                        </div>
+                        <button class="lever-container" id="slot-lever" aria-label="Pull lever">
+                            <div class="lever-track"></div>
+                            <div class="lever-handle">
+                                <div class="lever-grip"></div>
+                                <div class="lever-ball"></div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="bonzi-logos" id="bonzi-logos">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="0">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="1">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img gold" data-i="2">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="3">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="4">
+                    </div>
+                    <div class="win98-statusbar">
+                        <span class="status-led"></span>
+                        <span class="status-text" id="status-ready">Ready</span>
+                        <span class="status-divider">|</span>
+                        <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
                     </div>
                 </div>
-                <button class="lever-container" id="slot-lever" aria-label="Pull lever">
-                    <div class="lever-track"></div>
-                    <div class="lever-handle">
-                        <div class="lever-grip"></div>
-                        <div class="lever-ball"></div>
-                    </div>
-                </button>
             </div>
-            <div class="bonzi-logos" id="bonzi-logos">
-                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="0">
-                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="1">
-                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img gold" data-i="2">
-                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="3">
-                <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="4">
-            </div>
-            <div class="win98-statusbar">
-                <span class="status-led"></span>
-                <span class="status-text" id="status-ready">Ready</span>
-                <span class="status-divider">|</span>
-                <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
-            </div>
-        </div>
 
-        <div class="access-row">
-            <input type="text" id="pw" placeholder="access code" maxlength="12" autocomplete="off" spellcheck="false">
-            <button id="submit-btn">&#9654;</button>
+            <div class="win98-neon-window" data-pane="access">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="access-win-title">Access control</span>
+                </div>
+                <div class="win98-neon-body">
+                    <div class="access-row">
+                        <input type="text" id="pw" placeholder="access code" maxlength="12" autocomplete="off" spellcheck="false">
+                        <button type="button" id="submit-btn">Submit</button>
+                    </div>
+                    <p class="error-msg" id="err">&nbsp;</p>
+                    <p class="spin-count" id="spin-count"></p>
+                </div>
+            </div>
+
+            <div class="win98-neon-window" data-pane="updates">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="updates-win-title">Update notifications</span>
+                </div>
+                <div class="win98-neon-body win98-neon-body-updates">
+                    <section class="notify-bottom" id="email-updates" aria-label="Email updates">
+                        <h2 class="notify-bottom-title" id="notify-bottom-title">Email updates</h2>
+                        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist — one field, our database only.</p>
+                        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Join the list</a>
+                        <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
+                        <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
+                            <div class="waitlist-field-row">
+                                <input type="email" id="waitlist-email" name="email" maxlength="254" required autocomplete="email" inputmode="email" aria-required="true">
+                                <button type="submit" id="waitlist-submit">Join</button>
+                            </div>
+                            <input type="text" name="website" id="waitlist-hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        </form>
+                        <p class="notify-waitlist-thanks hidden" id="waitlist-thanks" role="status"></p>
+                    </section>
+                </div>
+            </div>
         </div>
-        <p class="error-msg" id="err">&nbsp;</p>
-        <p class="spin-count" id="spin-count"></p>
 
         <footer class="site-footer-slot">
             <div class="footer-lang-row">
@@ -762,20 +935,15 @@
         </footer>
     </div>
 
-    <section class="notify-bottom" id="email-updates" aria-label="Email updates">
-        <h2 class="notify-bottom-title" id="notify-bottom-title">Email updates</h2>
-        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist — one field, our database only.</p>
-        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Join the list</a>
-        <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
-        <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
-            <div class="waitlist-field-row">
-                <input type="email" id="waitlist-email" name="email" maxlength="254" required autocomplete="email" inputmode="email" aria-required="true">
-                <button type="submit" id="waitlist-submit">Join</button>
-            </div>
-            <input type="text" name="website" id="waitlist-hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-        </form>
-        <p class="notify-waitlist-thanks hidden" id="waitlist-thanks" role="status"></p>
-    </section>
+    <div class="win98-neon-site-decor">
+        <div class="win98-winamp-stripe" aria-hidden="true"><strong>Winamp</strong><br><span style="opacity:0.82">00:00 - STOPPED</span></div>
+        <nav class="win98-meta-lines" aria-label="Site credits">
+            sponsored by Ethervista | CTO | bonzivista.org<br>
+            <a href="https://opensource.org/licenses/MIT" rel="noopener noreferrer">MIT license</a>
+            &#183;
+            <a href="privacy.html">privacy</a>
+        </nav>
+    </div>
 
     <div id="funnel-msg-overlay" class="funnel-msg-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="funnel-msg-heading">
         <div class="funnel-msg-dlg">
@@ -826,7 +994,7 @@
 
         var I18N = {
             en: {
-                tagline: 'Pull the lever.',
+                tagline: 'Pull lever to spin.',
                 notifyMsg: 'Early list: emails only.',
                 notifyMsgPending: '',
                 notifyCta: 'Get notified',
@@ -834,16 +1002,20 @@
                 notifyBottomSub: 'Bonzi waitlist — one field, our database only.',
                 notifyBottomCta: 'Join the list',
                 notifyBottomPending: '',
+                winSlotTitle: 'Bonzi slot',
+                winAccessTitle: 'Access control',
+                winUpdatesTitle: 'Update notifications',
+                accessSubmitLabel: 'Submit',
                 waitlistThanks: "You're on the list.",
                 waitlistErr: 'Could not save. Try again in a moment.',
                 waitlistModalTitle: 'Bonzi Vista',
                 waitlistModalOk: 'OK',
                 waitlistJoin: 'Join',
-                waitlistEmailPh: 'Email',
+                waitlistEmailPh: 'username@msn.com',
                 lcdPrefix: 'Tokenise your',
                 statusIdle: 'Ready',
                 statusStarting: 'Waking up…',
-                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
+                serviceWarmingClue: 'System warming up. Please wait.',
                 clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
                 pwPlaceholder: 'access code',
                 footerPrivacy: 'Privacy',
@@ -874,7 +1046,7 @@
                 }
             },
             'pt-BR': {
-                tagline: 'Puxe a alavanca.',
+                tagline: 'Puxe a alavanca para girar.',
                 notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
                 notifyMsgPending: '',
                 notifyCta: 'Avise-me',
@@ -882,16 +1054,20 @@
                 notifyBottomSub: 'Lista Bonzi — um campo, nosso banco s\u00F3.',
                 notifyBottomCta: 'Quero entrar',
                 notifyBottomPending: '',
+                winSlotTitle: 'Bonzi slot',
+                winAccessTitle: 'Controle de acesso',
+                winUpdatesTitle: 'Notifica\u00E7\u00F5es',
+                accessSubmitLabel: 'Enviar',
                 waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
                 waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
                 waitlistModalTitle: 'Bonzi Vista',
                 waitlistModalOk: 'OK',
                 waitlistJoin: 'Entrar',
-                waitlistEmailPh: 'E-mail',
+                waitlistEmailPh: 'usuario@exemplo.com',
                 lcdPrefix: 'Tokenise sua',
                 statusIdle: 'Pronto',
                 statusStarting: 'Acordando\u2026',
-                serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente de novo em alguns segundos.',
+                serviceWarmingClue: 'Sistema aquecendo. Aguarde.',
                 clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
                 pwPlaceholder: 'c\u00F3digo',
                 footerPrivacy: 'Privacidade',
@@ -1058,6 +1234,16 @@
             document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
             var gt = document.getElementById('gate-tagline');
             if (gt) gt.textContent = L.tagline;
+            var swt = document.getElementById('slot-win-title');
+            if (swt && L.winSlotTitle) {
+                swt.textContent = '\uD83C\uDFB0 ' + L.winSlotTitle;
+            }
+            var awt = document.getElementById('access-win-title');
+            if (awt && L.winAccessTitle) awt.textContent = L.winAccessTitle;
+            var uwt = document.getElementById('updates-win-title');
+            if (uwt && L.winUpdatesTitle) uwt.textContent = L.winUpdatesTitle;
+            var sbtn = document.getElementById('submit-btn');
+            if (sbtn && L.accessSubmitLabel) sbtn.textContent = L.accessSubmitLabel;
             var lp = document.getElementById('lcd-prefix');
             if (lp) lp.textContent = L.lcdPrefix;
             var machineEl = document.getElementById('slot-machine');
@@ -1347,6 +1533,25 @@
             if (spinning) return;
             if (lever.classList.contains('lever-disabled')) return;
             spinning = true;
+
+            (function leverPullChime() {
+                var ac = document.getElementById('slot-coin');
+                if (!ac) {
+                    ding();
+                    return;
+                }
+                try {
+                    ac.currentTime = 0;
+                    var pr = ac.play();
+                    if (pr && typeof pr.catch === 'function') {
+                        pr.catch(function() {
+                            ding();
+                        });
+                    }
+                } catch (eChime) {
+                    ding();
+                }
+            })();
 
             clueEl.textContent = getStr().spinChecking;
 

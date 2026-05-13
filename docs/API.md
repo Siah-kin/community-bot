@@ -4,19 +4,21 @@ This repository is a static site; the live API is hosted separately.
 
 **Base URL (hosted):** `https://bonzi-v5.onrender.com`
 
+**GTM note:** Public-facing positioning centers **staking**, **slot funnel**, **waitlist**, and Telegram **`/ticket`**. Sections below describe **hosted endpoints** for health checks and **operator/integration** use; they are not the visitor-facing product pitch.
+
 ## Health
 
 - `GET /healthz` → `{ "status": "ok", "service": "bonzi-platform" }`
 - `GET /health` → same
 
-## Well-known (agent discovery)
+## Well-known (discovery JSON)
 
-- `GET /.well-known/agent.json` (A2A discovery)
-- `GET /.well-known/agent-card.json` (ERC-8004)
+- `GET /.well-known/agent.json` — discovery document  
+- `GET /.well-known/agent-card.json` — alternate agent card JSON  
 
-Both return the current agent card JSON.
+Both return JSON synced from live configuration when wired.
 
-## Trust Oracle
+## Trust endpoints (operators / integrations)
 
 ### Get trust by wallet
 
@@ -42,7 +44,7 @@ curl "https://bonzi-v5.onrender.com/api/trust/0xYOUR_WALLET"
 - `GET /api/trust/cpi/{user_id}`
 - `GET /api/trust/explain/{user_id}`
 
-### ERC-8004 status
+### Registry heartbeat
 
 - `GET /api/trust/erc8004/status`
 

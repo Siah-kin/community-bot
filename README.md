@@ -2,8 +2,6 @@
 
 **What this is:** the **public website** for Bonzi Vista, hosted on **GitHub Pages**: static HTML, CSS, and JavaScript. Visitors get the slot landing page, the **MIT-licensed** BONZI staking mini-app in the browser, manuals, and other public pages.
 
-**What this is not:** the hosted Telegram bot, private APIs, databases, or server-side product code. Those are not in this repository. Forking here gives you the **public site and open front-end assets** only.
-
 **Live site:** https://bonzivista.org
 
 ---
@@ -17,7 +15,7 @@
 
 ---
 
-### What you can review here (no private repo needed)
+### What you can review here
 
 | Area | Where |
 |------|--------|
@@ -79,7 +77,7 @@ Then open the URL your terminal prints (often http://localhost:8000/) and browse
 
 ### Maintainer note (keep out of visitor copy)
 
-Backend wiring for the waitlist, slot API host, and production checks live with the **hosted service** and internal runbooks, not in this README. If you maintain the stack, use your private ops docs and the repo’s `docs/` tree for HTTP details; do not paste SQL, table names, or environment keys into public issues.
+Waitlist wiring, API host, and production checks are operator concerns; this README stays visitor-facing. Maintainers: use internal runbooks and the repo `docs/` tree for HTTP detail. Do not paste SQL, table names, or secrets into public issues.
 
 ---
 

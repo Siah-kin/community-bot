@@ -1,10 +1,10 @@
-# Bonzi Community Bot (Oracle)
+# Bonzi Vista public site (`community-bot`)
 
 **What this repo is:** the **public website** for Bonzi Vista (GitHub Pages): static HTML/CSS/JS, manuals, the **MIT-licensed** BONZI staking mini-app client, slot landing page, metrics, widgets, and ERC-8004 **discovery** files under `.well-known/`.
 
 **What this repo is not:** the Telegram bot runtime, admin dashboard, RAG stack, or trust engine **source code**—those live in private product infrastructure. Forking this repo gives you the **public site and open clients**, not a copy-paste of the full product backend.
 
-**GitHub About text:** keep it aligned with [docs/REPO_ABOUT.md](docs/REPO_ABOUT.md). Do not use legacy wording that claims this repo *is* the full AI bot with RAG and dashboards.
+**GitHub About (sidebar):** paste the sentence from [docs/REPO_ABOUT.md](docs/REPO_ABOUT.md). Repo **Description** lives only in GitHub Settings, not in git. Do not recycle legacy lines that claim this repo *is* the full bot stack with RAG and dashboards.
 
 **Agent discovery JSON** (`.well-known/agent*.json`) may be **auto-synced from the live API**; treat listed skills as **API surface / intent**, not a warranty that every path is live or row-proven for your tenant until you verify it.
 

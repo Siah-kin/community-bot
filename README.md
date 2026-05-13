@@ -10,6 +10,21 @@
 
 - **Live site:** https://bonzivista.org
 
+### Public vetting surface (business card stage)
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Live site](https://img.shields.io/badge/site-bonzivista.org-7c3aed.svg)](https://bonzivista.org/)
+[![Slot funnel — source](https://img.shields.io/badge/slot%20funnel-index.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/index.html)
+[![Staking mini-app — source](https://img.shields.io/badge/staking%20client-stake--tg.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/stake-tg.html)
+
+Three things outsiders can sanity-check **without** your private backend repo:
+
+| What | Why it matters |
+|------|----------------|
+| **Slot game (public source)** | Funnel UX and **`/api/slotgame/*`** wiring are visible in [`index.html`](index.html); API base is declared in `<meta name="bonzi-api-origin">`. |
+| **Email (first-party waitlist)** | Closed-alpha signup **POST** goes to **`/api/public/waitlist`** on that same host (**Slot page + first-party waitlist** section below); not a disguised hosted form unless you deliberately override meta. |
+| **Staking mini-app (MIT client)** | Full browser client lives in **`stake-tg.html`**; anyone can audit wallet and contract reads before touching funds. |
+
 **GitHub Pages priority:** Every push to `main` should refresh the public site. This repo ships [`.github/workflows/pages.yml`](.github/workflows/pages.yml): turn it on under **Settings → Pages → Build and deployment → Source: GitHub Actions**. That runs a deploy on each `main` push with **concurrency** so overlapping pushes **finish** in order instead of cancelling mid-upload (set `cancel-in-progress: false`). If Pages looks stuck after a push, open **Actions** for the latest **Deploy GitHub Pages** run, confirm it is green, then hard-refresh `bonzivista.org` (CDN can cache HTML briefly). If you still use **Deploy from a branch** (`main` / root), pushes update Pages without Actions; pick **one** source in Settings to avoid duplicate or failed workflows. From Bonzi_v5, run `scripts/development/publish_public_pages_mirror.sh` to copy `data/static/tg/*` and push `main` in one step.
 - **Telegram:** https://t.me/Bonzivista_bot
 - **X:** https://x.com/Bonzi_vista

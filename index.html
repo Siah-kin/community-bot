@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-slot-minimal-green-serif">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-layer-panels-footer-type">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -54,6 +54,14 @@
             --win98-btn-deep: #4b1999;
             --neon-outer: rgba(106, 50, 159, 0.55);
             --reel-lime: #00ff00;
+            /* Stacked panels on #000 page (reference layout). */
+            --layer-panel: #121212;
+            --layer-border: #2a2a2a;
+            --layer-bevel-light: rgba(255, 255, 255, 0.06);
+            --footer-muted: #71717a;
+            --footer-fine: #a1a1aa;
+            --terminal-green: #00ff00;
+            --terminal-green-dim: #3d7a3d;
         }
 
         /* === PUZZLE GATE === */
@@ -149,12 +157,15 @@
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* Updates pane: CRT/terminal skin inside the same Win98 window chrome (balances with other boxes). */
+        /* Updates pane: dark grey card on #000, neon green monospace (reference). */
         .win98-neon-body-updates {
-            background: #0a0a0a;
-            color: #7cfc00;
-            padding: 12px 14px 14px;
+            background: var(--layer-panel);
+            color: var(--terminal-green);
+            padding: 18px 16px 20px;
             font-family: 'Courier New', Courier, monospace;
+            border: 1px solid var(--layer-border);
+            box-shadow: inset 0 1px 0 var(--layer-bevel-light);
+            box-sizing: border-box;
         }
 
         .win98-neon-body-updates .notify-bottom {
@@ -166,20 +177,20 @@
         }
 
         .win98-neon-body-updates #notify-bottom-title {
-            font-size: 13px;
-            font-weight: 400;
+            font-size: 14px;
+            font-weight: 700;
             font-family: 'Courier New', Courier, monospace;
-            color: #7cfc00;
-            margin: 0 0 0.35rem;
-            letter-spacing: 0.02em;
-            text-shadow: 0 0 6px rgba(124, 252, 0, 0.35);
+            color: var(--terminal-green);
+            margin: 0 0 0.4rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
         }
 
         .win98-neon-body-updates #notify-bottom-sub {
             font-size: 11px;
-            color: #5cb85c;
+            color: var(--terminal-green-dim);
             font-family: 'Courier New', Courier, monospace;
-            margin: 0 0 0.75rem;
+            margin: 0 0 0.8rem;
             line-height: 1.45;
         }
 
@@ -224,7 +235,7 @@
         }
 
         .win98-neon-body-updates .notify-waitlist-form input[type="email"]::placeholder {
-            color: #3d6b3d !important;
+            color: #4a5c4a !important;
         }
 
         .win98-neon-body-updates #waitlist-submit {
@@ -290,12 +301,13 @@
         .slot-footer-zone .slot-stake-footer.site-footer {
             box-sizing: border-box;
             width: 100%;
-            background: #0f0f0f;
+            background: var(--layer-panel);
             padding: 20px 16px 22px;
             margin-top: 12px;
             text-align: center;
             font-size: 13px;
-            border-top: 1px solid #27272a;
+            border: 1px solid var(--layer-border);
+            box-shadow: inset 0 1px 0 var(--layer-bevel-light);
         }
 
         .slot-footer-zone .slot-stake-footer .footer-cto-row {
@@ -305,21 +317,66 @@
             gap: 8px;
             flex-wrap: wrap;
             margin-bottom: 12px;
-            color: #a1a1aa;
+            color: var(--footer-muted);
             font-size: 13px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-pipe {
+            color: #52525b;
         }
 
         .slot-footer-zone .slot-stake-footer .footer-cto-row a {
             color: #ffffff;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .slot-footer-zone .slot-stake-footer .footer-cto-row a:hover {
             text-decoration: underline;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 12px;
+            color: var(--footer-muted);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row a {
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-legal-row {
+            font-size: 12px;
+            color: var(--footer-fine);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-legal-row a {
+            color: var(--footer-fine);
+            text-decoration: none;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-legal-row a:hover {
+            text-decoration: underline;
+        }
+
+        .slot-footer-zone .win98-winamp-stripe {
+            margin-bottom: 10px;
         }
 
         .win98-winamp-stripe {
@@ -440,67 +497,15 @@
             letter-spacing: 0.04em;
         }
 
-        /* Slot + waitlist panes: no outer Win98 frame (black page + green copy only). */
-        .win98-neon-window[data-pane="slot"],
+        /* Updates pane only: no outer Win98 frame or title bar (CRT block stands alone). */
         .win98-neon-window[data-pane="updates"] {
             border: none;
             box-shadow: none;
             background: transparent;
         }
 
-        .win98-neon-window[data-pane="slot"] #slot-machine {
-            background: transparent;
-        }
-
         .win98-neon-window[data-pane="updates"] .win98-titlebar {
             display: none !important;
-        }
-
-        .win98-neon-window[data-pane="slot"] .bonzi-logos {
-            background: #0a0a0a;
-            border-top: 1px solid #262626;
-            border-bottom: 1px solid #262626;
-        }
-
-        .win98-neon-window[data-pane="slot"] .win98-statusbar {
-            background: #0a0a0a;
-            border-top: 1px solid #333333;
-        }
-
-        .win98-neon-window[data-pane="slot"] .status-text { color: #86efac; }
-        .win98-neon-window[data-pane="slot"] .status-divider { color: #3f3f46; }
-        .win98-neon-window[data-pane="slot"] .clue-msg { color: #5cb85c; font-style: normal; }
-
-        .slot-info-minimal {
-            margin-left: auto;
-            flex-shrink: 0;
-            background: transparent;
-            border: 1px solid #2d6b2d;
-            color: #7cfc00;
-            font-size: 10px;
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 2px 10px;
-            cursor: pointer;
-            border-radius: 0;
-        }
-
-        .slot-info-minimal:hover {
-            filter: brightness(1.15);
-            border-color: #7cfc00;
-        }
-
-        /* Slot reel: bold serif + neon lime + glow (match Launch reference). */
-        .win98-neon-window[data-pane="slot"] .lcd-panel-slot {
-            background: transparent;
-            border: none;
-            padding: 0;
-            box-shadow: none;
-        }
-
-        .win98-neon-window[data-pane="slot"] .win98-content {
-            background: #000000;
-            padding: 10px 12px;
         }
 
         /* === WIN98 SLOT MACHINE === */
@@ -748,24 +753,19 @@
             height: 60px;
             line-height: 60px;
             padding: 0 16px;
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: bold;
             font-family: Georgia, 'Times New Roman', Times, serif;
-            color: #00ff00;
+            color: var(--reel-lime);
             white-space: nowrap;
             text-align: center;
-            -webkit-font-smoothing: antialiased;
-            text-shadow:
-                0 0 2px #00ff00,
-                0 0 8px #00ff00,
-                0 0 14px rgba(0, 255, 0, 0.55);
+            text-shadow: 0 0 6px rgba(0, 255, 0, 0.45);
         }
         .slot-reel .word.hint-word {
             color: #c4b5fd;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-weight: 700;
-            font-size: 22px;
-            text-shadow: 0 0 6px rgba(196, 181, 253, 0.65), 0 0 12px rgba(167, 139, 250, 0.35);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-shadow: 0 0 6px rgba(196, 181, 253, 0.6);
         }
         .slot-reel .word.key-word {
             color: #d4af37;
@@ -877,6 +877,9 @@
         .slot-machine.jackpot .lcd-panel {
             background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
             animation: jackpot-glow 0.3s ease-in-out infinite alternate;
+        }
+        .slot-machine.jackpot .lcd-dash-line {
+            border-top-color: rgba(253, 250, 255, 0.55);
         }
         .slot-machine.jackpot .status-led {
             background: #7c3aed;
@@ -1155,8 +1158,19 @@
         <div class="win98-neon-stack">
             <div class="win98-neon-window" data-pane="slot">
                 <div class="slot-machine" id="slot-machine">
+                    <div class="win98-titlebar">
+                        <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
+                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
+                    </div>
                     <div class="win98-content">
-                        <div class="lcd-panel lcd-panel-slot">
+                        <div class="lcd-panel">
+                            <div class="lcd-marquee-caption" aria-live="polite">
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                                <div class="lcd-marquee-lines lcd-label-stack">
+                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
+                                </div>
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                            </div>
                             <div class="lcd-screen">
                                 <div class="slot-reel" id="slot-reel"></div>
                             </div>
@@ -1181,7 +1195,6 @@
                         <span class="status-text" id="status-ready">Ready</span>
                         <span class="status-divider">|</span>
                         <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
-                        <button type="button" id="slot-info-btn" class="slot-info-minimal" title="Rules">Rules</button>
                     </div>
                 </div>
             </div>
@@ -1246,23 +1259,23 @@
             <!-- CTO, sponsor, MIT + privacy -->
             <footer class="site-footer slot-stake-footer" aria-label="Site footer">
                 <div class="footer-cto-row">
-                    <span style="color: #71717A;">CTO</span>
-                    <span style="color: #52525b;"> | </span>
+                    <span>CTO</span>
+                    <span class="footer-pipe">|</span>
                     <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
                         <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
                         Bonzivista.org
                     </a>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
-                    <span style="color: #71717A;">sponsored by
-                        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <div class="footer-sponsor-row">
+                    <span>sponsored by
+                        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
                             <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
                             Ethervista
                         </a>
                     </span>
                 </div>
-                <div style="font-size: 12px; color: #71717A;">
-                    <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" id="footer-mit-repo" style="color: #71717A; text-decoration: none;"><span id="footer-mit-lic">mit license</span></a><span aria-hidden="true">, </span><a href="privacy.html" id="footer-privacy" style="color: #71717A; text-decoration: none;">privacy policy</a>
+                <div class="footer-legal-row">
+                    <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" id="footer-mit-repo"><span id="footer-mit-lic">mit license</span></a><span aria-hidden="true">, </span><a href="privacy.html" id="footer-privacy">privacy policy</a>
                 </div>
             </footer>
 
@@ -1585,12 +1598,18 @@
             document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
             var gt = document.getElementById('gate-tagline');
             if (gt) gt.textContent = L.tagline;
+            var swt = document.getElementById('slot-win-title');
+            if (swt && L.winSlotTitle) {
+                swt.textContent = '\uD83C\uDFB0 ' + L.winSlotTitle;
+            }
             var awt = document.getElementById('access-win-title');
             if (awt && L.winAccessTitle) awt.textContent = '\uD83D\uDD11 ' + L.winAccessTitle;
             var uwt = document.getElementById('updates-win-title');
             if (uwt && L.winUpdatesTitle) uwt.textContent = '\uD83D\uDCE3 ' + L.winUpdatesTitle;
             var sbtn = document.getElementById('submit-btn');
             if (sbtn && L.accessSubmitLabel) sbtn.textContent = L.accessSubmitLabel;
+            var lp = document.getElementById('lcd-prefix');
+            if (lp) lp.textContent = L.lcdPrefix;
             var machineEl = document.getElementById('slot-machine');
             var warmingNow = machineEl && machineEl.classList.contains('api-warming');
             var st = document.getElementById('status-ready');

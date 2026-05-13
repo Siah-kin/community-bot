@@ -8,8 +8,12 @@ Place a short, low-bitrate clip you have rights to use at:
 
 Until the file exists, the page falls back to a short synthesized tone in script.
 
-## Winamp strip demo (`winamp-demo.wav`)
+## Winamp strip (`rage-against-the-machine-killing-in-the-name.mp3`)
 
-The footer **Winamp**-homage stripe plays **`sounds/winamp-demo.wav`**: a short in-repo sine tone (no rights issue).
+The homepage `<audio id="winamp-player">` loads **`sounds/rage-against-the-machine-killing-in-the-name.mp3`** first, then falls back to **`sounds/winamp-demo.wav`**.
 
-To use **MP3** instead, add a licensed file and change the homepage `<audio id="winamp-player">` to a single `<source src="sounds/your-track.mp3" type="audio/mpeg">`.
+Only ship audio you have the rights to redistribute on a public site. Source of truth on the operator machine may live under the Bonzi_v5 tree; this repo keeps a copy under `sounds/` for GitHub Pages.
+
+## Winamp fallback (`winamp-demo.wav`)
+
+Short in-repo sine tone used if the MP3 source is missing or unsupported.

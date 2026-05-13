@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-footer-order-winamp-first">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-winamp-ratm-mp3">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -983,8 +983,8 @@
 </head>
 <body class="bonzi-slot-page">
     <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
-    <!-- Homage stripe: demo audio (synthetic tone, wav). Replace with licensed MP3 in sounds/ if preferred. -->
-    <audio id="winamp-player" preload="metadata"><source src="sounds/winamp-demo.wav" type="audio/wav"></audio>
+    <!-- Homage stripe: primary MP3 + WAV fallback (see sounds/README.md). -->
+    <audio id="winamp-player" preload="metadata"><source src="sounds/rage-against-the-machine-killing-in-the-name.mp3" type="audio/mpeg"><source src="sounds/winamp-demo.wav" type="audio/wav"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">

@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-layer-panels-footer-type">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-ocr-a-slot-font">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -20,6 +20,14 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <style>
+        /* OCR A (OFL): opensourcedesign/fonts OCR/OCRA.otf — see assets/fonts/OFL-opensourcedesign-fonts.txt */
+        @font-face {
+            font-family: 'Bonzi OCR A';
+            src: url('assets/fonts/OCRA.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         body.bonzi-slot-page {
             background: #000000;
             color: #0a0a0a;
@@ -725,7 +733,7 @@
             color: #ffffff;
             font-size: 11px;
             font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
             letter-spacing: 1px;
             text-shadow: none;
             margin-bottom: 2px;
@@ -755,7 +763,7 @@
             padding: 0 16px;
             font-size: 22px;
             font-weight: bold;
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
             color: var(--reel-lime);
             white-space: nowrap;
             text-align: center;
@@ -763,7 +771,7 @@
         }
         .slot-reel .word.hint-word {
             color: #c4b5fd;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
             font-size: 18px;
             text-shadow: 0 0 6px rgba(196, 181, 253, 0.6);
         }
@@ -2232,8 +2240,7 @@
             var val = pwEl.value.trim().toUpperCase();
             if (val === 'EULER26') {
                 sessionStorage.setItem('bonzi_alpha', '1');
-                document.getElementById('gate').classList.add('hidden');
-                document.getElementById('content').classList.remove('hidden');
+                window.location.replace(new URL('stake/', window.location.href).href);
             } else if (val.length > 0) {
                 errEl.textContent = getStr().errWrong;
                 pwEl.value = '';

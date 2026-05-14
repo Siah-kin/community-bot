@@ -7,7 +7,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-mirror-parity-wallet-first-pool-below-footer-mit-20260514" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-pool-faq-context-20260514" />
+    <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -1379,7 +1380,7 @@
         <!-- Pool snapshot + FAQ (reads after staking UI) -->
         <div class="stats-bar metrics-hero-wrap">
             <p id="metricsKickerPool" class="metrics-section-kicker">Pool snapshot</p>
-            <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
+            <div class="metrics-hero-grid" role="group" aria-label="Pool metrics" id="metricsHeroGridPool" data-aria-en="Pool metrics" data-aria-pt="Métricas do pool" data-aria-zh="资金池指标">
                 <div class="metric-tile">
                     <div id="metricLabelWalletsStaking" class="metric-tile-label">Wallets staking</div>
                     <div class="metric-tile-value" id="metricStakingWallets">--</div>
@@ -1389,12 +1390,12 @@
                     <div class="metric-tile-value" id="metricHardstakePct">--</div>
                 </div>
                 <div class="metric-tile">
-                    <div id="metricLabelYieldPool" class="metric-tile-label">Yield (pool)</div>
-                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
-                </div>
-                <div class="metric-tile">
                     <div id="metricLabelLpPct" class="metric-tile-label">LP (% supply)</div>
                     <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
+                </div>
+                <div class="metric-tile">
+                    <div id="metricLabelYieldPool" class="metric-tile-label">Yield (pool)</div>
+                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
                 </div>
             </div>
             <div class="pool-snapshot-faq" aria-labelledby="poolSnapshotFaqKicker">
@@ -1406,15 +1407,15 @@
                     </details>
                     <details class="faq-item">
                         <summary><span class="faq-question" id="poolFaqQStaked">Staked (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                        <div class="faq-answer">BONZI locked in HARDSTAKE escrow (whole-network share). <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">HARDSTAKE on Etherscan</a></div>
+                        <div class="faq-answer" id="faqPoolStakedA">The tile shows <strong>BONZI inside the HARDSTAKE escrow contract</strong> as a percent of <strong>total BONZI supply</strong> on Ethereum. That is whole-network headline math for this page, not your personal stake balance (your numbers stay in the wallet card above). <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">Open HARDSTAKE on Etherscan</a> to read balances directly.</div>
+                    </details>
+                    <details class="faq-item">
+                        <summary><span class="faq-question" id="poolFaqQLp">LP (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer" id="faqPoolLpA">Here <strong>LP</strong> means <strong>BONZI held in the HARDLOCK / pair vault</strong> that backs tradable liquidity on the routers we index (Ethervista path on this screen). It is a different vault from HARDSTAKE escrow, so read both tiles before you compare a blended TVL post. <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Open the pool vault on Etherscan</a>.</div>
                     </details>
                     <details class="faq-item">
                         <summary><span class="faq-question" id="poolFaqQYield">Yield (pool)</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer" id="faqPoolYieldDesc"></div>
-                    </details>
-                    <details class="faq-item">
-                        <summary><span class="faq-question" id="poolFaqQLp">LP (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                        <div class="faq-answer">BONZI in the HARDLOCK pool used for trading liquidity. <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Pool vault on Etherscan</a></div>
                     </details>
                     <details class="faq-item">
                         <summary><span class="faq-question" id="poolFaqQHistory">Pool history and pacing</span><span class="faq-marker" aria-hidden="true"></span></summary>
@@ -1428,40 +1429,41 @@
             <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
             <div class="faq-list">
                 <details class="faq-item">
-                    <summary><span class="faq-question">What is BONZI staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">You lock BONZI in HARDSTAKE. While it stays locked, your share of the pool can earn ETH from trading fees that flow through Ethervista. This page is Bonzivista’s staking workflow (connect wallet, stake, claim, withdraw).</div>
+                    <summary><span class="faq-question" id="faqMain1Q">What is BONZI staking?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain1A">You lock BONZI in HARDSTAKE. While it stays locked, your share of the pool can earn ETH from trading fees that flow through Ethervista. This page is Bonzivista’s staking workflow (connect wallet, stake, claim, withdraw).</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">How does Ethervista relate to this page?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Ethervista ships the routers and pool contracts Bonzi plugs into on Ethereum mainnet. Bonzivista only hosts this staking screen inside Telegram/browser. Want the official vendor story? Read <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">Ethervista: how it works</a>.</div>
+                    <summary><span class="faq-question" id="faqMain2Q">How does Ethervista relate to this page?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain2A">Ethervista ships the routers and pool contracts Bonzi plugs into on Ethereum mainnet. Bonzivista only hosts this staking screen inside Telegram/browser. Want the official vendor story? Read <a href="https://www.ethervista.app/how-it-works" target="_blank" rel="noopener noreferrer">Ethervista: how it works</a>.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">How are rewards paid?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">ETH builds up against your stake over time. When you tap <strong>Claim</strong>, one wallet transaction sends whatever is currently owed into your wallet. Nothing auto-sends unless you confirm that claim.</div>
+                    <summary><span class="faq-question" id="faqMain3Q">How are rewards paid?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain3A">ETH builds up against your stake over time. When you tap <strong>Claim</strong>, one wallet transaction sends whatever is currently owed into your wallet. Nothing auto-sends unless you confirm that claim.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Is there a lock period?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Yes. Withdrawals wait <strong>14 days</strong> after you stake (or restake) before BONZI can leave the pool. Claiming ETH does not restart that countdown.</div>
+                    <summary><span class="faq-question" id="faqMain4Q">Is there a lock period?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain4A">Yes. Withdrawals wait <strong>14 days</strong> after you stake (or restake) before BONZI can leave the pool. Claiming ETH does not restart that countdown.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">When the backing numbers look solid we may show one pool-wide percent for the Yield tile. When data is noisy we instead show ETH paid over time converted to ETH per year (<strong>pacing only</strong>, whole pool math, not “your locked rate”). Connecting your wallet does not rewrite those headline tiles.</div>
+                    <summary><span class="faq-question" id="faqMain5Q">How is APR calculated?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain5A">When the backing numbers look solid we may show one pool-wide percent for the Yield tile. When data is noisy we instead show ETH paid over time converted to ETH per year (<strong>pacing only</strong>, whole pool math, not “your locked rate”). Connecting your wallet does not rewrite those headline tiles.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Why does Yield show small ETH/year when posts quote huge totals?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">This page favors plain ETH pacing for the HARDSTAKE pool slice we index. Loud posts mix US dollars, other tokens, longer time spans, blended products, or fees outside Bonzi staking. Compare apples to apples first: denomination (ETH vs USD) plus what pool or product they counted.</div>
+                    <summary><span class="faq-question" id="faqMain6Q">Why does Yield show small ETH/year when posts quote huge totals?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain6A">This page favors plain ETH pacing for the HARDSTAKE pool slice we index. Loud posts mix US dollars, other tokens, longer time spans, blended products, or fees outside Bonzi staking. Compare apples to apples first: denomination (ETH vs USD) plus what pool or product they counted.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Which blockchain is this?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Ethereum mainnet (chain ID 1). If your wallet is on another chain, reconnect on Ethereum.</div>
+                    <summary><span class="faq-question" id="faqMain7Q">Which blockchain is this?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain7A">Ethereum mainnet (chain ID 1). If your wallet is on another chain, reconnect on Ethereum.</div>
                 </details>
                 <details class="faq-item">
-                    <summary><span class="faq-question">Why claim before staking more or withdrawing?</span><span class="faq-marker" aria-hidden="true"></span></summary>
-                    <div class="faq-answer">Adding stake or pulling BONZI changes your internal reward index math. Grab pending ETH rewards first so nothing gets reset unexpectedly (same warning banner on this page).</div>
+                    <summary><span class="faq-question" id="faqMain8Q">Why claim before staking more or withdrawing?</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                    <div class="faq-answer" id="faqMain8A">Adding stake or pulling BONZI changes your internal reward index math. Grab pending ETH rewards first so nothing gets reset unexpectedly (same warning banner on this page).</div>
                 </details>
             </div>
             <a
                 class="ethervista-how-bar"
+                id="ethervistaHowBarLink"
                 href="https://www.ethervista.app/how-it-works"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -2018,6 +2020,210 @@
             }
         };
 
+        var STAKE_FAQ_FULL_I18N = {
+        "en": {
+                "faqMain1Q": "What is BONZI staking?",
+                "faqMain1A": "You lock BONZI in HARDSTAKE. While it stays locked, your share of the pool can earn ETH from trading fees that flow through Ethervista. This page is Bonzivista's staking workflow (connect wallet, stake, claim, withdraw).",
+                "faqMain2Q": "How does Ethervista relate to this page?",
+                "faqMain2A": "Ethervista ships the routers and pool contracts Bonzi plugs into on Ethereum mainnet. Bonzivista only hosts this staking screen inside Telegram/browser. Want the official vendor story? Read <a href=\"https://www.ethervista.app/how-it-works\" target=\"_blank\" rel=\"noopener noreferrer\">Ethervista: how it works</a>.",
+                "faqMain3Q": "How are rewards paid?",
+                "faqMain3A": "ETH builds up against your stake over time. When you tap <strong>Claim</strong>, one wallet transaction sends whatever is currently owed into your wallet. Nothing auto-sends unless you confirm that claim.",
+                "faqMain4Q": "Is there a lock period?",
+                "faqMain4A": "Yes. Withdrawals wait <strong>14 days</strong> after you stake (or restake) before BONZI can leave the pool. Claiming ETH does not restart that countdown.",
+                "faqMain5Q": "How is APR calculated?",
+                "faqMain5A": "When the backing numbers look solid we may show one pool-wide percent for the Yield tile. When data is noisy we instead show ETH paid over time converted to ETH per year (<strong>pacing only</strong>, whole pool math, not \"your locked rate\"). Connecting your wallet does not rewrite those headline tiles.",
+                "faqMain6Q": "Why does Yield show small ETH/year when posts quote huge totals?",
+                "faqMain6A": "This page favors plain ETH pacing for the HARDSTAKE pool slice we index. Loud posts mix US dollars, other tokens, longer time spans, blended products, or fees outside Bonzi staking. Compare apples to apples first: denomination (ETH vs USD) plus what pool or product they counted.",
+                "faqMain7Q": "Which blockchain is this?",
+                "faqMain7A": "Ethereum mainnet (chain ID 1). If your wallet is on another chain, reconnect on Ethereum.",
+                "faqMain8Q": "Why claim before staking more or withdrawing?",
+                "faqMain8A": "Adding stake or pulling BONZI changes your internal reward index math. Grab pending ETH rewards first so nothing gets reset unexpectedly (same warning banner on this page).",
+                "faqEthervistaBarHtml": "Ethervista: how it works (official)",
+                "faqPoolStakedA": "The tile shows <strong>BONZI inside the HARDSTAKE escrow contract</strong> as a percent of <strong>total BONZI supply</strong> on Ethereum. That is whole-network headline math for this page, not your personal stake balance (your numbers stay in the wallet card above). <a href=\"https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53\" target=\"_blank\" rel=\"noopener noreferrer\">Open HARDSTAKE on Etherscan</a> to read balances directly.",
+                "faqPoolLpA": "Here <strong>LP</strong> means <strong>BONZI held in the HARDLOCK / pair vault</strong> that backs tradable liquidity on the routers we index (Ethervista path on this screen). It is a different vault from HARDSTAKE escrow, so read both tiles before you compare a blended TVL post. <a href=\"https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2\" target=\"_blank\" rel=\"noopener noreferrer\">Open the pool vault on Etherscan</a>."
+        },
+        "pt": {
+                "faqMain1Q": "O que é staking de BONZI?",
+                "faqMain1A": "Você trava BONZI no HARDSTAKE. Enquanto estiver travado, sua fatia do pool pode ganhar ETH com taxas de negociação que passam pela Ethervista. Esta página é o fluxo Bonzivista (conectar carteira, stake, resgatar, sacar).",
+                "faqMain2Q": "Como a Ethervista se relaciona com esta página?",
+                "faqMain2A": "A Ethervista entrega roteadores e contratos de pool que o Bonzi usa na Ethereum mainnet. A Bonzivista só hospeda esta tela de stake no Telegram/navegador. Quer a história oficial do fornecedor? Leia <a href=\"https://www.ethervista.app/how-it-works\" target=\"_blank\" rel=\"noopener noreferrer\">Ethervista: como funciona</a>.",
+                "faqMain3Q": "Como as recompensas são pagas?",
+                "faqMain3A": "ETH acumula contra seu stake ao longo do tempo. Ao tocar em <strong>Resgatar</strong>, uma transação na carteira envia o que estiver devido. Nada sai sozinho sem você confirmar o resgate.",
+                "faqMain4Q": "Existe período de bloqueio?",
+                "faqMain4A": "Sim. Saques esperam <strong>14 dias</strong> após stake (ou novo stake) antes do BONZI sair do pool. Resgatar ETH não reinicia essa contagem.",
+                "faqMain5Q": "Como o APR é calculado?",
+                "faqMain5A": "Quando os números de base estão sólidos podemos mostrar um percentual amplo do pool no bloco Rendimento. Quando os dados são ruidosos mostramos ETH pago ao longo do tempo convertido em ETH por ano (<strong>só ritmo</strong>, matemática do pool inteiro, não \"sua taxa travada\"). Conectar a carteira não reescreve esses blocos.",
+                "faqMain6Q": "Por que o Rendimento mostra ETH/ano pequeno se posts citam totais enormes?",
+                "faqMain6A": "Esta página prefere ritmo em ETH para o recorte HARDSTAKE que indexamos. Posts misturam dólar, outros tokens, períodos maiores, produtos mistos ou taxas fora do staking Bonzi. Compare denominador (ETH vs USD) e qual pool ou produto contaram.",
+                "faqMain7Q": "Qual blockchain é esta?",
+                "faqMain7A": "Ethereum mainnet (chain ID 1). Se a carteira estiver em outra rede, reconecte na Ethereum.",
+                "faqMain8Q": "Por que resgatar antes de aumentar stake ou sacar?",
+                "faqMain8A": "Mais stake ou retirar BONZI muda o índice interno de recompensas. Resgate o ETH pendente primeiro para evitar reset inesperado (mesmo aviso desta página).",
+                "faqEthervistaBarHtml": "Ethervista: como funciona (oficial)",
+                "faqPoolStakedA": "O bloco mostra <strong>BONZI dentro do contrato HARDSTAKE</strong> como percentual do <strong>supply total</strong> na Ethereum. É matemática de rede para o headline, não o saldo pessoal (seu stake fica no cartão acima). <a href=\"https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53\" target=\"_blank\" rel=\"noopener noreferrer\">Abrir HARDSTAKE no Etherscan</a> para ver saldos on-chain.",
+                "faqPoolLpA": "Aqui <strong>LP</strong> é <strong>BONZI no cofre HARDLOCK / par</strong> que sustenta liquidez negociável nos roteadores que indexamos (Ethervista nesta tela). É outro cofre que o HARDSTAKE; leia os dois percentuais antes de comparar TVL misturada em posts. <a href=\"https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2\" target=\"_blank\" rel=\"noopener noreferrer\">Abrir o cofre do pool no Etherscan</a>."
+        },
+        "zh": {
+                "faqMain1Q": "什么是 BONZI 质押？",
+                "faqMain1A": "你将 BONZI 锁入 HARDSTAKE。锁定期间，你在池中的份额可因经 Ethervista 路由的交易手续费而获得 ETH。本页为 Bonzivista 的质押流程（连接钱包、质押、领取、撤回）。",
+                "faqMain2Q": "Ethervista 与本页是什么关系？",
+                "faqMain2A": "Ethervista 提供 Bonzi 在以太坊主网接入的路由与池合约。Bonzivista 仅在 Telegram/浏览器内托管此质押界面。需要官方说明请阅读 <a href=\"https://www.ethervista.app/how-it-works\" target=\"_blank\" rel=\"noopener noreferrer\">Ethervista：工作原理</a>。",
+                "faqMain3Q": "奖励如何发放？",
+                "faqMain3A": "ETH 会随时间相对你的质押累积。点击<strong>领取</strong>后，由钱包发起一笔交易把当前应付额打入你的地址。未经你确认不会自动转出。",
+                "faqMain4Q": "是否有锁定期？",
+                "faqMain4A": "有。质押（或再次质押）后需等待<strong>14 天</strong>才可从池中提取 BONZI。领取 ETH 不会重置该倒计时。",
+                "faqMain5Q": "APR 如何计算？",
+                "faqMain5A": "当底层数据稳定时，收益卡可能显示池级百分比；数据噪声大时，我们改为按已支付 ETH 换算年化 ETH（<strong>仅节奏估算</strong>，整池口径，非“你个人锁仓利率”）。连接钱包不会改写这些标题数字。",
+                "faqMain6Q": "为何此处 ETH/年较小，而帖子里总额很大？",
+                "faqMain6A": "本页对 HARDSTAKE 切片采用朴素 ETH 节奏。社媒帖常混用美元、其他代币、更长周期、混合产品或 Bonzi 质押外的费用。先对齐口径：计价（ETH 对 USD）以及统计的是哪个池或产品。",
+                "faqMain7Q": "使用哪条链？",
+                "faqMain7A": "以太坊主网（chain ID 1）。若钱包在其他链，请在以太坊上重新连接。",
+                "faqMain8Q": "为何要在加质押或撤回前先领取？",
+                "faqMain8A": "增加质押或撤出 BONZI 会改变内部奖励索引。请先领取待领 ETH，避免意外重置（与本页警告条一致）。",
+                "faqEthervistaBarHtml": "Ethervista：工作原理（官方）",
+                "faqPoolStakedA": "该数字为<strong>以太坊上 HARDSTAKE 合约内的 BONZI</strong>占<strong>总供应量</strong>的比例，属于整网标题口径，不是您个人质押余额（个人数据在上方钱包卡片）。<a href=\"https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53\" target=\"_blank\" rel=\"noopener noreferrer\">在 Etherscan 打开 HARDSTAKE</a>可直接查看链上余额。",
+                "faqPoolLpA": "此处 <strong>LP</strong> 指<strong>HARDLOCK / 交易对金库中的 BONZI</strong>，用于支撑我们索引的路由上的可交易流动性（本页为 Ethervista 路径）。它与 HARDSTAKE 托管不同；对比社媒上的混合 TVL 前请同时看两块百分比。<a href=\"https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2\" target=\"_blank\" rel=\"noopener noreferrer\">在 Etherscan 打开池金库合约</a>。"
+        }
+};
+        var STAKE_POOL_DYNAMIC_I18N = {
+            en: {
+                yieldSub: {
+                    wholePool: 'Whole pool headline %',
+                    poolPacing: 'Waiting on ETH/yr pace row',
+                    ethYrThin: 'ETH/yr pace (thin LP headline data)',
+                    wholePoolNotWallet: 'Whole pool ETH/yr pace (not your wallet)',
+                    thinData: 'Thin LP signal for a % headline'
+                },
+                walletsPendingHtml:
+                    '<p style="margin:0 0 0.45rem 0;">The wallet count comes from the optional <strong>public staking analytics</strong> export Bonzi publishes (same JSON that feeds the headline tiles).</p>' +
+                    '<p style="margin:0;">Until that file finishes loading we keep this line short on purpose so we do not invent a number.</p>',
+                walletsPending: 'Loads after the public staking analytics JSON is fetched.',
+                walletsFromHtml: function (slug) {
+                    var s = String(slug).replace(/_/g, ' ');
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">This is an <strong>aggregate</strong> count from the public staking analytics JSON. It is <strong>not</strong> your Telegram handle or wallet address.</p>' +
+                        '<p style="margin:0;">The file stores a machine-facing <strong>source</strong> tag so builders can trace which upstream slice powered the row. The slug you are seeing is <code style="word-break:break-all;">' +
+                        s +
+                        '</code> (underscores are part of the export schema, not a typo).</p>'
+                    );
+                },
+                historyEmpty:
+                    '<p style="margin:0;">Pool history text appears after the public staking metrics file returns totals plus pool age. Refresh if you opened the mini-app before the CDN finished.</p>',
+                historyFullHtml: function (p) {
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">Pool history uses the same pacing window as the Yield tile: it is descriptive math for the indexed slice, not a promise of future returns.</p>' +
+                        '<p style="margin:0;">~' +
+                        p.te.toFixed(2) +
+                        ' ETH recorded over ~' +
+                        Math.round(p.days) +
+                        ' days (~' +
+                        p.dmean.toFixed(4) +
+                        ' ETH/day). Yield tile: ~' +
+                        p.pace.toFixed(2) +
+                        ' ETH/year whole pool (pacing only). Social posts often mix USD, blended products, or wider scopes.</p>'
+                    );
+                }
+            },
+            pt: {
+                yieldSub: {
+                    wholePool: '% headline do pool inteiro',
+                    poolPacing: 'Aguardando linha ETH/ano',
+                    ethYrThin: 'Ritmo ETH/ano (dados LP finos)',
+                    wholePoolNotWallet: 'Ritmo ETH/ano do pool inteiro (n\u00E3o sua carteira)',
+                    thinData: 'Sinal LP fino para % headline'
+                },
+                walletsPendingHtml:
+                    '<p style="margin:0 0 0.45rem 0;">A contagem vem do export p\u00FAblico opcional de <strong>staking analytics</strong> da Bonzi (o mesmo JSON dos blocos acima).</p>' +
+                    '<p style="margin:0;">Enquanto o arquivo n\u00E3o carrega mantemos o texto curto para n\u00E3o inventar n\u00FAmero.</p>',
+                walletsPending: 'Carrega depois que o JSON p\u00FAblico de staking for buscado.',
+                walletsFromHtml: function (slug) {
+                    var s = String(slug).replace(/_/g, ' ');
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">\u00C9 um total <strong>agregado</strong> do JSON p\u00FAblico de staking. <strong>N\u00E3o</strong> \u00E9 seu usu\u00E1rio do Telegram nem endere\u00E7o de carteira.</p>' +
+                        '<p style="margin:0;">O arquivo guarda uma tag <strong>source</strong> leg\u00EDvel por m\u00E1quina. Voc\u00EA est\u00E1 vendo <code style="word-break:break-all;">' +
+                        s +
+                        '</code> (underscores fazem parte do schema exportado).</p>'
+                    );
+                },
+                historyEmpty:
+                    '<p style="margin:0;">O hist\u00F3rico aparece depois que o arquivo p\u00FAblico devolver totais e idade do pool. Atualize se abriu o mini-app antes do CDN terminar.</p>',
+                historyFullHtml: function (p) {
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">O hist\u00F3rico usa a mesma janela de ritmo do bloco Rendimento: matem\u00E1tica descritiva do recorte indexado, n\u00E3o promessa de retorno.</p>' +
+                        '<p style="margin:0;">~' +
+                        p.te.toFixed(2) +
+                        ' ETH registrados em ~' +
+                        Math.round(p.days) +
+                        ' dias (~' +
+                        p.dmean.toFixed(4) +
+                        ' ETH/dia). Bloco Rendimento: ~' +
+                        p.pace.toFixed(2) +
+                        ' ETH/ano pool inteiro (s\u00F3 ritmo). Posts costumam misturar USD, produtos mistos ou escopos maiores.</p>'
+                    );
+                }
+            },
+            zh: {
+                yieldSub: {
+                    wholePool: '\u6574\u6C60\u6807\u9898\u767e\u5206\u6BD4',
+                    poolPacing: '\u7B49\u5F85 ETH/\u5E74\u8282\u594f\u6570\u636E\u884C',
+                    ethYrThin: 'ETH/\u5E74\u8282\u594f\uFF08LP \u4FE1\u53F7\u8584\uFF0C\u4E0D\u505A\u5355\u7B14\u5927\u767E\u5206\u6BD4\uFF09',
+                    wholePoolNotWallet: '\u6574\u6C60 ETH/\u5E74\u8282\u594f\uFF08\u975E\u4E2A\u4EBA\u94B1\u5305\uFF09',
+                    thinData: 'LP \u4FE1\u53F7\u8584\uFF0C\u6682\u4E0D\u5C55\u793A\u5934\u6761\u767E\u5206\u6BD4'
+                },
+                walletsPendingHtml:
+                    '<p style="margin:0 0 0.45rem 0;">\u94B1\u5305\u6570\u6765\u81EA Bonzi \u53EF\u9009\u7684<strong>\u516C\u5F00\u8D28\u62BC\u5206\u6790</strong>JSON\uFF08\u4E0E\u4E0A\u65B9\u5361\u7247\u540C\u6E90\uFF09\u3002</p>' +
+                    '<p style="margin:0;">\u6587\u4EF6\u672A\u52A0\u8F7D\u5B8C\u6210\u524D\u6545\u610F\u4FDD\u7559\u77ED\u6587\u672C\uFF0C\u907F\u514D\u7F16\u9020\u6570\u5B57\u3002</p>',
+                walletsPending: '\u516C\u5F00\u8D28\u62BC\u6570\u636E JSON \u52A0\u8F7D\u540E\u663E\u793A\u3002',
+                walletsFromHtml: function (slug) {
+                    var s = String(slug).replace(/_/g, ' ');
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">\u8FD9\u662F\u516C\u5F00\u8D28\u62BC JSON \u7684<strong>\u96C6\u5408</strong>\u8BA1\u6570\uFF0C<strong>\u4E0D\u662F</strong>Telegram \u7528\u6237\u540D\u6216\u94B1\u5305\u5730\u5740\u3002</p>' +
+                        '<p style="margin:0;">\u6587\u4EF6\u7528 <strong>source</strong> \u5B57\u6BB5\u6807\u8BB0\u6570\u636e\u884C\u6765\u6E90\uFF0C\u65B9\u4FBF\u8C03\u8BD5\u3002\u60A8\u770B\u5230\u7684\u6807\u7B7E\u4E3A <code style="word-break:break-all;">' +
+                        s +
+                        '</code>\uFF08\u4E0B\u5212\u7EBF\u6765\u81EA\u5BFC\u51FA schema\uFF0C\u5E76\u975E\u9519\u8BEF\uFF09\u3002</p>'
+                    );
+                },
+                historyEmpty:
+                    '<p style="margin:0;">\u516C\u5F00\u6307\u6807\u8FD4\u56DE\u603B\u91CF\u4E0E\u6C60\u5B50\u5E74\u9F84\u540E\u663E\u793A\u5386\u53F2\u6BB5\u843D\u3002\u82E5 CDN \u672A\u5B8C\u6210\u53EF\u5237\u65B0\u91CD\u8BD5\u3002</p>',
+                historyFullHtml: function (p) {
+                    return (
+                        '<p style="margin:0 0 0.45rem 0;">\u4E0E\u6536\u76CA\u5361\u7247\u4F7F\u7528\u540C\u4E00\u5957\u8282\u594f\u7A97\u53E3\uFF1B\u4EC5\u4E3A\u88AB\u7D22\u5F15\u5207\u7247\u7684\u63CF\u8FF0\u6027\u7EDF\u8BA1\uFF0C\u975E\u672A\u6765\u56DE\u62A5\u627F\u8BFA\u3002</p>' +
+                        '<p style="margin:0;">\u7EA6' +
+                        p.te.toFixed(2) +
+                        ' ETH\uFF0C\u8BB0\u5F55\u7EA6' +
+                        Math.round(p.days) +
+                        '\u5929\uFF08\u7EA6' +
+                        p.dmean.toFixed(4) +
+                        ' ETH/\u5929\uFF09\u3002\u6536\u76CA\u5361\u7247\uFF1A\u6574\u6C60\u7EA6' +
+                        p.pace.toFixed(2) +
+                        ' ETH/\u5E74\uFF08\u4EC5\u8282\u594f\uFF09\u3002\u793E\u5A92\u5E38\u6DF7\u5168\u7F8E\u5143\u6216\u66F4\u5927\u8303\u56F4\u3002</p>'
+                    );
+                }
+            }
+        };
+
+        function applyStakePoolSnapshotDynamicLang() {
+            var Pp = window.__poolDynState;
+            if (!Pp) return;
+            var Lp = normalizeStakeOverlayLang(STAKE_OVERLAY_LANG);
+            var P = STAKE_POOL_DYNAMIC_I18N[Lp] || STAKE_POOL_DYNAMIC_I18N.en;
+            var yieldFaq = document.getElementById('faqPoolYieldDesc');
+            if (yieldFaq && Pp.subKey && P.yieldSub) {
+                yieldFaq.textContent = P.yieldSub[Pp.subKey] || P.yieldSub.wholePool || '';
+            }
+            var walletsFaq = document.getElementById('faqPoolWalletsDesc');
+            if (walletsFaq && Pp.walletsType === 'pending') {
+                if (P.walletsPendingHtml) walletsFaq.innerHTML = P.walletsPendingHtml;
+                else if (P.walletsPending) walletsFaq.textContent = P.walletsPending;
+            } else if (walletsFaq && Pp.walletsType === 'from' && Pp.walletsSrc && typeof P.walletsFromHtml === 'function') {
+                walletsFaq.innerHTML = P.walletsFromHtml(Pp.walletsSrc);
+            }
+            var rm = document.getElementById('metricsRewardsExplainer');
+            if (rm && Pp.historyType === 'empty') rm.innerHTML = P.historyEmpty;
+            else if (rm && Pp.historyType === 'full' && typeof P.historyFullHtml === 'function') {
+                rm.innerHTML = P.historyFullHtml(Pp.hp);
+            }
+        }
         function stakeMainPack(L) {
             var k = normalizeStakeOverlayLang(L);
             return STAKE_MAIN_I18N[k] || STAKE_MAIN_I18N.en;
@@ -2037,7 +2243,8 @@
 
         function applyStakeMainShellLang(lang) {
             var L = normalizeStakeOverlayLang(lang);
-            var m = stakeMainPack(L);
+            var fq = STAKE_FAQ_FULL_I18N[L] || STAKE_FAQ_FULL_I18N.en;
+            var m = Object.assign({}, stakeMainPack(L), fq);
             var grid = document.getElementById('metricsHeroGridYour');
             if (grid) {
                 var aria = grid.getAttribute('data-aria-' + L) || grid.getAttribute('data-aria-en');
@@ -2148,6 +2355,30 @@
                 if (svgB) buy.appendChild(svgB);
                 buy.appendChild(document.createTextNode(' ' + m.buyCta));
             }
+            var gridPool = document.getElementById('metricsHeroGridPool');
+            if (gridPool) {
+                var ariaP = gridPool.getAttribute('data-aria-' + L) || gridPool.getAttribute('data-aria-en');
+                if (ariaP) gridPool.setAttribute('aria-label', ariaP);
+            }
+            try {
+                document.title = m.mainTitle;
+            } catch (eTitle) {}
+            var evb = document.getElementById('ethervistaHowBarLink');
+            if (evb && m.faqEthervistaBarHtml) evb.textContent = m.faqEthervistaBarHtml;
+            var fi;
+            for (fi = 1; fi <= 8; fi++) {
+                var qel = document.getElementById('faqMain' + fi + 'Q');
+                var ael = document.getElementById('faqMain' + fi + 'A');
+                var qk = 'faqMain' + fi + 'Q';
+                var ak = 'faqMain' + fi + 'A';
+                if (qel && m[qk]) qel.textContent = m[qk];
+                if (ael && m[ak]) ael.innerHTML = m[ak];
+            }
+            var psA = document.getElementById('faqPoolStakedA');
+            if (psA && m.faqPoolStakedA) psA.innerHTML = m.faqPoolStakedA;
+            var plA = document.getElementById('faqPoolLpA');
+            if (plA && m.faqPoolLpA) plA.innerHTML = m.faqPoolLpA;
+            if (typeof applyStakePoolSnapshotDynamicLang === 'function') applyStakePoolSnapshotDynamicLang();
             document.querySelectorAll('.max-btn').forEach(function (mx) {
                 mx.textContent = m.maxBtn;
             });
@@ -3199,6 +3430,7 @@
             var aprTitle = '';
             var aprTxt = '--';
             var aprSub = 'Pool pacing';
+            var aprSubLocaleKey = 'poolPacing';
             var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
             var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
             /** Thin LP side: file may carry TVL-style percents we do not use as the hero headline. */
@@ -3227,6 +3459,7 @@
                     'ETH/year from indexed payouts and pool age. Pacing only, not a promise.';
                 if (unreliable) {
                     aprSub = 'ETH/yr, thin data';
+                    aprSubLocaleKey = 'ethYrThin';
                     if (
                         roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
                         !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
@@ -3246,18 +3479,21 @@
                     }
                 } else {
                     aprSub = 'Whole pool, not your wallet';
+                    aprSubLocaleKey = 'wholePoolNotWallet';
                 }
             }
 
             if (!unreliable && aprRaw != null && !isNaN(Number(aprRaw))) {
                 aprTxt = Number(aprRaw).toFixed(2) + '%';
                 aprSub = 'Whole pool';
+                aprSubLocaleKey = 'wholePool';
                 aprTitle =
                     (aprSrc ? aprSrc + '. ' : '') + 'From staking_analytics.json; not your personal outcome.';
             } else if (paceEth != null && !isNaN(Number(paceEth))) {
                 applyEthYearPace(true);
             } else if (unreliable) {
                 aprSub = 'Thin data';
+                aprSubLocaleKey = 'thinData';
                 aprTitle = 'No ETH/yr pace in file yet; refresh metrics before trusting a big %.';
             }
 
@@ -3269,9 +3505,6 @@
                 }
             }
 
-            var yieldFaq = document.getElementById('faqPoolYieldDesc');
-            if (yieldFaq) yieldFaq.textContent = aprSub;
-
             setAprHero(aprTxt, aprTitle || '');
 
             var lpEl = document.getElementById('metricLpSupplyPct');
@@ -3280,57 +3513,49 @@
             if (hkEl) hkEl.textContent = hkTxt;
             var wEl = document.getElementById('metricStakingWallets');
             if (wEl) wEl.textContent = wallets != null ? String(wallets) : '--';
-            var walletsFaq = document.getElementById('faqPoolWalletsDesc');
-            if (walletsFaq) {
-                var src = agg.source != null ? String(agg.source) : '';
-                walletsFaq.textContent = src
-                    ? 'From public metrics: ' + src.replace(/_/g, ' ')
-                    : 'Loads after the public staking analytics JSON is fetched.';
-            }
 
-            var rm = document.getElementById('metricsRewardsExplainer');
-            if (rm) {
-                var totalAgg2 =
-                    agg.total_eth_distributed_aggregate != null
-                        ? Number(agg.total_eth_distributed_aggregate)
-                        : null;
-                var totalRoi2 =
-                    roi.pool_aggregate_eth_claimed_total_optional != null
-                        ? Number(roi.pool_aggregate_eth_claimed_total_optional)
-                        : null;
-                var totalEth2 =
-                    totalAgg2 != null && !isNaN(totalAgg2) ? totalAgg2 : totalRoi2;
-                var days2 =
-                    roi.pool_age_days_est != null ? Number(roi.pool_age_days_est) : null;
-                var paceP2 =
-                    roi.pool_aggregate_eth_reward_pace_per_year_illustrative != null
-                        ? Number(roi.pool_aggregate_eth_reward_pace_per_year_illustrative)
-                        : null;
-                if (
-                    totalEth2 != null &&
-                    !isNaN(totalEth2) &&
-                    days2 != null &&
-                    !isNaN(days2) &&
-                    days2 >= 8 &&
-                    paceP2 != null &&
-                    !isNaN(paceP2)
-                ) {
-                    var dmean2 = totalEth2 / days2;
-                    rm.innerHTML =
-                        '<span>~' +
-                        totalEth2.toFixed(2) +
-                        ' ETH recorded over ~' +
-                        Math.round(days2) +
-                        ' days (~' +
-                        dmean2.toFixed(4) +
-                        ' ETH/day). Yield tile: ~' +
-                        paceP2.toFixed(2) +
-                        ' ETH/year whole pool (pacing, not a promise). Social posts often mix USD or wider scopes.</span>';
-                } else {
-                    rm.innerHTML =
-                        '<span>Totals appear when the public staking metrics file loads.</span>';
-                }
+            var totalAgg2 =
+                agg.total_eth_distributed_aggregate != null
+                    ? Number(agg.total_eth_distributed_aggregate)
+                    : null;
+            var totalRoi2 =
+                roi.pool_aggregate_eth_claimed_total_optional != null
+                    ? Number(roi.pool_aggregate_eth_claimed_total_optional)
+                    : null;
+            var totalEth2 = totalAgg2 != null && !isNaN(totalAgg2) ? totalAgg2 : totalRoi2;
+            var days2 = roi.pool_age_days_est != null ? Number(roi.pool_age_days_est) : null;
+            var paceP2 =
+                roi.pool_aggregate_eth_reward_pace_per_year_illustrative != null
+                    ? Number(roi.pool_aggregate_eth_reward_pace_per_year_illustrative)
+                    : null;
+            var historyTypeDyn = 'empty';
+            var hpDyn = null;
+            if (
+                totalEth2 != null &&
+                !isNaN(totalEth2) &&
+                days2 != null &&
+                !isNaN(days2) &&
+                days2 >= 8 &&
+                paceP2 != null &&
+                !isNaN(paceP2)
+            ) {
+                historyTypeDyn = 'full';
+                hpDyn = {
+                    te: totalEth2,
+                    days: days2,
+                    dmean: totalEth2 / days2,
+                    pace: paceP2
+                };
             }
+            var srcW = agg.source != null ? String(agg.source) : '';
+            window.__poolDynState = {
+                subKey: aprSubLocaleKey,
+                walletsType: srcW ? 'from' : 'pending',
+                walletsSrc: srcW,
+                historyType: historyTypeDyn,
+                hp: hpDyn
+            };
+            applyStakePoolSnapshotDynamicLang();
         }
 
         function applyStakingAnalytics(data) {
@@ -3925,7 +4150,7 @@
         </a>
     </div>
     <div style="font-size: 12px; color: #71717A;">
-        mit license, <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">GitHub</a>, <a href="legal/privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
     </div>
     <button type="button" class="stake-render-debug" id="stakeFooterDeployRev" aria-label="Copy loaded stake build revision">
         build loading

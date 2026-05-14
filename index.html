@@ -4,7 +4,7 @@
     <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="bonzi-slot-ui-rev" content="2026-05-14-ocr-a-slot-font">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-14-slot-i18n-zh-cn">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
     <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
@@ -1291,6 +1291,7 @@
                 <div class="footer-lang-row">
                     <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
                     <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-zh-cn" aria-pressed="false" lang="zh-CN" title="简体中文">&#20013;</button>
                 </div>
             </div>
         </div>
@@ -1341,7 +1342,13 @@
         var currentLang = 'en';
         try {
             var _st = (localStorage.getItem(LOCALE_KEY) || 'en').toLowerCase();
-            currentLang = (_st === 'pt-br' || _st === 'pt_br' || _st === 'pt') ? 'pt-BR' : 'en';
+            if (_st === 'pt-br' || _st === 'pt_br' || _st === 'pt') {
+                currentLang = 'pt-BR';
+            } else if (_st === 'zh-cn' || _st === 'zh_cn' || _st === 'zh' || _st === 'mandarin') {
+                currentLang = 'zh-CN';
+            } else {
+                currentLang = 'en';
+            }
         } catch (eLoc) {}
 
         var I18N = {
@@ -1468,6 +1475,68 @@
                     'e^i\u03C0+1=0': 'Dica: f\u00F3rmula famosa. Mesmo jogo do teclado.',
                     'K\u00F6nigsberg': 'Dica: quebra-cabe\u00E7a cl\u00E1ssico. Mesmo jogo do teclado.'
                 }
+            },
+            'zh-CN': {
+                tagline: '\u62c9\u52a8\u6447\u6746\u65cb\u8f6c\u3002',
+                notifyMsg: '\u65e9\u671f\u540d\u5355\uff1a\u4ec5\u90ae\u7bb1\u3002',
+                notifyMsgPending: '',
+                notifyCta: '\u63d0\u9192\u6211',
+                notifyBottomTitle: '\u8f93\u5165\u90ae\u7bb1\u4ee5\u83b7\u53d6\u66f4\u65b0\u3002',
+                notifyBottomSub: 'Bonzi \u7b49\u5f85\u540d\u5355\u3002',
+                notifyBottomCta: '\u6253\u5f00\u6ce8\u518c',
+                notifyBottomPending: '',
+                winSlotTitle: 'Bonzi \u8001\u864e\u673a',
+                winAccessTitle: '\u8bbf\u95ee\u63a7\u5236',
+                winUpdatesTitle: '\u66f4\u65b0\u901a\u77e5',
+                accessSubmitLabel: '\u63d0\u4ea4',
+                waitlistThanks: '\u5df2\u52a0\u5165\u540d\u5355\u3002',
+                waitlistErr: '\u6682\u65f6\u65e0\u6cd5\u4fdd\u5b58\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002',
+                waitlistModalTitle: 'Bonzi Vista',
+                waitlistModalOk: '\u786e\u5b9a',
+                waitlistJoin: '\u63d0\u4ea4',
+                waitlistEmailPh: 'you@example.com',
+                lcdPrefix: '\u5c06\u60a8\u7684\u8d44\u4ea7\u4ee3\u5e01\u5316',
+                statusIdle: '\u5c31\u7eea',
+                statusStarting: '\u5524\u9192\u4e2d\u2026',
+                serviceWarmingClue: 'Bonzi \u6b63\u5728\u5524\u9192\uff0c\u8bf7\u51e0\u79d2\u540e\u518d\u8bd5\u6447\u6746\u3002',
+                clueBar: '\u91d1\u8272\u8f6c\u8f6e = Telegram \u5956\u54c1\u3002\u7d2b\u8272 = \u5bc6\u7801\u63d0\u793a\u3002',
+                pwPlaceholder: '\u8bbf\u95ee\u7801',
+                footerMitLic: 'mit \u8bb8\u53ef',
+                footerPrivacy: '\u9690\u79c1\u653f\u7b56',
+                prizeTitle: 'BONZI JACKPOT!',
+                prizeDesc: '\u4f60\u8f6c\u5230\u4e86 <b>\u91d1\u8272\u5927\u5956</b> \u8f6c\u8f6e\uff08Bonzi \u5377\u8f74\uff09\u3002\u70b9\u51fb\u4e0b\u65b9\u6309\u94ae\u6253\u5f00 Telegram\u3002',
+                tgOpen: '\u6253\u5f00 @Bonzivista_bot',
+                closeModal: '\u5173\u95ed',
+                spinChecking: '\u68c0\u67e5\u4e2d\u2026',
+                spinNoReceipt: '\u670d\u52a1\u5668\u672a\u8fd4\u56de\u6536\u636e\u3002',
+                spinBlocked: '\u65cb\u8f6c\u5df2\u963b\u6b62',
+                jackpotClaiming: '\u5927\u5956 - \u6b63\u5728\u83b7\u53d6\u94fe\u63a5\u2026',
+                jackpotOk: '\u5927\u5956\uff01',
+                prizeFail: '\u65e0\u6cd5\u83b7\u53d6\u5956\u54c1\u94fe\u63a5\u3002',
+                prizeNet: '\u7f51\u7edc\u9519\u8bef\u3002',
+                reelInteresting: '\u6709\u610f\u601d\u2026',
+                reelFluff: '\u672c\u6b21\u672a\u4e2d\u5956\u3002\u91d1\u8272\u5377\u8f74 = Telegram\u3002',
+                spinNetErr: '\u7f51\u7edc\u9519\u8bef - \u8bf7\u91cd\u8bd5\u3002',
+                triesLeft: function(a, m) { return '\u5269\u4f59\u6b21\u6570\uff1a' + a + ' / ' + m; },
+                errWrong: '\u5bc6\u7801\u9519\u8bef\u3002',
+                logoHint: '\u63d0\u793a\uff1a\u59d3 + 26\u3002',
+                infoTitle: '\u89c4\u5219',
+                leverAria: '\u62c9\u52a8\u6447\u6746',
+                winampGroupAria: '\u590d\u53e4\u98ce\u683c\u6f14\u793a\u97f3\u9891\u64ad\u653e\u5668',
+                winampPlay: '\u64ad\u653e',
+                winampPause: '\u6682\u505c',
+                winampStop: '\u505c\u6b62',
+                winampPrev: '\u4e0a\u4e00\u9996',
+                winampNext: '\u4e0b\u4e00\u9996',
+                winampStopped: '\u5df2\u505c\u6b62',
+                winampPlayState: '\u64ad\u653e',
+                winampPauseState: '\u6682\u505c',
+                hints: {
+                    'Euler': '\u5bc6\u7801\u63d0\u793a\uff1a\u8f6c\u8f6e\u4e0a\u7684\u6570\u5b66\u5bb6\u540d\uff08\u4e0d\u662f\u94b1\uff09\u3002',
+                    '26': '\u63d0\u793a\uff1a26 = A-Z\u3002\u4e0e\u53e6\u4e00\u6761\u63d0\u793a\u7ed3\u5408\u4f7f\u7528\u3002',
+                    'e^i\u03C0+1=0': '\u63d0\u793a\uff1a\u8457\u540d\u516c\u5f0f\u3002\u540c\u6837\u7684\u952e\u76d8\u6e38\u620f\u3002',
+                    'K\u00F6nigsberg': '\u63d0\u793a\uff1a\u53e4\u8001\u7684\u6865\u6881\u8c1c\u9898\u3002\u540c\u6837\u7684\u952e\u76d8\u6e38\u620f\u3002'
+                }
             }
         };
 
@@ -1504,7 +1573,10 @@
 
         function persistLang() {
             try {
-                localStorage.setItem(LOCALE_KEY, currentLang === 'pt-BR' ? 'pt-br' : 'en');
+                var st = 'en';
+                if (currentLang === 'pt-BR') st = 'pt-br';
+                else if (currentLang === 'zh-CN') st = 'zh-cn';
+                localStorage.setItem(LOCALE_KEY, st);
             } catch (eP) {}
         }
 
@@ -1603,7 +1675,13 @@
 
         function applyLang() {
             var L = getStr();
-            document.documentElement.lang = currentLang === 'pt-BR' ? 'pt-BR' : 'en';
+            if (currentLang === 'pt-BR') {
+                document.documentElement.lang = 'pt-BR';
+            } else if (currentLang === 'zh-CN') {
+                document.documentElement.lang = 'zh-CN';
+            } else {
+                document.documentElement.lang = 'en';
+            }
             var gt = document.getElementById('gate-tagline');
             if (gt) gt.textContent = L.tagline;
             var swt = document.getElementById('slot-win-title');
@@ -1647,8 +1725,10 @@
             if (levEl) levEl.setAttribute('aria-label', L.leverAria);
             var bp = document.getElementById('lang-pt-br');
             var be = document.getElementById('lang-en');
+            var bz = document.getElementById('lang-zh-cn');
             if (bp) bp.setAttribute('aria-pressed', currentLang === 'pt-BR' ? 'true' : 'false');
             if (be) be.setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+            if (bz) bz.setAttribute('aria-pressed', currentLang === 'zh-CN' ? 'true' : 'false');
             var wem = document.getElementById('waitlist-email');
             if (wem) wem.placeholder = L.waitlistEmailPh;
             var wsb = document.getElementById('waitlist-submit');
@@ -1749,6 +1829,7 @@
         (function wireLangButtons() {
             var langPtBtn = document.getElementById('lang-pt-br');
             var langEnBtn = document.getElementById('lang-en');
+            var langZhBtn = document.getElementById('lang-zh-cn');
             if (langPtBtn) {
                 langPtBtn.addEventListener('click', function() {
                     currentLang = 'pt-BR';
@@ -1759,6 +1840,13 @@
             if (langEnBtn) {
                 langEnBtn.addEventListener('click', function() {
                     currentLang = 'en';
+                    persistLang();
+                    applyLang();
+                });
+            }
+            if (langZhBtn) {
+                langZhBtn.addEventListener('click', function() {
+                    currentLang = 'zh-CN';
                     persistLang();
                     applyLang();
                 });
@@ -1896,6 +1984,8 @@
                 var rulesUrl = getApiOrigin() + '/api/slotgame/rules';
                 if (currentLang === 'pt-BR') {
                     rulesUrl += '?lang=pt';
+                } else if (currentLang === 'zh-CN') {
+                    rulesUrl += '?lang=zh';
                 }
                 var feats = 'width=480,height=620,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no';
                 var w = window.open(rulesUrl, 'slotrules', feats);

@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-footer-order-mit-link-20260514" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-mirror-parity-wallet-first-pool-below-footer-mit-20260514" />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <script>
@@ -282,10 +282,40 @@
             padding: 0 0.72rem 0.72rem;
         }
 
-        .metrics-your-wrap {
-            margin-top: 0.72rem;
-            padding-top: 0.62rem;
+        .pool-snapshot-faq {
+            margin: 0.45rem 0 0.15rem;
+        }
+
+        .pool-snapshot-faq .faq-item summary {
+            padding: 0.52rem 0.62rem;
+        }
+
+        .pool-snapshot-faq .faq-answer.pool-history-body {
+            padding-top: 0.55rem;
+        }
+
+        .your-wallet-strip {
+            margin-top: 0.85rem;
+            padding-top: 0.55rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .your-wallet-strip .metrics-your-wrap {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .pool-snapshot-after-app {
+            margin-top: 1.35rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .metrics-your-wrap {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
         }
 
         .stake-alert-banner {
@@ -836,7 +866,7 @@
             font-weight: 600;
         }
 
-        /* Telegram Desktop/Web: contextual copy - Connect stays in Telegram; MM shortcut hidden */
+        /* Telegram Desktop/Web: contextual copy — Connect stays in Telegram; MM shortcut hidden */
         .connect-desktop-wc-hint {
             font-size: 0.72rem;
             line-height: 1.45;
@@ -853,6 +883,37 @@
             word-break: break-word;
         }
 
+        .desktop-extension-fallback {
+            width: 100%;
+            max-width: 320px;
+            margin: -2px auto 14px;
+            display: none;
+        }
+
+        .desktop-extension-fallback.is-visible {
+            display: block;
+        }
+
+        .desktop-extension-fallback .connect-btn {
+            max-width: none;
+            margin-bottom: 8px;
+            background: rgba(24, 24, 27, 0.98);
+            border: 1px solid rgba(167, 139, 250, 0.52);
+            color: #fafafa;
+        }
+
+        .desktop-extension-fallback .connect-btn:hover:not(:disabled) {
+            box-shadow: 0 10px 28px rgba(124, 58, 237, 0.22);
+        }
+
+        .desktop-extension-caption {
+            margin: 0;
+            color: #71717a;
+            font-size: 0.68rem;
+            line-height: 1.42;
+            text-align: left;
+        }
+
         .connect-overlay-error {
             color: #dc2626;
             font-size: 0.8rem;
@@ -867,7 +928,25 @@
             margin-top: 28px;
             font-size: 10px;
             color: #3f3f46;
-            letter-spacing: 0.02em;
+            letter-spacing: 0;
+        }
+
+        .stake-render-debug {
+            display: block;
+            margin: 10px auto 0;
+            max-width: 420px;
+            border: 0;
+            background: transparent;
+            color: #52525b;
+            font: inherit;
+            font-size: 10px;
+            line-height: 1.4;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .stake-render-debug.is-mismatch {
+            color: #dc2626;
         }
         .mev-badge {
             display: inline-flex;
@@ -1115,8 +1194,14 @@
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
             <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
             <p id="wcConnectDesktopHint" class="connect-desktop-wc-hint hidden" role="note">
-                <strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported). MetaMask shortcuts are off here — Telegram WebView often redirects them to metamask.io/download. To use MetaMask as a desktop extension, open this page with <code>?wallet_external=1</code> plus your Mini App URL parameters (browser hand-off is opt-in).
+                <strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported), or use your browser extension from a normal browser tab.
             </p>
+            <div id="desktopExtensionFallback" class="desktop-extension-fallback" aria-live="polite">
+                <button type="button" class="connect-btn" id="desktopBrowserFallbackBtn">
+                    <span>Use browser extension</span>
+                </button>
+                <p class="desktop-extension-caption">Opens this stake screen in your normal browser with the same action and wallet parameters.</p>
+            </div>
             <button type="button" class="connect-btn" id="wcConnectBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 <span id="wcConnectBtnLabel">Connect Wallet</span>
@@ -1148,45 +1233,7 @@
             </div>
         </header>
 
-        <!-- Hero metrics -->
-        <div class="stats-bar metrics-hero-wrap">
-            <p id="metricsKickerPool" class="metrics-section-kicker">Pool snapshot</p>
-            <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
-                <div class="metric-tile">
-                    <div id="metricLabelYieldPool" class="metric-tile-label">Yield (pool)</div>
-                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
-                    <div class="metric-tile-sub" id="metricAprHeroSub">Est. yield (whole pool)</div>
-                </div>
-                <div class="metric-tile">
-                    <div id="metricLabelWalletsStaking" class="metric-tile-label">Wallets staking</div>
-                    <div class="metric-tile-value" id="metricStakingWallets">--</div>
-                    <div class="metric-tile-sub" id="metricStakingWalletsSub">From public staking metrics file</div>
-                </div>
-                <div class="metric-tile">
-                    <div id="metricLabelStakedPct" class="metric-tile-label">Staked (% of supply)</div>
-                    <div class="metric-tile-value" id="metricHardstakePct">--</div>
-                    <div class="metric-tile-sub metric-tile-sub-row">
-                        <span>BONZI in HARDSTAKE escrow</span>
-                        <a class="metric-explorer-link" href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer" title="HARDSTAKE on Etherscan" aria-label="HARDSTAKE contract on Etherscan">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="metric-tile">
-                    <div id="metricLabelLpPct" class="metric-tile-label">LP (% of supply)</div>
-                    <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
-                    <div class="metric-tile-sub metric-tile-sub-row">
-                        <span>BONZI HARDLOCK pool (trading liquidity)</span>
-                        <a class="metric-explorer-link" href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer" title="BONZI and WETH pool vault on Etherscan" aria-label="BONZI and WETH pool vault on Etherscan">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <details class="pool-history-details">
-                <summary class="pool-history-summary">Pool history (click to open)</summary>
-                <div class="pool-history-body" id="metricsRewardsExplainer" aria-live="polite"></div>
-            </details>
+        <div class="stats-bar metrics-hero-wrap your-wallet-strip">
             <div class="metrics-your-wrap">
                 <p id="metricsKickerYour" class="metrics-section-kicker">Your wallet</p>
                 <div class="metrics-hero-grid" role="group" aria-label="Your staking position">
@@ -1331,6 +1378,54 @@
             </div>
         </div>
 
+        <!-- Pool snapshot + FAQ (reads after staking UI) -->
+        <div class="stats-bar metrics-hero-wrap">
+            <p id="metricsKickerPool" class="metrics-section-kicker">Pool snapshot</p>
+            <div class="metrics-hero-grid" role="group" aria-label="Pool metrics">
+                <div class="metric-tile">
+                    <div id="metricLabelWalletsStaking" class="metric-tile-label">Wallets staking</div>
+                    <div class="metric-tile-value" id="metricStakingWallets">--</div>
+                </div>
+                <div class="metric-tile">
+                    <div id="metricLabelStakedPct" class="metric-tile-label">Staked (% supply)</div>
+                    <div class="metric-tile-value" id="metricHardstakePct">--</div>
+                </div>
+                <div class="metric-tile">
+                    <div id="metricLabelYieldPool" class="metric-tile-label">Yield (pool)</div>
+                    <div class="metric-tile-value is-apr" id="metricAprHero" title="">--</div>
+                </div>
+                <div class="metric-tile">
+                    <div id="metricLabelLpPct" class="metric-tile-label">LP (% supply)</div>
+                    <div class="metric-tile-value" id="metricLpSupplyPct">--</div>
+                </div>
+            </div>
+            <div class="pool-snapshot-faq" aria-labelledby="poolSnapshotFaqKicker">
+                <p id="poolSnapshotFaqKicker" class="metrics-section-kicker">Snapshot FAQ</p>
+                <div class="faq-list pool-snapshot-faq-list">
+                    <details class="faq-item">
+                        <summary><span class="faq-question">Wallets staking</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer" id="faqPoolWalletsDesc"></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary><span class="faq-question">Staked (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer">BONZI locked in HARDSTAKE escrow (whole-network share). <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">HARDSTAKE on Etherscan</a></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary><span class="faq-question">Yield (pool)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer" id="faqPoolYieldDesc"></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary><span class="faq-question">LP (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer">BONZI in the HARDLOCK pool used for trading liquidity. <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Pool vault on Etherscan</a></div>
+                    </details>
+                    <details class="faq-item">
+                        <summary><span class="faq-question">Pool history and pacing</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <div class="faq-answer pool-history-body" id="metricsRewardsExplainer" aria-live="polite"></div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
         <section class="faq-section" aria-labelledby="faq-section-title">
             <p id="faq-section-title" class="faq-section-title">Frequently Asked Questions</p>
             <div class="faq-list">
@@ -1399,8 +1494,6 @@
         // #region agent log
         window.__bonziDbgLog = function (hypothesisId, locLabel, message, data) {
             var payload = {
-                sessionId: '2ee239',
-                runId: 'pre-fix',
                 hypothesisId: hypothesisId,
                 location: locLabel,
                 message: message,
@@ -1408,20 +1501,8 @@
                 timestamp: Date.now()
             };
             try {
-                console.info('[BONZI_WC_DEBUG]', JSON.stringify(payload));
+                console.info('[bonzi-wc]', JSON.stringify(payload));
             } catch (e1) {}
-            try {
-                var winLoc = typeof window !== 'undefined' && window.location ? window.location : null;
-                if (winLoc && winLoc.protocol === 'http:' && (winLoc.hostname === 'localhost' || winLoc.hostname === '127.0.0.1')) {
-                    fetch('http://127.0.0.1:7385/ingest/4aac0891-148f-4349-a863-59eaae64b5db', {
-                        method: 'POST',
-                        mode: 'cors',
-                        credentials: 'omit',
-                        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '2ee239' },
-                        body: JSON.stringify(payload)
-                    }).catch(function () {});
-                }
-            } catch (e2) {}
         };
         // #endregion
     </script>
@@ -1810,6 +1891,7 @@
             var desktopOs = /Windows NT|Macintosh|Mac OS X|Linux x86_64|X11/i.test(ua);
             return HAS_TELEGRAM_WEBAPP && desktopOs && !mobile;
         }
+        const IS_DESKTOP_TELEGRAM_RUNTIME = isDesktopTelegramRuntime();
         /** Product default: stay inside Telegram for Connect (better UX).
          * Optional escape hatch when WalletConnect is flaky on Telegram Web/Desktop: add ?wallet_external=1 .
          * History: previously we auto-sent those clients to Safari/Chrome via tg.openLink; that is now opt-in only. */
@@ -1819,17 +1901,21 @@
             WALLET_EXTERNAL_BROWSER_ESCAPE &&
             !IS_EXTERNAL_BROWSER_FLOW &&
             HAS_TELEGRAM_WEBAPP &&
-            (isDesktopTelegramRuntime() ||
+            (IS_DESKTOP_TELEGRAM_RUNTIME ||
                 (TELEGRAM_PLATFORM === 'unknown' && IS_TELEGRAM_EMBEDDED));
         const USE_QR_MODAL =
             !HAS_TELEGRAM_WEBAPP ||
-            (HAS_TELEGRAM_WEBAPP && isDesktopTelegramRuntime() && !WALLET_EXTERNAL_BROWSER_ESCAPE);
+            (HAS_TELEGRAM_WEBAPP && IS_DESKTOP_TELEGRAM_RUNTIME && !WALLET_EXTERNAL_BROWSER_ESCAPE);
         const WALLETCONNECT_INIT_VARIANTS = [
             { optionalChains: [1], showQrModal: USE_QR_MODAL },
             { chains: [1], showQrModal: USE_QR_MODAL },
             { optionalChains: [1], showQrModal: true },
             { chains: [1], showQrModal: true }
         ];
+
+        function shouldUseDesktopExtensionFallback() {
+            return HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW && IS_DESKTOP_TELEGRAM_RUNTIME;
+        }
 
         function preferInjectedEthereum() {
             return (
@@ -1975,7 +2061,8 @@
 
         /** Mobile Telegram Mini App: `metamask://` opens the MetaMask mobile app.
          * Plain browser (`external` flow or non-Telegram): universal HTTPS link OK.
-         * Telegram Desktop/Web Mini App (no `wallet_external`): never `metamask.app.link` (often lands on download page). */
+         * Telegram Desktop/Web Mini App: return no MetaMask universal link. Extension
+         * connection only works after the explicit browser fallback opens external=1. */
         function metaMaskWalletConnectHref(encodedUri) {
             var ua = '';
             try {
@@ -1985,6 +2072,12 @@
                 /Mobile|Android|iPhone|iPod|iPad|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
             if (HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW && isMobileUa) {
                 return 'metamask://wc?uri=' + encodedUri;
+            }
+            if (shouldUseDesktopExtensionFallback()) {
+                dbgStakeEmit('H_mm_desktop_hidden', 'metaMaskWalletConnectHref', 'desktop tg hides metamask link', {
+                    platform: TELEGRAM_PLATFORM
+                });
+                return '';
             }
             if (!HAS_TELEGRAM_WEBAPP || IS_EXTERNAL_BROWSER_FLOW) {
                 return 'https://metamask.app.link/wc?uri=' + encodedUri;
@@ -2043,12 +2136,23 @@
             });
             var box = document.getElementById('wcWalletShortcuts');
             if (box) {
-                box.style.display = 'block';
+                box.style.display = shouldUseDesktopExtensionFallback() ? 'none' : 'block';
             }
         }
 
         function showWcWalletShortcuts(uri) {
             if (!uri || typeof uri !== 'string') {
+                return;
+            }
+            if (shouldUseDesktopExtensionFallback()) {
+                var desktopBox = document.getElementById('wcWalletShortcuts');
+                if (desktopBox) {
+                    desktopBox.style.display = 'none';
+                }
+                dbgStakeEmit('H_wc_desktop_shortcuts_hidden', 'stake-tg.html:wcShortcuts', 'desktop tg hides direct wallet links', {
+                    uriLen: uri.length,
+                    platform: TELEGRAM_PLATFORM
+                });
                 return;
             }
             try {
@@ -2169,11 +2273,63 @@
             return url.toString();
         }
 
+        function syncDesktopExtensionFallback() {
+            var active = shouldUseDesktopExtensionFallback();
+            var hint = document.getElementById('wcConnectDesktopHint');
+            var fallback = document.getElementById('desktopExtensionFallback');
+            var shortcuts = document.getElementById('wcWalletShortcuts');
+            if (hint) {
+                hint.classList.toggle('hidden', !active);
+            }
+            if (fallback) {
+                fallback.classList.toggle('is-visible', active);
+            }
+            if (shortcuts && active) {
+                shortcuts.style.display = 'none';
+            }
+        }
+
+        function openBrowserExtensionFallback() {
+            const browserUrl = buildBrowserFallbackUrl();
+            dbgStakeEmit('H_desktop_extension_fallback', 'stake-tg.html:desktopFallback', 'open external browser for injected wallet', {
+                platform: TELEGRAM_PLATFORM,
+                hasOpenLink: !!(tg && typeof tg.openLink === 'function')
+            });
+            if (tg && typeof tg.openLink === 'function') {
+                try {
+                    tg.openLink(browserUrl, { try_instant_view: false });
+                } catch (eOpenLinkOpts) {
+                    tg.openLink(browserUrl);
+                }
+                return;
+            }
+            try {
+                window.open(browserUrl, '_blank', 'noopener,noreferrer');
+            } catch (eWinOpen) {
+                window.location.href = browserUrl;
+            }
+        }
+
+        function wireDesktopExtensionFallback() {
+            var btn = document.getElementById('desktopBrowserFallbackBtn');
+            if (!btn || btn.dataset.desktopFallbackWire === '1') return;
+            btn.dataset.desktopFallbackWire = '1';
+            btn.addEventListener(
+                'click',
+                function (ev) {
+                    ev.preventDefault();
+                    openBrowserExtensionFallback();
+                },
+                false
+            );
+        }
+
+        syncDesktopExtensionFallback();
+        wireDesktopExtensionFallback();
+
         // #region agent log
         function dbgStakeEmit(hypothesisId, location, message, data) {
             var payload = {
-                sessionId: '2ee239',
-                runId: 'debug-pre',
                 hypothesisId: hypothesisId,
                 location: location,
                 message: message,
@@ -2181,7 +2337,7 @@
                 timestamp: Date.now()
             };
             try {
-                console.info('[BONZI_SESSION_2ee239]', JSON.stringify(payload));
+                console.info('[bonzi-stake]', JSON.stringify(payload));
             } catch (e1) {}
         }
         dbgStakeEmit('H_boot', 'stake-tg.html:boot', 'telegram snapshot', {
@@ -2559,7 +2715,7 @@
             var wallets = agg.currently_staking_wallets_aggregate;
             var aprTitle = '';
             var aprTxt = '--';
-            var aprSub = 'Est. yield from past pool activity';
+            var aprSub = 'Pool pacing';
             var paceEth = roi.pool_aggregate_eth_reward_pace_per_year_illustrative;
             var unreliable = roi.eth_mid_proxy_unreliable_for_hero_pct === true;
             /** Thin LP side: file may carry TVL-style percents we do not use as the hero headline. */
@@ -2585,17 +2741,17 @@
             function applyEthYearPace(mentionUsdGhost) {
                 aprTxt = '~' + Number(paceEth).toFixed(2) + ' ETH/yr';
                 aprTitle =
-                    'Rough ETH paid per year across the pool, inferred from indexed payouts and pool age. This is pacing, not a promise.';
+                    'ETH/year from indexed payouts and pool age. Pacing only, not a promise.';
                 if (unreliable) {
-                    aprSub = 'ETH per year (we skip flashy % headlines when data is thin)';
+                    aprSub = 'ETH/yr, thin data';
                     if (
                         roi.annualized_yield_eth_mid_proxy_pct_computed_optional != null &&
                         !isNaN(Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional))
                     ) {
                         aprTitle +=
-                            ' Omitting misleading LP-mid percent (~' +
+                            ' Skipped LP-mid ~' +
                             Number(roi.annualized_yield_eth_mid_proxy_pct_computed_optional).toFixed(1) +
-                            '%).';
+                            '% headline.';
                     }
                     if (
                         mentionUsdGhost &&
@@ -2603,26 +2759,23 @@
                         !isNaN(Number(roi.annualized_pool_reward_yield_estimate_pct))
                     ) {
                         var u = roi.annualized_pool_reward_yield_estimate_pct;
-                        aprTitle +=
-                            ' Omitting CoinGecko-style TVL percent (~' + Number(u).toFixed(1) + '%) from same snapshot.';
+                        aprTitle += ' Skipped TVL ~' + Number(u).toFixed(1) + '% headline.';
                     }
                 } else {
-                    aprSub = 'Historical pool payout pace, whole pool (not your wallet)';
+                    aprSub = 'Whole pool, not your wallet';
                 }
             }
 
             if (!unreliable && aprRaw != null && !isNaN(Number(aprRaw))) {
                 aprTxt = Number(aprRaw).toFixed(2) + '%';
-                aprSub = 'Est. yield, whole pool (not your wallet)';
+                aprSub = 'Whole pool';
                 aprTitle =
-                    aprSrc +
-                    '. Pool-wide number from staking_analytics.json, not your personal outcome.';
+                    (aprSrc ? aprSrc + '. ' : '') + 'From staking_analytics.json; not your personal outcome.';
             } else if (paceEth != null && !isNaN(Number(paceEth))) {
                 applyEthYearPace(true);
             } else if (unreliable) {
-                aprSub = 'Pool data is thin; check the metrics file for details';
-                aprTitle =
-                    'No ETH-per-year pace in this file yet; refresh metrics before showing a big percent.';
+                aprSub = 'Thin data';
+                aprTitle = 'No ETH/yr pace in file yet; refresh metrics before trusting a big %.';
             }
 
             function setAprHero(txt, titleAttr) {
@@ -2633,8 +2786,8 @@
                 }
             }
 
-            var subEl = document.getElementById('metricAprHeroSub');
-            if (subEl) subEl.textContent = aprSub;
+            var yieldFaq = document.getElementById('faqPoolYieldDesc');
+            if (yieldFaq) yieldFaq.textContent = aprSub;
 
             setAprHero(aprTxt, aprTitle || '');
 
@@ -2644,10 +2797,12 @@
             if (hkEl) hkEl.textContent = hkTxt;
             var wEl = document.getElementById('metricStakingWallets');
             if (wEl) wEl.textContent = wallets != null ? String(wallets) : '--';
-            var wSub = document.getElementById('metricStakingWalletsSub');
-            if (wSub) {
-                var src = agg.source != null ? String(agg.source) : 'metrics slice';
-                wSub.textContent = 'From public metrics: ' + src.replace(/_/g, ' ');
+            var walletsFaq = document.getElementById('faqPoolWalletsDesc');
+            if (walletsFaq) {
+                var src = agg.source != null ? String(agg.source) : '';
+                walletsFaq.textContent = src
+                    ? 'From public metrics: ' + src.replace(/_/g, ' ')
+                    : 'Loads after the public staking analytics JSON is fetched.';
             }
 
             var rm = document.getElementById('metricsRewardsExplainer');
@@ -2679,18 +2834,18 @@
                 ) {
                     var dmean2 = totalEth2 / days2;
                     rm.innerHTML =
-                        '<span>About ' +
+                        '<span>~' +
                         totalEth2.toFixed(2) +
-                        ' ETH is in our public reward tally so far, over about ' +
+                        ' ETH tallied over ~' +
                         Math.round(days2) +
-                        ' days (roughly ' +
+                        ' days (~' +
                         dmean2.toFixed(4) +
-                        ' ETH per day on average). The Yield number (' +
+                        ' ETH/day). Yield tile: ~' +
                         paceP2.toFixed(2) +
-                        ' ETH/year) is that daily pace stretched to one year for the whole pool together; it is pacing math, not a promise. Big numbers you see in posts are often dollars or count a wider picture than this tally.</span>';
+                        ' ETH/year whole pool (pacing, not a promise). Social posts often mix USD or wider scopes.</span>';
                 } else {
                     rm.innerHTML =
-                        '<span>These totals load after the public staking metrics file arrives.</span>';
+                        '<span>Totals appear when the public staking metrics file loads.</span>';
                 }
             }
         }
@@ -2903,6 +3058,7 @@
             var code =
                 typeof rawErr === 'object' && rawErr !== null ? rawErr.code : undefined;
             var gloss = null;
+            var lower = base.toLowerCase();
 
             if (
                 code === 'CALL_EXCEPTION' ||
@@ -2974,6 +3130,89 @@
             document.getElementById('statusMessage').classList.add('hidden');
             var strip = document.getElementById('reportBugStrip');
             if (strip) strip.classList.add('hidden');
+        }
+
+        function getStakeDeployTag() {
+            var meta = document.querySelector('meta[name="bonzi-stake-tg-deploy"]');
+            return meta && meta.content ? meta.content : 'unknown';
+        }
+
+        function getStakeUrlVersion() {
+            try {
+                return new URL(window.location.href).searchParams.get('v') || '';
+            } catch (eUrl) {
+                return '';
+            }
+        }
+
+        function getStakeRenderProbe() {
+            var deployTag = getStakeDeployTag();
+            var urlVersion = getStakeUrlVersion();
+            var versionMatches = Boolean(urlVersion && deployTag && urlVersion === deployTag);
+            return {
+                deployTag: deployTag,
+                urlVersion: urlVersion,
+                versionMatches: versionMatches,
+                href: window.location.href,
+                loadedAt: new Date().toISOString(),
+            };
+        }
+
+        function formatStakeRenderProbe(probe) {
+            var urlPart = probe.urlVersion
+                ? probe.versionMatches
+                    ? 'url v ok'
+                    : 'url v mismatch ' + probe.urlVersion
+                : 'url v missing';
+            return 'build ' + probe.deployTag + ' · ' + urlPart;
+        }
+
+        function updateStakeRenderProbe() {
+            var probe = getStakeRenderProbe();
+            var text = formatStakeRenderProbe(probe);
+            var els = [
+                document.getElementById('stakeHtmlDeployRev'),
+                document.getElementById('stakeFooterDeployRev'),
+            ];
+            document.documentElement.setAttribute('data-bonzi-stake-deploy', probe.deployTag);
+            document.documentElement.setAttribute('data-bonzi-stake-url-version', probe.urlVersion || '');
+            els.forEach(function (el) {
+                if (!el) return;
+                el.textContent = text;
+                el.classList.toggle('is-mismatch', Boolean(probe.urlVersion && !probe.versionMatches));
+                el.setAttribute(
+                    'data-render-proof',
+                    probe.deployTag + '|' + (probe.urlVersion || 'missing')
+                );
+            });
+            dbgStakeEmit('H_render_rev', 'stake-tg.html:renderProbe', 'stake frontend revision loaded', {
+                deployTag: probe.deployTag,
+                urlVersion: probe.urlVersion,
+                versionMatches: probe.versionMatches,
+            });
+            return probe;
+        }
+
+        async function copyStakeRenderProbe() {
+            var probe = getStakeRenderProbe();
+            var text = [
+                'stake render proof',
+                'deploy=' + probe.deployTag,
+                'url_v=' + (probe.urlVersion || 'missing'),
+                'matches=' + (probe.versionMatches ? 'yes' : 'no'),
+                'href=' + probe.href,
+                'loaded_at=' + probe.loadedAt,
+            ].join('\n');
+            try {
+                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                    await navigator.clipboard.writeText(text);
+                }
+            } catch (eClip) {}
+            var el = document.getElementById('stakeFooterDeployRev');
+            if (el) {
+                el.textContent = formatStakeRenderProbe(probe) + ' · copied';
+                setTimeout(updateStakeRenderProbe, 1600);
+            }
         }
 
         function initReportBugDeployHint() {
@@ -3157,22 +3396,16 @@
         window.claim = claim;
         window.withdraw = withdraw;
         window.setMax = setMax;
+        window.__bonziStakeRenderProbe = getStakeRenderProbe;
 
         // ============================================================
         // Auto-connect on load
         // ============================================================
         window.addEventListener('load', async () => {
-            try {
-                var m = document.querySelector('meta[name="bonzi-stake-tg-deploy"]');
-                var el = document.getElementById('stakeHtmlDeployRev');
-                if (m && el) {
-                    var tag = m.getAttribute('content') || 'unknown';
-                    el.textContent =
-                        'deploy ' + tag + '. Telegram may cache HTML; use ?v= on the stake link to force refresh.';
-                }
-            } catch (eDep) {}
-
+            updateStakeRenderProbe();
             initReportBugDeployHint();
+            var footerRevBtn = document.getElementById('stakeFooterDeployRev');
+            if (footerRevBtn) footerRevBtn.addEventListener('click', copyStakeRenderProbe);
 
             ensureStakingAnalyticsSnapshot();
             // If opened with pre-populated action, auto-trigger connect
@@ -3184,16 +3417,8 @@
     </script>
     </div><!-- /.page-main -->
 
-<!-- Footer: CTO | Bonzivista.org, sponsored by Ethervista, mit license + privacy -->
+<!-- Footer: sponsor (Ethervista) + CTO / Bonzivista.org only -->
 <footer class="site-footer" aria-label="Site footer">
-    <div class="footer-cto-row">
-        <span style="color: #71717A;">CTO</span>
-        <span style="color: #52525b;"> | </span>
-        <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
-            <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
-            Bonzivista.org
-        </a>
-    </div>
     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
         <span style="color: #71717A;">sponsored by
             <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
@@ -3202,9 +3427,20 @@
             </a>
         </span>
     </div>
-    <div style="font-size: 12px; color: #71717A;">
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">mit license</a>, <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+    <div class="footer-cto-row">
+        <span style="color: #71717A;">CTO</span>
+        <span style="color: #52525b;"> | </span>
+        <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
+            <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
+            Bonzivista.org
+        </a>
     </div>
+    <div style="font-size: 12px; color: #71717A;">
+        mit license, <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+    </div>
+    <button type="button" class="stake-render-debug" id="stakeFooterDeployRev" aria-label="Copy loaded stake build revision">
+        build loading
+    </button>
 </footer>
 </body>
 </html>

@@ -1193,14 +1193,12 @@
             <img src="bonzi-logo.png" alt="Bonzi" class="logo connect-logo-lg">
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
             <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
-            <p id="wcConnectDesktopHint" class="connect-desktop-wc-hint hidden" role="note">
-                <strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported), or use your browser extension from a normal browser tab.
-            </p>
+            <p id="wcConnectDesktopHint" class="connect-desktop-wc-hint hidden" role="note"></p>
             <div id="desktopExtensionFallback" class="desktop-extension-fallback" aria-live="polite">
                 <button type="button" class="connect-btn" id="desktopBrowserFallbackBtn">
-                    <span>Use browser extension</span>
+                    <span id="desktopExtBtnSpan">Use browser extension</span>
                 </button>
-                <p class="desktop-extension-caption">Opens this stake screen in your normal browser with the same action and wallet parameters.</p>
+                <p class="desktop-extension-caption" id="desktopExtCaption">Opens this stake screen in your normal browser with the same action and wallet parameters.</p>
             </div>
             <button type="button" class="connect-btn" id="wcConnectBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
@@ -1236,22 +1234,22 @@
         <div class="stats-bar metrics-hero-wrap your-wallet-strip">
             <div class="metrics-your-wrap">
                 <p id="metricsKickerYour" class="metrics-section-kicker">Your wallet</p>
-                <div class="metrics-hero-grid" role="group" aria-label="Your staking position">
+                <div class="metrics-hero-grid" role="group" aria-label="Your staking position" id="metricsHeroGridYour" data-aria-en="Your staking position" data-aria-pt="Sua posição de stake" data-aria-zh="您的质押仓位">
                     <div class="metric-tile">
                         <div id="metricLabelYourStake" class="metric-tile-label">Your stake</div>
                         <div class="metric-tile-value" id="stakedBalance">0</div>
-                        <div class="metric-tile-sub">BONZI</div>
+                        <div class="metric-tile-sub" id="metricSubYourBonzi">BONZI</div>
                     </div>
                     <div class="metric-tile">
-                        <div class="metric-tile-label">Claimable</div>
+                        <div id="metricLabelHeroClaimable" class="metric-tile-label">Claimable</div>
                         <div class="metric-tile-value is-claim" id="claimableEth">0.000</div>
-                        <div class="metric-tile-sub">ETH rewards</div>
+                        <div class="metric-tile-sub" id="metricSubEthRewards">ETH rewards</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <p class="action-block-kicker">Your wallet: stake, claim, withdraw</p>
+        <p class="action-block-kicker" id="actionBlockKicker">Your wallet: stake, claim, withdraw</p>
 
         <div class="stake-alert-banner" role="status">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1278,17 +1276,17 @@
 
         <!-- Tabs: Stake / Claim / Withdraw -->
         <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab('stake')">Stake</button>
-            <button class="tab-btn" onclick="switchTab('claim')">Claim</button>
-            <button class="tab-btn" onclick="switchTab('withdraw')">Withdraw</button>
+            <button type="button" class="tab-btn active" id="tabBtnStake" onclick="switchTab('stake')">Stake</button>
+            <button type="button" class="tab-btn" id="tabBtnClaim" onclick="switchTab('claim')">Claim</button>
+            <button type="button" class="tab-btn" id="tabBtnWithdraw" onclick="switchTab('withdraw')">Withdraw</button>
         </div>
 
         <!-- STAKE tab -->
         <div class="tab-content active" id="tab-stake">
             <div class="stake-card">
                 <div class="card-header">
-                    <span class="card-title">Stake BONZI</span>
-                    <span class="balance">Balance: <span id="bonziBalance">0</span></span>
+                    <span class="card-title" id="stakeCardTitle">Stake BONZI</span>
+                    <span class="balance"><span id="stakeBalanceLabel">Balance:</span> <span id="bonziBalance">0</span></span>
                 </div>
 
                 <div class="input-group">
@@ -1309,7 +1307,7 @@
                             <path d="M12 7v6l4 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </span>
-                    <div class="stake-lock-copy">
+                    <div class="stake-lock-copy" id="stakeLockCopy">
                         <strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days.<br>
                         Claim ETH rewards anytime.
                     </div>
@@ -1323,13 +1321,13 @@
             <div class="rewards-card">
                 <div class="rewards-header">
                     <div>
-                        <span class="card-title">Your Rewards</span>
-                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
-                            Staked: <span id="claimStakedDisplay">0</span> BONZI
+                        <span class="card-title" id="claimCardTitle">Your Rewards</span>
+                        <p id="claimStakedLine" style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
+                            <span id="claimStakedPrefix">Staked:</span> <span id="claimStakedDisplay">0</span> BONZI
                         </p>
                     </div>
                     <div class="claimable">
-                        <div class="claimable-label">Claimable</div>
+                        <div class="claimable-label" id="claimTabClaimableLabel">Claimable</div>
                         <div class="claimable-value" id="claimableEthDisplay">0.00 ETH</div>
                     </div>
                 </div>
@@ -1345,13 +1343,13 @@
             <div class="rewards-card">
                 <div class="rewards-header">
                     <div>
-                        <span class="card-title">Withdraw BONZI</span>
-                        <p style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
-                            Staked: <span id="withdrawStakedDisplay">0</span> BONZI
+                        <span class="card-title" id="withdrawCardTitle">Withdraw BONZI</span>
+                        <p id="withdrawStakedLine" style="color: var(--gray); font-size: 0.8rem; margin-top: 0.25rem;">
+                            <span id="withdrawStakedPrefix">Staked:</span> <span id="withdrawStakedDisplay">0</span> BONZI
                         </p>
                     </div>
                     <div class="claimable">
-                        <div class="claimable-label">Lock Remaining</div>
+                        <div class="claimable-label" id="withdrawLockLabel">Lock Remaining</div>
                         <div class="claimable-value" id="lockTimeDisplay" style="color: var(--gray); font-size: 1rem;">--</div>
                     </div>
                 </div>
@@ -1374,7 +1372,7 @@
                     <line x1="12" y1="8" x2="12" y2="12"/>
                     <line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p><strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.</p>
+                <p id="withdrawInfoBox"><strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.</p>
             </div>
         </div>
 
@@ -1403,23 +1401,23 @@
                 <p id="poolSnapshotFaqKicker" class="metrics-section-kicker">Snapshot FAQ</p>
                 <div class="faq-list pool-snapshot-faq-list">
                     <details class="faq-item">
-                        <summary><span class="faq-question">Wallets staking</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <summary><span class="faq-question" id="poolFaqQWallets">Wallets staking</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer" id="faqPoolWalletsDesc"></div>
                     </details>
                     <details class="faq-item">
-                        <summary><span class="faq-question">Staked (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <summary><span class="faq-question" id="poolFaqQStaked">Staked (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer">BONZI locked in HARDSTAKE escrow (whole-network share). <a href="https://etherscan.io/address/0x3618158bb8d07111e476f4de28676dff050d1a53" target="_blank" rel="noopener noreferrer">HARDSTAKE on Etherscan</a></div>
                     </details>
                     <details class="faq-item">
-                        <summary><span class="faq-question">Yield (pool)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <summary><span class="faq-question" id="poolFaqQYield">Yield (pool)</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer" id="faqPoolYieldDesc"></div>
                     </details>
                     <details class="faq-item">
-                        <summary><span class="faq-question">LP (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <summary><span class="faq-question" id="poolFaqQLp">LP (% of supply)</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer">BONZI in the HARDLOCK pool used for trading liquidity. <a href="https://etherscan.io/address/0x970cf9b7346fbaea0588f03356a104100eb675e2" target="_blank" rel="noopener noreferrer">Pool vault on Etherscan</a></div>
                     </details>
                     <details class="faq-item">
-                        <summary><span class="faq-question">Pool history and pacing</span><span class="faq-marker" aria-hidden="true"></span></summary>
+                        <summary><span class="faq-question" id="poolFaqQHistory">Pool history and pacing</span><span class="faq-marker" aria-hidden="true"></span></summary>
                         <div class="faq-answer pool-history-body" id="metricsRewardsExplainer" aria-live="polite"></div>
                     </details>
                 </div>
@@ -1562,6 +1560,13 @@
 
         function resolveWalletDisplayLocale() {
             try {
+                if (typeof STAKE_OVERLAY_LANG === 'string') {
+                    if (STAKE_OVERLAY_LANG === 'zh') return 'zh-CN';
+                    if (STAKE_OVERLAY_LANG === 'pt') return 'pt-BR';
+                    if (STAKE_OVERLAY_LANG === 'en') return 'en-US';
+                }
+            } catch (eUiLoc) {}
+            try {
                 if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code) {
                     var lc = String(tg.initDataUnsafe.user.language_code).toLowerCase();
                     var map = {
@@ -1574,6 +1579,7 @@
                     };
                     if (map[lc]) return map[lc];
                     if (lc.indexOf('pt') === 0) return 'pt-BR';
+                    if (lc.indexOf('zh') === 0) return 'zh-CN';
                     if (lc.length === 2) return lc + '-' + lc.toUpperCase();
                     return lc;
                 }
@@ -1676,14 +1682,484 @@
             }
         };
 
+        var STAKE_MAIN_I18N = {
+            en: {
+                desktopHintHtml:
+                    '<strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported), or use your browser extension from a normal browser tab.',
+                extensionBtn: 'Use browser extension',
+                extensionCaption:
+                    'Opens this stake screen in your normal browser with the same action and wallet parameters.',
+                mainTitle: 'Stake BONZI',
+                mainSubtitle: 'Earn ETH rewards',
+                metricsYourWallet: 'Your wallet',
+                metricYourStake: 'Your stake',
+                metricBonzi: 'BONZI',
+                metricClaimable: 'Claimable',
+                metricEthRewards: 'ETH rewards',
+                actionKicker: 'Your wallet: stake, claim, withdraw',
+                claimingWarningHtml:
+                    '<strong>Action Required:</strong> Please <strong>Claim</strong> your ETH rewards before adding to or withdrawing from your stake to prevent reward reset.',
+                reportTitle: 'Send us this error',
+                reportStep1: 'Screenshot this screen. Include the red message.',
+                reportStep2: 'Tap <strong>Report with screenshot</strong> to open Bonzi bot.',
+                reportStep3:
+                    'In Telegram, attach the screenshot and write details in the <strong>photo caption</strong> (wallet app, chain, steps). Telegram needs a caption, not photo-only.',
+                reportCta: 'Report with screenshot',
+                reportDeployHintPrefix: 'Paste in your screenshot caption if you can: deploy_tag ',
+                tabStake: 'Stake',
+                tabClaim: 'Claim',
+                tabWithdraw: 'Withdraw',
+                stakeCardTitle: 'Stake BONZI',
+                balanceLabel: 'Balance:',
+                maxBtn: 'MAX',
+                stakeLockHtml:
+                    '<strong>14-day lock period.</strong> Staked BONZI cannot be withdrawn for 14 days.<br>Claim ETH rewards anytime.',
+                claimCardTitle: 'Your Rewards',
+                claimStakedPrefix: 'Staked:',
+                claimTabClaimableLabel: 'Claimable',
+                claimBtn: 'Claim ETH Rewards',
+                withdrawCardTitle: 'Withdraw BONZI',
+                withdrawStakedPrefix: 'Staked:',
+                withdrawLockLabel: 'Lock Remaining',
+                withdrawInfoHtml:
+                    '<strong>Claim first!</strong> Withdrawing resets your Euler index. Claim ETH rewards before withdrawing to avoid losing them.',
+                poolKicker: 'Pool snapshot',
+                poolLabelWallets: 'Wallets staking',
+                poolLabelStakedPct: 'Staked (% supply)',
+                poolLabelYield: 'Yield (pool)',
+                poolLabelLp: 'LP (% supply)',
+                snapshotFaqKicker: 'Snapshot FAQ',
+                poolFaqQWallets: 'Wallets staking',
+                poolFaqQStaked: 'Staked (% of supply)',
+                poolFaqQYield: 'Yield (pool)',
+                poolFaqQLp: 'LP (% of supply)',
+                poolFaqQHistory: 'Pool history and pacing',
+                faqSectionTitle: 'Frequently Asked Questions',
+                ticketCta: 'Open a Ticket for Support',
+                buyCta: 'Buy $BONZI Tokens',
+                unlocked: 'Unlocked',
+                stakeEulerConfirm: function (eth) {
+                    return (
+                        'You have ' +
+                        eth +
+                        ' ETH unclaimed!\n\n' +
+                        'Staking resets your Euler index.\n' +
+                        'Claim first or lose your rewards.\n\n' +
+                        'Continue anyway?'
+                    );
+                },
+                withdrawEulerConfirm: function (eth) {
+                    return (
+                        'You have ' +
+                        eth +
+                        ' ETH unclaimed!\n\n' +
+                        'Withdrawing resets your Euler index.\n' +
+                        'Claim first or lose your rewards.\n\n' +
+                        'Continue anyway?'
+                    );
+                },
+                stakeBtnEnter: 'Enter Amount',
+                stakeBtnInsufficient: 'Insufficient Balance',
+                stakeBtnStakePrefix: 'Stake ',
+                withdrawBtnLocked: 'Locked',
+                withdrawBtnEnter: 'Enter amount',
+                withdrawBtnInvalid: 'Invalid amount',
+                withdrawBtnMore: 'More than staked',
+                withdrawBtnPrefix: 'Withdraw ',
+                lockDaysSuffix: 'd'
+            },
+            pt: {
+                desktopHintHtml:
+                    '<strong>Telegram Desktop/Web:</strong> não há extensão de carteira aqui. Toque em <strong>Conectar carteira</strong> para WalletConnect (QR quando suportado) ou use o navegador externo com extensão.',
+                extensionBtn: 'Usar extensão do navegador',
+                extensionCaption:
+                    'Abre esta tela de stake no navegador normal com os mesmos parâmetros de carteira e ação.',
+                mainTitle: 'Stake de BONZI',
+                mainSubtitle: 'Ganhe recompensas em ETH',
+                metricsYourWallet: 'Sua carteira',
+                metricYourStake: 'Seu stake',
+                metricBonzi: 'BONZI',
+                metricClaimable: 'Resgatável',
+                metricEthRewards: 'Recompensas ETH',
+                actionKicker: 'Sua carteira: stake, resgatar, sacar',
+                claimingWarningHtml:
+                    '<strong>Ação necessária:</strong> <strong>Resgate</strong> suas recompensas em ETH antes de aumentar o stake ou sacar, para evitar reset das recompensas.',
+                reportTitle: 'Envie este erro',
+                reportStep1: 'Capture a tela. Inclua a mensagem vermelha.',
+                reportStep2: 'Toque em <strong>Reportar com captura</strong> para abrir o bot Bonzi.',
+                reportStep3:
+                    'No Telegram, anexe a captura e escreva detalhes na <strong>legenda da foto</strong> (app da carteira, rede, passos). O Telegram precisa de legenda, não só a imagem.',
+                reportCta: 'Reportar com captura',
+                reportDeployHintPrefix: 'Cole na legenda da foto se puder: deploy_tag ',
+                tabStake: 'Stake',
+                tabClaim: 'Resgatar',
+                tabWithdraw: 'Sacar',
+                stakeCardTitle: 'Stake de BONZI',
+                balanceLabel: 'Saldo:',
+                maxBtn: 'MÁX',
+                stakeLockHtml:
+                    '<strong>Período de bloqueio de 14 dias.</strong> BONZI em stake não pode ser sacado por 14 dias.<br>Resgate recompensas em ETH a qualquer momento.',
+                claimCardTitle: 'Suas recompensas',
+                claimStakedPrefix: 'Em stake:',
+                claimTabClaimableLabel: 'Resgatável',
+                claimBtn: 'Resgatar recompensas ETH',
+                withdrawCardTitle: 'Sacar BONZI',
+                withdrawStakedPrefix: 'Em stake:',
+                withdrawLockLabel: 'Bloqueio restante',
+                withdrawInfoHtml:
+                    '<strong>Resgate antes!</strong> Sacar redefine seu índice Euler. Resgate ETH antes de sacar para não perder recompensas.',
+                poolKicker: 'Instantâneo do pool',
+                poolLabelWallets: 'Carteiras em stake',
+                poolLabelStakedPct: 'Em stake (% do supply)',
+                poolLabelYield: 'Rendimento (pool)',
+                poolLabelLp: 'LP (% do supply)',
+                snapshotFaqKicker: 'FAQ do instantâneo',
+                poolFaqQWallets: 'Carteiras em stake',
+                poolFaqQStaked: 'Em stake (% do supply)',
+                poolFaqQYield: 'Rendimento (pool)',
+                poolFaqQLp: 'LP (% do supply)',
+                poolFaqQHistory: 'Histórico do pool e ritmo',
+                faqSectionTitle: 'Perguntas frequentes',
+                ticketCta: 'Abrir ticket de suporte',
+                buyCta: 'Comprar tokens $BONZI',
+                unlocked: 'Desbloqueado',
+                stakeEulerConfirm: function (eth) {
+                    return (
+                        'Você tem ' +
+                        eth +
+                        ' ETH não resgatados!\n\n' +
+                        'Stake altera seu índice Euler.\n' +
+                        'Resgate antes ou perca recompensas.\n\n' +
+                        'Continuar mesmo assim?'
+                    );
+                },
+                withdrawEulerConfirm: function (eth) {
+                    return (
+                        'Você tem ' +
+                        eth +
+                        ' ETH não resgatados!\n\n' +
+                        'Sacar altera seu índice Euler.\n' +
+                        'Resgate antes ou perca recompensas.\n\n' +
+                        'Continuar mesmo assim?'
+                    );
+                },
+                stakeBtnEnter: 'Digite o valor',
+                stakeBtnInsufficient: 'Saldo insuficiente',
+                stakeBtnStakePrefix: 'Stake ',
+                withdrawBtnLocked: 'Bloqueado',
+                withdrawBtnEnter: 'Digite o valor',
+                withdrawBtnInvalid: 'Valor inválido',
+                withdrawBtnMore: 'Mais do que em stake',
+                withdrawBtnPrefix: 'Sacar ',
+                lockDaysSuffix: 'd'
+            },
+            zh: {
+                desktopHintHtml:
+                    '<strong>Telegram 桌面 / Web：</strong>此内置浏览器没有钱包扩展。请点击<strong>连接钱包</strong>使用 WalletConnect（支持时会显示二维码），或在系统浏览器中用扩展完成操作。',
+                extensionBtn: '使用浏览器扩展',
+                extensionCaption: '在系统默认浏览器中打开本质押页，并保留相同的钱包与操作参数。',
+                mainTitle: '质押 BONZI',
+                mainSubtitle: '赚取 ETH 奖励',
+                metricsYourWallet: '您的钱包',
+                metricYourStake: '您的质押',
+                metricBonzi: 'BONZI',
+                metricClaimable: '可领取',
+                metricEthRewards: 'ETH 奖励',
+                actionKicker: '您的钱包：质押、领取、撤回',
+                claimingWarningHtml:
+                    '<strong>需要操作：</strong>在加仓或撤回质押前，请先<strong>领取</strong> ETH 奖励，否则奖励索引可能被重置。',
+                reportTitle: '把此错误发给我们',
+                reportStep1: '截屏本页，包含红色错误文字。',
+                reportStep2: '点击<strong>带截图反馈</strong>打开 Bonzi 机器人。',
+                reportStep3:
+                    '在 Telegram 里附上截图，并在<strong>图片说明</strong>里写清钱包应用、链、操作步骤。Telegram 需要说明文字，不能只发图。',
+                reportCta: '带截图反馈',
+                reportDeployHintPrefix: '如方便请写在图片说明里：deploy_tag ',
+                tabStake: '质押',
+                tabClaim: '领取',
+                tabWithdraw: '撤回',
+                stakeCardTitle: '质押 BONZI',
+                balanceLabel: '余额：',
+                maxBtn: '最大',
+                stakeLockHtml:
+                    '<strong>14 天锁定期。</strong>质押后的 BONZI 在 14 天内不能撤回。<br>ETH 奖励可随时领取。',
+                claimCardTitle: '您的奖励',
+                claimStakedPrefix: '已质押：',
+                claimTabClaimableLabel: '可领取',
+                claimBtn: '领取 ETH 奖励',
+                withdrawCardTitle: '撤回 BONZI',
+                withdrawStakedPrefix: '已质押：',
+                withdrawLockLabel: '剩余锁定期',
+                withdrawInfoHtml:
+                    '<strong>请先领取！</strong>撤回会重置 Euler 指数。撤回前请先领取 ETH 奖励，以免丢失。',
+                poolKicker: '资金池快照',
+                poolLabelWallets: '参与质押的钱包数',
+                poolLabelStakedPct: '质押占比（总供应）',
+                poolLabelYield: '收益率（池子）',
+                poolLabelLp: 'LP 占比（总供应）',
+                snapshotFaqKicker: '快照常见问题',
+                poolFaqQWallets: '参与质押的钱包数',
+                poolFaqQStaked: '质押（占供应百分比）',
+                poolFaqQYield: '收益率（池子）',
+                poolFaqQLp: 'LP（占供应百分比）',
+                poolFaqQHistory: '资金池历史与节奏',
+                faqSectionTitle: '常见问题',
+                ticketCta: '提交工单获取支持',
+                buyCta: '购买 $BONZI 代币',
+                unlocked: '已解锁',
+                stakeEulerConfirm: function (eth) {
+                    return (
+                        '您有 ' +
+                        eth +
+                        ' ETH 尚未领取！\n\n' +
+                        '继续质押会重置 Euler 指数。\n' +
+                        '请先领取，否则可能失去奖励。\n\n' +
+                        '仍要继续吗？'
+                    );
+                },
+                withdrawEulerConfirm: function (eth) {
+                    return (
+                        '您有 ' +
+                        eth +
+                        ' ETH 尚未领取！\n\n' +
+                        '撤回会重置 Euler 指数。\n' +
+                        '请先领取，否则可能失去奖励。\n\n' +
+                        '仍要继续吗？'
+                    );
+                },
+                stakeBtnEnter: '输入数量',
+                stakeBtnInsufficient: '余额不足',
+                stakeBtnStakePrefix: '质押 ',
+                withdrawBtnLocked: '锁定中',
+                withdrawBtnEnter: '输入数量',
+                withdrawBtnInvalid: '数量无效',
+                withdrawBtnMore: '超过已质押量',
+                withdrawBtnPrefix: '撤回 ',
+                lockDaysSuffix: '天'
+            }
+        };
+
+        var STAKE_TXN_I18N = {
+            en: {
+                openBrowserConnect: 'Open this page in a browser to connect your wallet.',
+                requestingApproval: 'Requesting approval...',
+                approveSpending: 'Approve BONZI spending in your wallet...',
+                waitingApproval: 'Waiting for approval confirmation...',
+                submittingStake: 'Submitting stake transaction...',
+                waitingConfirmation: 'Waiting for confirmation...',
+                stakedSuccess: 'Staked successfully!',
+                claimingRewards: 'Claiming rewards...',
+                rewardsClaimed: 'Rewards claimed!',
+                invalidAmount: 'Invalid amount',
+                withdrawMoreThanStaked: 'Amount is more than you have staked',
+                withdrawing: 'Withdrawing BONZI...',
+                withdrawalComplete: 'Withdrawal complete!'
+            },
+            pt: {
+                openBrowserConnect: 'Abra esta página no navegador para conectar a carteira.',
+                requestingApproval: 'Solicitando aprovação...',
+                approveSpending: 'Aprove o gasto de BONZI na carteira...',
+                waitingApproval: 'Aguardando confirmação da aprovação...',
+                submittingStake: 'Enviando transação de stake...',
+                waitingConfirmation: 'Aguardando confirmação...',
+                stakedSuccess: 'Stake concluído!',
+                claimingRewards: 'Resgatando recompensas...',
+                rewardsClaimed: 'Recompensas resgatadas!',
+                invalidAmount: 'Valor inválido',
+                withdrawMoreThanStaked: 'Valor maior que o stake',
+                withdrawing: 'Sacando BONZI...',
+                withdrawalComplete: 'Saque concluído!'
+            },
+            zh: {
+                openBrowserConnect: '请在系统浏览器中打开本页以连接钱包。',
+                requestingApproval: '正在请求授权…',
+                approveSpending: '请在钱包中授权 BONZI 额度…',
+                waitingApproval: '等待授权确认…',
+                submittingStake: '正在提交质押交易…',
+                waitingConfirmation: '等待链上确认…',
+                stakedSuccess: '质押成功！',
+                claimingRewards: '正在领取奖励…',
+                rewardsClaimed: '奖励已领取！',
+                invalidAmount: '数量无效',
+                withdrawMoreThanStaked: '超过已质押数量',
+                withdrawing: '正在撤回 BONZI…',
+                withdrawalComplete: '撤回完成！'
+            }
+        };
+
+        var STAKE_REVERT_GLOSS_I18N = {
+            en: {
+                transferHelper:
+                    'This deposit did not go through our router (often allowance balance or router mismatch). Retry Approve, try slightly less BONZI, confirm Ethereum mainnet. If stuck, screenshot the Technical line.',
+                userRejected: 'The wallet declined or dismissed the popup (not a Bonzi servers error).',
+                nonce:
+                    'A stuck transaction nonce in your wallet blocked this tx. Clear or speed up pending items in Phantom / MetaMask, then retry.',
+                timeout:
+                    'Blockchain confirmation stalled. Inspect pending transactions in explorer or retry after one minute.',
+                fallback: 'Transaction failed.'
+            },
+            pt: {
+                transferHelper:
+                    'Este depósito não passou pelo nosso roteador (permissão, saldo ou roteador). Tente Aprovar de novo, um pouco menos de BONZI, rede Ethereum principal. Se travar, capture a linha Técnica.',
+                userRejected: 'A carteira recusou ou fechou o pop-up (não é erro dos servidores Bonzi).',
+                nonce:
+                    'Nonce de transação preso bloqueou esta tx. Limpe ou acelere pendentes no Phantom / MetaMask e tente de novo.',
+                timeout:
+                    'Confirmação na blockchain travou. Veja pendentes no explorador ou tente após um minuto.',
+                fallback: 'Transação falhou.'
+            },
+            zh: {
+                transferHelper:
+                    '本次存入未走通路由（常见于授权、余额或路由不匹配）。请重试授权、略减 BONZI 数量并确认在以太坊主网。若仍卡住，请截屏含 Technical 行。',
+                userRejected: '钱包拒绝或关闭了弹窗（不是 Bonzi 服务器错误）。',
+                nonce: '钱包里有未完成的交易占用 nonce。请在 Phantom / MetaMask 清理或加速待确认交易后重试。',
+                timeout: '链上确认卡住。请在浏览器查看待确认交易，或一分钟后再试。',
+                fallback: '交易失败。'
+            }
+        };
+
+        function stakeMainPack(L) {
+            var k = normalizeStakeOverlayLang(L);
+            return STAKE_MAIN_I18N[k] || STAKE_MAIN_I18N.en;
+        }
+
+        function stakeTxnMsg(key) {
+            var k = normalizeStakeOverlayLang(STAKE_OVERLAY_LANG);
+            var pack = STAKE_TXN_I18N[k] || STAKE_TXN_I18N.en;
+            return pack[key] || STAKE_TXN_I18N.en[key] || key;
+        }
+
+        function stakeRevertGloss(kind) {
+            var k = normalizeStakeOverlayLang(STAKE_OVERLAY_LANG);
+            var pack = STAKE_REVERT_GLOSS_I18N[k] || STAKE_REVERT_GLOSS_I18N.en;
+            return pack[kind] || STAKE_REVERT_GLOSS_I18N.en[kind] || '';
+        }
+
+        function applyStakeMainShellLang(lang) {
+            var L = normalizeStakeOverlayLang(lang);
+            var m = stakeMainPack(L);
+            var grid = document.getElementById('metricsHeroGridYour');
+            if (grid) {
+                var aria = grid.getAttribute('data-aria-' + L) || grid.getAttribute('data-aria-en');
+                if (aria) grid.setAttribute('aria-label', aria);
+            }
+            var dh = document.getElementById('wcConnectDesktopHint');
+            if (dh) dh.innerHTML = m.desktopHintHtml;
+            var des = document.getElementById('desktopExtBtnSpan');
+            if (des) des.textContent = m.extensionBtn;
+            var dc = document.getElementById('desktopExtCaption');
+            if (dc) dc.textContent = m.extensionCaption;
+            var h1 = document.getElementById('mainShellH1');
+            if (h1) h1.textContent = m.mainTitle;
+            var sub = document.getElementById('mainShellSubtitle');
+            if (sub) sub.textContent = m.mainSubtitle;
+            var kYour = document.getElementById('metricsKickerYour');
+            if (kYour) kYour.textContent = m.metricsYourWallet;
+            var lys = document.getElementById('metricLabelYourStake');
+            if (lys) lys.textContent = m.metricYourStake;
+            var sb = document.getElementById('metricSubYourBonzi');
+            if (sb) sb.textContent = m.metricBonzi;
+            var hcl = document.getElementById('metricLabelHeroClaimable');
+            if (hcl) hcl.textContent = m.metricClaimable;
+            var ser = document.getElementById('metricSubEthRewards');
+            if (ser) ser.textContent = m.metricEthRewards;
+            var abk = document.getElementById('actionBlockKicker');
+            if (abk) abk.textContent = m.actionKicker;
+            var cw = document.getElementById('claimingWarning');
+            if (cw) cw.innerHTML = m.claimingWarningHtml;
+            var rt = document.getElementById('reportBugTitle');
+            if (rt) rt.textContent = m.reportTitle;
+            var steps = document.querySelector('#reportBugStrip .report-bug-steps');
+            if (steps) {
+                steps.innerHTML =
+                    '<li>' +
+                    m.reportStep1 +
+                    '</li><li>' +
+                    m.reportStep2 +
+                    '</li><li>' +
+                    m.reportStep3 +
+                    '</li>';
+            }
+            var rlc = document.getElementById('reportBugLink');
+            if (rlc) rlc.textContent = m.reportCta;
+            var ts = document.getElementById('tabBtnStake');
+            if (ts) ts.textContent = m.tabStake;
+            var tc = document.getElementById('tabBtnClaim');
+            if (tc) tc.textContent = m.tabClaim;
+            var tw = document.getElementById('tabBtnWithdraw');
+            if (tw) tw.textContent = m.tabWithdraw;
+            var sct = document.getElementById('stakeCardTitle');
+            if (sct) sct.textContent = m.stakeCardTitle;
+            var sbl = document.getElementById('stakeBalanceLabel');
+            if (sbl) sbl.textContent = m.balanceLabel;
+            var slc = document.getElementById('stakeLockCopy');
+            if (slc) slc.innerHTML = m.stakeLockHtml;
+            var cct = document.getElementById('claimCardTitle');
+            if (cct) cct.textContent = m.claimCardTitle;
+            var csp = document.getElementById('claimStakedPrefix');
+            if (csp) csp.textContent = m.claimStakedPrefix;
+            var ctcl = document.getElementById('claimTabClaimableLabel');
+            if (ctcl) ctcl.textContent = m.claimTabClaimableLabel;
+            var cbtn = document.getElementById('claimBtn');
+            if (cbtn) cbtn.textContent = m.claimBtn;
+            var wct = document.getElementById('withdrawCardTitle');
+            if (wct) wct.textContent = m.withdrawCardTitle;
+            var wsp = document.getElementById('withdrawStakedPrefix');
+            if (wsp) wsp.textContent = m.withdrawStakedPrefix;
+            var wll = document.getElementById('withdrawLockLabel');
+            if (wll) wll.textContent = m.withdrawLockLabel;
+            var wib = document.getElementById('withdrawInfoBox');
+            if (wib) wib.innerHTML = m.withdrawInfoHtml;
+            var mkp = document.getElementById('metricsKickerPool');
+            if (mkp) mkp.textContent = m.poolKicker;
+            var mlw = document.getElementById('metricLabelWalletsStaking');
+            if (mlw) mlw.textContent = m.poolLabelWallets;
+            var mls = document.getElementById('metricLabelStakedPct');
+            if (mls) mls.textContent = m.poolLabelStakedPct;
+            var mly = document.getElementById('metricLabelYieldPool');
+            if (mly) mly.textContent = m.poolLabelYield;
+            var mll = document.getElementById('metricLabelLpPct');
+            if (mll) mll.textContent = m.poolLabelLp;
+            var sfk = document.getElementById('poolSnapshotFaqKicker');
+            if (sfk) sfk.textContent = m.snapshotFaqKicker;
+            var pq1 = document.getElementById('poolFaqQWallets');
+            if (pq1) pq1.textContent = m.poolFaqQWallets;
+            var pq2 = document.getElementById('poolFaqQStaked');
+            if (pq2) pq2.textContent = m.poolFaqQStaked;
+            var pq3 = document.getElementById('poolFaqQYield');
+            if (pq3) pq3.textContent = m.poolFaqQYield;
+            var pq4 = document.getElementById('poolFaqQLp');
+            if (pq4) pq4.textContent = m.poolFaqQLp;
+            var pq5 = document.getElementById('poolFaqQHistory');
+            if (pq5) pq5.textContent = m.poolFaqQHistory;
+            var fqst = document.getElementById('faq-section-title');
+            if (fqst) fqst.textContent = m.faqSectionTitle;
+            var tfb = document.getElementById('telegramFaqBtn');
+            if (tfb) {
+                var svg = tfb.querySelector('svg');
+                tfb.innerHTML = '';
+                if (svg) tfb.appendChild(svg);
+                tfb.appendChild(document.createTextNode(' ' + m.ticketCta));
+            }
+            var buy = document.getElementById('ctaBuyBonziTokens');
+            if (buy) {
+                var svgB = buy.querySelector('svg');
+                buy.innerHTML = '';
+                if (svgB) buy.appendChild(svgB);
+                buy.appendChild(document.createTextNode(' ' + m.buyCta));
+            }
+            document.querySelectorAll('.max-btn').forEach(function (mx) {
+                mx.textContent = m.maxBtn;
+            });
+        }
+
         function applyStakeOverlayLang(lang) {
             var L = normalizeStakeOverlayLang(lang);
             STAKE_OVERLAY_LANG = L;
             try {
                 sessionStorage.setItem('bonzi_stake_overlay_lang', L);
             } catch (eS) {}
-            var d = STAKE_OVERLAY_I18N[L];
-            if (!d) return;
+            var d = STAKE_OVERLAY_I18N[L] || STAKE_OVERLAY_I18N.en;
             document.documentElement.lang =
                 L === 'pt' ? 'pt-BR' : L === 'zh' ? 'zh-CN' : 'en';
             var titleEl = document.getElementById('stakeOverlayTitle');
@@ -1714,6 +2190,11 @@
             } else if (wcBtn) {
                 CONNECT_BTN_DEFAULT_HTML = wcBtn.innerHTML;
             }
+            applyStakeMainShellLang(L);
+            try {
+                if (typeof updateStakeButton === 'function') updateStakeButton();
+                if (typeof updateWithdrawButton === 'function') updateWithdrawButton();
+            } catch (eBtn) {}
         }
 
         applyStakeOverlayLang(STAKE_OVERLAY_LANG);
@@ -2368,9 +2849,11 @@
             }
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            var tabBtn = document.querySelector('.tab-btn[onclick="switchTab(\'' + t + '\')"]');
-            if (tabBtn) {
-                tabBtn.classList.add('active');
+            var idMap = { stake: 'tabBtnStake', claim: 'tabBtnClaim', withdraw: 'tabBtnWithdraw' };
+            var bid = idMap[t];
+            if (bid) {
+                var tabBtn = document.getElementById(bid);
+                if (tabBtn) tabBtn.classList.add('active');
             }
             var pane = document.getElementById('tab-' + t);
             if (pane) {
@@ -2528,7 +3011,7 @@
                     try {
                         window.open(browserUrl, '_blank', 'noopener,noreferrer');
                     } catch (eWinOpen) {}
-                    showStatus('Open this page in a browser to connect your wallet.', 'error');
+                    showStatus(stakeTxnMsg('openBrowserConnect'), 'error');
                 }
                 return;
             }
@@ -2836,7 +3319,7 @@
                     rm.innerHTML =
                         '<span>~' +
                         totalEth2.toFixed(2) +
-                        ' ETH tallied over ~' +
+                        ' ETH recorded over ~' +
                         Math.round(days2) +
                         ' days (~' +
                         dmean2.toFixed(4) +
@@ -2941,10 +3424,11 @@
                 document.getElementById('withdrawStakedDisplay').textContent = formatWalletTokenAmount(stakedBal, 4);
                 if (timeRemaining > 0) {
                     const days = Math.ceil(timeRemaining / 86400);
-                    document.getElementById('lockTimeDisplay').textContent = days + 'd';
+                    var smLock = stakeMainPack(STAKE_OVERLAY_LANG);
+                    document.getElementById('lockTimeDisplay').textContent = days + smLock.lockDaysSuffix;
                     document.getElementById('lockTimeDisplay').style.color = 'var(--red)';
                 } else if (stakedBal > 0) {
-                    document.getElementById('lockTimeDisplay').textContent = 'Unlocked';
+                    document.getElementById('lockTimeDisplay').textContent = stakeMainPack(STAKE_OVERLAY_LANG).unlocked;
                     document.getElementById('lockTimeDisplay').style.color = 'var(--green)';
                 }
 
@@ -2975,15 +3459,16 @@
         function updateStakeButton() {
             const amount = parseFloat(document.getElementById('stakeAmount').value) || 0;
             const btn = document.getElementById('stakeBtn');
+            const sm = stakeMainPack(STAKE_OVERLAY_LANG);
 
             if (amount === 0) {
-                btn.textContent = 'Enter Amount';
+                btn.textContent = sm.stakeBtnEnter;
                 btn.disabled = true;
             } else if (amount > bonziBalance) {
-                btn.textContent = 'Insufficient Balance';
+                btn.textContent = sm.stakeBtnInsufficient;
                 btn.disabled = true;
             } else {
-                btn.textContent = 'Stake ' + formatWalletTokenAmount(amount, 8) + ' BONZI';
+                btn.textContent = sm.stakeBtnStakePrefix + formatWalletTokenAmount(amount, 8) + ' BONZI';
                 btn.disabled = false;
             }
         }
@@ -2999,15 +3484,16 @@
         function updateWithdrawButton() {
             var btn = document.getElementById('withdrawBtn');
             if (!btn) return;
+            var sm = stakeMainPack(STAKE_OVERLAY_LANG);
 
             if (lastWithdrawLockSeconds > 0) {
-                btn.textContent = 'Locked';
+                btn.textContent = sm.withdrawBtnLocked;
                 btn.disabled = true;
                 return;
             }
 
             if (!lastStakedAmountWei || lastStakedAmountWei.isZero()) {
-                btn.textContent = 'Enter amount';
+                btn.textContent = sm.withdrawBtnEnter;
                 btn.disabled = true;
                 return;
             }
@@ -3015,7 +3501,7 @@
             var wInput = document.getElementById('withdrawAmount');
             var raw = (wInput && wInput.value ? String(wInput.value) : '').trim();
             if (!raw || parseFloat(raw) === 0) {
-                btn.textContent = 'Enter amount';
+                btn.textContent = sm.withdrawBtnEnter;
                 btn.disabled = true;
                 return;
             }
@@ -3024,18 +3510,18 @@
             try {
                 amtWei = ethers.utils.parseEther(raw);
             } catch (eW) {
-                btn.textContent = 'Invalid amount';
+                btn.textContent = sm.withdrawBtnInvalid;
                 btn.disabled = true;
                 return;
             }
 
             if (amtWei.gt(lastStakedAmountWei)) {
-                btn.textContent = 'More than staked';
+                btn.textContent = sm.withdrawBtnMore;
                 btn.disabled = true;
                 return;
             }
 
-            btn.textContent = 'Withdraw ' + formatWalletTokenAmount(parseFloat(raw), 8) + ' BONZI';
+            btn.textContent = sm.withdrawBtnPrefix + formatWalletTokenAmount(parseFloat(raw), 8) + ' BONZI';
             btn.disabled = false;
         }
 
@@ -3054,7 +3540,7 @@
             } catch (_eFmt) {
                 base = '';
             }
-            if (!base || !base.trim()) base = 'Transaction failed.';
+            if (!base || !base.trim()) base = stakeRevertGloss('fallback');
             var code =
                 typeof rawErr === 'object' && rawErr !== null ? rawErr.code : undefined;
             var gloss = null;
@@ -3066,24 +3552,27 @@
                     base
                 )
             ) {
-                gloss =
-                    'This deposit did not go through our router (often allowance balance or router mismatch). Retry Approve, try slightly less BONZI, confirm Ethereum mainnet. If stuck, screenshot the Technical line.';
+                gloss = stakeRevertGloss('transferHelper');
             } else if (
                 code === 4001 ||
                 code === 'ACTION_REJECTED' ||
                 /user rejected|user denied|^user denied transaction$/i.test(lower)
             ) {
-                gloss = 'The wallet declined or dismissed the popup (not a Bonzi servers error).';
+                gloss = stakeRevertGloss('userRejected');
             } else if (/nonce|replacement transaction|replacement underpriced/i.test(lower)) {
-                gloss =
-                    'A stuck transaction nonce in your wallet blocked this tx. Clear or speed up pending items in Phantom / MetaMask, then retry.';
+                gloss = stakeRevertGloss('nonce');
             } else if (/timed out|timeout|confirmation timed/i.test(lower)) {
-                gloss =
-                    'Blockchain confirmation stalled. Inspect pending transactions in explorer or retry after one minute.';
+                gloss = stakeRevertGloss('timeout');
             }
 
             if (!gloss) return base;
-            return gloss + '\n\nTechnical: ' + base;
+            var tech =
+                STAKE_OVERLAY_LANG === 'zh'
+                    ? '\n\n技术详情：'
+                    : STAKE_OVERLAY_LANG === 'pt'
+                      ? '\n\nTécnico: '
+                      : '\n\nTechnical: ';
+            return gloss + tech + base;
         }
 
         /** Race tx.wait vs timeout minutes (default four). Caller sets pending label beforehand. */
@@ -3219,7 +3708,7 @@
             var meta = document.querySelector('meta[name=\"bonzi-stake-tg-deploy\"]');
             var hintEl = document.getElementById('reportBugDeployHint');
             if (meta && meta.content && hintEl) {
-                hintEl.textContent = 'Paste in your screenshot caption if you can: deploy_tag ' + meta.content;
+                hintEl.textContent = stakeMainPack(STAKE_OVERLAY_LANG).reportDeployHintPrefix + meta.content;
                 hintEl.classList.remove('hidden');
             }
         }
@@ -3251,11 +3740,11 @@
 
             // Euler reset warning
             if (currentClaimableEth > 0) {
+                var smE = stakeMainPack(STAKE_OVERLAY_LANG);
                 const proceed = confirm(
-                    `You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
-                    `Staking resets your Euler index.\n` +
-                    `Claim first or lose your rewards.\n\n` +
-                    `Continue anyway?`
+                    typeof smE.stakeEulerConfirm === 'function'
+                        ? smE.stakeEulerConfirm(currentClaimableEth.toFixed(6))
+                        : 'You have ' + currentClaimableEth.toFixed(6) + ' ETH unclaimed!'
                 );
                 if (!proceed) return;
             }
@@ -3263,20 +3752,20 @@
             const amountWei = ethers.utils.parseEther(amount);
 
             try {
-                showStatus('Requesting approval...');
+                showStatus(stakeTxnMsg('requestingApproval'));
                 signer = getWalletSigner();
 
                 const bonziContract = new ethers.Contract(CONTRACTS.BONZI_TOKEN, ERC20_ABI, signer);
                 const allowance = await bonziContract.allowance(userAddress, CONTRACTS.ROUTER);
 
                 if (allowance.lt(amountWei)) {
-                    showStatus('Approve BONZI spending in your wallet...');
+                    showStatus(stakeTxnMsg('approveSpending'));
                     const approveTx = await bonziContract.approve(CONTRACTS.ROUTER, amountWei);
-                    showStatus('Waiting for approval confirmation...');
+                    showStatus(stakeTxnMsg('waitingApproval'));
                     await waitTxReceipt(approveTx.wait());
                 }
 
-                showStatus('Submitting stake transaction...');
+                showStatus(stakeTxnMsg('submittingStake'));
                 const routerContract = new ethers.Contract(CONTRACTS.ROUTER, ROUTER_ABI, signer);
                 const stakeTx = await routerContract.hardstake(
                     CONTRACTS.BONZI_HARDSTAKE,
@@ -3284,11 +3773,11 @@
                     amountWei
                 );
 
-                showStatus('Waiting for confirmation...');
+                showStatus(stakeTxnMsg('waitingConfirmation'));
                 const receipt = await waitTxReceipt(stakeTx.wait());
 
                 notifyTelegramHaptic('success');
-                showStatus('Staked successfully!', 'success');
+                showStatus(stakeTxnMsg('stakedSuccess'), 'success');
                 document.getElementById('stakeAmount').value = '';
 
                 sendResultToBot('staked', receipt.transactionHash, amount);
@@ -3307,17 +3796,17 @@
         // ============================================================
         async function claim() {
             try {
-                showStatus('Claiming rewards...');
+                showStatus(stakeTxnMsg('claimingRewards'));
                 signer = getWalletSigner();
 
                 const hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
                 const claimTx = await hardstakeContract.claimShare();
 
-                showStatus('Waiting for confirmation...');
+                showStatus(stakeTxnMsg('waitingConfirmation'));
                 const receipt = await waitTxReceipt(claimTx.wait());
 
                 notifyTelegramHaptic('success');
-                showStatus('Rewards claimed!', 'success');
+                showStatus(stakeTxnMsg('rewardsClaimed'), 'success');
 
                 sendResultToBot('claimed', receipt.transactionHash, currentClaimableEth.toFixed(6));
                 await updateUI();
@@ -3336,11 +3825,11 @@
         async function withdraw() {
             // Euler reset warning
             if (currentClaimableEth > 0) {
+                var smW = stakeMainPack(STAKE_OVERLAY_LANG);
                 var proceed = confirm(
-                    `You have ${currentClaimableEth.toFixed(6)} ETH unclaimed!\n\n` +
-                        `Withdrawing resets your Euler index.\n` +
-                        `Claim first or lose your rewards.\n\n` +
-                        `Continue anyway?`
+                    typeof smW.withdrawEulerConfirm === 'function'
+                        ? smW.withdrawEulerConfirm(currentClaimableEth.toFixed(6))
+                        : 'You have ' + currentClaimableEth.toFixed(6) + ' ETH unclaimed!'
                 );
                 if (!proceed) return;
             }
@@ -3352,28 +3841,28 @@
             try {
                 amountWei = ethers.utils.parseEther(raw);
             } catch (eP) {
-                showStatus('Invalid amount', 'error');
+                showStatus(stakeTxnMsg('invalidAmount'), 'error');
                 return;
             }
 
             if (amountWei.isZero()) return;
             if (!lastStakedAmountWei || amountWei.gt(lastStakedAmountWei)) {
-                showStatus('Amount is more than you have staked', 'error');
+                showStatus(stakeTxnMsg('withdrawMoreThanStaked'), 'error');
                 return;
             }
 
             try {
-                showStatus('Withdrawing BONZI...');
+                showStatus(stakeTxnMsg('withdrawing'));
                 signer = getWalletSigner();
 
                 var hardstakeContract = new ethers.Contract(CONTRACTS.BONZI_HARDSTAKE, HARDSTAKE_ABI, signer);
                 var withdrawTx = await hardstakeContract.withdraw(amountWei);
 
-                showStatus('Waiting for confirmation...');
+                showStatus(stakeTxnMsg('waitingConfirmation'));
                 var receipt = await waitTxReceipt(withdrawTx.wait());
 
                 notifyTelegramHaptic('success');
-                showStatus('Withdrawal complete!', 'success');
+                showStatus(stakeTxnMsg('withdrawalComplete'), 'success');
 
                 var amtOut = ethers.utils.formatEther(amountWei);
                 sendResultToBot('withdrawn', receipt.transactionHash, amtOut);

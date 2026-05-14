@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-external-bootstrap-lang-20260514" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-no-footer-build-chip-20260514" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -970,30 +970,7 @@
             text-align: center;
         }
 
-        .footer-debug {
-            margin-top: 28px;
-            font-size: 10px;
-            color: #3f3f46;
-            letter-spacing: 0;
-        }
 
-        .stake-render-debug {
-            display: block;
-            margin: 10px auto 0;
-            max-width: 420px;
-            border: 0;
-            background: transparent;
-            color: #52525b;
-            font: inherit;
-            font-size: 10px;
-            line-height: 1.4;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .stake-render-debug.is-mismatch {
-            color: #dc2626;
-        }
         .mev-badge {
             display: inline-flex;
             align-items: center;
@@ -1247,7 +1224,6 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
-            <p class="footer-debug" id="stakeHtmlDeployRev">Loading deploy tag…</p>
         </div>
     </div>
 
@@ -3958,33 +3934,14 @@
             };
         }
 
-        function formatStakeRenderProbe(probe) {
-            var urlPart = probe.urlVersion
-                ? probe.versionMatches
-                    ? 'url v ok'
-                    : 'url v mismatch ' + probe.urlVersion
-                : 'url v missing';
-            return 'build ' + probe.deployTag + ' · ' + urlPart;
-        }
-
         function updateStakeRenderProbe() {
             var probe = getStakeRenderProbe();
-            var text = formatStakeRenderProbe(probe);
-            var els = [
-                document.getElementById('stakeHtmlDeployRev'),
-                document.getElementById('stakeFooterDeployRev'),
-            ];
             document.documentElement.setAttribute('data-bonzi-stake-deploy', probe.deployTag);
             document.documentElement.setAttribute('data-bonzi-stake-url-version', probe.urlVersion || '');
-            els.forEach(function (el) {
-                if (!el) return;
-                el.textContent = text;
-                el.classList.toggle('is-mismatch', Boolean(probe.urlVersion && !probe.versionMatches));
-                el.setAttribute(
-                    'data-render-proof',
-                    probe.deployTag + '|' + (probe.urlVersion || 'missing')
-                );
-            });
+            document.documentElement.setAttribute(
+                'data-bonzi-stake-cache-match',
+                probe.versionMatches ? '1' : '0'
+            );
             dbgStakeEmit('H_render_rev', 'stake-tg.html:renderProbe', 'stake frontend revision loaded', {
                 deployTag: probe.deployTag,
                 urlVersion: probe.urlVersion,
@@ -3996,23 +3953,18 @@
         async function copyStakeRenderProbe() {
             var probe = getStakeRenderProbe();
             var text = [
-                'stake render proof',
-                'deploy=' + probe.deployTag,
-                'url_v=' + (probe.urlVersion || 'missing'),
-                'matches=' + (probe.versionMatches ? 'yes' : 'no'),
-                'href=' + probe.href,
-                'loaded_at=' + probe.loadedAt,
+                'Bonzi stake — support snapshot',
+                'deploy_tag=' + probe.deployTag,
+                'url_v=' + (probe.urlVersion || 'not set'),
+                'cache_matches_meta=' + (probe.versionMatches ? 'yes' : 'no'),
+                'url=' + probe.href,
+                'time=' + probe.loadedAt,
             ].join('\n');
             try {
                 if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
                     await navigator.clipboard.writeText(text);
                 }
             } catch (eClip) {}
-            var el = document.getElementById('stakeFooterDeployRev');
-            if (el) {
-                el.textContent = formatStakeRenderProbe(probe) + ' · copied';
-                setTimeout(updateStakeRenderProbe, 1600);
-            }
         }
 
         function initReportBugDeployHint() {
@@ -4205,9 +4157,6 @@
             bootstrapExternalStakeEntry();
             updateStakeRenderProbe();
             initReportBugDeployHint();
-            var footerRevBtn = document.getElementById('stakeFooterDeployRev');
-            if (footerRevBtn) footerRevBtn.addEventListener('click', copyStakeRenderProbe);
-
             ensureStakingAnalyticsSnapshot();
             // If opened with pre-populated action, auto-trigger connect
             if (preAction || preWallet) {
@@ -4237,11 +4186,8 @@
         </a>
     </div>
     <div style="font-size: 12px; color: #71717A;">
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">GitHub</a>, <a href="https://bonzivista.org/legal/privacy.html" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">GitHub</a>,         <a href="https://bonzivista.org/legal/privacy.html" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">privacy policy</a>
     </div>
-    <button type="button" class="stake-render-debug" id="stakeFooterDeployRev" aria-label="Copy loaded stake build revision">
-        build loading
-    </button>
 </footer>
 </body>
 </html>

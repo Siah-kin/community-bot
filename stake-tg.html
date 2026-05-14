@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-pool-faq-context-20260514" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-external-bootstrap-lang-20260514" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -669,16 +669,59 @@
 
         .connect-overlay-lang {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             z-index: 10001;
         }
 
-        .connect-content--stake > .connect-overlay-lang {
+        .stake-global-lang {
+            position: fixed;
+            top: max(10px, env(safe-area-inset-top, 0px));
+            right: max(10px, env(safe-area-inset-right, 0px));
+            z-index: 10002;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15, 15, 15, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stake-global-lang .lang-btn {
+            font-size: 13px;
+            padding: 6px 9px;
+            min-width: 40px;
+            min-height: 36px;
+            border-radius: 10px;
+        }
+
+        .external-flow-connect {
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.45rem;
+            margin: 0.35rem 0 0.85rem;
+            text-align: center;
+        }
+
+        .external-flow-connect:not(.hidden) {
+            display: flex;
+        }
+
+        .external-flow-connect-btn {
             width: 100%;
-            margin: 0 0 14px;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .external-flow-connect-hint {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.45;
         }
 
         .lang-btn {
@@ -1153,22 +1196,6 @@
             transform: scale(0.99);
         }
 
-        .main-shell-lang.connect-overlay-lang {
-            position: static;
-        }
-
-        .main-shell-lang {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 0 auto 0.65rem;
-            max-width: 320px;
-        }
-
-        .main-shell-lang .lang-btn-main {
-            min-width: 44px;
-        }
-
         @keyframes bonzi-buy-pulse {
             0%,
             100% {
@@ -1187,16 +1214,16 @@
     </style>
 </head>
 <body>
+    <div id="stakeGlobalLang" class="stake-global-lang connect-overlay-lang" role="group" aria-label="Page language">
+        <button type="button" class="lang-btn lang-btn-main" data-lang="pt" id="langBtnPt" title="Português">&#x1F1E7;&#x1F1F7;</button>
+        <button type="button" class="lang-btn lang-btn-main" data-lang="en" id="langBtnEn" title="English">EN</button>
+        <button type="button" class="lang-btn lang-btn-main" data-lang="zh" id="langBtnZh" title="简体中文">中</button>
+    </div>
     <div class="page-main">
     <!-- Connect overlay - WalletConnect only inside Telegram -->
     <div class="connect-overlay" id="connectOverlay">
         <button type="button" id="connectOverlayCloseBtn" onclick="closeConnectOverlay()" style="position: absolute; top: 20px; left: 20px; background: none; border: none; color: #7C3AED; font-size: 28px; cursor: pointer; z-index: 10000; line-height: 1; padding: 8px;" aria-label="Close">&times;</button>
         <div class="connect-content connect-content--stake">
-            <div class="connect-overlay-lang" role="group" aria-label="Language">
-                <button type="button" class="lang-btn" data-lang="pt" id="langBtnPt" title="Português">&#x1F1E7;&#x1F1F7;</button>
-                <button type="button" class="lang-btn" data-lang="en" id="langBtnEn" title="English">EN</button>
-                <button type="button" class="lang-btn" data-lang="zh" id="langBtnZh" title="简体中文">中</button>
-            </div>
             <img src="bonzi-logo.png" alt="Bonzi" class="logo connect-logo-lg">
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
             <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
@@ -1228,14 +1255,13 @@
     <div class="container" id="mainContent" style="display: none;">
         <div class="stake-shell">
         <header>
-            <div class="main-shell-lang connect-overlay-lang" role="group" aria-label="Page language">
-                <button type="button" class="lang-btn lang-btn-main" data-lang="pt" id="mainLangBtnPt" title="Português">&#x1F1E7;&#x1F1F7;</button>
-                <button type="button" class="lang-btn lang-btn-main" data-lang="en" id="mainLangBtnEn" title="English">EN</button>
-                <button type="button" class="lang-btn lang-btn-main" data-lang="zh" id="mainLangBtnZh" title="简体中文">中</button>
-            </div>
             <img src="bonzi-logo.png" alt="Bonzi" class="logo">
             <h1 id="mainShellH1">Stake BONZI</h1>
             <p id="mainShellSubtitle" class="subtitle">Earn ETH rewards</p>
+            <div id="externalFlowConnect" class="external-flow-connect hidden">
+                <button type="button" class="connect-btn external-flow-connect-btn" id="externalFlowConnectBtn">Connect wallet</button>
+                <p class="external-flow-connect-hint" id="externalFlowConnectHint"></p>
+            </div>
         </header>
 
         <div class="stats-bar metrics-hero-wrap your-wallet-strip">
@@ -1693,10 +1719,12 @@
         var STAKE_MAIN_I18N = {
             en: {
                 desktopHintHtml:
-                    '<strong>Telegram Desktop/Web:</strong> there is no browser wallet plug-in inside this viewer. Tap <strong>Connect Wallet</strong> for WalletConnect (QR opens when supported), or use your browser extension from a normal browser tab.',
-                extensionBtn: 'Use browser extension',
+                    '<strong>Telegram desktop/web:</strong> this viewer has no wallet plug-in. Use <strong>Connect Wallet</strong> (WalletConnect) or <strong>Open in system browser</strong> for MetaMask and similar.',
+                extensionBtn: 'Open in system browser',
                 extensionCaption:
-                    'Opens this stake screen in your normal browser with the same action and wallet parameters.',
+                    'If Telegram opens the same tab again, copy the address from the bar into Chrome or Safari.',
+                externalFlowBtn: 'Connect wallet',
+                externalFlowHint: 'WalletConnect or a browser wallet works on this page.',
                 mainTitle: 'Stake BONZI',
                 mainSubtitle: 'Earn ETH rewards',
                 metricsYourWallet: 'Your wallet',
@@ -1778,10 +1806,12 @@
             },
             pt: {
                 desktopHintHtml:
-                    '<strong>Telegram Desktop/Web:</strong> não há extensão de carteira aqui. Toque em <strong>Conectar carteira</strong> para WalletConnect (QR quando suportado) ou use o navegador externo com extensão.',
-                extensionBtn: 'Usar extensão do navegador',
+                    '<strong>Telegram desktop/web:</strong> não há extensão de carteira aqui. Use <strong>Conectar carteira</strong> (WalletConnect) ou <strong>Abrir no navegador do sistema</strong> para MetaMask e similares.',
+                extensionBtn: 'Abrir no navegador do sistema',
                 extensionCaption:
-                    'Abre esta tela de stake no navegador normal com os mesmos parâmetros de carteira e ação.',
+                    'Se o Telegram abrir a mesma aba de novo, copie o endereço da barra para o Chrome ou Safari.',
+                externalFlowBtn: 'Conectar carteira',
+                externalFlowHint: 'WalletConnect ou extensão do navegador funciona nesta página.',
                 mainTitle: 'Stake de BONZI',
                 mainSubtitle: 'Ganhe recompensas em ETH',
                 metricsYourWallet: 'Sua carteira',
@@ -1863,9 +1893,11 @@
             },
             zh: {
                 desktopHintHtml:
-                    '<strong>Telegram 桌面 / Web：</strong>此内置浏览器没有钱包扩展。请点击<strong>连接钱包</strong>使用 WalletConnect（支持时会显示二维码），或在系统浏览器中用扩展完成操作。',
-                extensionBtn: '使用浏览器扩展',
-                extensionCaption: '在系统默认浏览器中打开本质押页，并保留相同的钱包与操作参数。',
+                    '<strong>Telegram 桌面 / Web：</strong>此窗口没有钱包扩展。请用<strong>连接钱包</strong>（WalletConnect）或<strong>在系统浏览器中打开</strong>以使用 MetaMask 等。',
+                extensionBtn: '在系统浏览器中打开',
+                extensionCaption: '若仍在 Telegram 内打开同一页，请把地址栏里的链接复制到 Chrome 或 Safari。',
+                externalFlowBtn: '连接钱包',
+                externalFlowHint: '本页可使用 WalletConnect 或浏览器钱包扩展。',
                 mainTitle: '质押 BONZI',
                 mainSubtitle: '赚取 ETH 奖励',
                 metricsYourWallet: '您的钱包',
@@ -2262,6 +2294,10 @@
             if (des) des.textContent = m.extensionBtn;
             var dc = document.getElementById('desktopExtCaption');
             if (dc) dc.textContent = m.extensionCaption;
+            var efb = document.getElementById('externalFlowConnectBtn');
+            if (efb) efb.textContent = m.externalFlowBtn || '';
+            var efh = document.getElementById('externalFlowConnectHint');
+            if (efh) efh.textContent = m.externalFlowHint || '';
             var h1 = document.getElementById('mainShellH1');
             if (h1) h1.textContent = m.mainTitle;
             var sub = document.getElementById('mainShellSubtitle');
@@ -2986,9 +3022,52 @@
         }
 
         function buildBrowserFallbackUrl() {
-            const url = new URL(window.location.href);
+            var url;
+            try {
+                url = new URL(window.location.href);
+            } catch (eU) {
+                return window.location.href;
+            }
+            url.hash = '';
+            var del = [];
+            url.searchParams.forEach(function (_, k) {
+                if (/^tgwebapp/i.test(k) || k === '_tgWebAppStartParam') {
+                    del.push(k);
+                }
+            });
+            del.forEach(function (k) {
+                url.searchParams.delete(k);
+            });
             url.searchParams.set('external', '1');
             return url.toString();
+        }
+
+        function openStakeUrlInOuterBrowser(browserUrl) {
+            var w = null;
+            try {
+                w = window.open(browserUrl, '_blank', 'noopener,noreferrer');
+            } catch (eW) {}
+            if (w) {
+                try {
+                    if (typeof w.focus === 'function') {
+                        w.focus();
+                    }
+                } catch (eF) {}
+                dbgStakeEmit('H_outer_open', 'stake-tg.html:openStakeUrlInOuterBrowser', 'window.open ok', {});
+                return;
+            }
+            if (tg && typeof tg.openLink === 'function') {
+                try {
+                    tg.openLink(browserUrl, { try_instant_view: false });
+                } catch (eOpenLinkOpts) {
+                    tg.openLink(browserUrl);
+                }
+                dbgStakeEmit('H_outer_open', 'stake-tg.html:openStakeUrlInOuterBrowser', 'tg.openLink fallback', {});
+                return;
+            }
+            try {
+                window.location.href = browserUrl;
+            } catch (eNav) {}
         }
 
         function syncDesktopExtensionFallback() {
@@ -3008,24 +3087,12 @@
         }
 
         function openBrowserExtensionFallback() {
-            const browserUrl = buildBrowserFallbackUrl();
+            var browserUrl = buildBrowserFallbackUrl();
             dbgStakeEmit('H_desktop_extension_fallback', 'stake-tg.html:desktopFallback', 'open external browser for injected wallet', {
                 platform: TELEGRAM_PLATFORM,
                 hasOpenLink: !!(tg && typeof tg.openLink === 'function')
             });
-            if (tg && typeof tg.openLink === 'function') {
-                try {
-                    tg.openLink(browserUrl, { try_instant_view: false });
-                } catch (eOpenLinkOpts) {
-                    tg.openLink(browserUrl);
-                }
-                return;
-            }
-            try {
-                window.open(browserUrl, '_blank', 'noopener,noreferrer');
-            } catch (eWinOpen) {
-                window.location.href = browserUrl;
-            }
+            openStakeUrlInOuterBrowser(browserUrl);
         }
 
         function wireDesktopExtensionFallback() {
@@ -3236,20 +3303,8 @@
                     platform: TELEGRAM_PLATFORM,
                     browserUrl: browserUrl
                 });
-                if (tg && typeof tg.openLink === 'function') {
-                    try {
-                        tg.openLink(browserUrl, { try_instant_view: false });
-                    } catch (eOpenLinkOpts) {
-                        tg.openLink(browserUrl);
-                    }
-                    dbgStakeEmit('H_openlink_sent', 'stake-tg.html:connectWallet', 'openLink invoked', {});
-                } else {
-                    dbgStakeEmit('H_openlink_missing', 'stake-tg.html:connectWallet', 'openLink unavailable', {});
-                    try {
-                        window.open(browserUrl, '_blank', 'noopener,noreferrer');
-                    } catch (eWinOpen) {}
-                    showStatus(stakeTxnMsg('openBrowserConnect'), 'error');
-                }
+                openStakeUrlInOuterBrowser(browserUrl);
+                dbgStakeEmit('H_openlink_sent', 'stake-tg.html:connectWallet', 'outer browser dispatch', {});
                 return;
             }
 
@@ -3406,6 +3461,31 @@
                 false
             );
         })();
+
+        function bootstrapExternalStakeEntry() {
+            if (!IS_EXTERNAL_BROWSER_FLOW) return;
+            var overlay = document.getElementById('connectOverlay');
+            var main = document.getElementById('mainContent');
+            var row = document.getElementById('externalFlowConnect');
+            var btn = document.getElementById('externalFlowConnectBtn');
+            if (!overlay || !main) return;
+            overlay.classList.add('hidden');
+            overlay.setAttribute('aria-hidden', 'true');
+            main.style.display = 'block';
+            main.removeAttribute('aria-hidden');
+            if (row) row.classList.remove('hidden');
+            if (btn && !btn.dataset.externalWire) {
+                btn.dataset.externalWire = '1';
+                btn.addEventListener(
+                    'click',
+                    function () {
+                        connectWallet();
+                    },
+                    false
+                );
+            }
+            applyStakeMainShellLang(normalizeStakeOverlayLang(STAKE_OVERLAY_LANG));
+        }
 
         function getWalletSigner() {
             if (walletConnectProvider) {
@@ -4122,6 +4202,7 @@
         // Auto-connect on load
         // ============================================================
         window.addEventListener('load', async () => {
+            bootstrapExternalStakeEntry();
             updateStakeRenderProbe();
             initReportBugDeployHint();
             var footerRevBtn = document.getElementById('stakeFooterDeployRev');

@@ -780,7 +780,8 @@
             margin-bottom: 24px;
         }
 
-        .connect-overlay .connect-btn {
+        .connect-overlay .connect-btn,
+        .external-flow-connect .connect-btn {
             background: #7c3aed;
             color: white;
             border: none;
@@ -800,17 +801,20 @@
             box-sizing: border-box;
         }
 
-        .connect-overlay .connect-btn:hover:not(:disabled) {
+        .connect-overlay .connect-btn:hover:not(:disabled),
+        .external-flow-connect .connect-btn:hover:not(:disabled) {
             transform: translateY(-1px);
             box-shadow: 0 10px 28px rgba(124, 58, 237, 0.35);
         }
 
-        .connect-overlay .connect-btn:active:not(:disabled) {
+        .connect-overlay .connect-btn:active:not(:disabled),
+        .external-flow-connect .connect-btn:active:not(:disabled) {
             transform: scale(0.98);
             background: #6d28d9;
         }
 
-        .connect-overlay .connect-btn:disabled {
+        .connect-overlay .connect-btn:disabled,
+        .external-flow-connect .connect-btn:disabled {
             opacity: 0.65;
             cursor: not-allowed;
             transform: none;

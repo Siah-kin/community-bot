@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="bonzi-slot-ui-rev" content="2026-05-15-winamp-title-marquee">
     <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
-    <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
+    <meta name="bonzi-api-origin" content="">
     <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
-    <meta name="bonzi-waitlist-mode" content="first_party">
+    <meta name="bonzi-waitlist-mode" content="read_only">
     <meta name="bonzi-notify-signup-url" content="">
     <title>Bonzi Vista — Slot</title>
     <meta name="description" content="Spin on bonzivista.org. Jackpot flows to Telegram. Closed-alpha funnel.">
@@ -1998,7 +1998,7 @@
         function getApiOrigin() {
             var meta = document.querySelector('meta[name="bonzi-api-origin"]');
             var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
-            return raw || 'https://bonzi-v5.onrender.com';
+            return raw || window.location.origin;
         }
 
         function getDeviceFingerprint() {

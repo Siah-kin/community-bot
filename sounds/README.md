@@ -15,8 +15,7 @@ The footer player uses in-page **`WINAMP_PLAYLIST`** (see `index.html`): ordered
 | File | Shown title |
 |------|----------------|
 | `sounds/rage-against-the-machine-killing-in-the-name.mp3` | Rage Against the Machine - Killing in the Name |
-| `sounds/black-sabbath-children-of-the-grave.mp3` | Black Sabbath - Children of the Grave |
-| `sounds/winamp-demo.wav` | Bonzi demo tone (synth WAV) |
+| `sounds/winamp-demo.wav` | Demo tune |
 
 `.gitignore` only allows these tracked MP3s by name; add `!sounds/your-file.mp3` when you add another licensed file and extend the playlist in script.
 

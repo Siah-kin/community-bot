@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Bonzi</title>
+    <meta name="description" content="Bonzi Privacy Policy - what data we collect, how we use it, and your rights.">
+    <link rel="canonical" href="https://bonzivista.org/legal/privacy.html">
+    <link rel="icon" href="/bonzi-logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bonzi-design.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <script src="/js/nav-loader.js?v=20260221" defer></script>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #121212;
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --border: #2a2a2f;
+            --accent: #a78bfa;
+            --accent-strong: #7c3aed;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            padding-top: 70px;
+        }
+
+        body.light-mode {
+            --bg: #fafafa;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #4b5563;
+            --border: #e5e7eb;
+            --accent: #7c3aed;
+            --accent-strong: #6d28d9;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 42px;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .last-updated {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .lang-btn {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .lang-btn.active {
+            border-color: var(--accent-strong);
+            color: #fff;
+            background: var(--accent-strong);
+        }
+
+        .summary {
+            background: color-mix(in srgb, var(--accent) 14%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 26px;
+        }
+
+        .summary p {
+            margin: 0;
+            color: var(--text);
+        }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 14px;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            color: var(--accent);
+            font-size: 22px;
+        }
+
+        h3 {
+            margin: 18px 0 8px;
+            font-size: 17px;
+        }
+
+        p {
+            margin: 0 0 10px;
+            color: var(--text);
+        }
+
+        ul {
+            margin: 0 0 10px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 0 0 8px;
+            color: var(--text);
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .contact {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .contact a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 26px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body data-theme-default="system">
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <main class="container">
+        <h1 id="page-title">Privacy Policy</h1>
+        <p class="last-updated" id="last-updated">Last updated: January 3, 2026</p>
+
+        <div class="lang-switch">
+            <button class="lang-btn active" id="lang-en" type="button">EN</button>
+            <button class="lang-btn" id="lang-pt" type="button">PT-BR</button>
+        </div>
+
+        <div class="summary">
+            <p id="summary-text">We collect what we need to run the bot. We do not sell data and we do not track users across the web.</p>
+        </div>
+
+        <section>
+            <h2 id="collect-title">What We Collect</h2>
+            <h3 id="collect-direct-title">Data you provide directly</h3>
+            <ul id="collect-direct-list">
+                <li>Messages and questions sent to the bot</li>
+                <li>Ratings and feedback on responses</li>
+                <li>Telegram user ID and chat ID</li>
+                <li>Commands you execute</li>
+                <li>Wallet addresses (for claims)</li>
+            </ul>
+
+            <h3 id="collect-auto-title">Data collected automatically</h3>
+            <ul id="collect-auto-list">
+                <li>Usage frequency and session patterns</li>
+                <li>Quality scores and behavioral signals</li>
+                <li>Technical metadata and timestamps</li>
+            </ul>
+
+            <h3 id="collect-not-title">What we do NOT collect</h3>
+            <ul id="collect-not-list">
+                <li>Personal names (unless you share them)</li>
+                <li>Email addresses</li>
+                <li>Location data</li>
+                <li>Contacts or phone numbers</li>
+                <li>Payment card details</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="use-title">How We Use Your Data</h2>
+            <ul id="use-list">
+                <li>Answer questions and process commands</li>
+                <li>Improve response quality over time</li>
+                <li>Detect sybil attacks and abuse patterns</li>
+                <li>Calculate contribution scores</li>
+                <li>Process ETH claims for verified users</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="processing-title">AI Processing</h2>
+            <p id="processing-p1">Messages are processed by AI providers to generate replies. Where possible, we configure providers to avoid model training on your data.</p>
+            <p id="processing-p2">Quality improvement uses anonymized patterns, not direct replay of your private chat text.</p>
+        </section>
+
+        <section>
+            <h2 id="storage-title">Storage and Security</h2>
+            <ul id="storage-list">
+                <li><strong>Database:</strong> PostgreSQL on Render (US)</li>
+                <li><strong>Caching:</strong> Redis</li>
+                <li><strong>Backups:</strong> Cloudflare R2</li>
+                <li><strong>Security:</strong> Encryption at rest and in transit</li>
+            </ul>
+
+            <h3 id="retention-title">Retention</h3>
+            <ul id="retention-list">
+                <li>Messages: retained for context</li>
+                <li>Logs: 30 days</li>
+                <li>Cached responses: 7 days</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 id="rights-title">Your Rights</h2>
+            <ul id="rights-list">
+                <li><strong>Access:</strong> request a copy of your data</li>
+                <li><strong>Deletion:</strong> request deletion (processed within 30 days)</li>
+                <li><strong>Correction:</strong> request correction of inaccurate data</li>
+            </ul>
+            <p class="contact" id="contact-line">Contact: <a href="https://t.me/Bonzivista_bot">@Bonzivista_bot</a></p>
+        </section>
+
+        <section>
+            <h2 id="compliance-title">Compliance and Changes</h2>
+            <p id="compliance-p1">This policy is maintained for GDPR, CCPA, and Telegram third-party bot privacy requirements.</p>
+            <p id="compliance-p2">If we change this policy, we publish the update date here and announce material changes in the Telegram community.</p>
+        </section>
+
+        <footer>
+            <span class="muted" id="footer-note">Official legal URL: /legal/privacy.html</span>
+        </footer>
+    </main>
+
+    <script>
+    (function () {
+        var I18N = {
+            en: {
+                title: "Privacy Policy",
+                updated: "Last updated: January 3, 2026",
+                summary: "We collect what we need to run the bot. We do not sell data and we do not track users across the web.",
+                collectTitle: "What We Collect",
+                collectDirectTitle: "Data you provide directly",
+                collectDirect: [
+                    "Messages and questions sent to the bot",
+                    "Ratings and feedback on responses",
+                    "Telegram user ID and chat ID",
+                    "Commands you execute",
+                    "Wallet addresses (for claims)"
+                ],
+                collectAutoTitle: "Data collected automatically",
+                collectAuto: [
+                    "Usage frequency and session patterns",
+                    "Quality scores and behavioral signals",
+                    "Technical metadata and timestamps"
+                ],
+                collectNotTitle: "What we do NOT collect",
+                collectNot: [
+                    "Personal names (unless you share them)",
+                    "Email addresses",
+                    "Location data",
+                    "Contacts or phone numbers",
+                    "Payment card details"
+                ],
+                useTitle: "How We Use Your Data",
+                useList: [
+                    "Answer questions and process commands",
+                    "Improve response quality over time",
+                    "Detect sybil attacks and abuse patterns",
+                    "Calculate contribution scores",
+                    "Process ETH claims for verified users"
+                ],
+                processingTitle: "AI Processing",
+                processingP1: "Messages are processed by AI providers to generate replies. Where possible, we configure providers to avoid model training on your data.",
+                processingP2: "Quality improvement uses anonymized patterns, not direct replay of your private chat text.",
+                storageTitle: "Storage and Security",
+                storageList: [
+                    "<strong>Database:</strong> PostgreSQL on Render (US)",
+                    "<strong>Caching:</strong> Redis",
+                    "<strong>Backups:</strong> Cloudflare R2",
+                    "<strong>Security:</strong> Encryption at rest and in transit"
+                ],
+                retentionTitle: "Retention",
+                retentionList: [
+                    "Messages: retained for context",
+                    "Logs: 30 days",
+                    "Cached responses: 7 days"
+                ],
+                rightsTitle: "Your Rights",
+                rightsList: [
+                    "<strong>Access:</strong> request a copy of your data",
+                    "<strong>Deletion:</strong> request deletion (processed within 30 days)",
+                    "<strong>Correction:</strong> request correction of inaccurate data"
+                ],
+                contact: "Contact: <a href=\"https://t.me/Bonzivista_bot\">@Bonzivista_bot</a>",
+                complianceTitle: "Compliance and Changes",
+                complianceP1: "This policy is maintained for GDPR, CCPA, and Telegram third-party bot privacy requirements.",
+                complianceP2: "If we change this policy, we publish the update date here and announce material changes in the Telegram community.",
+                footer: "Official legal URL: /legal/privacy.html"
+            },
+            pt: {
+                title: "Política de Privacidade",
+                updated: "Atualizado em: 3 de janeiro de 2026",
+                summary: "Coletamos apenas o necessário para o bot funcionar. Não vendemos dados e não rastreamos usuários pela web.",
+                collectTitle: "O que coletamos",
+                collectDirectTitle: "Dados fornecidos por você",
+                collectDirect: [
+                    "Mensagens e perguntas enviadas ao bot",
+                    "Avaliações e feedback das respostas",
+                    "ID do usuário e do chat no Telegram",
+                    "Comandos executados",
+                    "Endereços de carteira (para claims)"
+                ],
+                collectAutoTitle: "Dados coletados automaticamente",
+                collectAuto: [
+                    "Frequência de uso e padrões de sessão",
+                    "Pontuações de qualidade e sinais comportamentais",
+                    "Metadados técnicos e timestamps"
+                ],
+                collectNotTitle: "O que NÃO coletamos",
+                collectNot: [
+                    "Nome pessoal (a menos que você informe)",
+                    "E-mail",
+                    "Localização",
+                    "Contatos ou número de telefone",
+                    "Dados de cartão"
+                ],
+                useTitle: "Como usamos seus dados",
+                useList: [
+                    "Responder perguntas e processar comandos",
+                    "Melhorar a qualidade das respostas",
+                    "Detectar sybil e abuso",
+                    "Calcular pontuação de contribuição",
+                    "Processar claims de ETH para usuários verificados"
+                ],
+                processingTitle: "Processamento com IA",
+                processingP1: "As mensagens passam por provedores de IA para gerar respostas. Quando possível, configuramos para evitar treino de modelo com seus dados.",
+                processingP2: "A melhoria de qualidade usa padrões anonimizados, não replay direto do texto privado do seu chat.",
+                storageTitle: "Armazenamento e segurança",
+                storageList: [
+                    "<strong>Banco:</strong> PostgreSQL na Render (EUA)",
+                    "<strong>Cache:</strong> Redis",
+                    "<strong>Backups:</strong> Cloudflare R2",
+                    "<strong>Segurança:</strong> Criptografia em repouso e em trânsito"
+                ],
+                retentionTitle: "Retenção",
+                retentionList: [
+                    "Mensagens: retidas para contexto",
+                    "Logs: 30 dias",
+                    "Respostas em cache: 7 dias"
+                ],
+                rightsTitle: "Seus direitos",
+                rightsList: [
+                    "<strong>Acesso:</strong> pedir cópia dos seus dados",
+                    "<strong>Exclusão:</strong> pedir remoção (até 30 dias)",
+                    "<strong>Correção:</strong> corrigir dado incorreto"
+                ],
+                contact: "Contato: <a href=\"https://t.me/Bonzivista_bot\">@Bonzivista_bot</a>",
+                complianceTitle: "Conformidade e mudanças",
+                complianceP1: "Esta política é mantida para GDPR, CCPA e exigências de privacidade de bots do Telegram.",
+                complianceP2: "Se houver mudança material, atualizamos a data aqui e avisamos na comunidade do Telegram.",
+                footer: "URL legal oficial: /legal/privacy.html"
+            }
+        };
+
+        function fillList(id, items) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.innerHTML = items.map(function (x) { return "<li>" + x + "</li>"; }).join("");
+        }
+
+        function applyLang(lang) {
+            var L = I18N[lang] || I18N.en;
+            document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+            document.getElementById("page-title").textContent = L.title;
+            document.getElementById("last-updated").textContent = L.updated;
+            document.getElementById("summary-text").textContent = L.summary;
+            document.getElementById("collect-title").textContent = L.collectTitle;
+            document.getElementById("collect-direct-title").textContent = L.collectDirectTitle;
+            fillList("collect-direct-list", L.collectDirect);
+            document.getElementById("collect-auto-title").textContent = L.collectAutoTitle;
+            fillList("collect-auto-list", L.collectAuto);
+            document.getElementById("collect-not-title").textContent = L.collectNotTitle;
+            fillList("collect-not-list", L.collectNot);
+            document.getElementById("use-title").textContent = L.useTitle;
+            fillList("use-list", L.useList);
+            document.getElementById("processing-title").textContent = L.processingTitle;
+            document.getElementById("processing-p1").textContent = L.processingP1;
+            document.getElementById("processing-p2").textContent = L.processingP2;
+            document.getElementById("storage-title").textContent = L.storageTitle;
+            fillList("storage-list", L.storageList);
+            document.getElementById("retention-title").textContent = L.retentionTitle;
+            fillList("retention-list", L.retentionList);
+            document.getElementById("rights-title").textContent = L.rightsTitle;
+            fillList("rights-list", L.rightsList);
+            document.getElementById("contact-line").innerHTML = L.contact;
+            document.getElementById("compliance-title").textContent = L.complianceTitle;
+            document.getElementById("compliance-p1").textContent = L.complianceP1;
+            document.getElementById("compliance-p2").textContent = L.complianceP2;
+            document.getElementById("footer-note").textContent = L.footer;
+            document.getElementById("lang-en").classList.toggle("active", lang === "en");
+            document.getElementById("lang-pt").classList.toggle("active", lang === "pt");
+            try { localStorage.setItem("bonzi_privacy_lang", lang); } catch (e) {}
+        }
+
+        var startLang = "en";
+        try {
+            var saved = localStorage.getItem("bonzi_privacy_lang");
+            if (saved === "pt" || saved === "en") startLang = saved;
+        } catch (e) {}
+
+        document.getElementById("lang-en").addEventListener("click", function () { applyLang("en"); });
+        document.getElementById("lang-pt").addEventListener("click", function () { applyLang("pt"); });
+        applyLang(startLang);
+    })();
+    </script>
+</body>
+</html>

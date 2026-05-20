@@ -2,7 +2,6 @@
     // Gate check: redirect to slot machine if no access token
     // Skip for dev.html (dev bypass) and index.html (is the gate)
     const _page = location.pathname.split('/').pop() || 'index.html';
-    // Public surfaces: no alpha gate (privacy must stay readable from bot/Telegram without slot session).
     const _publicPages = new Set(['index.html', 'dev.html', '404.html', 'privacy.html']);
     if (!_publicPages.has(_page)) {
         if (sessionStorage.getItem('bonzi_alpha') !== '1') {

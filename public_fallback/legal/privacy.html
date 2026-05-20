@@ -9,8 +9,6 @@
     <link rel="icon" href="/bonzi-logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/bonzi-design.css">
-    <link rel="stylesheet" href="/css/nav.css">
-    <script src="/js/nav-loader.js?v=20260520" defer></script>
     <style>
         :root {
             --bg: #0a0a0a;
@@ -28,7 +26,7 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.65;
-            padding-top: 70px;
+            padding-top: 0;
         }
 
         body.light-mode {
@@ -39,6 +37,30 @@
             --border: #e5e7eb;
             --accent: #7c3aed;
             --accent-strong: #6d28d9;
+        }
+
+        .legal-header {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .legal-home {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .legal-kicker {
+            color: var(--muted);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
         .container {
@@ -157,8 +179,10 @@
     </style>
 </head>
 <body data-theme-default="system">
-    <nav id="nav-container" class="site-nav"></nav>
-    <div id="mobile-menu-container"></div>
+    <header class="legal-header">
+        <a class="legal-home" href="/">Bonzi</a>
+        <span class="legal-kicker">Legal</span>
+    </header>
 
     <main class="container">
         <h1 id="page-title">Privacy Policy</h1>

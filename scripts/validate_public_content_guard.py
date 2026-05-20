@@ -57,6 +57,8 @@ def main() -> int:
     legal_page = (ROOT / "legal" / "privacy.html").read_text(encoding="utf-8")
     if 'href="https://bonzivista.org/legal/privacy.html"' not in legal_page:
         failures.append("legal/privacy.html: canonical URL must be /legal/privacy.html")
+    if "nav-loader.js" in legal_page:
+        failures.append("legal/privacy.html: must not depend on nav-loader.js")
 
     if failures:
         print("PUBLIC CONTENT GUARD: FAIL")

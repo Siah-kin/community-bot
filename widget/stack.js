@@ -1,7 +1,7 @@
 /**
  * Bonzi Stack Widget - Buy + Stake + Earn
  *
- * DOCUMENTATION: https://github.com/Siah-kin/community-bot/blob/main/widget/README.md
+ * DOCUMENTATION: https://bonzivista.org/docs/WIDGET_INTEGRATION_GUIDE.md
  *
  * A unified widget for the complete BONZI journey:
  * 1. Buy BONZI tokens

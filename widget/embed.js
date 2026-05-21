@@ -1,7 +1,7 @@
 /**
  * Bonzi Brand Widget - Embed Script
  *
- * DOCUMENTATION: https://github.com/Siah-kin/community-bot/blob/main/widget/README.md
+ * DOCUMENTATION: https://bonzivista.org/docs/WIDGET_INTEGRATION_GUIDE.md
  * FULL MANUAL:   https://bonzi.bot/docs/brand-starter-kit
  *
  * Quick Start:

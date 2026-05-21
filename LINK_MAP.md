@@ -5,7 +5,7 @@ Last updated: 2026-01-18
 ## Site Structure
 
 ```
-https://siah-kin.github.io/community-bot/
+https://bonzivista.org/
 ├── index.html              (Home - landing page)
 ├── features.html           (Features - engineering deep dive)
 ├── faq.html                (Manifesto - confrontational FAQ)
@@ -33,7 +33,7 @@ https://siah-kin.github.io/community-bot/
 
 | Link | Target | Opens In |
 |------|--------|----------|
-| GitHub Source | https://github.com/Siah-kin/community-bot | _blank |
+| Developer Guide | https://bonzivista.org/dev.html | _blank |
 | Ethervista | https://ethervista.com | _blank |
 | Telegram | https://t.me/Bonzivista_bot | _blank |
 
@@ -51,14 +51,14 @@ https://siah-kin.github.io/community-bot/
 ## SEO Considerations
 
 ### Canonical URLs (all pages have)
-- index.html: https://siah-kin.github.io/community-bot/
-- features.html: https://siah-kin.github.io/community-bot/features.html
-- faq.html: https://siah-kin.github.io/community-bot/faq.html
-- research/: https://siah-kin.github.io/community-bot/research/
-- dao/: https://siah-kin.github.io/community-bot/dao/
-- economics/: https://siah-kin.github.io/community-bot/economics/
-- manual/: https://siah-kin.github.io/community-bot/manual/
-- privacy.html: https://siah-kin.github.io/community-bot/privacy.html
+- index.html: https://bonzivista.org/
+- features.html: https://bonzivista.org/features.html
+- faq.html: https://bonzivista.org/faq.html
+- research/: https://bonzivista.org/research/
+- dao/: https://bonzivista.org/dao/
+- economics/: https://bonzivista.org/economics/
+- manual/: https://bonzivista.org/manual/
+- privacy.html: https://bonzivista.org/privacy.html
 
 ### Priority (sitemap.xml)
 1. index.html (1.0) - Main entry point

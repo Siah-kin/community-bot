@@ -10,7 +10,7 @@ Add this single line to your website:
 
 ```html
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0xYourTokenAddress"
   data-symbol="$TOKEN">
 </script>
@@ -42,7 +42,7 @@ Embed the full widget directly on your page:
 ```html
 <div id="buy-widget"></div>
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0xYourTokenAddress"
   data-symbol="$TOKEN"
   data-container="buy-widget"
@@ -56,7 +56,7 @@ Show a button that opens the widget in a modal:
 
 ```html
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0xYourTokenAddress"
   data-symbol="$TOKEN"
   data-position="modal"
@@ -70,7 +70,7 @@ Fixed button in the corner of the screen:
 
 ```html
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0xYourTokenAddress"
   data-symbol="$TOKEN"
   data-position="floating">
@@ -122,7 +122,7 @@ Embed via iframe directly:
 
 ```html
 <iframe
-  src="https://siah-kin.github.io/community-bot/widget/brand-widget.html?token=0xYourToken&symbol=$TOKEN"
+  src="https://bonzivista.org/widget/brand-widget.html?token=0xYourToken&symbol=$TOKEN"
   width="400"
   height="600"
   frameborder="0"
@@ -142,7 +142,7 @@ URL Parameters:
 
 Generate QR codes for IRL marketing:
 
-1. Visit https://siah-kin.github.io/community-bot/widget/qr.html
+1. Visit https://bonzivista.org/widget/qr.html
 2. Enter your token details
 3. Download QR code or sticker design
 4. Print and distribute
@@ -197,7 +197,7 @@ For development, use Base Sepolia:
 
 ```html
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0xTestnetTokenAddress"
   data-symbol="$TEST"
   data-testnet="true">
@@ -233,7 +233,7 @@ For development, use Base Sepolia:
 
 ## Support
 
-- **GitHub Issues:** https://github.com/Siah-kin/community-bot/issues
+- **Support:** https://bonzivista.org/dev.html
 - **Telegram:** https://t.me/ethervistatoken
 
 ---
@@ -270,7 +270,7 @@ MIT License - Use freely in commercial projects.
 
   <!-- Widget appears here -->
   <script
-    src="https://siah-kin.github.io/community-bot/widget/embed.js"
+    src="https://bonzivista.org/widget/embed.js"
     data-token="0x1234..."
     data-symbol="$EXAMPLE">
   </script>
@@ -294,7 +294,7 @@ MIT License - Use freely in commercial projects.
 </button>
 
 <script
-  src="https://siah-kin.github.io/community-bot/widget/embed.js"
+  src="https://bonzivista.org/widget/embed.js"
   data-token="0x1234..."
   data-symbol="$EXAMPLE"
   data-position="modal">
@@ -309,7 +309,7 @@ import { useEffect } from 'react';
 function BuyWidget({ token, symbol }) {
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = 'https://siah-kin.github.io/community-bot/widget/embed.js';
+    script.src = 'https://bonzivista.org/widget/embed.js';
     script.dataset.token = token;
     script.dataset.symbol = symbol;
     script.dataset.position = 'modal';
@@ -341,7 +341,7 @@ let script;
 
 onMounted(() => {
   script = document.createElement('script');
-  script.src = 'https://siah-kin.github.io/community-bot/widget/embed.js';
+  script.src = 'https://bonzivista.org/widget/embed.js';
   script.dataset.token = props.token;
   script.dataset.symbol = props.symbol;
   script.dataset.position = 'modal';
@@ -360,4 +360,4 @@ const openWidget = () => window.BonziWidget?.open();
 
 ## Try It Now
 
-Generate your embed code instantly: https://siah-kin.github.io/community-bot/#demo
+Generate your embed code instantly: https://bonzivista.org/dev.html

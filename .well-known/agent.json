@@ -63,7 +63,7 @@
     }
   ],
   "endpoints": {
-    "telegram": "https://t.me/SiahBot",
+    "telegram": "https://t.me/Bonzivista_bot",
     "trust_api": "https://app.bonzivista.org/api/trust",
     "tip_api": "https://app.bonzivista.org/api/tip",
     "agent_api": "https://app.bonzivista.org/api/agent",
@@ -91,9 +91,9 @@
   },
   "links": {
     "full_card": "ipfs://QmSIAHAgentCard2026",
-    "docs": "https://siah-kin.github.io/community-bot/docs/",
-    "telegram": "https://t.me/SiahBot",
-    "source": "https://github.com/Siah-kin/community-bot"
+    "docs": "https://bonzivista.org/manual/",
+    "telegram": "https://t.me/Bonzivista_bot",
+    "source": "https://bonzivista.org/dev.html"
   },
   "erc8004": {
     "mainnet_identity": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",

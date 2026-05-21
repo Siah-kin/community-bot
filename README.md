@@ -12,8 +12,8 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live site](https://img.shields.io/badge/site-bonzivista.org-7c3aed.svg)](https://bonzivista.org/)
-[![Slot (source)](https://img.shields.io/badge/slot-index.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/index.html)
-[![Staking (source)](https://img.shields.io/badge/staking-stake--tg.html-111827.svg)](https://github.com/Siah-kin/community-bot/blob/main/stake-tg.html)
+[![Slot (source)](https://img.shields.io/badge/slot-index.html-111827.svg)](./index.html)
+[![Staking (source)](https://img.shields.io/badge/staking-stake--tg.html-111827.svg)](./stake-tg.html)
 
 ---
 
@@ -39,10 +39,10 @@ This repo is built for **GitHub Pages**. Use **one** deploy source in repo **Set
 
 ### Quick links
 
-- Site: https://bonzivista.org · https://siah-kin.github.io/community-bot/
+- Site: https://bonzivista.org
 - Staking: https://bonzivista.org/stake-tg.html
 - FAQ JSON: https://bonzivista.org/stake-faq-i18n.json
-- Source: https://github.com/Siah-kin/community-bot
+- Developer guide: https://bonzivista.org/dev.html
 - Ethervista primer: https://www.ethervista.app/how-it-works
 
 ---

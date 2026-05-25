@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-lang-flags-only-20260516" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-help-button-20260525" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -916,7 +916,40 @@
             font-weight: 600;
         }
 
-        /* Telegram Desktop/Web: contextual copy — Connect stays in Telegram; MM shortcut hidden */
+        .help-toggle-btn {
+            margin-top: 14px;
+            background: #FBBF24;
+            color: #18181B;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 120ms ease;
+        }
+        .help-toggle-btn:hover,
+        .help-toggle-btn[aria-expanded="true"] {
+            background: #F59E0B;
+        }
+        .help-panel {
+            margin-top: 10px;
+            padding: 12px 14px;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 10px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #E4E4E7;
+        }
+        .help-panel.hidden { display: none; }
+        .help-panel ol { padding-left: 18px; margin: 0; }
+        .help-panel li { margin: 6px 0; }
+        .help-panel strong { color: #FBBF24; }
+
+        /* Telegram Desktop/Web: contextual copy. Connect stays in Telegram; MM shortcut hidden. */
         .connect-desktop-wc-hint {
             font-size: 0.72rem;
             line-height: 1.45;
@@ -1228,6 +1261,17 @@
                 </div>
             </div>
             <p id="overlayError" class="connect-overlay-error"></p>
+            <button type="button" class="help-toggle-btn" id="helpToggleBtn" onclick="toggleHelpPanel()" aria-expanded="false" aria-controls="helpPanel">
+                Need help connecting?
+            </button>
+            <div id="helpPanel" class="help-panel hidden" role="region" aria-labelledby="helpToggleBtn">
+                <ol>
+                    <li><strong>Stuck on "Connecting..."?</strong> Tap <strong>Open in system browser</strong> above, then connect from Chrome or Safari.</li>
+                    <li><strong>Phone wallet did not open?</strong> Open MetaMask, Trust, or Binance Wallet on your phone first, then tap <strong>Connect Wallet</strong> here.</li>
+                    <li><strong>Wallet opened but did not sign?</strong> Switch to your wallet app, approve the connection, then come back.</li>
+                    <li><strong>Still stuck?</strong> Tap <strong>Open in system browser</strong> and use a browser wallet extension (like MetaMask).</li>
+                </ol>
+            </div>
         </div>
     </div>
 
@@ -2999,6 +3043,20 @@
                 return;
             }
             window.location.href = window.location.origin ? window.location.origin + '/' : '/';
+        }
+
+        function toggleHelpPanel() {
+            var btn = document.getElementById('helpToggleBtn');
+            var panel = document.getElementById('helpPanel');
+            if (!btn || !panel) return;
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            if (expanded) {
+                panel.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                panel.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+            }
         }
 
         function buildBrowserFallbackUrl() {

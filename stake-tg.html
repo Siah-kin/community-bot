@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-help-button-20260525" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-wallet-openlink-fallback-20260525" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -1743,7 +1743,7 @@
         var STAKE_MAIN_I18N = {
             en: {
                 desktopHintHtml:
-                    '<strong>Telegram desktop/web:</strong> this viewer has no wallet plug-in. Use <strong>Connect Wallet</strong> (WalletConnect) or <strong>Open in system browser</strong> for MetaMask and similar.',
+                    '<strong>Telegram in-app browser:</strong> use <strong>Connect Wallet</strong> first. If the wallet handoff stalls, use <strong>Open in system browser</strong> for MetaMask, Trust, Binance, or another browser wallet.',
                 extensionBtn: 'Open in system browser',
                 extensionCaption:
                     'If Telegram opens the same tab again, copy the address from the bar into Chrome or Safari.',
@@ -1830,7 +1830,7 @@
             },
             pt: {
                 desktopHintHtml:
-                    '<strong>Telegram desktop/web:</strong> não há extensão de carteira aqui. Use <strong>Conectar carteira</strong> (WalletConnect) ou <strong>Abrir no navegador do sistema</strong> para MetaMask e similares.',
+                    '<strong>Navegador interno do Telegram:</strong> use <strong>Conectar carteira</strong> primeiro. Se a abertura da carteira travar, use <strong>Abrir no navegador do sistema</strong> para MetaMask, Trust, Binance ou outra carteira do navegador.',
                 extensionBtn: 'Abrir no navegador do sistema',
                 extensionCaption:
                     'Se o Telegram abrir a mesma aba de novo, copie o endereço da barra para o Chrome ou Safari.',
@@ -1917,7 +1917,7 @@
             },
             zh: {
                 desktopHintHtml:
-                    '<strong>Telegram 桌面 / Web：</strong>此窗口没有钱包扩展。请用<strong>连接钱包</strong>（WalletConnect）或<strong>在系统浏览器中打开</strong>以使用 MetaMask 等。',
+                    '<strong>Telegram 内置浏览器：</strong>请先使用<strong>连接钱包</strong>。如果钱包跳转卡住，请用<strong>在系统浏览器中打开</strong>，再通过 MetaMask、Trust、Binance 或其他浏览器钱包连接。',
                 extensionBtn: '在系统浏览器中打开',
                 extensionCaption: '若仍在 Telegram 内打开同一页，请把地址栏里的链接复制到 Chrome 或 Safari。',
                 externalFlowBtn: '连接钱包',
@@ -2695,6 +2695,10 @@
             return HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW && IS_DESKTOP_TELEGRAM_RUNTIME;
         }
 
+        function shouldShowBrowserFallback() {
+            return HAS_TELEGRAM_WEBAPP && !IS_EXTERNAL_BROWSER_FLOW;
+        }
+
         function preferInjectedEthereum() {
             return (
                 !IS_TELEGRAM_WEBAPP &&
@@ -2864,29 +2868,35 @@
         }
 
         function wireMetaMaskShortcutClickForTelegram() {
-            var mm = document.getElementById('wcLinkMetamask');
-            if (!mm || mm.dataset.mmTelegramWire === '1') return;
-            mm.dataset.mmTelegramWire = '1';
-            mm.addEventListener(
-                'click',
-                function (ev) {
-                    if (mm.classList.contains('wallet-shortcut-waiting')) return;
-                    var href = mm.getAttribute('href') || '';
-                    if (!href || href.indexOf('javascript:') === 0) return;
-                    if (href.indexOf('metamask://') === 0) return;
-                    if (
-                        HAS_TELEGRAM_WEBAPP &&
-                        tg &&
-                        typeof tg.openLink === 'function' &&
-                        !IS_EXTERNAL_BROWSER_FLOW &&
-                        href.indexOf('http') === 0
-                    ) {
-                        ev.preventDefault();
-                        tg.openLink(href);
-                    }
-                },
-                false
-            );
+            ['wcLinkMetamask', 'wcLinkTrust', 'wcLinkBinance'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (!el || el.dataset.walletTelegramWire === '1') return;
+                el.dataset.walletTelegramWire = '1';
+                el.addEventListener(
+                    'click',
+                    function (ev) {
+                        if (el.classList.contains('wallet-shortcut-waiting')) return;
+                        var href = el.getAttribute('href') || '';
+                        if (!href || href.indexOf('javascript:') === 0) return;
+                        if (href.indexOf('metamask://') === 0) return;
+                        if (
+                            HAS_TELEGRAM_WEBAPP &&
+                            tg &&
+                            typeof tg.openLink === 'function' &&
+                            !IS_EXTERNAL_BROWSER_FLOW &&
+                            href.indexOf('http') === 0
+                        ) {
+                            ev.preventDefault();
+                            try {
+                                tg.openLink(href, { try_instant_view: false });
+                            } catch (eOpenWallet) {
+                                tg.openLink(href);
+                            }
+                        }
+                    },
+                    false
+                );
+            });
         }
 
         wireMetaMaskShortcutClickForTelegram();
@@ -3081,6 +3091,15 @@
         }
 
         function openStakeUrlInOuterBrowser(browserUrl) {
+            if (tg && typeof tg.openLink === 'function') {
+                try {
+                    tg.openLink(browserUrl, { try_instant_view: false });
+                } catch (eOpenLinkOpts) {
+                    tg.openLink(browserUrl);
+                }
+                dbgStakeEmit('H_outer_open', 'stake-tg.html:openStakeUrlInOuterBrowser', 'tg.openLink dispatch', {});
+                return;
+            }
             var w = null;
             try {
                 w = window.open(browserUrl, '_blank', 'noopener,noreferrer');
@@ -3094,22 +3113,14 @@
                 dbgStakeEmit('H_outer_open', 'stake-tg.html:openStakeUrlInOuterBrowser', 'window.open ok', {});
                 return;
             }
-            if (tg && typeof tg.openLink === 'function') {
-                try {
-                    tg.openLink(browserUrl, { try_instant_view: false });
-                } catch (eOpenLinkOpts) {
-                    tg.openLink(browserUrl);
-                }
-                dbgStakeEmit('H_outer_open', 'stake-tg.html:openStakeUrlInOuterBrowser', 'tg.openLink fallback', {});
-                return;
-            }
             try {
                 window.location.href = browserUrl;
             } catch (eNav) {}
         }
 
         function syncDesktopExtensionFallback() {
-            var active = shouldUseDesktopExtensionFallback();
+            var active = shouldShowBrowserFallback();
+            var desktopActive = shouldUseDesktopExtensionFallback();
             var hint = document.getElementById('wcConnectDesktopHint');
             var fallback = document.getElementById('desktopExtensionFallback');
             var shortcuts = document.getElementById('wcWalletShortcuts');
@@ -3119,7 +3130,7 @@
             if (fallback) {
                 fallback.classList.toggle('is-visible', active);
             }
-            if (shortcuts && active) {
+            if (shortcuts && desktopActive) {
                 shortcuts.style.display = 'none';
             }
         }
@@ -3177,7 +3188,7 @@
             useQrModal: USE_QR_MODAL,
             pageOrigin: typeof location !== 'undefined' ? location.origin : '',
             externalParam: typeof location !== 'undefined' ? new URLSearchParams(location.search).get('external') : '',
-            buildTag: 'telegram-inapp-wallet-default-20260224'
+            buildTag: 'telegram-wallet-fallback-openlink-20260525'
         });
         // #endregion
 

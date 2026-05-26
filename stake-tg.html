@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-diag-i18n-20260526" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-helppanel-i18n-20260526" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -1349,12 +1349,7 @@
                 Need help connecting?
             </button>
             <div id="helpPanel" class="help-panel hidden" role="region" aria-labelledby="helpToggleBtn">
-                <ol>
-                    <li><strong>Stuck on "Connecting..."?</strong> Tap <strong>Open in system browser</strong> above, then connect from Chrome or Safari.</li>
-                    <li><strong>Phone wallet did not open?</strong> Open MetaMask, Trust, or Binance Wallet on your phone first, then tap <strong>Connect Wallet</strong> here.</li>
-                    <li><strong>Wallet opened but did not sign?</strong> Switch to your wallet app, approve the connection, then come back.</li>
-                    <li><strong>Still stuck?</strong> Tap <strong>Open in system browser</strong> and use a browser wallet extension (like MetaMask).</li>
-                </ol>
+                <ol id="helpPanelList"></ol>
             </div>
         </div>
     </div>
@@ -1801,6 +1796,13 @@
                 statusStalled: 'Connect stalled. Opening your browser…',
                 statusConnected: 'Connected.',
                 escalateLabel: 'Get help',
+                helpButtonLabel: 'Need help connecting?',
+                helpPanel: [
+                    { lead: 'Stuck on "Connecting…"?', body: 'Tap <strong>Open in system browser</strong> above, then connect from Chrome or Safari.' },
+                    { lead: 'Phone wallet did not open?', body: 'Open MetaMask, Trust, or Binance Wallet on your phone first, then tap <strong>Connect Wallet</strong> here.' },
+                    { lead: 'Wallet opened but did not sign?', body: 'Switch to your wallet app, approve the connection, then come back.' },
+                    { lead: 'Still stuck?', body: 'Tap <strong>Open in system browser</strong> and use a browser wallet extension (like MetaMask).' }
+                ],
                 diag: {
                     WC_SDK_INIT_TIMEOUT: { title: "Couldn't load WalletConnect", why: 'The wallet library took too long to load. Your network or browser may be blocking it.', actionLabel: 'Open in system browser' },
                     WC_SDK_INIT_FAIL: { title: "WalletConnect didn't start", why: 'The wallet library failed to initialize on this device.', actionLabel: 'Try again' },
@@ -1830,6 +1832,13 @@
                 statusStalled: 'Conexão travou. Abrindo seu navegador…',
                 statusConnected: 'Conectado.',
                 escalateLabel: 'Obter ajuda',
+                helpButtonLabel: 'Precisa de ajuda para conectar?',
+                helpPanel: [
+                    { lead: 'Travado em "Conectando…"?', body: 'Toque em <strong>Abrir no navegador do sistema</strong> acima e conecte pelo Chrome ou Safari.' },
+                    { lead: 'A carteira no celular não abriu?', body: 'Abra MetaMask, Trust ou Binance Wallet no seu celular primeiro, depois toque em <strong>Conectar carteira</strong> aqui.' },
+                    { lead: 'A carteira abriu mas não assinou?', body: 'Vá para o app da sua carteira, aprove a conexão e volte aqui.' },
+                    { lead: 'Ainda travado?', body: 'Toque em <strong>Abrir no navegador do sistema</strong> e use uma extensão de carteira (como MetaMask).' }
+                ],
                 diag: {
                     WC_SDK_INIT_TIMEOUT: { title: 'Não foi possível carregar o WalletConnect', why: 'A biblioteca da carteira demorou demais para carregar. Sua rede ou navegador pode estar bloqueando.', actionLabel: 'Abrir no navegador do sistema' },
                     WC_SDK_INIT_FAIL: { title: 'WalletConnect não iniciou', why: 'A biblioteca da carteira falhou ao iniciar neste dispositivo.', actionLabel: 'Tentar de novo' },
@@ -1859,6 +1868,13 @@
                 statusStalled: '连接卡住。正在打开您的浏览器…',
                 statusConnected: '已连接。',
                 escalateLabel: '获取帮助',
+                helpButtonLabel: '需要帮助连接？',
+                helpPanel: [
+                    { lead: '卡在"连接中…"？', body: '点击上方<strong>在系统浏览器中打开</strong>，然后从 Chrome 或 Safari 连接。' },
+                    { lead: '手机钱包没有打开？', body: '先在手机上打开 MetaMask、Trust 或 Binance Wallet，然后在这里点击<strong>连接钱包</strong>。' },
+                    { lead: '钱包打开了但没有签名？', body: '切换到您的钱包应用，批准连接，然后返回这里。' },
+                    { lead: '仍然卡住？', body: '点击<strong>在系统浏览器中打开</strong>，使用浏览器钱包扩展（如 MetaMask）。' }
+                ],
                 diag: {
                     WC_SDK_INIT_TIMEOUT: { title: '无法加载 WalletConnect', why: '钱包库加载超时。您的网络或浏览器可能在阻止它。', actionLabel: '在系统浏览器中打开' },
                     WC_SDK_INIT_FAIL: { title: 'WalletConnect 未启动', why: '钱包库在此设备上初始化失败。', actionLabel: '重试' },
@@ -3323,6 +3339,26 @@
             if (currentStatusKey) {
                 setConnectStatus(currentStatusKey, document.getElementById('connectStatus') && document.getElementById('connectStatus').classList.contains('connect-status--active'));
             }
+            renderHelpPanelI18n();
+        }
+
+        function renderHelpPanelI18n() {
+            var pack = diagPackForLang();
+            var btn = document.getElementById('helpToggleBtn');
+            if (btn && pack && pack.helpButtonLabel) {
+                btn.textContent = pack.helpButtonLabel;
+            }
+            var ol = document.getElementById('helpPanelList');
+            if (!ol || !pack || !pack.helpPanel) return;
+            var items = pack.helpPanel;
+            var out = '';
+            for (var i = 0; i < items.length; i++) {
+                var it = items[i] || {};
+                var lead = it.lead || '';
+                var body = it.body || '';
+                out += '<li><strong>' + lead + '</strong> ' + body + '</li>';
+            }
+            ol.innerHTML = out;
         }
 
         function hideDiagnostic() {

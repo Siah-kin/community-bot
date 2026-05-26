@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta name="bonzi-stake-tg-deploy" content="stake-smart-diagnostic-cascade-20260526" />
+    <meta name="bonzi-stake-tg-deploy" content="stake-diag-i18n-20260526" />
     <meta name="description" content="Stake BONZI on Ethereum mainnet, claim ETH rewards, and read pool pacing from Bonzi public staking metrics. LP and HARDSTAKE snapshot tiles include short explainers under each headline." />
     <title>Stake BONZI</title>
     <link rel="icon" href="bonzi-logo.png" type="image/png">
@@ -1794,7 +1794,23 @@
                 closeAria: 'Close',
                 overlayErrFallback: 'Connection failed. Try opening in browser instead.',
                 connectCancelled: 'Connection cancelled. Tap Connect to try again.',
-                connectStalled: 'Connection stalled. Tap Connect to try again.'
+                connectStalled: 'Connection stalled. Tap Connect to try again.',
+                statusLoading: 'Loading WalletConnect…',
+                statusPairing: 'Pairing with relay…',
+                statusWaitingApprove: 'Waiting for your wallet to approve…',
+                statusStalled: 'Connect stalled. Opening your browser…',
+                statusConnected: 'Connected.',
+                escalateLabel: 'Get help',
+                diag: {
+                    WC_SDK_INIT_TIMEOUT: { title: "Couldn't load WalletConnect", why: 'The wallet library took too long to load. Your network or browser may be blocking it.', actionLabel: 'Open in system browser' },
+                    WC_SDK_INIT_FAIL: { title: "WalletConnect didn't start", why: 'The wallet library failed to initialize on this device.', actionLabel: 'Try again' },
+                    WC_RELAY_UNREACHABLE: { title: "Couldn't reach the WalletConnect relay", why: 'We got no pairing link back. Your network may be blocking relay.walletconnect.com.', actionLabel: 'Open in system browser' },
+                    WC_PAIRING_TIMEOUT: { title: "Wallet didn't approve in time", why: 'Open your wallet app, find WalletConnect (or the Sessions tab), and approve this connection.', actionLabel: 'Try again' },
+                    WC_NO_ACCOUNTS: { title: 'Wallet returned no account', why: 'Open your wallet, make sure an account is selected, then try again.', actionLabel: 'Try again' },
+                    WALLET_NO_EXTENSION: { title: 'No wallet extension found', why: 'Install MetaMask in this browser, or use Connect Wallet with a phone wallet.', actionLabel: 'Get MetaMask' },
+                    WALLET_WRONG_CHAIN: { title: 'Wrong network', why: 'Switch to Ethereum Mainnet in your wallet, then tap Try again.', actionLabel: 'Try again' },
+                    GENERIC: { title: 'Connect failed', why: 'Something went wrong. Try again, or open the page in your browser.', actionLabel: 'Open in system browser' }
+                }
             },
             pt: {
                 title: 'Stake de BONZI',
@@ -1807,7 +1823,23 @@
                 closeAria: 'Fechar',
                 overlayErrFallback: 'Falha na conexão. Tente abrir no navegador.',
                 connectCancelled: 'Conexão cancelada. Toque em Conectar para tentar de novo.',
-                connectStalled: 'Conexão travada. Toque em Conectar para tentar de novo.'
+                connectStalled: 'Conexão travada. Toque em Conectar para tentar de novo.',
+                statusLoading: 'Carregando WalletConnect…',
+                statusPairing: 'Pareando com o servidor…',
+                statusWaitingApprove: 'Aguardando aprovação na sua carteira…',
+                statusStalled: 'Conexão travou. Abrindo seu navegador…',
+                statusConnected: 'Conectado.',
+                escalateLabel: 'Obter ajuda',
+                diag: {
+                    WC_SDK_INIT_TIMEOUT: { title: 'Não foi possível carregar o WalletConnect', why: 'A biblioteca da carteira demorou demais para carregar. Sua rede ou navegador pode estar bloqueando.', actionLabel: 'Abrir no navegador do sistema' },
+                    WC_SDK_INIT_FAIL: { title: 'WalletConnect não iniciou', why: 'A biblioteca da carteira falhou ao iniciar neste dispositivo.', actionLabel: 'Tentar de novo' },
+                    WC_RELAY_UNREACHABLE: { title: 'Não foi possível alcançar o WalletConnect', why: 'Nenhum link de pareamento retornou. Sua rede pode estar bloqueando relay.walletconnect.com.', actionLabel: 'Abrir no navegador do sistema' },
+                    WC_PAIRING_TIMEOUT: { title: 'A carteira não aprovou a tempo', why: 'Abra o app da sua carteira, encontre WalletConnect (ou a aba Sessões) e aprove esta conexão.', actionLabel: 'Tentar de novo' },
+                    WC_NO_ACCOUNTS: { title: 'A carteira não retornou conta', why: 'Abra sua carteira, confirme que há uma conta selecionada e tente de novo.', actionLabel: 'Tentar de novo' },
+                    WALLET_NO_EXTENSION: { title: 'Nenhuma extensão de carteira encontrada', why: 'Instale o MetaMask neste navegador, ou use Conectar carteira com uma carteira de celular.', actionLabel: 'Obter MetaMask' },
+                    WALLET_WRONG_CHAIN: { title: 'Rede errada', why: 'Mude para a Ethereum Mainnet na sua carteira e toque em Tentar de novo.', actionLabel: 'Tentar de novo' },
+                    GENERIC: { title: 'Falha na conexão', why: 'Algo deu errado. Tente de novo, ou abra a página no seu navegador.', actionLabel: 'Abrir no navegador do sistema' }
+                }
             },
             zh: {
                 title: '质押 BONZI',
@@ -1820,7 +1852,23 @@
                 closeAria: '关闭',
                 overlayErrFallback: '连接失败。请尝试在浏览器中打开本页。',
                 connectCancelled: '已取消连接。请再次点击连接重试。',
-                connectStalled: '连接卡住。请再次点击连接重试。'
+                connectStalled: '连接卡住。请再次点击连接重试。',
+                statusLoading: '正在加载 WalletConnect…',
+                statusPairing: '正在与中继配对…',
+                statusWaitingApprove: '正在等待您的钱包批准…',
+                statusStalled: '连接卡住。正在打开您的浏览器…',
+                statusConnected: '已连接。',
+                escalateLabel: '获取帮助',
+                diag: {
+                    WC_SDK_INIT_TIMEOUT: { title: '无法加载 WalletConnect', why: '钱包库加载超时。您的网络或浏览器可能在阻止它。', actionLabel: '在系统浏览器中打开' },
+                    WC_SDK_INIT_FAIL: { title: 'WalletConnect 未启动', why: '钱包库在此设备上初始化失败。', actionLabel: '重试' },
+                    WC_RELAY_UNREACHABLE: { title: '无法连接到 WalletConnect 中继', why: '没有返回配对链接。您的网络可能在阻止 relay.walletconnect.com。', actionLabel: '在系统浏览器中打开' },
+                    WC_PAIRING_TIMEOUT: { title: '钱包未及时批准', why: '打开您的钱包应用，找到 WalletConnect（或会话标签），批准此连接。', actionLabel: '重试' },
+                    WC_NO_ACCOUNTS: { title: '钱包未返回账户', why: '打开您的钱包，确认已选择账户，然后重试。', actionLabel: '重试' },
+                    WALLET_NO_EXTENSION: { title: '未找到钱包扩展', why: '在此浏览器中安装 MetaMask，或使用连接钱包配合手机钱包。', actionLabel: '获取 MetaMask' },
+                    WALLET_WRONG_CHAIN: { title: '网络错误', why: '在您的钱包中切换到 Ethereum 主网，然后点击重试。', actionLabel: '重试' },
+                    GENERIC: { title: '连接失败', why: '出错了。请重试，或在浏览器中打开此页面。', actionLabel: '在系统浏览器中打开' }
+                }
             }
         };
 
@@ -2576,6 +2624,9 @@
                 if (typeof updateStakeButton === 'function') updateStakeButton();
                 if (typeof updateWithdrawButton === 'function') updateWithdrawButton();
             } catch (eBtn) {}
+            try {
+                if (typeof refreshDiagnosticLang === 'function') refreshDiagnosticLang();
+            } catch (eDiag) {}
         }
 
         applyStakeOverlayLang(STAKE_OVERLAY_LANG);
@@ -3107,7 +3158,7 @@
             } catch (eOff) {}
             wcDisplayUriHandler = function (uri) {
                 wcDisplayUriEverFired = true;
-                setConnectStatus('Waiting for your wallet to approve...', true);
+                setConnectStatus('statusWaitingApprove', true);
                 showWcWalletShortcuts(uri);
             };
             provider.on('display_uri', wcDisplayUriHandler);
@@ -3157,11 +3208,25 @@
 
         var wcDisplayUriEverFired = false;
         var lastDiagnosticCode = null;
+        var currentStatusKey = null;
 
-        function setConnectStatus(text, active) {
+        function diagPackForLang() {
+            var lang = (typeof STAKE_OVERLAY_LANG === 'string' && STAKE_OVERLAY_I18N[STAKE_OVERLAY_LANG])
+                ? STAKE_OVERLAY_LANG
+                : 'en';
+            return STAKE_OVERLAY_I18N[lang] || STAKE_OVERLAY_I18N.en;
+        }
+
+        function setConnectStatus(statusKey, active) {
             var el = document.getElementById('connectStatus');
             if (!el) return;
-            el.textContent = text || '';
+            currentStatusKey = statusKey || null;
+            var text = '';
+            if (statusKey) {
+                var pack = diagPackForLang();
+                text = (pack && pack[statusKey]) || (STAKE_OVERLAY_I18N.en && STAKE_OVERLAY_I18N.en[statusKey]) || '';
+            }
+            el.textContent = text;
             if (active) {
                 el.classList.add('connect-status--active');
             } else {
@@ -3170,55 +3235,21 @@
         }
 
         var STAKE_DIAGNOSTICS = {
-            WC_SDK_INIT_TIMEOUT: {
-                title: "Couldn't load WalletConnect",
-                why: "The wallet library took too long to load. Your network or browser may be blocking it.",
-                actionLabel: 'Open in system browser',
-                action: 'openInBrowser'
-            },
-            WC_SDK_INIT_FAIL: {
-                title: "WalletConnect didn't start",
-                why: "The wallet library failed to initialize on this device.",
-                actionLabel: 'Try again',
-                action: 'retry'
-            },
-            WC_RELAY_UNREACHABLE: {
-                title: "Couldn't reach the WalletConnect relay",
-                why: "We got no pairing link back. Your network may be blocking relay.walletconnect.com.",
-                actionLabel: 'Open in system browser',
-                action: 'openInBrowser'
-            },
-            WC_PAIRING_TIMEOUT: {
-                title: "Wallet didn't approve in time",
-                why: "Open your wallet app, find WalletConnect (or the Sessions tab), and approve this connection.",
-                actionLabel: 'Try again',
-                action: 'retry'
-            },
-            WC_NO_ACCOUNTS: {
-                title: 'Wallet returned no account',
-                why: 'Open your wallet, make sure an account is selected, then try again.',
-                actionLabel: 'Try again',
-                action: 'retry'
-            },
-            WALLET_NO_EXTENSION: {
-                title: 'No wallet extension found',
-                why: 'Install MetaMask in this browser, or use Connect Wallet with a phone wallet.',
-                actionLabel: 'Get MetaMask',
-                action: 'openMetaMask'
-            },
-            WALLET_WRONG_CHAIN: {
-                title: 'Wrong network',
-                why: 'Switch to Ethereum Mainnet in your wallet, then tap Try again.',
-                actionLabel: 'Try again',
-                action: 'retry'
-            },
-            GENERIC: {
-                title: 'Connect failed',
-                why: 'Something went wrong. Try again, or open the page in your browser.',
-                actionLabel: 'Open in system browser',
-                action: 'openInBrowser'
-            }
+            WC_SDK_INIT_TIMEOUT: { action: 'openInBrowser' },
+            WC_SDK_INIT_FAIL: { action: 'retry' },
+            WC_RELAY_UNREACHABLE: { action: 'openInBrowser' },
+            WC_PAIRING_TIMEOUT: { action: 'retry' },
+            WC_NO_ACCOUNTS: { action: 'retry' },
+            WALLET_NO_EXTENSION: { action: 'openMetaMask' },
+            WALLET_WRONG_CHAIN: { action: 'retry' },
+            GENERIC: { action: 'openInBrowser' }
         };
+
+        function diagCopyForCode(code) {
+            var pack = diagPackForLang();
+            var diagPack = (pack && pack.diag) ? pack.diag : (STAKE_OVERLAY_I18N.en.diag || {});
+            return diagPack[code] || diagPack.GENERIC || { title: '', why: '', actionLabel: '' };
+        }
 
         function classifyConnectError(msg, hadDisplayUri) {
             if (!msg) return 'GENERIC';
@@ -3260,22 +3291,38 @@
 
         function renderDiagnostic(code) {
             lastDiagnosticCode = code;
-            var d = STAKE_DIAGNOSTICS[code] || STAKE_DIAGNOSTICS.GENERIC;
+            var spec = STAKE_DIAGNOSTICS[code] || STAKE_DIAGNOSTICS.GENERIC;
+            var copy = diagCopyForCode(code);
             var box = document.getElementById('overlayDiagnostic');
             if (!box) return;
             var titleEl = document.getElementById('overlayDiagTitle');
             var whyEl = document.getElementById('overlayDiagWhy');
             var actionBtn = document.getElementById('overlayDiagAction');
-            if (titleEl) titleEl.textContent = d.title;
-            if (whyEl) whyEl.textContent = d.why;
+            if (titleEl) titleEl.textContent = copy.title;
+            if (whyEl) whyEl.textContent = copy.why;
             if (actionBtn) {
-                actionBtn.textContent = d.actionLabel;
-                actionBtn.onclick = function () { performDiagnosticAction(d.action); };
+                actionBtn.textContent = copy.actionLabel;
+                actionBtn.onclick = function () { performDiagnosticAction(spec.action); };
             }
             box.classList.remove('hidden');
             var oe = document.getElementById('overlayError');
             if (oe) { oe.textContent = ''; oe.style.display = 'none'; }
-            setConnectStatus('');
+            setConnectStatus(null);
+        }
+
+        function refreshDiagnosticLang() {
+            var pack = diagPackForLang();
+            var escBtn = document.getElementById('overlayDiagEscalate');
+            if (escBtn && pack && pack.escalateLabel) {
+                escBtn.textContent = pack.escalateLabel;
+            }
+            var box = document.getElementById('overlayDiagnostic');
+            if (box && !box.classList.contains('hidden') && lastDiagnosticCode) {
+                renderDiagnostic(lastDiagnosticCode);
+            }
+            if (currentStatusKey) {
+                setConnectStatus(currentStatusKey, document.getElementById('connectStatus') && document.getElementById('connectStatus').classList.contains('connect-status--active'));
+            }
         }
 
         function hideDiagnostic() {
@@ -3297,6 +3344,7 @@
 
         window.escalateToBot = escalateToBot;
         window.renderDiagnostic = renderDiagnostic;
+        try { refreshDiagnosticLang(); } catch (eRDL) {}
 
         function buildBrowserFallbackUrl() {
             var url;
@@ -3613,7 +3661,7 @@
             wcConnectInFlight = true;
             wcDisplayUriEverFired = false;
             hideDiagnostic();
-            setConnectStatus('Loading WalletConnect...', true);
+            setConnectStatus('statusLoading', true);
             resetWcWalletShortcutWaiting();
             btn.disabled = true;
             var lblConn = document.getElementById('wcConnectBtnLabel');
@@ -3652,7 +3700,7 @@
                     throw new Error('WalletConnect failed to initialize. Please try again.');
                 }
 
-                setConnectStatus('Pairing with relay...', true);
+                setConnectStatus('statusPairing', true);
                 attachWcDisplayUri(walletConnectProvider);
 
                 var connectTimeoutId = null;
@@ -3687,7 +3735,7 @@
                 PUBLIC_RPC = await findWorkingRpc();
                 provider = new ethers.providers.JsonRpcProvider(PUBLIC_RPC);
 
-                setConnectStatus('Connected.', false);
+                setConnectStatus('statusConnected', false);
                 hideDiagnostic();
                 // Show main content
                 document.getElementById('connectOverlay').classList.add('hidden');
@@ -3728,7 +3776,7 @@
                     !IS_EXTERNAL_BROWSER_FLOW &&
                     (code === 'WC_RELAY_UNREACHABLE' || code === 'WC_SDK_INIT_TIMEOUT')
                 ) {
-                    setConnectStatus('Connect stalled. Opening your browser...', true);
+                    setConnectStatus('statusStalled', true);
                     try {
                         var browserUrl = buildBrowserFallbackUrl();
                         if (tg && typeof tg.openLink === 'function') {

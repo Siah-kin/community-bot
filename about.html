@@ -3,28 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Bonzi - Community Management on Telegram</title>
-    <meta name="description" content="What Bonzi is and what it is not. Plain language. No hype.">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="About Bonzi">
-    <meta property="og:description" content="What Bonzi is and what it is not. Plain language. No hype.">
-    <meta property="og:image" content="https://bonzivista.org/bonzi-logo.png">
-    <meta property="og:url" content="https://bonzivista.org/about.html">
+    <title>About Bonzi - Why this exists</title>
+    <meta name="description" content="Why Bonzivista exists.">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://bonzivista.org/about.html">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <script src="js/nav-loader.js?v=20260221" defer></script>
+    <script src="js/i18n-loader.js?v=20260529" defer></script>
 
     <style>
-        @font-face {
-            font-family: 'Bonzi OCR A';
-            src: url('assets/fonts/OCRA.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -35,40 +24,35 @@
             --black: #0A0A0A;
             --gray: #71717A;
             --gray-light: #F4F4F5;
-            --gold: #d4af37;
-            --terminal-green: #00ff00;
-            --terminal-green-dim: #3d7a3d;
-            --terminal-green-glow: rgba(0, 255, 0, 0.35);
+            --gold: #D4AF37;
         }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--white);
             color: var(--black);
             line-height: 1.6;
         }
 
-        /* Dark mode */
         body.dark-mode {
-            background: #0A0A0A;
+            background: var(--black);
             color: #FAFAFA;
         }
         body.dark-mode .about-hero h1 { color: #fff; }
         body.dark-mode .about-section { border-top-color: #27272A; }
         body.dark-mode .about-section h2 { color: var(--purple-light); }
-        body.dark-mode .about-section p,
-        body.dark-mode .about-section li { color: #A1A1AA; }
-        body.dark-mode .about-section li strong { color: #fff; }
-        body.dark-mode .about-footer { background: #0A0A0A; border-top-color: #27272A; }
-        body.dark-mode .about-footer-links a { color: #A1A1AA; }
-        body.dark-mode .about-footer-links a:hover { color: #fff; }
+        body.dark-mode .about-section p { color: #D4D4D8; }
+        body.dark-mode .about-section p strong { color: #fff; }
+        body.dark-mode .about-footer { background: var(--black); border-top-color: #27272A; color: #A1A1AA; }
+        body.dark-mode .about-footer a { color: #A1A1AA; }
+        body.dark-mode .about-footer a:hover { color: #fff; }
+        body.dark-mode .footer-sep { color: #52525B; }
 
-        /* Hero */
         .about-hero {
-            padding: 140px 40px 60px;
-            max-width: 860px;
+            padding: 140px 40px 40px;
+            max-width: 760px;
             margin: 0 auto;
         }
 
@@ -85,199 +69,134 @@
         }
 
         .about-hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -2px;
+            line-height: 1.1;
+            letter-spacing: -1px;
             color: var(--black);
-            margin-bottom: 20px;
         }
 
-        .about-hero .lead {
-            font-size: 1.15rem;
-            color: var(--gray);
-            max-width: 620px;
-            line-height: 1.7;
-        }
-
-        /* Sections */
         .about-body {
-            max-width: 860px;
+            max-width: 760px;
             margin: 0 auto;
-            padding: 0 40px 80px;
+            padding: 16px 40px 80px;
         }
 
         .about-section {
             border-top: 1px solid #E4E4E7;
-            padding: 48px 0;
-        }
-
-        .about-section h2 {
-            font-family: 'Bonzi OCR A', 'Courier New', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--purple);
-            margin-bottom: 20px;
+            padding: 40px 0;
         }
 
         .about-section p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #3F3F46;
-            line-height: 1.75;
-            max-width: 680px;
-            margin-bottom: 12px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 640px;
         }
 
         .about-section p:last-child { margin-bottom: 0; }
 
-        .about-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            max-width: 680px;
-        }
-
-        .about-list li {
-            padding: 10px 0 10px 24px;
-            position: relative;
-            font-size: 1rem;
-            color: #3F3F46;
-            line-height: 1.65;
-            border-bottom: 1px solid #F4F4F5;
-        }
-
-        .about-list li:last-child { border-bottom: none; }
-
-        .about-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 19px;
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-        }
-
-        .about-list li strong {
-            color: var(--black);
+        .about-section p.lead-line {
+            font-size: 1.4rem;
             font-weight: 600;
+            color: var(--black);
+            margin-bottom: 32px;
         }
+        body.dark-mode .about-section p.lead-line { color: #fff; }
 
-        /* Not-list uses red accent */
-        .about-list.not-list li::before {
-            background: #DC2626;
+        .about-section p.guess-line {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--purple);
+            margin-top: 32px;
         }
+        body.dark-mode .about-section p.guess-line { color: var(--purple-light); }
 
-        /* Stake CTA section */
-        .about-cta {
-            border-top: 1px solid #E4E4E7;
-            padding: 56px 0 0;
-            text-align: center;
-        }
-
-        .about-cta p {
-            font-size: 1rem;
-            color: var(--gray);
-            margin-bottom: 28px;
-        }
-
-        /* Green stake button - matches euler26 style */
-        .btn-stake {
-            display: inline-block;
-            background: var(--terminal-green);
-            color: #000000;
-            font-family: 'Bonzi OCR A', 'Courier New', monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 1rem 2.4rem;
-            border: 2px solid var(--terminal-green);
-            cursor: pointer;
-            transition: background 0.15s, box-shadow 0.15s, color 0.15s;
-        }
-
-        .btn-stake:hover,
-        .btn-stake:focus {
-            background: #000000;
-            color: var(--terminal-green);
-            box-shadow: 0 0 18px var(--terminal-green-glow), inset 0 0 0 2px var(--terminal-green);
-            outline: none;
-        }
-
-        /* Page footer */
         .about-footer {
             background: var(--gray-light);
             border-top: 1px solid #E4E4E7;
-            padding: 28px 40px;
+            padding: 32px 40px 24px;
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-align: center;
         }
 
         .about-footer-inner {
-            max-width: 860px;
+            max-width: 760px;
             margin: 0 auto;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .about-footer-copy {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-
-        .about-footer-links {
+        .footer-brand {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--black);
         }
+        body.dark-mode .footer-brand { color: #fff; }
 
-        .about-footer-links a {
-            font-size: 0.8rem;
+        .footer-sep { color: var(--gray); }
+
+        .footer-sponsor { font-size: 0.85rem; color: var(--gray); }
+
+        .footer-links { display: flex; gap: 6px; }
+        .footer-links a {
             color: var(--gray);
             text-decoration: none;
             transition: color 0.15s;
         }
+        .footer-links a:hover { color: var(--purple); }
 
-        .about-footer-links a:hover {
-            color: var(--black);
+        .footer-lang {
+            margin-top: 6px;
+            display: flex;
+            gap: 14px;
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
-            .about-hero { padding: 120px 20px 40px; }
-            .about-body { padding: 0 20px 60px; }
-            .about-hero h1 { font-size: 2.2rem; }
-            .about-footer { padding: 24px 20px; }
+        .footer-lang button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--gray);
+            padding: 4px 8px;
+            transition: color 0.15s;
         }
+
+        .footer-lang button:hover,
+        .footer-lang button.active {
+            color: var(--purple);
+        }
+
+        body.dark-mode .footer-lang button.active { color: var(--purple-light); }
     </style>
 </head>
-<body>
+<body data-theme-default="light">
 
-<div id="nav-container"></div>
+<nav id="nav-container" class="site-nav"></nav>
 <div id="mobile-menu-container"></div>
 
 <main>
 
     <section class="about-hero">
-        <div class="about-label">Bonzi Vista</div>
-        <h1>About Bonzi</h1>
-        <p class="lead">The aim, in short.</p>
+        <div class="about-label">About</div>
+        <h1 data-i18n="about.h1">Why this exists</h1>
     </section>
 
     <div class="about-body">
 
-        <section class="about-section" id="intro">
-            <h2>What we're building</h2>
-            <p>Bonzi Vista is a token, a Telegram room, and a hardstake.</p>
-            <p>The aim is small: a market that holds together past the cycle that started it. One where the people who showed up early set the tone, and the tone holds.</p>
-            <p>What we ship next, we earn first.</p>
-        </section>
-
-        <section class="about-cta" id="stake">
-            <a href="/stake-tg.html" class="btn-stake">STAKE BONZI</a>
+        <section class="about-section" id="why">
+            <p class="lead-line" data-i18n="about.p1">The cycle eats its own.</p>
+            <p data-i18n="about.p2">Every wave brings hype, then exit, then silence. The people who showed up first take the loss. The people who managed the room are gone before the dust settles.</p>
+            <p data-i18n="about.p3">Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.</p>
+            <p data-i18n="about.p4">Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.</p>
+            <p class="guess-line" data-i18n="about.last">Can you guess what it will be?</p>
         </section>
 
     </div>
@@ -286,14 +205,38 @@
 
 <footer class="about-footer">
     <div class="about-footer-inner">
-        <span class="about-footer-copy">&copy; 2026 Bonzi Vista</span>
-        <nav class="about-footer-links" aria-label="Footer">
-            <a href="/">Home</a>
-            
-            <a href="/privacy.html">Privacy</a>
-        </nav>
+        <div class="footer-brand">
+            <span data-i18n="footer.cto">CTO</span>
+            <span class="footer-sep">|</span>
+            <span>Bonzivista.org</span>
+        </div>
+        <p class="footer-sponsor" data-i18n="footer.sponsoredBy">sponsored by Ethervista</p>
+        <p class="footer-links">
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span>,</span>
+            <a href="/privacy.html" data-i18n="footer.privacy">privacy policy</a>
+        </p>
+        <div class="footer-lang" role="group" aria-label="Language">
+            <button type="button" data-lang="pt" title="Português">🇧🇷</button>
+            <button type="button" data-lang="en" title="English">EN</button>
+            <button type="button" data-lang="zh" title="中文">中</button>
+        </div>
     </div>
 </footer>
+
+<script>
+(function() {
+    var current = localStorage.getItem('bonzi_lang') || 'en';
+    document.querySelectorAll('.footer-lang button').forEach(function(b) {
+        if (b.getAttribute('data-lang') === current) b.classList.add('active');
+        b.addEventListener('click', function() {
+            var lang = b.getAttribute('data-lang');
+            localStorage.setItem('bonzi_lang', lang);
+            location.reload();
+        });
+    });
+})();
+</script>
 
 </body>
 </html>

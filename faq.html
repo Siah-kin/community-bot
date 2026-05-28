@@ -2,12 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=manifesto.html">
-    <link rel="canonical" href="https://bonzivista.org/manifesto.html">
-    <title>Redirecting to Manifesto...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonzi Vista - Coming Soon</title>
+    <meta name="description" content="Section in build. Released after Silver Fox vetting.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="/bonzi-logo.png" type="image/png">
+    <style>
+        @font-face { font-family: 'Bonzi OCR A'; src: url('/assets/fonts/OCRA.otf') format('opentype'); font-weight: normal; font-style: normal; font-display: swap; }
+        :root { --tg: #00ff00; --tgd: #3d7a3d; --tgg: rgba(0,255,0,0.35); --bg: #000; --panel: #0a0a0a; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body { background: var(--bg); color: var(--tg); font-family: 'Bonzi OCR A', 'Courier New', monospace; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
+        .wrap { display: flex; flex-direction: column; align-items: center; gap: 2rem; max-width: 420px; text-align: center; }
+        .logo { width: 64px; height: 64px; filter: drop-shadow(0 0 10px var(--tgg)); }
+        .title { font-size: 1.3rem; letter-spacing: 0.12em; text-transform: uppercase; }
+        .sub { font-size: 0.85rem; color: var(--tgd); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem; }
+        .lcd { border: 1px solid var(--tgd); background: var(--panel); padding: 0.6rem 1.2rem; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; animation: pulse 2.4s ease-in-out infinite; white-space: nowrap; }
+        @keyframes pulse { 0%, 100% { opacity: 1; text-shadow: 0 0 6px var(--tgg); } 50% { opacity: 0.55; text-shadow: none; } }
+        .stake { display: inline-block; background: var(--tg); color: #000; font-family: 'Bonzi OCR A', 'Courier New', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 2rem; border: 2px solid var(--tg); transition: background 0.15s, color 0.15s, box-shadow 0.15s; }
+        .stake:hover, .stake:focus { background: #000; color: var(--tg); box-shadow: 0 0 18px var(--tgg), inset 0 0 0 2px var(--tg); outline: none; }
+        .home { font-size: 0.7rem; color: var(--tgd); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
+        .home:hover, .home:focus { color: var(--tg); border-bottom-color: var(--tg); }
+        footer { margin-top: 2rem; font-size: 0.6rem; color: #2a2a2a; letter-spacing: 0.1em; }
+    </style>
 </head>
 <body>
-    <p>This page has moved. <a href="manifesto.html">Click here if not redirected</a>.</p>
-    <script>window.location.href = "manifesto.html";</script>
+<main class="wrap">
+    <img src="/bonzi-logo.png" alt="Bonzi" class="logo">
+    <div>
+        <div class="title">Section in build</div>
+        <div class="sub">Released after Silver Fox vetting</div>
+    </div>
+    <div class="lcd">Stake is live. Rest earns its place.</div>
+    <a href="/stake-tg.html" class="stake">STAKE BONZI</a>
+    <a href="/about.html" class="home">About</a>
+</main>
+<footer>&copy; 2026 Bonzi Vista</footer>
 </body>
 </html>

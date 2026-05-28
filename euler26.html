@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonzi Vista - EULER26 Portal</title>
+    <meta name="description" content="EULER26 closed-alpha portal. Bonzi Vista.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="css/bonzi-design.css">
+    <style>
+        @font-face {
+            font-family: 'Bonzi OCR A';
+            src: url('assets/fonts/OCRA.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --terminal-green: #00ff00;
+            --terminal-green-dim: #3d7a3d;
+            --terminal-green-glow: rgba(0, 255, 0, 0.35);
+            --bg: #000000;
+            --panel-bg: #0a0a0a;
+            --panel-border: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--terminal-green);
+            font-family: 'Bonzi OCR A', 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .portal-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Logo */
+        .portal-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--terminal-green-glow));
+        }
+
+        /* Title block */
+        .portal-title {
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--terminal-green);
+            line-height: 1.2;
+        }
+
+        .portal-subtitle {
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--terminal-green-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* LCD pulse line */
+        .lcd-line {
+            border: 1px solid var(--terminal-green-dim);
+            background: var(--panel-bg);
+            padding: 0.6rem 1.4rem;
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--terminal-green);
+            animation: lcd-pulse 2.4s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes lcd-pulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 6px var(--terminal-green-glow); }
+            50%       { opacity: 0.55; text-shadow: none; }
+        }
+
+        /* Stake button */
+        .btn-stake {
+            display: inline-block;
+            background: var(--terminal-green);
+            color: #000000;
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1rem 2.4rem;
+            border: 2px solid var(--terminal-green);
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+            box-shadow: 0 0 0 transparent;
+        }
+
+        .btn-stake:hover,
+        .btn-stake:focus {
+            background: #000000;
+            color: var(--terminal-green);
+            box-shadow: 0 0 18px var(--terminal-green-glow), inset 0 0 0 2px var(--terminal-green);
+            outline: none;
+        }
+
+        /* Secondary link */
+        .portal-about {
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: var(--terminal-green-dim);
+            text-decoration: none;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+        }
+
+        .portal-about:hover,
+        .portal-about:focus {
+            color: var(--terminal-green);
+            border-bottom-color: var(--terminal-green);
+            outline: none;
+        }
+
+        /* Footer */
+        .portal-footer {
+            margin-top: 3rem;
+            font-family: 'Bonzi OCR A', 'Courier New', monospace;
+            font-size: 0.65rem;
+            color: #2a2a2a;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<main class="portal-wrap">
+
+    <img src="bonzi-logo.png" alt="Bonzi" class="portal-logo">
+
+    <div>
+        <div class="portal-title">Bonzi Vista - closed alpha</div>
+        <div class="portal-subtitle">Coming soon.</div>
+    </div>
+
+    <div class="lcd-line">Tokenise your community</div>
+
+    <a href="/stake.html" class="btn-stake">STAKE BONZI</a>
+
+    <a href="/about.html" class="portal-about">About Bonzi</a>
+
+</main>
+
+<footer class="portal-footer">
+    &copy; 2026 Bonzi Vista
+</footer>
+
+</body>
+</html>

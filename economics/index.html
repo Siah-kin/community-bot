@@ -3,40 +3,619 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonzi Vista - Coming Soon</title>
-    <meta name="description" content="Section in build. Released after Silver Fox vetting.">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="/bonzi-logo.png" type="image/png">
+    <title>Economics - How Bonzi Works</title>
+    <meta name="description" content="How Bonzi's token economy works. Flat ETH fees, automatic supply reduction, and fee distribution to holders.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Economics - How Bonzi Works">
+    <meta property="og:description" content="How Bonzi's token economy works. Flat ETH fees, automatic supply reduction, and fee distribution to holders.">
+    <meta property="og:image" content="https://bonzivista.org/bonzi-logo.png">
+    <meta property="og:url" content="https://bonzivista.org/economics/">
+    <link rel="canonical" href="https://bonzivista.org/economics/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav-loader.js?v=20260221" defer></script>
     <style>
-        @font-face { font-family: 'Bonzi OCR A'; src: url('/assets/fonts/OCRA.otf') format('opentype'); font-weight: normal; font-style: normal; font-display: swap; }
-        :root { --tg: #00ff00; --tgd: #3d7a3d; --tgg: rgba(0,255,0,0.35); --bg: #000; --panel: #0a0a0a; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; }
-        body { background: var(--bg); color: var(--tg); font-family: 'Bonzi OCR A', 'Courier New', monospace; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
-        .wrap { display: flex; flex-direction: column; align-items: center; gap: 2rem; max-width: 420px; text-align: center; }
-        .logo { width: 64px; height: 64px; filter: drop-shadow(0 0 10px var(--tgg)); }
-        .title { font-size: 1.3rem; letter-spacing: 0.12em; text-transform: uppercase; }
-        .sub { font-size: 0.85rem; color: var(--tgd); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem; }
-        .lcd { border: 1px solid var(--tgd); background: var(--panel); padding: 0.6rem 1.2rem; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; animation: pulse 2.4s ease-in-out infinite; white-space: nowrap; }
-        @keyframes pulse { 0%, 100% { opacity: 1; text-shadow: 0 0 6px var(--tgg); } 50% { opacity: 0.55; text-shadow: none; } }
-        .stake { display: inline-block; background: var(--tg); color: #000; font-family: 'Bonzi OCR A', 'Courier New', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 2rem; border: 2px solid var(--tg); transition: background 0.15s, color 0.15s, box-shadow 0.15s; }
-        .stake:hover, .stake:focus { background: #000; color: var(--tg); box-shadow: 0 0 18px var(--tgg), inset 0 0 0 2px var(--tg); outline: none; }
-        .home { font-size: 0.7rem; color: var(--tgd); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
-        .home:hover, .home:focus { color: var(--tg); border-bottom-color: var(--tg); }
-        footer { margin-top: 2rem; font-size: 0.6rem; color: #2a2a2a; letter-spacing: 0.1em; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: #0A0A0A;
+            color: #FFFFFF;
+        }
+        body.dark-mode .hero p { color: #A1A1AA; }
+        body.dark-mode .section h2 { color: #A78BFA; }
+        body.dark-mode .section p, body.dark-mode .section ul { color: #A1A1AA; }
+        body.dark-mode .callout { background: #1F1F23; }
+        body.dark-mode .callout p { color: #E4E4E7; }
+        body.dark-mode .mechanism { background: #1F1F23; }
+        body.dark-mode .mechanism h3 { color: #A78BFA; }
+        body.dark-mode .mechanism p { color: #A1A1AA; }
+        body.dark-mode .nav-lang-select { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+
+        .nav-connect-btn {
+            background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
+            border: none;
+            border-radius: 0;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a0a0a;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav-connect-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
+        }
+        .nav-connect-btn.connected {
+            background: #7C3AED;
+            color: #FFFFFF;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        .nav-connect-btn.connected:hover {
+            background: #5B21B6;
+        }
+        @media (max-width: 768px) {
+            nav { padding: 0 16px; }
+            .nav-links { gap: 16px; }
+            .nav-link { font-size: 13px; }
+        }
+        @media (max-width: 600px) {
+            .nav-links { gap: 12px; }
+            .nav-link { font-size: 12px; }
+            .nav-logo { font-size: 16px; }
+            .nav-lang-select { display: none; }
+        }
+
+        .hero {
+            padding: 160px 40px 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+        .section {
+            margin-bottom: 48px;
+        }
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--purple-dark);
+        }
+        .section p {
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+        .section ul {
+            color: var(--gray);
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .callout {
+            background: var(--gray-light);
+            border-radius: 0;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        .callout p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .flow-diagram {
+            background: var(--black);
+            color: var(--white);
+            padding: 32px;
+            border-radius: 0;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 24px 0;
+            white-space: pre;
+        }
+
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .mechanism {
+            background: var(--gray-light);
+            border-radius: 0;
+            padding: 24px;
+        }
+        .mechanism h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--purple);
+        }
+        .mechanism p {
+            font-size: 14px;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .question {
+            background: var(--gray-light);
+            border-left: 4px solid var(--purple);
+            padding: 20px 24px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .question strong {
+            display: block;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+        .question p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .source-link {
+            font-size: 13px;
+            color: var(--purple);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .mechanism-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: var(--gray-light);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle:hover {
+            background: var(--purple);
+            color: white;
+        }
+        body.dark-mode .lang-toggle {
+            background: #333;
+            color: #fff;
+        }
     </style>
 </head>
-<body>
-<main class="wrap">
-    <img src="/bonzi-logo.png" alt="Bonzi" class="logo">
-    <div>
-        <div class="title">Section in build</div>
-        <div class="sub">Released after Silver Fox vetting</div>
+<body data-theme-default="light">
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <section class="hero">
+        <h1>How It Works</h1>
+        <p>Bonzi is the first memecoin on Ethervista. Here's the underlying mechanism.</p>
+    </section>
+
+    <div class="content">
+        <div class="section" id="ethervista">
+            <h2>What is Ethervista?</h2>
+            <p>Ethervista is a <span class="term" data-tip="Trade tokens, no middleman">trading platform on Ethereum</span> - similar to Uniswap, but with a different fee model. Instead of taking a percentage of each <span class="term" data-tip="Swap - trading one token for another">trade</span> in tokens, Ethervista charges a <strong>flat fee in ETH</strong> (typically $5-$15 per transaction).</p>
+            <p>This matters because:</p>
+            <ul>
+                <li>Rewards are paid in ETH, not inflationary tokens</li>
+                <li><span class="term" data-tip="Funds a trading pool">Liquidity providers</span> benefit from transaction <em>count</em>, not token price speculation</li>
+                <li>No sell pressure from people dumping reward tokens</li>
+            </ul>
+            <a href="https://www.blocmates.com/articles/what-is-ethervista-" target="_blank" class="source-link">→ Detailed Ethervista explainer (blocmates)</a>
+        </div>
+
+        <div class="section">
+            <h2>Where Bonzi Fits</h2>
+            <p>Bonzi ($BONZI) was the first memecoin launched on Ethervista - the platform's mascot token. Same fee mechanics as other Ethervista pools, plus an additional burn mechanism.</p>
+
+            <div class="flow-diagram">
+Someone trades BONZI
+        |
+        v
+  Flat ETH fee taken
+   (e.g. $10 worth)
+        |
+   +----+----+
+   |         |
+   v         v
+ Pool      Protocol
+ depositors   |
+   |         v
+   |    Auto-buy BONZI
+   |    from market
+   |         |
+   |         v
+   |    Burn it (gone
+   |    forever)
+   |
+   v
+Paid out in ETH
+to trading pool depositors
+            </div>
+
+            <p>The burn is automatic and on-chain. Each transaction reduces circulating supply slightly. This has burned ~2.17% of total supply since launch.</p>
+        </div>
+
+        <div class="section" id="euler-model">
+            <h2>The Euler Model</h2>
+            <p>How does the contract track who gets what share of fees? It uses something called the "Euler model" - a mathematical trick to avoid recalculating every user's balance on every transaction.</p>
+
+            <div class="callout">
+                <p><strong>Simplified:</strong> When you stake liquidity provider tokens, the contract records the current "Euler value" (say, 1.2). Later, fees raise it to 1.5. Your reward = your tokens × (1.5 - 1.2). This avoids expensive loops through all stakers, cutting gas costs ~99%.</p>
+            </div>
+
+            <p>Not unique to Ethervista. Similar math exists in other <span class="term" data-tip="Financial tools on blockchain">blockchain finance systems</span>. The point: efficient fee distribution without running out of gas.</p>
+        </div>
+
+        <div class="section" id="hardstake">
+            <h2><span class="term" data-tip="Lock tokens 14+ days, more fees">Hardstake</span> / Hardlock</h2>
+            <p>Optional feature: lock your tokens or liquidity provider position for 14+ days to earn a larger share of the fee pool. The tradeoff is obvious - you can't withdraw during the lock period.</p>
+            <p>This exists to reward committed capital over mercenary <span class="term" data-tip="Liquidity - tokens deposited so others can trade">trading pool funds</span> that farm and dump.</p>
+        </div>
+
+        <div class="section" id="anti-rug">
+            <h2>Anti-Rug Measures</h2>
+            <p>Ethervista enforces a <strong>5-day trading pool lock</strong> on new token launches. Creators cannot withdraw pool funds for 5 days after launch.</p>
+            <p>Why 5 days? According to the team, most rug pulls happen within 2-4 days of launch. This doesn't prevent all scams, but raises the bar.</p>
+            <a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank" class="source-link">→ More on Ethervista security features (Gate.io)</a>
+        </div>
+
+        <div class="section" id="closed-loop">
+            <h2>Closed-Loop Marketing</h2>
+            <p>Here's where it gets interesting. A portion of trading fees can fund a <strong>marketing staking pool</strong> - ecosystem money that exists because users trade. The idea: use it to reward users who grow the ecosystem.</p>
+
+            <div class="flow-diagram">
+Users trade BONZI
+        |
+        v
+  Flat ETH fee taken
+        |
+   +----+----+
+   |         |
+   v         v
+ Pool     Treasury
+ depositors (protocol fee)
+             |
+             v
+    Marketing Staking Pool
+             |
+             v
+    AI verification system
+    vets quality (prevents
+    gaming/spam)
+             |
+             v
+    Pro-rata rewards to
+    genuine contributors
+             |
+             v
+    Contributors market more
+             |
+    +--------+
+    |
+    v
+More users trade... (loop)
+            </div>
+
+            <p>The key innovation: an <strong><span class="term" data-tip="Oracle - feeds real-world data to the blockchain">AI verification system</span></strong> evaluates contribution quality before rewards are distributed. This prevents the classic problem where marketing rewards get gamed by bots and spam.</p>
+
+            <div class="mechanism-grid">
+                <div class="mechanism">
+                    <h3>Quality Scoring</h3>
+                    <p>Contributors earn a CPI (Cooperation Performance Index) score based on genuine ecosystem participation - helpful answers, quality content, real engagement. Higher score = larger share of the pool.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Anti-Gaming</h3>
+                    <p>The AI system detects coordinated behavior, bot patterns, and artificial inflation. Rewards flow to humans doing real work, not scripts farming points.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Self-Sustaining</h3>
+                    <p>More quality marketing → more users → more trades → more fees → bigger reward pool. The flywheel compounds without requiring external capital.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Aligned Incentives</h3>
+                    <p>Everyone benefits from ecosystem growth. Pool depositors earn more fees. Contributors earn rewards. Users get better content. No zero-sum competition.</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <p><strong>Think of it as:</strong> X (Twitter) revenue sharing, but for crypto communities. Instead of paying creators based on impressions, pay them based on actual ecosystem contribution - measured and verified by AI.</p>
+            </div>
+        </div>
+
+        <div class="section" id="trust-infrastructure">
+            <h2>Trust Infrastructure</h2>
+            <p>The AI verification system does more than rate post-contribution quality. It provides <strong><span class="term" data-tip="Checks trust scores before any tokens change hands">trust checks before trading</span></strong> - checking wallets before you interact with them.</p>
+
+            <div class="flow-diagram">
+Before You Trade/Tip/Collaborate
+              |
+              v
+     Query wallet via /vetx
+     or bonzivista.org/vetter
+              |
+              v
+     8 signals aggregated:
+     - Fake-account detection
+     - Cooperation history
+     - On-chain behavior
+     - EigenTrust score (academic trust algorithm)
+     - DAO participation
+     - Question quality
+     - Tip patterns
+     - Community vouching
+              |
+              v
+    Get tier: S / A / B / C / F
+              |
+     +--------+--------+
+     |                 |
+     v                 v
+  Proceed          Investigate
+  (trusted)        (external links)
+            </div>
+
+            <div class="mechanism-grid">
+                <div class="mechanism">
+                    <h3>Pre-Transaction Protection</h3>
+                    <p>Check any wallet before sending funds, tipping, or collaborating. One lookup prevents losses to known scammers, new accounts, or <span class="term" data-tip="Fake account network">networks of fake accounts</span>.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Post-Action Scoring</h3>
+                    <p>After contributions, the AI system updates reputation. Quality promotions, helpful answers, and genuine engagement build your score over time.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Revenue Loop</h3>
+                    <p>Vetting queries ($0.01 via API, free tier for humans) generate revenue that funds the reward pool. The system pays for itself through usage.</p>
+                </div>
+                <div class="mechanism">
+                    <h3>Economic Value</h3>
+                    <p>Less money lost to scams = healthier economy. Higher trust = more collaboration. Better scoring = quality rises. The AI verification makes the whole system work better.</p>
+                </div>
+            </div>
+
+            <div class="callout">
+                <p><strong>Try it:</strong> <a href="../vetter/" style="color: var(--purple);">Free wallet vetter</a> (5 queries/day) or <code>/vetx</code> in <span style="color: var(--purple);">Telegram</span> for unlimited checks.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Common Questions</h2>
+
+            <div class="question">
+                <strong>If fees are flat (not percentage), doesn't that hurt small traders?</strong>
+                <p>Yes. A $10 flat fee on a $50 trade is 20%. On a $5000 trade, it's 0.2%. This model favors larger transactions. Whether that's good or bad depends on your perspective - it discourages <span class="term" data-tip="Faking volume by self-trading">fake trading</span> and automated spam, but makes the platform less accessible for small amounts.</p>
+            </div>
+
+            <div class="question">
+                <strong>What if trading volume drops?</strong>
+                <p>Rewards drop proportionally. ETH rewards come from trading activity - no trades, no fees, no rewards. This is more honest than emission-based models that promise fixed APYs until the treasury empties.</p>
+            </div>
+
+            <div class="question">
+                <strong>What are the risks?</strong>
+                <p><span class="term" data-tip="Auto-executing blockchain code">Smart contract</span> risk (all blockchain finance). <span class="term" data-tip="Value drop when pool prices shift">Temporary value loss</span> from price changes for pool depositors. Volume dependency for yield. Token price can still go to zero for market reasons. The 5-day lock helps but doesn't eliminate scam risk for new tokens. Do your own research.</p>
+            </div>
+
+            <div class="question">
+                <strong>How does the AI verification system prevent gaming of marketing rewards?</strong>
+                <p>The system uses 8 different signals to build a reputation score: on-chain behavior, cooperation patterns, question quality, <span class="term" data-tip="Spotting fake accounts">fake-account detection</span>, and more. Gaming one signal doesn't help - you need consistent genuine participation across multiple dimensions. The system is designed to reward humans doing real work, not bots optimizing metrics.</p>
+            </div>
+
+            <div class="question">
+                <strong>Is this live yet?</strong>
+                <p>The scoring system is live. The treasury-to-marketing-pool flow is in governance discussion. Community will vote on activation parameters (fee percentage, minimum scores, etc.).</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Sources</h2>
+            <ul>
+                <li><a href="https://www.blocmates.com/articles/what-is-ethervista-" target="_blank">blocmates - What Is Ethervista?</a></li>
+                <li><a href="https://www.gate.io/learn/articles/what-is-ethervista-the-self-proclaimed-new-standard-for-dex/4079" target="_blank">Gate.io - Ethervista Overview</a></li>
+                <li><a href="https://99bitcoins.com/news/bonzi-the-first-meme-coin-on-ethervista-can-it-save-ethereum/" target="_blank">99Bitcoins - Bonzi, First Meme Coin on Ethervista</a></li>
+                <li><a href="https://www.coingecko.com/en/coins/bonzi" target="_blank">CoinGecko - BONZI</a></li>
+                <li><span>Bonzi Oracle Bot - Telegram</span></li>
+            </ul>
+        </div>
     </div>
-    <div class="lcd">Stake is live. Rest earns its place.</div>
-    <a href="/stake-tg.html" class="stake">STAKE BONZI</a>
-    <a href="/about.html" class="home">About</a>
-</main>
-<footer>&copy; 2026 Bonzi Vista</footer>
+
+    <!-- Sound Toggle + Hint -->
+    <div class="sound-hint" id="sound-hint">
+        <span class="emoji">💜</span>
+        <span class="emoji">🤫</span>
+        <span class="arrow">▼</span>
+    </div>
+    <button class="sound-toggle muted" id="sound-toggle" aria-label="Toggle music">
+        <span class="sound-on">📢</span>
+        <span class="sound-off">🔇</span>
+    </button>
+    <audio id="bg-music" preload="auto" loop>
+        <source src="../static/audio/placeholder.wav" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Sound toggle - teaser mode (Moby only)
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundHint = document.getElementById('sound-hint');
+        const bgMusic = document.getElementById('bg-music');
+        const musicVolume = 0.3;
+
+        // Check localStorage for previous state (shared with main page)
+        const musicPlaying = localStorage.getItem('bonzi_music_playing');
+        if (musicPlaying === 'true') {
+            bgMusic.volume = musicVolume;
+            bgMusic.play().then(() => {
+                soundToggle.classList.remove('muted');
+                if (soundHint) soundHint.style.display = 'none';
+            }).catch(() => {
+                // Autoplay blocked - keep muted state
+                soundToggle.classList.add('muted');
+            });
+        }
+
+        soundToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.volume = musicVolume;
+                bgMusic.play();
+                soundToggle.classList.remove('muted');
+                localStorage.setItem('bonzi_music_playing', 'true');
+                if (soundHint) soundHint.style.display = 'none';
+            } else {
+                bgMusic.pause();
+                soundToggle.classList.add('muted');
+                localStorage.setItem('bonzi_music_playing', 'false');
+            }
+        });
+
+        // Hide hint after 5 seconds
+        if (soundHint) {
+            setTimeout(() => {
+                soundHint.style.opacity = '0';
+                setTimeout(() => soundHint.style.display = 'none', 500);
+            }, 5000);
+        }
+
+        // Nav Connect Button Handler
+        function initNavConnect() {
+            const navBtn = document.getElementById('nav-connect-btn');
+            if (!navBtn) return;
+            function truncateAddress(addr) { return addr.slice(0, 6) + '...' + addr.slice(-4); }
+            function updateButtonState() {
+                const savedWallet = localStorage.getItem('bonzi_wallet_address');
+                const savedTimestamp = localStorage.getItem('bonzi_auth_timestamp');
+                if (savedWallet && savedTimestamp) {
+                    const age = Date.now() - parseInt(savedTimestamp);
+                    if (age < 24 * 60 * 60 * 1000) {
+                        navBtn.textContent = truncateAddress(savedWallet);
+                        navBtn.classList.add('connected');
+                        return true;
+                    }
+                }
+                return false;
+            }
+            async function handleConnect() {
+                // If already connected, clicking takes user to research (gated content)
+                if (updateButtonState()) {
+                    window.location.href = '../metrics/';
+                    return;
+                }
+                if (typeof window.ethereum === 'undefined') {
+                    alert('Please install MetaMask or another Web3 wallet');
+                    return;
+                }
+                const originalText = navBtn.textContent;
+                navBtn.textContent = 'Connecting...';
+                navBtn.disabled = true;
+                // Timeout helper - 45 second max wait
+                const withTimeout = (promise, ms = 45000) => Promise.race([
+                    promise,
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Connection timed out')), ms))
+                ]);
+                try {
+                    const accounts = await withTimeout(window.ethereum.request({ method: 'eth_requestAccounts' }));
+                    if (accounts && accounts.length > 0) {
+                        localStorage.setItem('bonzi_wallet_address', accounts[0]);
+                        localStorage.setItem('bonzi_auth_timestamp', Date.now().toString());
+                        navBtn.textContent = truncateAddress(accounts[0]);
+                        navBtn.classList.add('connected');
+                        navBtn.disabled = false;
+                        // User can now click again to go to research
+                    }
+                } catch (err) {
+                    console.error('Wallet connection failed:', err);
+                    navBtn.textContent = originalText;
+                    navBtn.disabled = false;
+                }
+            }
+            updateButtonState();
+            navBtn.addEventListener('click', handleConnect);
+        }
+
+        if (window.navReady && typeof window.navReady.then === 'function') {
+            window.navReady.then(initNavConnect);
+        } else {
+            document.addEventListener('nav:loaded', initNavConnect, { once: true });
+        }
+    </script>
+
+    <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+            <span style="color: #71717A;">sponsored by
+                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                    Ethervista
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">by co-founder
+                <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="../defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Defiants
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">profits fund
+                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="../unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Unidos Projects
+                </a>
+            </span>
+        </div>
+        <div style="font-size: 12px; color: #71717A;">
+            open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        </div>
+    </footer>
+
 </body>
 </html>

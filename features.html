@@ -3,40 +3,664 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonzi Vista - Coming Soon</title>
-    <meta name="description" content="Section in build. Released after Silver Fox vetting.">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="/bonzi-logo.png" type="image/png">
+    <title>Features - The Community Starter Kit | Bonzi</title>
+    <meta name="description" content="Everything you need to launch a token and grow your community. Telegram bot, open source code, hosted service, and AI trust tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Features - The Community Starter Kit | Bonzi">
+    <meta property="og:description" content="Everything you need to launch a token and grow your community. Telegram bot, open source code, hosted service, and AI trust tools.">
+    <meta property="og:image" content="https://bonzivista.org/bonzi-logo.png">
+    <meta property="og:url" content="https://bonzivista.org/features.html">
+    <link rel="canonical" href="https://bonzivista.org/features.html">
+    <link rel="icon" href="bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="css/bonzi-design.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <script src="js/nav-loader.js?v=20260221" defer></script>
+
     <style>
-        @font-face { font-family: 'Bonzi OCR A'; src: url('/assets/fonts/OCRA.otf') format('opentype'); font-weight: normal; font-style: normal; font-display: swap; }
-        :root { --tg: #00ff00; --tgd: #3d7a3d; --tgg: rgba(0,255,0,0.35); --bg: #000; --panel: #0a0a0a; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; }
-        body { background: var(--bg); color: var(--tg); font-family: 'Bonzi OCR A', 'Courier New', monospace; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
-        .wrap { display: flex; flex-direction: column; align-items: center; gap: 2rem; max-width: 420px; text-align: center; }
-        .logo { width: 64px; height: 64px; filter: drop-shadow(0 0 10px var(--tgg)); }
-        .title { font-size: 1.3rem; letter-spacing: 0.12em; text-transform: uppercase; }
-        .sub { font-size: 0.85rem; color: var(--tgd); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem; }
-        .lcd { border: 1px solid var(--tgd); background: var(--panel); padding: 0.6rem 1.2rem; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; animation: pulse 2.4s ease-in-out infinite; white-space: nowrap; }
-        @keyframes pulse { 0%, 100% { opacity: 1; text-shadow: 0 0 6px var(--tgg); } 50% { opacity: 0.55; text-shadow: none; } }
-        .stake { display: inline-block; background: var(--tg); color: #000; font-family: 'Bonzi OCR A', 'Courier New', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; padding: 0.9rem 2rem; border: 2px solid var(--tg); transition: background 0.15s, color 0.15s, box-shadow 0.15s; }
-        .stake:hover, .stake:focus { background: #000; color: var(--tg); box-shadow: 0 0 18px var(--tgg), inset 0 0 0 2px var(--tg); outline: none; }
-        .home { font-size: 0.7rem; color: var(--tgd); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
-        .home:hover, .home:focus { color: var(--tg); border-bottom-color: var(--tg); }
-        footer { margin-top: 2rem; font-size: 0.6rem; color: #2a2a2a; letter-spacing: 0.1em; }
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #d4af37;
+            --green: #10B981;
+            --blue: #3B82F6;
+            --orange: #F59E0B;
+        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Dark Mode */
+        body.dark-mode { background: #0A0A0A; color: #FFFFFF; }
+        body.dark-mode .hero p { color: #A1A1AA; }
+        body.dark-mode .access-section { border-top-color: #27272A; }
+        body.dark-mode .access-section:nth-child(even) { background: #1F1F23; }
+        body.dark-mode .tagline { color: #A1A1AA; }
+        body.dark-mode .feature-grid { background: #1F1F23; }
+        body.dark-mode .feature-card { background: #27272A; }
+        body.dark-mode .feature-card p { color: #A1A1AA; }
+        body.dark-mode .stakeholder-card { background: #27272A; border-color: #3F3F46; }
+        body.dark-mode .stakeholder-card p { color: #A1A1AA; }
+        body.dark-mode .nav-lang-select { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.2); }
+
+        /* Hero */
+        .hero {
+            padding: 160px 40px 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .hero-label {
+            color: var(--purple);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+        .hero-sponsor {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 24px;
+        }
+        .hero-sponsor strong { color: var(--gold); }
+
+        /* Access Points Grid */
+        .access-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        .access-btn {
+            padding: 12px 24px;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .access-btn.retail { background: var(--purple); color: white; }
+        .access-btn.retail:hover { background: var(--purple-dark); }
+        .access-btn.dev { background: var(--black); color: white; }
+        .access-btn.dev:hover { background: #1a1a1a; }
+        .access-btn.enterprise { background: var(--gold); color: var(--black); }
+        .access-btn.enterprise:hover { background: #c4a030; }
+        .access-btn.agent { background: var(--green); color: white; }
+        .access-btn.agent:hover { background: #059669; }
+        body.dark-mode .access-btn.dev { background: #27272A; }
+
+        /* Access Sections */
+        .access-section {
+            padding: 80px 40px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .access-section:nth-child(even) {
+            background: var(--gray-light);
+        }
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .section-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 28px;
+        }
+        .section-icon.retail { background: var(--purple); }
+        .section-icon.dev { background: var(--black); }
+        .section-icon.enterprise { background: var(--gold); }
+        .section-icon.agent { background: var(--green); }
+        body.dark-mode .section-icon.dev { background: #27272A; }
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title .tagline {
+            color: var(--gray);
+            font-size: 18px;
+        }
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-badge.live { background: #10B981; color: white; }
+        .status-badge.beta { background: #F59E0B; color: white; }
+        .status-badge.coming { background: #6366F1; color: white; }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .feature-card {
+            background: white;
+            padding: 24px;
+            border-radius: 0;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        body.dark-mode .feature-card { border-color: #3F3F46; }
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Subsection Labels */
+        .subsection-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            color: var(--purple);
+        }
+        body.dark-mode .subsection-label { color: var(--purple-light); }
+
+        /* CTA Button */
+        .section-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 0;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .section-cta.retail { background: var(--purple); color: white; }
+        .section-cta.retail:hover { background: var(--purple-dark); transform: translateY(-2px); }
+        .section-cta.dev { background: var(--black); color: white; }
+        .section-cta.dev:hover { background: #1a1a1a; transform: translateY(-2px); }
+        .section-cta.enterprise { background: var(--gold); color: var(--black); }
+        .section-cta.enterprise:hover { background: #c4a030; transform: translateY(-2px); }
+        .section-cta.agent { background: var(--green); color: white; }
+        .section-cta.agent:hover { background: #059669; transform: translateY(-2px); }
+
+        /* Stakeholder Section */
+        .stakeholder-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            color: white;
+        }
+        .stakeholder-section h2 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .stakeholder-section > p {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 48px;
+            font-size: 18px;
+        }
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .stakeholder-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            padding: 24px;
+            border-radius: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.2s;
+        }
+        .stakeholder-card:hover { transform: translateY(-4px); }
+        .stakeholder-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stakeholder-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+        .stakeholder-card a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .stakeholder-card a:hover { text-decoration: underline; }
+
+        /* Footer CTA */
+        .cta-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: var(--black);
+            color: white;
+        }
+        .cta-section h2 { font-size: 36px; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; opacity: 0.8; margin-bottom: 32px; }
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 0;
+            transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            background: #0a0a0a;
+        }
+        footer a { color: var(--gold); text-decoration: none; }
+        footer a:hover { color: var(--purple); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 120px 24px 60px; }
+            .hero h1 { font-size: 36px; }
+            .hero p { font-size: 16px; }
+            .access-section { padding: 60px 20px; }
+            .section-header { flex-direction: column; }
+            .section-title h2 { font-size: 24px; }
+            .stakeholder-section { padding: 60px 20px; }
+            .stakeholder-section h2 { font-size: 28px; }
+        }
     </style>
 </head>
-<body>
-<main class="wrap">
-    <img src="/bonzi-logo.png" alt="Bonzi" class="logo">
-    <div>
-        <div class="title">Section in build</div>
-        <div class="sub">Released after Silver Fox vetting</div>
-    </div>
-    <div class="lcd">Stake is live. Rest earns its place.</div>
-    <a href="/stake-tg.html" class="stake">STAKE BONZI</a>
-    <a href="/about.html" class="home">About</a>
-</main>
-<footer>&copy; 2026 Bonzi Vista</footer>
+<body data-theme-default="light">
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-label">The <span class="term" data-tip="Community group with shared funds and voting">Community Starter Kit</span></div>
+        <h1>Everything you need to tokenise your brand.</h1>
+        <p>One bot. Full community infrastructure. From token launch to community rewards - pick your access point.</p>
+
+        <div class="access-nav">
+            <a href="#retail" class="access-btn retail">Telegram Bot</a>
+            <a href="#developer" class="access-btn dev">GitHub Open Source</a>
+            <a href="/baas.html" class="access-btn enterprise">Bonzi-as-a-Service</a>
+            <a href="#agent" class="access-btn agent">For AI Agents</a>
+        </div>
+
+        <p class="hero-sponsor">Sponsored by <strong>BONZI</strong> + <strong>VISTA</strong> community</p>
+
+        <div style="margin-top: 32px; padding: 16px 24px; border-left: 4px solid var(--gold); background: rgba(212,175,55,0.08); text-align: left; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 14px; color: var(--gray);">
+            <strong style="color: var(--gold);">Closed Alpha</strong> -Core features are functional. Some UI flows and AI responses are being optimized. Expect rough edges.
+        </div>
+    </section>
+
+    <!-- RETAIL - TELEGRAM BOT -->
+    <section class="access-section" id="retail">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-icon retail">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="section-title">
+                    <h2>Telegram Bot <span class="status-badge live">Live</span></h2>
+                    <div class="tagline">One bot. Full community infrastructure. No code required.</div>
+                </div>
+            </div>
+
+            <div class="subsection-label">For Branders</div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><span class="term" data-tip="Euler - Ethervista's flat-fee pricing model">Quick Token Launch</span></h3>
+                    <p>Launch on <span class="term" data-tip="Community token standard">Ethervista</span> via Etherfun. Token live in minutes with built-in fee distribution to your community.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI Project Wizard</h3>
+                    <p>Instant community support. Answers questions about your project 24/7. Learns from your docs and improves over time.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AI Project Supervision</h3>
+                    <p>Admin dashboard for your team. Analytics, moderation controls, and knowledge gap detection.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Ticket Tool</h3>
+                    <p>Telegram-native support tickets. Track issues, route to team members, close loops.</p>
+                </div>
+            </div>
+
+            <div class="subsection-label">For Ambassadors & Contributors</div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Ask & Earn</h3>
+                    <p>Get paid to ask quality questions. AI scores depth, novelty, and cooperation. +1-10 pts per question.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Bug & Earn</h3>
+                    <p>Report bugs, earn Thanks points. +5 pts for verified issues. Help improve, get rewarded.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Promote & Earn</h3>
+                    <p>Auto-verified X engagement. No more screenshot hell. Original content scores higher.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Meme Contests</h3>
+                    <p>Community-voted meme competitions. Top creators earn from the tip pool.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><span class="term" data-tip="Staking - locking tokens to earn rewards over time">Lock</span> & Earn</h3>
+                    <p>Lock tokens into brand success. <span class="term" data-tip="Rewards auto-reinvested">Auto-growing</span> rewards. Mobile staking for BONZI holders.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Task System</h3>
+                    <p>AI-vetted quests with <span class="term" data-tip="Ethereum's currency">ETH</span> rewards. Complete tasks, earn from the community pool.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><span class="term" data-tip="Spotting fake accounts">Fake-Account-Protected</span> Tipping</h3>
+                    <p>Only humans earn. AI fingerprinting catches bots and copy-paste farmers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>ETH Claims</h3>
+                    <p>Hit 100 points, claim ETH. Trading fees fund the tip pool. Real value for real contributions.</p>
+                </div>
+            </div>
+
+            <a href="/?slot=open" class="section-cta retail">
+                Play to Unlock
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- DEVELOPER - GITHUB OSS -->
+    <section class="access-section" id="developer">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-icon dev">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                </div>
+                <div class="section-title">
+                    <h2>GitHub <span class="term" data-tip="Code anyone can use and modify">Open Source</span> <span class="status-badge live">Live</span></h2>
+                    <div class="tagline">Fork it. Integrate it. Ship <span class="term" data-tip="Financial tools without banks">token features</span> faster.</div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Widget Library</h3>
+                    <p>Buy buttons, QR codes, embeds. Drop token trading into any website in minutes.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>MIT Licensed</h3>
+                    <p>Free forever, no strings. Use it commercially, modify it, ship it. No tracking, no fees.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Self-Hostable</h3>
+                    <p>Your server, your rules. Full control over data, uptime, and customization.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Token Tools</h3>
+                    <p>Ready-made integrations for Ethervista, staking displays, and token analytics.</p>
+                </div>
+            </div>
+
+            <a href="dev.html" class="section-cta dev">
+                Open Developer Guide
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ENTERPRISE - BaaS -->
+    <section class="access-section" id="enterprise">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-icon enterprise">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <div class="section-title">
+                    <h2>Bonzi-as-a-Service</h2>
+                    <div class="tagline">Deploy Bonzi for your community. Self-host free or we run it for €25/mo.</div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Same bot, your community</h3>
+                    <p>The trust scoring, fake account detection, and cooperation tracking that runs our community - running yours.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Answers from your docs</h3>
+                    <p>Upload your project docs. Bonzi answers community questions from them. No training required.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><span class="term" data-tip="Shared fake-account detection">Shared fake account data</span></h3>
+                    <p>A wallet flagged for gaming in one Bonzi community gets flagged in yours. Shared defense, private data.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Open source</h3>
+                    <p>Same code either way. No feature gates, no interaction limits. Self-host or let us handle it.</p>
+                </div>
+            </div>
+
+            <a href="/baas.html" class="section-cta enterprise">
+                Get Started
+            </a>
+        </div>
+    </section>
+
+    <!-- AGENT - FOR AI AGENTS -->
+    <section class="access-section" id="agent">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-icon agent">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+                </div>
+                <div class="section-title">
+                    <h2>For AI Agents <span class="status-badge coming">In Development</span></h2>
+                    <div class="tagline">Agents as peers. Query trust scores. Verify cooperation. Detect gaming.</div>
+                </div>
+            </div>
+
+            <div class="subsection-label">Live Tools</div>
+            <div class="feature-grid">
+                <div class="feature-card" style="border-left: 3px solid var(--green);">
+                    <h3>Wallet Vetter <span class="status-badge" style="background: var(--green); font-size: 10px;">LIVE</span></h3>
+                    <p>Check any <span class="term" data-tip="Digital account for crypto">wallet's</span> trust score. 8 independent signals, one anti-gameable tier (S/A/B/C/F). <a href="vetter/">Try it free</a> or use <code>/vetx</code> in Telegram.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Trust Scores</h3>
+                    <p>0-100 score with tier grading. Years of community management distilled into searchable reputation data.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Cooperation Signals</h3>
+                    <p>Help, gratitude, education - weighted by genuine value exchange. Battle-tested rules from real community operations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gaming Detection</h3>
+                    <p><span class="term" data-tip="Anti-sybil - detecting coordinated fake accounts">Anti-fraud</span> patterns from real manipulation attempts. Flags <span class="term" data-tip="Faking volume by self-trading">fake trading</span>, <span class="term" data-tip="Networks of automated accounts">automated spam networks</span>, and copy-paste farming.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Mutual Verification</h3>
+                    <p>The <span class="term" data-tip="AI that provides verified data">trust system</span> exposes its own metrics. Verify it the same way we verify humans.</p>
+                </div>
+            </div>
+
+            <div class="subsection-label">Use Cases (Query the trust system for...)</div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Pre-Transaction Trust</h3>
+                    <p>Before transacting with a human, check their cooperation history. Tier S/A = proceed. Tier C/F = caution.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Community Health Checks</h3>
+                    <p>Is this community project legitimate? Cooperation signals reveal real community vs paid shills.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Gaming Detection</h3>
+                    <p>Is this engagement genuine? <span class="term" data-tip="Quality metric from flat fees">Engagement score</span> separates authentic value exchange from fake trading.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Verify the Trust System's Data</h3>
+                    <p>Query our metrics. Check our <span class="term" data-tip="AI agent identity standard">agent identity standard</span>. You verify us the same way we verify humans.</p>
+                </div>
+            </div>
+
+            <a href="manual/#agents" class="section-cta agent">
+                Agent Documentation
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- STAKEHOLDER SECTION -->
+    <section class="stakeholder-section">
+        <h2>Which stakeholder are you?</h2>
+        <p>Different paths to the same ecosystem. Find your journey.</p>
+
+        <div class="stakeholder-grid">
+            <div class="stakeholder-card">
+                <h3>Branders</h3>
+                <p>Use the tokeniser to launch your brand on Ethervista.</p>
+                <a href="manual/#branders">Launch guide &rarr;</a>
+            </div>
+            <div class="stakeholder-card">
+                <h3>Ambassadors</h3>
+                <p>Earn ETH through tasks, questions, promotions, and bug reports.</p>
+                <a href="manual/#ambassadors">Earning guide &rarr;</a>
+            </div>
+            <div class="stakeholder-card">
+                <h3>Investors</h3>
+                <p>Buy tokens on brand websites using our embeddable widgets.</p>
+                <a href="manual/#investors">How to buy &rarr;</a>
+            </div>
+            <div class="stakeholder-card">
+                <h3>Stakers</h3>
+                <p>Lock tokens into brand success. Auto-growing returns on Ethervista.</p>
+                <a href="manual/#stakers">Staking guide &rarr;</a>
+            </div>
+            <div class="stakeholder-card">
+                <h3>Developers</h3>
+                <p>Integrate token widgets. Fork the open source code. Ship faster.</p>
+                <a href="manual/#developers">Dev docs &rarr;</a>
+            </div>
+            <div class="stakeholder-card">
+                <h3>AI Agents</h3>
+                <p>Query reputation scores. <span class="term" data-tip="AI systems talking directly">AI-to-AI</span> tipping. Agent identity standard integration.</p>
+                <a href="manual/#agents">Agent docs &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to tokenise your brand?</h2>
+        <p>Self-host free, or let us run it for you.</p>
+        <a href="/?slot=open" class="cta-btn">Play to Unlock</a>
+    </section>
+
+    <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+            <span style="color: #71717A;">sponsored by
+                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                    Ethervista
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">by co-founder
+                <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Defiants
+                </a>
+            </span>
+            <span style="color: #71717A;">·</span>
+            <span style="color: #71717A;">profits fund
+                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Unidos Projects
+                </a>
+            </span>
+        </div>
+        <div style="font-size: 12px; color: #71717A;">
+            open source · mit license · <a href="privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+    <!-- i18n Loader - loads translations from shared JSON files -->
+    <script src="js/i18n-loader.js"></script>
 </body>
 </html>

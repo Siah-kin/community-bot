@@ -2535,7 +2535,7 @@
             var val = pwEl.value.trim().toUpperCase();
             if (val === 'EULER26') {
                 sessionStorage.setItem('bonzi_alpha', '1');
-                window.location.replace(new URL('stake/', window.location.href).href);
+                window.location.replace(new URL('about.html', window.location.href).href);
             } else if (val.length > 0) {
                 errEl.textContent = getStr().errWrong;
                 pwEl.value = '';

@@ -84,36 +84,46 @@
     }
 
     // Initialize i18n
+    let _initRan = false;
     async function init() {
         // Get saved language or default to English
         const savedLang = localStorage.getItem('bonzi_lang') || 'en';
 
-        // Set up language selector if it exists
+        // Apply translations on every init pass (covers nav-injected i18n strings
+        // that were not in DOM during the first pass).
+        if (savedLang !== 'en') {
+            await applyTranslations(savedLang);
+        }
+
+        // Set up language selector if it exists - bind once even if init runs twice.
         const langSelect = document.getElementById('lang-select');
-        if (langSelect) {
+        if (langSelect && !langSelect.dataset.i18nBound) {
             langSelect.value = savedLang;
             langSelect.addEventListener('change', (e) => {
                 applyTranslations(e.target.value);
             });
+            langSelect.dataset.i18nBound = '1';
         }
 
-        // Apply translations if not English (English is already in HTML as default)
-        if (savedLang !== 'en') {
-            await applyTranslations(savedLang);
-        }
+        _initRan = true;
     }
 
     // Export for manual use if needed
     window.bonziI18n = {
         applyTranslations,
         loadTranslations,
-        getBasePath
+        getBasePath,
+        init
     };
 
-    // Initialize when DOM is ready
+    // Initialize when DOM is ready (catches static [data-i18n] elements)
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
+
+    // Re-initialize after nav-loader injects the nav (catches the lang-select
+    // and any [data-i18n] strings inside the injected nav/mobile-menu).
+    document.addEventListener('nav:loaded', init);
 })();

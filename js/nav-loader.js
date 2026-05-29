@@ -47,7 +47,7 @@
             initLanguageSelect();
             initContactLinks();
             initDemoButton();
-            initBrazilButton();
+            // initBrazilButton(); // disabled 2026-05-29: operator request, language switching now uses nav lang-select uniformly
 
             document.dispatchEvent(new CustomEvent('nav:loaded'));
         } catch (err) {

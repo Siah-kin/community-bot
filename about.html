@@ -151,30 +151,6 @@
             transition: color 0.15s;
         }
         .footer-links a:hover { color: var(--purple); }
-
-        .footer-lang {
-            margin-top: 6px;
-            display: flex;
-            gap: 14px;
-        }
-
-        .footer-lang button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.95rem;
-            color: var(--gray);
-            padding: 4px 8px;
-            transition: color 0.15s;
-        }
-
-        .footer-lang button:hover,
-        .footer-lang button.active {
-            color: var(--purple);
-        }
-
-        body.dark-mode .footer-lang button.active { color: var(--purple-light); }
     </style>
 </head>
 <body data-theme-default="light">
@@ -216,27 +192,8 @@
             <span>,</span>
             <a href="/privacy.html" data-i18n="footer.privacy">privacy policy</a>
         </p>
-        <div class="footer-lang" role="group" aria-label="Language">
-            <button type="button" data-lang="pt" title="Português">🇧🇷</button>
-            <button type="button" data-lang="en" title="English">EN</button>
-            <button type="button" data-lang="zh" title="中文">中</button>
-        </div>
     </div>
 </footer>
-
-<script>
-(function() {
-    var current = localStorage.getItem('bonzi_lang') || 'en';
-    document.querySelectorAll('.footer-lang button').forEach(function(b) {
-        if (b.getAttribute('data-lang') === current) b.classList.add('active');
-        b.addEventListener('click', function() {
-            var lang = b.getAttribute('data-lang');
-            localStorage.setItem('bonzi_lang', lang);
-            location.reload();
-        });
-    });
-})();
-</script>
 
 </body>
 </html>

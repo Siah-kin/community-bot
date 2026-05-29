@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <script src="js/nav-loader.js?v=20260221" defer></script>
-    <script src="js/i18n-loader.js?v=20260529b" defer></script>
+    <script src="js/i18n-loader.js?v=20260529c" defer></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,10 +45,11 @@
         body.dark-mode .about-section h2 { color: var(--purple-light); }
         body.dark-mode .about-section p { color: #D4D4D8; }
         body.dark-mode .about-section p strong { color: #fff; }
-        body.dark-mode .about-footer { background: var(--black); border-top-color: #27272A; color: #A1A1AA; }
-        body.dark-mode .about-footer a { color: #A1A1AA; }
+        body.dark-mode .about-footer { background: var(--black); border-top-color: #27272A; color: #E4E4E7; }
+        body.dark-mode .about-footer a { color: #E4E4E7; }
         body.dark-mode .about-footer a:hover { color: #fff; }
-        body.dark-mode .footer-sep { color: #52525B; }
+        body.dark-mode .footer-sep { color: #71717A; }
+        body.dark-mode .footer-brand { color: #fff; }
 
         .about-hero {
             padding: 140px 40px 40px;
@@ -140,13 +141,13 @@
         }
         body.dark-mode .footer-brand { color: #fff; }
 
-        .footer-sep { color: var(--black); }
+        .footer-sep { color: inherit; }
 
-        .footer-sponsor { font-size: 0.85rem; color: var(--black); }
+        .footer-sponsor { font-size: 0.85rem; color: inherit; }
 
         .footer-links { display: flex; gap: 6px; }
         .footer-links a {
-            color: var(--black);
+            color: inherit;
             text-decoration: none;
             transition: color 0.15s;
         }

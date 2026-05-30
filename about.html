@@ -152,6 +152,46 @@
             transition: color 0.15s;
         }
         .footer-links a:hover { color: var(--purple); }
+
+        .answer-row {
+            display: flex;
+            gap: 10px;
+            max-width: 420px;
+            margin-top: 8px;
+        }
+        .answer-row input {
+            flex: 1;
+            padding: 12px 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--black);
+            background: var(--white);
+            border: 2px solid var(--purple);
+            outline: none;
+        }
+        .answer-row input::placeholder { color: var(--gray); }
+        .answer-row input:focus { border-color: var(--purple-dark); }
+        .answer-row button {
+            padding: 12px 22px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            color: var(--white);
+            background: var(--purple);
+            border: 2px solid var(--purple);
+            cursor: pointer;
+            transition: filter 0.15s;
+        }
+        .answer-row button:hover { filter: brightness(1.08); }
+        .answer-row button:disabled { opacity: 0.6; cursor: default; }
+        .answer-msg {
+            min-height: 1.4em;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: var(--purple);
+        }
+        body.dark-mode .answer-row input { color: #fff; background: #18181B; }
+        body.dark-mode .answer-msg { color: var(--purple-light); }
     </style>
 </head>
 <body data-theme-default="light">
@@ -174,6 +214,15 @@
             <p data-i18n="about.p3">Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.</p>
             <p data-i18n="about.p4">Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.</p>
             <p class="guess-line" data-i18n="about.last">Can you guess what it will be?</p>
+        </section>
+
+        <section class="about-section" id="answer">
+            <p data-i18n="about.answer_prompt">Think you have it? Type your answer to open the door.</p>
+            <div class="answer-row">
+                <input type="text" id="riddle-answer" placeholder="answer" maxlength="24" autocomplete="off" spellcheck="false" aria-label="Riddle answer">
+                <button type="button" id="riddle-submit" data-i18n="about.answer_submit">Submit</button>
+            </div>
+            <p class="answer-msg" id="riddle-msg">&nbsp;</p>
         </section>
 
     </div>
@@ -204,6 +253,70 @@
         </p>
     </div>
 </footer>
+
+<script>
+(function () {
+    var input = document.getElementById('riddle-answer');
+    var btn = document.getElementById('riddle-submit');
+    var msg = document.getElementById('riddle-msg');
+    if (!input || !btn || !msg) return;
+
+    function apiOrigin() {
+        var meta = document.querySelector('meta[name="bonzi-api-origin"]');
+        var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
+        return raw || 'https://bonzi-v5.onrender.com';
+    }
+
+    function fingerprint() {
+        var KEY = 'bonzi_slot_fp_v1';
+        try {
+            var v = localStorage.getItem(KEY);
+            if (v && v.length >= 8) return v;
+            v = 'fp-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 18);
+            localStorage.setItem(KEY, v);
+            return v;
+        } catch (e) {
+            return 'fp-fallback-' + String(Date.now()) + Math.random().toString(36).slice(2, 14);
+        }
+    }
+
+    function submit() {
+        var val = (input.value || '').trim();
+        if (!val) return;
+        btn.disabled = true;
+        msg.textContent = 'Checking…';
+        fetch(apiOrigin() + '/api/slotgame/skill_claim', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fingerprint: fingerprint(), answer: val })
+        }).then(function (r) {
+            return r.text().then(function (t) {
+                var j = null;
+                try { j = JSON.parse(t); } catch (e) { j = null; }
+                return { ok: r.ok, json: j };
+            });
+        }).then(function (res) {
+            btn.disabled = false;
+            var j = res.json || {};
+            if (res.ok && j.success && j.deep_link) {
+                msg.textContent = 'Door open. Sending you to Telegram…';
+                window.location.href = j.deep_link;
+                return;
+            }
+            msg.textContent = (j && j.error) ? j.error : 'Not quite. Read the page again.';
+            input.value = '';
+            setTimeout(function () { msg.innerHTML = '&nbsp;'; }, 2500);
+        }).catch(function () {
+            btn.disabled = false;
+            msg.textContent = 'Network error — try again.';
+            setTimeout(function () { msg.innerHTML = '&nbsp;'; }, 2500);
+        });
+    }
+
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+})();
+</script>
 
 </body>
 </html>

@@ -11,9 +11,9 @@
     <meta name="bonzi-waitlist-mode" content="read_only">
     <meta name="bonzi-notify-signup-url" content="">
     <title>Bonzi Vista — Slot</title>
-    <meta name="description" content="Spin on bonzivista.org. Jackpot flows to Telegram. Closed-alpha funnel.">
+    <meta name="description" content="Spin on bonzivista.org. Hidden door, signed Telegram claim, waiting-room ritual.">
     <meta property="og:title" content="Bonzi Vista">
-    <meta property="og:description" content="Spin the lever; your receipt lands in Telegram. Closed-alpha funnel—not a support desk.">
+    <meta property="og:description" content="Spin the lever; signed Telegram claims land in Telegram. Waiting-room ritual, not a support desk.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="robots" content="noindex, nofollow">
@@ -157,6 +157,15 @@
             color: #8a8a8a;
             text-transform: none;
             letter-spacing: normal;
+        }
+
+        .win98-neon-body .skill-prompt {
+            margin: 0 0 0.8rem;
+            color: #3f3f46;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            min-height: 2.4em;
         }
 
         .win98-neon-body .spin-count {
@@ -805,16 +814,10 @@
             text-align: center;
             text-shadow: 0 0 6px rgba(0, 255, 0, 0.45);
         }
-        .slot-reel .word.hint-word {
-            color: #c4b5fd;
-            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
-            font-size: 18px;
-            text-shadow: 0 0 6px rgba(196, 181, 253, 0.6);
-        }
-        .slot-reel .word.key-word {
-            color: #d4af37;
-            text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
-        }
+	        .slot-reel .word.key-word {
+	            color: #d4af37;
+	            text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+	        }
         .slot-bonzi-img {
             height: 48px;
             width: auto;
@@ -1085,7 +1088,7 @@
             font-family: inherit;
         }
 
-        /* === POST-UNLOCK (keypad bypass placeholder) === */
+	        /* === POST-UNLOCK PLACEHOLDER === */
         .holding {
             text-align: center;
             padding: 2rem;
@@ -1240,7 +1243,7 @@
                             <div class="lcd-marquee-caption" aria-live="polite">
                                 <span class="lcd-dash-line" aria-hidden="true"></span>
                                 <div class="lcd-marquee-lines lcd-label-stack">
-                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your</span>
+                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Clues:</span>
                                 </div>
                                 <span class="lcd-dash-line" aria-hidden="true"></span>
                             </div>
@@ -1272,18 +1275,19 @@
                         <span class="status-led"></span>
                         <span class="status-text" id="status-ready">Ready</span>
                         <span class="status-divider">|</span>
-                        <span class="clue-msg" id="clue-msg">Gold reel = Telegram prize. Purple = code hints.</span>
+	                        <span class="clue-msg" id="clue-msg">Slot = luck. Land the gold reel to win. To crack the code instead, use the Hidden door.</span>
                     </div>
                 </div>
             </div>
 
             <div class="win98-neon-window" data-pane="access">
                 <div class="win98-titlebar">
-                    <span class="win98-title" id="access-win-title">Access control</span>
+                    <span class="win98-title" id="access-win-title">Hidden door</span>
                 </div>
                 <div class="win98-neon-body">
+                    <p class="skill-prompt" id="skill-prompt">Loading the hidden door…</p>
                     <div class="access-row">
-                        <input type="text" id="pw" placeholder="access code" maxlength="12" autocomplete="off" spellcheck="false">
+                        <input type="text" id="pw" placeholder="door answer" maxlength="12" autocomplete="off" spellcheck="false">
                         <button type="button" id="submit-btn">Submit</button>
                     </div>
                     <p class="error-msg" id="err">&nbsp;</p>
@@ -1438,7 +1442,7 @@
                 notifyBottomCta: 'Open signup',
                 notifyBottomPending: '',
                 winSlotTitle: 'Bonzi slot',
-                winAccessTitle: 'Access control',
+                winAccessTitle: 'Hidden door',
                 winUpdatesTitle: 'Update notifications',
                 accessSubmitLabel: 'Submit',
                 waitlistThanks: "You're on the list.",
@@ -1447,12 +1451,12 @@
                 waitlistModalOk: 'OK',
                 waitlistJoin: 'Submit',
                 waitlistEmailPh: 'username@msn.com',
-                lcdPrefix: 'Tokenise your',
+	                lcdPrefix: 'Clues:',
                 statusIdle: 'Ready',
                 statusStarting: 'Waking up...',
-                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
-                clueBar: 'Gold reel = Telegram prize. Purple = code hints.',
-                pwPlaceholder: 'access code',
+	                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
+	                clueBar: 'Slot = luck. Land the gold reel to win. To crack the code instead, use the Hidden door.',
+                pwPlaceholder: 'door answer',
                 footerMitLic: 'GitHub',
                 footerPrivacy: 'privacy policy',
                 prizeTitle: 'BONZI JACKPOT!',
@@ -1466,12 +1470,12 @@
                 jackpotOk: 'Jackpot!',
                 prizeFail: 'Could not get prize link.',
                 prizeNet: 'Network error.',
-                reelInteresting: 'Interesting…',
-                reelFluff: 'No prize on this stop. Gold scroll = Telegram.',
+                reelInteresting: 'Try the hidden door.',
+                reelFluff: 'No claim on this stop. Try again.',
                 spinNetErr: 'Network error — try again.',
                 triesLeft: function(a, m) { return 'Tries left: ' + a + ' / ' + m; },
-                errWrong: 'Wrong code.',
-                logoHint: 'Hint: surname + 26.',
+	                errWrong: 'Wrong code.',
+	                logoHint: 'Hint: open about.html.',
                 infoTitle: 'Rules',
                 leverAria: 'Pull lever',
                 leverPullLabel: 'PULL',
@@ -1484,12 +1488,7 @@
                 winampStopped: 'STOPPED',
                 winampPlayState: 'PLAY',
                 winampPauseState: 'PAUSE',
-                hints: {
-                    'Euler': 'Code hint: math name on reel (not money).',
-                    '26': 'Code hint: 26 = A–Z. Use with the other hint.',
-                    'e^i\u03C0+1=0': 'Code hint: famous formula. Same keypad game.',
-                    'K\u00F6nigsberg': 'Code hint: old bridge puzzle. Same keypad game.'
-                },
+	                hints: {},
                 docTitle: 'Bonzi Vista — Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1514,7 +1513,7 @@
                 notifyBottomCta: 'Abrir cadastro',
                 notifyBottomPending: '',
                 winSlotTitle: 'Bonzi slot',
-                winAccessTitle: 'Controle de acesso',
+                winAccessTitle: 'Porta oculta',
                 winUpdatesTitle: 'Notifica\u00E7\u00F5es',
                 accessSubmitLabel: 'Enviar',
                 waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
@@ -1523,12 +1522,12 @@
                 waitlistModalOk: 'OK',
                 waitlistJoin: 'Enviar',
                 waitlistEmailPh: 'usuario@exemplo.com',
-                lcdPrefix: 'Tokenise sua',
+                lcdPrefix: 'Pistas:',
                 statusIdle: 'Pronto',
                 statusStarting: 'Acordando...',
                 serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente a alavanca de novo em alguns segundos.',
-                clueBar: 'Rolo dourado = pr\u00EAmio no Telegram. Roxo = dicas do c\u00F3digo.',
-                pwPlaceholder: 'c\u00F3digo',
+	                clueBar: 'Slot = sorte. Pare no rolo dourado para ganhar. Para decifrar o código, use a Porta oculta.',
+                pwPlaceholder: 'resposta da porta',
                 footerMitLic: 'GitHub',
                 footerPrivacy: 'pol\u00EDtica de privacidade',
                 prizeTitle: 'BONZI JACKPOT!',
@@ -1542,12 +1541,12 @@
                 jackpotOk: 'Jackpot!',
                 prizeFail: 'N\u00E3o foi poss\u00EDvel obter o link.',
                 prizeNet: 'Erro de rede.',
-                reelInteresting: 'Interessante\u2026',
-                reelFluff: 'Sem pr\u00EAmio aqui. Scroll dourado = Telegram.',
+                reelInteresting: 'Tente a porta oculta.',
+                reelFluff: 'Sem claim nesta parada. Tente de novo.',
                 spinNetErr: 'Erro de rede \u2014 tente de novo.',
                 triesLeft: function(a, m) { return 'Tentativas: ' + a + ' / ' + m; },
                 errWrong: 'C\u00F3digo errado.',
-                logoHint: 'Dica: sobrenome + 26.',
+	                logoHint: 'Dica: abra about.html.',
                 infoTitle: 'Regras',
                 leverAria: 'Puxar alavanca',
                 leverPullLabel: 'PUXAR',
@@ -1560,12 +1559,7 @@
                 winampStopped: 'PARADO',
                 winampPlayState: 'TOCAR',
                 winampPauseState: 'PAUSA',
-                hints: {
-                    'Euler': 'Dica do c\u00F3digo: nome de matem\u00E1tico no rolo (n\u00E3o \u00E9 dinheiro).',
-                    '26': 'Dica: 26 = A-Z. Junte \u00E0 outra dica.',
-                    'e^i\u03C0+1=0': 'Dica: f\u00F3rmula famosa. Mesmo jogo do teclado.',
-                    'K\u00F6nigsberg': 'Dica: quebra-cabe\u00E7a cl\u00E1ssico. Mesmo jogo do teclado.'
-                },
+	                hints: {},
                 docTitle: 'Bonzi Vista — Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1590,7 +1584,7 @@
                 notifyBottomCta: '\u6253\u5f00\u6ce8\u518c',
                 notifyBottomPending: '',
                 winSlotTitle: 'Bonzi \u8001\u864e\u673a',
-                winAccessTitle: '\u8bbf\u95ee\u63a7\u5236',
+                winAccessTitle: '\u9690\u85cf\u95e8',
                 winUpdatesTitle: '\u66f4\u65b0\u901a\u77e5',
                 accessSubmitLabel: '\u63d0\u4ea4',
                 waitlistThanks: '\u5df2\u52a0\u5165\u540d\u5355\u3002',
@@ -1599,12 +1593,12 @@
                 waitlistModalOk: '\u786e\u5b9a',
                 waitlistJoin: '\u63d0\u4ea4',
                 waitlistEmailPh: 'you@example.com',
-                lcdPrefix: '\u5c06\u60a8\u7684\u8d44\u4ea7\u4ee3\u5e01\u5316',
+                lcdPrefix: '\u63d0\u793a\uff1a',
                 statusIdle: '\u5c31\u7eea',
                 statusStarting: '\u5524\u9192\u4e2d\u2026',
                 serviceWarmingClue: 'Bonzi \u6b63\u5728\u5524\u9192\uff0c\u8bf7\u51e0\u79d2\u540e\u518d\u8bd5\u6447\u6746\u3002',
-                clueBar: '\u91d1\u8272\u8f6c\u8f6e = Telegram \u5956\u54c1\u3002\u7d2b\u8272 = \u5bc6\u7801\u63d0\u793a\u3002',
-                pwPlaceholder: '\u8bbf\u95ee\u7801',
+                clueBar: '\u8001\u864e\u673a\u9760\u8fd0\u6c14\uff1a\u8f6c\u5230\u91d1\u8272\u8f6c\u8f6e\u5373\u4e2d\u5956\u3002\u60f3\u7834\u89e3\u5bc6\u7801\uff0c\u8bf7\u7528\u9690\u85cf\u95e8\u3002',
+                pwPlaceholder: '\u95e8\u7684\u7b54\u6848',
                 footerMitLic: 'GitHub',
                 footerPrivacy: '\u9690\u79c1\u653f\u7b56',
                 prizeTitle: 'BONZI JACKPOT!',
@@ -1618,12 +1612,12 @@
                 jackpotOk: '\u5927\u5956\uff01',
                 prizeFail: '\u65e0\u6cd5\u83b7\u53d6\u5956\u54c1\u94fe\u63a5\u3002',
                 prizeNet: '\u7f51\u7edc\u9519\u8bef\u3002',
-                reelInteresting: '\u6709\u610f\u601d\u2026',
-                reelFluff: '\u672c\u6b21\u672a\u4e2d\u5956\u3002\u91d1\u8272\u5377\u8f74 = Telegram\u3002',
+                reelInteresting: '\u8bd5\u8bd5\u9690\u85cf\u95e8\u3002',
+                reelFluff: '\u8fd9\u6b21\u6ca1\u6709 claim\u3002\u518d\u8bd5\u4e00\u6b21\u3002',
                 spinNetErr: '\u7f51\u7edc\u9519\u8bef - \u8bf7\u91cd\u8bd5\u3002',
                 triesLeft: function(a, m) { return '\u5269\u4f59\u6b21\u6570\uff1a' + a + ' / ' + m; },
                 errWrong: '\u5bc6\u7801\u9519\u8bef\u3002',
-                logoHint: '\u63d0\u793a\uff1a\u59d3 + 26\u3002',
+	                logoHint: '\u63d0\u793a\uff1a\u6253\u5f00 about.html\u3002',
                 infoTitle: '\u89c4\u5219',
                 leverAria: '\u62c9\u52a8\u6447\u6746',
                 leverPullLabel: '\u62c9',
@@ -1636,12 +1630,7 @@
                 winampStopped: '\u5df2\u505c\u6b62',
                 winampPlayState: '\u64ad\u653e',
                 winampPauseState: '\u6682\u505c',
-                hints: {
-                    'Euler': '\u5bc6\u7801\u63d0\u793a\uff1a\u8f6c\u8f6e\u4e0a\u7684\u6570\u5b66\u5bb6\u540d\uff08\u4e0d\u662f\u94b1\uff09\u3002',
-                    '26': '\u63d0\u793a\uff1a26 = A-Z\u3002\u4e0e\u53e6\u4e00\u6761\u63d0\u793a\u7ed3\u5408\u4f7f\u7528\u3002',
-                    'e^i\u03C0+1=0': '\u63d0\u793a\uff1a\u8457\u540d\u516c\u5f0f\u3002\u540c\u6837\u7684\u952e\u76d8\u6e38\u620f\u3002',
-                    'K\u00F6nigsberg': '\u63d0\u793a\uff1a\u53e4\u8001\u7684\u6865\u6881\u8c1c\u9898\u3002\u540c\u6837\u7684\u952e\u76d8\u6e38\u620f\u3002'
-                },
+	                hints: {},
                 docTitle: 'Bonzi Vista — \u8001\u864e\u673a',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1718,12 +1707,19 @@
             return typeof u === 'string' && /^https:\/\//i.test(u.trim());
         }
 
+        function waitlistModeIsReadOnly() {
+            var meta = document.querySelector('meta[name="bonzi-waitlist-mode"]');
+            return !!meta && String(meta.content || '').trim().toLowerCase() === 'read_only';
+        }
+
         function refreshNotifyBottom(url, looksTelegram, L) {
             var sec = document.getElementById('email-updates');
             var title = document.getElementById('notify-bottom-title');
             var sub = document.getElementById('notify-bottom-sub');
             var cta = document.getElementById('notify-bottom-cta');
             var pend = document.getElementById('notify-bottom-pending');
+            var form = document.getElementById('waitlist-form');
+            var thanks = document.getElementById('waitlist-thanks');
             if (!sec || !title || !sub || !cta || !pend) return;
             title.textContent = L.notifyBottomTitle;
             sub.textContent = L.notifyBottomSub;
@@ -1732,8 +1728,17 @@
                 return;
             }
             sec.classList.remove('hidden');
-            var form = document.getElementById('waitlist-form');
-            var thanks = document.getElementById('waitlist-thanks');
+            if (waitlistModeIsReadOnly()) {
+                if (form) form.classList.add('hidden');
+                if (thanks) {
+                    thanks.textContent = '';
+                    thanks.classList.add('hidden');
+                }
+                cta.classList.add('hidden');
+                pend.textContent = 'Email updates are read-only on this page.';
+                pend.classList.remove('hidden');
+                return;
+            }
             if (url && notifySignupUrlIsAllowedHttps(url)) {
                 if (form) form.classList.add('hidden');
                 if (thanks) thanks.classList.add('hidden');
@@ -1887,22 +1892,17 @@
         }
 
         // === SLOT WORDS ===
-        // Purple stops = keypad bypass hints only. Gold scroll = Telegram jackpot (server-backed).
-        var words = [
-            'Launch', 'Brand', 'Token', 'Future', 'Dream',
-            { t: 'Euler', cls: 'hint-word' },           // CLUE
-            'Protocol', 'Chain', 'Empire', 'Vision',
-            'Node', 'Vault', 'Trust', 'Oracle', 'Layer',
-            { t: '26', cls: 'hint-word' },               // CLUE
-            'Guild', 'Arena', 'Realm', 'Bridge', 'Fund',
-            'Legacy', 'Mission', 'Manifesto', 'Network',
-            { t: 'e^i\u03C0+1=0', cls: 'hint-word' },  // CLUE (Euler's identity)
-            'Treasury', 'Forge', 'Signal', 'Archive',
-            'Lab', 'Syndicate', 'Tribe', 'Venture',
-            { t: 'K\u00F6nigsberg', cls: 'hint-word' }, // CLUE (Seven Bridges)
-            'Index', 'Hedge', 'Course', 'Platform',
-            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll — jackpot
-        ];
+	        // Concrete clue words only; the gold scroll still marks the jackpot.
+	        var words = [
+	            'Spin', 'Door', 'Email', 'Telegram', 'Claim',
+	            'Waitlist', 'Update', 'Open', 'Read', 'Button',
+	            'Site', 'Hidden', 'Interest', 'Later',
+	            'Link', 'Ticket', 'Profile',
+	            'Home', 'Notice', 'Save', 'Check', 'Press',
+	            'Finish', 'Wait', 'List', 'Visit',
+	            'Note', 'Message', 'Send', 'Return', 'Badge', 'Receipt',
+	            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll — jackpot
+	        ];
 
         var reel = document.getElementById('slot-reel');
         var lever = document.getElementById('slot-lever');
@@ -2105,18 +2105,81 @@
             });
         }
 
-        function postSlotWin(attemptToken) {
+	        function postSlotWin(attemptToken) {
+	            var api = getApiOrigin();
+	            var url = api + '/api/slotgame/win';
+	            return _slotFetchJson(url, {
+	                method: 'POST',
+	                headers: { 'Content-Type': 'application/json' },
+	                body: JSON.stringify({
+	                    fingerprint: getDeviceFingerprint(),
+	                    tier: 'bonzi',
+	                    attempt_token: attemptToken
+	                })
+	            });
+	        }
+
+        function postSkillClaim(challengeId, answer) {
             var api = getApiOrigin();
-            var url = api + '/api/slotgame/win';
+            var url = api + '/api/slotgame/skill_claim';
             return _slotFetchJson(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     fingerprint: getDeviceFingerprint(),
-                    tier: 'bonzi',
-                    attempt_token: attemptToken
+                    challenge_id: challengeId,
+                    answer: answer
                 })
             });
+        }
+
+        var skillPromptEl = document.getElementById('skill-prompt');
+        var skillChallengeId = '';
+        var skillChallengeLoading = null;
+
+        function setSkillPrompt(text) {
+            if (skillPromptEl) skillPromptEl.textContent = text || '';
+        }
+
+        function loadSkillChallenge() {
+            if (skillChallengeLoading) return skillChallengeLoading;
+            setSkillPrompt('Loading the hidden door…');
+            var api = getApiOrigin();
+            skillChallengeLoading = _slotFetchJson(api + '/api/slotgame/skill_challenge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+            }).then(function (res) {
+                skillChallengeLoading = null;
+                var j = res.json || {};
+                if (res.httpOk && j.success && j.challenge_id) {
+                    skillChallengeId = j.challenge_id;
+                    setSkillPrompt(j.prompt || 'Read the prompt, then type the answer.');
+                    return true;
+                }
+                skillChallengeId = '';
+                setSkillPrompt('Read the prompt again in a moment.');
+                errEl.textContent = (j && j.error) ? j.error : 'Hidden door unavailable right now.';
+                return false;
+            }).catch(function () {
+                skillChallengeLoading = null;
+                skillChallengeId = '';
+                setSkillPrompt('Read the prompt again in a moment.');
+                errEl.textContent = 'Hidden door unavailable right now.';
+                return false;
+            });
+            return skillChallengeLoading;
+        }
+
+        function applySkillChallengePayload(payload) {
+            if (!payload) return false;
+            var challenge = payload.challenge || payload;
+            if (challenge && challenge.challenge_id) {
+                skillChallengeId = challenge.challenge_id;
+                setSkillPrompt(challenge.prompt || 'Read the prompt, then type the answer.');
+                return true;
+            }
+            return false;
         }
 
         var infoBtn = document.getElementById('slot-info-btn');
@@ -2203,27 +2266,21 @@
 
                 machine.classList.remove('jackpot');
 
-                var target;
-                var hintIndices = [];
-                words.forEach(function(w, i) {
-                    if (typeof w === 'object' && w.cls === 'hint-word') hintIndices.push(i);
-                });
+	                var target;
 
                 var jackpotIdx = -1;
                 words.forEach(function(w, i) {
                     if (typeof w === 'object' && w.cls === 'key-word') jackpotIdx = i;
                 });
 
-                var jackpotChance = Math.min(0.4, Math.max(0, (spins - 4) * 0.08));
-                var clueChance = Math.min(0.5, 0.3 + (spins * 0.04));
-
-                if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
-                    target = jackpotIdx;
-                } else if (Math.random() < clueChance && hintIndices.length > 0) {
-                    target = hintIndices[Math.floor(Math.random() * hintIndices.length)];
-                } else {
-                    target = Math.floor(Math.random() * words.length);
-                }
+	                var jackpotChance = Math.min(0.05, Math.max(0, (spins - 4) * 0.01));
+	                if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
+	                    target = jackpotIdx;
+	                } else {
+	                    // Gold comes only from the deliberate jackpot roll above; keep it out of the random fallback.
+	                    target = Math.floor(Math.random() * words.length);
+	                    if (target === jackpotIdx) target = (target + 1) % words.length;
+	                }
 
                 var targetPos = target * wordH;
                 var rotations = 3 + Math.floor(Math.random() * 2);
@@ -2255,14 +2312,7 @@
 
                         var landed = words[target];
                         if (typeof landed === 'object') {
-                            if (landed.cls === 'hint-word') {
-                                ding();
-                                machine.classList.add('jackpot');
-                                cluesFound[landed.t] = true;
-                                var H = getStr().hints;
-                                clueEl.textContent = (H && H[landed.t]) ? H[landed.t] : getStr().reelInteresting;
-                                spinning = false;
-                            } else if (landed.cls === 'key-word') {
+	                            if (landed.cls === 'key-word') {
                                 ding();
                                 machine.classList.add('jackpot');
                                 clueEl.textContent = getStr().jackpotClaiming;
@@ -2486,6 +2536,10 @@
         (function wireWaitlistForm() {
             var form = document.getElementById('waitlist-form');
             if (!form) return;
+            if (waitlistModeIsReadOnly()) {
+                form.classList.add('hidden');
+                return;
+            }
             form.addEventListener('submit', function(ev) {
                 ev.preventDefault();
                 var em = document.getElementById('waitlist-email');
@@ -2530,23 +2584,47 @@
             });
         })();
 
-        // Access code check
-        function tryCode() {
-            var val = pwEl.value.trim().toUpperCase();
-            if (val === 'EULER26') {
-                sessionStorage.setItem('bonzi_alpha', '1');
-                window.location.replace(new URL('about.html', window.location.href).href);
-            } else if (val.length > 0) {
-                errEl.textContent = getStr().errWrong;
-                pwEl.value = '';
-                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2000);
-            }
-        }
+	        // Skill-door claim: issue a signed CRACKER code, then open Telegram.
+	        function tryCode() {
+	            var val = pwEl.value.trim();
+	            if (!val) return;
+	            if (!skillChallengeId) {
+	                errEl.textContent = 'Loading the hidden door…';
+	                loadSkillChallenge();
+	                return;
+	            }
+	            submitBtn.disabled = true;
+	            errEl.textContent = getStr().spinChecking;
+	            postSkillClaim(skillChallengeId, val).then(function(res) {
+	                submitBtn.disabled = false;
+	                var j = res.json || {};
+	                if (res.httpOk && j.success && j.deep_link) {
+	                    window.location.href = j.deep_link;
+	                    return;
+	                }
+	                if (res.status === 428 || j.reason === 'challenge_required') {
+	                    if (applySkillChallengePayload(j)) {
+	                        errEl.textContent = j.error || 'Read the new prompt, then try again.';
+	                    } else {
+	                        errEl.textContent = j.error || 'Read the prompt again in a moment.';
+	                    }
+	                } else {
+	                    errEl.textContent = (j && j.error) ? j.error : getStr().errWrong;
+	                }
+	                pwEl.value = '';
+	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
+	            }).catch(function() {
+	                submitBtn.disabled = false;
+	                errEl.textContent = getStr().prizeNet;
+	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
+	            });
+	        }
 
         pwEl.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') tryCode();
         });
         submitBtn.addEventListener('click', tryCode);
+        loadSkillChallenge();
 
         // Easter egg: click logo 5 times for a hint
         var logoClicks = 0;

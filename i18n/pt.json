@@ -123,7 +123,7 @@
   "farmers.raidearn.3": "Bot verifica: tweet existe, conteudo original, qualidade da conta",
   "farmers.raidearn.4": "Pontos concedidos automaticamente",
   "farmers.tasks.title": "Sistema de Tarefas",
-  "farmers.tasks.desc": "Missoes verificadas por IA com recompensas em ETH. Complete tarefas, ganhe do pool da comunidade.",
+  "farmers.tasks.desc": "Atribuicoes verificadas por IA com recompensas em ETH. Complete o trabalho, ganhe do pool da comunidade.",
   "farmers.tasks.1": "Veja tarefas disponiveis no painel",
   "farmers.tasks.2": "Envie prova de conclusao",
   "farmers.tasks.3": "IA verifica, pontos concedidos",
@@ -242,5 +242,8 @@
   "about.p2": "Toda onda traz hype, depois saída, depois silêncio. Quem chegou primeiro arca com a perda. Quem gerenciava a sala já se foi antes da poeira baixar.",
   "about.p3": "Modelos estão inundando a sala com conteúdo que ninguém escreveu. Sinal real está ficando mais difícil de encontrar. A confiança entre holders e founders está no menor ponto em uma década.",
   "about.p4": "Algo precisa ficar entre o hype e os holders. Algo que mantenha os founders responsáveis quando ninguém está olhando. Algo difícil de fingir e difícil de gamear.",
-  "about.last": "Você consegue adivinhar o que será?"
+  "about.hub_lead": "Você entrou. O resto está no bot.",
+  "about.hub_intro": "Seu selo fica no seu perfil do Telegram. Abra o Bonzi para configurar seu perfil e vê-lo.",
+  "about.act_bot": "Abrir o bot Bonzi",
+  "about.act_stake": "Stake"
 }

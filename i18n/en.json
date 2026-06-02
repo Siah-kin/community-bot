@@ -123,7 +123,7 @@
   "farmers.raidearn.3": "Bot verifies: tweet exists, original content, account quality",
   "farmers.raidearn.4": "Points awarded automatically",
   "farmers.tasks.title": "Task System",
-  "farmers.tasks.desc": "AI-vetted quests with ETH rewards. Complete tasks, earn from the community pool.",
+  "farmers.tasks.desc": "AI-vetted assignments with ETH rewards. Complete the work, earn from the community pool.",
   "farmers.tasks.1": "View available tasks in dashboard",
   "farmers.tasks.2": "Submit proof of completion",
   "farmers.tasks.3": "AI verifies, points awarded",
@@ -254,5 +254,8 @@
   "about.p2": "Every wave brings hype, then exit, then silence. The people who showed up first take the loss. The people who managed the room are gone before the dust settles.",
   "about.p3": "Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.",
   "about.p4": "Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.",
-  "about.last": "Can you guess what it will be?"
+  "about.hub_lead": "You're in. The rest is in the bot.",
+  "about.hub_intro": "Your badge lives on your Telegram profile. Open Bonzi to set up your profile and see it.",
+  "about.act_bot": "Open the Bonzi bot",
+  "about.act_stake": "Stake"
 }

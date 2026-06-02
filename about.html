@@ -153,53 +153,32 @@
         }
         .footer-links a:hover { color: var(--purple); }
 
-        .answer-row {
+        .hub-actions {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
             max-width: 420px;
             margin-top: 8px;
         }
-        .answer-row input {
-            flex: 1;
-            padding: 12px 14px;
-            font-size: 1rem;
-            font-family: inherit;
-            color: var(--black);
-            background: var(--white);
-            border: 2px solid var(--purple);
-            outline: none;
-        }
-        .answer-row input::placeholder { color: var(--gray); }
-        .answer-row input:focus { border-color: var(--purple-dark); }
-        .answer-row button {
-            padding: 12px 22px;
+        .hub-action {
+            display: block;
+            padding: 14px 18px;
             font-size: 1rem;
             font-weight: 700;
             font-family: inherit;
             color: var(--white);
             background: var(--purple);
             border: 2px solid var(--purple);
-            cursor: pointer;
+            text-decoration: none;
             transition: filter 0.15s;
         }
-        .answer-row button:hover { filter: brightness(1.08); }
-        .answer-row button:disabled { opacity: 0.6; cursor: default; }
-        .answer-prompt {
-            min-height: 1.4em;
-            margin-top: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--purple-dark);
-        }
-        body.dark-mode .answer-prompt { color: var(--purple-light); }
-        .answer-msg {
-            min-height: 1.4em;
-            margin-top: 12px;
-            font-size: 0.95rem;
+        .hub-action:hover { filter: brightness(1.08); }
+        .hub-action.secondary {
             color: var(--purple);
+            background: transparent;
         }
-        body.dark-mode .answer-row input { color: #fff; background: #18181B; }
-        body.dark-mode .answer-msg { color: var(--purple-light); }
+        .hub-action.secondary:hover { background: rgba(124, 58, 237, 0.08); }
+        body.dark-mode .hub-action.secondary { color: var(--purple-light); border-color: var(--purple-light); }
     </style>
 </head>
 <body data-theme-default="light">
@@ -221,17 +200,16 @@
             <p data-i18n="about.p2">Every wave brings hype, then exit, then silence. The people who showed up first take the loss. The people who managed the room are gone before the dust settles.</p>
             <p data-i18n="about.p3">Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.</p>
             <p data-i18n="about.p4">Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.</p>
-            <p class="guess-line" data-i18n="about.last">Can you guess what it will be?</p>
+            <p class="guess-line" data-i18n="about.last">Who was born in '99 and sneaked into people's inboxes?</p>
         </section>
 
-        <section class="about-section" id="answer">
-            <p>Read the prompt below, then type the answer.</p>
-            <p class="answer-prompt" id="riddle-prompt">Loading the hidden door…</p>
-            <div class="answer-row">
-                <input type="text" id="riddle-answer" placeholder="door answer" maxlength="24" autocomplete="off" spellcheck="false" aria-label="Door answer">
-                <button type="button" id="riddle-submit" data-i18n="about.answer_submit">Submit</button>
+        <section class="about-section" id="hub">
+            <p class="lead-line" data-i18n="about.hub_lead">You're in. The rest is in the bot.</p>
+            <p data-i18n="about.hub_intro">Your badge lives on your Telegram profile. Open Bonzi to set up your profile and see it. Want to crack the code yourself? The hidden door is on the home page.</p>
+            <div class="hub-actions">
+                <a class="hub-action" href="https://t.me/Bonzivista_bot" target="_blank" rel="noopener noreferrer" data-i18n="about.act_bot">Open the Bonzi bot</a>
+                <a class="hub-action secondary" href="/stake-tg.html" data-i18n="about.act_stake">Stake</a>
             </div>
-            <p class="answer-msg" id="riddle-msg">&nbsp;</p>
         </section>
 
     </div>
@@ -262,140 +240,6 @@
         </p>
     </div>
 </footer>
-
-<script>
-(function () {
-    var input = document.getElementById('riddle-answer');
-    var btn = document.getElementById('riddle-submit');
-    var msg = document.getElementById('riddle-msg');
-    var promptEl = document.getElementById('riddle-prompt');
-    if (!input || !btn || !msg || !promptEl) return;
-
-    function apiOrigin() {
-        var meta = document.querySelector('meta[name="bonzi-api-origin"]');
-        var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
-        return raw || 'https://bonzi-v5.onrender.com';
-    }
-
-    function fingerprint() {
-        var KEY = 'bonzi_slot_fp_v1';
-        try {
-            var v = localStorage.getItem(KEY);
-            if (v && v.length >= 8) return v;
-            v = 'fp-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 18);
-            localStorage.setItem(KEY, v);
-            return v;
-        } catch (e) {
-            return 'fp-fallback-' + String(Date.now()) + Math.random().toString(36).slice(2, 14);
-        }
-    }
-
-    var challengeId = '';
-    var challengeLoading = null;
-
-    function setPrompt(text) {
-        if (promptEl) promptEl.textContent = text || '';
-    }
-
-    function applyChallengePayload(payload) {
-        if (!payload) return false;
-        var challenge = payload.challenge || payload;
-        if (challenge && challenge.challenge_id) {
-            challengeId = challenge.challenge_id;
-            setPrompt(challenge.prompt || 'Read the prompt below, then type the answer.');
-            return true;
-        }
-        return false;
-    }
-
-    function loadChallenge() {
-        if (challengeLoading) return challengeLoading;
-        setPrompt('Loading the hidden door…');
-        challengeLoading = fetch(apiOrigin() + '/api/slotgame/skill_challenge', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fingerprint: fingerprint() })
-        }).then(function (r) {
-            return r.text().then(function (t) {
-                var j = null;
-                try { j = JSON.parse(t); } catch (e) { j = null; }
-                return { ok: r.ok, json: j, status: r.status };
-            });
-        }).then(function (res) {
-            challengeLoading = null;
-            var j = res.json || {};
-            if (res.ok && j.success && j.challenge_id) {
-                challengeId = j.challenge_id;
-                setPrompt(j.prompt || 'Read the prompt below, then type the answer.');
-                return true;
-            }
-            challengeId = '';
-            setPrompt('Read the prompt below, then type the answer.');
-            msg.textContent = (j && j.error) ? j.error : 'Hidden door unavailable right now.';
-            return false;
-        }).catch(function () {
-            challengeLoading = null;
-            challengeId = '';
-            setPrompt('Read the prompt below, then type the answer.');
-            msg.textContent = 'Hidden door unavailable right now.';
-            return false;
-        });
-        return challengeLoading;
-    }
-
-    function submit() {
-        var val = (input.value || '').trim();
-        if (!val) return;
-        if (!challengeId) {
-            msg.textContent = 'Loading the hidden door…';
-            loadChallenge();
-            return;
-        }
-        btn.disabled = true;
-        msg.textContent = 'Checking…';
-        fetch(apiOrigin() + '/api/slotgame/skill_claim', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fingerprint: fingerprint(), challenge_id: challengeId, answer: val })
-        }).then(function (r) {
-            return r.text().then(function (t) {
-                var j = null;
-                try { j = JSON.parse(t); } catch (e) { j = null; }
-                return { ok: r.ok, json: j, status: r.status };
-            });
-        }).then(function (res) {
-            btn.disabled = false;
-            var j = res.json || {};
-            if (res.ok && j.success && j.deep_link) {
-                msg.textContent = 'Door open. Sending you to Telegram…';
-                window.location.href = j.deep_link;
-                return;
-            }
-            if (res.status === 428 || j.reason === 'challenge_required') {
-                if (applyChallengePayload(j)) {
-                    msg.textContent = j.error || 'Read the new prompt, then try again.';
-                } else {
-                    msg.textContent = j.error || 'Read the prompt again in a moment.';
-                }
-                input.value = '';
-                setTimeout(function () { msg.innerHTML = '&nbsp;'; }, 2500);
-                return;
-            }
-            msg.textContent = (j && j.error) ? j.error : 'Not quite. Read the page again.';
-            input.value = '';
-            setTimeout(function () { msg.innerHTML = '&nbsp;'; }, 2500);
-        }).catch(function () {
-            btn.disabled = false;
-            msg.textContent = 'Network error — try again.';
-            setTimeout(function () { msg.innerHTML = '&nbsp;'; }, 2500);
-        });
-    }
-
-    btn.addEventListener('click', submit);
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
-    loadChallenge();
-})();
-</script>
 
 </body>
 </html>

@@ -25,7 +25,7 @@
         const prefix = getPathPrefix();
 
         try {
-            const _v = '20260602b';
+            const _v = '20260602c';
         const [navRes, menuRes] = await Promise.all([
                 fetch(prefix + 'includes/nav.html?v=' + _v),
                 fetch(prefix + 'includes/mobile-menu.html?v=' + _v)

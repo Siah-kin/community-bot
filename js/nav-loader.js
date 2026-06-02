@@ -3,7 +3,7 @@
     // Skip for dev.html (dev bypass) and index.html (is the gate)
     const _page = location.pathname.split('/').pop() || 'index.html';
     // Public surfaces: no alpha gate (privacy must stay readable from bot/Telegram without slot session).
-    const _publicPages = new Set(['index.html', 'dev.html', '404.html', 'privacy.html', 'euler26.html', 'about.html', 'about']);
+    const _publicPages = new Set(['index.html', 'dev.html', '404.html', 'privacy.html', 'euler26.html', 'about.html', 'about', 'stake.html', 'stake-tg.html', 'stake']);
     if (!_publicPages.has(_page)) {
         if (sessionStorage.getItem('bonzi_alpha') !== '1') {
             location.href = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1) || '/';

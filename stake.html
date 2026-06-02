@@ -23,6 +23,30 @@
     </script>
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Web vs Telegram context: on the web this is a branded desktop page with the site nav;
+         inside Telegram it stays the mini-app (no nav, native close). -->
+    <link rel="stylesheet" href="/css/nav.css?v=20260602d">
+    <script src="/js/nav-loader.js?v=20260602d" defer></script>
+    <script>
+      (function () {
+        var w = window.Telegram && window.Telegram.WebApp;
+        var inTg = !!(w && ((w.initData && w.initData.length) || (w.platform && w.platform !== 'unknown')));
+        document.documentElement.classList.add(inTg ? 'ctx-tg' : 'ctx-web');
+      })();
+    </script>
+    <style>
+      /* Web: dark brand nav on top, hide the Telegram-only close X and the duplicate
+         lang toggle. Telegram: mini-app chrome stays, no site nav. */
+      #nav-container { display: none; }
+      html.ctx-web #nav-container { display: flex; z-index: 10050; background: #0A0A0A; border-bottom: 1px solid #27272A; }
+      html.ctx-web #nav-container .nav-link { color: rgba(255,255,255,0.85); }
+      html.ctx-web #nav-container .nav-link:hover { color: #fff; }
+      html.ctx-web #nav-container .nav-logo { color: #fff; }
+      html.ctx-web #connectOverlayCloseBtn,
+      html.ctx-web #stakeGlobalLang { display: none; }
+      html.ctx-tg #nav-container,
+      html.ctx-tg #mobile-menu-container { display: none; }
+    </style>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1318,6 +1342,8 @@
     </style>
 </head>
 <body>
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
     <div id="stakeGlobalLang" class="stake-global-lang connect-overlay-lang" role="group" aria-label="Page language">
         <button type="button" class="lang-btn lang-btn-main" data-lang="pt" id="langBtnPt" title="Português">&#x1F1E7;&#x1F1F7;</button>
         <button type="button" class="lang-btn lang-btn-main" data-lang="en" id="langBtnEn" title="English">&#x1F1FA;&#x1F1F8;</button>

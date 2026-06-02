@@ -44,6 +44,10 @@
       html.ctx-web #nav-container .nav-logo { color: #fff; }
       html.ctx-web #connectOverlayCloseBtn,
       html.ctx-web #stakeGlobalLang { display: none; }
+      /* On web the fixed nav sits above the overlay; offset the overlay so the
+         Bonzi logo/title are not hidden behind it. align-items:flex-start keeps
+         the top reachable when content is taller than the viewport. */
+      html.ctx-web .connect-overlay { padding-top: 88px; align-items: safe flex-start; }
       html.ctx-tg #nav-container,
       html.ctx-tg #mobile-menu-container { display: none; }
     </style>

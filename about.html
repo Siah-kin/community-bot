@@ -152,6 +152,9 @@
             transition: color 0.15s;
         }
         .footer-links a:hover { color: var(--purple); }
+        /* Footer links black on the white footer (light mode). The body.dark-mode
+           rules above are more specific, so they still win in dark mode. */
+        .about-footer a { color: var(--black); }
 
         .hub-actions {
             display: flex;
@@ -200,7 +203,7 @@
             <p data-i18n="about.p2">Every wave brings hype, then exit, then silence. The people who showed up first take the loss. The people who managed the room are gone before the dust settles.</p>
             <p data-i18n="about.p3">Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.</p>
             <p data-i18n="about.p4">Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.</p>
-            <p class="guess-line" data-i18n="about.last">Who was born in '99 and sneaked into people's inboxes?</p>
+            <p class="guess-line">That's the gap Bonzi was built to fill.</p>
         </section>
 
         <section class="about-section" id="hub">

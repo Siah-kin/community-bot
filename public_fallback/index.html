@@ -1894,9 +1894,9 @@
         // === SLOT WORDS ===
 	        // Concrete clue words plus visible emoji stops; the gold scroll still marks the jackpot.
 	        var words = [
-	            'Spin', 'Door', 'Email', 'Telegram', 'Claim',
+	            'Spin', 'Passage', 'Email', 'Telegram', 'Claim',
 	            'Waitlist', 'Update', 'Open', 'Read', 'Button',
-	            'Site', 'Hidden', 'Interest', 'Later',
+	            'Site', 'Code', 'Interest', 'Later',
 	            'Link', 'Ticket', 'Profile',
 	            'Home', 'Notice', 'Save', 'Check', 'Press',
 	            'Finish', 'Wait', 'List', 'Visit',
@@ -2111,6 +2111,7 @@
 	            var url = api + '/api/slotgame/win';
 	            return _slotFetchJson(url, {
 	                method: 'POST',
+	                credentials: 'include',
 	                headers: { 'Content-Type': 'application/json' },
 	                body: JSON.stringify({
 	                    fingerprint: getDeviceFingerprint(),
@@ -2125,6 +2126,7 @@
             var url = api + '/api/slotgame/skill_claim';
             return _slotFetchJson(url, {
                 method: 'POST',
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     fingerprint: getDeviceFingerprint(),

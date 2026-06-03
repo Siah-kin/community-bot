@@ -1397,6 +1397,7 @@
             <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
             <h3 id="prize-title">BONZI JACKPOT!</h3>
             <p class="prize-desc" id="prize-desc"></p>
+            <p class="prize-code" id="prize-code-display" style="font-family:monospace;font-size:0.85rem;letter-spacing:0.04em;margin:0.4rem 0 0.2rem;color:#D4AF37;word-break:break-all;"></p>
             <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
             <button class="close-prize" id="close-prize"><span id="close-prize-label">close</span></button>
         </div>
@@ -1459,9 +1460,12 @@
                 pwPlaceholder: 'code word',
                 footerMitLic: 'GitHub',
                 footerPrivacy: 'privacy policy',
-                prizeTitle: 'BONZI JACKPOT!',
-                prizeDesc: 'You hit the <b>gold jackpot</b> reel (Bonzi scroll). Open Telegram with the button below.',
+                prizeTitle: 'Lucky spin. 😎',
+                prizeDesc: 'You hit the golden emblem. Your prize code:',
                 tgOpen: 'Open @Bonzivista_bot',
+                skillPrizeTitle: 'You found it. 💜🤫',
+                skillPrizeDesc: 'You recognised the sign. Your badge code:',
+                skillTgOpen: 'Claim badge in @Bonzivista_bot',
                 closeModal: 'close',
                 spinChecking: 'Checking…',
                 spinNoReceipt: 'No receipt from server.',
@@ -1901,7 +1905,7 @@
 	            'Home', 'Notice', 'Save', 'Check', 'Press',
 	            'Finish', 'Wait', 'List', 'Visit',
 	            'Note', 'Message', 'Send', 'Return', 'Badge', 'Receipt',
-	            '💜', '🤫', '😎', '🍌',
+	            '💜🤫', '😎', '🍌',
 	            { t: '\u{1F4DC}', cls: 'key-word' },         // Gold scroll — jackpot
 	        ];
 
@@ -2326,6 +2330,10 @@
                                     if (wres.httpOk && wj.success && wj.deep_link) {
                                         clueEl.textContent = getStr().jackpotOk;
                                         tgLink.href = wj.deep_link;
+                                        var _prt=document.getElementById('prize-title'); if(_prt) _prt.textContent=getStr().prizeTitle||'Lucky spin. 😎';
+                                        var _prd=document.getElementById('prize-desc'); if(_prd) _prd.innerHTML=getStr().prizeDesc||'';
+                                        var _pcd=document.getElementById('prize-code-display'); if(_pcd) _pcd.textContent=wj.code||wj.signed_code||'';
+                                        var _tgl=document.getElementById('tg-link-label'); if(_tgl) _tgl.textContent=getStr().tgOpen||'Open @Bonzivista_bot';
                                         setTimeout(function() {
                                             prizeOverlay.classList.add('open');
                                         }, 400);
@@ -2602,7 +2610,12 @@
 	                submitBtn.disabled = false;
 	                var j = res.json || {};
 	                if (res.httpOk && j.success && j.deep_link) {
-	                    window.location.href = j.deep_link;
+	                    tgLink.href = j.deep_link;
+	                    var _prt2=document.getElementById('prize-title'); if(_prt2) _prt2.textContent=getStr().skillPrizeTitle||'You found it. 💜🤫';
+	                    var _prd2=document.getElementById('prize-desc'); if(_prd2) _prd2.innerHTML=getStr().skillPrizeDesc||'You recognised the sign. Your badge code:';
+	                    var _pcd2=document.getElementById('prize-code-display'); if(_pcd2) _pcd2.textContent=j.code||j.signed_code||'';
+	                    var _tgl2=document.getElementById('tg-link-label'); if(_tgl2) _tgl2.textContent=getStr().skillTgOpen||'Claim badge in @Bonzivista_bot';
+	                    prizeOverlay.classList.add('open');
 	                    return;
 	                }
 	                if (res.status === 428 || j.reason === 'challenge_required') {

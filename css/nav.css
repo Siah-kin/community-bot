@@ -413,12 +413,40 @@ body.dark-mode .menu-gated {
     .nav-links { display: none; }
     .nav-connect-btn { padding: 8px 14px; font-size: 13px; }
     .hamburger { display: flex; }
+    .nav-lang-flags { display: none; } /* flags move into the mobile menu at this breakpoint */
 }
 
 /* Tablet - hide language selector */
 @media (max-width: 900px) {
     .nav-lang-select { display: none; }
 }
+
+/* Mobile menu language flags */
+.mobile-lang-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 8px;
+}
+.mobile-lang-flags button {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+    font-family: inherit;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.mobile-lang-flags button:hover,
+.mobile-lang-flags button.active { background: #7C3AED; border-color: #7C3AED; }
 
 /* Mobile - reduce logo size */
 @media (max-width: 600px) {

@@ -284,7 +284,8 @@
     }
 
     function _i18nSetActive(lang) {
-        document.querySelectorAll('#nav-lang-flags button').forEach(function(b) {
+        // sync active state across both the desktop nav flags and the mobile menu flags
+        document.querySelectorAll('#nav-lang-flags button, .mobile-lang-flags button').forEach(function(b) {
             b.classList.toggle('active', b.getAttribute('data-lang') === lang);
         });
     }
@@ -297,15 +298,29 @@
         _i18nSetActive(lang);
     }
 
+    function _wireFlagGroup(container) {
+        if (!container) return;
+        container.querySelectorAll('button[data-lang]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                _i18nSetLang(btn.getAttribute('data-lang'));
+            });
+        });
+    }
+
     function initLanguageSelect() {
         _i18nCacheOrig();
-        var flags = document.getElementById('nav-lang-flags');
-        if (flags) {
-            flags.querySelectorAll('button[data-lang]').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    _i18nSetLang(btn.getAttribute('data-lang'));
-                });
+        _wireFlagGroup(document.getElementById('nav-lang-flags'));
+        // Mobile menu flags are injected dynamically; wire them after menu loads
+        var mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+            _wireFlagGroup(mobileMenu.querySelector('.mobile-lang-flags'));
+        } else {
+            // mobile-menu may not be loaded yet; observe for it
+            var obs = new MutationObserver(function(_, o) {
+                var mm = document.getElementById('mobile-menu');
+                if (mm) { _wireFlagGroup(mm.querySelector('.mobile-lang-flags')); o.disconnect(); }
             });
+            obs.observe(document.body, { childList: true, subtree: true });
         }
         // Restore saved language preference on page load
         var saved = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';

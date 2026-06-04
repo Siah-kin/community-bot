@@ -155,21 +155,28 @@ body.dark-mode .nav-divider {
 .nav-lang-flags {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
 }
 .nav-lang-flags button {
     background: none;
     border: none;
-    padding: 4px 5px;
-    font-size: 16px;
+    padding: 3px 6px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
     border-radius: 0;
-    opacity: 0.55;
-    transition: opacity 0.15s;
+    opacity: 0.75;
+    transition: opacity 0.15s, color 0.15s;
     line-height: 1;
+    color: var(--black);
+    letter-spacing: 0.01em;
 }
-.nav-lang-flags button:hover { opacity: 0.9; }
-.nav-lang-flags button.active { opacity: 1; box-shadow: 0 2px 0 0 #7C3AED; }
+body.dark-mode .nav-lang-flags button { color: #fff; }
+.nav-lang-flags button:hover { opacity: 1; color: #7C3AED; }
+body.dark-mode .nav-lang-flags button:hover { color: #A78BFA; }
+.nav-lang-flags button.active { opacity: 1; color: #7C3AED; box-shadow: 0 2px 0 0 #7C3AED; }
+body.dark-mode .nav-lang-flags button.active { color: #A78BFA; box-shadow: 0 2px 0 0 #A78BFA; }
 
 .theme-toggle {
     background: transparent;

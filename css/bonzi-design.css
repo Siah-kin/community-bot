@@ -55,6 +55,8 @@ body {
     background: var(--white);
     color: var(--black);
     line-height: 1.6;
+    padding-top: 56px; /* fixed nav height — prevents content sliding under it */
+    scroll-padding-top: 72px; /* anchor links land below the nav */
 }
 
 /* ========================================

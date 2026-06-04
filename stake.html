@@ -47,7 +47,7 @@
       /* On web the fixed nav sits above the overlay; offset the overlay so the
          Bonzi logo/title are not hidden behind it. align-items:flex-start keeps
          the top reachable when content is taller than the viewport. */
-      html.ctx-web .connect-overlay { padding-top: 88px; align-items: safe flex-start; }
+      html.ctx-web .connect-overlay { padding-top: 68px; align-items: safe flex-start; }
       html.ctx-tg #nav-container,
       html.ctx-tg #mobile-menu-container { display: none; }
     </style>
@@ -1561,7 +1561,7 @@
         </div>
 
         <!-- Pool snapshot + FAQ (reads after staking UI) -->
-        <div class="stats-bar metrics-hero-wrap">
+        <div class="stats-bar metrics-hero-wrap" style="display:none">
             <p id="metricsKickerPool" class="metrics-section-kicker">Pool snapshot</p>
             <div class="metrics-hero-grid" role="group" aria-label="Pool metrics" id="metricsHeroGridPool" data-aria-en="Pool metrics" data-aria-pt="Métricas do pool" data-aria-zh="资金池指标">
                 <div class="metric-tile">
@@ -2699,6 +2699,18 @@
             b.addEventListener('click', function () {
                 var L = b.getAttribute('data-lang');
                 if (L === 'pt' || L === 'en' || L === 'zh') applyStakeOverlayLang(L);
+            });
+        });
+
+        // Bridge nav flags → stake i18n (nav-loader fires 'nav:loaded' after injecting flags)
+        document.addEventListener('nav:loaded', function () {
+            document.querySelectorAll('#nav-lang-flags button[data-lang]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var L = btn.getAttribute('data-lang');
+                    var stakeL = (L === 'pt' || L === 'zh') ? L : 'en';
+                    applyStakeOverlayLang(stakeL);
+                    applyStakeMainShellLang(stakeL);
+                });
             });
         });
 

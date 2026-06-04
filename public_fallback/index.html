@@ -2169,7 +2169,7 @@
                 }
                 skillChallengeId = '';
                 setSkillPrompt('Read the prompt again in a moment.');
-                errEl.textContent = (j && j.error) ? j.error : 'Passage unavailable right now.';
+                errEl.textContent = (j && j.error && j.error !== 'kill_switch_enabled') ? j.error : 'Passage unavailable right now.';
                 return false;
             }).catch(function () {
                 skillChallengeLoading = null;
@@ -2633,7 +2633,7 @@
 	                        errEl.textContent = j.error || 'Read the prompt again in a moment.';
 	                    }
 	                } else {
-	                    errEl.textContent = (j && j.error) ? j.error : getStr().errWrong;
+	                    var _e2 = (j && j.error && j.error !== "kill_switch_enabled") ? j.error : ""; errEl.textContent = _e2 || getStr().errWrong;
 	                }
 	                pwEl.value = '';
 	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);

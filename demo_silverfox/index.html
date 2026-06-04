@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetting - See What Works | Bonzi</title>
+    <meta name="description" content="Closed alpha vetting page. See the support and debug loop work, step by step. Open source, MIT licensed.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vetting - See What Works | Bonzi">
+    <meta property="og:description" content="Closed alpha vetting page. See the support and debug loop work, step by step. Open source, MIT licensed.">
+    <meta property="og:image" content="https://bonzivista.org/bonzi-logo.png">
+    <meta property="og:url" content="https://bonzivista.org/demo_silverfox/">
+    <link rel="canonical" href="https://bonzivista.org/demo_silverfox/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <script src="../js/nav-loader.js?v=20260221" defer></script>
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #d4af37;
+            --green: #10B981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Dark Mode */
+        body.dark-mode { background: #0A0A0A; color: #FFFFFF; }
+
+        /* Layout */
+        .docs-layout {
+            display: flex;
+            padding-top: 56px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--gray-light);
+            padding: 32px 20px;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            overflow-y: auto;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-mode .sidebar { background: #1F1F23; border-right-color: rgba(255,255,255,0.05); }
+
+        .sidebar-section { margin-bottom: 28px; }
+        .sidebar-section h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        body.dark-mode .sidebar-section h4 { color: #71717A; }
+
+        .sidebar-section a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--black);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 0;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+        }
+        body.dark-mode .sidebar-section a { color: #A1A1AA; }
+        .sidebar-section a:hover { background: rgba(124, 58, 237, 0.1); color: var(--purple); }
+        body.dark-mode .sidebar-section a:hover { background: rgba(124, 58, 237, 0.15); color: var(--purple-light); }
+        .sidebar-section a.active { background: var(--purple); color: white; }
+
+        .stakeholder-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px !important;
+            margin-bottom: 6px !important;
+            border-radius: 0 !important;
+            font-weight: 600 !important;
+        }
+        .stakeholder-btn .icon { font-size: 18px; display: inline-flex; align-items: center; }
+        .stakeholder-btn .icon svg { width: 18px; height: 18px; fill: #7c3aed; }
+        .section-icon { display: inline; margin-right: 8px; }
+        .section-icon svg { width: 24px; height: 24px; fill: #7c3aed; vertical-align: middle; }
+
+        /* Main Content */
+        .docs-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 48px 64px;
+            max-width: 900px;
+        }
+
+        /* Audience Section Backgrounds (subtle color coding) */
+        .audience-section {
+            margin-left: -64px;
+            margin-right: -64px;
+            padding: 48px 64px;
+            transition: background 0.3s ease;
+        }
+        .audience-section.farmers {
+            background: linear-gradient(to bottom, rgba(124, 58, 237, 0.03), rgba(124, 58, 237, 0.05));
+        }
+        .audience-section.holders {
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.03), rgba(212, 175, 55, 0.05));
+        }
+        .audience-section.developers {
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.03), rgba(59, 130, 246, 0.05));
+        }
+        body.dark-mode .audience-section.farmers {
+            background: linear-gradient(to bottom, rgba(124, 58, 237, 0.05), rgba(124, 58, 237, 0.08));
+        }
+        body.dark-mode .audience-section.holders {
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.05), rgba(212, 175, 55, 0.08));
+        }
+        body.dark-mode .audience-section.developers {
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.08));
+        }
+        .docs-content h1 {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .docs-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 64px;
+            margin-bottom: 16px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+        }
+        body.dark-mode .docs-content h2 { border-top-color: rgba(255,255,255,0.08); }
+        .docs-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 12px;
+        }
+        .docs-content p {
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        body.dark-mode .docs-content p { color: #A1A1AA; }
+        .docs-content p strong { color: var(--black); }
+        body.dark-mode .docs-content p strong { color: var(--white); }
+
+        .docs-content code {
+            background: var(--gray-light);
+            padding: 2px 8px;
+            border-radius: 0;
+            font-size: 14px;
+            color: var(--purple);
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+        body.dark-mode .docs-content code { background: #27272A; color: var(--purple-light); }
+
+        .docs-content pre {
+            background: var(--black);
+            color: var(--white);
+            padding: 20px 24px;
+            border-radius: 0;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .docs-content pre code { background: none; padding: 0; color: inherit; }
+
+        .docs-content ol, .docs-content ul {
+            color: var(--gray);
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+        body.dark-mode .docs-content ol, body.dark-mode .docs-content ul { color: #A1A1AA; }
+        .docs-content li { margin-bottom: 8px; line-height: 1.7; }
+        .docs-content li strong { color: var(--black); }
+        body.dark-mode .docs-content li strong { color: var(--white); }
+
+        .docs-content a { color: var(--purple); text-decoration: none; }
+        .docs-content a:hover { text-decoration: underline; }
+        body.dark-mode .docs-content a { color: var(--purple-light); }
+
+        /* Intro text */
+        .docs-intro {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        body.dark-mode .docs-intro { color: #A1A1AA; }
+
+        /* Highlight boxes */
+        .highlight-box {
+            padding: 20px 24px;
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 4px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+        body.dark-mode .highlight-box { background: rgba(124, 58, 237, 0.15); }
+        .highlight-box strong { color: var(--purple); }
+
+        /* Quick Know-How Cards (for diagonal readers) - GREEN = access */
+        .quick-knowhow {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.12));
+            border: 2px solid var(--green);
+            border-radius: 0;
+            padding: 32px;
+            margin: 32px 0 48px 0;
+            position: relative;
+        }
+        body.dark-mode .quick-knowhow {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.18));
+        }
+        .quick-knowhow-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        body.dark-mode .quick-knowhow-header { color: #34D399; }
+        .quick-knowhow-header svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--green);
+        }
+        body.dark-mode .quick-knowhow-header svg { fill: #34D399; }
+        .quick-knowhow-list {
+            display: grid;
+            gap: 16px;
+            list-style: none;
+            padding: 0;
+        }
+        .quick-knowhow-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--black);
+        }
+        body.dark-mode .quick-knowhow-list li { color: var(--white); }
+        .quick-knowhow-list li::before {
+            content: "→";
+            color: var(--green);
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        body.dark-mode .quick-knowhow-list li::before { color: #34D399; }
+        .quick-knowhow-list strong {
+            color: var(--green);
+            font-weight: 600;
+        }
+        body.dark-mode .quick-knowhow-list strong { color: #34D399; }
+
+        .success-box {
+            padding: 20px 24px;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--green);
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+        body.dark-mode .success-box { background: rgba(16, 185, 129, 0.15); }
+        .success-box strong { color: var(--green); }
+
+        /* Command table */
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        .command-table th {
+            background: var(--black);
+            color: var(--white);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .command-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-light);
+            color: var(--gray);
+        }
+        body.dark-mode .command-table td { border-bottom-color: #27272A; color: #A1A1AA; }
+        .command-table tr:nth-child(even) { background: var(--gray-light); }
+        body.dark-mode .command-table tr:nth-child(even) { background: #1F1F23; }
+        .command-table code { color: var(--purple); background: transparent; }
+
+        /* Feature link */
+        .feature-link {
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: rgba(124, 58, 237, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        body.dark-mode .feature-link { background: rgba(124, 58, 237, 0.15); }
+        .feature-link a { color: var(--purple); font-weight: 600; }
+        body.dark-mode .feature-link a { color: var(--purple-light); }
+
+        /* Accessibility: Skip Navigation */
+        .skip-nav {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--purple);
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            transition: top 0.3s;
+            font-weight: 600;
+        }
+        .skip-nav:focus { top: 0; }
+
+        /* Accessibility: Focus styles */
+        *:focus-visible {
+            outline: 3px solid var(--purple);
+            outline-offset: 2px;
+        }
+
+        /* Accessibility: Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Accessibility: High contrast mode */
+        @media (forced-colors: active) {
+            .highlight-box, .success-box { border: 2px solid; }
+            .stakeholder-btn { border: 1px solid; }
+        }
+
+        /* UI Mockup: Telegram-style phone frame */
+        .ui-mockup {
+            max-width: 360px;
+            margin: 24px auto;
+            background: #1A1A2E;
+            border: 2px solid rgba(124, 58, 237, 0.3);
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        .ui-mockup-header {
+            background: #16162A;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        .ui-mockup-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .ui-mockup-name {
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .ui-mockup-body {
+            padding: 16px;
+            min-height: 180px;
+        }
+        .ui-mockup-msg {
+            background: #2A2A4A;
+            color: #E0E0E0;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 85%;
+        }
+        .ui-mockup-btn {
+            display: block;
+            width: 100%;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            cursor: default;
+        }
+        .ui-mockup-btn.gold { border-color: rgba(212, 175, 55, 0.3); color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+        .ui-mockup-caption {
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        body.dark-mode .ui-mockup { border-color: rgba(124, 58, 237, 0.4); }
+
+        /* Audio guide placeholder */
+        .audio-guide {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--green);
+            margin: 16px 0;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        body.dark-mode .audio-guide { background: rgba(16, 185, 129, 0.12); }
+        .audio-guide svg { width: 24px; height: 24px; fill: var(--green); flex-shrink: 0; }
+
+        /* Step visual indicator */
+        .step-visual {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+        .step-visual .step-content { flex: 1; }
+        .step-visual .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--purple);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s; z-index: 50; }
+            .sidebar.open { transform: translateX(0); }
+            .docs-content { margin-left: 0; padding: 32px 24px; }
+            .docs-content h1 { font-size: 32px; }
+            .nav-links { display: none; }
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background: var(--gray-light);
+            color: var(--black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .lang-toggle:hover {
+            background: var(--purple);
+            color: white;
+        }
+        body.dark-mode .lang-toggle {
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body data-theme-default="light">
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    <nav id="nav-container" class="site-nav" aria-label="Main navigation"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <div class="docs-layout">
+        <aside class="sidebar" id="sidebar" role="complementary" aria-label="Vetting navigation">
+            <div class="sidebar-section">
+                <h4>Start</h4>
+                <a href="#start">Start here</a>
+                <a href="#loop">The loop</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Using it</h4>
+                <a href="#send">Send a ticket</a>
+                <a href="#after">After you send it</a>
+                <a href="#receipts">Receipts</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Vetting</h4>
+                <a href="#proven" style="color: var(--green);">What is proven now</a>
+                <a href="#opensource">Open source</a>
+            </div>
+            <div class="sidebar-section">
+                <h4>Help</h4>
+                <a href="#faq">FAQ</a>
+                <a href="#take-part">Take part</a>
+            </div>
+        </aside>
+
+        <main class="docs-content" id="main-content">
+            <h1>See what works, step by step</h1>
+            <p class="docs-intro">
+                This is a closed alpha. This page shows the support and debug loop and lets you check it yourself.
+                It calls a thing live only when that thing already leaves a record you can point to. Everything else is marked as not yet.
+            </p>
+
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+                <strong>Closed alpha</strong> - access is by vetting. Read this page, then test the live part in the bot.
+            </div>
+
+            <div class="highlight-box">
+                <strong>Open source:</strong> the bot and this site are MIT licensed. You do not have to trust us, you can read the code.
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener">View the code &rarr;</a>
+            </div>
+
+            <h2 id="start">Start here</h2>
+            <p>Two commands matter. The rest you find as you go.</p>
+            <ul>
+                <li><strong><code>/intro</code></strong> to enter.</li>
+                <li><strong><code>/ticket</code></strong> when something breaks or needs a look.</li>
+            </ul>
+
+            <div class="ui-mockup">
+                <div class="ui-mockup-header">
+                    <div class="ui-mockup-avatar">B</div>
+                    <div class="ui-mockup-name">Bonzi</div>
+                </div>
+                <div class="ui-mockup-body">
+                    <div class="ui-mockup-msg">
+                        <strong>Ticket #482 received.</strong><br>
+                        We'll respond back within 48h.
+                    </div>
+                    <button class="ui-mockup-btn">/ticket</button>
+                </div>
+            </div>
+            <p class="ui-mockup-caption">Open a ticket and you get a number and a 48h target.</p>
+
+            <h2 id="loop">The loop</h2>
+            <p>One path, four steps. Each step leaves a record.</p>
+            <p><strong>ticket &rarr; case &rarr; reviewed reply &rarr; receipt</strong></p>
+
+            <div class="step-visual">
+                <div class="step-number">1</div>
+                <div class="step-content"><strong>Ticket.</strong> You send what broke. A bug, a broken button, a confusing flow.</div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number">2</div>
+                <div class="step-content"><strong>Case.</strong> Your ticket becomes a case. Similar reports may be grouped.</div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number">3</div>
+                <div class="step-content"><strong>Reviewed reply.</strong> A draft answer may be prepared. A person reviews it before it reaches you.</div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number">4</div>
+                <div class="step-content"><strong>Receipt.</strong> A receipt records the path: the ticket, the review, the reply, the outcome.</div>
+            </div>
+
+            <h2 id="send">Send a useful ticket</h2>
+            <ol>
+                <li>Open the bot.</li>
+                <li>Type <code>/ticket</code>.</li>
+                <li>Say what you did, what you expected, what happened.</li>
+                <li>Add a screenshot or a link if it helps.</li>
+            </ol>
+
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+                <strong>Never send</strong> seed phrases, private keys, passwords, or payment details. Keep those to yourself. A bug report never needs them.
+            </div>
+
+            <h2 id="after">After you send it</h2>
+            <ul>
+                <li>It becomes a case.</li>
+                <li>Similar reports may be grouped.</li>
+                <li>A draft reply may be prepared.</li>
+                <li>A person reviews it.</li>
+                <li>You get a reply when the answer is ready.</li>
+                <li>Target: within 48h.</li>
+            </ul>
+
+            <h2 id="receipts">Receipts</h2>
+            <p>
+                A receipt records the path. The ticket, the review, the reply, the outcome.
+                It is something you can point to later, not a promise you have to take on faith.
+            </p>
+
+            <h2 id="proven">What is proven now</h2>
+            <p>Plain status. Nothing here is called live unless it already leaves a record you can check.</p>
+
+            <div class="success-box">
+                <strong>Active now:</strong> the <code>/ticket</code> intake. Open <code>/ticket</code> in the bot and send a report. It comes back with a ticket number and a 48h target. Test it yourself.
+            </div>
+
+            <div class="highlight-box">
+                <strong>Built, tested in a sandbox:</strong> the full loop, ticket to reviewed reply to receipt. Proven in a test run. Not yet confirmed live end to end.
+            </div>
+
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+                <strong>Still checking:</strong> live reply confirmation, end to end. We are validating this now. When a real reply lands with its receipt, this line moves up to active.
+            </div>
+
+            <div class="highlight-box" style="border-left: 4px solid var(--gray);">
+                <strong>Later:</strong> credit for reported bugs, and proof on your profile. Not active. There is no automatic reward today.
+            </div>
+
+            <h2 id="opensource">Open source</h2>
+            <p>
+                The bot and this site are MIT licensed. Fork it, read it, run it yourself.
+                The point of this page is that you can check what works, so the code is open for the same reason.
+            </p>
+            <div class="feature-link">
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener">github.com/Siah-kin/community-bot &rarr;</a>
+            </div>
+
+            <h2 id="faq">FAQ</h2>
+
+            <h3>Is this a chatbot?</h3>
+            <p>It answers, but a reply that affects you is reviewed by a person first. It is not a fire-and-forget bot.</p>
+
+            <h3>Does it auto-send replies?</h3>
+            <p>No. A person reviews the reply before it goes out. Live confirmation of that send is still being checked.</p>
+
+            <h3>What should I put in a bug report?</h3>
+            <p>What you did, what you expected, what happened. A screenshot or a link helps a lot.</p>
+
+            <h3>How long does a reply take?</h3>
+            <p>The target is within 48h.</p>
+
+            <h3>Can I earn from reporting bugs?</h3>
+            <p>Not yet. That comes later. There is no automatic reward today.</p>
+
+            <h3>What should I never send?</h3>
+            <p>Seed phrases, private keys, passwords, payment details. Keep those to yourself.</p>
+
+            <h2 id="take-part">Take part</h2>
+            <div class="success-box">
+                <strong>Access is through the Passage.</strong> Spin the slot on the home page. When the Passage opens, follow the button it gives you. It returns a signed claim. Once inside, send <code>/intro</code> to enter and <code>/ticket</code> to report something.
+                <br><br>
+                <a href="/?slot=open">Open the slot &rarr;</a>
+            </div>
+        </main>
+    </div>
+
+    <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
+            <span style="color: #71717A;">sponsored by
+                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                    Ethervista
+                </a>
+            </span>
+            <span style="color: #71717A;">&middot;</span>
+            <span style="color: #71717A;">profits fund
+                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <img src="../unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
+                    Unidos Projects
+                </a>
+            </span>
+        </div>
+        <div style="font-size: 12px; color: #71717A;">
+            open source &middot; mit license &middot; <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -524,19 +524,26 @@
             border-radius: 0;
         }
         body.dark-mode .chalkboard { border-color: #1d4d3a; }
-        /* Contents table */
+        /* Contents table — in-flow card, left-accent to match the highlight boxes */
         .toc {
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 20px 24px;
-            margin: 24px 0 8px 0;
+            background: rgba(124, 58, 237, 0.04);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-left: 4px solid var(--purple);
+            padding: 18px 24px;
+            margin: 32px 0;
+            position: static;
+            max-width: 100%;
         }
-        body.dark-mode .toc { border-color: rgba(255,255,255,0.12); }
+        body.dark-mode .toc { background: rgba(124, 58, 237, 0.10); border-color: rgba(255,255,255,0.10); }
         .toc h4 {
             font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--gray); margin-bottom: 12px; font-weight: 700;
+            color: var(--gray); margin: 0 0 12px 0; font-weight: 700;
         }
-        .toc ol { margin: 0 0 0 18px; color: var(--gray); }
-        .toc li { margin-bottom: 6px; }
+        .toc ol { margin: 0; padding-left: 22px; color: var(--gray); }
+        .toc li { margin-bottom: 5px; line-height: 1.5; }
+        .toc a { color: var(--purple); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        body.dark-mode .toc a { color: var(--purple-light); }
         /* Glossary */
         .glossary dt { font-weight: 700; margin-top: 16px; color: var(--purple); }
         body.dark-mode .glossary dt { color: var(--purple-light); }
@@ -605,7 +612,7 @@
                 <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener"><span data-i18n="box.opensource.link">View the code</span> &rarr;</a>
             </div>
 
-            <nav class="toc" aria-label="Contents">
+            <div class="toc" role="navigation" aria-label="Contents">
                 <h4 data-i18n="toc.title">Contents</h4>
                 <ol>
                     <li><a href="#start" data-i18n="nav.start">Start here</a></li>
@@ -619,7 +626,7 @@
                     <li><a href="#glossary" data-i18n="nav.glossary">Glossary</a></li>
                     <li><a href="#take-part" data-i18n="nav.takepart">Take part</a></li>
                 </ol>
-            </nav>
+            </div>
 
             <h2 id="start" data-i18n="start.title">Start here</h2>
             <p data-i18n="start.p">Two commands matter. The rest you find as you go.</p>
@@ -1228,6 +1235,7 @@
         function apply(lang) {
             var dict = T[lang];
             if (!dict) return;
+            document.documentElement.lang = lang;  // stop the browser offering Google Translate
             document.querySelectorAll("[data-i18n]").forEach(function (el) {
                 var k = el.getAttribute("data-i18n");
                 if (dict[k] != null) el.innerHTML = dict[k];

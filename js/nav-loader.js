@@ -252,29 +252,65 @@
         localStorage.setItem(LEGACY_THEME_KEY, isDark ? 'dark' : 'light');
     }
 
-    function initLanguageSelect() {
-        const select = document.getElementById('lang-select');
-        if (!select) return;
+    // Per-page i18n: pages that provide a window.BONZI_I18N dict of
+    // { lang: { "data-i18n-key": "translated string" } } get in-place
+    // translation via flag clicks. Pages without a dict: flags click but
+    // content stays in English (graceful degradation — no GT redirect ever).
+    var _i18nOrigText = {};
 
-        const savedLang = localStorage.getItem('bonzi-lang');
-        if (savedLang) select.value = savedLang;
-
-        select.addEventListener('change', (e) => {
-            const lang = e.target.value;
-            localStorage.setItem('bonzi-lang', lang);
-            if (lang === 'en') {
-                // If on a translated page, go back to original
-                const url = new URL(window.location.href);
-                if (url.hostname === 'translate.goog') {
-                    window.location.href = url.searchParams.get('_x_tr_pto') || '/';
-                }
-                return;
-            }
-            // Redirect to Google Translate for non-EN languages
-            const langMap = { pt: 'pt', zh: 'zh-CN', tr: 'tr', ru: 'ru', fr: 'fr' };
-            const tl = langMap[lang] || lang;
-            window.location.href = 'https://translate.google.com/translate?sl=en&tl=' + tl + '&u=' + encodeURIComponent(window.location.href);
+    function _i18nCacheOrig() {
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var k = el.getAttribute('data-i18n');
+            if (_i18nOrigText[k] == null) _i18nOrigText[k] = el.innerHTML;
         });
+    }
+
+    function _i18nApply(lang) {
+        var dict = window.BONZI_I18N && window.BONZI_I18N[lang];
+        if (!dict) return;
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var k = el.getAttribute('data-i18n');
+            if (dict[k] != null) el.innerHTML = dict[k];
+        });
+    }
+
+    function _i18nRestoreEn() {
+        document.documentElement.lang = 'en';
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var k = el.getAttribute('data-i18n');
+            if (_i18nOrigText[k] != null) el.innerHTML = _i18nOrigText[k];
+        });
+    }
+
+    function _i18nSetActive(lang) {
+        document.querySelectorAll('#nav-lang-flags button').forEach(function(b) {
+            b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+        });
+    }
+
+    function _i18nSetLang(lang) {
+        localStorage.setItem('bonzi_lang', lang);
+        localStorage.setItem('bonzi-lang', lang);
+        if (lang === 'en') { _i18nRestoreEn(); _i18nSetActive('en'); return; }
+        _i18nApply(lang);
+        _i18nSetActive(lang);
+    }
+
+    function initLanguageSelect() {
+        _i18nCacheOrig();
+        var flags = document.getElementById('nav-lang-flags');
+        if (flags) {
+            flags.querySelectorAll('button[data-lang]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    _i18nSetLang(btn.getAttribute('data-lang'));
+                });
+            });
+        }
+        // Restore saved language preference on page load
+        var saved = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';
+        if (saved && saved !== 'en') { _i18nApply(saved); }
+        _i18nSetActive(saved || 'en');
     }
 
     function initNavInteractions() {

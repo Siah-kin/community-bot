@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/bonzi-design.css">
     <link rel="stylesheet" href="../css/nav.css">
-    <script src="../js/nav-loader.js?v=20260221" defer></script>
+    <script src="../js/nav-loader.js?v=20260604flags" defer></script>
     <style>
         :root {
             --sidebar-width: 280px;
@@ -2105,18 +2105,14 @@
             localStorage.setItem('bonzi-lang', lang);
         }
 
-        // Language selector
+        // Language selector — wired to the nav flag buttons via BONZI_I18N.
+        // The manual exposes its translation dict so nav-loader's flag engine
+        // can drive it without duplicating state.
+        window.BONZI_I18N = translations;  // nav-loader picks this up
+
         function initLanguageSelect() {
-            const langSelect = document.getElementById('lang-select');
-            if (!langSelect) return;
-            const savedLang = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';
-            langSelect.value = savedLang;
-            if (savedLang !== 'en') {
-                applyTranslations(savedLang);
-            }
-            langSelect.addEventListener('change', (e) => {
-                applyTranslations(e.target.value);
-            });
+            const saved = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';
+            if (saved && saved !== 'en') applyTranslations(saved);
         }
 
         if (window.navReady && typeof window.navReady.then === 'function') {

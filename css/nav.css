@@ -150,21 +150,26 @@ body.dark-mode .nav-divider {
     align-items: center;
 }
 
-.nav-lang-select {
-    background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-}
+.nav-lang-select { display: none; } /* replaced by flag buttons */
 
-body.dark-mode .nav-lang-select {
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #FFFFFF;
-    background: transparent;
+.nav-lang-flags {
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }
+.nav-lang-flags button {
+    background: none;
+    border: none;
+    padding: 4px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 0;
+    opacity: 0.55;
+    transition: opacity 0.15s;
+    line-height: 1;
+}
+.nav-lang-flags button:hover { opacity: 0.9; }
+.nav-lang-flags button.active { opacity: 1; box-shadow: 0 2px 0 0 #7C3AED; }
 
 .theme-toggle {
     background: transparent;

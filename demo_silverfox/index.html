@@ -1232,13 +1232,31 @@
             return "en";
         }
 
+        // Cache original English innerHTML on first load so we can restore it
+        // without a page reload when the user switches back to EN.
+        var _origText = {};
+        function cacheOrig() {
+            document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                var k = el.getAttribute("data-i18n");
+                if (_origText[k] == null) _origText[k] = el.innerHTML;
+            });
+        }
+
         function apply(lang) {
             var dict = T[lang];
             if (!dict) return;
-            document.documentElement.lang = lang;  // stop the browser offering Google Translate
+            document.documentElement.lang = lang;
             document.querySelectorAll("[data-i18n]").forEach(function (el) {
                 var k = el.getAttribute("data-i18n");
                 if (dict[k] != null) el.innerHTML = dict[k];
+            });
+        }
+
+        function restoreEn() {
+            document.documentElement.lang = "en";
+            document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                var k = el.getAttribute("data-i18n");
+                if (_origText[k] != null) el.innerHTML = _origText[k];
             });
         }
 
@@ -1251,11 +1269,12 @@
             lang = normLang(lang);
             localStorage.setItem("bonzi_lang", lang);
             localStorage.setItem("bonzi-lang", lang);
-            if (lang === "en") { location.reload(); return; }
+            if (lang === "en") { restoreEn(); setActiveFlag("en"); return; }
             apply(lang);
             setActiveFlag(lang);
         }
         function wireFlags() {
+            cacheOrig();  // snapshot original English text before any translation
             document.querySelectorAll(".lang-flags button").forEach(function (b) {
                 b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
             });

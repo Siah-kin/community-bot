@@ -2,8 +2,10 @@
 // Client-side wallet connect + balance check
 
 const TOKEN_ADDRESSES = {
-    BONZI: '0x1c6E06e07257B1d2FF8AeD2930F8aaB650877260',
-    VISTA: '0x0F1f0E8b8093CD5002BD9C9596F6Ce877fD5DB04'
+    BONZI: '0xd6175692026bcd7cb12a515e39cf0256ef35cb86',
+    BONZI_HARDSTAKE: '0x3618158bb8d07111e476f4de28676dff050d1a53',
+    VISTA: '0xc9bca88b04581699fab5aa276ccaff7df957cbbf',
+    VISTA_HARDSTAKE: '0xee5a6f8a55b02689138c195031d09bafdc7d278f',
 };
 
 const TOKEN_ABI = [
@@ -109,17 +111,28 @@ class TokenGate {
             // Use Infura or Alchemy as provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-            // Check BONZI balance (need ≥1M tokens = 1e24 wei for 18 decimals)
-            const bonziContract = new ethers.Contract(TOKEN_ADDRESSES.BONZI, TOKEN_ABI, provider);
-            const bonziBalance = await bonziContract.balanceOf(this.walletAddress);
             const bonziMin = ethers.BigNumber.from('1000000').mul(ethers.BigNumber.from('10').pow(18));
 
-            // Check VISTA balance (need any amount)
-            const vistaContract = new ethers.Contract(TOKEN_ADDRESSES.VISTA, TOKEN_ABI, provider);
-            const vistaBalance = await vistaContract.balanceOf(this.walletAddress);
+            // Check BONZI: wallet balance + hardstake (staked BONZI shows zero in wallet)
+            const bonziContract = new ethers.Contract(TOKEN_ADDRESSES.BONZI, TOKEN_ABI, provider);
+            const bonziHardstakeContract = new ethers.Contract(TOKEN_ADDRESSES.BONZI_HARDSTAKE, TOKEN_ABI, provider);
+            const [bonziBalance, bonziStaked] = await Promise.all([
+                bonziContract.balanceOf(this.walletAddress),
+                bonziHardstakeContract.balanceOf(this.walletAddress).catch(() => ethers.BigNumber.from(0)),
+            ]);
+            const bonziTotal = bonziBalance.add(bonziStaked);
 
-            const hasBonzi = bonziBalance.gte(bonziMin);
-            const hasVista = vistaBalance.gt(0);
+            // Check VISTA: wallet balance + hardstake
+            const vistaContract = new ethers.Contract(TOKEN_ADDRESSES.VISTA, TOKEN_ABI, provider);
+            const vistaHardstakeContract = new ethers.Contract(TOKEN_ADDRESSES.VISTA_HARDSTAKE, TOKEN_ABI, provider);
+            const [vistaBalance, vistaStaked] = await Promise.all([
+                vistaContract.balanceOf(this.walletAddress),
+                vistaHardstakeContract.balanceOf(this.walletAddress).catch(() => ethers.BigNumber.from(0)),
+            ]);
+            const vistaTotal = vistaBalance.add(vistaStaked);
+
+            const hasBonzi = bonziTotal.gte(bonziMin);
+            const hasVista = vistaTotal.gt(0);
 
             if (hasBonzi || hasVista) {
                 // Access granted
@@ -137,7 +150,7 @@ class TokenGate {
                 // No tokens found
                 if (statusDiv) {
                     statusDiv.innerHTML = `
-                        ❌ Insufficient balance. Need 1M+ BONZI or any VISTA.
+                        ❌ Insufficient balance. Need 1M+ BONZI (wallet or staked) or any VISTA.
                         <br><br>
                         <a href="/" style="color: #7C3AED; text-decoration: none;">← Back to homepage</a>
                         <br>

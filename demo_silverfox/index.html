@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/bonzi-design.css">
     <link rel="stylesheet" href="../css/nav.css">
-    <script src="../js/nav-loader.js?v=20260604demo" defer></script>
+    <script src="../js/nav-loader.js?v=20260221" defer></script>
     <style>
         :root {
             --sidebar-width: 280px;
@@ -508,57 +508,126 @@
     <nav id="nav-container" class="site-nav" aria-label="Main navigation"></nav>
     <div id="mobile-menu-container"></div>
 
+    <style>
+        /* Chalkboard panel for the loop diagram */
+        .chalkboard {
+            background: #0A0A0A;
+            color: #6EE7B7;
+            border: 1px solid #163a2c;
+            padding: 22px 24px;
+            margin: 24px 0;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.55;
+            overflow-x: auto;
+            white-space: pre;
+            border-radius: 0;
+        }
+        body.dark-mode .chalkboard { border-color: #1d4d3a; }
+        /* Contents table */
+        .toc {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 20px 24px;
+            margin: 24px 0 8px 0;
+        }
+        body.dark-mode .toc { border-color: rgba(255,255,255,0.12); }
+        .toc h4 {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--gray); margin-bottom: 12px; font-weight: 700;
+        }
+        .toc ol { margin: 0 0 0 18px; color: var(--gray); }
+        .toc li { margin-bottom: 6px; }
+        /* Glossary */
+        .glossary dt { font-weight: 700; margin-top: 16px; color: var(--purple); }
+        body.dark-mode .glossary dt { color: var(--purple-light); }
+        .glossary dd { margin: 4px 0 0 0; color: var(--gray); }
+        body.dark-mode .glossary dd { color: #A1A1AA; }
+        .step-visual .step-content em { color: var(--gray); font-style: italic; }
+        /* Language flags */
+        .lang-flags { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+        .lang-flags button {
+            background: var(--gray-light); border: 1px solid rgba(0,0,0,0.08);
+            color: var(--black); padding: 6px 10px; font-size: 13px; font-weight: 600;
+            cursor: pointer; border-radius: 0; font-family: inherit; line-height: 1;
+        }
+        .lang-flags button.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+        body.dark-mode .lang-flags button { background: #1F1F23; color: #A1A1AA; border-color: rgba(255,255,255,0.08); }
+        body.dark-mode .lang-flags button.active { background: var(--purple); color: #fff; }
+    </style>
+
     <div class="docs-layout">
         <aside class="sidebar" id="sidebar" role="complementary" aria-label="Vetting navigation">
-            <div class="sidebar-section">
-                <h4>Start</h4>
-                <a href="#start">Start here</a>
-                <a href="#loop">The loop</a>
+            <div class="lang-flags" role="group" aria-label="Language">
+                <button type="button" data-lang="en" title="English">🇬🇧 EN</button>
+                <button type="button" data-lang="pt" title="Português (BR)">🇧🇷 PT</button>
+                <button type="button" data-lang="zh" title="中文">🇨🇳 中文</button>
             </div>
             <div class="sidebar-section">
-                <h4>Using it</h4>
-                <a href="#send">Send a ticket</a>
-                <a href="#after">After you send it</a>
-                <a href="#receipts">Receipts</a>
+                <h4 data-i18n="s.start">Start</h4>
+                <a href="#start" data-i18n="nav.start">Start here</a>
+                <a href="#loop" data-i18n="nav.loop">The loop</a>
             </div>
             <div class="sidebar-section">
-                <h4>Vetting</h4>
-                <a href="#proven" style="color: var(--green);">What is proven now</a>
-                <a href="#opensource">Open source</a>
+                <h4 data-i18n="s.using">Using it</h4>
+                <a href="#send" data-i18n="nav.send">Send a ticket</a>
+                <a href="#after" data-i18n="nav.after">After you send it</a>
+                <a href="#receipts" data-i18n="nav.receipts">Receipts</a>
             </div>
             <div class="sidebar-section">
-                <h4>Help</h4>
-                <a href="#faq">FAQ</a>
-                <a href="#take-part">Take part</a>
+                <h4 data-i18n="s.vetting">Vetting</h4>
+                <a href="#proven" style="color: var(--green);" data-i18n="nav.proven">What is proven now</a>
+                <a href="#opensource" data-i18n="nav.opensource">Open source</a>
+            </div>
+            <div class="sidebar-section">
+                <h4 data-i18n="s.help">Help</h4>
+                <a href="#faq" data-i18n="nav.faq">FAQ</a>
+                <a href="#glossary" data-i18n="nav.glossary">Glossary</a>
+                <a href="#take-part" data-i18n="nav.takepart">Take part</a>
             </div>
         </aside>
 
         <main class="docs-content" id="main-content">
-            <h1>See what works, step by step</h1>
-            <p class="docs-intro">
+            <h1 data-i18n="h1">See what works, step by step</h1>
+            <p class="docs-intro" data-i18n="intro">
                 This is a closed alpha. This page shows the support and debug loop and lets you check it yourself.
                 It calls a thing live only when that thing already leaves a record you can point to. Everything else is marked as not yet.
             </p>
 
-            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);" data-i18n="box.alpha">
                 <strong>Closed alpha</strong> - access is by vetting. Read this page, then test the live part in the bot.
             </div>
 
             <div class="highlight-box">
-                <strong>Open source:</strong> the bot and this site are MIT licensed. You do not have to trust us, you can read the code.
-                <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener">View the code &rarr;</a>
+                <span data-i18n="box.opensource"><strong>Open source:</strong> the bot and this site are MIT licensed. You do not have to trust us, you can read the code.</span>
+                <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener"><span data-i18n="box.opensource.link">View the code</span> &rarr;</a>
             </div>
 
-            <h2 id="start">Start here</h2>
-            <p>Two commands matter. The rest you find as you go.</p>
+            <nav class="toc" aria-label="Contents">
+                <h4 data-i18n="toc.title">Contents</h4>
+                <ol>
+                    <li><a href="#start" data-i18n="nav.start">Start here</a></li>
+                    <li><a href="#loop" data-i18n="nav.loop">The loop</a></li>
+                    <li><a href="#send" data-i18n="nav.send">Send a useful ticket</a></li>
+                    <li><a href="#after" data-i18n="nav.after">After you send it</a></li>
+                    <li><a href="#receipts" data-i18n="nav.receipts">Receipts</a></li>
+                    <li><a href="#proven" data-i18n="nav.proven">What is proven now</a></li>
+                    <li><a href="#opensource" data-i18n="nav.opensource">Open source</a></li>
+                    <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                    <li><a href="#glossary" data-i18n="nav.glossary">Glossary</a></li>
+                    <li><a href="#take-part" data-i18n="nav.takepart">Take part</a></li>
+                </ol>
+            </nav>
+
+            <h2 id="start" data-i18n="start.title">Start here</h2>
+            <p data-i18n="start.p">Two commands matter. The rest you find as you go.</p>
             <ul>
-                <li><strong><code>/intro</code></strong> to enter.</li>
-                <li><strong><code>/ticket</code></strong> when something breaks or needs a look.</li>
+                <li data-i18n="start.li1"><strong><code>/intro</code></strong> to enter.</li>
+                <li data-i18n="start.li2"><strong><code>/ticket</code></strong> when something breaks or needs a look.</li>
             </ul>
             <div class="success-box">
-                <strong>Open Bonzi on Telegram</strong>, then send <code>/intro</code>.
+                <span data-i18n="start.cta"><strong>Open Bonzi on Telegram</strong>, then send <code>/intro</code>.</span>
                 <br><br>
-                <a href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener">Open Bonzi on Telegram &rarr;</a>
+                <a href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener"><span data-i18n="start.cta.link">Open Bonzi on Telegram</span> &rarr;</a>
             </div>
 
             <div class="ui-mockup">
@@ -569,83 +638,97 @@
                 <div class="ui-mockup-body">
                     <div class="ui-mockup-msg">
                         <strong>Ticket #482 received.</strong><br>
-                        We'll respond back within 48h.
+                        <span data-i18n="mockup.msg">We'll respond back within 48h.</span>
                     </div>
                     <button class="ui-mockup-btn">/ticket</button>
                 </div>
             </div>
-            <p class="ui-mockup-caption">Open a ticket and you get a number and a 48h target.</p>
+            <p class="ui-mockup-caption" data-i18n="mockup.caption">Open a ticket and you get a number and a 48h target.</p>
 
-            <h2 id="loop">The loop</h2>
-            <p>One path, four steps. Each step leaves a record.</p>
-            <p><strong>ticket &rarr; case &rarr; reviewed reply &rarr; receipt</strong></p>
+            <h2 id="loop" data-i18n="loop.title">The loop</h2>
+            <p data-i18n="loop.intro">
+                One path, four steps. You do the first one. The system carries the rest, and each step leaves a record you can check later.
+            </p>
+            <p><strong data-i18n="loop.flow">ticket &rarr; case &rarr; reviewed reply &rarr; receipt</strong></p>
 
             <div class="step-visual">
                 <div class="step-number">1</div>
-                <div class="step-content"><strong>Ticket.</strong> You send what broke. A bug, a broken button, a confusing flow.</div>
+                <div class="step-content" data-i18n="loop.step1"><strong>Ticket.</strong> You send what broke: a bug, a broken button, a confusing flow. A screenshot or link helps. This is the only step that is yours. <em>Record: your ticket, with a number and a time.</em></div>
             </div>
             <div class="step-visual">
                 <div class="step-number">2</div>
-                <div class="step-content"><strong>Case.</strong> Your ticket becomes a case. Similar reports may be grouped.</div>
+                <div class="step-content" data-i18n="loop.step2"><strong>Case.</strong> Your ticket becomes a case. If other people reported the same thing, yours joins theirs, so one fix can answer many. You are not shouting into a void. <em>Record: the case, linked to your ticket.</em></div>
             </div>
             <div class="step-visual">
                 <div class="step-number">3</div>
-                <div class="step-content"><strong>Reviewed reply.</strong> A draft answer may be prepared. A person reviews it before it reaches you.</div>
+                <div class="step-content" data-i18n="loop.step3"><strong>Reviewed reply.</strong> A draft answer may be prepared, but it does not reach you on its own. A person reads it first and decides if it is right. This is the step that makes it reviewed work, not a bot guessing at you. <em>Record: who reviewed, and what they decided.</em></div>
             </div>
             <div class="step-visual">
                 <div class="step-number">4</div>
-                <div class="step-content"><strong>Receipt.</strong> A receipt records the path: the ticket, the review, the reply, the outcome.</div>
+                <div class="step-content" data-i18n="loop.step4"><strong>Receipt.</strong> A receipt ties the path together: the ticket, the review, the reply, the outcome. Something you can point to later, not a promise you take on faith. <em>Record: the receipt itself, proof the loop ran.</em></div>
             </div>
 
-            <h2 id="send">Send a useful ticket</h2>
+            <pre class="chalkboard" data-i18n="loop.diagram"> 1  ticket   ●  recorded
+       │
+ 2  case     ●  recorded
+       │
+ 3  reply    ●  drafted
+       │
+       └─ a person reviews  ◀── the gate
+       │
+ 4  receipt  ●  proof the loop ran
+
+ ● = a record you can check</pre>
+
+            <h2 id="send" data-i18n="send.title">Send a useful ticket</h2>
             <ol>
-                <li>Open the bot.</li>
-                <li>Type <code>/ticket</code>.</li>
-                <li>Say what you did, what you expected, what happened.</li>
-                <li>Add a screenshot or a link if it helps.</li>
+                <li data-i18n="send.li1">Open the bot.</li>
+                <li data-i18n="send.li2">Type <code>/ticket</code>.</li>
+                <li data-i18n="send.li3">Say what you did, what you expected, what happened.</li>
+                <li data-i18n="send.li4">Add a screenshot or a link if it helps.</li>
             </ol>
 
-            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);" data-i18n="send.warn">
                 <strong>Never send</strong> seed phrases, private keys, passwords, or payment details. Keep those to yourself. A bug report never needs them.
             </div>
 
-            <h2 id="after">After you send it</h2>
+            <h2 id="after" data-i18n="after.title">After you send it</h2>
             <ul>
-                <li>It becomes a case.</li>
-                <li>Similar reports may be grouped.</li>
-                <li>A draft reply may be prepared.</li>
-                <li>A person reviews it.</li>
-                <li>You get a reply when the answer is ready.</li>
-                <li>Target: within 48h.</li>
+                <li data-i18n="after.li1">It becomes a case.</li>
+                <li data-i18n="after.li2">Similar reports may be grouped.</li>
+                <li data-i18n="after.li3">A draft reply may be prepared.</li>
+                <li data-i18n="after.li4">A person reviews it.</li>
+                <li data-i18n="after.li5">You get a reply when the answer is ready.</li>
+                <li data-i18n="after.li6">Target: within 48h.</li>
             </ul>
 
-            <h2 id="receipts">Receipts</h2>
-            <p>
+            <h2 id="receipts" data-i18n="receipts.title">Receipts</h2>
+            <p data-i18n="receipts.p">
                 A receipt records the path. The ticket, the review, the reply, the outcome.
                 It is something you can point to later, not a promise you have to take on faith.
             </p>
 
-            <h2 id="proven">What is proven now</h2>
-            <p>Plain status. Nothing here is called live unless it already leaves a record you can check.</p>
+            <h2 id="proven" data-i18n="proven.title">What is proven now</h2>
+            <p data-i18n="proven.p">Plain status. Nothing here is called live unless it already leaves a record you can check.</p>
 
-            <div class="success-box">
+            <div class="success-box" data-i18n="proven.active">
                 <strong>Active now:</strong> the <code>/ticket</code> intake. Open <code>/ticket</code> in the bot and send a report. It comes back with a ticket number and a 48h target. Test it yourself.
             </div>
 
-            <div class="highlight-box">
+            <div class="highlight-box" data-i18n="proven.sandbox">
                 <strong>Built, tested in a sandbox:</strong> the full loop, ticket to reviewed reply to receipt. Proven in a test run. Not yet confirmed live end to end.
             </div>
 
-            <div class="highlight-box" style="border-left: 4px solid var(--gold);">
+            <div class="highlight-box" style="border-left: 4px solid var(--gold);" data-i18n="proven.checking">
                 <strong>Still checking:</strong> live reply confirmation, end to end. We are validating this now. When a real reply lands with its receipt, this line moves up to active.
             </div>
 
-            <div class="highlight-box" style="border-left: 4px solid var(--gray);">
+            <div class="highlight-box" style="border-left: 4px solid var(--gray);" data-i18n="proven.later">
                 <strong>Later:</strong> credit for reported bugs, and proof on your profile. Not active. There is no automatic reward today.
             </div>
 
-            <h2 id="opensource">Open source</h2>
-            <p>
+            <h2 id="opensource" data-i18n="opensource.title">Open source</h2>
+            <p data-i18n="opensource.p">
                 The bot and this site are MIT licensed. Fork it, read it, run it yourself.
                 The point of this page is that you can check what works, so the code is open for the same reason.
             </p>
@@ -653,31 +736,56 @@
                 <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener">github.com/Siah-kin/community-bot &rarr;</a>
             </div>
 
-            <h2 id="faq">FAQ</h2>
+            <h2 id="faq" data-i18n="faq.title">FAQ</h2>
 
-            <h3>Is this a chatbot?</h3>
-            <p>It answers, but a reply that affects you is reviewed by a person first. It is not a fire-and-forget bot.</p>
+            <h3 data-i18n="faq.q1">Is this a chatbot?</h3>
+            <p data-i18n="faq.a1">It answers, but a reply that affects you is reviewed by a person first. It is not a fire-and-forget bot.</p>
 
-            <h3>Does it auto-send replies?</h3>
-            <p>No. A person reviews the reply before it goes out. Live confirmation of that send is still being checked.</p>
+            <h3 data-i18n="faq.q2">Does it auto-send replies?</h3>
+            <p data-i18n="faq.a2">No. A person reviews the reply before it goes out. Live confirmation of that send is still being checked.</p>
 
-            <h3>What should I put in a bug report?</h3>
-            <p>What you did, what you expected, what happened. A screenshot or a link helps a lot.</p>
+            <h3 data-i18n="faq.q3">What should I put in a bug report?</h3>
+            <p data-i18n="faq.a3">What you did, what you expected, what happened. A screenshot or a link helps a lot.</p>
 
-            <h3>How long does a reply take?</h3>
-            <p>The target is within 48h.</p>
+            <h3 data-i18n="faq.q4">How long does a reply take?</h3>
+            <p data-i18n="faq.a4">The target is within 48h.</p>
 
-            <h3>Can I earn from reporting bugs?</h3>
-            <p>Not yet. That comes later. There is no automatic reward today.</p>
+            <h3 data-i18n="faq.q5">Can I earn from reporting bugs?</h3>
+            <p data-i18n="faq.a5">Not yet. That comes later. There is no automatic reward today.</p>
 
-            <h3>What should I never send?</h3>
-            <p>Seed phrases, private keys, passwords, payment details. Keep those to yourself.</p>
+            <h3 data-i18n="faq.q6">What should I never send?</h3>
+            <p data-i18n="faq.a6">Seed phrases, private keys, passwords, payment details. Keep those to yourself.</p>
 
-            <h2 id="take-part">Take part</h2>
+            <h2 id="glossary" data-i18n="glossary.title">Glossary</h2>
+            <p data-i18n="glossary.intro">Plain meanings for the words on this page.</p>
+            <dl class="glossary">
+                <dt data-i18n="g.vetting.t">Vetting</dt>
+                <dd data-i18n="g.vetting.d">Checking that something works before you trust it. You vet by testing it yourself, not by being told it works.</dd>
+                <dt data-i18n="g.alpha.t">Closed alpha</dt>
+                <dd data-i18n="g.alpha.d">An early, invite-only test. Parts work, with rough edges. You are here to find them.</dd>
+                <dt data-i18n="g.ticket.t">Ticket</dt>
+                <dd data-i18n="g.ticket.d">A report you send when something breaks or needs a look. It gets a number and a time.</dd>
+                <dt data-i18n="g.case.t">Case</dt>
+                <dd data-i18n="g.case.d">What your ticket becomes once it is in the system. Similar tickets can be grouped into one case.</dd>
+                <dt data-i18n="g.reply.t">Reviewed reply</dt>
+                <dd data-i18n="g.reply.d">An answer a person reads and approves before it reaches you. Not auto-sent.</dd>
+                <dt data-i18n="g.receipt.t">Receipt</dt>
+                <dd data-i18n="g.receipt.d">A short record of a path: the ticket, the review, the reply, the outcome. Something you can point to later.</dd>
+                <dt data-i18n="g.passage.t">Passage</dt>
+                <dd data-i18n="g.passage.d">The way in. You open it by playing the slot on the home page. It returns a signed claim.</dd>
+                <dt data-i18n="g.claim.t">Signed claim</dt>
+                <dd data-i18n="g.claim.d">A code the bot gives you that proves you came through the Passage. Save it.</dd>
+                <dt data-i18n="g.sandbox.t">Sandbox</dt>
+                <dd data-i18n="g.sandbox.d">A safe test space, separate from the live bot. Work proven only in the sandbox is not yet live.</dd>
+                <dt data-i18n="g.mit.t">MIT licensed</dt>
+                <dd data-i18n="g.mit.d">A permissive open-source license. You can read, copy, change, and run the code freely.</dd>
+            </dl>
+
+            <h2 id="take-part" data-i18n="takepart.title">Take part</h2>
             <div class="success-box">
-                <strong>Access is through the Passage.</strong> Spin the slot on the home page. When the Passage opens, follow the button it gives you. It returns a signed claim. Once inside, send <code>/intro</code> to enter and <code>/ticket</code> to report something.
+                <span data-i18n="takepart.body"><strong>Access is through the Passage.</strong> Spin the slot on the home page. When the Passage opens, follow the button it gives you. It returns a signed claim. Once inside, send <code>/intro</code> to enter and <code>/ticket</code> to report something.</span>
                 <br><br>
-                <a href="/?slot=open">Open the slot &rarr;</a>
+                <a href="/?slot=open"><span data-i18n="takepart.link">Open the slot</span> &rarr;</a>
             </div>
         </main>
     </div>
@@ -702,6 +810,224 @@
             open source &middot; mit license &middot; <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
         </div>
     </footer>
+
+    <script>
+    (function () {
+        // pt = Português (BR), zh = 中文 (Mandarin, Simplified). en is the HTML default.
+        var T = {
+            pt: {
+                "s.start": "Início", "nav.start": "Comece aqui", "nav.loop": "O ciclo",
+                "s.using": "Como usar", "nav.send": "Enviar um chamado", "nav.after": "Depois de enviar", "nav.receipts": "Recibos",
+                "s.vetting": "Verificação", "nav.proven": "O que já está provado", "nav.opensource": "Código aberto",
+                "s.help": "Ajuda", "nav.faq": "Perguntas", "nav.glossary": "Glossário", "nav.takepart": "Participe",
+                "h1": "Veja o que funciona, passo a passo",
+                "intro": "Isto é um alpha fechado. Esta página mostra o fluxo de suporte e depuração e deixa você conferir por conta própria. Só chamamos algo de ativo quando aquilo já deixa um registro que você pode apontar. Todo o resto está marcado como ainda não.",
+                "box.alpha": "<strong>Alpha fechado</strong> - o acesso é por verificação. Leia esta página, depois teste a parte ativa no bot.",
+                "box.opensource": "<strong>Código aberto:</strong> o bot e este site têm licença MIT. Você não precisa confiar na nossa palavra, pode ler o código.",
+                "box.opensource.link": "Ver o código",
+                "toc.title": "Conteúdo",
+                "start.title": "Comece aqui",
+                "start.p": "Dois comandos importam. O resto você descobre no caminho.",
+                "start.li1": "<strong><code>/intro</code></strong> para entrar.",
+                "start.li2": "<strong><code>/ticket</code></strong> quando algo quebra ou precisa de uma olhada.",
+                "start.cta": "<strong>Abra o Bonzi no Telegram</strong>, depois envie <code>/intro</code>.",
+                "start.cta.link": "Abrir o Bonzi no Telegram",
+                "mockup.msg": "Respondemos em até 48h.",
+                "mockup.caption": "Abra um chamado e você recebe um número e um prazo de 48h.",
+                "loop.title": "O ciclo",
+                "loop.intro": "Um caminho, quatro passos. Você faz o primeiro. O sistema toca o resto, e cada passo deixa um registro que você pode conferir depois.",
+                "loop.flow": "chamado &rarr; caso &rarr; resposta revisada &rarr; recibo",
+                "loop.step1": "<strong>Chamado.</strong> Você envia o que quebrou: um bug, um botão quebrado, um fluxo confuso. Uma captura de tela ou link ajuda. Este é o único passo que é seu. <em>Registro: seu chamado, com número e horário.</em>",
+                "loop.step2": "<strong>Caso.</strong> Seu chamado vira um caso. Se outras pessoas relataram o mesmo, o seu junta-se ao delas, e uma correção pode resolver vários. Você não está falando no vazio. <em>Registro: o caso, ligado ao seu chamado.</em>",
+                "loop.step3": "<strong>Resposta revisada.</strong> Um rascunho pode ser preparado, mas ele não chega até você sozinho. Uma pessoa lê primeiro e decide se está certo. É este passo que faz disso trabalho revisado, não um bot adivinhando. <em>Registro: quem revisou e o que decidiu.</em>",
+                "loop.step4": "<strong>Recibo.</strong> Um recibo amarra o caminho todo: o chamado, a revisão, a resposta, o resultado. Algo que você aponta depois, não uma promessa que você aceita de fé. <em>Registro: o próprio recibo, a prova de que o ciclo rodou.</em>",
+                "loop.diagram": " 1  chamado  ●  registrado\n       │\n 2  caso     ●  registrado\n       │\n 3  resposta ●  rascunho\n       │\n       └─ uma pessoa revisa  ◀── o portão\n       │\n 4  recibo   ●  prova de que o ciclo rodou\n\n ● = um registro que você pode conferir",
+                "send.title": "Envie um chamado útil",
+                "send.li1": "Abra o bot.",
+                "send.li2": "Digite <code>/ticket</code>.",
+                "send.li3": "Diga o que você fez, o que esperava, o que aconteceu.",
+                "send.li4": "Anexe uma captura de tela ou um link se ajudar.",
+                "send.warn": "<strong>Nunca envie</strong> frases-semente, chaves privadas, senhas ou dados de pagamento. Guarde isso para você. Um relato de bug nunca precisa deles.",
+                "after.title": "Depois de enviar",
+                "after.li1": "Vira um caso.",
+                "after.li2": "Relatos parecidos podem ser agrupados.",
+                "after.li3": "Um rascunho de resposta pode ser preparado.",
+                "after.li4": "Uma pessoa revisa.",
+                "after.li5": "Você recebe a resposta quando ela estiver pronta.",
+                "after.li6": "Prazo: até 48h.",
+                "receipts.title": "Recibos",
+                "receipts.p": "Um recibo registra o caminho. O chamado, a revisão, a resposta, o resultado. É algo que você aponta depois, não uma promessa que você aceita de fé.",
+                "proven.title": "O que já está provado",
+                "proven.p": "Status direto. Nada aqui é chamado de ativo a não ser que já deixe um registro que você pode conferir.",
+                "proven.active": "<strong>Ativo agora:</strong> a entrada de <code>/ticket</code>. Abra <code>/ticket</code> no bot e envie um relato. Ele volta com um número de chamado e um prazo de 48h. Teste você mesmo.",
+                "proven.sandbox": "<strong>Construído, testado em sandbox:</strong> o ciclo completo, do chamado à resposta revisada ao recibo. Provado em um teste. Ainda não confirmado ativo de ponta a ponta.",
+                "proven.checking": "<strong>Ainda conferindo:</strong> a confirmação de resposta ativa, de ponta a ponta. Estamos validando isso agora. Quando uma resposta real chegar com o recibo, esta linha sobe para ativo.",
+                "proven.later": "<strong>Depois:</strong> crédito por bugs relatados e prova no seu perfil. Não ativo. Não há recompensa automática hoje.",
+                "opensource.title": "Código aberto",
+                "opensource.p": "O bot e este site têm licença MIT. Faça um fork, leia, rode por conta própria. O objetivo desta página é que você possa conferir o que funciona, por isso o código é aberto pelo mesmo motivo.",
+                "faq.title": "Perguntas",
+                "faq.q1": "Isto é um chatbot?",
+                "faq.a1": "Ele responde, mas uma resposta que afeta você é revisada por uma pessoa primeiro. Não é um bot que dispara e esquece.",
+                "faq.q2": "Ele envia respostas automáticas?",
+                "faq.a2": "Não. Uma pessoa revisa a resposta antes de ela sair. A confirmação ativa desse envio ainda está sendo conferida.",
+                "faq.q3": "O que coloco em um relato de bug?",
+                "faq.a3": "O que você fez, o que esperava, o que aconteceu. Uma captura de tela ou link ajuda muito.",
+                "faq.q4": "Quanto tempo leva uma resposta?",
+                "faq.a4": "O prazo é de até 48h.",
+                "faq.q5": "Posso ganhar relatando bugs?",
+                "faq.a5": "Ainda não. Isso vem depois. Não há recompensa automática hoje.",
+                "faq.q6": "O que nunca devo enviar?",
+                "faq.a6": "Frases-semente, chaves privadas, senhas, dados de pagamento. Guarde isso para você.",
+                "glossary.title": "Glossário",
+                "glossary.intro": "Significados simples para as palavras desta página.",
+                "g.vetting.t": "Verificação", "g.vetting.d": "Conferir que algo funciona antes de confiar. Você verifica testando você mesmo, não por te dizerem que funciona.",
+                "g.alpha.t": "Alpha fechado", "g.alpha.d": "Um teste inicial, só por convite. Partes funcionam, com arestas. Você está aqui para encontrá-las.",
+                "g.ticket.t": "Chamado", "g.ticket.d": "Um relato que você envia quando algo quebra ou precisa de uma olhada. Ele recebe um número e um horário.",
+                "g.case.t": "Caso", "g.case.d": "O que seu chamado vira ao entrar no sistema. Chamados parecidos podem ser agrupados em um caso.",
+                "g.reply.t": "Resposta revisada", "g.reply.d": "Uma resposta que uma pessoa lê e aprova antes de chegar até você. Não é enviada automaticamente.",
+                "g.receipt.t": "Recibo", "g.receipt.d": "Um registro curto de um caminho: o chamado, a revisão, a resposta, o resultado. Algo que você aponta depois.",
+                "g.passage.t": "Passagem", "g.passage.d": "O caminho de entrada. Você a abre jogando o slot na página inicial. Ela devolve um comprovante assinado.",
+                "g.claim.t": "Comprovante assinado", "g.claim.d": "Um código que o bot te dá provando que você passou pela Passagem. Guarde-o.",
+                "g.sandbox.t": "Sandbox", "g.sandbox.d": "Um espaço de teste seguro, separado do bot ativo. Trabalho provado só na sandbox ainda não está ativo.",
+                "g.mit.t": "Licença MIT", "g.mit.d": "Uma licença de código aberto permissiva. Você pode ler, copiar, mudar e rodar o código livremente.",
+                "takepart.title": "Participe",
+                "takepart.body": "<strong>O acesso é pela Passagem.</strong> Jogue o slot na página inicial. Quando a Passagem abrir, siga o botão que ela te dá. Ele devolve um comprovante assinado. Já dentro, envie <code>/intro</code> para entrar e <code>/ticket</code> para relatar algo.",
+                "takepart.link": "Abrir o slot"
+            },
+            zh: {
+                "s.start": "开始", "nav.start": "从这里开始", "nav.loop": "闭环",
+                "s.using": "如何使用", "nav.send": "提交工单", "nav.after": "提交之后", "nav.receipts": "回执",
+                "s.vetting": "核验", "nav.proven": "目前已证实的", "nav.opensource": "开源",
+                "s.help": "帮助", "nav.faq": "常见问题", "nav.glossary": "术语表", "nav.takepart": "参与",
+                "h1": "一步步看它如何运作",
+                "intro": "这是封闭式 alpha。本页展示支持与调试的闭环，让你自己核验。只有当某件事已经留下你能指认的记录时，我们才称它为已上线，其余都标为尚未。",
+                "box.alpha": "<strong>封闭式 alpha</strong> - 通过核验进入。先读本页，再到机器人里测试已上线的部分。",
+                "box.opensource": "<strong>开源：</strong>机器人和本站采用 MIT 许可。你不必信我们的话，可以直接读代码。",
+                "box.opensource.link": "查看代码",
+                "toc.title": "目录",
+                "start.title": "从这里开始",
+                "start.p": "两个命令最重要，其余的你会在路上发现。",
+                "start.li1": "<strong><code>/intro</code></strong> 进入。",
+                "start.li2": "<strong><code>/ticket</code></strong> 当有东西坏了或需要查看时。",
+                "start.cta": "<strong>在 Telegram 打开 Bonzi</strong>，然后发送 <code>/intro</code>。",
+                "start.cta.link": "在 Telegram 打开 Bonzi",
+                "mockup.msg": "我们会在 48 小时内回复。",
+                "mockup.caption": "提交一个工单，你会得到一个编号和 48 小时的目标。",
+                "loop.title": "闭环",
+                "loop.intro": "一条路径，四个步骤。第一步由你完成。系统接手其余步骤，每一步都留下你之后可以核验的记录。",
+                "loop.flow": "工单 &rarr; 案例 &rarr; 经审回复 &rarr; 回执",
+                "loop.step1": "<strong>工单。</strong>你提交坏掉的东西：一个 bug、一个坏掉的按钮、一个让人困惑的流程。截图或链接会有帮助。这是唯一属于你的步骤。<em>记录：你的工单，带编号和时间。</em>",
+                "loop.step2": "<strong>案例。</strong>你的工单变成一个案例。如果别人报告了同样的问题，你的会并入其中，一次修复可以回应许多人。你不是在对着空气喊。<em>记录：该案例，关联到你的工单。</em>",
+                "loop.step3": "<strong>经审回复。</strong>可能会准备一份草稿答复，但它不会自己送到你这里。先由一个人阅读并判断是否正确。正是这一步让它成为经审的工作，而不是机器人对你瞎猜。<em>记录：谁审阅了，以及他们的决定。</em>",
+                "loop.step4": "<strong>回执。</strong>一张回执把整条路径串起来：工单、审阅、回复、结果。是你之后能指认的东西，而非要你凭信任接受的承诺。<em>记录：回执本身，闭环跑过的凭证。</em>",
+                "loop.diagram": " 1  工单    ●  已记录\n       │\n 2  案例    ●  已记录\n       │\n 3  回复    ●  已起草\n       │\n       └─ 一个人审阅  ◀── 关口\n       │\n 4  回执    ●  闭环跑过的凭证\n\n ● = 一条你可以核验的记录",
+                "send.title": "提交一个有用的工单",
+                "send.li1": "打开机器人。",
+                "send.li2": "输入 <code>/ticket</code>。",
+                "send.li3": "说明你做了什么、你期待什么、实际发生了什么。",
+                "send.li4": "如果有帮助，附上截图或链接。",
+                "send.warn": "<strong>切勿发送</strong>助记词、私钥、密码或支付信息。这些请自己保管。一份 bug 报告从不需要它们。",
+                "after.title": "提交之后",
+                "after.li1": "它变成一个案例。",
+                "after.li2": "相似的报告可能被归并。",
+                "after.li3": "可能会准备一份草稿答复。",
+                "after.li4": "一个人进行审阅。",
+                "after.li5": "答案准备好时，你会收到回复。",
+                "after.li6": "目标：48 小时内。",
+                "receipts.title": "回执",
+                "receipts.p": "回执记录整条路径。工单、审阅、回复、结果。它是你之后能指认的东西，而非要你凭信任接受的承诺。",
+                "proven.title": "目前已证实的",
+                "proven.p": "直白的状态。除非某件事已经留下你能核验的记录，否则这里不会称它为已上线。",
+                "proven.active": "<strong>现已上线：</strong><code>/ticket</code> 的受理。在机器人里打开 <code>/ticket</code> 并提交报告。它会带着工单编号和 48 小时目标返回。你可以自己测试。",
+                "proven.sandbox": "<strong>已构建，在沙盒中测试：</strong>完整闭环，从工单到经审回复再到回执。在一次测试中已证实。尚未端到端确认上线。",
+                "proven.checking": "<strong>仍在核验：</strong>端到端的实时回复确认。我们正在验证。当一条真实回复带着回执送达时，这一行会上移为已上线。",
+                "proven.later": "<strong>以后：</strong>报告 bug 的积分，以及个人资料上的凭证。尚未启用。今天没有自动奖励。",
+                "opensource.title": "开源",
+                "opensource.p": "机器人和本站采用 MIT 许可。你可以 fork、阅读、自行运行。本页的意义在于让你核验什么有效，代码开放也是出于同样的理由。",
+                "faq.title": "常见问题",
+                "faq.q1": "这是聊天机器人吗？",
+                "faq.a1": "它会回答，但会影响你的回复要先经一个人审阅。它不是发完就不管的机器人。",
+                "faq.q2": "它会自动发送回复吗？",
+                "faq.a2": "不会。回复发出前由一个人审阅。该发送的实时确认仍在核验中。",
+                "faq.q3": "bug 报告里该写什么？",
+                "faq.a3": "你做了什么、你期待什么、实际发生了什么。截图或链接很有帮助。",
+                "faq.q4": "回复要多久？",
+                "faq.a4": "目标是 48 小时内。",
+                "faq.q5": "报告 bug 能赚钱吗？",
+                "faq.a5": "还不能。那是以后的事。今天没有自动奖励。",
+                "faq.q6": "我绝不该发送什么？",
+                "faq.a6": "助记词、私钥、密码、支付信息。这些请自己保管。",
+                "glossary.title": "术语表",
+                "glossary.intro": "本页词语的直白含义。",
+                "g.vetting.t": "核验", "g.vetting.d": "在信任之前确认某件事有效。你通过亲自测试来核验，而不是听别人说它有效。",
+                "g.alpha.t": "封闭式 alpha", "g.alpha.d": "一次早期的、仅限邀请的测试。部分功能可用，带着粗糙之处。你来这里就是为了找出它们。",
+                "g.ticket.t": "工单", "g.ticket.d": "当有东西坏了或需要查看时你提交的报告。它会得到一个编号和时间。",
+                "g.case.t": "案例", "g.case.d": "你的工单进入系统后变成的东西。相似的工单可以归并为一个案例。",
+                "g.reply.t": "经审回复", "g.reply.d": "一个人在送达你之前阅读并批准的答复。不会自动发送。",
+                "g.receipt.t": "回执", "g.receipt.d": "一条路径的简短记录：工单、审阅、回复、结果。是你之后能指认的东西。",
+                "g.passage.t": "通道", "g.passage.d": "进入的方式。你在首页玩老虎机来打开它。它会返回一个签名凭据。",
+                "g.claim.t": "签名凭据", "g.claim.d": "机器人给你的一个代码，证明你是经通道进来的。请保存好。",
+                "g.sandbox.t": "沙盒", "g.sandbox.d": "一个安全的测试空间，与上线的机器人分开。只在沙盒中证实的工作尚未上线。",
+                "g.mit.t": "MIT 许可", "g.mit.d": "一种宽松的开源许可。你可以自由阅读、复制、修改和运行代码。",
+                "takepart.title": "参与",
+                "takepart.body": "<strong>通过通道进入。</strong>在首页玩老虎机。当通道打开时，跟随它给你的按钮。它会返回一个签名凭据。进入之后，发送 <code>/intro</code> 进入，发送 <code>/ticket</code> 报告问题。",
+                "takepart.link": "打开老虎机"
+            }
+        };
+
+        function normLang(v) {
+            v = String(v || "").toLowerCase();
+            if (v.indexOf("pt") === 0) return "pt";
+            if (v.indexOf("zh") === 0) return "zh";
+            return "en";
+        }
+
+        function apply(lang) {
+            var dict = T[lang];
+            if (!dict) return;
+            document.querySelectorAll("[data-i18n]").forEach(function (el) {
+                var k = el.getAttribute("data-i18n");
+                if (dict[k] != null) el.innerHTML = dict[k];
+            });
+        }
+
+        function setActiveFlag(lang) {
+            document.querySelectorAll(".lang-flags button").forEach(function (b) {
+                b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+            });
+        }
+        function setLang(lang) {
+            lang = normLang(lang);
+            localStorage.setItem("bonzi_lang", lang);
+            localStorage.setItem("bonzi-lang", lang);
+            if (lang === "en") { location.reload(); return; }
+            apply(lang);
+            setActiveFlag(lang);
+        }
+        function wireFlags() {
+            document.querySelectorAll(".lang-flags button").forEach(function (b) {
+                b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+            });
+            var saved = normLang(localStorage.getItem("bonzi_lang") || localStorage.getItem("bonzi-lang") || "en");
+            setActiveFlag(saved);
+            if (saved !== "en") apply(saved);
+        }
+        // Remove the Google-Translate redirect dropdown; the flags replace it.
+        function hideNavDropdown() {
+            var sel = document.getElementById("lang-select");
+            if (sel) { sel.style.display = "none"; }
+        }
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", wireFlags);
+        } else { wireFlags(); }
+        if (window.navReady && typeof window.navReady.then === "function") {
+            window.navReady.then(hideNavDropdown);
+        } else {
+            document.addEventListener("nav:loaded", hideNavDropdown, { once: true });
+            setTimeout(hideNavDropdown, 600);
+        }
+    })();
+    </script>
 
 </body>
 </html>

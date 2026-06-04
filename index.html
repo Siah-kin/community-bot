@@ -2317,6 +2317,7 @@
                                     if (wres.httpOk && wj.success && wj.deep_link) {
                                         clueEl.textContent = getStr().jackpotOk;
                                         tgLink.href = wj.deep_link;
+                                        try { localStorage.setItem('bonzi_pending_claim', JSON.stringify({ deep_link: wj.deep_link, expires_at: wj.expires_at || '', code: wj.code || wj.signed_code || '' })); } catch (e) {}
                                         var _prt=document.getElementById('prize-title'); if(_prt) _prt.textContent=getStr().prizeTitle||'Lucky spin. 😎';
                                         var _prd=document.getElementById('prize-desc'); if(_prd) _prd.innerHTML=getStr().prizeDesc||'';
                                         var _pcd=document.getElementById('prize-code-display'); if(_pcd) _pcd.textContent=wj.code||wj.signed_code||'';
@@ -2647,6 +2648,28 @@
         prizeOverlay.addEventListener('click', function(e) {
             if (e.target === prizeOverlay) prizeOverlay.classList.remove('open');
         });
+    })();
+    </script>
+    <script>
+    /* Pending-claim bind CTA: a web win binds to Telegram only when the visitor
+       opens the deep link. If they leave without binding, the win is stored and a
+       sticky 'tap to bind' bar shows on return until the claim expires. */
+    (function () {
+        try {
+            var KEY = 'bonzi_pending_claim';
+            var raw = localStorage.getItem(KEY);
+            if (!raw) return;
+            var c = JSON.parse(raw);
+            if (!c || !c.deep_link) return;
+            if (c.expires_at && Date.parse(c.expires_at) <= Date.now()) { localStorage.removeItem(KEY); return; }
+            var bar = document.createElement('a');
+            bar.href = c.deep_link; bar.target = '_blank'; bar.rel = 'noopener';
+            bar.id = 'pending-claim-bar';
+            bar.textContent = 'Claim pending - tap to bind it to Telegram';
+            bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;display:block;text-align:center;padding:12px 16px;background:#7C3AED;color:#fff;font-weight:700;text-decoration:none;font-family:inherit;';
+            document.body.appendChild(bar);
+            bar.addEventListener('click', function () { try { localStorage.removeItem(KEY); } catch (e) {} });
+        } catch (e) {}
     })();
     </script>
 </body>

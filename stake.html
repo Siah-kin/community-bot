@@ -2706,8 +2706,25 @@
             });
         });
 
+        // Force overlay below the fixed nav on web context.
+        // CSS top: 56px loses to inset:0 in the second style block — inline style wins.
+        (function fixOverlayPosition() {
+            if (!document.documentElement.classList.contains('ctx-web')) return;
+            var overlay = document.getElementById('connectOverlay');
+            if (!overlay) return;
+            var navEl = document.getElementById('nav-container');
+            var navH = navEl ? (navEl.offsetHeight || 56) : 56;
+            overlay.style.setProperty('top', navH + 'px');
+        }());
+
         // Bridge nav flags → stake i18n (nav-loader fires 'nav:loaded' after injecting flags)
         document.addEventListener('nav:loaded', function () {
+            // Re-check nav height after nav loads (offsetHeight now reliable)
+            if (document.documentElement.classList.contains('ctx-web')) {
+                var overlay = document.getElementById('connectOverlay');
+                var navEl = document.getElementById('nav-container');
+                if (overlay && navEl) overlay.style.setProperty('top', navEl.offsetHeight + 'px');
+            }
             document.querySelectorAll('#nav-lang-flags button[data-lang]').forEach(function (btn) {
                 btn.addEventListener('click', function () {
                     var L = btn.getAttribute('data-lang');

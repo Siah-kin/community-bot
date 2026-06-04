@@ -44,10 +44,14 @@
       html.ctx-web #nav-container .nav-logo { color: #fff; }
       html.ctx-web #connectOverlayCloseBtn,
       html.ctx-web #stakeGlobalLang { display: none; }
-      /* On web the fixed nav sits above the overlay; offset the overlay so the
-         Bonzi logo/title are not hidden behind it. align-items:flex-start keeps
-         the top reachable when content is taller than the viewport. */
-      html.ctx-web .connect-overlay { padding-top: 88px; align-items: safe flex-start; }
+      /* On web the fixed nav (56px) sits above the overlay. Start the overlay
+         at the nav's bottom edge instead of trying to offset with padding-top
+         (which doesn't work because inset:0 composites below the nav layer). */
+      html.ctx-web .connect-overlay { top: 56px; align-items: safe flex-start; }
+      /* Stake page only ships EN/PT/ZH — hide unsupported flag buttons in nav */
+      html.ctx-web #nav-lang-flags button[data-lang="ru"],
+      html.ctx-web #nav-lang-flags button[data-lang="tr"],
+      html.ctx-web #nav-lang-flags button[data-lang="fr"] { display: none; }
       html.ctx-tg #nav-container,
       html.ctx-tg #mobile-menu-container { display: none; }
     </style>

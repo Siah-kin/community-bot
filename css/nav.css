@@ -431,9 +431,9 @@ body.dark-mode .menu-gated {
     margin-top: 8px;
 }
 .mobile-lang-flags button {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--black);
     padding: 6px 12px;
     font-size: 13px;
     font-weight: 600;
@@ -445,8 +445,11 @@ body.dark-mode .menu-gated {
     align-items: center;
     gap: 5px;
 }
-.mobile-lang-flags button:hover,
-.mobile-lang-flags button.active { background: #7C3AED; border-color: #7C3AED; }
+.mobile-lang-flags button:hover { background: rgba(124,58,237,0.08); color: #7C3AED; border-color: rgba(124,58,237,0.3); }
+.mobile-lang-flags button.active { background: #7C3AED; border-color: #7C3AED; color: #fff; }
+body.dark-mode .mobile-lang-flags button { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: #fff; }
+body.dark-mode .mobile-lang-flags button:hover { background: rgba(124,58,237,0.2); color: #A78BFA; border-color: rgba(124,58,237,0.4); }
+body.dark-mode .mobile-lang-flags button.active { background: #7C3AED; border-color: #7C3AED; color: #fff; }
 
 /* Mobile - reduce logo size */
 @media (max-width: 600px) {

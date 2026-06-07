@@ -92,7 +92,16 @@
             color: #f4f4f5;
             font-size: 12px;
             font-family: 'Courier New', Courier, monospace;
-            margin-bottom: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .slot-intro-text {
+            color: #a1a1aa;
+            font-size: 11px;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.5;
+            margin: 0 auto 1.5rem;
         }
 
         /* === WIN98 NEON STACK === */
@@ -839,9 +848,9 @@
             font-size: 10px;
             font-weight: bold;
             letter-spacing: 0.12em;
-            color: #1a1525;
-            background: linear-gradient(180deg, #ede9fe, #c4b5fd);
-            border: 1px solid #5b21b6;
+            color: #14532d;
+            background: linear-gradient(180deg, #dcfce7, #4ade80);
+            border: 1px solid #16a34a;
             border-radius: 2px;
             text-align: center;
             line-height: 1.2;
@@ -1105,21 +1114,29 @@
         }
 
         .slot-footer-lang {
-            padding: 14px 0 0;
+            padding: 16px 0 4px;
             margin-top: 4px;
             text-align: center;
             font-size: 11px;
             color: #71717a;
             line-height: 1.5;
         }
+        .slot-footer-lang-label {
+            display: block;
+            font-size: 10px;
+            color: #71717a;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
         .slot-footer-lang .footer-lang-btn {
             display: inline-block;
             background: transparent;
-            border: 1px solid #3f3f46;
+            border: 1px solid #52525b;
             color: #e4e4e7;
             border-radius: 4px;
-            padding: 4px 8px;
-            font-size: 12px;
+            padding: 6px 12px;
+            font-size: 13px;
             cursor: pointer;
             font-family: inherit;
             margin: 0 4px;
@@ -1128,18 +1145,19 @@
         .slot-footer-lang .footer-lang-btn[aria-pressed="true"] {
             border-color: #7c3aed;
             color: #c4b5fd;
+            background: rgba(124,58,237,0.12);
         }
         .slot-footer-lang .footer-lang-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .slot-footer-lang .footer-lang-flag {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             line-height: 1;
-            padding: 4px 10px;
+            padding: 6px 12px;
         }
 
         .lever-container.lever-disabled {
@@ -1225,6 +1243,7 @@
     <div class="puzzle-gate" id="gate">
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
         <p class="tagline" id="gate-tagline">pull lever to try your luck</p>
+        <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.</p>
 
         <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
             <span class="notify-bar-text" id="notify-bar-msg">Early list: emails only.</span>
@@ -1368,6 +1387,7 @@
             </footer>
 
             <div class="slot-footer-lang">
+                <span class="slot-footer-lang-label">language</span>
                 <div class="footer-lang-row">
                     <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
                     <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
@@ -1422,10 +1442,12 @@
         var bonziWinampLangRefresh = null;
         var currentLang = 'en';
         try {
-            var _st = (localStorage.getItem(LOCALE_KEY) || 'en').toLowerCase();
-            if (_st === 'pt-br' || _st === 'pt_br' || _st === 'pt') {
+            var _saved = localStorage.getItem(LOCALE_KEY);
+            var _detect = (_saved || (navigator.languages && navigator.languages[0]) || navigator.language || 'en');
+            var _st = _detect.toLowerCase();
+            if (_st === 'pt-br' || _st === 'pt_br' || _st.slice(0,2) === 'pt') {
                 currentLang = 'pt-BR';
-            } else if (_st === 'zh-cn' || _st === 'zh_cn' || _st === 'zh' || _st === 'mandarin') {
+            } else if (_st === 'zh-cn' || _st === 'zh_cn' || _st.slice(0,2) === 'zh') {
                 currentLang = 'zh-CN';
             } else {
                 currentLang = 'en';
@@ -1493,6 +1515,11 @@
                 winampPlayState: 'PLAY',
                 winampPauseState: 'PAUSE',
 	                hints: {},
+                loadingPassage: 'Loading the Passage…',
+                passageUnavailable: 'Passage unavailable right now.',
+                readPromptSoon: 'Read the prompt again in a moment.',
+                readThenAnswer: 'Read the prompt, then type the answer.',
+                introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1570,6 +1597,11 @@
                 winampPlayState: 'TOCAR',
                 winampPauseState: 'PAUSA',
 	                hints: {},
+                loadingPassage: 'Carregando a Passagem\u2026',
+                passageUnavailable: 'Passagem indispon\u00EDvel no momento.',
+                readPromptSoon: 'Leia o prompt em um instante.',
+                readThenAnswer: 'Leia o prompt e digite a resposta.',
+                introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabe\u00E7as. Leia, digite a palavra-c\u00F3digo e clique em Enviar.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1647,6 +1679,11 @@
                 winampPlayState: '\u64ad\u653e',
                 winampPauseState: '\u6682\u505c',
 	                hints: {},
+                loadingPassage: '\u52a0\u8f7d\u901a\u9053\u2026',
+                passageUnavailable: '\u901a\u9053\u6682\u65f6\u4e0d\u53ef\u7528\u3002',
+                readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
+                readThenAnswer: '\u9605\u8bfb\u63d0\u793a\uff0c\u7136\u540e\u8f93\u5165\u7b54\u6848\u3002',
+                introText: '\u62c9\u52a8\u6447\u6746\u30025\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u9605\u8bfb\u63d0\u793a\uff0c\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u70b9\u51fb\u63d0\u4ea4\u3002',
                 docTitle: 'Bonzi Vista: \u8001\u864e\u673a',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1848,6 +1885,10 @@
             if (levEl) levEl.setAttribute('aria-label', L.leverAria);
             var lpl = document.getElementById('lever-pull-label');
             if (lpl && L.leverPullLabel) lpl.textContent = L.leverPullLabel;
+            var introEl = document.getElementById('slot-intro-text');
+            if (introEl && L.introText) introEl.textContent = L.introText;
+            var spEl = document.getElementById('skill-prompt');
+            if (spEl && L.loadingPassage && !skillChallengeId) spEl.textContent = L.loadingPassage;
             try {
                 document.title = L.docTitle || 'Bonzi Vista: Slot';
             } catch (eDoc) {}
@@ -2149,7 +2190,7 @@
 
         function loadSkillChallenge() {
             if (skillChallengeLoading) return skillChallengeLoading;
-            setSkillPrompt('Loading the Passage…');
+            setSkillPrompt(getStr().loadingPassage);
             var api = getApiOrigin();
             skillChallengeLoading = _slotFetchJson(api + '/api/slotgame/skill_challenge', {
                 method: 'POST',
@@ -2160,19 +2201,19 @@
                 var j = res.json || {};
                 if (res.httpOk && j.success && j.challenge_id) {
                     skillChallengeId = j.challenge_id;
-                    setSkillPrompt(j.prompt || 'Read the prompt, then type the answer.');
+                    setSkillPrompt(j.prompt || getStr().readThenAnswer);
                     return true;
                 }
                 skillChallengeId = '';
-                setSkillPrompt('Read the prompt again in a moment.');
+                setSkillPrompt(getStr().readPromptSoon);
                 var _rawErr = (j && j.error) ? j.error : '';
-                errEl.textContent = (_rawErr && _rawErr !== 'kill_switch_enabled') ? _rawErr : 'Passage unavailable right now.';
+                errEl.textContent = (_rawErr && _rawErr !== 'kill_switch_enabled') ? _rawErr : getStr().passageUnavailable;
                 return false;
             }).catch(function () {
                 skillChallengeLoading = null;
                 skillChallengeId = '';
-                setSkillPrompt('Read the prompt again in a moment.');
-                errEl.textContent = 'Passage unavailable right now.';
+                setSkillPrompt(getStr().readPromptSoon);
+                errEl.textContent = getStr().passageUnavailable;
                 return false;
             });
             return skillChallengeLoading;
@@ -2183,7 +2224,7 @@
             var challenge = payload.challenge || payload;
             if (challenge && challenge.challenge_id) {
                 skillChallengeId = challenge.challenge_id;
-                setSkillPrompt(challenge.prompt || 'Read the prompt, then type the answer.');
+                setSkillPrompt(challenge.prompt || getStr().readThenAnswer);
                 return true;
             }
             return false;
@@ -2602,7 +2643,7 @@
 	            var val = pwEl.value.trim();
 	            if (!val) return;
 	            if (!skillChallengeId) {
-	                errEl.textContent = 'Loading the Passage…';
+	                errEl.textContent = getStr().loadingPassage;
 	                loadSkillChallenge();
 	                return;
 	            }

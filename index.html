@@ -610,6 +610,44 @@
             font-family: Tahoma, sans-serif;
         }
         .win98-info-btn:hover { background: rgba(255,255,255,0.2); }
+        .win98-close-btn {
+            flex-shrink: 0;
+            font-size: 11px;
+            line-height: 1;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.65);
+            background: rgba(0,0,0,0.15);
+            color: #fff;
+            border-radius: 2px;
+            font-family: Tahoma, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .win98-close-btn:hover { background: #b91c1c; border-color: #fff; }
+        .howto-window { display: block; }
+        .howto-window.hidden { display: none; }
+        .howto-body {
+            padding: 10px 12px 8px;
+        }
+        .howto-steps {
+            margin: 0 0 8px 0;
+            padding: 0 0 0 18px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: #d4d4d8;
+            line-height: 1.7;
+        }
+        .howto-steps li { margin-bottom: 2px; }
+        .howto-note {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            color: #71717a;
+        }
         .notify-bar {
             box-sizing: border-box;
             width: 100%;
@@ -1251,6 +1289,20 @@
         </div>
 
         <div class="win98-neon-stack">
+            <div class="win98-neon-window howto-window" id="howto-window" data-pane="howto">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="howto-win-title">&#127914; How to play</span>
+                    <button type="button" class="win98-close-btn" id="howto-close-btn" aria-label="Close">&#10005;</button>
+                </div>
+                <div class="win98-neon-body howto-body">
+                    <ol class="howto-steps">
+                        <li id="howto-step1">Pull the lever.</li>
+                        <li id="howto-step2">A hint appears below the 5 heads. Read it literally.</li>
+                        <li id="howto-step3">Type the code word in the Passage box and hit Submit.</li>
+                    </ol>
+                    <p class="howto-note" id="howto-note">Hit Rules for the full guide.</p>
+                </div>
+            </div>
             <div class="win98-neon-window" data-pane="slot">
                 <div class="slot-machine" id="slot-machine">
                     <div class="win98-titlebar">
@@ -1520,6 +1572,11 @@
                 readPromptSoon: 'Read the prompt again in a moment.',
                 readThenAnswer: 'Read the prompt, then type the answer.',
                 introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.',
+                howtoTitle: 'How to play',
+                howtoStep1: 'Pull the lever.',
+                howtoStep2: 'A hint appears below the 5 heads. Read it literally.',
+                howtoStep3: 'Type the code word in the Passage box and hit Submit.',
+                howtoNote: 'Hit Rules for the full guide.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1602,6 +1659,11 @@
                 readPromptSoon: 'Leia o prompt em um instante.',
                 readThenAnswer: 'Leia o prompt e digite a resposta.',
                 introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabe\u00E7as. Leia, digite a palavra-c\u00F3digo e clique em Enviar.',
+                howtoTitle: 'Como jogar',
+                howtoStep1: 'Puxe a alavanca.',
+                howtoStep2: 'Uma dica aparece abaixo das 5 cabe\u00E7as. Leia com aten\u00E7\u00E3o.',
+                howtoStep3: 'Digite a palavra-c\u00F3digo na caixa Passagem e clique em Enviar.',
+                howtoNote: 'Clique em Regras para o guia completo.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1684,6 +1746,11 @@
                 readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
                 readThenAnswer: '\u9605\u8bfb\u63d0\u793a\uff0c\u7136\u540e\u8f93\u5165\u7b54\u6848\u3002',
                 introText: '\u62c9\u52a8\u6447\u6746\u30025\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u9605\u8bfb\u63d0\u793a\uff0c\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u70b9\u51fb\u63d0\u4ea4\u3002',
+                howtoTitle: '\u6e38\u620f\u8bf4\u660e',
+                howtoStep1: '\u62c9\u52a8\u6447\u6746\u3002',
+                howtoStep2: '5\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u4ed4\u7ec6\u9605\u8bfb\u3002',
+                howtoStep3: '\u5728\u901a\u9053\u6846\u4e2d\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u7136\u540e\u70b9\u51fb\u63d0\u4ea4\u3002',
+                howtoNote: '\u70b9\u51fb\u89c4\u5219\u67e5\u770b\u5b8c\u6574\u6307\u5357\u3002',
                 docTitle: 'Bonzi Vista: \u8001\u864e\u673a',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
@@ -1887,6 +1954,16 @@
             if (lpl && L.leverPullLabel) lpl.textContent = L.leverPullLabel;
             var introEl = document.getElementById('slot-intro-text');
             if (introEl && L.introText) introEl.textContent = L.introText;
+            var hwt = document.getElementById('howto-win-title');
+            if (hwt && L.howtoTitle) hwt.textContent = '🎴 ' + L.howtoTitle;
+            var hs1 = document.getElementById('howto-step1');
+            if (hs1 && L.howtoStep1) hs1.textContent = L.howtoStep1;
+            var hs2 = document.getElementById('howto-step2');
+            if (hs2 && L.howtoStep2) hs2.textContent = L.howtoStep2;
+            var hs3 = document.getElementById('howto-step3');
+            if (hs3 && L.howtoStep3) hs3.textContent = L.howtoStep3;
+            var hn = document.getElementById('howto-note');
+            if (hn && L.howtoNote) hn.textContent = L.howtoNote;
             var spEl = document.getElementById('skill-prompt');
             if (spEl && L.loadingPassage && !skillChallengeId) spEl.textContent = L.loadingPassage;
             try {
@@ -2229,6 +2306,21 @@
             }
             return false;
         }
+
+        (function wireHowto() {
+            var HOWTO_KEY = 'bonzi_howto_dismissed';
+            var hw = document.getElementById('howto-window');
+            try {
+                if (hw && localStorage.getItem(HOWTO_KEY) === '1') hw.classList.add('hidden');
+            } catch (e) {}
+            var hcb = document.getElementById('howto-close-btn');
+            if (hcb && hw) {
+                hcb.addEventListener('click', function() {
+                    hw.classList.add('hidden');
+                    try { localStorage.setItem(HOWTO_KEY, '1'); } catch (e) {}
+                });
+            }
+        })();
 
         var infoBtn = document.getElementById('slot-info-btn');
         if (infoBtn) {

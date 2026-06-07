@@ -599,17 +599,19 @@
         }
         .win98-info-btn {
             flex-shrink: 0;
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1;
-            padding: 2px 6px;
+            padding: 2px 8px;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.65);
-            background: rgba(0,0,0,0.15);
+            border: 1px solid #a855f7;
+            background: #7c3aed;
             color: #fff;
             border-radius: 2px;
             font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.02em;
         }
-        .win98-info-btn:hover { background: rgba(255,255,255,0.2); }
+        .win98-info-btn:hover { background: #6d28d9; border-color: #c4b5fd; }
         .win98-close-btn {
             flex-shrink: 0;
             font-size: 11px;
@@ -631,21 +633,21 @@
         .howto-window { display: block; }
         .howto-window.hidden { display: none; }
         .howto-body {
-            padding: 10px 12px 8px;
+            padding: 5px 10px 5px;
         }
         .howto-steps {
-            margin: 0 0 8px 0;
-            padding: 0 0 0 18px;
+            margin: 0 0 4px 0;
+            padding: 0 0 0 16px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
+            font-size: 10px;
             color: #d4d4d8;
-            line-height: 1.7;
+            line-height: 1.55;
         }
-        .howto-steps li { margin-bottom: 2px; }
+        .howto-steps li { margin-bottom: 0; }
         .howto-note {
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 10px;
+            font-size: 9px;
             color: #71717a;
         }
         .notify-bar {
@@ -1152,12 +1154,15 @@
         }
 
         .slot-footer-lang {
-            padding: 16px 0 4px;
-            margin-top: 4px;
+            padding: 0;
+            margin: 0 auto 10px;
             text-align: center;
             font-size: 11px;
             color: #71717a;
             line-height: 1.5;
+        }
+        .lang-above-logo {
+            margin-bottom: 12px;
         }
         .slot-footer-lang-label {
             display: block;
@@ -1165,37 +1170,41 @@
             color: #71717a;
             font-family: 'Courier New', Courier, monospace;
             letter-spacing: 0.08em;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
         }
         .slot-footer-lang .footer-lang-btn {
-            display: inline-block;
-            background: transparent;
-            border: 1px solid #52525b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            border: 1.5px solid #52525b;
             color: #e4e4e7;
-            border-radius: 4px;
-            padding: 6px 12px;
-            font-size: 13px;
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 14px;
             cursor: pointer;
             font-family: inherit;
-            margin: 0 4px;
+            min-width: 54px;
+            min-height: 40px;
         }
-        .slot-footer-lang .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; }
+        .slot-footer-lang .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; background: rgba(124,58,237,0.15); }
         .slot-footer-lang .footer-lang-btn[aria-pressed="true"] {
             border-color: #7c3aed;
+            border-width: 2px;
             color: #c4b5fd;
-            background: rgba(124,58,237,0.12);
+            background: rgba(124,58,237,0.18);
         }
         .slot-footer-lang .footer-lang-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .slot-footer-lang .footer-lang-flag {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             line-height: 1;
-            padding: 6px 12px;
+            padding: 5px 10px;
         }
 
         .lever-container.lever-disabled {
@@ -1279,6 +1288,14 @@
     <audio id="winamp-player" preload="metadata"></audio>
     <!-- PUZZLE GATE (slot — default home) -->
     <div class="puzzle-gate" id="gate">
+        <div class="slot-footer-lang lang-above-logo">
+            <span class="slot-footer-lang-label">language</span>
+            <div class="footer-lang-row">
+                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
+                <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
+                <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-zh-cn" aria-pressed="false" lang="zh-CN" title="简体中文">&#20013;</button>
+            </div>
+        </div>
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
         <p class="tagline" id="gate-tagline">pull lever to try your luck</p>
         <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.</p>
@@ -1307,7 +1324,7 @@
                 <div class="slot-machine" id="slot-machine">
                     <div class="win98-titlebar">
                         <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
-                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="Rules">&#9432; Info</button>
+                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="How To Play">How To Play</button>
                     </div>
                     <div class="win98-content">
                         <div class="lcd-panel">
@@ -1438,14 +1455,6 @@
                 </div>
             </footer>
 
-            <div class="slot-footer-lang">
-                <span class="slot-footer-lang-label">language</span>
-                <div class="footer-lang-row">
-                    <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
-                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-en" aria-pressed="true" lang="en">EN</button>
-                    <button type="button" class="footer-lang-btn footer-lang-mini" id="lang-zh-cn" aria-pressed="false" lang="zh-CN" title="简体中文">&#20013;</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1554,7 +1563,7 @@
                 triesLeft: function(a, m) { return 'Tries left: ' + a + ' / ' + m; },
 	                errWrong: 'Wrong code.',
 		                logoHint: 'Hint: open about.html.',
-                infoTitle: 'Rules',
+                infoTitle: 'How To Play',
                 leverAria: 'Pull lever',
                 leverPullLabel: 'PULL',
                 winampGroupAria: 'Retro-style demo audio player',
@@ -1641,7 +1650,7 @@
                 triesLeft: function(a, m) { return 'Tentativas: ' + a + ' / ' + m; },
                 errWrong: 'C\u00F3digo errado.',
 	                logoHint: 'Dica: abra about.html.',
-                infoTitle: 'Regras',
+                infoTitle: 'Como Jogar',
                 leverAria: 'Puxar alavanca',
                 leverPullLabel: 'PUXAR',
                 winampGroupAria: 'Reprodutor demo em estilo retr\u00F4',
@@ -1728,7 +1737,7 @@
                 triesLeft: function(a, m) { return '\u5269\u4f59\u6b21\u6570\uff1a' + a + ' / ' + m; },
                 errWrong: '\u5bc6\u7801\u9519\u8bef\u3002',
 	                logoHint: '\u63d0\u793a\uff1a\u6253\u5f00 about.html\u3002',
-                infoTitle: '\u89c4\u5219',
+                infoTitle: '\u6e38\u620f\u8bf4\u660e',
                 leverAria: '\u62c9\u52a8\u6447\u6746',
                 leverPullLabel: '\u62c9',
                 winampGroupAria: '\u590d\u53e4\u98ce\u683c\u6f14\u793a\u97f3\u9891\u64ad\u653e\u5668',

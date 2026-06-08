@@ -323,11 +323,26 @@
         _i18nSetActive(lang);
     }
 
+    // A flag shows only if the page actually delivers that language.
+    // Page declares window.BONZI_LANGS = ['en','pt',...]; default is English-only
+    // so hardcoded pages never show a flag that does nothing. 'en' is always allowed.
+    function _allowedLangs() {
+        var a = (window.BONZI_LANGS && window.BONZI_LANGS.length) ? window.BONZI_LANGS.slice() : ['en'];
+        if (a.indexOf('en') === -1) a.push('en');
+        return a;
+    }
+
     function _wireFlagGroup(container) {
         if (!container) return;
+        var allowed = _allowedLangs();
         container.querySelectorAll('button[data-lang]').forEach(function(btn) {
+            var L = btn.getAttribute('data-lang');
+            if (allowed.indexOf(L) === -1) {
+                btn.style.display = 'none';
+                return;
+            }
             btn.addEventListener('click', function() {
-                _i18nSetLang(btn.getAttribute('data-lang'));
+                _i18nSetLang(L);
             });
         });
     }

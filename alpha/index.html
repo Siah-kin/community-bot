@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Fox Alpha - Make this one count | Bonzi</title>
+    <meta name="description" content="You did the work and the room kept the credit. The Silver Fox alpha tests one thing: can a confirmed record of your contribution beat the reputation you already carry.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Silver Fox Alpha - Make this one count | Bonzi">
+    <meta property="og:description" content="A person confirms your contribution. The record is yours, and it does not die with the room. Run the one live loop and decide if it holds.">
+    <meta property="og:url" content="https://bonzivista.org/alpha/">
+    <link rel="canonical" href="https://bonzivista.org/alpha/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/nav.css?v=20260608">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260608i18n" defer></script>
+
+    <style>
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #D4AF37;
+            --green: #10B981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        body.dark-mode { background: var(--black); color: #FAFAFA; }
+
+        .skip-nav {
+            position: absolute; top: -40px; left: 0;
+            background: var(--purple); color: #fff; padding: 8px 16px;
+            z-index: 100; transition: top 0.3s; font-weight: 600;
+        }
+        .skip-nav:focus { top: 0; }
+        *:focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+        /* Hero (about.html spine) */
+        .alpha-hero {
+            padding: 130px 40px 24px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .alpha-label {
+            display: inline-block;
+            font-size: 11px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--purple);
+            background: rgba(124, 58, 237, 0.08);
+            padding: 5px 12px; margin-bottom: 24px;
+        }
+        .alpha-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800; line-height: 1.1; letter-spacing: -1px;
+            color: var(--black);
+        }
+        body.dark-mode .alpha-hero h1 { color: #fff; }
+
+        /* Body */
+        .alpha-body { max-width: 760px; margin: 0 auto; padding: 8px 40px 80px; }
+
+        .alpha-section { border-top: 1px solid #E4E4E7; padding: 44px 0; }
+        body.dark-mode .alpha-section { border-top-color: #27272A; }
+        .alpha-section h2 {
+            font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px;
+            line-height: 1.2; margin-bottom: 20px; color: var(--black);
+        }
+        body.dark-mode .alpha-section h2 { color: #fff; }
+        .alpha-section p {
+            font-size: 1.1rem; color: #3F3F46; line-height: 1.75;
+            margin-bottom: 18px; max-width: 660px;
+        }
+        body.dark-mode .alpha-section p { color: #D4D4D8; }
+        .alpha-section p:last-child { margin-bottom: 0; }
+        .alpha-section p strong { color: var(--black); }
+        body.dark-mode .alpha-section p strong { color: #fff; }
+
+        /* The italic-purple turn line (about.html guess-line) */
+        .turn-line {
+            font-size: 1.25rem; font-style: italic; font-weight: 500;
+            color: var(--purple); margin-top: 28px;
+        }
+        body.dark-mode .turn-line { color: var(--purple-light); }
+
+        code {
+            background: var(--gray-light); padding: 2px 8px;
+            font-size: 0.95rem; color: var(--purple);
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+        body.dark-mode code { background: #27272A; color: var(--purple-light); }
+
+        /* TOC (from demo_silverfox) */
+        .toc {
+            background: rgba(124, 58, 237, 0.04);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-left: 4px solid var(--purple);
+            padding: 18px 24px; margin: 28px 0 8px;
+        }
+        body.dark-mode .toc { background: rgba(124, 58, 237, 0.10); border-color: rgba(255,255,255,0.10); }
+        .toc h4 {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--gray); margin: 0 0 12px 0; font-weight: 700;
+        }
+        .toc ol { margin: 0; padding-left: 22px; color: var(--gray); }
+        .toc li { margin-bottom: 5px; line-height: 1.5; }
+        .toc a { color: var(--purple); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        body.dark-mode .toc a { color: var(--purple-light); }
+
+        /* Status boxes (from demo_silverfox) */
+        .highlight-box {
+            padding: 20px 24px; background: rgba(124, 58, 237, 0.08);
+            border-left: 4px solid var(--purple); border-radius: 0 8px 8px 0; margin: 18px 0;
+        }
+        body.dark-mode .highlight-box { background: rgba(124, 58, 237, 0.15); }
+        .highlight-box strong { color: var(--purple); }
+        .highlight-box.gold { border-left-color: var(--gold); background: rgba(212, 175, 55, 0.07); }
+        .highlight-box.gold strong { color: #9a7d10; }
+        body.dark-mode .highlight-box.gold { background: rgba(212, 175, 55, 0.12); }
+        body.dark-mode .highlight-box.gold strong { color: var(--gold); }
+        .highlight-box.gray { border-left-color: var(--gray); background: rgba(113, 113, 122, 0.06); }
+        .highlight-box.gray strong { color: var(--gray); }
+        .highlight-box.deny { border-left-color: #EF4444; background: rgba(239, 68, 68, 0.05); }
+        .highlight-box.deny strong { color: #b91c1c; }
+        body.dark-mode .highlight-box.deny strong { color: #f87171; }
+        .highlight-box p { font-size: 1rem; color: #3F3F46; margin: 0; line-height: 1.65; }
+        body.dark-mode .highlight-box p { color: #D4D4D8; }
+
+        .success-box {
+            padding: 20px 24px; background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--green); border-radius: 0 8px 8px 0; margin: 18px 0;
+        }
+        body.dark-mode .success-box { background: rgba(16, 185, 129, 0.15); }
+        .success-box strong { color: var(--green); }
+        .success-box p { font-size: 1rem; color: #3F3F46; margin: 0 0 14px; line-height: 1.65; }
+        body.dark-mode .success-box p { color: #D4D4D8; }
+
+        /* Inline status pills */
+        .pill {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px;
+            border: 1px solid; vertical-align: middle; margin-left: 8px; white-space: nowrap;
+        }
+        .pill.live { color: var(--green); border-color: var(--green); background: rgba(16,185,129,0.06); }
+        .pill.checking { color: #9a7d10; border-color: var(--gold); background: rgba(212,175,55,0.08); }
+        body.dark-mode .pill.checking { color: var(--gold); }
+        .pill.later { color: var(--gray); border-color: rgba(0,0,0,0.18); }
+        body.dark-mode .pill.later { border-color: rgba(255,255,255,0.2); }
+
+        /* Step visual (from demo_silverfox) */
+        .step-visual { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 26px; }
+        .step-visual .step-content { flex: 1; }
+        .step-visual .step-content p { font-size: 1.05rem; margin: 0; }
+        .step-visual .step-number {
+            width: 36px; height: 36px; background: var(--purple); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 16px; flex-shrink: 0;
+        }
+        .step-visual .step-number.muted { background: var(--gray); }
+
+        /* CTA button (about.html hub-action) */
+        .alpha-action {
+            display: inline-block; padding: 14px 22px; font-size: 1rem;
+            font-weight: 700; font-family: inherit; color: var(--white);
+            background: var(--purple); border: 2px solid var(--purple);
+            text-decoration: none; transition: filter 0.15s;
+        }
+        .alpha-action:hover { filter: brightness(1.08); }
+
+        .feature-link {
+            margin-top: 16px; padding: 16px 20px;
+            background: rgba(124, 58, 237, 0.08); border-left: 3px solid var(--purple);
+            border-radius: 0 8px 8px 0; font-size: 0.95rem; color: #3F3F46;
+        }
+        body.dark-mode .feature-link { background: rgba(124, 58, 237, 0.15); color: #D4D4D8; }
+        .feature-link a { color: var(--purple); font-weight: 600; }
+        body.dark-mode .feature-link a { color: var(--purple-light); }
+
+        /* Footer (about.html) */
+        .alpha-footer {
+            background: var(--white); border-top: 1px solid #E4E4E7;
+            padding: 32px 40px 24px; font-size: 0.85rem; color: var(--black); text-align: center;
+        }
+        body.dark-mode .alpha-footer { background: var(--black); border-top-color: #27272A; color: #E4E4E7; }
+        .alpha-footer-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--black); }
+        body.dark-mode .footer-brand { color: #fff; }
+        .footer-links { display: flex; gap: 6px; }
+        .footer-links a { color: var(--black); text-decoration: none; transition: color 0.15s; }
+        body.dark-mode .footer-links a { color: #E4E4E7; }
+        .footer-links a:hover { color: var(--purple); }
+
+        @media (max-width: 600px) {
+            .alpha-hero { padding-top: 110px; }
+            .alpha-section p { font-size: 1.05rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body data-theme-default="light">
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    <nav id="nav-container" class="site-nav" aria-label="Main navigation"></nav>
+    <div id="mobile-menu-container"></div>
+
+<main id="main-content">
+
+    <section class="alpha-hero">
+        <div class="alpha-label">Silver Fox Alpha</div>
+        <h1>You did the work. The room kept the credit.</h1>
+    </section>
+
+    <div class="alpha-body">
+
+        <div class="toc" role="navigation" aria-label="Contents">
+            <h4>On this page</h4>
+            <ol>
+                <li><a href="#why">What happened to your standing</a></li>
+                <li><a href="#farmed">Why every program to fix it got farmed</a></li>
+                <li><a href="#question">The honest question</a></li>
+                <li><a href="#confirm">A person confirms it. Then it is on record</a></li>
+                <li><a href="#loop">The one live loop</a></li>
+                <li><a href="#status">What is live, what is not</a></li>
+                <li><a href="#validator">If you run a room</a></li>
+                <li><a href="#why-us">Why this is built to last</a></li>
+                <li><a href="#take-part">Take part</a></li>
+            </ol>
+        </div>
+
+        <!-- 1. WOUND -->
+        <section class="alpha-section" id="why">
+            <h2>You showed up early. The room moved on. Your standing did not come with you.</h2>
+            <p>You debugged the thing nobody else would touch. You kept the chat civil at 3am. You filed the bug before it cost anyone money. Then the wave broke, the founder went quiet, and the room emptied out.</p>
+            <p>Your standing went with it. The OG role, the respect, the history of showing up first. It lived in one Discord that is now a graveyard, and it died there.</p>
+            <p>You still carry it in your head. You know what you built and where. Nobody else can check it, and nothing pays it forward.</p>
+            <p class="turn-line">The work was real. The record was not.</p>
+        </section>
+
+        <!-- 2. FARMED (validator hook) -->
+        <section class="alpha-section" id="farmed">
+            <h2>Every program built to fix this got farmed.</h2>
+            <p>If you have run one, you know how it ends. You open a contributor campaign, a bug bounty, an ambassador track. Week one is real. Week three is people gaming the number you were willing to publish. By week six you are paying for noise, and you cannot tell the bouncer from the leech.</p>
+            <p>The rot is always the same. The reward chased a number, and a number is a thing people can manufacture. Count the messages, you get message spam. Count the reports, you get junk reports. The metric becomes the target, and the target stops telling the truth.</p>
+            <p>So the scepticism you walked in with is correct. The fix is not a cleverer number.</p>
+            <p class="turn-line">The fix is judging the work on whether it actually held.</p>
+        </section>
+
+        <!-- 3. THE HONEST QUESTION (formal vs informal) -->
+        <section class="alpha-section" id="question">
+            <h2>You already trust a reputation system. It is the one in your head.</h2>
+            <p>You know who pays, who ships, who lies. You trust it because you earned every entry yourself.</p>
+            <p>So the real question is not whether portable credit is a good idea. Everyone wants their work to follow them. The question is harder. Can a credit somebody else records ever feel as solid as the one you carry yourself?</p>
+            <p>We do not get to answer that for you. That is what this alpha is for. You run the loop, you look at the record, and you decide if it holds up against the track record you already trust.</p>
+            <p>If it does not beat what is in your head, it failed. That is the bar.</p>
+            <p class="turn-line">We are testing the credit, not the buttons.</p>
+        </section>
+
+        <!-- 4. WHO CONFIRMS (legitimacy + the record) -->
+        <section class="alpha-section" id="confirm">
+            <h2>A person confirms it. Then it is on record.</h2>
+            <p>Here the call is made by a human, not a counter. Someone with standing in the room looks at what you sent and decides whether it was real. Not whether it is popular. Not whether it got upvotes. Whether the bug was a bug, whether the fix held, whether the thing you reported was worth reporting.</p>
+            <p>That is the whole difference, and it is a small one on purpose. A vote can be swarmed. A like can be bought. A person who puts their name on the confirmation, and who gets judged later on whether they called it right, has every reason to call it straight.</p>
+            <p>When they confirm it, the system writes it down. A ticket number, the confirmation, the outcome. That record is yours to point at, and it does not live or die with this room.</p>
+            <p class="turn-line">Informal reputation you cannot show is worth less than a plain record you can.</p>
+        </section>
+
+        <!-- 5. THE LOOP -->
+        <section class="alpha-section" id="loop">
+            <h2>One path. You take the first step.</h2>
+            <p>One way to make a contribution that leaves a record. It is small on purpose. You can run the first step in a minute and watch it work. The steps below carry an honest tag for what is proven today and what we are still checking with the first real users.</p>
+
+            <div class="step-visual">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <p><strong>You file it.</strong> <span class="pill live">Live now</span><br>Open <code>/ticket</code> in the bot and write a real bug: what you did, what you expected, what broke. A screenshot or link helps. You get a number and a time back. This step works today. Test it yourself.</p>
+                </div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number muted">2</div>
+                <div class="step-content">
+                    <p><strong>It becomes a case.</strong> <span class="pill checking">Checking now</span><br>If other people hit the same thing, the reports join up, so one fix can answer many. You are not shouting into a channel that scrolls away.</p>
+                </div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number muted">3</div>
+                <div class="step-content">
+                    <p><strong>A person confirms it.</strong> <span class="pill checking">Checking now</span><br>A human, not an algorithm, reads it and decides if it is a real bug worth crediting. Judged on whether it held up, not on how loud it was.</p>
+                </div>
+            </div>
+            <div class="step-visual">
+                <div class="step-number muted">4</div>
+                <div class="step-content">
+                    <p><strong>Credit, then a receipt.</strong> <span class="pill checking">Checking now</span><br>Your contribution credit is recorded, and a receipt closes the loop: the ticket number, the confirmation, the outcome. Something you point to later, not a promise you take on faith.</p>
+                </div>
+            </div>
+
+            <p>Step one is live today. The rest is built and running in production. The last mile, the receipt and credit reaching you, is what we are checking right now with the first real users. The status section below says exactly where each part stands.</p>
+        </section>
+
+        <!-- 6. HONEST STATUS -->
+        <section class="alpha-section" id="status">
+            <h2>What is live, what we are checking, what is not yet.</h2>
+            <p>Plain status. Nothing here is called live unless it already leaves a record you can check yourself.</p>
+
+            <div class="success-box">
+                <p><strong>Live now:</strong> the <code>/ticket</code> intake. Open <code>/ticket</code> in the bot and send a report. It comes back with a number and a 48h target. Test it today, this minute, without taking our word for it.</p>
+            </div>
+
+            <div class="highlight-box gold">
+                <p><strong>Checking now, with the first real users:</strong> receipt delivery and the contribution credit. The code is in production. What we are watching is the full path with real people: a real bug confirmed by an admin, the reporter getting their credit, the receipt landing. When that runs clean, this line moves up to live.</p>
+            </div>
+
+            <div class="highlight-box gray">
+                <p><strong>Later:</strong> thank points (the credit you earn for helping) converting to ETH, the money the network runs on. That rail starts on test ETH, which is practice money on a test network with no real value, so the whole path is proven before any real value moves. There is no automatic reward today.</p>
+            </div>
+
+            <div class="highlight-box deny">
+                <p><strong>Not running at all yet:</strong> there is no honesty penalty, no locked deposit, no voting weight, and no token reward live today. None of it. When any of those start, this page will say so in these words. If a page tells you they are running before you can point to the record, close the page.</p>
+            </div>
+
+            <div class="feature-link">
+                The bot and this page are open source, free to read, copy, and run yourself (MIT licensed). You do not have to trust the words. You can read the thing. <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">github.com/Siah-kin/community-bot &rarr;</a>
+            </div>
+        </section>
+
+        <!-- 7. VALIDATOR ROLE -->
+        <section class="alpha-section" id="validator">
+            <h2>If you run a room, you hold the confirm button.</h2>
+            <p>If you have watched a program get farmed, you are the reader this was built for. The contributor sends the report. You are the one who decides whether it counts. The credit that gets written down is worth exactly what your judgment is worth, and that is the point.</p>
+            <p>We do not ask you to trust a score. We ask you to make the call you already make in your head every day, the one where you know who is carrying the room and who is farming it. We write that call down so it survives you. When this community is gone, the people who actually held it up have something to carry to the next one.</p>
+            <p>This is why your scepticism is the asset, not a problem to manage. A confirmation is worth as much as the person giving it is hard to fool. Someone who has watched their own program get farmed is the last person a farmer wants holding the gate.</p>
+            <p class="turn-line">Where everyone else sees users to bill, the job here is keeping the people who keep the room honest.</p>
+        </section>
+
+        <!-- 8. WHY US (moat) -->
+        <section class="alpha-section" id="why-us">
+            <h2>Seven years of running rooms, written down this time.</h2>
+            <p>This is not a clever idea from last quarter. It is seven years of managing communities by hand, deciding what counted and what was noise, watching which rewards got farmed and which held. That judgment used to live in one operator's head. Now it is in the code that decides what a confirmation looks like.</p>
+            <p>That is the part that is hard to copy. Anyone can fork the bot, and you should, it is open. But the calls baked into it came from doing the work, year after year, in rooms that mostly do not exist anymore.</p>
+            <p>We are not selling you the future of anything. The job is narrow on purpose: wire credit to real work so it stops getting eaten by the next cycle.</p>
+            <p class="turn-line">You do not have to trust that. Read the code.</p>
+        </section>
+
+        <!-- 9. TAKE PART -->
+        <section class="alpha-section" id="take-part">
+            <h2>Two commands. Then try to break it.</h2>
+            <p>This is a closed alpha. Parts work, parts have rough edges, and you are here to find them.</p>
+            <p>Open the Bonzi bot. Send <code>/intro</code> to get in, then <code>/ticket</code> the next time something breaks or looks off. (<code>/intro</code> lets you in, <code>/ticket</code> files the report.) That is the live loop, and it is the one we want you stress-testing.</p>
+            <p>Then answer the only question that matters. Did that record feel like real credit, or like another leaderboard point you would not bother screenshotting? Tell us straight. A no is more useful than a polite yes. If a line on this page reads like hype, that is a bug too. Report it the same way.</p>
+
+            <div class="success-box" style="margin-top:24px;">
+                <p><strong>Run the live part.</strong> Open the bot, send <code>/intro</code>, then <code>/ticket</code> when you find something real.</p>
+                <a class="alpha-action" href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener noreferrer">Open Bonzi on Telegram &rarr;</a>
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<footer class="alpha-footer">
+    <div class="alpha-footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="footer-brand-link" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+                <img src="../bonzi-logo.png" alt="" width="22" height="22">
+                <span>Bonzivista.org</span>
+            </a>
+        </div>
+        <p class="footer-links">
+            <a href="/demo_silverfox/">Vetting page</a>
+            <span>,</span>
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span>,</span>
+            <a href="/privacy.html">privacy policy</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -2132,6 +2132,18 @@
             return raw || 'https://bonzi-v5.onrender.com';
         }
 
+        function _tgLangSuffix() {
+            if (currentLang === 'pt-BR') return '_lang_pt';
+            if (currentLang === 'zh-CN') return '_lang_zh';
+            return '';
+        }
+
+        function _appendLangToTgLink(url) {
+            var s = _tgLangSuffix();
+            if (!s || !url) return url;
+            return url.replace(/(start=)([^&]*)/, function(_, k, v) { return k + v + s; });
+        }
+
         function getDeviceFingerprint() {
             var KEY = 'bonzi_slot_fp_v1';
             try {
@@ -2281,7 +2293,7 @@
             skillChallengeLoading = _slotFetchJson(api + '/api/slotgame/skill_challenge', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint(), lang: currentLang })
             }).then(function (res) {
                 skillChallengeLoading = null;
                 var j = res.json || {};
@@ -2471,7 +2483,7 @@
                                     var wj = wres.json || {};
                                     if (wres.httpOk && wj.success && wj.deep_link) {
                                         clueEl.textContent = getStr().jackpotOk;
-                                        tgLink.href = wj.deep_link;
+                                        tgLink.href = _appendLangToTgLink(wj.deep_link);
                                         try { localStorage.setItem('bonzi_pending_claim', JSON.stringify({ deep_link: wj.deep_link, expires_at: wj.expires_at || '', code: wj.code || wj.signed_code || '' })); } catch (e) {}
                                         var _prt=document.getElementById('prize-title'); if(_prt) _prt.textContent=getStr().prizeTitle||'Lucky spin. 😎';
                                         var _prd=document.getElementById('prize-desc'); if(_prd) _prd.innerHTML=getStr().prizeDesc||'';
@@ -2754,7 +2766,7 @@
 	                submitBtn.disabled = false;
 	                var j = res.json || {};
 	                if (res.httpOk && j.success && j.deep_link) {
-	                    tgLink.href = j.deep_link;
+	                    tgLink.href = _appendLangToTgLink(j.deep_link);
 	                    var _prt2=document.getElementById('prize-title'); if(_prt2) _prt2.textContent=getStr().skillPrizeTitle||'You found it. 💜🤫';
 	                    var _prd2=document.getElementById('prize-desc'); if(_prd2) _prd2.innerHTML=getStr().skillPrizeDesc||'You recognised the sign. Your badge code:';
 	                    var _pcd2=document.getElementById('prize-code-display'); if(_pcd2) _pcd2.textContent=j.code||j.signed_code||'';

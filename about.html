@@ -11,8 +11,7 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/nav.css?v=20260602c">
     <link rel="stylesheet" href="css/bonzi-design.css">
-    <script src="js/nav-loader.js?v=20260604flags" defer></script>
-    <script src="js/i18n-loader.js?v=20260529c" defer></script>
+    <script src="js/nav-loader.js?v=20260608i18n" defer></script>
     <script src="js/slot-access-gate.js?v=20260603a" defer></script>
 
     <style>
@@ -250,7 +249,7 @@
 <main>
 
     <section class="about-hero">
-        <div class="about-label">About</div>
+        <div class="about-label" data-i18n="about.label">About</div>
         <h1 data-i18n="about.h1">Why this exists</h1>
     </section>
 
@@ -261,7 +260,7 @@
             <p data-i18n="about.p2">Every wave brings hype, then exit, then silence. The people who showed up first take the loss. The people who managed the room are gone before the dust settles.</p>
             <p data-i18n="about.p3">Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.</p>
             <p data-i18n="about.p4">Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.</p>
-            <p class="guess-line">That's the gap Bonzi was built to fill.</p>
+            <p class="guess-line" data-i18n="about.guess">That's the gap Bonzi was built to fill.</p>
         </section>
 
         <section class="about-section" id="hub">
@@ -301,80 +300,5 @@
         </p>
     </div>
 </footer>
-<script>
-window.BONZI_I18N = {
-  pt: {
-    "about.h1": "Por que isso existe",
-    "about.p1": "O ciclo devora a si mesmo.",
-    "about.p2": "Cada onda traz euforia, depois saída, depois silêncio. Quem chegou primeiro arca com o prejuízo. Quem controlava o espaço some antes da poeira baixar.",
-    "about.p3": "Modelos inundam o espaço com conteúdo que ninguém escreveu. O sinal verdadeiro fica cada vez mais difícil de identificar. A confiança entre holders e fundadores está no ponto mais baixo em uma década.",
-    "about.p4": "Precisa existir algo entre a euforia e os holders. Algo que responsabilize os fundadores quando ninguém está olhando. Algo difícil de falsificar e difícil de manipular.",
-    "about.hub_lead": "Você está dentro. O resto está no bot.",
-    "about.hub_intro": "Seu badge pode ser verificado em uma mensagem direta com o bot Bonzi. Abra o bot e use /myprofile.",
-    "about.act_bot": "Abrir o bot Bonzi",
-    "about.act_stake": "Fazer stake",
-    "footer.cto": "CTO",
-    "footer.sponsoredByPrefix": "patrocinado por",
-    "footer.privacy": "política de privacidade"
-  },
-  zh: {
-    "about.h1": "为什么会有这个",
-    "about.p1": "这个循环在吞噬自己。",
-    "about.p2": "每一波都是炒作，然后离场，然后沉默。最早进来的人承担损失。管理社区的人在尘埃落定前早已消失。",
-    "about.p3": "模型正在用没有人写过的内容淹没这个空间。真正的信号越来越难辨别。持有者和创始人之间的信任跌到了十年来的最低点。",
-    "about.p4": "炒作和持有者之间需要有一个东西。一个在没人盯着的时候也能让创始人负责的东西。一个难以伪造、难以操控的东西。",
-    "about.hub_lead": "你已经进来了。其余的都在机器人里。",
-    "about.hub_intro": "你的徽章可以通过与 Bonzi 机器人的私信来验证。打开机器人，使用 /myprofile。",
-    "about.act_bot": "打开 Bonzi 机器人",
-    "about.act_stake": "质押",
-    "footer.cto": "CTO",
-    "footer.sponsoredByPrefix": "赞助方",
-    "footer.privacy": "隐私政策"
-  },
-  ru: {
-    "about.h1": "Зачем это нужно",
-    "about.p1": "Цикл пожирает сам себя.",
-    "about.p2": "Каждая волна приносит ажиотаж, потом выход, потом тишину. Те, кто пришёл первым, несут убытки. Те, кто управлял пространством, исчезают до того, как осядет пыль.",
-    "about.p3": "Модели наполняют пространство контентом, который никто не писал. Настоящий сигнал становится всё сложнее различить. Доверие между холдерами и основателями на самом низком уровне за десятилетие.",
-    "about.p4": "Между ажиотажем и холдерами должно быть что-то. Что-то, что удерживает основателей в ответе, когда никто не смотрит. Что-то, что сложно подделать и сложно обойти.",
-    "about.hub_lead": "Ты внутри. Остальное - в боте.",
-    "about.hub_intro": "Твой значок можно проверить в личном сообщении с ботом Bonzi. Открой бота и используй /myprofile.",
-    "about.act_bot": "Открыть бота Bonzi",
-    "about.act_stake": "Застейкать",
-    "footer.cto": "CTO",
-    "footer.sponsoredByPrefix": "при поддержке",
-    "footer.privacy": "политика конфиденциальности"
-  },
-  tr: {
-    "about.h1": "Neden var",
-    "about.p1": "Döngü kendini yutuyor.",
-    "about.p2": "Her dalga hype getirir, sonra çıkış, sonra sessizlik. En başta gelenler kaybı üstlenir. Ortamı yönetenler toz kalkmadan ortadan kaybolur.",
-    "about.p3": "Modeller, kimsenin yazmadığı içeriklerle ortamı dolduruyor. Gerçek sinyali fark etmek giderek zorlaşıyor. Holderlar ile kurucular arasındaki güven on yılın en düşük noktasında.",
-    "about.p4": "Hype ile holderlar arasında bir şey olması gerekiyor. Kimse bakmıyorken kurucuları hesap verebilir kılan bir şey. Taklit edilmesi zor, oynanması zor olan bir şey.",
-    "about.hub_lead": "İçeridesin. Geri kalan botta.",
-    "about.hub_intro": "Rozetin Bonzi botu ile özel mesajda doğrulanabilir. Botu aç, ardından /myprofile komutunu kullan.",
-    "about.act_bot": "Bonzi botunu aç",
-    "about.act_stake": "Stake et",
-    "footer.cto": "CTO",
-    "footer.sponsoredByPrefix": "sponsor",
-    "footer.privacy": "gizlilik politikası"
-  },
-  fr: {
-    "about.h1": "Pourquoi c'est là",
-    "about.p1": "Le cycle se dévore lui-même.",
-    "about.p2": "Chaque vague apporte l'euphorie, puis la sortie, puis le silence. Ceux qui sont arrivés les premiers portent les pertes. Ceux qui géraient l'espace disparaissent avant que la poussière retombe.",
-    "about.p3": "Les modèles inondent l'espace de contenus que personne n'a écrits. Le vrai signal devient de plus en plus difficile à repérer. La confiance entre holders et fondateurs est au plus bas depuis dix ans.",
-    "about.p4": "Il faut quelque chose entre l'euphorie et les holders. Quelque chose qui tient les fondateurs responsables quand personne ne regarde. Quelque chose de difficile à falsifier et à contourner.",
-    "about.hub_lead": "Tu es dedans. Le reste est dans le bot.",
-    "about.hub_intro": "Ton badge peut être vérifié en message privé avec le bot Bonzi. Ouvre le bot, puis utilise /myprofile.",
-    "about.act_bot": "Ouvrir le bot Bonzi",
-    "about.act_stake": "Staker",
-    "footer.cto": "CTO",
-    "footer.sponsoredByPrefix": "sponsorisé par",
-    "footer.privacy": "politique de confidentialité"
-  }
-};
-</script>
-
 </body>
 </html>

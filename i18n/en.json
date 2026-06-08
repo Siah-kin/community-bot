@@ -255,7 +255,10 @@
   "about.p3": "Models are flooding the room with content nobody wrote. Real signal is getting harder to spot. Trust between holders and founders is at its lowest point in a decade.",
   "about.p4": "Something needs to sit between the hype and the holders. Something that holds founders accountable when no one is watching. Something that is hard to fake and hard to game.",
   "about.hub_lead": "You're in. The rest is in the bot.",
-  "about.hub_intro": "Your badge lives on your Telegram profile. Open Bonzi to set up your profile and see it.",
+  "about.hub_intro": "Your badge can be checked in a direct message with the Bonzi bot. Open the bot, then use /myprofile.",
   "about.act_bot": "Open the Bonzi bot",
-  "about.act_stake": "Stake"
+  "about.act_stake": "Stake",
+  "about.label": "About",
+  "about.guess": "That's the gap Bonzi was built to fill.",
+  "footer.sponsoredByPrefix": "sponsored by"
 }

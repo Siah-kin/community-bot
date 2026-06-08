@@ -1,0 +1,16 @@
+{
+  "about.label": "À propos",
+  "about.h1": "Pourquoi c'est là",
+  "about.p1": "Le cycle se dévore lui-même.",
+  "about.p2": "Chaque vague apporte l'euphorie, puis la sortie, puis le silence. Ceux qui sont arrivés les premiers portent les pertes. Ceux qui géraient l'espace disparaissent avant que la poussière retombe.",
+  "about.p3": "Les modèles inondent l'espace de contenus que personne n'a écrits. Le vrai signal devient de plus en plus difficile à repérer. La confiance entre holders et fondateurs est au plus bas depuis dix ans.",
+  "about.p4": "Il faut quelque chose entre l'euphorie et les holders. Quelque chose qui tient les fondateurs responsables quand personne ne regarde. Quelque chose de difficile à falsifier et à contourner.",
+  "about.guess": "C'est précisément ce vide que Bonzi a été conçu pour combler.",
+  "about.hub_lead": "Tu es dedans. Le reste est dans le bot.",
+  "about.hub_intro": "Ton badge peut être vérifié en message privé avec le bot Bonzi. Ouvre le bot, puis utilise /myprofile.",
+  "about.act_bot": "Ouvrir le bot Bonzi",
+  "about.act_stake": "Staker",
+  "footer.cto": "CTO",
+  "footer.sponsoredByPrefix": "sponsorisé par",
+  "footer.privacy": "politique de confidentialité"
+}

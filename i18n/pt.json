@@ -243,7 +243,10 @@
   "about.p3": "Modelos estão inundando a sala com conteúdo que ninguém escreveu. Sinal real está ficando mais difícil de encontrar. A confiança entre holders e founders está no menor ponto em uma década.",
   "about.p4": "Algo precisa ficar entre o hype e os holders. Algo que mantenha os founders responsáveis quando ninguém está olhando. Algo difícil de fingir e difícil de gamear.",
   "about.hub_lead": "Você entrou. O resto está no bot.",
-  "about.hub_intro": "Seu selo fica no seu perfil do Telegram. Abra o Bonzi para configurar seu perfil e vê-lo.",
+  "about.hub_intro": "Seu selo pode ser conferido em uma mensagem direta com o bot Bonzi. Abra o bot e depois use /myprofile.",
   "about.act_bot": "Abrir o bot Bonzi",
-  "about.act_stake": "Stake"
+  "about.act_stake": "Stake",
+  "about.label": "Sobre",
+  "about.guess": "É essa lacuna que o Bonzi foi feito para preencher.",
+  "footer.sponsoredByPrefix": "patrocinado por"
 }

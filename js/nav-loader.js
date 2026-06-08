@@ -265,13 +265,38 @@
         });
     }
 
+    // Central JSON cache (i18n/{lang}.json). Authority source for unified pages.
+    var _i18nCentralCache = {};
+
+    function _i18nBasePath() {
+        var segs = window.location.pathname.split('/').filter(function(s) {
+            return s && !s.endsWith('.html');
+        });
+        return segs.length === 0 ? './' : '../'.repeat(segs.length);
+    }
+
+    function _i18nLoadCentral(lang) {
+        if (_i18nCentralCache[lang] !== undefined) {
+            return Promise.resolve(_i18nCentralCache[lang]);
+        }
+        return fetch(_i18nBasePath() + 'i18n/' + lang + '.json')
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(j) { _i18nCentralCache[lang] = j || null; return _i18nCentralCache[lang]; })
+            .catch(function() { _i18nCentralCache[lang] = null; return null; });
+    }
+
+    // Central JSON is authority; per-page BONZI_I18N dict is fallback during
+    // migration. Dict-only pages (no central keys) keep working unchanged.
     function _i18nApply(lang) {
-        var dict = window.BONZI_I18N && window.BONZI_I18N[lang];
-        if (!dict) return;
-        document.documentElement.lang = lang;
-        document.querySelectorAll('[data-i18n]').forEach(function(el) {
-            var k = el.getAttribute('data-i18n');
-            if (dict[k] != null) el.innerHTML = dict[k];
+        var dict = (window.BONZI_I18N && window.BONZI_I18N[lang]) || {};
+        _i18nLoadCentral(lang).then(function(central) {
+            central = central || {};
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+                var k = el.getAttribute('data-i18n');
+                var v = (central[k] != null) ? central[k] : dict[k];
+                if (v != null) el.innerHTML = v;
+            });
         });
     }
 

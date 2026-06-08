@@ -30,7 +30,10 @@
   "about.p3": "模型正在用没人写过的内容淹没房间。真实信号越来越难找。持币者和创始人之间的信任处于十年来最低点。",
   "about.p4": "需要某种东西介于炒作和持币者之间。需要某种东西在没人看时让创始人负责。需要某种难以伪造、难以操纵的东西。",
   "about.hub_lead": "你进来了。其余的都在机器人里。",
-  "about.hub_intro": "你的徽章在你的 Telegram 个人资料上。打开 Bonzi 设置你的个人资料并查看徽章。",
+  "about.hub_intro": "你的徽章可以在与 Bonzi 机器人的私聊中查看。打开机器人，然后使用 /myprofile。",
   "about.act_bot": "打开 Bonzi 机器人",
-  "about.act_stake": "Stake"
+  "about.act_stake": "Stake",
+  "about.label": "关于",
+  "about.guess": "这正是 Bonzi 被打造出来填补的空白。",
+  "footer.sponsoredByPrefix": "赞助方"
 }

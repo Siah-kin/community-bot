@@ -30,6 +30,7 @@
             --gray-light: #F4F4F5;
             --gold: #D4AF37;
             --green: #10B981;
+            --red: #DC2626;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -135,7 +136,8 @@
         body.dark-mode .highlight-box.gold strong { color: var(--gold); }
         .highlight-box.gray { border-left-color: var(--gray); background: rgba(113, 113, 122, 0.06); }
         .highlight-box.gray strong { color: var(--gray); }
-        .highlight-box.deny { border-left-color: #EF4444; background: rgba(239, 68, 68, 0.05); }
+        body.dark-mode .highlight-box.gray strong { color: #A1A1AA; }
+        .highlight-box.deny { border-left-color: var(--red); background: rgba(220, 38, 38, 0.05); }
         .highlight-box.deny strong { color: #b91c1c; }
         body.dark-mode .highlight-box.deny strong { color: #f87171; }
         .highlight-box p { font-size: 1rem; color: #3F3F46; margin: 0; line-height: 1.65; }
@@ -200,6 +202,13 @@
         .alpha-footer-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--black); }
         body.dark-mode .footer-brand { color: #fff; }
+        .footer-brand-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .footer-sep { color: inherit; }
+        body.dark-mode .footer-sep { color: #71717A; }
+        .footer-sponsor { font-size: 0.85rem; color: inherit; }
+        .footer-sponsor-link { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
+        .footer-sponsor-link:hover { color: var(--purple); }
+        .footer-sponsor-logo { flex-shrink: 0; }
         .footer-links { display: flex; gap: 6px; }
         .footer-links a { color: var(--black); text-decoration: none; transition: color 0.15s; }
         body.dark-mode .footer-links a { color: #E4E4E7; }
@@ -377,17 +386,26 @@
 <footer class="alpha-footer">
     <div class="alpha-footer-inner">
         <div class="footer-brand">
-            <a href="/" class="footer-brand-link" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
-                <img src="../bonzi-logo.png" alt="" width="22" height="22">
+            <span data-i18n="footer.cto">CTO</span>
+            <span class="footer-sep">|</span>
+            <a href="/" class="footer-brand-link">
+                <img src="../bonzi-logo.png" alt="" width="22" height="22" class="footer-brand-logo">
                 <span>Bonzivista.org</span>
             </a>
         </div>
+        <p class="footer-sponsor">
+            <span data-i18n="footer.sponsoredByPrefix">sponsored by</span>
+            <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer" class="footer-sponsor-link">
+                <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true" class="footer-sponsor-logo"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                <span>Ethervista</span>
+            </a>
+        </p>
         <p class="footer-links">
             <a href="/demo_silverfox/">Vetting page</a>
             <span>,</span>
             <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span>,</span>
-            <a href="/privacy.html">privacy policy</a>
+            <a href="/privacy.html" data-i18n="footer.privacy">privacy policy</a>
         </p>
     </div>
 </footer>

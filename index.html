@@ -1517,6 +1517,7 @@
 
         var I18N = {
             en: {
+                claimPending: 'Claim pending - tap to bind it to Telegram',
                 tagline: 'pull lever to try your luck',
                 notifyMsg: 'Early list: emails only.',
                 notifyMsgPending: '',
@@ -1601,6 +1602,7 @@
                 langZhTitle: 'Simplified Chinese'
             },
             'pt-BR': {
+                claimPending: 'Prêmio pendente - toque para vincular ao Telegram',
                 tagline: 'puxe a alavanca e tente a sorte',
                 notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
                 notifyMsgPending: '',
@@ -1688,6 +1690,7 @@
                 langZhTitle: 'Chin\u00EAs simplificado'
             },
             'zh-CN': {
+                claimPending: '待领取 - 点击绑定到 Telegram',
                 tagline: '\u62c9\u52a8\u6447\u6746\u78b0\u78b0\u8fd0\u6c14\u3002',
                 notifyMsg: '\u65e9\u671f\u540d\u5355\uff1a\u4ec5\u90ae\u7bb1\u3002',
                 notifyMsgPending: '',
@@ -2832,7 +2835,7 @@
             var bar = document.createElement('a');
             bar.href = c.deep_link; bar.target = '_blank'; bar.rel = 'noopener';
             bar.id = 'pending-claim-bar';
-            bar.textContent = 'Claim pending - tap to bind it to Telegram';
+            bar.textContent = (typeof getStr === 'function' && getStr().claimPending) || 'Claim pending - tap to bind it to Telegram';
             bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;display:block;text-align:center;padding:12px 16px;background:#7C3AED;color:#fff;font-weight:700;text-decoration:none;font-family:inherit;';
             document.body.appendChild(bar);
             bar.addEventListener('click', function () { try { localStorage.removeItem(KEY); } catch (e) {} });

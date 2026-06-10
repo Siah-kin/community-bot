@@ -112,7 +112,7 @@
   "farmers.askearn.cooperation.desc": "Does it help others learn?",
   "farmers.askearn.score": "Score: 1-10 pts per question. Farmers get 1-2 pts for spam. Curious users get 7-10 pts.",
   "farmers.bugearn.title": "Bug & Earn",
-  "farmers.bugearn.desc": "Report bugs, get DAO points. Use /bug followed by description.",
+  "farmers.bugearn.desc": "Report bugs, earn Thanks points. Use /bug followed by description.",
   "farmers.bugearn.verified": "+10 pts for verified bugs",
   "farmers.bugearn.feature": "+5 pts for feature suggestions that get implemented",
   "farmers.bugearn.invalid": "Invalid reports get 0 pts (no penalty)",

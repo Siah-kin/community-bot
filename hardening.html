@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Bonzi Knows Work Is Real | Bonzi</title>
+    <style>
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #d4af37;
+            --green: #10B981;
+            --surface: #1F1F23;
+            --border: #27272A;
+            --muted: #A1A1AA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 56px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: var(--purple-light); }
+
+        /* LAYOUT */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 40px 120px;
+        }
+
+        /* HERO */
+        .hero-tag {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--purple-light);
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            color: var(--muted);
+            max-width: 640px;
+            margin-bottom: 56px;
+            line-height: 1.6;
+        }
+
+        /* DIVIDER */
+        .divider {
+            width: 48px;
+            height: 3px;
+            background: var(--purple);
+            margin: 48px 0;
+        }
+
+        /* SECTION HEADINGS */
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            margin-top: 56px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--purple-light);
+        }
+
+        p { margin-bottom: 20px; color: #E4E4E7; }
+
+        /* BOXES */
+        .technical-box {
+            background: var(--black);
+            border-left: 4px solid var(--purple);
+            padding: 28px 32px;
+            margin: 28px 0;
+            position: relative;
+        }
+
+        .technical-box::before {
+            content: "HOW IT WORKS";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--purple);
+            color: white;
+            padding: 4px 12px;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .feature-box {
+            background: rgba(124, 58, 237, 0.12);
+            border-left: 4px solid var(--purple);
+            padding: 28px 32px;
+            margin: 28px 0;
+            position: relative;
+        }
+
+        .feature-box::before {
+            content: "KEY FEATURE";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--purple);
+            color: white;
+            padding: 4px 12px;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .advantage-box {
+            background: var(--surface);
+            border-left: 4px solid var(--gold);
+            padding: 28px 32px;
+            margin: 28px 0;
+            position: relative;
+        }
+
+        .advantage-box::before {
+            content: "ADVANTAGE";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--gold);
+            color: var(--black);
+            padding: 4px 12px;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .highlight-box {
+            background: var(--surface);
+            border-left: 3px solid var(--purple);
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        /* BOX INNER */
+        .technical-box p,
+        .feature-box p,
+        .advantage-box p,
+        .highlight-box p {
+            color: #D4D4D8;
+            margin-bottom: 12px;
+        }
+
+        .technical-box p:last-child,
+        .feature-box p:last-child,
+        .advantage-box p:last-child,
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        /* STEP LIST */
+        .step-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .step-list li {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 14px;
+            color: #D4D4D8;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--purple);
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 15px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--surface);
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            color: #E4E4E7;
+            vertical-align: top;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        td.green { color: var(--green); font-weight: 600; }
+        td.muted  { color: var(--muted); }
+
+        /* STATUS BADGES */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+        .badge-purple { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+        .badge-gold { background: rgba(212,175,55,0.15); color: var(--gold); }
+
+        /* QUOTE */
+        blockquote {
+            border-left: 3px solid var(--gold);
+            padding: 20px 28px;
+            margin: 32px 0;
+            background: var(--surface);
+        }
+
+        blockquote p {
+            font-size: 19px;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.5;
+        }
+
+        blockquote cite {
+            display: block;
+            font-style: normal;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        footer a { color: var(--purple-light); text-decoration: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .container { padding: 48px 20px 80px; }
+            nav { padding: 0 20px; }
+            h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-logo">Bonzi<span>.</span></a>
+    </nav>
+
+    <div class="container">
+
+        <div class="hero-tag">System Update</div>
+        <h1>When Bonzi says <em>done</em>, <br>it means done.</h1>
+        <p class="hero-sub">
+            Bonzi's earn mechanics only hold up if the system can tell real work from claimed work.
+            That was the gap we closed. Here's what changed and why it matters for contributors.
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- SECTION 1: THE PROBLEM -->
+        <h2>The problem with self-reported work</h2>
+
+        <p>
+            Most task systems have the same blind spot. A contributor says they finished something.
+            The system records it as done. Rewards go out. Later, it turns out the work was partial,
+            broken, or never actually connected to anything.
+        </p>
+
+        <p>
+            In a normal job that's annoying. In a work-and-reward system running on a blockchain,
+            it means people collect tokens for things that didn't happen. That corrodes trust fast
+            — and once it starts, it's hard to stop.
+        </p>
+
+        <div class="technical-box">
+            <p>
+                Bonzi used to rely on a mix of automated checks, AI interpretation, and convention.
+                A task could look green even when key checks had not truly run. Scripts could report
+                success without touching the files they were supposed to verify. An agent that sounded
+                confident could advance a task past gates that were designed to stop incomplete work.
+            </p>
+            <p>
+                That's not a bug in one place. It's a structural weakness: the verification layer
+                trusted intent instead of evidence.
+            </p>
+        </div>
+
+        <!-- SECTION 2: WHAT CHANGED -->
+        <h2>What we fixed, and how</h2>
+
+        <p>
+            The hardening work pushed truth out of memory and into artifacts. Instead of asking
+            "did the agent say it ran the check?" the system now asks "is there a file, a row,
+            or an exit code that proves it?"
+        </p>
+
+        <div class="feature-box">
+            <h3>Three layers of evidence</h3>
+            <ul class="step-list">
+                <li>
+                    <span class="step-num">1</span>
+                    <span><strong>Scripts verify reality.</strong> Verification commands run against live files and actual state — not against memory or cached snapshots. If the file changed, the check sees the new file. If the database has zero rows, the check fails.</span>
+                </li>
+                <li>
+                    <span class="step-num">2</span>
+                    <span><strong>Artifacts preserve what happened.</strong> Results are written to disk as structured records. An agent can't revise what it reported. The artifact is what it is.</span>
+                </li>
+                <li>
+                    <span class="step-num">3</span>
+                    <span><strong>Gates decide if the evidence is enough.</strong> Before a task advances, a gate reads the artifact and checks a set of concrete conditions. Confidence and phrasing don't influence this. The conditions either pass or they don't.</span>
+                </li>
+            </ul>
+        </div>
+
+        <p>
+            This matters because it removes judgment from the critical path. Gates don't need to
+            understand what an agent meant. They check facts: did this command exit with code 0,
+            does this row exist, is this file newer than this timestamp. That's it.
+        </p>
+
+        <!-- SECTION 3: EARN MECHANICS -->
+        <h2>What this means for raid-and-earn</h2>
+
+        <p>
+            Raid-and-earn is only worth building if the earn part is tied to real outcomes.
+            A raiding model where everyone earns the same flat amount just for showing up will
+            be gamed immediately. But a model where earnings scale with verified contribution
+            and degrade when evidence weakens — that's defensible.
+        </p>
+
+        <div class="advantage-box">
+            <h3>Proof-backed rewards</h3>
+            <p>
+                With the hardened truth layer in place, Bonzi can now tie reward thresholds to
+                artifact state rather than task labels. A task marked "done" with a full evidence
+                chain earns differently from one that passed on the minimum. A contribution that
+                holds up over time earns more than one that degrades at the next audit.
+            </p>
+            <p>
+                That's the earn mechanic we're building toward: rewards that are fair because
+                they're grounded in something the system actually measured.
+            </p>
+        </div>
+
+        <p>
+            It also opens the door to status degradation. If a task was accepted but later
+            fails a re-verification — because a dependency changed, a check now fails, or the
+            integration broke — the system can lower its status. That's not a punishment.
+            It's the difference between a snapshot and a living record.
+        </p>
+
+        <div class="highlight-box">
+            <p>
+                In a reputation economy, a claim only holds as much weight as the evidence behind it.
+                Bonzi's artifact layer is what makes that sentence operational rather than aspirational.
+            </p>
+        </div>
+
+        <!-- SECTION 4: HYBRID VETTING -->
+        <h2>Hybrid vetting: machine facts, human judgment</h2>
+
+        <p>
+            Full automation is brittle. Full manual review doesn't scale. The right split is:
+            let the machine verify what's objectively checkable, and bring humans in where
+            judgment actually matters.
+        </p>
+
+        <p>
+            Bonzi is now closer to that line. The verification layer handles the facts side:
+            command execution, file presence, database rows, artifact freshness, integration
+            state. These aren't interpretation calls. Either the row exists or it doesn't.
+        </p>
+
+        <div class="technical-box">
+            <p>
+                Human review kicks in for the edge cases that machines can't resolve cleanly:
+                policy exemptions, disputed evidence, unusual contribution types, cases where
+                the spec was ambiguous. This keeps the system scalable without becoming sloppy.
+                Reviewers spend time where their judgment adds value, not on facts the system
+                can already check.
+            </p>
+        </div>
+
+        <!-- SECTION 5: REPUTATION -->
+        <h2>Reputation that holds up</h2>
+
+        <p>
+            The longer-term goal is portable contributor reputation: badges, claims, and signals
+            that follow a contributor across raids and carry weight with other communities.
+            That only works if the reputation is hard to fake.
+        </p>
+
+        <blockquote>
+            <p>Reputation built on self-reported work is just branding. Reputation built on artifact-backed results that passed real gates is a record.</p>
+            <cite>— The design principle behind Bonzi's verification layer</cite>
+        </blockquote>
+
+        <p>
+            When Bonzi issues a reputation signal — a claim that someone completed verifiable work,
+            that their contribution held up under re-check, that they consistently pass at a certain
+            standard — that signal comes from the artifact chain, not from a chat log.
+        </p>
+
+        <p>
+            That's what makes it worth putting onchain. An onchain claim tied to nothing is just
+            a token. An onchain claim tied to a verifiable chain of artifacts is evidence.
+        </p>
+
+        <p>
+            There is a simpler way to say all of this. Online, nobody verifies claims one by one.
+            People trust what they have repeated experience with: it behaves the same way every
+            time, it says what it knows and what it doesn't, and when it gets something wrong,
+            it corrects itself in the open.
+        </p>
+
+        <p>
+            That is the standard Bonzi is built against, and you can check it instead of taking
+            it on faith. Answers draw on one record, so they stay consistent. Known limits are
+            stated, not papered over. And when a check fails, the failure is written to an
+            append-only log: the same standard the system applies to everyone else.
+        </p>
+
+        <!-- SUMMARY TABLE -->
+        <h2>Before and after</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Before</th>
+                    <th>After</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="muted">Task advances if agent sounds confident</td>
+                    <td class="green">Task advances only if gate conditions pass</td>
+                </tr>
+                <tr>
+                    <td class="muted">Verification result lives in memory or a log</td>
+                    <td class="green">Verification result written to a structured artifact</td>
+                </tr>
+                <tr>
+                    <td class="muted">Done means "agent reported done"</td>
+                    <td class="green">Done means files, checks, and rows all agree</td>
+                </tr>
+                <tr>
+                    <td class="muted">Task status is final once marked complete</td>
+                    <td class="green">Task status can degrade if evidence weakens</td>
+                </tr>
+                <tr>
+                    <td class="muted">Reward tied to task label</td>
+                    <td class="green">Reward tied to evidence chain depth</td>
+                </tr>
+                <tr>
+                    <td class="muted">Reputation from self-report or chat context</td>
+                    <td class="green">Reputation from artifact-backed, gate-verified results</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- CLOSING -->
+        <div class="divider"></div>
+
+        <h2>Why this is the foundation, not just a fix</h2>
+
+        <p>
+            None of the things we want to build — raid coordination, fair rewards, hybrid vetting,
+            portable reputation — hold up without a reliable way to distinguish real work from
+            appearances. That's not a nice-to-have. It's the load-bearing layer.
+        </p>
+
+        <p>
+            This hardening work is that layer. It's not internal cleanup. It's the reason everything
+            else we're building can be trusted. When Bonzi says a task is done, it's because the repo,
+            the checks, and the verification artifacts all agree. Not because an agent sounded convincing.
+        </p>
+
+        <div class="feature-box">
+            <h3>Where each part stands</h3>
+            <p>
+                This list moves as the proof lands. A part graduates only when real rows back it,
+                not when it looks finished. <span class="badge badge-green">Open</span> means you can
+                use it in the alpha today. <span class="badge badge-purple">Proving</span> means it
+                runs, but the evidence behind it is still being earned. <span class="badge badge-gold">Next</span>
+                is on the path, not open yet.
+            </p>
+            <p>
+                <span class="badge badge-green">Open</span>&nbsp; Report a bug, watch it get reviewed, earn for real finds<br><br>
+                <span class="badge badge-green">Open</span>&nbsp; Submit and vote on memes<br><br>
+                <span class="badge badge-green">Open</span>&nbsp; Stake BONZI from your phone wallet<br><br>
+                <span class="badge badge-green">Open</span>&nbsp; Spin for prize codes<br><br>
+                <span class="badge badge-green">Open</span>&nbsp; See your trust band and what moves it<br><br>
+                <span class="badge badge-green">Open</span>&nbsp; Token price, yield, and holdings at a glance<br><br>
+                <span class="badge badge-purple">Proving</span>&nbsp; Reward tiers that scale with how much evidence backs your work<br><br>
+                <span class="badge badge-purple">Proving</span>&nbsp; Raid coordination<br><br>
+                <span class="badge badge-purple">Proving</span>&nbsp; Full trust scoring across every signal<br><br>
+                <span class="badge badge-purple">Proving</span>&nbsp; Auto-compounding vault<br><br>
+                <span class="badge badge-gold">Next</span>&nbsp; Link your X account to your profile<br><br>
+                <span class="badge badge-gold">Next</span>&nbsp; Onchain reputation you can carry anywhere
+            </p>
+        </div>
+
+        <p style="color: var(--muted); font-size: 15px; margin-top: 40px;">
+            Questions or want early access? Find us on Ethervista or reach out via the Bonzi Telegram.
+        </p>
+
+    </div>
+
+    <footer>
+        <p><a href="/">bonzivista.org</a> &nbsp;·&nbsp; Built on Base &nbsp;·&nbsp; Flat fees, no percentages</p>
+    </footer>
+
+</body>
+</html>

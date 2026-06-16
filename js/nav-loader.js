@@ -315,9 +315,32 @@
         });
     }
 
+    function _siteLangToken(lang) {
+        if (lang === 'pt') return 'pt-br';
+        if (lang === 'zh') return 'zh-cn';
+        return 'en';
+    }
+
+    function _normaliseSavedLang(raw) {
+        var lang = String(raw || '').trim().toLowerCase().replace(/_/g, '-');
+        if (lang === 'pt-br' || lang === 'pt' || lang.slice(0, 2) === 'pt') return 'pt';
+        if (lang === 'zh-cn' || lang === 'zh' || lang === 'mandarin' || lang.slice(0, 2) === 'zh') return 'zh';
+        return 'en';
+    }
+
+    function _readSavedLang() {
+        return _normaliseSavedLang(
+            localStorage.getItem('bonzi_lang') ||
+            localStorage.getItem('bonzi-lang') ||
+            localStorage.getItem('bonzi_site_lang') ||
+            'en'
+        );
+    }
+
     function _i18nSetLang(lang) {
         localStorage.setItem('bonzi_lang', lang);
         localStorage.setItem('bonzi-lang', lang);
+        localStorage.setItem('bonzi_site_lang', _siteLangToken(lang));
         if (lang === 'en') { _i18nRestoreEn(); _i18nSetActive('en'); return; }
         _i18nApply(lang);
         _i18nSetActive(lang);
@@ -363,7 +386,7 @@
             obs.observe(document.body, { childList: true, subtree: true });
         }
         // Restore saved language preference on page load
-        var saved = localStorage.getItem('bonzi_lang') || localStorage.getItem('bonzi-lang') || 'en';
+        var saved = _readSavedLang();
         if (saved && saved !== 'en') { _i18nApply(saved); }
         _i18nSetActive(saved || 'en');
     }

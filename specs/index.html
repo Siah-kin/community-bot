@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonziVista Strategic Roadmap</title>
+    <meta name="description" content="BonziVista living roadmap for public review: current evidence, active development questions, timing considerations, and boundaries around present claims.">
+    <meta name="roadmap-refreshed" content="2026-06-18">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css?v=20260618roadmap">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260618roadmap" defer></script>
+    <style>
+        :root {
+            --road-ink: #18181b;
+            --road-muted: #52525b;
+            --road-line: #e4e4e7;
+            --road-soft: #f8fafc;
+            --road-green: #0f9f6e;
+            --road-green-soft: #ecfdf5;
+            --road-amber: #b7791f;
+            --road-amber-soft: #fffbeb;
+            --road-blue: #2563eb;
+            --road-blue-soft: #eff6ff;
+            --road-purple: #7c3aed;
+            --road-purple-soft: #f5f3ff;
+        }
+
+        body {
+            background: #ffffff;
+            color: var(--road-ink);
+        }
+
+        .roadmap-shell {
+            width: min(1760px, calc(100% - 56px));
+            margin: 0 auto;
+            padding: 94px 0 76px;
+        }
+
+        .roadmap-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+            gap: 36px;
+            align-items: center;
+            border-bottom: 1px solid var(--road-line);
+            padding-bottom: 38px;
+        }
+
+        .roadmap-kicker,
+        .section-kicker,
+        .phase-eyebrow,
+        .metric-label {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .roadmap-kicker {
+            color: var(--road-purple);
+        }
+
+        .roadmap-hero h1 {
+            max-width: 980px;
+            margin: 16px 0 20px;
+            font-size: clamp(2.45rem, 5.4vw, 5.6rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .roadmap-lead {
+            max-width: 980px;
+            margin: 0;
+            color: var(--road-muted);
+            font-size: clamp(1.06rem, 1.75vw, 1.34rem);
+            line-height: 1.62;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 26px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            border: 1px solid var(--road-line);
+            border-radius: 999px;
+            padding: 7px 13px;
+            background: #fff;
+            color: var(--road-muted);
+            font-size: 13px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .status-pill.green {
+            border-color: rgba(15, 159, 110, 0.28);
+            background: var(--road-green-soft);
+            color: #047857;
+        }
+
+        .status-pill.amber {
+            border-color: rgba(183, 121, 31, 0.28);
+            background: var(--road-amber-soft);
+            color: #92400e;
+        }
+
+        .hero-visual {
+            display: grid;
+            justify-items: center;
+            align-content: center;
+            min-height: 330px;
+            border: 1px solid var(--road-line);
+            border-radius: 8px;
+            background: var(--road-soft);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-visual img {
+            width: min(74%, 360px);
+            height: auto;
+            object-fit: contain;
+        }
+
+        .visual-caption {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 16px;
+            color: var(--road-muted);
+            font-size: 13px;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .refresh-grid {
+            display: grid;
+            grid-template-columns: 1.25fr repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .refresh-card {
+            border: 1px solid var(--road-line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 18px;
+            min-height: 152px;
+        }
+
+        .refresh-card.primary {
+            background: var(--road-blue-soft);
+            border-color: rgba(37, 99, 235, 0.22);
+        }
+
+        .refresh-card strong {
+            display: block;
+            margin-top: 10px;
+            font-size: clamp(1.25rem, 2vw, 2rem);
+            line-height: 1.08;
+            letter-spacing: 0;
+        }
+
+        .refresh-card p {
+            margin: 12px 0 0;
+            color: var(--road-muted);
+            line-height: 1.58;
+            font-size: 14px;
+        }
+
+        .summary-card,
+        .phase-card,
+        .proof-card,
+        .depth-card,
+        .watch-card,
+        .stats-card {
+            border: 1px solid var(--road-line);
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .summary-card {
+            padding: 20px;
+            min-height: 170px;
+        }
+
+        .summary-card h2,
+        .phase-card h3,
+        .proof-card h3,
+        .stats-card strong {
+            margin: 0;
+            letter-spacing: 0;
+        }
+
+        .summary-card h2 {
+            font-size: 19px;
+        }
+
+        .summary-card p,
+        .phase-card p,
+        .phase-card li,
+        .proof-card p,
+        .depth-card p,
+        .depth-card li,
+        .watch-card p,
+        .watch-card li,
+        .stats-card p,
+        .roadmap-note,
+        .boundary-list li {
+            color: var(--road-muted);
+            line-height: 1.58;
+        }
+
+        .summary-card p {
+            margin: 12px 0 0;
+            font-size: 15px;
+        }
+
+        .roadmap-section {
+            margin-top: 46px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 22px;
+            margin-bottom: 18px;
+        }
+
+        .section-head h2 {
+            margin: 8px 0 0;
+            font-size: clamp(1.75rem, 3vw, 3rem);
+            line-height: 1.05;
+            letter-spacing: 0;
+        }
+
+        .section-head p {
+            max-width: 700px;
+            margin: 0;
+            color: var(--road-muted);
+            line-height: 1.58;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(4, minmax(190px, 1fr));
+            gap: 14px;
+        }
+
+        .phase-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 410px;
+            padding: 20px;
+            border-top-width: 7px;
+        }
+
+        .phase-card.proven {
+            border-top-color: var(--road-green);
+            background: linear-gradient(180deg, var(--road-green-soft), #fff 150px);
+        }
+
+        .phase-card.next {
+            border-top-color: var(--road-amber);
+            background: linear-gradient(180deg, var(--road-amber-soft), #fff 150px);
+        }
+
+        .phase-card.planned {
+            border-top-color: var(--road-blue);
+            background: linear-gradient(180deg, var(--road-blue-soft), #fff 150px);
+        }
+
+        .phase-card.partner {
+            border-top-color: var(--road-purple);
+            background: linear-gradient(180deg, var(--road-purple-soft), #fff 150px);
+        }
+
+        .phase-eyebrow.green { color: #047857; }
+        .phase-eyebrow.amber { color: #92400e; }
+        .phase-eyebrow.blue { color: #1d4ed8; }
+        .phase-eyebrow.purple { color: #6d28d9; }
+
+        .phase-card h3 {
+            font-size: clamp(1.32rem, 2vw, 2rem);
+            line-height: 1.08;
+        }
+
+        .phase-card p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .phase-card ul,
+        .proof-card ul,
+        .boundary-list {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .phase-card li,
+        .boundary-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .phase-card .phase-status-line {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid rgba(24, 24, 27, 0.1);
+            color: var(--road-ink);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .depth-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .depth-card {
+            padding: 22px;
+            min-height: 300px;
+        }
+
+        .depth-card h3,
+        .watch-card h3 {
+            margin: 0;
+            font-size: 21px;
+            line-height: 1.15;
+            letter-spacing: 0;
+        }
+
+        .depth-card p,
+        .watch-card p {
+            margin: 12px 0 0;
+            font-size: 15px;
+        }
+
+        .depth-card ul,
+        .watch-card ul {
+            margin: 16px 0 0;
+            padding-left: 18px;
+        }
+
+        .depth-card li,
+        .watch-card li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .depth-marker {
+            display: inline-block;
+            margin-bottom: 14px;
+            color: var(--road-purple);
+            font-size: 12px;
+            font-weight: 850;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .watch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .watch-card {
+            padding: 22px;
+            min-height: 250px;
+            border-top-width: 6px;
+        }
+
+        .watch-card.now { border-top-color: var(--road-amber); }
+        .watch-card.next { border-top-color: var(--road-blue); }
+        .watch-card.always { border-top-color: var(--road-purple); }
+
+        .proof-card {
+            padding: 20px;
+            min-height: 260px;
+        }
+
+        .proof-card h3 {
+            font-size: 19px;
+            line-height: 1.18;
+        }
+
+        .proof-card p {
+            margin: 12px 0 0;
+            font-size: 15px;
+        }
+
+        .proof-card .proof-label {
+            display: inline-block;
+            margin-bottom: 13px;
+            color: #047857;
+            font-size: 12px;
+            font-weight: 850;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .callout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: 20px;
+            margin-top: 18px;
+            border: 1px solid rgba(183, 121, 31, 0.3);
+            border-radius: 8px;
+            background: var(--road-amber-soft);
+            padding: 22px;
+        }
+
+        .callout h3 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0;
+        }
+
+        .callout p {
+            margin: 0;
+            color: #5f4520;
+            line-height: 1.6;
+        }
+
+        .boundary-panel {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+            gap: 22px;
+            border: 1px solid var(--road-line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 24px;
+        }
+
+        .boundary-panel h2 {
+            margin: 0;
+            font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+            line-height: 1.08;
+            letter-spacing: 0;
+        }
+
+        .boundary-panel p {
+            margin: 14px 0 0;
+            color: var(--road-muted);
+            line-height: 1.58;
+        }
+
+        .boundary-list {
+            columns: 2;
+            column-gap: 36px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .stats-card {
+            padding: 18px;
+            min-height: 128px;
+        }
+
+        .metric-label {
+            display: block;
+            color: var(--road-muted);
+            margin-bottom: 10px;
+        }
+
+        .stats-card strong {
+            display: block;
+            font-size: clamp(1.25rem, 2vw, 1.8rem);
+            line-height: 1.1;
+        }
+
+        .stats-card p {
+            margin: 10px 0 0;
+            font-size: 14px;
+        }
+
+        .roadmap-note {
+            margin: 22px 0 0;
+            border-left: 4px solid var(--road-purple);
+            background: var(--road-purple-soft);
+            border-radius: 0 8px 8px 0;
+            padding: 16px 18px;
+        }
+
+        body.dark-mode {
+            background: #050505;
+            color: #f4f4f5;
+        }
+
+        body.dark-mode .roadmap-lead,
+        body.dark-mode .summary-card p,
+        body.dark-mode .refresh-card p,
+        body.dark-mode .phase-card p,
+        body.dark-mode .phase-card li,
+        body.dark-mode .proof-card p,
+        body.dark-mode .depth-card p,
+        body.dark-mode .depth-card li,
+        body.dark-mode .watch-card p,
+        body.dark-mode .watch-card li,
+        body.dark-mode .stats-card p,
+        body.dark-mode .section-head p,
+        body.dark-mode .boundary-panel p,
+        body.dark-mode .boundary-list li,
+        body.dark-mode .roadmap-note,
+        body.dark-mode .visual-caption {
+            color: #d4d4d8;
+        }
+
+        body.dark-mode .summary-card,
+        body.dark-mode .refresh-card,
+        body.dark-mode .phase-card,
+        body.dark-mode .proof-card,
+        body.dark-mode .depth-card,
+        body.dark-mode .watch-card,
+        body.dark-mode .stats-card,
+        body.dark-mode .boundary-panel,
+        body.dark-mode .hero-visual,
+        body.dark-mode .status-pill {
+            background: #111;
+            border-color: #27272a;
+        }
+
+        body.dark-mode .phase-card.proven,
+        body.dark-mode .phase-card.next,
+        body.dark-mode .phase-card.planned,
+        body.dark-mode .phase-card.partner {
+            background: #111;
+        }
+
+        body.dark-mode .callout {
+            background: #1f1606;
+            border-color: #5f4520;
+        }
+
+        body.dark-mode .callout p {
+            color: #f8e7b4;
+        }
+
+        @media (max-width: 1240px) {
+            .summary-grid,
+            .refresh-grid,
+            .depth-grid,
+            .watch-grid,
+            .proof-grid,
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .phase-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 860px) {
+            .roadmap-shell {
+                width: min(100% - 32px, 760px);
+                padding-top: 82px;
+            }
+
+            .roadmap-hero,
+            .callout,
+            .boundary-panel,
+            .section-head {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+
+            .roadmap-hero {
+                gap: 24px;
+            }
+
+            .hero-visual {
+                min-height: 250px;
+            }
+
+            .summary-grid,
+            .refresh-grid,
+            .phase-grid,
+            .depth-grid,
+            .watch-grid,
+            .proof-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-card {
+                min-height: auto;
+            }
+
+            .boundary-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body data-theme-default="light" data-silver-fox-page="specs">
+    <nav id="nav-container"></nav>
+    <div id="mobile-menu-container"></div>
+    <main class="roadmap-shell">
+        <section class="roadmap-hero" aria-labelledby="roadmap-title">
+            <div>
+                <div class="roadmap-kicker">Specs / Living Strategic Roadmap</div>
+                <h1 id="roadmap-title">BonziVista Living Roadmap</h1>
+                <p class="roadmap-lead">An educational roadmap for reviewers who want to understand the project beyond announcements. This page explains the current evidence, the work under development, the timing considerations, and the boundaries around present claims.</p>
+                <div class="hero-actions" aria-label="Roadmap status">
+                    <span class="status-pill green">Phase 1 proven internally</span>
+                    <span class="status-pill amber">Phases 2-5 pending proof</span>
+                    <span class="status-pill">Last refreshed 2026-06-18</span>
+                    <span class="status-pill">Silver Fox remains protected</span>
+                </div>
+            </div>
+            <div class="hero-visual" aria-label="BonziVista roadmap visual">
+                <img src="../assets/bonzi/presenting.png" alt="Bonzi presenting the roadmap">
+                <p class="visual-caption">The sequence is evidence first, interpretation second, expansion third. Broader claims are deferred until supporting evidence is available.</p>
+            </div>
+        </section>
+
+        <section class="refresh-grid" aria-label="Living roadmap refresh model">
+            <article class="refresh-card primary">
+                <span class="metric-label">Living roadmap</span>
+                <strong>Refresh after evidence changes</strong>
+                <p>This page should update whenever a proof pack closes, a phase opens, a blocker changes, or the public explanation needs clearer context.</p>
+            </article>
+            <article class="refresh-card">
+                <span class="metric-label">Current signal</span>
+                <strong>Phase 1 closed</strong>
+                <p>Phase 1 establishes the baseline evidence layer. Subsequent work asks how that baseline improves memory, strategy, and timing discipline.</p>
+            </article>
+            <article class="refresh-card">
+                <span class="metric-label">Next review focus</span>
+                <strong>Decision memory</strong>
+                <p>Future review decisions should become more traceable, cited, and easier to explain.</p>
+            </article>
+            <article class="refresh-card">
+                <span class="metric-label">Review standard</span>
+                <strong>Context with discipline</strong>
+                <p>The page is designed to give reviewers enough context to assess progress without exposing sensitive operating details.</p>
+            </article>
+        </section>
+
+        <section class="summary-grid" aria-label="Roadmap summary">
+            <article class="summary-card">
+                <h2>Where Bonzi is now</h2>
+                <p>The first live proof pack is closed. Bonzi can reference production evidence rows across the first required operating surfaces.</p>
+            </article>
+            <article class="summary-card">
+                <h2>What Phase 1 proved</h2>
+                <p>Experiment evidence, shadow trust scoring, bug reporter credit, and support escalation confirmation each produced the required proof layer.</p>
+            </article>
+            <article class="summary-card">
+                <h2>What comes next</h2>
+                <p>The roadmap moves from row proof into decision memory, market comparison, answer receipts, and partner role clarity.</p>
+            </article>
+            <article class="summary-card">
+                <h2>What is not claimed</h2>
+                <p>This is not a launch claim, not payment readiness, not final trust authority, and not a promise that later phases are already complete.</p>
+            </article>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="depth-title">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Educational purpose</div>
+                    <h2 id="depth-title">A roadmap with development depth</h2>
+                </div>
+                <p>A roadmap should not only state milestones. It should explain the intermediate evidence: what is built, what changed, what failed, and what still needs proof.</p>
+            </div>
+            <div class="depth-grid">
+                <article class="depth-card">
+                    <span class="depth-marker">Development depth</span>
+                    <h3>Show the operating layer</h3>
+                    <p>The roadmap explains the actual proof type behind each phase: rows, records, receipts, comparisons, and traceability.</p>
+                    <ul>
+                        <li>Built work is separated from planned work.</li>
+                        <li>Evidence is explained in plain language.</li>
+                        <li>Correction history is treated as signal, not embarrassment.</li>
+                    </ul>
+                </article>
+                <article class="depth-card">
+                    <span class="depth-marker">Strategy depth</span>
+                    <h3>Explain why each phase exists</h3>
+                    <p>Each phase should answer what it unlocks, why it matters, what timing depends on, and what it still does not claim.</p>
+                    <ul>
+                        <li>Phase 1 proves the base evidence layer.</li>
+                        <li>Phase 2 strengthens decision memory.</li>
+                        <li>Later phases support comparison, traceability, and partner posture.</li>
+                    </ul>
+                </article>
+                <article class="depth-card">
+                    <span class="depth-marker">Reviewer orientation</span>
+                    <h3>Give reviewers a method</h3>
+                    <p>The page should help reviewers follow progress without needing raw engineering access, private review instructions, or unsupported confidence.</p>
+                    <ul>
+                        <li>Current proof status is visible.</li>
+                        <li>Next review focus is explicit.</li>
+                        <li>Stats stay bounded and easy to compare over time.</li>
+                    </ul>
+                </article>
+                <article class="depth-card">
+                    <span class="depth-marker">Communication standard</span>
+                    <h3>Make progress legible</h3>
+                    <p>The standard is not announcement frequency. The standard is whether a community can explain the depth of its development and strategy without overstating what is ready.</p>
+                    <ul>
+                        <li>Less vague momentum language.</li>
+                        <li>More proof-aware communication.</li>
+                        <li>Clearer boundaries before scale.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="phase-roadmap-title">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Five-phase proof path</div>
+                    <h2 id="phase-roadmap-title">From first rows to external posture</h2>
+                </div>
+                <p>Each phase has a different job. The roadmap starts with proof that the system records real events, then moves toward stronger memory, comparison, traceability, and partner-facing structure.</p>
+            </div>
+            <div class="phase-grid">
+                <article class="phase-card proven">
+                    <span class="phase-eyebrow green">Proven / Closed</span>
+                    <h3>Phase 1: First live proof pack</h3>
+                    <p>The base layer is now row-backed. Four required operating flows produced evidence in the expected places.</p>
+                    <ul>
+                        <li>RACI economy evidence row</li>
+                        <li>Shadow trust scoring row</li>
+                        <li>Bug reporter credit row</li>
+                        <li>Escalation confirmation event</li>
+                    </ul>
+                    <div class="phase-status-line">Status: closed after re-check</div>
+                </article>
+                <article class="phase-card next">
+                    <span class="phase-eyebrow amber">Next / Being prepared</span>
+                    <h3>Phase 2: Decision memory</h3>
+                    <p>Decision memory turns past operator choices into a clearer review record, so future work can learn from bounded history instead of loose summaries.</p>
+                    <ul>
+                        <li>Decision-history backfill</li>
+                        <li>Cleaner labels for why decisions happened</li>
+                        <li>Citations back to bounded sources</li>
+                    </ul>
+                    <div class="phase-status-line">Status: planned through controlled sequencing</div>
+                </article>
+                <article class="phase-card planned">
+                    <span class="phase-eyebrow blue">Planned proof work</span>
+                    <h3>Phase 3: Outside comparison</h3>
+                    <p>Outside comparison checks BonziVista against nearby approaches before making stronger market claims.</p>
+                    <ul>
+                        <li>Peer research against comparable systems</li>
+                        <li>Sharper explanation of what is different</li>
+                        <li>Reduced risk of overstatement</li>
+                    </ul>
+                    <div class="phase-status-line">Status: pending</div>
+                </article>
+                <article class="phase-card planned">
+                    <span class="phase-eyebrow blue">Planned proof work</span>
+                    <h3>Phase 4: Answer traceability</h3>
+                    <p>Answer traceability makes important responses easier to inspect later: where they came from, what they used, and how they were recorded.</p>
+                    <ul>
+                        <li>Answer receipts or stamps</li>
+                        <li>More honest source tracking</li>
+                        <li>Trace rows that accumulate over time</li>
+                    </ul>
+                    <div class="phase-status-line">Status: pending</div>
+                </article>
+                <article class="phase-card partner">
+                    <span class="phase-eyebrow purple">External posture</span>
+                    <h3>Phase 5: Partner roles</h3>
+                    <p>Partner roles become useful only after the proof base is strong enough to describe responsibility boundaries without stretching the evidence.</p>
+                    <ul>
+                        <li>Clearer partner role names</li>
+                        <li>Evidence-backed access boundaries</li>
+                        <li>External posture matched to proven capability</li>
+                    </ul>
+                    <div class="phase-status-line">Status: pending</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="phase-one-title">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Phase 1 detail</div>
+                    <h2 id="phase-one-title">What the first proof pack actually proves</h2>
+                </div>
+                <p>Phase 1 is the deepest section because it is the proven section. Its value is specific: the system produced records, not just plans.</p>
+            </div>
+            <div class="proof-grid">
+                <article class="proof-card">
+                    <span class="proof-label">Proof 1</span>
+                    <h3>Experiment evidence</h3>
+                    <p>The OpenBox/RACI economy path produced an evidence row. Founder meaning: the experiment surface can leave an operating trace.</p>
+                </article>
+                <article class="proof-card">
+                    <span class="proof-label">Proof 2</span>
+                    <h3>Shadow trust scoring</h3>
+                    <p>The trust side produced shadow scoring evidence. Founder meaning: scoring can be observed before it becomes stronger authority.</p>
+                </article>
+                <article class="proof-card">
+                    <span class="proof-label">Proof 3</span>
+                    <h3>Contributor credit</h3>
+                    <p>A confirmed bug signal produced credit evidence. Founder meaning: useful user feedback can become a visible contribution record.</p>
+                </article>
+                <article class="proof-card">
+                    <span class="proof-label">Proof 4</span>
+                    <h3>Escalation confirmation</h3>
+                    <p>A serious support escalation produced a confirmation event. Founder meaning: critical support moments can leave durable records.</p>
+                </article>
+            </div>
+            <div class="callout">
+                <h3>Why the correction matters</h3>
+                <p>One Phase 1 closure was challenged because the escalation proof needed stronger confirmation. The pack was corrected, checked again, and re-closed only after the required event record was verified. That is a stronger signal than a clean story with no error memory.</p>
+            </div>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="boundary-title">
+            <div class="boundary-panel">
+                <div>
+                    <div class="section-kicker">Boundaries</div>
+                    <h2 id="boundary-title">What this roadmap does not claim</h2>
+                    <p>Early proof is valuable because it is narrow. The page should help investors and contributors understand progress without turning early evidence into a bigger claim.</p>
+                </div>
+                <ul class="boundary-list">
+                    <li>Phase 1 does not mean public launch readiness.</li>
+                    <li>Phase 1 does not mean final reward economics are complete.</li>
+                    <li>Phase 1 does not mean final trust scoring is ready for user outcomes.</li>
+                    <li>Phase 1 does not mean all support paths are automated.</li>
+                    <li>Phase 2-5 work remains pending until the proof gates are satisfied.</li>
+                    <li>Silver Fox is a protected contributor journey, not a shortcut to formal authority.</li>
+                    <li>Internal review mechanics and sensitive operating details stay off this public specs surface.</li>
+                    <li>Roadmap language follows proof; it does not create proof by itself.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="watch-title">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Review questions</div>
+                    <h2 id="watch-title">Questions for ongoing review</h2>
+                </div>
+                <p>A living roadmap should provide repeatable questions, not only a timeline. These questions help reviewers understand whether progress is deepening or merely being restated.</p>
+            </div>
+            <div class="watch-grid">
+                <article class="watch-card now">
+                    <h3>Current question: memory quality</h3>
+                    <p>The next useful signal is whether past decisions become easier to review and cite.</p>
+                    <ul>
+                        <li>Can decisions be traced back to bounded sources?</li>
+                        <li>Can reviewers understand why a decision happened?</li>
+                        <li>Can later work avoid repeating old mistakes?</li>
+                    </ul>
+                </article>
+                <article class="watch-card next">
+                    <h3>Next question: external comparison</h3>
+                    <p>After memory improves, the stronger question is how BonziVista compares to nearby trust, agent, and community systems.</p>
+                    <ul>
+                        <li>What is genuinely different?</li>
+                        <li>Which claims are still too early?</li>
+                        <li>Where does the proof base need more depth?</li>
+                    </ul>
+                </article>
+                <article class="watch-card always">
+                    <h3>Constant question: claim discipline</h3>
+                    <p>The roadmap is useful only if it keeps separating evidence from ambition.</p>
+                    <ul>
+                        <li>Proof should lead the story.</li>
+                        <li>Boundaries should stay visible.</li>
+                        <li>Public language should change when proof changes.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="roadmap-section" aria-labelledby="stats-title">
+            <div class="section-head">
+                <div>
+                    <div class="section-kicker">Technical appendix</div>
+                    <h2 id="stats-title">Stats kept at the bottom</h2>
+                </div>
+                <p>These are included for orientation only. Execution truth remains governed by the internal source files and current proof gates.</p>
+            </div>
+            <div class="stats-grid">
+                <article class="stats-card">
+                    <span class="metric-label">Phase 1 status</span>
+                    <strong>Closed</strong>
+                    <p>First live proof pack completed internally.</p>
+                </article>
+                <article class="stats-card">
+                    <span class="metric-label">Proof points</span>
+                    <strong>4/4 proof points</strong>
+                    <p>All required Phase 1 evidence surfaces recorded.</p>
+                </article>
+                <article class="stats-card">
+                    <span class="metric-label">Re-closed date</span>
+                    <strong>2026-06-18</strong>
+                    <p>Re-closed after escalation proof was checked again.</p>
+                </article>
+                <article class="stats-card">
+                    <span class="metric-label">Next phase</span>
+                    <strong>Pending</strong>
+                    <p>Decision memory opens only through controlled sequencing.</p>
+                </article>
+                <article class="stats-card">
+                    <span class="metric-label">Public posture</span>
+                    <strong>Bounded</strong>
+                    <p>Public review surface, not a full operating disclosure.</p>
+                </article>
+                <article class="stats-card">
+                    <span class="metric-label">Refresh model</span>
+                    <strong>Event-led</strong>
+                    <p>Updated after proof, phase, blocker, or positioning changes.</p>
+                </article>
+            </div>
+            <p class="roadmap-note">Use this page as a readable strategic map for reviewers and contributors. It is not the task queue, not reward policy, not reviewer policy, and not a replacement for proof-gated execution.</p>
+        </section>
+    </main>
+</body>
+</html>

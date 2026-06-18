@@ -1420,16 +1420,36 @@
 
         var LOCALE_KEY = 'bonzi_site_lang';
         var bonziWinampLangRefresh = null;
+
+        function normaliseSlotLang(raw) {
+            var st = String(raw || '').trim().toLowerCase().replace(/_/g, '-');
+            if (st === 'pt-br' || st === 'pt' || st.slice(0, 2) === 'pt') {
+                return 'pt-BR';
+            }
+            if (st === 'zh-cn' || st === 'zh' || st === 'mandarin' || st.slice(0, 2) === 'zh') {
+                return 'zh-CN';
+            }
+            return 'en';
+        }
+
+        function readSavedSlotLang() {
+            try {
+                return (
+                    localStorage.getItem(LOCALE_KEY) ||
+                    localStorage.getItem('bonzi_lang') ||
+                    localStorage.getItem('bonzi-lang') ||
+                    ''
+                );
+            } catch (eRead) {
+                return '';
+            }
+        }
+
         var currentLang = 'en';
         try {
-            var _st = (localStorage.getItem(LOCALE_KEY) || 'en').toLowerCase();
-            if (_st === 'pt-br' || _st === 'pt_br' || _st === 'pt') {
-                currentLang = 'pt-BR';
-            } else if (_st === 'zh-cn' || _st === 'zh_cn' || _st === 'zh' || _st === 'mandarin') {
-                currentLang = 'zh-CN';
-            } else {
-                currentLang = 'en';
-            }
+            var _saved = readSavedSlotLang();
+            var _detect = (_saved || (navigator.languages && navigator.languages[0]) || navigator.language || 'en');
+            currentLang = normaliseSlotLang(_detect);
         } catch (eLoc) {}
 
         var I18N = {
@@ -1696,10 +1716,18 @@
 
         function persistLang() {
             try {
-                var st = 'en';
-                if (currentLang === 'pt-BR') st = 'pt-br';
-                else if (currentLang === 'zh-CN') st = 'zh-cn';
-                localStorage.setItem(LOCALE_KEY, st);
+                var slotLang = 'en';
+                var navLang = 'en';
+                if (currentLang === 'pt-BR') {
+                    slotLang = 'pt-br';
+                    navLang = 'pt';
+                } else if (currentLang === 'zh-CN') {
+                    slotLang = 'zh-cn';
+                    navLang = 'zh';
+                }
+                localStorage.setItem(LOCALE_KEY, slotLang);
+                localStorage.setItem('bonzi_lang', navLang);
+                localStorage.setItem('bonzi-lang', navLang);
             } catch (eP) {}
         }
 
@@ -1864,6 +1892,20 @@
             if (levEl) levEl.setAttribute('aria-label', L.leverAria);
             var lpl = document.getElementById('lever-pull-label');
             if (lpl && L.leverPullLabel) lpl.textContent = L.leverPullLabel;
+            var spEl = document.getElementById('skill-prompt');
+            if (spEl) {
+                if (skillChallengeId || skillChallengeLoading) {
+                    skillChallengeId = '';
+                    loadSkillChallenge(true);
+                } else if (L.loadingPassage) {
+                    spEl.textContent = L.loadingPassage;
+                }
+            }
+            var reelWords = document.querySelectorAll('#slot-reel .word');
+            for (var ri = 0; ri < reelWords.length; ri++) {
+                var rk = reelWords[ri].getAttribute('data-reel-key');
+                if (rk) reelWords[ri].textContent = reelLabel(rk);
+            }
             try {
                 document.title = L.docTitle || 'Bonzi Vista: Slot';
             } catch (eDoc) {}
@@ -1909,6 +1951,32 @@
 
         // === SLOT WORDS ===
 	        // Concrete clue words plus visible emoji stops; the gold scroll still marks the jackpot.
+	        var REEL_I18N = {
+	            'pt-BR': {
+	                'Attention': 'Atenção', 'Loyalty': 'Lealdade', 'Presence': 'Presença', 'Activity': 'Atividade',
+	                'Signal': 'Sinal', 'Trust': 'Confiança', 'Reputation': 'Reputação', 'Time': 'Tempo',
+	                'Streak': 'Sequência', 'Stake': 'Participação', 'Claim': 'Direito', 'Badge': 'Selo',
+	                'Moment': 'Momento', 'Energy': 'Energia', 'Identity': 'Identidade', 'Community': 'Comunidade',
+	                'Story': 'História', 'Voice': 'Voz', 'Action': 'Ação', 'History': 'Histórico',
+	                'Effort': 'Esforço', 'Knowledge': 'Conhecimento', 'Focus': 'Foco', 'Value': 'Valor',
+	                'Impact': 'Impacto', 'Proof': 'Prova', 'Record': 'Registro', 'Score': 'Pontuação',
+	                'Coin': 'Moeda', 'Network': 'Rede', 'Bond': 'Vínculo', 'Choice': 'Escolha'
+	            },
+	            'zh-CN': {
+	                'Attention': '注意力', 'Loyalty': '忠诚', 'Presence': '存在感', 'Activity': '活跃度',
+	                'Signal': '信号', 'Trust': '信任', 'Reputation': '声誉', 'Time': '时间',
+	                'Streak': '连胜', 'Stake': '权益', 'Claim': '主张', 'Badge': '徽章',
+	                'Moment': '时刻', 'Energy': '能量', 'Identity': '身份', 'Community': '社区',
+	                'Story': '故事', 'Voice': '声音', 'Action': '行动', 'History': '历史',
+	                'Effort': '努力', 'Knowledge': '知识', 'Focus': '专注', 'Value': '价值',
+	                'Impact': '影响力', 'Proof': '证明', 'Record': '记录', 'Score': '分数',
+	                'Coin': '代币', 'Network': '网络', 'Bond': '纽带', 'Choice': '选择'
+	            }
+	        };
+	        function reelLabel(key) {
+	            var map = REEL_I18N[currentLang];
+	            return (map && map[key]) ? map[key] : key;
+	        }
 	        var words = [
 	            'Attention', 'Loyalty', 'Presence', 'Activity',
 	            'Signal', 'Trust', 'Reputation', 'Time',
@@ -1955,7 +2023,8 @@
                     span.textContent = w.t;
                 }
             } else {
-                span.textContent = w;
+                span.dataset.reelKey = w;
+                span.textContent = reelLabel(w);
             }
             reel.appendChild(span);
         });
@@ -1987,6 +2056,7 @@
             });
         }
 
+        persistLang();
         applyLang();
         (function wireLangButtons() {
             var langPtBtn = document.getElementById('lang-pt-br');
@@ -2158,36 +2228,41 @@
         var skillPromptEl = document.getElementById('skill-prompt');
         var skillChallengeId = '';
         var skillChallengeLoading = null;
+        var skillChallengeRequestToken = 0;
 
         function setSkillPrompt(text) {
             if (skillPromptEl) skillPromptEl.textContent = text || '';
         }
 
-        function loadSkillChallenge() {
-            if (skillChallengeLoading) return skillChallengeLoading;
-            setSkillPrompt('Loading the Passage…');
+        function loadSkillChallenge(forceReload) {
+            if (skillChallengeLoading && !forceReload) return skillChallengeLoading;
+            var requestToken = ++skillChallengeRequestToken;
+            var requestLang = currentLang;
+            setSkillPrompt((I18N[requestLang] || I18N.en).loadingPassage);
             var api = getApiOrigin();
             skillChallengeLoading = _slotFetchJson(api + '/api/slotgame/skill_challenge', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint(), lang: requestLang })
             }).then(function (res) {
+                if (requestToken !== skillChallengeRequestToken) return false;
                 skillChallengeLoading = null;
                 var j = res.json || {};
                 if (res.httpOk && j.success && j.challenge_id) {
                     skillChallengeId = j.challenge_id;
-                    setSkillPrompt(j.prompt || 'Read the prompt, then type the answer.');
+                    setSkillPrompt(j.prompt || getStr().readThenAnswer);
                     return true;
                 }
                 skillChallengeId = '';
-                setSkillPrompt('Read the prompt again in a moment.');
-                errEl.textContent = (j && j.error && j.error !== 'kill_switch_enabled') ? j.error : 'Passage unavailable right now.';
+                setSkillPrompt(getStr().readPromptSoon);
+                errEl.textContent = (j && j.error && j.error !== 'kill_switch_enabled') ? j.error : getStr().passageUnavailable;
                 return false;
             }).catch(function () {
+                if (requestToken !== skillChallengeRequestToken) return false;
                 skillChallengeLoading = null;
                 skillChallengeId = '';
-                setSkillPrompt('Read the prompt again in a moment.');
-                errEl.textContent = 'Passage unavailable right now.';
+                setSkillPrompt(getStr().readPromptSoon);
+                errEl.textContent = getStr().passageUnavailable;
                 return false;
             });
             return skillChallengeLoading;
@@ -2198,7 +2273,7 @@
             var challenge = payload.challenge || payload;
             if (challenge && challenge.challenge_id) {
                 skillChallengeId = challenge.challenge_id;
-                setSkillPrompt(challenge.prompt || 'Read the prompt, then type the answer.');
+                setSkillPrompt(challenge.prompt || getStr().readThenAnswer);
                 return true;
             }
             return false;
@@ -2620,8 +2695,8 @@
 	            var val = pwEl.value.trim();
 	            if (!val) return;
 	            if (!skillChallengeId) {
-	                errEl.textContent = 'Loading the Passage…';
-	                loadSkillChallenge();
+	                errEl.textContent = getStr().loadingPassage;
+	                loadSkillChallenge(true);
 	                return;
 	            }
 	            submitBtn.disabled = true;
@@ -2640,9 +2715,9 @@
 	                }
 	                if (res.status === 428 || j.reason === 'challenge_required') {
 	                    if (applySkillChallengePayload(j)) {
-	                        errEl.textContent = j.error || 'Read the new prompt, then try again.';
+	                        errEl.textContent = j.error || getStr().readThenAnswer;
 	                    } else {
-	                        errEl.textContent = j.error || 'Read the prompt again in a moment.';
+	                        errEl.textContent = j.error || getStr().readPromptSoon;
 	                    }
 	                } else {
 	                    var _e2 = (j && j.error && j.error !== "kill_switch_enabled") ? j.error : ""; errEl.textContent = _e2 || getStr().errWrong;

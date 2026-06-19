@@ -29,11 +29,10 @@ FORBIDDEN_PATTERNS = [
 
 # Required elements in footer
 REQUIRED_FOOTER_ELEMENTS = [
-    r'etherfun\.app',  # Ethervista link
-    r'defiants\.org',  # Defiants link
-    r'unidosprojects\.org',  # Unidos link
-    r'privacy',  # Privacy policy reference
-    r'mit license|MIT license',  # License mention
+    r'Bonzivista\.org',
+    r'Ethervista\.app sponsor',
+    r'GITHUB',
+    r'Privacy',
 ]
 
 # Files to skip (templates, variants, etc.)

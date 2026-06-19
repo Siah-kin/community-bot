@@ -8,6 +8,7 @@ Part of the Oracle system - prevents ad-hoc patches that break site consistency.
 Run: python3 scripts/validate_nav.py
 """
 
+import html
 import re
 import sys
 from pathlib import Path
@@ -15,19 +16,20 @@ from typing import Optional
 
 # Expected nav structure (source of truth from includes/nav.html)
 EXPECTED_NAV_LINKS = [
-    "tools",
-    "manual",
-    "manifesto",
-    "economics",
-    "metrics",
-    "stake",
-    "dao",
-    "contact"
+    "about",
+    "why",
+    "how",
+    "what",
+    "when",
+    "stake bonzi",
 ]
+
+PUBLIC_NAV_KEYS = ["about", "why", "how", "what", "when", "stake"]
 
 # Pages that should have consistent nav
 HTML_PAGES = [
     "index.html",
+    "about.html",
     "features.html",
     "manifesto.html",
     "privacy.html",
@@ -36,7 +38,13 @@ HTML_PAGES = [
     "manual/index.html",
     "economics/index.html",
     "dao/index.html",
-    "metrics/index.html"
+    "metrics/index.html",
+    "page_1/index.html",
+    "page_2/index.html",
+    "page_3/index.html",
+    "page_4/index.html",
+    "specs/index.html",
+    "quest-earn/index.html"
 ]
 
 
@@ -57,12 +65,13 @@ def extract_nav_links(html_content: str, allow_fragment: bool = False) -> list:
     normalized = []
     for link in links:
         # Remove HTML tags
-        text = re.sub(r'<[^>]+>', '', link)
+        text = html.unescape(re.sub(r'<[^>]+>', '', link))
         # Clean up
         text = text.lower().strip()
         text = text.replace('↗', '').replace('→', '').strip()
         # Remove common emoji patterns
         text = re.sub(r'[^\w\s-]', '', text).strip()
+        text = re.sub(r'\s+', ' ', text)
         # Skip logo link
         if text in ['bonzi', 'home', '']:
             continue
@@ -87,10 +96,7 @@ def check_nav_style(html_content: str, filename: str, nav_fragment: Optional[str
     # Remove dropdown menus before checking - their items can be capitalized (proper nouns)
     nav_without_dropdowns = re.sub(r'<div class="nav-dropdown-menu">.*?</div>', '', nav_html, flags=re.DOTALL)
 
-    # Check for capitalized links in main nav only (should be lowercase)
-    cap_links = re.findall(r'<a[^>]*>([A-Z][a-z]+)</a>', nav_without_dropdowns)
-    if cap_links:
-        issues.append(f"{filename}: Capitalized nav links found: {cap_links} (should be lowercase)")
+    # User-facing nav labels may be title case; link presence is checked below.
 
     # Check for missing lang-switcher (optional warning)
     if 'lang-switcher' not in html_content and filename == 'index.html':
@@ -131,12 +137,59 @@ def validate_all_pages(root_dir: Path) -> tuple:
         errors.extend(style_issues)
 
         # Check for minimum required links
-        required = ['tools', 'manual', 'manifesto']
-        for req in required:
+        for req in EXPECTED_NAV_LINKS:
             if req not in links:
                 errors.append(f"{page_path}: Missing required nav link '{req}'")
 
     return errors, warnings
+
+
+def validate_public_cta_routes(root_dir: Path) -> list[str]:
+    """Check public navigation CTAs route to supported bot deep-link payloads."""
+    errors = []
+    nav_loader = root_dir / "js" / "nav-loader.js"
+    if not nav_loader.exists():
+        return ["js/nav-loader.js not found"]
+
+    nav_text = nav_loader.read_text()
+    if "Bonzivista_bot?start=apply" in nav_text:
+        errors.append(
+            "js/nav-loader.js routes public contributor CTA to B2B start=apply; use Silver Fox or explicit B2B copy"
+        )
+
+    shared_nav = root_dir / "includes" / "nav.html"
+    if shared_nav.exists():
+        shared_nav_text = shared_nav.read_text()
+        if "Apply to contribute" in shared_nav_text and "start=silverfox" not in nav_text:
+            errors.append("Apply to contribute CTA must route through start=silverfox")
+
+    return errors
+
+
+def validate_public_nav_access(root_dir: Path) -> list[str]:
+    """Primary public nav must expose the approved route contract."""
+    errors = []
+    fragments = [
+        ("includes/nav.html", root_dir / "includes" / "nav.html"),
+        ("includes/mobile-menu.html", root_dir / "includes" / "mobile-menu.html"),
+    ]
+    for label, path in fragments:
+        if not path.exists():
+            errors.append(f"{label} not found")
+            continue
+        text = path.read_text()
+        for nav_key in PUBLIC_NAV_KEYS:
+            public_link_pattern = rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"'
+            if not re.search(public_link_pattern, text):
+                errors.append(f"{label}: missing public data-nav={nav_key!r} link")
+            hidden_pattern = rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"[^>]*\bhidden\b'
+            gated_pattern = (
+                rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"'
+                rf'[^>]*data-silver-fox-nav'
+            )
+            if re.search(hidden_pattern, text) or re.search(gated_pattern, text):
+                errors.append(f"{label}: data-nav={nav_key!r} must be public, not gated")
+    return errors
 
 
 def main():
@@ -152,6 +205,8 @@ def main():
     print("=" * 40)
 
     errors, warnings = validate_all_pages(repo_root)
+    errors.extend(validate_public_cta_routes(repo_root))
+    errors.extend(validate_public_nav_access(repo_root))
 
     if warnings:
         print("\n⚠️  WARNINGS:")

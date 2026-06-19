@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the public specs roadmap freshness and copy boundaries."""
+"""Validate the public roadmap freshness and copy boundaries."""
 
 from __future__ import annotations
 
@@ -75,10 +75,10 @@ def parse_roadmap_date(html_text: str) -> date:
 def main() -> int:
     args = parse_args()
     repo_root = Path(__file__).resolve().parents[1]
-    page_path = repo_root / "specs" / "index.html"
+    page_path = repo_root / "page_4" / "index.html"
 
     if not page_path.exists():
-        print("ERROR: specs/index.html is missing")
+        print("ERROR: page_4/index.html is missing")
         return 1
 
     html_text = page_path.read_text()

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Bonzi Is | Proof-Based Governance Ledger</title>
+    <meta name="description" content="Bonzi is a proof-based governance ledger for communities, brands, token projects, and DAOs.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://bonzivista.org/page_3/">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css?v=20260619routes2">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260619routes2" defer></script>
+    <style>
+        :root {
+            --what-ink: #18181b;
+            --what-muted: #52525b;
+            --what-line: #e4e4e7;
+            --what-soft: #f8fafc;
+            --what-purple: #7c3aed;
+            --what-green: #0f9f6e;
+            --what-amber: #b7791f;
+            --what-blue: #2563eb;
+            --what-red: #b91c1c;
+        }
+
+        body.what-page,
+        body.what-page.dark-mode {
+            background: #ffffff;
+            color: var(--what-ink);
+        }
+
+        .what-shell {
+            width: min(1760px, calc(100% - 56px));
+            margin: 0 auto;
+            padding: 94px 0 0;
+        }
+
+        .what-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+            gap: 44px;
+            align-items: center;
+            border-bottom: 1px solid var(--what-line);
+            padding-bottom: 44px;
+        }
+
+        .kicker {
+            color: var(--what-purple);
+            font-size: 12px;
+            font-weight: 850;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .what-hero h1 {
+            max-width: 1060px;
+            margin: 16px 0 20px;
+            font-size: clamp(2.55rem, 5.4vw, 5.8rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .lead {
+            max-width: 980px;
+            margin: 0;
+            color: var(--what-muted);
+            font-size: clamp(1.08rem, 1.7vw, 1.34rem);
+            line-height: 1.62;
+        }
+
+        .hero-panel {
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: var(--what-soft);
+            padding: 28px;
+        }
+
+        .hero-panel img {
+            display: block;
+            width: min(72%, 340px);
+            height: auto;
+            margin: 0 auto 20px;
+        }
+
+        .hero-panel p {
+            margin: 0;
+            color: var(--what-muted);
+            font-size: 15px;
+            line-height: 1.58;
+            text-align: center;
+        }
+
+        .section {
+            margin-top: 54px;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 28px;
+            margin-bottom: 18px;
+        }
+
+        .section-head h2 {
+            max-width: 900px;
+            margin: 8px 0 0;
+            font-size: clamp(1.8rem, 3.1vw, 3.05rem);
+            line-height: 1.08;
+            letter-spacing: 0;
+        }
+
+        .section-head p {
+            max-width: 760px;
+            margin: 0;
+            color: var(--what-muted);
+            font-size: 16px;
+            line-height: 1.64;
+        }
+
+        .plain-panel,
+        .proof-panel {
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: var(--what-soft);
+            padding: 26px;
+        }
+
+        .plain-panel p,
+        .proof-panel p {
+            max-width: 1260px;
+            margin: 0 0 14px;
+            color: var(--what-muted);
+            font-size: 18px;
+            line-height: 1.68;
+        }
+
+        .plain-panel p:last-child,
+        .proof-panel p:last-child {
+            margin-bottom: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .grid.four {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .card {
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 22px;
+            min-height: 204px;
+        }
+
+        .card.green { border-top: 6px solid var(--what-green); }
+        .card.amber { border-top: 6px solid var(--what-amber); }
+        .card.blue { border-top: 6px solid var(--what-blue); }
+        .card.purple { border-top: 6px solid var(--what-purple); }
+        .card.red { border-top: 6px solid var(--what-red); }
+
+        .card h3 {
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.15;
+            letter-spacing: 0;
+        }
+
+        .card p,
+        .card li {
+            color: var(--what-muted);
+            font-size: 15px;
+            line-height: 1.58;
+        }
+
+        .card p {
+            margin: 12px 0 0;
+        }
+
+        .card ul {
+            margin: 14px 0 0;
+            padding-left: 18px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            min-height: 178px;
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 20px;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            display: inline-grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            margin-bottom: 16px;
+            border-radius: 50%;
+            background: var(--what-purple);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 850;
+        }
+
+        .step h3 {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.22;
+        }
+
+        .step p {
+            margin: 10px 0 0;
+            color: var(--what-muted);
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .audience-list {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .audience-list li {
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 14px;
+            color: var(--what-ink);
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .what-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            border-radius: 8px;
+            padding: 10px 16px;
+            border: 1px solid var(--what-line);
+            color: var(--what-ink);
+            font-weight: 850;
+            text-decoration: none;
+        }
+
+        .what-cta.primary {
+            border-color: var(--what-purple);
+            background: var(--what-purple);
+            color: #ffffff;
+        }
+
+        .site-footer {
+            margin-top: 60px;
+            border-top: 1px solid var(--what-line);
+            padding: 28px 0 34px;
+            color: var(--what-muted);
+            font-size: 13px;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .site-footer a {
+            color: var(--what-ink);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1320px) {
+            .grid.four,
+            .steps,
+            .audience-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 980px) {
+            .what-shell {
+                width: min(100% - 32px, 820px);
+                padding-top: 82px;
+            }
+
+            .what-hero,
+            .section-head,
+            .grid,
+            .grid.two,
+            .grid.four,
+            .steps,
+            .audience-list {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="what-page" data-theme-default="light">
+    <nav id="nav-container"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <main class="what-shell">
+        <section class="what-hero" aria-labelledby="what-title">
+            <div>
+                <div class="kicker">What</div>
+                <h1 id="what-title">Bonzi is a proof-based governance ledger for communities, brands, token projects, and DAOs.</h1>
+                <p class="lead">It helps groups make decisions they can prove: who contributed, who verified, who was affected, and what happened next.</p>
+            </div>
+            <div class="hero-panel" aria-label="Bonzi governance ledger visual">
+                <img src="../assets/bonzi/presenting.png" alt="Bonzi presenting a community record">
+                <p>Community decisions become stronger when they leave a record that can be reviewed later.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="problem-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">The problem</div>
+                    <h2 id="problem-title">Online trust breaks when decisions stay informal.</h2>
+                </div>
+                <p>Communities often know that work happened, but they cannot easily show who did it, who checked it, and why a decision followed.</p>
+            </div>
+            <div class="grid">
+                <article class="card red">
+                    <h3>Informal decisions fade</h3>
+                    <p>Chat history, private messages, and memory are weak foundations for contribution, dispute, or reward decisions.</p>
+                </article>
+                <article class="card amber">
+                    <h3>AI can amplify authority risk</h3>
+                    <p>If one agent can plan, act, and certify itself, the community has speed without a reliable check on power.</p>
+                </article>
+                <article class="card blue">
+                    <h3>Voting is not enough</h3>
+                    <p>DAOs and community-led projects need evidence before and after votes: context, verification, consequences, and correction.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="definition-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">What Bonzi is</div>
+                    <h2 id="definition-title">A shared record for contribution, verification, gratitude, and outcomes.</h2>
+                </div>
+                <p>Bonzi is built for groups that need more than announcements. It gives community work a place to become reviewable.</p>
+            </div>
+            <div class="plain-panel">
+                <p><strong>Bonzi helps communities govern with proof.</strong> It records contribution, verification, gratitude, and outcomes so groups can coordinate fairly without trusting one person, one model, or one unchecked system.</p>
+                <p>The aim is not to replace people. The aim is to make important community work easier to trace, review, and improve.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="works-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">How it works</div>
+                    <h2 id="works-title">Important claims should leave evidence behind.</h2>
+                </div>
+                <p>The method stays simple. Work can begin in conversation, but significant decisions should end in records.</p>
+            </div>
+            <div class="steps" aria-label="How Bonzi works">
+                <article class="step">
+                    <h3>People and agents propose work</h3>
+                    <p>A report, question, contribution, dispute, or task enters the system.</p>
+                </article>
+                <article class="step">
+                    <h3>Contributions are recorded</h3>
+                    <p>The useful signal becomes easier to find later than a message in a crowded chat.</p>
+                </article>
+                <article class="step">
+                    <h3>Claims require proof</h3>
+                    <p>Important statements should connect to records, reviewers, or outcomes.</p>
+                </article>
+                <article class="step">
+                    <h3>Checks challenge self-certification</h3>
+                    <p>No actor should be the only source for its own approval.</p>
+                </article>
+                <article class="step">
+                    <h3>Outcomes become history</h3>
+                    <p>The final decision becomes part of the community record, not a lost explanation.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="ledgers-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">The three ledgers</div>
+                    <h2 id="ledgers-title">Governance, contribution, and gratitude belong together.</h2>
+                </div>
+                <p>Community trust improves when work, review, and recognition can be read as one connected record.</p>
+            </div>
+            <div class="grid">
+                <article class="card purple">
+                    <h3>Governance ledger</h3>
+                    <p>Decisions, approvals, disputes, verification, escalation, and review history.</p>
+                </article>
+                <article class="card green">
+                    <h3>Contribution ledger</h3>
+                    <p>Work, help, participation, bug reports, useful context, and value created.</p>
+                </article>
+                <article class="card amber">
+                    <h3>Gratitude ledger</h3>
+                    <p>Thanks, rewards, recognition, and social proof that a community can remember.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="ostrom-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">Governance model</div>
+                    <h2 id="ostrom-title">Ostrom-compliant governance, in plain terms.</h2>
+                </div>
+                <p>A community commons needs rules people can understand, records people can inspect, and escalation when something becomes sensitive.</p>
+            </div>
+            <div class="grid four">
+                <article class="card blue">
+                    <h3>Clear roles</h3>
+                    <p>People should know who proposed, reviewed, approved, objected, or escalated.</p>
+                </article>
+                <article class="card green">
+                    <h3>Monitoring and proof</h3>
+                    <p>Important work should be visible through records, not private certainty.</p>
+                </article>
+                <article class="card amber">
+                    <h3>Escalation and oversight</h3>
+                    <p>Sensitive cases need human review and a path for disagreement.</p>
+                </article>
+                <article class="card purple">
+                    <h3>No unchecked authority</h3>
+                    <p>No person, model, or system should be allowed to certify itself without challenge.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="audience-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">Who it is for</div>
+                    <h2 id="audience-title">Built for groups where community work has real value.</h2>
+                </div>
+                <p>Bonzi is relevant wherever contribution, trust, recognition, and decisions need to become easier to review.</p>
+            </div>
+            <ul class="audience-list" aria-label="Bonzi audiences">
+                <li>DAOs</li>
+                <li>Token communities</li>
+                <li>Creator communities</li>
+                <li>Brands with active communities</li>
+                <li>Open-source or volunteer networks</li>
+                <li>Local or digital commons</li>
+            </ul>
+        </section>
+
+        <section class="section" aria-labelledby="different-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">Why it is different</div>
+                    <h2 id="different-title">Not just chat, voting, or analytics.</h2>
+                </div>
+                <p>Bonzi is not useful because it speaks more. It is useful when it helps a community keep accountable records.</p>
+            </div>
+            <div class="grid">
+                <article class="card red">
+                    <h3>Not just a chatbot</h3>
+                    <p>A chatbot can answer. Bonzi should connect important answers to records and review.</p>
+                </article>
+                <article class="card amber">
+                    <h3>Not just a voting tool</h3>
+                    <p>A vote records preference. Bonzi should preserve the evidence around why a decision was made.</p>
+                </article>
+                <article class="card blue">
+                    <h3>Not just analytics</h3>
+                    <p>Analytics summarize behavior. Bonzi should help a community act, verify, and remember.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="proof-title">
+            <div class="proof-panel">
+                <div class="kicker">Proof, not claims</div>
+                <h2 id="proof-title">Bonzi's rule is simple: important claims need evidence.</h2>
+                <p>That is the standard for contributions, rewards, disputes, approvals, corrections, and public progress. A claim becomes stronger when the record behind it becomes stronger.</p>
+                <div class="cta-row" aria-label="Next reading">
+                    <a class="what-cta primary" href="/page_1/">See how Bonzi works</a>
+                    <a class="what-cta" href="#ostrom-title">Read the governance model</a>
+                    <a class="what-cta" href="#depth-title">Explore CPI and Thankspool</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="depth-title">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">Next layer</div>
+                    <h2 id="depth-title">Specs carry the depth; this page defines the product.</h2>
+                </div>
+                <p>Deeper material should stay separated by purpose so a reader can choose the right level of detail.</p>
+            </div>
+            <div class="grid two">
+                <article class="card purple">
+                    <h3>Governance and safety</h3>
+                    <p>The institutional model, proof requirements, escalation paths, and self-certification prevention belong in dedicated governance and safety specifications.</p>
+                </article>
+                <article class="card green">
+                    <h3>Economics and trust</h3>
+                    <p>Thankspool, CPI, contribution quality, gratitude, rewards, and value flow belong in economic and trust specifications.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Site footer">
+        <div class="footer-row">
+            <span>MIT license</span>
+            <span aria-hidden="true">|</span>
+            <a href="/legal/privacy.html">Privacy</a>
+            <span aria-hidden="true">|</span>
+            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer">etherfun.app</a>
+            <span aria-hidden="true">|</span>
+            <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">defiants.org</a>
+            <span aria-hidden="true">|</span>
+            <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">unidosprojects.org</a>
+        </div>
+    </footer>
+</body>
+</html>

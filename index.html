@@ -20,7 +20,7 @@
     <link rel="icon" href="bonzi-logo.png" type="image/png">
     <link rel="stylesheet" href="css/bonzi-design.css">
     <style>
-        /* OCR A (OFL): opensourcedesign/fonts OCR/OCRA.otf — see assets/fonts/OFL-opensourcedesign-fonts.txt */
+        /* OCR A (OFL): opensourcedesign/fonts OCR/OCRA.otf - see assets/fonts/OFL-opensourcedesign-fonts.txt */
         @font-face {
             font-family: 'Bonzi OCR A';
             src: url('assets/fonts/OCRA.otf') format('opentype');
@@ -39,7 +39,7 @@
             font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
             margin: 0;
         }
-        /* bonzi-design.css sets `nav { position:fixed; top:0; light background }` for marketing pages — kill on slot for any descendant <nav> */
+        /* bonzi-design.css sets `nav { position:fixed; top:0; light background }` for marketing pages - kill on slot for any descendant <nav> */
         body.bonzi-slot-page nav {
             position: static !important;
             top: auto !important;
@@ -599,9 +599,9 @@
         }
         .win98-info-btn {
             flex-shrink: 0;
-            font-size: 11px;
+            font-size: 13px;
             line-height: 1;
-            padding: 2px 8px;
+            padding: 7px 20px;
             cursor: pointer;
             border: 1px solid #16a34a;
             background: linear-gradient(180deg, #dcfce7, #4ade80);
@@ -610,8 +610,14 @@
             font-family: Tahoma, sans-serif;
             font-weight: bold;
             letter-spacing: 0.02em;
+            min-height: 38px;
         }
         .win98-info-btn:hover { background: #86efac; border-color: #15803d; }
+        .slot-top-action {
+            display: flex;
+            justify-content: center;
+            margin: -0.45rem auto 1.15rem;
+        }
         .win98-close-btn {
             flex-shrink: 0;
             font-size: 11px;
@@ -1154,15 +1160,24 @@
         }
 
         .slot-footer-lang {
-            padding: 0;
-            margin: 0 auto 10px;
+            padding: 6px;
+            margin: 0;
             text-align: center;
             font-size: 11px;
             color: #71717a;
             line-height: 1.5;
         }
-        .lang-above-logo {
-            margin-bottom: 12px;
+        .slot-language-switch {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 80;
+            background: rgba(9, 9, 11, 0.86);
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .slot-footer-lang-label {
             display: block;
@@ -1170,7 +1185,8 @@
             color: #71717a;
             font-family: 'Courier New', Courier, monospace;
             letter-spacing: 0.08em;
-            margin-bottom: 7px;
+            margin-bottom: 5px;
+            text-align: left;
         }
         .slot-footer-lang .footer-lang-btn {
             display: inline-flex;
@@ -1180,12 +1196,12 @@
             border: 1.5px solid #52525b;
             color: #e4e4e7;
             border-radius: 6px;
-            padding: 6px 14px;
+            padding: 6px 10px;
             font-size: 14px;
             cursor: pointer;
             font-family: inherit;
-            min-width: 54px;
-            min-height: 40px;
+            min-width: 46px;
+            min-height: 44px;
         }
         .slot-footer-lang .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; background: rgba(124,58,237,0.15); }
         .slot-footer-lang .footer-lang-btn[aria-pressed="true"] {
@@ -1198,7 +1214,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             flex-wrap: wrap;
         }
         .slot-footer-lang .footer-lang-flag {
@@ -1280,16 +1296,27 @@
             .win98-neon-window { width: 100%; }
             .puzzle-gate { padding: 1rem; }
         }
+        @media (max-width: 560px) {
+            .slot-language-switch {
+                position: static;
+                width: fit-content;
+                max-width: 100%;
+                margin: 0 auto 16px;
+            }
+            .slot-footer-lang-label {
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body class="bonzi-slot-page">
     <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
     <!-- Winamp stripe: see WINAMP_PLAYLIST in script (MP3 + WAV fallback). -->
     <audio id="winamp-player" preload="metadata"></audio>
-    <!-- PUZZLE GATE (slot — default home) -->
+    <!-- PUZZLE GATE (slot - default home) -->
     <div class="puzzle-gate" id="gate">
-        <div class="slot-footer-lang lang-above-logo">
-            <span class="slot-footer-lang-label">language</span>
+        <div class="slot-footer-lang slot-language-switch" role="group" aria-label="Language selector">
+            <span class="slot-footer-lang-label" id="slot-lang-label">Language</span>
             <div class="footer-lang-row">
                 <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
                 <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-en" aria-pressed="true" lang="en" aria-label="English" title="EN">&#127468;&#127463;</button>
@@ -1299,6 +1326,9 @@
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
         <p class="tagline" id="gate-tagline">pull lever to try your luck</p>
         <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.</p>
+        <div class="slot-top-action">
+            <button type="button" id="slot-info-btn" class="win98-info-btn" title="How To Play">How To Play</button>
+        </div>
 
         <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
             <span class="notify-bar-text" id="notify-bar-msg">Early list: emails only.</span>
@@ -1306,7 +1336,7 @@
         </div>
 
         <div class="win98-neon-stack">
-            <div class="win98-neon-window howto-window" id="howto-window" data-pane="howto">
+            <div class="win98-neon-window howto-window hidden" id="howto-window" data-pane="howto" aria-hidden="true">
                 <div class="win98-titlebar">
                     <span class="win98-title" id="howto-win-title">&#127914; How to play</span>
                     <button type="button" class="win98-close-btn" id="howto-close-btn" aria-label="Close">&#10005;</button>
@@ -1324,7 +1354,6 @@
                 <div class="slot-machine" id="slot-machine">
                     <div class="win98-titlebar">
                         <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
-                        <button type="button" id="slot-info-btn" class="win98-info-btn" title="How To Play">How To Play</button>
                     </div>
                     <div class="win98-content">
                         <div class="lcd-panel">
@@ -1515,12 +1544,7 @@
 
         function readSavedSlotLang() {
             try {
-                return (
-                    localStorage.getItem(LOCALE_KEY) ||
-                    localStorage.getItem('bonzi_lang') ||
-                    localStorage.getItem('bonzi-lang') ||
-                    ''
-                );
+                return localStorage.getItem(LOCALE_KEY) || '';
             } catch (eRead) {
                 return '';
             }
@@ -1549,10 +1573,12 @@
                 winUpdatesTitle: 'Update notifications',
                 accessSubmitLabel: 'Submit',
                 waitlistThanks: "You're on the list.",
-                waitlistErr: 'Could not save. Try again in a moment.',
-                waitlistModalTitle: 'Bonzi Vista',
-                waitlistModalOk: 'OK',
-                waitlistJoin: 'Submit',
+	                waitlistErr: 'Could not save. Try again in a moment.',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: 'OK',
+	                alphaGateTitle: 'VIP alpha access',
+	                alphaGateBody: 'That page is inside the Silver Fox alpha. Play the Passage to enter. For now, long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                waitlistJoin: 'Submit',
                 waitlistEmailPh: 'username@msn.com',
 	                lcdPrefix: 'Tokenise your:',
                 statusIdle: 'Ready',
@@ -1613,6 +1639,8 @@
                 emailUpdatesAria: 'Email updates',
                 funnelCloseAria: 'Close',
                 holdingPrank: 'Nothing to see here yet.',
+                langGroupAria: 'Language selector',
+                langLabel: 'Language',
                 langEnAria: 'English',
                 langPtAria: 'Portuguese (Brazil)',
                 langPtTitle: 'PT-BR',
@@ -1634,10 +1662,12 @@
                 winUpdatesTitle: 'Notifica\u00E7\u00F5es',
                 accessSubmitLabel: 'Enviar',
                 waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
-                waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
-                waitlistModalTitle: 'Bonzi Vista',
-                waitlistModalOk: 'OK',
-                waitlistJoin: 'Enviar',
+	                waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: 'OK',
+	                alphaGateTitle: 'Acesso alpha VIP',
+	                alphaGateBody: 'Essa p\u00E1gina faz parte do alpha Silver Fox. Jogue a Passagem para entrar. Por enquanto, investidores de longo prazo seguem pelo caminho VIP enquanto o alpha \u00E9 depurado antes do GTM.',
+	                waitlistJoin: 'Enviar',
                 waitlistEmailPh: 'usuario@exemplo.com',
                 lcdPrefix: 'Tokenize seu:',
                 statusIdle: 'Pronto',
@@ -1701,6 +1731,8 @@
                 emailUpdatesAria: 'Atualiza\u00E7\u00F5es por e-mail',
                 funnelCloseAria: 'Fechar',
                 holdingPrank: 'Nada para ver aqui ainda.',
+                langGroupAria: 'Seletor de idioma',
+                langLabel: 'Idioma',
                 langEnAria: 'Ingl\u00EAs',
                 langPtAria: 'Portugu\u00EAs (Brasil)',
                 langPtTitle: 'PT-BR',
@@ -1722,10 +1754,12 @@
                 winUpdatesTitle: '\u66f4\u65b0\u901a\u77e5',
                 accessSubmitLabel: '\u63d0\u4ea4',
                 waitlistThanks: '\u5df2\u52a0\u5165\u540d\u5355\u3002',
-                waitlistErr: '\u6682\u65f6\u65e0\u6cd5\u4fdd\u5b58\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002',
-                waitlistModalTitle: 'Bonzi Vista',
-                waitlistModalOk: '\u786e\u5b9a',
-                waitlistJoin: '\u63d0\u4ea4',
+	                waitlistErr: '\u6682\u65f6\u65e0\u6cd5\u4fdd\u5b58\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: '\u786e\u5b9a',
+	                alphaGateTitle: 'VIP alpha access',
+	                alphaGateBody: 'This page is inside the Silver Fox alpha. Play the Passage to enter. Long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                waitlistJoin: '\u63d0\u4ea4',
                 waitlistEmailPh: 'you@example.com',
 	                lcdPrefix: '\u4ee3\u5e01\u5316\u4f60\u7684\uff1a',
                 statusIdle: '\u5c31\u7eea',
@@ -1789,6 +1823,8 @@
                 emailUpdatesAria: '\u90ae\u4ef6\u66f4\u65b0',
                 funnelCloseAria: '\u5173\u95ed',
                 holdingPrank: '\u6682\u65f6\u8fd8\u6ca1\u6709\u5185\u5bb9\u3002',
+                langGroupAria: '\u8bed\u8a00\u9009\u62e9\u5668',
+                langLabel: '\u8bed\u8a00',
                 langEnAria: '\u82f1\u8bed',
                 langPtAria: '\u8461\u8404\u7259\u8bed\uff08\u5df4\u897f\uff09',
                 langPtTitle: 'PT-BR',
@@ -1816,22 +1852,62 @@
             ov.classList.remove('hidden');
         }
 
-        (function wireFunnelMsgModal() {
-            var ov = document.getElementById('funnel-msg-overlay');
-            if (!ov) return;
+	        (function wireFunnelMsgModal() {
+	            var ov = document.getElementById('funnel-msg-overlay');
+	            if (!ov) return;
             ov.addEventListener('click', function(ev) {
                 if (ev.target === ov) hideFunnelMsgModal();
             });
             var bx = document.getElementById('funnel-msg-close-btn');
             var ok = document.getElementById('funnel-msg-ok');
             if (bx) bx.addEventListener('click', hideFunnelMsgModal);
-            if (ok) ok.addEventListener('click', hideFunnelMsgModal);
-        })();
+	            if (ok) ok.addEventListener('click', hideFunnelMsgModal);
+	        })();
 
-        function persistLang() {
+	        function readAlphaGateRedirect() {
+	            try {
+	                var params = new URLSearchParams(window.location.search);
+	                return params.get('gate') || params.get('vip') || '';
+	            } catch (eGateRead) {
+	                return '';
+	            }
+	        }
+
+	        function clearAlphaGateRedirect() {
+	            try {
+	                var params = new URLSearchParams(window.location.search);
+	                params.delete('gate');
+	                params.delete('vip');
+	                var cleanUrl = (
+	                    window.location.pathname +
+	                    (params.toString() ? '?' + params.toString() : '') +
+	                    window.location.hash
+	                );
+	                window.history.replaceState({}, '', cleanUrl);
+	            } catch (eGateClear) {}
+	        }
+
+	        function showAlphaGateNoticeIfNeeded() {
+	            if (!readAlphaGateRedirect()) return;
+	            clearAlphaGateRedirect();
+	            var L = getStr();
+	            showFunnelMsgModal(
+	                L.alphaGateTitle || L.waitlistModalTitle || 'Bonzi Vista',
+	                L.alphaGateBody || 'This page is inside the Silver Fox alpha. Play the Passage to enter.'
+	            );
+	        }
+
+	        showAlphaGateNoticeIfNeeded();
+
+	        function persistLang() {
             try {
                 var slotLang = 'en';
                 var navLang = 'en';
+                var existingNavLang = String(
+                    localStorage.getItem('bonzi_lang') ||
+                    localStorage.getItem('bonzi-lang') ||
+                    ''
+                ).trim().toLowerCase().replace(/_/g, '-');
                 if (currentLang === 'pt-BR') {
                     slotLang = 'pt-br';
                     navLang = 'pt';
@@ -1840,6 +1916,12 @@
                     navLang = 'zh';
                 }
                 localStorage.setItem(LOCALE_KEY, slotLang);
+                if (
+                    currentLang === 'en' &&
+                    (existingNavLang === 'fr' || existingNavLang === 'ru' || existingNavLang === 'tr')
+                ) {
+                    return;
+                }
                 localStorage.setItem('bonzi_lang', navLang);
                 localStorage.setItem('bonzi-lang', navLang);
             } catch (eP) {}
@@ -2032,6 +2114,10 @@
             if (fcb && L.funnelCloseAria) fcb.setAttribute('aria-label', L.funnelCloseAria);
             var hph = document.getElementById('holding-prank-hint');
             if (hph && L.holdingPrank) hph.textContent = L.holdingPrank;
+            var lgroup = document.querySelector('.slot-language-switch');
+            if (lgroup && L.langGroupAria) lgroup.setAttribute('aria-label', L.langGroupAria);
+            var llabel = document.getElementById('slot-lang-label');
+            if (llabel && L.langLabel) llabel.textContent = L.langLabel;
             var bp = document.getElementById('lang-pt-br');
             var be = document.getElementById('lang-en');
             var bz = document.getElementById('lang-zh-cn');
@@ -2411,6 +2497,7 @@
             if (hcb && hw) {
                 hcb.addEventListener('click', function() {
                     hw.classList.add('hidden');
+                    hw.setAttribute('aria-hidden', 'true');
                     try { localStorage.setItem(HOWTO_KEY, '1'); } catch (e) {}
                 });
             }
@@ -2435,7 +2522,7 @@
 
         var lastAttemptToken = '';
 
-        // Spin — server attempt receipt first, then animation; jackpot calls /win with that receipt
+        // Spin - server attempt receipt first, then animation; jackpot calls /win with that receipt
         lever.addEventListener('click', function() {
             if (spinning) return;
             if (lever.classList.contains('lever-disabled')) return;

@@ -133,6 +133,83 @@ body.dark-mode .nav-connect-btn {
 }
 
 /* ========================================
+   BRANDED FOOTER
+   ======================================== */
+.site-footer.bonzi-branded-footer {
+    background: #111111;
+    border: 1px solid #27272A;
+    color: #A1A1AA;
+    margin: 60px auto 0;
+    max-width: 720px;
+    padding: 28px 16px 32px;
+    text-align: center;
+}
+
+.site-footer.bonzi-branded-footer .footer-cto-row,
+.site-footer.bonzi-branded-footer .footer-sponsor-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.site-footer.bonzi-branded-footer .footer-cto-row {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.site-footer.bonzi-branded-footer .footer-pipe {
+    color: #71717A;
+}
+
+.site-footer.bonzi-branded-footer .footer-cto-row a,
+.site-footer.bonzi-branded-footer .footer-sponsor-row a {
+    align-items: center;
+    color: #FFFFFF;
+    display: inline-flex;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.site-footer.bonzi-branded-footer .footer-cto-row img {
+    border-radius: 5px;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.site-footer.bonzi-branded-footer .footer-sponsor-row {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.site-footer.bonzi-branded-footer .footer-sponsor-row svg {
+    display: block;
+    flex: 0 0 auto;
+    height: 17px;
+    width: 17px;
+}
+
+.site-footer.bonzi-branded-footer .footer-legal-row {
+    color: #A1A1AA;
+    font-size: 16px;
+    margin-top: 18px;
+}
+
+.site-footer.bonzi-branded-footer .footer-legal-row a {
+    color: #A1A1AA;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.site-footer.bonzi-branded-footer a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* ========================================
    NAVIGATION
    ======================================== */
 nav {

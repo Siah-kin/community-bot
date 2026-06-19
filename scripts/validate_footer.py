@@ -29,8 +29,13 @@ FORBIDDEN_PATTERNS = [
 
 # Required elements in footer
 REQUIRED_FOOTER_ELEMENTS = [
+    r'bonzi-branded-footer',
+    r'footer-cto-row',
+    r'bonzi-logo\.png',
     r'Bonzivista\.org',
+    r'footer-sponsor-row',
     r'Ethervista\.app sponsor',
+    r'footer-legal-row',
     r'GITHUB',
     r'Privacy',
 ]

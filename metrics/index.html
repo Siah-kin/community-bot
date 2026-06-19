@@ -2472,15 +2472,23 @@
             .catch(err => console.log('Metrics JSON not loaded:', err));
     </script>
 
-    <footer class="site-footer" aria-label="Site footer">
-    <div class="footer-row">
-        <a href="/">Bonzivista.org</a>
-        <span aria-hidden="true">|</span>
-        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">Ethervista.app sponsor</a>
-        <span aria-hidden="true">|</span>
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a>
-        <span aria-hidden="true">|</span>
-        <a href="/privacy.html">Privacy</a>
+    <footer class="site-footer bonzi-branded-footer" aria-label="Site footer">
+    <div class="footer-cto-row">
+        <span>CTO</span>
+        <span class="footer-pipe" aria-hidden="true">|</span>
+        <a href="/">
+            <img src="/bonzi-logo.png" alt="" width="24" height="24">
+            <span>Bonzivista.org</span>
+        </a>
+    </div>
+    <div class="footer-sponsor-row">
+        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+            <svg width="17" height="17" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+            <span>Ethervista.app sponsor</span>
+        </a>
+    </div>
+    <div class="footer-legal-row">
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a><span aria-hidden="true">, </span><a href="/privacy.html">Privacy</a>
     </div>
 </footer>
 </body>

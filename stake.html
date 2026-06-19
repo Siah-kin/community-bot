@@ -152,6 +152,46 @@
             gap: 8px;
         }
 
+        .site-footer.bonzi-branded-footer {
+            border: 1px solid #27272A;
+            max-width: 520px;
+        }
+
+        .footer-pipe {
+            color: #71717A;
+        }
+
+        .footer-sponsor-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .footer-sponsor-row a {
+            color: #FFFFFF;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-legal-row {
+            color: #A1A1AA;
+            font-size: 16px;
+            margin-top: 18px;
+        }
+
+        .footer-legal-row a {
+            color: #A1A1AA;
+            text-decoration: none;
+        }
+
         header {
             text-align: center;
             margin-bottom: 1.5rem;
@@ -4616,15 +4656,23 @@
     </div><!-- /.page-main -->
 
 <!-- Footer: sponsor (Ethervista) + CTO / Bonzivista.org only -->
-<footer class="site-footer" aria-label="Site footer">
-    <div class="footer-row">
-        <a href="/">Bonzivista.org</a>
-        <span aria-hidden="true">|</span>
-        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">Ethervista.app sponsor</a>
-        <span aria-hidden="true">|</span>
-        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a>
-        <span aria-hidden="true">|</span>
-        <a href="/privacy.html">Privacy</a>
+<footer class="site-footer bonzi-branded-footer" aria-label="Site footer">
+    <div class="footer-cto-row">
+        <span>CTO</span>
+        <span class="footer-pipe" aria-hidden="true">|</span>
+        <a href="/">
+            <img src="/bonzi-logo.png" alt="" width="24" height="24">
+            <span>Bonzivista.org</span>
+        </a>
+    </div>
+    <div class="footer-sponsor-row">
+        <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+            <svg width="17" height="17" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+            <span>Ethervista.app sponsor</span>
+        </a>
+    </div>
+    <div class="footer-legal-row">
+        <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a><span aria-hidden="true">, </span><a href="/privacy.html">Privacy</a>
     </div>
 </footer>
 </body>

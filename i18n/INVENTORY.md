@@ -53,7 +53,7 @@ Conflicts found:
 ## Subdirectory pages (not yet string-counted)
 
 `dao/`, `economics/`, `metrics/` (+ `metrics-pt.html`), `stake/`, `vetter/`,
-`research/` (+ `openbox-proof-pt.html`), `demo_silverfox/`.
+`research/` (+ `openbox-proof-pt.html`), numbered public route pages.
 
 ## Verification gate (per the operator)
 

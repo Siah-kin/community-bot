@@ -207,25 +207,85 @@ body.dark-mode .theme-toggle svg {
 }
 
 .nav-connect-btn {
-    background: linear-gradient(135deg, #d4c084 0%, #a89050 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--purple);
     border: none;
-    border-radius: 0;
+    border-radius: 6px;
     padding: 10px 20px;
     font-size: 14px;
-    font-weight: 600;
-    color: #0a0a0a;
+    font-weight: 750;
+    color: #ffffff;
     cursor: pointer;
+    text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .nav-connect-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212, 192, 132, 0.3);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
 }
 
 .nav-connect-btn:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+#nav-container .nav-link,
+.site-nav .nav-link {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.78);
+    font-weight: 650;
+}
+
+#nav-container .nav-link:hover,
+.site-nav .nav-link:hover {
+    background: transparent;
+    color: var(--purple);
+}
+
+#nav-container .nav-link.active,
+.site-nav .nav-link.active {
+    background: transparent;
+    box-shadow: 0 2px 0 0 var(--purple);
+    color: var(--purple);
+}
+
+body.dark-mode #nav-container .nav-link,
+body.dark-mode .site-nav .nav-link {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+body.dark-mode #nav-container .nav-link:hover,
+body.dark-mode .site-nav .nav-link:hover,
+body.dark-mode #nav-container .nav-link.active,
+body.dark-mode .site-nav .nav-link.active {
+    background: transparent;
+    box-shadow: 0 2px 0 0 var(--purple-light);
+    color: var(--purple-light);
+}
+
+#nav-container .nav-stake-btn,
+.site-nav .nav-stake-btn,
+body.dark-mode #nav-container .nav-stake-btn,
+body.dark-mode .site-nav .nav-stake-btn {
+    background: var(--purple);
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+#nav-container .nav-stake-btn:hover,
+.site-nav .nav-stake-btn:hover,
+body.dark-mode #nav-container .nav-stake-btn:hover,
+body.dark-mode .site-nav .nav-stake-btn:hover {
+    background: var(--purple);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+    color: #ffffff;
 }
 
 /* Dropdown menus */

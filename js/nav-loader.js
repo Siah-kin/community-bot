@@ -1,17 +1,11 @@
 (() => {
-    const SILVER_FOX_SESSION_KEY = 'bonzi_silver_fox_access';
-    const SILVER_FOX_ALLOWED_CODES = new Set(['SF-ALPHA-2026', 'SILVER-FOX']);
-    const SILVER_FOX_PAGES = new Map([
-        ['demo', '/demo/'],
-        ['alpha', '/alpha/'],
-        ['specs', '/specs/'],
-        ['quest-earn', '/quest-earn/'],
-    ]);
-
-    bootstrapSilverFoxAccess();
-
+    const SILVER_FOX_SESSION_KEY = 'bonzi_alpha';
+    const SILVER_FOX_LEGACY_SESSION_KEY = 'bonzi_silver_fox_access';
     const THEME_KEY = 'bonzi_theme';
     const LEGACY_THEME_KEY = 'bonzi-theme';
+
+    bootstrapSilverFoxNavAccess();
+    if (!enforceProtectedRouteAccess()) return;
 
     const navReady = loadNav();
     window.navReady = navReady;
@@ -24,7 +18,7 @@
         const prefix = getPathPrefix();
 
         try {
-            const _v = '20260618sf';
+            const _v = '20260619routes3';
         const [navRes, menuRes] = await Promise.all([
                 fetch(prefix + 'includes/nav.html?v=' + _v),
                 fetch(prefix + 'includes/mobile-menu.html?v=' + _v)
@@ -38,6 +32,7 @@
                 prefixRelativeUrls(menuContainer, prefix);
             }
 
+            applySilverFoxNavVisibility();
             applyActiveState();
             initTheme();
             initDevMode();
@@ -45,8 +40,6 @@
             initMobileMenu();
             initLanguageSelect();
             initContactLinks();
-            initSilverFoxGate();
-            initDemoButton();
             // initBrazilButton(); // disabled 2026-05-29: operator request, language switching now uses nav lang-select uniformly
 
             document.dispatchEvent(new CustomEvent('nav:loaded'));
@@ -57,7 +50,7 @@
 
     function getPathPrefix() {
         const path = window.location.pathname;
-        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/research/', '/research', '/vetter/', '/vetter', '/dao/', '/dao', '/metrics/', '/metrics', '/demo/', '/demo', '/alpha/', '/alpha', '/specs/', '/specs', '/quest-earn/', '/quest-earn', '/page_1/', '/page_1', '/page_2/', '/page_2', '/page_3/', '/page_3', '/page_4/', '/page_4', '/demo_silverfox/', '/demo_silverfox'];
+        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/research/', '/research', '/vetter/', '/vetter', '/dao/', '/dao', '/metrics/', '/metrics', '/demo/', '/demo', '/alpha/', '/alpha', '/specs/', '/specs', '/quest-earn/', '/quest-earn', '/page_1/', '/page_1', '/page_2/', '/page_2', '/page_3/', '/page_3', '/page_4/', '/page_4'];
         const isSubdir = subdirs.some((dir) => path.includes(dir));
         return isSubdir ? '../' : '';
     }
@@ -96,10 +89,13 @@
     function getActiveKey(pathname) {
         const cleanPath = pathname.split('?')[0].split('#')[0];
 
-        if (pathMatches(cleanPath, '/demo')) return 'demo';
-        if (pathMatches(cleanPath, '/alpha')) return 'alpha';
-        if (pathMatches(cleanPath, '/specs')) return 'specs';
+        if (pathMatches(cleanPath, '/page_1') || pathMatches(cleanPath, '/demo')) return 'how';
+        if (pathMatches(cleanPath, '/page_2') || pathMatches(cleanPath, '/alpha')) return 'why';
+        if (pathMatches(cleanPath, '/page_3') || pathMatches(cleanPath, '/specs')) return 'what';
+        if (pathMatches(cleanPath, '/page_4')) return 'when';
         if (pathMatches(cleanPath, '/quest-earn')) return 'quest-earn';
+        if (cleanPath.endsWith('/about.html') || cleanPath.endsWith('/about')) return 'about';
+        if (cleanPath.endsWith('/stake.html') || cleanPath.endsWith('/stake')) return 'stake';
         if (cleanPath.includes('/manual')) return 'manual';
         if (cleanPath.includes('/economics')) return 'economics';
         if (cleanPath.includes('/research')) return 'research';
@@ -122,183 +118,74 @@
         return pathname === basePath || pathname.startsWith(basePath + '/');
     }
 
-    function normaliseSilverFoxCode(value) {
-        return String(value || '').trim().toUpperCase().replace(/\s+/g, '-');
+    function protectedSilverFoxPathKey(pathname) {
+        const cleanPath = pathname.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+        const protectedPaths = [
+            ['/alpha', 'why'],
+            ['/demo', 'how'],
+            ['/quest-earn', 'quest']
+        ];
+
+        const match = protectedPaths.find(([path]) => cleanPath === path || cleanPath.startsWith(path + '/'));
+        return match ? match[1] : '';
     }
 
-    function hasSilverFoxAccess() {
-        return sessionStorage.getItem(SILVER_FOX_SESSION_KEY) === '1';
+    function isProtectedSilverFoxPath(pathname) {
+        return Boolean(protectedSilverFoxPathKey(pathname));
     }
 
-    function grantSilverFoxAccess() {
-        sessionStorage.setItem(SILVER_FOX_SESSION_KEY, '1');
-        document.body.classList.add('silver-fox-unlocked');
-        document.body.classList.remove('silver-fox-locked', 'silver-fox-page-locked');
-        document.querySelectorAll('[data-silver-fox-link]').forEach((el) => {
-            el.classList.remove('is-locked');
-        });
-        const panel = document.getElementById('silver-fox-access-panel');
-        if (panel) panel.remove();
+    function enforceProtectedRouteAccess() {
+        const gateKey = protectedSilverFoxPathKey(window.location.pathname);
+        if (!gateKey) return true;
+        if (hasSilverFoxNavAccess()) return true;
+        window.location.replace('/?slot=open&gate=' + encodeURIComponent(gateKey));
+        return false;
     }
 
-    function validateSilverFoxCode(value) {
-        const code = normaliseSilverFoxCode(value);
-        return SILVER_FOX_ALLOWED_CODES.has(code);
-    }
-
-    function currentSilverFoxPageKey() {
-        const path = window.location.pathname;
-        for (const [key, pagePath] of SILVER_FOX_PAGES.entries()) {
-            if (path === pagePath || path.startsWith(pagePath)) return key;
-        }
-        return null;
-    }
-
-    function bootstrapSilverFoxAccess() {
+    function bootstrapSilverFoxNavAccess() {
         const params = new URLSearchParams(window.location.search);
-        const signed = params.get('sf') || params.get('silver_fox') || params.get('code');
-        if (signed && validateSilverFoxCode(signed)) {
+        const marker = params.get('silver_fox') || params.get('sf') || params.get('alpha');
+        if (!isTruthyMarker(marker)) return;
+
+        try {
             sessionStorage.setItem(SILVER_FOX_SESSION_KEY, '1');
-            params.delete('sf');
-            params.delete('silver_fox');
-            params.delete('code');
-            const clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
-            window.history.replaceState({}, '', clean);
-        }
-    }
-
-    function initSilverFoxGate() {
-        const unlocked = hasSilverFoxAccess();
-        document.body.classList.toggle('silver-fox-unlocked', unlocked);
-        document.body.classList.toggle('silver-fox-locked', !unlocked);
-
-        document.querySelectorAll('[data-silver-fox-link]').forEach((el) => {
-            el.classList.toggle('is-locked', !unlocked);
-            el.addEventListener('click', (e) => {
-                if (hasSilverFoxAccess()) return;
-                e.preventDefault();
-                if (typeof window.closeMobileMenu === 'function') window.closeMobileMenu();
-                openSilverFoxModal(el.getAttribute('href'));
-            });
-        });
-
-        if (!unlocked && currentSilverFoxPageKey()) {
-            showSilverFoxAccessPanel();
-            openSilverFoxModal(window.location.pathname);
-        }
-    }
-
-    function showSilverFoxAccessPanel() {
-        document.body.classList.add('silver-fox-page-locked');
-        if (document.getElementById('silver-fox-access-panel')) return;
-        const panel = document.createElement('section');
-        panel.id = 'silver-fox-access-panel';
-        panel.innerHTML = `
-            <div class="silver-fox-access-card">
-                <div class="silver-fox-kicker">Silver Fox</div>
-                <h1>This step is visible, but gated.</h1>
-                <p>Apply through the Bonzi bot or enter the access code from your acceptance message. Static pages contain only Silver Fox-safe content.</p>
-                <div class="silver-fox-panel-actions">
-                    <a href="https://t.me/Bonzivista_bot?start=silverfox" target="_blank" rel="noopener noreferrer">Apply for Silver Fox</a>
-                    <button type="button" data-open-silver-fox-modal>Enter access code</button>
-                </div>
-            </div>
-        `;
-        const nav = document.getElementById('mobile-menu-container') || document.body.firstChild;
-        if (nav && nav.parentNode) {
-            nav.parentNode.insertBefore(panel, nav.nextSibling);
-        } else {
-            document.body.insertBefore(panel, document.body.firstChild);
-        }
-        panel.querySelector('[data-open-silver-fox-modal]').addEventListener('click', () => openSilverFoxModal(window.location.pathname));
-    }
-
-    function openSilverFoxModal(targetHref) {
-        let modal = document.getElementById('silver-fox-modal');
-        if (!modal) {
-            modal = document.createElement('div');
-            modal.id = 'silver-fox-modal';
-            modal.className = 'silver-fox-modal';
-            modal.setAttribute('role', 'dialog');
-            modal.setAttribute('aria-modal', 'true');
-            modal.setAttribute('aria-labelledby', 'silver-fox-modal-title');
-            modal.innerHTML = `
-                <div class="silver-fox-modal-box">
-                    <button type="button" class="silver-fox-close" aria-label="Close">×</button>
-                    <div class="silver-fox-kicker">Silver Fox</div>
-                    <h2 id="silver-fox-modal-title">Access required</h2>
-                    <p>Use your Silver Fox acceptance code or apply through the Bonzi bot. This unlocks the static journey in this browser session only.</p>
-                    <a class="silver-fox-apply" href="https://t.me/Bonzivista_bot?start=silverfox" target="_blank" rel="noopener noreferrer">Apply for Silver Fox</a>
-                    <form class="silver-fox-code-form">
-                        <label for="silver-fox-code-input">Access code</label>
-                        <div class="silver-fox-code-row">
-                            <input id="silver-fox-code-input" type="text" autocomplete="one-time-code" placeholder="SF-ALPHA-2026" />
-                            <button type="submit">Unlock</button>
-                        </div>
-                        <div class="silver-fox-error" aria-live="polite"></div>
-                    </form>
-                </div>
-            `;
-            document.body.appendChild(modal);
-
-            modal.querySelector('.silver-fox-close').addEventListener('click', closeSilverFoxModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeSilverFoxModal();
-            });
-            modal.addEventListener('keydown', trapSilverFoxModalFocus);
-            modal.querySelector('.silver-fox-code-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const input = modal.querySelector('#silver-fox-code-input');
-                const error = modal.querySelector('.silver-fox-error');
-                if (validateSilverFoxCode(input.value)) {
-                    grantSilverFoxAccess();
-                    closeSilverFoxModal();
-                    const target = modal.dataset.targetHref || '';
-                    if (target && !String(target).startsWith('http')) {
-                        window.location.href = target;
-                    }
-                } else {
-                    error.textContent = 'Invalid access code.';
-                    input.value = '';
-                    input.focus();
-                }
-            });
-        }
-        modal.dataset.targetHref = targetHref || '';
-        modal.classList.add('active');
-        setTimeout(() => {
-            const input = modal.querySelector('#silver-fox-code-input');
-            if (input) input.focus();
-        }, 0);
-    }
-
-    function closeSilverFoxModal() {
-        const modal = document.getElementById('silver-fox-modal');
-        if (modal) modal.classList.remove('active');
-    }
-
-    function trapSilverFoxModalFocus(e) {
-        const modal = document.getElementById('silver-fox-modal');
-        if (!modal || !modal.classList.contains('active')) return;
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            closeSilverFoxModal();
+            sessionStorage.setItem(SILVER_FOX_LEGACY_SESSION_KEY, '1');
+        } catch (e) {
             return;
         }
-        if (e.key !== 'Tab') return;
-        const focusable = Array.from(
-            modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled])')
-        ).filter((el) => el.offsetParent !== null);
-        if (!focusable.length) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
+
+        params.delete('silver_fox');
+        params.delete('sf');
+        params.delete('alpha');
+        const cleanUrl = (
+            window.location.pathname +
+            (params.toString() ? '?' + params.toString() : '') +
+            window.location.hash
+        );
+        window.history.replaceState({}, '', cleanUrl);
+    }
+
+    function isTruthyMarker(value) {
+        const marker = String(value || '').trim().toLowerCase();
+        return marker === '1' || marker === 'true' || marker === 'yes' || marker === 'entered';
+    }
+
+    function hasSilverFoxNavAccess() {
+        try {
+            return (
+                sessionStorage.getItem(SILVER_FOX_SESSION_KEY) === '1' ||
+                sessionStorage.getItem(SILVER_FOX_LEGACY_SESSION_KEY) === '1'
+            );
+        } catch (e) {
+            return false;
         }
+    }
+
+    function applySilverFoxNavVisibility() {
+        const canSeeProtectedNav = hasSilverFoxNavAccess();
+        document.querySelectorAll('[data-silver-fox-nav]').forEach((el) => {
+            el.hidden = !canSeeProtectedNav;
+        });
     }
 
     function initDevMode() {
@@ -506,13 +393,16 @@
     function _siteLangToken(lang) {
         if (lang === 'pt') return 'pt-br';
         if (lang === 'zh') return 'zh-cn';
-        return 'en';
+        return lang;
     }
 
     function _normaliseSavedLang(raw) {
         var lang = String(raw || '').trim().toLowerCase().replace(/_/g, '-');
         if (lang === 'pt-br' || lang === 'pt' || lang.slice(0, 2) === 'pt') return 'pt';
         if (lang === 'zh-cn' || lang === 'zh' || lang === 'mandarin' || lang.slice(0, 2) === 'zh') return 'zh';
+        if (lang === 'fr' || lang.slice(0, 2) === 'fr') return 'fr';
+        if (lang === 'ru' || lang.slice(0, 2) === 'ru') return 'ru';
+        if (lang === 'tr' || lang.slice(0, 2) === 'tr') return 'tr';
         return 'en';
     }
 
@@ -733,12 +623,4 @@
         document.body.appendChild(btn);
     }
 
-    function initDemoButton() {
-        const demoBtn = document.getElementById('nav-connect-btn');
-        if (!demoBtn) return;
-
-        demoBtn.addEventListener('click', () => {
-            window.open('https://t.me/Bonzivista_bot?start=silverfox', '_blank', 'noopener,noreferrer');
-        });
-    }
 })();

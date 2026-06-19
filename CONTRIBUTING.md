@@ -25,6 +25,7 @@ Nav + footer consistency scripts live in `scripts/`:
 ```bash
 python3 scripts/validate_nav.py
 python3 scripts/validate_footer.py
+python3 scripts/validate_new_page_nav_guard.py
 ```
 
 ## Content guidelines
@@ -42,4 +43,3 @@ python3 scripts/validate_footer.py
 - DAO: `dao/`
 - Metrics + whitepaper: `metrics/`
 - Widgets: `widget/`
-

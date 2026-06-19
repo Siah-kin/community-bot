@@ -1092,8 +1092,7 @@
             box-shadow: 0 10px 28px rgba(124, 58, 237, 0.22);
         }
 
-        /* Uniform button size: the three stack actions (Open in system browser,
-           Connect Wallet, Need help connecting?) share width, height, padding,
+        /* Uniform button size: the stake overlay actions share width, height, padding,
            and corners. Colors/roles stay distinct. Placed late to win source order
            over .connect-overlay .connect-btn (max-width:280px) and .help-toggle-btn. */
         .connect-content--stake .connect-btn,
@@ -1363,14 +1362,7 @@
         <div class="connect-content connect-content--stake">
             <img src="bonzi-logo.png" alt="Bonzi" class="logo connect-logo-lg">
             <h2 class="connect-title" id="stakeOverlayTitle">Stake BONZI</h2>
-            <p class="subtitle-text" id="stakeOverlaySubtitle">Connect your wallet to start earning ETH rewards.</p>
-            <p id="wcConnectDesktopHint" class="connect-desktop-wc-hint hidden" role="note"></p>
-            <div id="desktopExtensionFallback" class="desktop-extension-fallback" aria-live="polite">
-                <button type="button" class="connect-btn" id="desktopBrowserFallbackBtn">
-                    <span id="desktopExtBtnSpan">Use browser extension</span>
-                </button>
-                <p class="desktop-extension-caption" id="desktopExtCaption">Opens this stake screen in your normal browser with the same action and wallet parameters.</p>
-            </div>
+            <p class="subtitle-text hidden" id="stakeOverlaySubtitle"></p>
             <button type="button" class="connect-btn" id="wcConnectBtn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.09 8.65c3.26-3.19 8.55-3.19 11.82 0l.39.38c.16.16.16.42 0 .58l-1.34 1.31c-.08.08-.21.08-.3 0l-.54-.53c-2.27-2.23-5.96-2.23-8.24 0l-.58.56c-.08.08-.21.08-.3 0L5.66 9.64c-.16-.16-.16-.42 0-.58l.43-.41zm14.62 2.71l1.19 1.17c.16.16.16.42 0 .58l-5.38 5.27c-.16.16-.43.16-.59 0l-3.82-3.74c-.04-.04-.11-.04-.15 0l-3.82 3.74c-.16.16-.43.16-.59 0L2.17 13.1c-.16-.16-.16-.42 0-.58l1.19-1.17c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0l3.82 3.74c.04.04.11.04.15 0l3.82-3.74c.16-.16.43-.16.59 0z"/></svg>
                 <span id="wcConnectBtnLabel">Connect Wallet</span>
@@ -1831,7 +1823,7 @@
         var STAKE_OVERLAY_I18N = {
             en: {
                 title: 'Stake BONZI',
-                subtitle: 'Connect your wallet to start earning ETH rewards.',
+                subtitle: '',
                 connectBtn: 'Connect Wallet',
                 connecting: 'Connecting…',
                 divider: 'or connect directly',
@@ -1844,25 +1836,25 @@
                 statusLoading: 'Loading WalletConnect…',
                 statusPairing: 'Pairing with relay…',
                 statusWaitingApprove: 'Waiting for your wallet to approve…',
-                statusStalled: 'Connect stalled. Opening your browser…',
+                statusStalled: 'Connect stalled. Use the help path below.',
                 statusConnected: 'Connected.',
                 escalateLabel: 'Get help',
                 helpButtonLabel: 'Need help connecting?',
                 helpPanel: [
-                    { lead: 'Stuck on "Connecting…"?', body: 'Tap <strong>Open in system browser</strong> above, then connect from Chrome or Safari.' },
+                    { lead: 'Stuck on "Connecting…"?', body: 'Use the help path here instead of retrying blindly. If Telegram blocks the wallet handoff, open this page from Chrome or Safari.' },
                     { lead: 'Phone wallet did not open?', body: 'Open MetaMask, Trust, or Binance Wallet on your phone first, then tap <strong>Connect Wallet</strong> here.' },
                     { lead: 'Wallet opened but did not sign?', body: 'Switch to your wallet app, approve the connection, then come back.' },
-                    { lead: 'Still stuck?', body: 'Tap <strong>Open in system browser</strong> and use a browser wallet extension (like MetaMask).' }
+                    { lead: 'Still stuck?', body: 'Use a browser wallet extension such as MetaMask, or report the failed handoff with a screenshot.' }
                 ],
                 diag: {
-                    WC_SDK_INIT_TIMEOUT: { title: "Couldn't load WalletConnect", why: 'The wallet library took too long to load. Your network or browser may be blocking it.', actionLabel: 'Open in system browser' },
+                    WC_SDK_INIT_TIMEOUT: { title: "Couldn't load WalletConnect", why: 'The wallet library took too long to load. Your network or browser may be blocking it.', actionLabel: 'Need help connecting?' },
                     WC_SDK_INIT_FAIL: { title: "WalletConnect didn't start", why: 'The wallet library failed to initialize on this device.', actionLabel: 'Try again' },
-                    WC_RELAY_UNREACHABLE: { title: "Couldn't reach the WalletConnect relay", why: 'We got no pairing link back. Your network may be blocking relay.walletconnect.com.', actionLabel: 'Open in system browser' },
+                    WC_RELAY_UNREACHABLE: { title: "Couldn't reach the WalletConnect relay", why: 'We got no pairing link back. Your network may be blocking relay.walletconnect.com.', actionLabel: 'Need help connecting?' },
                     WC_PAIRING_TIMEOUT: { title: "Wallet didn't approve in time", why: 'Open your wallet app, find WalletConnect (or the Sessions tab), and approve this connection.', actionLabel: 'Try again' },
                     WC_NO_ACCOUNTS: { title: 'Wallet returned no account', why: 'Open your wallet, make sure an account is selected, then try again.', actionLabel: 'Try again' },
                     WALLET_NO_EXTENSION: { title: 'No wallet extension found', why: 'Install MetaMask in this browser, or use Connect Wallet with a phone wallet.', actionLabel: 'Get MetaMask' },
                     WALLET_WRONG_CHAIN: { title: 'Wrong network', why: 'Switch to Ethereum Mainnet in your wallet, then tap Try again.', actionLabel: 'Try again' },
-                    GENERIC: { title: 'Connect failed', why: 'Something went wrong. Try again, or open the page in your browser.', actionLabel: 'Open in system browser' }
+                    GENERIC: { title: 'Connect failed', why: 'Something went wrong. Try again or use the help path below.', actionLabel: 'Need help connecting?' }
                 }
             },
             pt: {
@@ -1880,25 +1872,25 @@
                 statusLoading: 'Carregando WalletConnect…',
                 statusPairing: 'Pareando com o servidor…',
                 statusWaitingApprove: 'Aguardando aprovação na sua carteira…',
-                statusStalled: 'Conexão travou. Abrindo seu navegador…',
+                statusStalled: 'Conexão travou. Use a ajuda abaixo.',
                 statusConnected: 'Conectado.',
                 escalateLabel: 'Obter ajuda',
                 helpButtonLabel: 'Precisa de ajuda para conectar?',
                 helpPanel: [
-                    { lead: 'Travado em "Conectando…"?', body: 'Toque em <strong>Abrir no navegador do sistema</strong> acima e conecte pelo Chrome ou Safari.' },
+                    { lead: 'Travado em "Conectando…"?', body: 'Use esta ajuda em vez de tentar sem contexto. Se o Telegram bloquear a carteira, abra esta página pelo Chrome ou Safari.' },
                     { lead: 'A carteira no celular não abriu?', body: 'Abra MetaMask, Trust ou Binance Wallet no seu celular primeiro, depois toque em <strong>Conectar carteira</strong> aqui.' },
                     { lead: 'A carteira abriu mas não assinou?', body: 'Vá para o app da sua carteira, aprove a conexão e volte aqui.' },
-                    { lead: 'Ainda travado?', body: 'Toque em <strong>Abrir no navegador do sistema</strong> e use uma extensão de carteira (como MetaMask).' }
+                    { lead: 'Ainda travado?', body: 'Use uma extensão de carteira como MetaMask, ou envie uma captura do erro para suporte.' }
                 ],
                 diag: {
-                    WC_SDK_INIT_TIMEOUT: { title: 'Não foi possível carregar o WalletConnect', why: 'A biblioteca da carteira demorou demais para carregar. Sua rede ou navegador pode estar bloqueando.', actionLabel: 'Abrir no navegador do sistema' },
+                    WC_SDK_INIT_TIMEOUT: { title: 'Não foi possível carregar o WalletConnect', why: 'A biblioteca da carteira demorou demais para carregar. Sua rede ou navegador pode estar bloqueando.', actionLabel: 'Precisa de ajuda para conectar?' },
                     WC_SDK_INIT_FAIL: { title: 'WalletConnect não iniciou', why: 'A biblioteca da carteira falhou ao iniciar neste dispositivo.', actionLabel: 'Tentar de novo' },
-                    WC_RELAY_UNREACHABLE: { title: 'Não foi possível alcançar o WalletConnect', why: 'Nenhum link de pareamento retornou. Sua rede pode estar bloqueando relay.walletconnect.com.', actionLabel: 'Abrir no navegador do sistema' },
+                    WC_RELAY_UNREACHABLE: { title: 'Não foi possível alcançar o WalletConnect', why: 'Nenhum link de pareamento retornou. Sua rede pode estar bloqueando relay.walletconnect.com.', actionLabel: 'Precisa de ajuda para conectar?' },
                     WC_PAIRING_TIMEOUT: { title: 'A carteira não aprovou a tempo', why: 'Abra o app da sua carteira, encontre WalletConnect (ou a aba Sessões) e aprove esta conexão.', actionLabel: 'Tentar de novo' },
                     WC_NO_ACCOUNTS: { title: 'A carteira não retornou conta', why: 'Abra sua carteira, confirme que há uma conta selecionada e tente de novo.', actionLabel: 'Tentar de novo' },
                     WALLET_NO_EXTENSION: { title: 'Nenhuma extensão de carteira encontrada', why: 'Instale o MetaMask neste navegador, ou use Conectar carteira com uma carteira de celular.', actionLabel: 'Obter MetaMask' },
                     WALLET_WRONG_CHAIN: { title: 'Rede errada', why: 'Mude para a Ethereum Mainnet na sua carteira e toque em Tentar de novo.', actionLabel: 'Tentar de novo' },
-                    GENERIC: { title: 'Falha na conexão', why: 'Algo deu errado. Tente de novo, ou abra a página no seu navegador.', actionLabel: 'Abrir no navegador do sistema' }
+                    GENERIC: { title: 'Falha na conexão', why: 'Algo deu errado. Tente de novo ou use a ajuda abaixo.', actionLabel: 'Precisa de ajuda para conectar?' }
                 }
             },
             zh: {
@@ -1916,36 +1908,34 @@
                 statusLoading: '正在加载 WalletConnect…',
                 statusPairing: '正在与中继配对…',
                 statusWaitingApprove: '正在等待您的钱包批准…',
-                statusStalled: '连接卡住。正在打开您的浏览器…',
+                statusStalled: '连接卡住。请使用下方帮助。',
                 statusConnected: '已连接。',
                 escalateLabel: '获取帮助',
                 helpButtonLabel: '需要帮助连接？',
                 helpPanel: [
-                    { lead: '卡在"连接中…"？', body: '点击上方<strong>在系统浏览器中打开</strong>，然后从 Chrome 或 Safari 连接。' },
+                    { lead: '卡在"连接中…"？', body: '请先使用这里的帮助。如果 Telegram 阻止钱包跳转，请从 Chrome 或 Safari 打开此页面。' },
                     { lead: '手机钱包没有打开？', body: '先在手机上打开 MetaMask、Trust 或 Binance Wallet，然后在这里点击<strong>连接钱包</strong>。' },
                     { lead: '钱包打开了但没有签名？', body: '切换到您的钱包应用，批准连接，然后返回这里。' },
-                    { lead: '仍然卡住？', body: '点击<strong>在系统浏览器中打开</strong>，使用浏览器钱包扩展（如 MetaMask）。' }
+                    { lead: '仍然卡住？', body: '请使用 MetaMask 等浏览器钱包扩展，或截图错误并联系支持。' }
                 ],
                 diag: {
-                    WC_SDK_INIT_TIMEOUT: { title: '无法加载 WalletConnect', why: '钱包库加载超时。您的网络或浏览器可能在阻止它。', actionLabel: '在系统浏览器中打开' },
+                    WC_SDK_INIT_TIMEOUT: { title: '无法加载 WalletConnect', why: '钱包库加载超时。您的网络或浏览器可能在阻止它。', actionLabel: '需要连接帮助？' },
                     WC_SDK_INIT_FAIL: { title: 'WalletConnect 未启动', why: '钱包库在此设备上初始化失败。', actionLabel: '重试' },
-                    WC_RELAY_UNREACHABLE: { title: '无法连接到 WalletConnect 中继', why: '没有返回配对链接。您的网络可能在阻止 relay.walletconnect.com。', actionLabel: '在系统浏览器中打开' },
+                    WC_RELAY_UNREACHABLE: { title: '无法连接到 WalletConnect 中继', why: '没有返回配对链接。您的网络可能在阻止 relay.walletconnect.com。', actionLabel: '需要连接帮助？' },
                     WC_PAIRING_TIMEOUT: { title: '钱包未及时批准', why: '打开您的钱包应用，找到 WalletConnect（或会话标签），批准此连接。', actionLabel: '重试' },
                     WC_NO_ACCOUNTS: { title: '钱包未返回账户', why: '打开您的钱包，确认已选择账户，然后重试。', actionLabel: '重试' },
                     WALLET_NO_EXTENSION: { title: '未找到钱包扩展', why: '在此浏览器中安装 MetaMask，或使用连接钱包配合手机钱包。', actionLabel: '获取 MetaMask' },
                     WALLET_WRONG_CHAIN: { title: '网络错误', why: '在您的钱包中切换到 Ethereum 主网，然后点击重试。', actionLabel: '重试' },
-                    GENERIC: { title: '连接失败', why: '出错了。请重试，或在浏览器中打开此页面。', actionLabel: '在系统浏览器中打开' }
+                    GENERIC: { title: '连接失败', why: '出错了。请重试，或使用下方帮助。', actionLabel: '需要连接帮助？' }
                 }
             }
         };
 
         var STAKE_MAIN_I18N = {
             en: {
-                desktopHintHtml:
-                    '<strong>Telegram in-app browser:</strong> use <strong>Connect Wallet</strong> first. If the wallet handoff stalls, use <strong>Open in system browser</strong> for MetaMask, Trust, Binance, or another browser wallet.',
-                extensionBtn: 'Open in system browser',
-                extensionCaption:
-                    'If Telegram opens the same tab again, copy the address from the bar into Chrome or Safari.',
+                desktopHintHtml: '',
+                extensionBtn: '',
+                extensionCaption: '',
                 externalFlowBtn: 'Connect wallet',
                 externalFlowHint: 'WalletConnect or a browser wallet works on this page.',
                 mainTitle: 'Stake BONZI',
@@ -2028,11 +2018,9 @@
                 lockDaysSuffix: 'd'
             },
             pt: {
-                desktopHintHtml:
-                    '<strong>Navegador interno do Telegram:</strong> use <strong>Conectar carteira</strong> primeiro. Se a abertura da carteira travar, use <strong>Abrir no navegador do sistema</strong> para MetaMask, Trust, Binance ou outra carteira do navegador.',
-                extensionBtn: 'Abrir no navegador do sistema',
-                extensionCaption:
-                    'Se o Telegram abrir a mesma aba de novo, copie o endereço da barra para o Chrome ou Safari.',
+                desktopHintHtml: '',
+                extensionBtn: '',
+                extensionCaption: '',
                 externalFlowBtn: 'Conectar carteira',
                 externalFlowHint: 'WalletConnect ou extensão do navegador funciona nesta página.',
                 mainTitle: 'Stake de BONZI',
@@ -2115,10 +2103,9 @@
                 lockDaysSuffix: 'd'
             },
             zh: {
-                desktopHintHtml:
-                    '<strong>Telegram 内置浏览器：</strong>请先使用<strong>连接钱包</strong>。如果钱包跳转卡住，请用<strong>在系统浏览器中打开</strong>，再通过 MetaMask、Trust、Binance 或其他浏览器钱包连接。',
-                extensionBtn: '在系统浏览器中打开',
-                extensionCaption: '若仍在 Telegram 内打开同一页，请把地址栏里的链接复制到 Chrome 或 Safari。',
+                desktopHintHtml: '',
+                extensionBtn: '',
+                extensionCaption: '',
                 externalFlowBtn: '连接钱包',
                 externalFlowHint: '本页可使用 WalletConnect 或浏览器钱包扩展。',
                 mainTitle: '质押 BONZI',
@@ -2234,7 +2221,7 @@
                 withdrawalComplete: 'Saque concluído!'
             },
             zh: {
-                openBrowserConnect: '请在系统浏览器中打开本页以连接钱包。',
+                openBrowserConnect: '请使用连接帮助继续。',
                 requestingApproval: '正在请求授权…',
                 approveSpending: '请在钱包中授权 BONZI 额度…',
                 waitingApproval: '等待授权确认…',
@@ -2511,12 +2498,6 @@
                 var aria = grid.getAttribute('data-aria-' + L) || grid.getAttribute('data-aria-en');
                 if (aria) grid.setAttribute('aria-label', aria);
             }
-            var dh = document.getElementById('wcConnectDesktopHint');
-            if (dh) dh.innerHTML = m.desktopHintHtml;
-            var des = document.getElementById('desktopExtBtnSpan');
-            if (des) des.textContent = m.extensionBtn;
-            var dc = document.getElementById('desktopExtCaption');
-            if (dc) dc.textContent = m.extensionCaption;
             var efb = document.getElementById('externalFlowConnectBtn');
             if (efb) efb.textContent = m.externalFlowBtn || '';
             var efh = document.getElementById('externalFlowConnectHint');
@@ -2706,7 +2687,7 @@
         });
 
         // Force overlay below the fixed nav on web context.
-        // CSS top: 56px loses to inset:0 in the second style block — inline style wins.
+        // CSS top: 56px loses to inset:0 in the second style block - inline style wins.
         (function fixOverlayPosition() {
             if (!document.documentElement.classList.contains('ctx-web')) return;
             var overlay = document.getElementById('connectOverlay');
@@ -3331,14 +3312,14 @@
         }
 
         var STAKE_DIAGNOSTICS = {
-            WC_SDK_INIT_TIMEOUT: { action: 'openInBrowser' },
+            WC_SDK_INIT_TIMEOUT: { action: 'showHelp' },
             WC_SDK_INIT_FAIL: { action: 'retry' },
-            WC_RELAY_UNREACHABLE: { action: 'openInBrowser' },
+            WC_RELAY_UNREACHABLE: { action: 'showHelp' },
             WC_PAIRING_TIMEOUT: { action: 'retry' },
             WC_NO_ACCOUNTS: { action: 'retry' },
             WALLET_NO_EXTENSION: { action: 'openMetaMask' },
             WALLET_WRONG_CHAIN: { action: 'retry' },
-            GENERIC: { action: 'openInBrowser' }
+            GENERIC: { action: 'showHelp' }
         };
 
         function diagCopyForCode(code) {
@@ -3381,6 +3362,15 @@
                     try { tg.openLink(mmUrl); } catch (e) { window.open(mmUrl, '_blank'); }
                 } else {
                     window.open(mmUrl, '_blank');
+                }
+            } else if (action === 'showHelp') {
+                var helpBtn = document.getElementById('helpToggleBtn');
+                var panel = document.getElementById('helpPanel');
+                if (panel && panel.classList.contains('hidden') && helpBtn) {
+                    helpBtn.click();
+                } else if (panel) {
+                    panel.classList.remove('hidden');
+                    if (helpBtn) helpBtn.setAttribute('aria-expanded', 'true');
                 }
             }
         }
@@ -3511,23 +3501,6 @@
             } catch (eNav) {}
         }
 
-        function syncDesktopExtensionFallback() {
-            var active = shouldShowBrowserFallback();
-            var desktopActive = shouldUseDesktopExtensionFallback();
-            var hint = document.getElementById('wcConnectDesktopHint');
-            var fallback = document.getElementById('desktopExtensionFallback');
-            var shortcuts = document.getElementById('wcWalletShortcuts');
-            if (hint) {
-                hint.classList.toggle('hidden', !active);
-            }
-            if (fallback) {
-                fallback.classList.toggle('is-visible', active);
-            }
-            if (shortcuts && desktopActive) {
-                shortcuts.style.display = 'none';
-            }
-        }
-
         function openBrowserExtensionFallback() {
             var browserUrl = buildBrowserFallbackUrl();
             dbgStakeEmit('H_desktop_extension_fallback', 'stake.html:desktopFallback', 'open external browser for injected wallet', {
@@ -3537,22 +3510,6 @@
             openStakeUrlInOuterBrowser(browserUrl);
         }
 
-        function wireDesktopExtensionFallback() {
-            var btn = document.getElementById('desktopBrowserFallbackBtn');
-            if (!btn || btn.dataset.desktopFallbackWire === '1') return;
-            btn.dataset.desktopFallbackWire = '1';
-            btn.addEventListener(
-                'click',
-                function (ev) {
-                    ev.preventDefault();
-                    openBrowserExtensionFallback();
-                },
-                false
-            );
-        }
-
-        syncDesktopExtensionFallback();
-        wireDesktopExtensionFallback();
 
         // #region agent log
         function dbgStakeEmit(hypothesisId, location, message, data) {
@@ -4677,7 +4634,12 @@
         </a>
     </div>
     <div style="font-size: 12px; color: #71717A;">
-        <a href="dev.html" style="color: #71717A; text-decoration: none;">Developers</a>,         <a href="https://bonzivista.org/legal/privacy.html" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        <a href="dev.html" style="color: #71717A; text-decoration: none;">Developers</a>,
+        <a href="https://bonzivista.org/legal/privacy.html" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">privacy policy</a>,
+        <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">etherfun.app</a>,
+        <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">defiants.org</a>,
+        <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: #71717A; text-decoration: none;">unidosprojects.org</a>,
+        <span>MIT license</span>
     </div>
 </footer>
 </body>

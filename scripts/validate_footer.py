@@ -59,6 +59,14 @@ CHECK_DIRS = [
     '.',
     'metrics',
     'dao',
+    'page_1',
+    'page_2',
+    'page_3',
+    'page_4',
+    'specs',
+    'alpha',
+    'demo',
+    'quest-earn',
 ]
 
 
@@ -69,7 +77,7 @@ def get_html_files(base_path: Path) -> list:
         dir_path = base_path / dir_name
         if dir_path.exists():
             for f in dir_path.glob('*.html'):
-                if f.name not in SKIP_FILES:
+                if f.name not in SKIP_FILES or dir_name != '.':
                     files.append(f)
     return files
 

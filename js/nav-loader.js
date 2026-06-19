@@ -1,10 +1,9 @@
 (() => {
-    const SILVER_FOX_SESSION_KEY = 'bonzi_alpha';
-    const SILVER_FOX_LEGACY_SESSION_KEY = 'bonzi_silver_fox_access';
+    const PRIVATE_ACCESS_SESSION_KEY = 'bonzi_private_access';
     const THEME_KEY = 'bonzi_theme';
     const LEGACY_THEME_KEY = 'bonzi-theme';
 
-    bootstrapSilverFoxNavAccess();
+    bootstrapPrivateAccess();
     if (!enforceProtectedRouteAccess()) return;
 
     const navReady = loadNav();
@@ -18,7 +17,7 @@
         const prefix = getPathPrefix();
 
         try {
-            const _v = '20260619routes3';
+            const _v = '20260619routes5';
         const [navRes, menuRes] = await Promise.all([
                 fetch(prefix + 'includes/nav.html?v=' + _v),
                 fetch(prefix + 'includes/mobile-menu.html?v=' + _v)
@@ -32,7 +31,7 @@
                 prefixRelativeUrls(menuContainer, prefix);
             }
 
-            applySilverFoxNavVisibility();
+            applyPrivateNavVisibility();
             applyActiveState();
             initTheme();
             initDevMode();
@@ -118,7 +117,7 @@
         return pathname === basePath || pathname.startsWith(basePath + '/');
     }
 
-    function protectedSilverFoxPathKey(pathname) {
+    function protectedPrivatePathKey(pathname) {
         const cleanPath = pathname.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
         const protectedPaths = [
             ['/page_1', 'how'],
@@ -128,8 +127,6 @@
             ['/alpha', 'why'],
             ['/demo', 'how'],
             ['/specs', 'what'],
-            ['/stake', 'stake'],
-            ['/stake.html', 'stake'],
             ['/quest-earn', 'quest']
         ];
 
@@ -137,33 +134,32 @@
         return match ? match[1] : '';
     }
 
-    function isProtectedSilverFoxPath(pathname) {
-        return Boolean(protectedSilverFoxPathKey(pathname));
+    function isProtectedPrivatePath(pathname) {
+        return Boolean(protectedPrivatePathKey(pathname));
     }
 
     function enforceProtectedRouteAccess() {
-        const gateKey = protectedSilverFoxPathKey(window.location.pathname);
+        const gateKey = protectedPrivatePathKey(window.location.pathname);
         if (!gateKey) return true;
-        if (hasSilverFoxNavAccess()) return true;
+        if (hasPrivateAccess()) return true;
         window.location.replace('/?slot=open&gate=' + encodeURIComponent(gateKey));
         return false;
     }
 
-    function bootstrapSilverFoxNavAccess() {
+    function bootstrapPrivateAccess() {
         const params = new URLSearchParams(window.location.search);
-        const marker = params.get('silver_fox') || params.get('sf') || params.get('alpha');
+        const marker = params.get('access') || params.get('room') || params.get('vip');
         if (!isTruthyMarker(marker)) return;
 
         try {
-            sessionStorage.setItem(SILVER_FOX_SESSION_KEY, '1');
-            sessionStorage.setItem(SILVER_FOX_LEGACY_SESSION_KEY, '1');
+            sessionStorage.setItem(PRIVATE_ACCESS_SESSION_KEY, '1');
         } catch (e) {
             return;
         }
 
-        params.delete('silver_fox');
-        params.delete('sf');
-        params.delete('alpha');
+        params.delete('access');
+        params.delete('room');
+        params.delete('vip');
         const cleanUrl = (
             window.location.pathname +
             (params.toString() ? '?' + params.toString() : '') +
@@ -177,20 +173,17 @@
         return marker === '1' || marker === 'true' || marker === 'yes' || marker === 'entered';
     }
 
-    function hasSilverFoxNavAccess() {
+    function hasPrivateAccess() {
         try {
-            return (
-                sessionStorage.getItem(SILVER_FOX_SESSION_KEY) === '1' ||
-                sessionStorage.getItem(SILVER_FOX_LEGACY_SESSION_KEY) === '1'
-            );
+            return sessionStorage.getItem(PRIVATE_ACCESS_SESSION_KEY) === '1';
         } catch (e) {
             return false;
         }
     }
 
-    function applySilverFoxNavVisibility() {
-        const canSeeProtectedNav = hasSilverFoxNavAccess();
-        document.querySelectorAll('[data-silver-fox-nav]').forEach((el) => {
+    function applyPrivateNavVisibility() {
+        const canSeeProtectedNav = hasPrivateAccess();
+        document.querySelectorAll('[data-private-nav]').forEach((el) => {
             el.hidden = !canSeeProtectedNav;
         });
     }

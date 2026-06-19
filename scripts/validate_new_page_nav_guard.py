@@ -25,8 +25,6 @@ PROTECTED_ROUTES = [
     "/page_3",
     "/page_4",
     "/specs",
-    "/stake.html",
-    "/stake",
 ]
 
 REQUIRED_ROUTE_FILES = [
@@ -37,7 +35,7 @@ REQUIRED_ROUTE_FILES = [
     "specs/index.html",
 ]
 
-SILVER_FOX_STAGING_FILES = [
+PRIVATE_PREVIEW_FILES = [
     "alpha/index.html",
     "demo/index.html",
     "quest-earn/index.html",
@@ -76,15 +74,15 @@ def main() -> int:
         if subdir not in nav_text:
             errors.append(f"nav-loader.js missing page prefix: {subdir}")
 
-    required_gate_markers = ["protectedSilverFoxPathKey", "slot=open&gate="]
+    required_gate_markers = ["protectedPrivatePathKey", "slot=open&gate="]
     for marker in required_gate_markers:
         if marker not in nav_text:
-            errors.append(f"nav-loader.js missing Silver Fox route gate marker: {marker}")
+            errors.append(f"nav-loader.js missing private route gate marker: {marker}")
 
     for protected_route in PROTECTED_ROUTES:
         quoted = f"['{protected_route}'"
         if quoted not in nav_text:
-            errors.append(f"nav-loader.js must protect VIP route: {protected_route}")
+            errors.append(f"nav-loader.js must protect private preview route: {protected_route}")
 
     for route_file in REQUIRED_ROUTE_FILES:
         if not (repo_root / route_file).exists():
@@ -93,23 +91,37 @@ def main() -> int:
     forbidden_nav_markers = [
         "SF-ALPHA-2026",
         "SILVER-FOX",
+        "Silver Fox",
+        "silver_fox",
         "Access required",
         "This step is visible, but gated",
         "silver-fox-access-panel",
+        "VIP alpha access",
+        "Silver Fox alpha",
     ]
-    for marker in forbidden_nav_markers:
-        if marker in nav_text:
-            errors.append(f"nav-loader.js contains obsolete client-side gate marker: {marker}")
+    public_copy_files = [
+        repo_root / "index.html",
+        repo_root / "includes" / "nav.html",
+        repo_root / "includes" / "mobile-menu.html",
+        nav_loader,
+    ]
+    for path in public_copy_files:
+        text = path.read_text()
+        for marker in forbidden_nav_markers:
+            if marker in text:
+                errors.append(f"{path.relative_to(repo_root)} contains public access leak marker: {marker}")
 
     shared_nav = (repo_root / "includes" / "nav.html").read_text()
     mobile_nav = (repo_root / "includes" / "mobile-menu.html").read_text()
     for label, text in [("includes/nav.html", shared_nav), ("includes/mobile-menu.html", mobile_nav)]:
         if 'href="/stake.html"' not in text or "Stake $BONZI" not in text:
-            errors.append(f"{label} missing VIP Stake $BONZI button to /stake.html")
-        if 'data-nav="stake"' in text and "data-silver-fox-nav" not in text:
-            errors.append(f"{label}: Stake $BONZI must be silver-fox gated")
+            errors.append(f"{label} missing public Stake $BONZI button to /stake.html")
+        stake_links = re.findall(r'<a\b[^>]*data-nav="stake"[^>]*>', text)
+        for stake_link in stake_links:
+            if "data-private-nav" in stake_link or "hidden" in stake_link:
+                errors.append(f"{label}: Stake $BONZI must stay public")
         for marker in ["hidden>Why", "hidden>How", "hidden>What", "hidden>When"]:
-            if marker in text:
+            if marker in text and "data-private-nav" not in text:
                 errors.append(f"{label} contains obsolete public-nav gate marker: {marker}")
     if "Bonzivista_bot?start=apply" in nav_text:
         errors.append("shared nav routes contributor CTA to B2B start=apply")
@@ -125,15 +137,15 @@ def main() -> int:
             if phrase in text:
                 errors.append(f"{page.relative_to(repo_root)} contains forbidden stake route: {phrase}")
 
-    for route_file in SILVER_FOX_STAGING_FILES:
+    for route_file in PRIVATE_PREVIEW_FILES:
         page = repo_root / route_file
         if not page.exists():
-            errors.append(f"missing Silver Fox staging file: {route_file}")
+            errors.append(f"missing private preview file: {route_file}")
             continue
         text = page.read_text()
         if '<meta name="robots" content="noindex, nofollow">' not in text:
             errors.append(
-                f"{route_file}: Silver Fox/staging pages must use noindex,nofollow"
+                f"{route_file}: private preview pages must use noindex,nofollow"
             )
 
     if errors:

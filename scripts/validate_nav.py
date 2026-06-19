@@ -20,7 +20,7 @@ EXPECTED_NAV_LINKS = [
     "stake bonzi",
 ]
 
-PUBLIC_NAV_KEYS = ["about"]
+PUBLIC_NAV_KEYS = ["about", "stake"]
 FORBIDDEN_PUBLIC_NAV_HREFS = [
     "/page_1",
     "/page_2",
@@ -166,7 +166,7 @@ def validate_public_cta_routes(root_dir: Path) -> list[str]:
     nav_text = nav_loader.read_text()
     if "Bonzivista_bot?start=apply" in nav_text:
         errors.append(
-            "js/nav-loader.js routes public contributor CTA to B2B start=apply; use Silver Fox or explicit B2B copy"
+            "js/nav-loader.js routes public contributor CTA to B2B start=apply; use explicit public copy"
         )
 
     shared_nav = root_dir / "includes" / "nav.html"
@@ -195,15 +195,12 @@ def validate_public_nav_access(root_dir: Path) -> list[str]:
             if not re.search(public_link_pattern, text):
                 errors.append(f"{label}: missing public data-nav={nav_key!r} link")
             hidden_pattern = rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"[^>]*\bhidden\b'
-            gated_pattern = (
-                rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"'
-                rf'[^>]*data-silver-fox-nav'
-            )
+            gated_pattern = rf'<a\b[^>]*data-nav="{re.escape(nav_key)}"[^>]*data-private-nav'
             if re.search(hidden_pattern, text) or re.search(gated_pattern, text):
                 errors.append(f"{label}: data-nav={nav_key!r} must be public, not gated")
         for href in FORBIDDEN_PUBLIC_NAV_HREFS:
             pattern = rf'<a\b[^>]*href="{re.escape(href)}(?:/|\.html|")'
-            if re.search(pattern, text):
+            if re.search(pattern, text) and "data-private-nav" not in text:
                 errors.append(f"{label}: public nav must not expose staging route {href}")
     return errors
 

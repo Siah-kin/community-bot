@@ -1325,7 +1325,7 @@
         </div>
         <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
         <p class="tagline" id="gate-tagline">pull lever to try your luck</p>
-        <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.</p>
+        <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the answer, hit Submit.</p>
         <div class="slot-top-action">
             <button type="button" id="slot-info-btn" class="win98-info-btn" title="How To Play">How To Play</button>
         </div>
@@ -1345,7 +1345,7 @@
                     <ol class="howto-steps">
                         <li id="howto-step1">Pull the lever.</li>
                         <li id="howto-step2">A hint appears below the 5 heads. Read it literally.</li>
-                        <li id="howto-step3">Type the code word in the Passage box and hit Submit.</li>
+                        <li id="howto-step3">Type the answer in the Passage box and hit Submit.</li>
                     </ol>
                     <p class="howto-note" id="howto-note">Hit Rules for the full guide.</p>
                 </div>
@@ -1404,7 +1404,7 @@
                 <div class="win98-neon-body">
                     <p class="skill-prompt" id="skill-prompt">Loading the Passage…</p>
                     <div class="access-row">
-                        <input type="text" id="pw" placeholder="code word" maxlength="12" autocomplete="off" spellcheck="false">
+                        <input type="text" id="pw" placeholder="answer" maxlength="12" autocomplete="off" spellcheck="false">
                         <button type="button" id="submit-btn">Submit</button>
                     </div>
                     <p class="error-msg" id="err">&nbsp;</p>
@@ -1508,11 +1508,12 @@
             <p class="prize-desc" id="prize-desc"></p>
             <p class="prize-code" id="prize-code-display" style="font-family:monospace;font-size:0.85rem;letter-spacing:0.04em;margin:0.4rem 0 0.2rem;color:#D4AF37;word-break:break-all;"></p>
             <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
+            <a class="tg-btn hidden" id="private-hub-link" href="page_2/?access=entered"><span id="private-hub-label">Open Private Hub</span></a>
             <button class="close-prize" id="close-prize"><span id="close-prize-label">close</span></button>
         </div>
     </div>
 
-    <!-- PRANK / BYPASS DESTINATION (hidden until code or session) -->
+    <!-- Private preview destination, hidden until access is granted. -->
     <div class="holding hidden" id="content">
         <img src="bonzi-logo.png" alt="Bonzi">
         <p id="holding-prank-hint">Nothing to see here yet.</p>
@@ -1522,7 +1523,7 @@
     (function() {
         // === DEV BYPASS: ?dev=1 loads old site ===
         if (new URLSearchParams(window.location.search).get('dev') === '1') {
-            sessionStorage.setItem('bonzi_alpha', '1');
+            sessionStorage.setItem('bonzi_private_access', '1');
             window.location.href = 'dev.html';
             return;
         }
@@ -1575,8 +1576,8 @@
 	                waitlistErr: 'Could not save. Try again in a moment.',
 	                waitlistModalTitle: 'Bonzi Vista',
 	                waitlistModalOk: 'OK',
-	                alphaGateTitle: 'VIP alpha access',
-	                alphaGateBody: 'That page is inside the Silver Fox alpha. Play the Passage to enter. For now, long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                privateGateTitle: 'Private preview',
+	                privateGateBody: 'That room is not part of the public website yet. Start with About; accepted visitors receive their entry path separately.',
 	                waitlistJoin: 'Submit',
                 waitlistEmailPh: 'username@msn.com',
 	                lcdPrefix: 'Tokenise your:',
@@ -1584,12 +1585,13 @@
                 statusStarting: 'Waking up...',
 	                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
 		                clueBar: '',
-                pwPlaceholder: 'code word',
+                pwPlaceholder: 'answer',
                 footerMitLic: 'GITHUB',
                 footerPrivacy: 'Privacy',
                 prizeTitle: 'Lucky spin. 😎',
                 prizeDesc: 'You hit the golden emblem. Your prize code:',
                 tgOpen: 'Open @Bonzivista_bot',
+                privateHubOpen: 'Open Private Hub',
                 skillPrizeTitle: 'You found it. 💜🤫',
                 skillPrizeDesc: 'You recognised the sign. Your badge code:',
                 skillTgOpen: 'Claim badge in @Bonzivista_bot',
@@ -1622,14 +1624,14 @@
 	                hints: {},
 	                loadingPassage: 'Loading the Passage…',
 	                passageUnavailable: 'Passage unavailable right now.',
-	                passageServiceBusy: 'Alpha claim service is busy. Your code word is right; try again in a moment.',
+	                passageServiceBusy: 'Access check is busy. Your answer was accepted; try again in a moment.',
 	                readPromptSoon: 'Read the prompt again in a moment.',
                 readThenAnswer: 'Read the prompt, then type the answer.',
-                introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.',
+                introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the answer, hit Submit.',
                 howtoTitle: 'How to play',
                 howtoStep1: 'Pull the lever.',
                 howtoStep2: 'A hint appears below the 5 heads. Read it literally.',
-                howtoStep3: 'Type the code word in the Passage box and hit Submit.',
+                howtoStep3: 'Type the answer in the Passage box and hit Submit.',
                 howtoNote: 'Hit Rules for the full guide.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
@@ -1665,8 +1667,8 @@
 	                waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
 	                waitlistModalTitle: 'Bonzi Vista',
 	                waitlistModalOk: 'OK',
-	                alphaGateTitle: 'Acesso alpha VIP',
-	                alphaGateBody: 'Essa p\u00E1gina faz parte do alpha Silver Fox. Jogue a Passagem para entrar. Por enquanto, investidores de longo prazo seguem pelo caminho VIP enquanto o alpha \u00E9 depurado antes do GTM.',
+	                privateGateTitle: 'Previa privada',
+	                privateGateBody: 'Essa sala ainda nao faz parte do site publico. Comece pelo About; visitantes aceitos recebem o caminho de entrada separadamente.',
 	                waitlistJoin: 'Enviar',
                 waitlistEmailPh: 'usuario@exemplo.com',
                 lcdPrefix: 'Tokenize seu:',
@@ -1674,12 +1676,13 @@
                 statusStarting: 'Acordando...',
 	                serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente a alavanca de novo em alguns segundos.',
 		                clueBar: '',
-                pwPlaceholder: 'palavra-código',
+                pwPlaceholder: 'resposta',
                 footerMitLic: 'GITHUB',
                 footerPrivacy: 'Privacy',
                 prizeTitle: 'BONZI JACKPOT!',
                 prizeDesc: 'Voc\u00EA acertou o <b>emblema dourado</b> (o Bonzi dourado). Abra o Telegram no bot\u00E3o abaixo.',
                 tgOpen: 'Abrir @Bonzivista_bot',
+                privateHubOpen: 'Abrir Private Hub',
                 closeModal: 'fechar',
                 spinChecking: 'Verificando\u2026',
                 spinNoReceipt: 'Sem recibo do servidor.',
@@ -1715,14 +1718,14 @@
 	                hints: {},
 	                loadingPassage: 'Carregando a Passagem\u2026',
 	                passageUnavailable: 'Passagem indispon\u00EDvel no momento.',
-	                passageServiceBusy: 'O servi\u00E7o de claim do alpha est\u00E1 ocupado. Sua palavra-c\u00F3digo est\u00E1 certa; tente de novo em instantes.',
+	                passageServiceBusy: 'A verificacao de acesso esta ocupada. Sua resposta foi aceita; tente de novo em instantes.',
 	                readPromptSoon: 'Leia o prompt em um instante.',
                 readThenAnswer: 'Leia o prompt e digite a resposta.',
-                introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabe\u00E7as. Leia, digite a palavra-c\u00F3digo e clique em Enviar.',
+                introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabecas. Leia, digite a resposta e clique em Enviar.',
                 howtoTitle: 'Como jogar',
                 howtoStep1: 'Puxe a alavanca.',
                 howtoStep2: 'Uma dica aparece abaixo das 5 cabe\u00E7as. Leia com aten\u00E7\u00E3o.',
-                howtoStep3: 'Digite a palavra-c\u00F3digo na caixa Passagem e clique em Enviar.',
+                howtoStep3: 'Digite a resposta na caixa Passagem e clique em Enviar.',
                 howtoNote: 'Clique em Regras para o guia completo.',
                 docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
@@ -1758,8 +1761,8 @@
 	                waitlistErr: '\u6682\u65f6\u65e0\u6cd5\u4fdd\u5b58\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002',
 	                waitlistModalTitle: 'Bonzi Vista',
 	                waitlistModalOk: '\u786e\u5b9a',
-	                alphaGateTitle: 'VIP alpha access',
-	                alphaGateBody: 'This page is inside the Silver Fox alpha. Play the Passage to enter. Long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                privateGateTitle: 'Private preview',
+	                privateGateBody: 'That room is not part of the public website yet. Start with About; accepted visitors receive their entry path separately.',
 	                waitlistJoin: '\u63d0\u4ea4',
                 waitlistEmailPh: 'you@example.com',
 	                lcdPrefix: '\u4ee3\u5e01\u5316\u4f60\u7684\uff1a',
@@ -1773,6 +1776,7 @@
                 prizeTitle: 'BONZI JACKPOT!',
                 prizeDesc: '\u4f60\u8f6c\u5230\u4e86 <b>\u91d1\u8272\u5927\u5956</b> \u5fbd\u6807\uff08\u91d1\u8272 Bonzi\uff09\u3002\u70b9\u51fb\u4e0b\u65b9\u6309\u94ae\u6253\u5f00 Telegram\u3002',
                 tgOpen: '\u6253\u5f00 @Bonzivista_bot',
+                privateHubOpen: 'Open Private Hub',
                 closeModal: '\u5173\u95ed',
                 spinChecking: '\u68c0\u67e5\u4e2d\u2026',
                 spinNoReceipt: '\u670d\u52a1\u5668\u672a\u8fd4\u56de\u6536\u636e\u3002',
@@ -1808,7 +1812,7 @@
 	                hints: {},
 	                loadingPassage: '\u52a0\u8f7d\u901a\u9053\u2026',
 	                passageUnavailable: '\u901a\u9053\u6682\u65f6\u4e0d\u53ef\u7528\u3002',
-	                passageServiceBusy: 'Alpha claim service is busy. Your code word is right; try again in a moment.',
+	                passageServiceBusy: 'Access check is busy. Your answer was accepted; try again in a moment.',
 	                readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
                 readThenAnswer: '\u9605\u8bfb\u63d0\u793a\uff0c\u7136\u540e\u8f93\u5165\u7b54\u6848\u3002',
                 introText: '\u62c9\u52a8\u6447\u6746\u30025\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u9605\u8bfb\u63d0\u793a\uff0c\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u70b9\u51fb\u63d0\u4ea4\u3002',
@@ -1866,7 +1870,7 @@
 	            if (ok) ok.addEventListener('click', hideFunnelMsgModal);
 	        })();
 
-	        function readAlphaGateRedirect() {
+        function readPrivateGateRedirect() {
 	            try {
 	                var params = new URLSearchParams(window.location.search);
 	                return params.get('gate') || params.get('vip') || '';
@@ -1875,7 +1879,7 @@
 	            }
 	        }
 
-	        function clearAlphaGateRedirect() {
+        function clearPrivateGateRedirect() {
 	            try {
 	                var params = new URLSearchParams(window.location.search);
 	                params.delete('gate');
@@ -1889,17 +1893,17 @@
 	            } catch (eGateClear) {}
 	        }
 
-	        function showAlphaGateNoticeIfNeeded() {
-	            if (!readAlphaGateRedirect()) return;
-	            clearAlphaGateRedirect();
-	            var L = getStr();
-	            showFunnelMsgModal(
-	                L.alphaGateTitle || L.waitlistModalTitle || 'Bonzi Vista',
-	                L.alphaGateBody || 'This page is inside the Silver Fox alpha. Play the Passage to enter.'
-	            );
-	        }
+        function showPrivateGateNoticeIfNeeded() {
+            if (!readPrivateGateRedirect()) return;
+            clearPrivateGateRedirect();
+            var L = getStr();
+            showFunnelMsgModal(
+                L.privateGateTitle || L.waitlistModalTitle || 'Bonzi Vista',
+                L.privateGateBody || 'That room is not part of the public website yet. Start with About.'
+            );
+        }
 
-	        showAlphaGateNoticeIfNeeded();
+        showPrivateGateNoticeIfNeeded();
 
 	        function persistLang() {
             try {
@@ -2200,6 +2204,7 @@
         var bonziImgs = document.querySelectorAll('.bonzi-logo-img');
         var prizeOverlay = document.getElementById('prize-overlay');
         var tgLink = document.getElementById('tg-link');
+        var privateHubLink = document.getElementById('private-hub-link');
         var closePrize = document.getElementById('close-prize');
         var spinning = false;
         var apiWarmPoll = null;
@@ -2922,7 +2927,7 @@
             });
         })();
 
-	        // Passage claim: issue a signed CRACKER code, then open Telegram.
+	        // Passage claim: request a signed claim, then open Telegram.
 	        function tryCode() {
 	            var val = pwEl.value.trim();
 	            if (!val) return;
@@ -2937,6 +2942,7 @@
 	                submitBtn.disabled = false;
 	                var j = res.json || {};
 	                if (res.httpOk && j.success && j.deep_link) {
+	                    grantPrivateAccess();
 	                    tgLink.href = _appendLangToTgLink(j.deep_link);
 	                    var _prt2=document.getElementById('prize-title'); if(_prt2) _prt2.textContent=getStr().skillPrizeTitle||'You found it. 💜🤫';
 	                    var _prd2=document.getElementById('prize-desc'); if(_prd2) _prd2.innerHTML=getStr().skillPrizeDesc||'You recognised the sign. Your badge code:';
@@ -3012,3 +3018,14 @@
     </script>
 </body>
 </html>
+        function grantPrivateAccess() {
+            try {
+                sessionStorage.setItem('bonzi_private_access', '1');
+            } catch (eAccess) {}
+            if (privateHubLink) {
+                privateHubLink.classList.remove('hidden');
+                privateHubLink.href = 'page_2/?access=entered';
+            }
+            var phLabel = document.getElementById('private-hub-label');
+            if (phLabel) phLabel.textContent = getStr().privateHubOpen || 'Open Private Hub';
+        }

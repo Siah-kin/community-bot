@@ -1,369 +1,3003 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Slot gate: Tokenise + reel carousel only (no extra word row under header). Rev 2026-05-09. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BonziVista | Proof-Based Governance for Communities</title>
-    <meta name="description" content="BonziVista helps communities govern with proof by recording contribution, verification, gratitude, and outcomes.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://bonzivista.org/">
+    <meta name="bonzi-slot-ui-rev" content="2026-05-15-winamp-title-marquee">
+    <!-- HTTPS API origin (same host as /api/slotgame/* and /api/public/waitlist). -->
+    <meta name="bonzi-api-origin" content="https://bonzi-v5.onrender.com">
+    <!-- Default: first-party waitlist (embedded form POST /api/public/waitlist → Bonzi Postgres). Optional only: bonzi-notify-signup-url = non-empty https opens that page in a new tab (styled like other purple buttons). -->
+    <meta name="bonzi-waitlist-mode" content="first_party">
+    <meta name="bonzi-notify-signup-url" content="">
+    <title>Bonzi Vista: Slot</title>
+    <meta name="description" content="Spin on bonzivista.org. Passage, signed Telegram claim, waiting-room ritual.">
+    <meta property="og:title" content="Bonzi Vista">
+    <meta property="og:description" content="Spin the lever; signed Telegram claims land in Telegram. Waiting-room ritual, not a support desk.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="bonzi-logo.png" type="image/png">
-    <link rel="stylesheet" href="css/nav.css?v=20260619routes3">
     <link rel="stylesheet" href="css/bonzi-design.css">
-    <script>window.BONZI_LANGS=["en","pt","zh","fr","ru","tr"];</script>
-    <script src="js/nav-loader.js?v=20260619routes3" defer></script>
-    <script src="js/i18n-loader.js" defer></script>
     <style>
-        :root {
-            --home-ink: #18181b;
-            --home-muted: #52525b;
-            --home-line: #e4e4e7;
-            --home-soft: #f8fafc;
-            --home-purple: #7c3aed;
-            --home-green: #0f9f6e;
-            --home-amber: #b7791f;
-            --home-blue: #2563eb;
+        /* OCR A (OFL): opensourcedesign/fonts OCR/OCRA.otf - see assets/fonts/OFL-opensourcedesign-fonts.txt */
+        @font-face {
+            font-family: 'Bonzi OCR A';
+            src: url('assets/fonts/OCRA.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
-
-        * { box-sizing: border-box; }
-
-        body.home-page,
-        body.home-page.dark-mode {
-            margin: 0;
-            background: #ffffff;
-            color: var(--home-ink);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        .home-shell {
-            width: min(1760px, calc(100% - 56px));
-            margin: 0 auto;
-            padding: 106px 0 0;
-        }
-
-        .home-hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-            gap: 48px;
-            align-items: center;
-            min-height: calc(100vh - 128px);
-            padding-bottom: 42px;
-            border-bottom: 1px solid var(--home-line);
-        }
-
-        .kicker {
-            color: var(--home-purple);
-            font-size: 12px;
-            font-weight: 850;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            max-width: 1060px;
-            margin: 18px 0 20px;
-            font-size: clamp(2.7rem, 5.7vw, 6.2rem);
-            line-height: 0.98;
-            letter-spacing: 0;
-        }
-
-        .lead {
-            max-width: 940px;
-            margin: 0;
-            color: var(--home-muted);
-            font-size: clamp(1.1rem, 1.7vw, 1.34rem);
-            line-height: 1.62;
-        }
-
-        .home-actions {
+        body.bonzi-slot-page {
+            background: #000000;
+            color: #0a0a0a;
+            min-height: 100vh;
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 30px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+        /* bonzi-design.css sets `nav { position:fixed; top:0; light background }` for marketing pages - kill on slot for any descendant <nav> */
+        body.bonzi-slot-page nav {
+            position: static !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            z-index: auto !important;
+            background: transparent !important;
+            border: none !important;
+            border-bottom: none !important;
+            padding: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .hidden { display: none !important; }
+
+        :root {
+            --win98-face: #dcd6f7;
+            --win98-title: #6a329f;
+            --win98-btn: #6a329f;
+            --win98-btn-deep: #4b1999;
+            --neon-outer: rgba(106, 50, 159, 0.55);
+            --reel-lime: #00ff00;
+            /* Stacked panels on #000 page (reference layout). */
+            --layer-panel: #121212;
+            --layer-border: #2a2a2a;
+            --layer-bevel-light: rgba(255, 255, 255, 0.06);
+            --footer-muted: #71717a;
+            --footer-fine: #a1a1aa;
+            --terminal-green: #00ff00;
+            --terminal-green-dim: #3d7a3d;
         }
 
-        .home-cta {
+        /* === PUZZLE GATE === */
+        .puzzle-gate {
+            text-align: center;
+            padding: 2rem;
+            max-width: 480px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .puzzle-gate .logo {
+            width: 80px;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .puzzle-gate .logo:hover { transform: scale(1.05); }
+        .puzzle-gate .logo:active { transform: scale(0.95); }
+        .tagline {
+            color: #f4f4f5;
+            font-size: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0.5rem;
+        }
+        .slot-intro-text {
+            color: #a1a1aa;
+            font-size: 11px;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.5;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* === WIN98 NEON STACK === */
+        .win98-neon-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .win98-neon-window {
+            box-sizing: border-box;
+            width: min(460px, calc(100vw - 32px));
+            max-width: 100%;
+            background: var(--win98-face);
+            border: 2px outset #f0f0f0;
+            overflow: hidden;
+            box-shadow: 0 0 20px 2px var(--neon-outer);
+        }
+
+        .win98-neon-window > #slot-machine {
+            margin: 0 auto;
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .win98-neon-body {
+            padding: 12px;
+            box-sizing: border-box;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .win98-neon-body .access-row { margin-top: 0; }
+
+        .win98-neon-body .access-row input {
+            flex: 1 1 auto;
+            min-width: 0;
+            box-sizing: border-box;
+            width: auto;
+            max-width: none;
+            background: #ffffff;
+            color: #0a0a0a;
+            border: 2px inset #ffffff;
+            border-color: #404040 #ffffff #ffffff #404040;
+            padding: 0.45rem 0.65rem;
+            font-size: 12px;
+            text-align: center;
+            text-transform: none;
+            letter-spacing: normal;
+            outline: none;
+        }
+
+        .win98-neon-body .access-row input:focus {
+            border-color: #404040 #ffffff #ffffff #404040;
+        }
+
+        .win98-neon-body .access-row input::placeholder {
+            color: #8a8a8a;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .win98-neon-body .skill-prompt {
+            margin: 0 0 0.8rem;
+            color: #3f3f46;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            min-height: 2.4em;
+        }
+
+        .win98-neon-body .spin-count {
+            margin-top: 0.85rem;
+            color: #3f3f46;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Updates pane: dark grey card on #000, neon green monospace (reference). */
+        .win98-neon-body-updates {
+            background: var(--layer-panel);
+            color: var(--terminal-green);
+            padding: 18px 16px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid var(--layer-border);
+            box-shadow: inset 0 1px 0 var(--layer-bevel-light);
+            box-sizing: border-box;
+        }
+
+        .win98-neon-body-updates .notify-bottom {
+            margin: 0 auto;
+            padding: 0.35rem 0 0.25rem;
+            border-top: none;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .win98-neon-body-updates #notify-bottom-title {
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--terminal-green);
+            margin: 0 0 0.4rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+        }
+
+        .win98-neon-body-updates #notify-bottom-sub {
+            font-size: 11px;
+            color: var(--terminal-green-dim);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0 0 0.8rem;
+            line-height: 1.45;
+        }
+
+        .win98-neon-body-updates .notify-bottom-cta {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            padding: 0.45rem 0.85rem;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            color: #0a0a0a !important;
+            text-decoration: none;
+            background: #7cfc00;
+            border: 2px outset #5cb85c;
+            border-right-color: #1a3d1a;
+            border-bottom-color: #1a3d1a;
+            border-radius: 0;
+        }
+
+        .win98-neon-body-updates .notify-bottom-cta:hover {
+            filter: brightness(1.06);
+        }
+
+        .win98-neon-body-updates #notify-bottom-pending {
+            color: #5cb85c !important;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"] {
+            background: #000000 !important;
+            color: #7cfc00 !important;
+            border: 1px solid #2d6b2d !important;
+            border-radius: 0 !important;
+            font-family: 'Courier New', Courier, monospace !important;
+            font-size: 12px !important;
+            box-shadow: inset 0 0 0 1px #0f1f0f;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"]:focus {
+            outline: 1px solid #7cfc00;
+            outline-offset: 1px;
+        }
+
+        .win98-neon-body-updates .notify-waitlist-form input[type="email"]::placeholder {
+            color: #4a5c4a !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit {
+            background: #0a0a0a !important;
+            color: #7cfc00 !important;
+            border: 2px outset #2d6b2d !important;
+            border-right-color: #142814 !important;
+            border-bottom-color: #142814 !important;
+            font-family: 'Courier New', Courier, monospace !important;
+            font-weight: bold !important;
+            border-radius: 0 !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit:hover {
+            filter: brightness(1.12);
+            background: #111811 !important;
+        }
+
+        .win98-neon-body-updates #waitlist-submit:active {
+            border-style: inset !important;
+        }
+
+        .win98-neon-body .access-row #submit-btn {
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%);
+            border: 2px outset #d8c4ff;
+            border-right-color: #2d0f52;
+            border-bottom-color: #2d0f52;
+            color: #fff;
+            padding: 0.5rem 0.95rem;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Tahoma', 'MS Sans Serif', sans-serif;
+            min-width: 4.75rem;
+        }
+
+        .win98-neon-body .access-row #submit-btn:hover { filter: brightness(1.08); }
+
+        .win98-neon-body .access-row #submit-btn:active { border-style: inset; }
+
+        #waitlist-submit {
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%) !important;
+            color: #fff !important;
+            border: 2px outset #d8c4ff !important;
+            border-right-color: #2d0f52 !important;
+            border-bottom-color: #2d0f52 !important;
+            font-family: 'Tahoma', 'MS Sans Serif', sans-serif !important;
+            font-weight: bold !important;
+            border-radius: 0 !important;
+        }
+
+        #waitlist-submit:hover { filter: brightness(1.08) !important; }
+
+        #waitlist-submit:active { border-style: inset !important; }
+
+        .slot-footer-zone {
+            box-sizing: border-box;
+            width: min(460px, calc(100vw - 32px));
+            max-width: 100%;
+            margin: 1.25rem auto 0;
+            padding: 0 16px 1rem;
+        }
+
+        .slot-footer-zone .slot-stake-footer.site-footer {
+            box-sizing: border-box;
+            width: 100%;
+            background: var(--layer-panel);
+            padding: 20px 16px 22px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 13px;
+            border: 1px solid var(--layer-border);
+            box-shadow: inset 0 1px 0 var(--layer-bevel-light);
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 48px;
-            padding: 0 18px;
-            border: 1px solid var(--home-line);
-            border-radius: 8px;
-            color: var(--home-ink);
-            background: #ffffff;
-            font-size: 15px;
-            font-weight: 850;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            color: var(--footer-muted);
+            font-size: 13px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-pipe {
+            color: #52525b;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a:hover {
+            text-decoration: underline;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 12px;
+            color: var(--footer-muted);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row a {
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-legal-row {
+            font-size: 12px;
+            color: var(--footer-fine);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        .slot-footer-zone .slot-stake-footer .footer-legal-row a {
+            color: var(--footer-fine);
             text-decoration: none;
         }
 
-        .home-cta.primary {
-            border-color: var(--home-purple);
-            background: var(--home-purple);
-            color: #ffffff;
+        .slot-footer-zone .slot-stake-footer .footer-legal-row a:hover {
+            text-decoration: underline;
         }
 
-        .signal-panel {
-            border: 1px solid var(--home-line);
-            border-radius: 8px;
-            background: var(--home-soft);
-            padding: 30px;
+        .slot-footer-zone .win98-winamp-stripe {
+            margin-bottom: 10px;
         }
 
-        .signal-panel img {
-            display: block;
-            width: min(72%, 330px);
+        .win98-winamp-stripe {
+            display: flex;
+            align-items: stretch;
+            flex-direction: row;
+            min-height: 44px;
             height: auto;
-            margin: 0 auto 22px;
+            border: 1px solid #5a6270;
+            background: var(--win98-face);
+            margin-top: 0;
+            margin-bottom: 0;
+            box-sizing: border-box;
+            font-size: 11px;
+            overflow: hidden;
         }
 
-        .signal-panel p {
-            margin: 0;
-            color: var(--home-muted);
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: center;
+        .win98-winamp-stripe .winamp-brand {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 8px;
+            background: #2244cc;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 11px;
         }
 
-        .section {
-            margin-top: 54px;
+        .win98-winamp-stripe .winamp-brand .winamp-logo-img {
+            display: block;
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
-        .section-head {
+        .win98-winamp-stripe .winamp-transport {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 6px;
+            border-left: 1px solid #3d4a6b;
+            background: linear-gradient(#e8eaf0 0%, #d4d8e0 45%, #c8ccd6 100%);
+        }
+
+        .win98-winamp-stripe .winamp-btn {
+            font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+            font-size: 10px;
+            line-height: 1;
+            min-width: 26px;
+            height: 22px;
+            padding: 0 5px;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #5a6270;
+            border-bottom-color: #5a6270;
+            background: var(--win98-face);
+            color: #0a0a0a;
+            cursor: pointer;
+        }
+
+        .win98-winamp-stripe .winamp-btn:active {
+            border-style: inset;
+            border-top-color: #5a6270;
+            border-left-color: #5a6270;
+        }
+
+        .win98-winamp-stripe .winamp-btn-skip {
+            min-width: 30px;
+            font-size: 9px;
+            letter-spacing: -0.02em;
+            padding: 0 4px;
+        }
+
+        .win98-winamp-stripe .winamp-lcd {
+            flex: 1;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 4px 8px 4px 6px;
+            border-left: 1px solid #2d2d2d;
+            min-width: 0;
+        }
+
+        .win98-winamp-stripe .winamp-lcd-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .win98-winamp-stripe .winamp-track-title-outer {
+            display: flex;
+            justify-content: flex-end;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 1.15;
+            color: #9fdc6a;
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .win98-winamp-stripe .winamp-track-title-marquee {
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            will-change: transform;
+        }
+
+        .win98-winamp-stripe .winamp-track-title-marquee.is-scrolling {
+            animation-name: winamp-title-marquee;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes winamp-title-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(var(--winamp-marquee-shift, 0px)); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .win98-winamp-stripe .winamp-track-title-marquee.is-scrolling {
+                animation: none !important;
+            }
+        }
+
+        .win98-winamp-stripe .winamp-track-title-chunk {
+            flex-shrink: 0;
+        }
+
+        .win98-winamp-stripe .winamp-track-title-gap {
+            flex-shrink: 0;
+            opacity: 0.85;
+            padding: 0 0.35em;
+        }
+
+        .win98-winamp-stripe .winamp-time {
+            font-family: 'Courier New', Courier, monospace;
+            color: #7cfc00;
+            font-weight: bold;
+            letter-spacing: 0.04em;
+        }
+
+        /* Updates pane only: no outer Win98 frame or title bar (CRT block stands alone). */
+        .win98-neon-window[data-pane="updates"] {
+            border: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .win98-neon-window[data-pane="updates"] .win98-titlebar {
+            display: none !important;
+        }
+
+        /* === WIN98 SLOT MACHINE === */
+        .slot-machine {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--win98-face);
+            border: none;
+            overflow: hidden;
+        }
+        .win98-titlebar {
+            background: var(--win98-title);
+            padding: 3px 5px;
             display: flex;
             justify-content: space-between;
-            align-items: end;
-            gap: 28px;
-            margin-bottom: 18px;
+            align-items: center;
+            gap: 6px;
         }
-
-        .section-head h2 {
-            max-width: 920px;
-            margin: 8px 0 0;
-            font-size: clamp(1.9rem, 3.2vw, 3.2rem);
-            line-height: 1.08;
-            letter-spacing: 0;
+        .win98-title {
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Tahoma', 'MS Sans Serif', Arial, sans-serif;
+            flex: 1;
+            min-width: 0;
+            text-shadow: none;
+            text-align: left;
         }
-
-        .section-head p {
-            max-width: 720px;
-            margin: 0;
-            color: var(--home-muted);
-            font-size: 16px;
-            line-height: 1.64;
+        .win98-info-btn {
+            flex-shrink: 0;
+            font-size: 13px;
+            line-height: 1;
+            padding: 7px 20px;
+            cursor: pointer;
+            border: 1px solid #16a34a;
+            background: linear-gradient(180deg, #dcfce7, #4ade80);
+            color: #14532d;
+            border-radius: 2px;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.02em;
+            min-height: 38px;
         }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 14px;
-        }
-
-        .card {
-            min-height: 204px;
-            border: 1px solid var(--home-line);
-            border-radius: 8px;
-            background: #ffffff;
-            padding: 22px;
-        }
-
-        .card.green { border-top: 6px solid var(--home-green); }
-        .card.amber { border-top: 6px solid var(--home-amber); }
-        .card.blue { border-top: 6px solid var(--home-blue); }
-        .card.purple { border-top: 6px solid var(--home-purple); }
-
-        .card h3 {
-            margin: 0;
-            font-size: 23px;
-            line-height: 1.15;
-            letter-spacing: 0;
-        }
-
-        .card p {
-            margin: 12px 0 0;
-            color: var(--home-muted);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        .proof-band {
-            display: grid;
-            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-            gap: 16px;
-            align-items: stretch;
-        }
-
-        .proof-panel {
-            border: 1px solid var(--home-line);
-            border-radius: 8px;
-            background: var(--home-soft);
-            padding: 26px;
-        }
-
-        .proof-panel h2 {
-            margin: 8px 0 14px;
-            font-size: clamp(1.8rem, 3vw, 3rem);
-            line-height: 1.08;
-            letter-spacing: 0;
-        }
-
-        .proof-panel p,
-        .proof-panel li {
-            color: var(--home-muted);
-            font-size: 16px;
-            line-height: 1.62;
-        }
-
-        .proof-panel ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .site-footer {
-            margin-top: 64px;
-            border-top: 1px solid var(--home-line);
-            padding: 28px 0 32px;
-            color: var(--home-muted);
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .footer-row {
+        .win98-info-btn:hover { background: #86efac; border-color: #15803d; }
+        .slot-top-action {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin: -0.45rem auto 1.15rem;
         }
-
-        .site-footer a {
-            color: inherit;
+        .win98-close-btn {
+            flex-shrink: 0;
+            font-size: 11px;
+            line-height: 1;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.65);
+            background: rgba(0,0,0,0.15);
+            color: #fff;
+            border-radius: 2px;
+            font-family: Tahoma, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .win98-close-btn:hover { background: #b91c1c; border-color: #fff; }
+        .howto-window { display: block; }
+        .howto-window.hidden { display: none; }
+        .howto-body {
+            padding: 5px 10px 5px;
+        }
+        .howto-steps {
+            margin: 0 0 4px 0;
+            padding: 0 0 0 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            color: #d4d4d8;
+            line-height: 1.55;
+        }
+        .howto-steps li { margin-bottom: 0; }
+        .howto-note {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9px;
+            color: #71717a;
+        }
+        .notify-bar {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: min(460px, calc(100vw - 32px));
+            margin: 0 auto 0.75rem;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: linear-gradient(90deg, #1a1520, #2d2438);
+            border: 1px solid #7c3aed;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #e9d5ff;
+        }
+        .notify-bar.hidden { display: none !important; }
+        .notify-bar-text { flex: 1; color: #a78bfa; }
+        .notify-bar-cta {
+            flex-shrink: 0;
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: Tahoma, 'MS Sans Serif', sans-serif;
+            color: #fff;
             text-decoration: none;
+            border: 2px outset #d8c4ff;
+            border-right-color: #2d0f52;
+            border-bottom-color: #2d0f52;
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%);
+            border-radius: 0;
+        }
+        .notify-bar-cta:hover { filter: brightness(1.08); }
+
+        /* Legacy external signup link (same chrome as Submit; first_party uses inline form only) */
+        .notify-bottom {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 1.5rem;
+            padding: 1.5rem 1rem 2rem;
+            text-align: center;
+            border-top: 1px solid #27272a;
+        }
+        .notify-bottom-title {
+            color: #EDE9FE;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .notify-bottom-sub {
+            color: #A1A1AA;
+            font-size: 0.9rem;
+            margin: 0 0 1rem;
+            line-height: 1.5;
+        }
+        .notify-bottom-cta {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: Tahoma, 'MS Sans Serif', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            border: 2px outset #d8c4ff;
+            border-right-color: #2d0f52;
+            border-bottom-color: #2d0f52;
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%);
+            border-radius: 0;
+        }
+        .notify-bottom-cta:hover { filter: brightness(1.08); }
+        .notify-bottom-pending {
+            color: #71717A;
+            font-size: 0.85rem;
+            margin: 0.75rem 0 0;
+            line-height: 1.45;
+        }
+        .notify-waitlist-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 320px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .notify-waitlist-form .waitlist-field-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .notify-waitlist-form input[type="email"] {
+            flex: 1 1 180px;
+            min-width: 0;
+            padding: 0.55rem 0.65rem;
+            border-radius: 4px;
+            border: 1px solid #3f3f46;
+            background: #18181b;
+            color: #fafafa;
+            font-size: 0.95rem;
+        }
+        .notify-waitlist-form button[type="submit"] {
+            flex-shrink: 0;
+            color: #fff;
+            font-family: Tahoma, 'MS Sans Serif', sans-serif;
+            font-weight: bold;
+            padding: 0.55rem 1rem;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px outset #d8c4ff;
+            border-right-color: #2d0f52;
+            border-bottom-color: #2d0f52;
+            background: linear-gradient(180deg, #8e5fd4 0%, var(--win98-btn-deep) 100%);
+            border-radius: 0;
+        }
+        .notify-waitlist-form button[type="submit"]:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+        .notify-waitlist-thanks {
+            color: #86efac;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 0;
+            text-align: center;
+        }
+        .honeypot {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .win98-content {
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .lcd-panel {
+            flex: 1;
+            min-width: 0;
+            background: #000;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            padding: 8px;
+        }
+        .lcd-marquee-caption {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 6px 4px;
+        }
+        .lcd-marquee-caption .lcd-dash-line {
+            border-top: 1px dashed rgba(255, 255, 255, 0.55);
+        }
+        .lcd-marquee-lines {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .lcd-label-stack {
+            display: contents;
+        }
+        .lcd-line1 {
+            display: block;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
+            letter-spacing: 1px;
+            text-shadow: none;
+            margin-bottom: 2px;
+        }
+        .lcd-line-tokenise {
+            margin-bottom: 0;
+        }
+        .lcd-screen {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+            background: #000000;
+            border: 2px solid;
+            border-color: #404040 #ffffff #ffffff #404040;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            border-radius: 0;
+        }
+        .slot-reel {
+            position: relative;
+            will-change: transform;
+        }
+        .slot-reel .word {
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            padding: 0 16px;
+            font-size: 22px;
+            font-weight: bold;
+            font-family: 'Bonzi OCR A', 'OCR A Extended', 'OCR A', 'Courier New', monospace;
+            color: var(--reel-lime);
+            white-space: nowrap;
+            text-align: center;
+            text-shadow: 0 0 6px rgba(0, 255, 0, 0.45);
+        }
+	        .slot-reel .word.key-word {
+	            color: #d4af37;
+	            text-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+	        }
+        .slot-bonzi-img {
+            height: 48px;
+            width: auto;
+            vertical-align: middle;
         }
 
-        .site-footer a:hover {
-            color: var(--home-purple);
+        /* Lever */
+        .lever-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .lever-pull-hint {
+            margin: 0;
+            padding: 2px 6px;
+            font-family: Tahoma, 'MS Sans Serif', sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 0.12em;
+            color: #fff;
+            background: linear-gradient(180deg, #a855f7, #7c3aed);
+            border: 1px solid #6d28d9;
+            border-radius: 2px;
+            text-align: center;
+            line-height: 1.2;
+            white-space: nowrap;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+        }
+        .lever-pull-hint .lever-pull-arrow {
+            font-size: 12px;
+            margin-left: 2px;
+            vertical-align: middle;
         }
 
-        @media (max-width: 1100px) {
-            .home-hero,
-            .proof-band {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-
-            .grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .section-head {
-                display: block;
-            }
+        .lever-container {
+            width: 50px;
+            background: var(--win98-face);
+            border: 2px solid;
+            border-color: #8b7cb3 #f5f0ff #f5f0ff #8b7cb3;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .lever-container:active {
+            border-color: #ede8f5 #8b7cb3 #8b7cb3 #ede8f5;
+        }
+        .lever-track {
+            width: 12px;
+            height: 60px;
+            background: #4a4a4a;
+            border: 1px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+            border-radius: 6px;
+        }
+        .lever-handle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.15s;
+        }
+        .lever-container:active .lever-handle {
+            transform: translateY(8px);
+        }
+        .lever-grip {
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(90deg, #8b7cb3, #d8cef0, #ede8f5, #d8cef0, #8b7cb3);
+            border-radius: 4px;
+        }
+        .lever-ball {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #fff, #a78bfa, #7c3aed);
+            border: 1px solid #5b21b6;
+            border-radius: 50%;
+            margin-top: 2px;
         }
 
-        @media (max-width: 680px) {
-            .home-shell {
-                width: min(100% - 32px, 1760px);
-                padding-top: 92px;
-            }
+        /* Bonzi logo row */
+        .bonzi-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--win98-face);
+            border-top: 1px solid #a89bc4;
+            border-bottom: 1px solid #8b7eb8;
+        }
+        .bonzi-logo-img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            transition: filter 0.15s ease, transform 0.15s ease;
+        }
+        .bonzi-logo-img.gold {
+            filter: sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1);
+            transform: scale(1.1);
+        }
 
-            .grid {
-                grid-template-columns: 1fr;
-            }
+        /* Status bar */
+        .win98-statusbar {
+            background: var(--win98-face);
+            border-top: 2px inset #b8b0d4;
+            padding: 5px 8px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .status-led {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: #22c55e;
+            flex-shrink: 0;
+        }
+        .status-text { color: #1a1a1a; }
+        .status-divider { color: #6b5a7a; }
+        .clue-msg { color: #2d1b4e; font-style: italic; }
 
-            .home-actions {
-                flex-direction: column;
-            }
+        /* Jackpot states */
+        .slot-machine.jackpot {
+            animation: jackpot-shake 0.5s ease-in-out;
+        }
+        .slot-machine.jackpot .lcd-panel {
+            background: linear-gradient(45deg, #7C3AED, #A78BFA, #7C3AED);
+            animation: jackpot-glow 0.3s ease-in-out infinite alternate;
+        }
+        .slot-machine.jackpot .lcd-dash-line {
+            border-top-color: rgba(253, 250, 255, 0.55);
+        }
+        .slot-machine.jackpot .status-led {
+            background: #7c3aed;
+            animation: led-blink 0.3s infinite;
+        }
+        @keyframes jackpot-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-1deg); }
+            75% { transform: translateX(5px) rotate(1deg); }
+        }
+        @keyframes jackpot-glow {
+            from { box-shadow: 0 0 10px #7C3AED, 0 0 20px #7C3AED; }
+            to { box-shadow: 0 0 20px #A78BFA, 0 0 40px #A78BFA; }
+        }
+        @keyframes led-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
 
-            .home-cta {
-                width: 100%;
+        /* === ACCESS CODE INPUT === */
+        .access-row {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .access-row input {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-right: none;
+            color: #FAFAFA;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            width: 180px;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .access-row input:focus {
+            border-color: #7C3AED;
+        }
+        .access-row input::placeholder {
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: none;
+        }
+        .access-row button {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #52525B;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .access-row button:hover {
+            border-color: #7C3AED;
+            color: #a78bfa;
+        }
+        .error-msg {
+            color: #DC2626;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            height: 1rem;
+        }
+        .spin-count {
+            color: #333;
+            font-size: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        /* === JACKPOT PRIZE MODAL === */
+        .prize-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .prize-overlay.open { display: flex; }
+        .prize-box {
+            background: linear-gradient(135deg, #1a1025, #2d1f3d);
+            border: 3px solid #7c3aed;
+            padding: 2rem;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+        }
+        .prize-box img {
+            width: 80px;
+            margin-bottom: 1rem;
+        }
+        .prize-box h3 {
+            color: #a78bfa;
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem;
+        }
+        .prize-box .prize-desc {
+            color: #e0d4f7;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .prize-box .tg-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: #fff;
+            padding: 12px 32px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: box-shadow 0.2s;
+        }
+        .prize-box .tg-btn:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+        }
+        .prize-box .close-prize {
+            display: block;
+            margin-top: 1rem;
+            color: #52525B;
+            font-size: 0.75rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+	        /* === POST-UNLOCK PLACEHOLDER === */
+        .holding {
+            text-align: center;
+            padding: 2rem;
+            max-width: 460px;
+        }
+        .holding img {
+            width: 96px;
+            margin-bottom: 1.25rem;
+        }
+        .holding p {
+            color: #71717A;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .slot-footer-lang {
+            padding: 6px;
+            margin: 0;
+            text-align: center;
+            font-size: 11px;
+            color: #71717a;
+            line-height: 1.5;
+        }
+        .slot-language-switch {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 80;
+            background: rgba(9, 9, 11, 0.86);
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .slot-footer-lang-label {
+            display: block;
+            font-size: 10px;
+            color: #71717a;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .slot-footer-lang .footer-lang-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            border: 1.5px solid #52525b;
+            color: #e4e4e7;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            min-width: 46px;
+            min-height: 44px;
+        }
+        .slot-footer-lang .footer-lang-btn:hover { border-color: #7c3aed; color: #fff; background: rgba(124,58,237,0.15); }
+        .slot-footer-lang .footer-lang-btn[aria-pressed="true"] {
+            border-color: #7c3aed;
+            border-width: 2px;
+            color: #c4b5fd;
+            background: rgba(124,58,237,0.18);
+        }
+        .slot-footer-lang .footer-lang-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .slot-footer-lang .footer-lang-flag {
+            font-size: 1.6rem;
+            line-height: 1;
+            padding: 5px 10px;
+        }
+
+        .lever-container.lever-disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.25);
+            cursor: not-allowed;
+        }
+        .slot-machine.api-warming .status-led {
+            background: #d97706;
+            box-shadow: 0 0 6px rgba(217, 119, 6, 0.9);
+        }
+
+        /* Waitlist inline error modal (retro window, no alert()) */
+        .funnel-msg-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.85);
+            z-index: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .funnel-msg-overlay.hidden { display: none !important; }
+        .funnel-msg-dlg {
+            width: 320px;
+            max-width: min(320px, calc(100vw - 28px));
+            background: var(--win98-face);
+            border: 2px outset #f0f0f0;
+            box-shadow: 4px 4px 0 #111, 0 0 20px rgba(106, 50, 159, 0.4);
+        }
+        .funnel-msg-titlebar {
+            background: var(--win98-title);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+        .funnel-msg-close {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            padding: 0 6px 2px;
+            font-family: Tahoma, sans-serif;
+        }
+        .funnel-msg-body-wrap { padding: 12px 14px; font-size: 12px; color: #1e1033; line-height: 1.45; }
+        #funnel-msg-text { margin: 0; font-family: 'Courier New', monospace; }
+        .funnel-msg-actions button {
+            padding: 4px 16px;
+            font-size: 12px;
+            font-family: Tahoma, sans-serif;
+            background: #5b21b6;
+            color: #fff;
+            border: 2px outset #ede8f5;
+            border-right-color: #4c1d95;
+            border-bottom-color: #4c1d95;
+            cursor: pointer;
+        }
+        .funnel-msg-actions button:active {
+            border-style: inset;
+        }
+        @media (max-width: 400px) {
+            .slot-machine { width: 100%; }
+            .win98-neon-window { width: 100%; }
+            .puzzle-gate { padding: 1rem; }
+        }
+        @media (max-width: 560px) {
+            .slot-language-switch {
+                position: static;
+                width: fit-content;
+                max-width: 100%;
+                margin: 0 auto 16px;
+            }
+            .slot-footer-lang-label {
+                text-align: center;
             }
         }
     </style>
 </head>
-<body class="home-page" data-theme-default="light">
-    <nav id="nav-container"></nav>
-    <div id="mobile-menu-container"></div>
-
-    <main class="home-shell">
-        <section class="home-hero" aria-labelledby="home-title">
-            <div>
-                <div class="kicker">Proof-based community governance</div>
-                <h1 id="home-title">Bonzi helps communities govern with proof.</h1>
-                <p class="lead">It records contribution, verification, gratitude, and outcomes so groups can coordinate fairly without trusting one person, one model, or one unchecked system.</p>
-                <div class="home-actions" aria-label="Primary reading">
-                    <a class="home-cta primary" href="/page_3/">What Bonzi is</a>
-                    <a class="home-cta" href="/page_1/">How it works</a>
-                    <a class="home-cta" href="/page_4/">When progress changes</a>
-                </div>
+<body class="bonzi-slot-page">
+    <audio id="slot-coin" preload="auto"><source src="sounds/casino-coin.mp3" type="audio/mpeg"></audio>
+    <!-- Winamp stripe: see WINAMP_PLAYLIST in script (MP3 + WAV fallback). -->
+    <audio id="winamp-player" preload="metadata"></audio>
+    <!-- PUZZLE GATE (slot - default home) -->
+    <div class="puzzle-gate" id="gate">
+        <div class="slot-footer-lang slot-language-switch" role="group" aria-label="Language selector">
+            <span class="slot-footer-lang-label" id="slot-lang-label">Language</span>
+            <div class="footer-lang-row">
+                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-pt-br" aria-label="Portuguese Brazil" aria-pressed="false" title="PT-BR">&#127463;&#127479;</button>
+                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-en" aria-pressed="true" lang="en" aria-label="English" title="EN">&#127468;&#127463;</button>
+                <button type="button" class="footer-lang-btn footer-lang-flag" id="lang-zh-cn" aria-pressed="false" lang="zh-CN" aria-label="Chinese Simplified" title="ZH">&#127464;&#127475;</button>
             </div>
-            <aside class="signal-panel" aria-label="Bonzi signal">
-                <img src="bonzi-logo.png" alt="Bonzi">
-                <p>BonziVista is being built as an evidence layer for communities, brands, token projects, and DAOs.</p>
-            </aside>
-        </section>
-
-        <section class="section" aria-labelledby="overview-title">
-            <div class="section-head">
-                <div>
-                    <div class="kicker">Public overview</div>
-                    <h2 id="overview-title">A simple route through the project.</h2>
-                </div>
-                <p>The public site is organized as a due-diligence path. Each page answers one question and keeps sensitive operating details out of public copy.</p>
-            </div>
-            <div class="grid">
-                <article class="card purple">
-                    <h3>Why</h3>
-                    <p>Why community work needs records, proof, and reviewable context.</p>
-                </article>
-                <article class="card blue">
-                    <h3>How</h3>
-                    <p>How people, agents, reviews, and records fit into one operating loop.</p>
-                </article>
-                <article class="card green">
-                    <h3>What</h3>
-                    <p>What Bonzi is: a proof-based governance ledger for contribution and decisions.</p>
-                </article>
-                <article class="card amber">
-                    <h3>When</h3>
-                    <p>When evidence changes, the roadmap and public progress record should change with it.</p>
-                </article>
-            </div>
-        </section>
-
-        <section class="section proof-band" aria-labelledby="proof-title">
-            <div class="proof-panel">
-                <div class="kicker">Operating principle</div>
-                <h2 id="proof-title">Important claims need evidence.</h2>
-                <p>Bonzi should not only answer questions. It should help preserve who contributed, who reviewed, what changed, and what happened next.</p>
-                <div class="home-actions" aria-label="Next steps">
-                    <a class="home-cta primary" href="/page_3/">Read the WHAT page</a>
-                    <a class="home-cta" href="/stake.html">Stake $BONZI</a>
-                </div>
-            </div>
-            <div class="proof-panel">
-                <div class="kicker">Review lens</div>
-                <ul>
-                    <li>Contribution should become easier to inspect.</li>
-                    <li>Claims should be separated from proof.</li>
-                    <li>AI should not be allowed to certify itself.</li>
-                    <li>Public progress should stay clear about what is proven and what remains pending.</li>
-                </ul>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer" aria-label="Site footer">
-        <div class="footer-row">
-            <span>MIT license</span>
-            <span aria-hidden="true">|</span>
-            <a href="/legal/privacy.html">Privacy</a>
-            <span aria-hidden="true">|</span>
-            <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer">etherfun.app</a>
-            <span aria-hidden="true">|</span>
-            <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">defiants.org</a>
-            <span aria-hidden="true">|</span>
-            <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">unidosprojects.org</a>
         </div>
-    </footer>
+        <img src="bonzi-logo.png" alt="Bonzi" class="logo" id="logo-click">
+        <p class="tagline" id="gate-tagline">pull lever to try your luck</p>
+        <p class="slot-intro-text" id="slot-intro-text">Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.</p>
+        <div class="slot-top-action">
+            <button type="button" id="slot-info-btn" class="win98-info-btn" title="How To Play">How To Play</button>
+        </div>
+
+        <div id="notify-bar" class="notify-bar hidden" aria-hidden="true">
+            <span class="notify-bar-text" id="notify-bar-msg">Early list: emails only.</span>
+            <a id="notify-bar-link" class="notify-bar-cta" href="#" target="_blank" rel="noopener">Get notified</a>
+        </div>
+
+        <div class="win98-neon-stack">
+            <div class="win98-neon-window howto-window hidden" id="howto-window" data-pane="howto" aria-hidden="true">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="howto-win-title">&#127914; How to play</span>
+                    <button type="button" class="win98-close-btn" id="howto-close-btn" aria-label="Close">&#10005;</button>
+                </div>
+                <div class="win98-neon-body howto-body">
+                    <ol class="howto-steps">
+                        <li id="howto-step1">Pull the lever.</li>
+                        <li id="howto-step2">A hint appears below the 5 heads. Read it literally.</li>
+                        <li id="howto-step3">Type the code word in the Passage box and hit Submit.</li>
+                    </ol>
+                    <p class="howto-note" id="howto-note">Hit Rules for the full guide.</p>
+                </div>
+            </div>
+            <div class="win98-neon-window" data-pane="slot">
+                <div class="slot-machine" id="slot-machine">
+                    <div class="win98-titlebar">
+                        <span class="win98-title" id="slot-win-title">&#127920; Bonzi slot</span>
+                    </div>
+                    <div class="win98-content">
+                        <div class="lcd-panel">
+                            <div class="lcd-marquee-caption" aria-live="polite">
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                                <div class="lcd-marquee-lines lcd-label-stack">
+	                                    <span class="lcd-line1 lcd-line-tokenise" id="lcd-prefix">Tokenise your:</span>
+                                </div>
+                                <span class="lcd-dash-line" aria-hidden="true"></span>
+                            </div>
+                            <div class="lcd-screen">
+                                <div class="slot-reel" id="slot-reel"></div>
+                            </div>
+                        </div>
+                        <div class="lever-stack">
+                            <p class="lever-pull-hint" id="lever-pull-hint">
+                                <span id="lever-pull-label">PULL</span><span class="lever-pull-arrow" aria-hidden="true"> &#8595;</span>
+                            </p>
+                            <button class="lever-container" id="slot-lever" aria-label="Pull lever" aria-describedby="lever-pull-hint">
+                                <div class="lever-track"></div>
+                                <div class="lever-handle">
+                                    <div class="lever-grip"></div>
+                                    <div class="lever-ball"></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bonzi-logos" id="bonzi-logos">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="0">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="1">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img gold" data-i="2">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="3">
+                        <img src="bonzi-logo.png" alt="" class="bonzi-logo-img" data-i="4">
+                    </div>
+                    <div class="win98-statusbar">
+                        <span class="status-led"></span>
+                        <span class="status-text" id="status-ready">Ready</span>
+                        <span class="status-divider">|</span>
+	                        <span class="clue-msg" id="clue-msg"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="win98-neon-window" data-pane="access">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="access-win-title">Passage</span>
+                </div>
+                <div class="win98-neon-body">
+                    <p class="skill-prompt" id="skill-prompt">Loading the Passage…</p>
+                    <div class="access-row">
+                        <input type="text" id="pw" placeholder="code word" maxlength="12" autocomplete="off" spellcheck="false">
+                        <button type="button" id="submit-btn">Submit</button>
+                    </div>
+                    <p class="error-msg" id="err">&nbsp;</p>
+                    <p class="spin-count" id="spin-count"></p>
+                </div>
+            </div>
+
+            <div class="win98-neon-window" data-pane="updates">
+                <div class="win98-titlebar">
+                    <span class="win98-title" id="updates-win-title">Update notifications</span>
+                </div>
+                <div class="win98-neon-body win98-neon-body-updates">
+                    <section class="notify-bottom" id="email-updates" aria-label="Email updates">
+                        <h2 class="notify-bottom-title" id="notify-bottom-title">Enter email for updates.</h2>
+                        <p class="notify-bottom-sub" id="notify-bottom-sub">Bonzi waitlist.</p>
+                        <a class="notify-bottom-cta" id="notify-bottom-cta" href="#" target="_blank" rel="noopener noreferrer">Open signup</a>
+                        <p class="notify-bottom-pending hidden" id="notify-bottom-pending"></p>
+                        <form id="waitlist-form" class="notify-waitlist-form hidden" action="#" method="post" novalidate>
+                            <div class="waitlist-field-row">
+                                <input type="email" id="waitlist-email" name="email" maxlength="254" required autocomplete="email" inputmode="email" aria-required="true">
+                                <button type="submit" id="waitlist-submit">Submit</button>
+                            </div>
+                            <input type="text" name="website" id="waitlist-hp" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        </form>
+                        <p class="notify-waitlist-thanks hidden" id="waitlist-thanks" role="status"></p>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="slot-footer-zone">
+            <div class="win98-winamp-stripe" role="group" aria-label="">
+                <div class="winamp-brand">
+                    <img src="assets/winamp-logo.png" alt="" class="winamp-logo-img" width="22" height="22">
+                    <span id="winamp-brand-text" aria-hidden="true">Winamp</span>
+                </div>
+                <div class="winamp-transport">
+                    <button type="button" class="winamp-btn winamp-btn-skip" id="winamp-prev">|&lt;&lt;</button>
+                    <button type="button" class="winamp-btn" id="winamp-play" aria-pressed="false">&#9654;</button>
+                    <button type="button" class="winamp-btn" id="winamp-stop">&#9632;</button>
+                    <button type="button" class="winamp-btn winamp-btn-skip" id="winamp-next">&gt;&gt;|</button>
+                </div>
+                <div class="winamp-lcd">
+                    <div class="winamp-lcd-stack">
+                        <div class="winamp-track-title-outer" id="winamp-track-title-outer">
+                            <div class="winamp-track-title-marquee" id="winamp-track-title-marquee">
+                                <span class="winamp-track-title-chunk" id="winamp-track-title-a"></span>
+                                <span class="winamp-track-title-gap" aria-hidden="true"> - </span>
+                                <span class="winamp-track-title-chunk" id="winamp-track-title-b" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <span class="winamp-time" id="winamp-time-line">00:00 / 00:00 - STOPPED</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTO, sponsor, GitHub + privacy -->
+            <footer class="site-footer slot-stake-footer" id="site-footer-main" aria-label="Site footer">
+                <div class="footer-cto-row">
+                    <span id="footer-cto-label">CTO</span>
+                    <span class="footer-pipe">|</span>
+                    <a href="https://bonzivista.org" target="_blank" rel="noopener noreferrer">
+                        <img src="bonzi-logo.png" alt="" width="22" height="22" style="border-radius: 5px;">
+                        Bonzivista.org
+                    </a>
+                </div>
+                <div class="footer-sponsor-row">
+                    <span><span id="footer-sponsor-prefix">sponsored by
+                        </span><a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+                            <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                            Ethervista
+                        </a>
+                    </span>
+                </div>
+                <div class="footer-legal-row">
+                    <a href="dev.html" id="footer-mit-repo"><span id="footer-mit-lic">Developers</span></a><span aria-hidden="true">, </span><a href="legal/privacy.html" id="footer-privacy">privacy policy</a>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <div id="funnel-msg-overlay" class="funnel-msg-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="funnel-msg-heading">
+        <div class="funnel-msg-dlg">
+            <div class="funnel-msg-titlebar">
+                <span id="funnel-msg-heading">Bonzi Vista</span>
+                <button type="button" id="funnel-msg-close-btn" class="funnel-msg-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="funnel-msg-body-wrap">
+                <p id="funnel-msg-text"></p>
+            </div>
+            <div class="funnel-msg-actions">
+                <button type="button" id="funnel-msg-ok">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="prize-overlay" id="prize-overlay">
+        <div class="prize-box">
+            <img src="bonzi-logo.png" alt="Bonzi" id="prize-img">
+            <h3 id="prize-title">BONZI JACKPOT!</h3>
+            <p class="prize-desc" id="prize-desc"></p>
+            <p class="prize-code" id="prize-code-display" style="font-family:monospace;font-size:0.85rem;letter-spacing:0.04em;margin:0.4rem 0 0.2rem;color:#D4AF37;word-break:break-all;"></p>
+            <a class="tg-btn" id="tg-link" href="https://t.me/Bonzivista_bot?start=intro" target="_blank" rel="noopener"><span id="tg-link-label">Open @Bonzivista_bot</span></a>
+            <button class="close-prize" id="close-prize"><span id="close-prize-label">close</span></button>
+        </div>
+    </div>
+
+    <!-- PRANK / BYPASS DESTINATION (hidden until code or session) -->
+    <div class="holding hidden" id="content">
+        <img src="bonzi-logo.png" alt="Bonzi">
+        <p id="holding-prank-hint">Nothing to see here yet.</p>
+    </div>
+
+    <script>
+    (function() {
+        // === DEV BYPASS: ?dev=1 loads old site ===
+        if (new URLSearchParams(window.location.search).get('dev') === '1') {
+            sessionStorage.setItem('bonzi_alpha', '1');
+            window.location.href = 'dev.html';
+            return;
+        }
+
+        var LOCALE_KEY = 'bonzi_site_lang';
+        var bonziWinampLangRefresh = null;
+
+        function normaliseSlotLang(raw) {
+            var st = String(raw || '').trim().toLowerCase().replace(/_/g, '-');
+            if (st === 'pt-br' || st === 'pt' || st.slice(0, 2) === 'pt') {
+                return 'pt-BR';
+            }
+            if (st === 'zh-cn' || st === 'zh' || st === 'mandarin' || st.slice(0, 2) === 'zh') {
+                return 'zh-CN';
+            }
+            return 'en';
+        }
+
+        function readSavedSlotLang() {
+            try {
+                return localStorage.getItem(LOCALE_KEY) || '';
+            } catch (eRead) {
+                return '';
+            }
+        }
+
+        var currentLang = 'en';
+        try {
+            var _saved = readSavedSlotLang();
+            var _detect = (_saved || (navigator.languages && navigator.languages[0]) || navigator.language || 'en');
+            currentLang = normaliseSlotLang(_detect);
+        } catch (eLoc) {}
+
+        var I18N = {
+            en: {
+                claimPending: 'Claim pending - tap to bind it to Telegram',
+                tagline: 'pull lever to try your luck',
+                notifyMsg: 'Early list: emails only.',
+                notifyMsgPending: '',
+                notifyCta: 'Get notified',
+                notifyBottomTitle: 'Enter email for updates.',
+                notifyBottomSub: 'Bonzi waitlist.',
+                notifyBottomCta: 'Open signup',
+                notifyBottomPending: '',
+                winSlotTitle: 'Bonzi slot',
+                winAccessTitle: 'Passage',
+                winUpdatesTitle: 'Update notifications',
+                accessSubmitLabel: 'Submit',
+                waitlistThanks: "You're on the list.",
+	                waitlistErr: 'Could not save. Try again in a moment.',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: 'OK',
+	                alphaGateTitle: 'VIP alpha access',
+	                alphaGateBody: 'That page is inside the Silver Fox alpha. Play the Passage to enter. For now, long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                waitlistJoin: 'Submit',
+                waitlistEmailPh: 'username@msn.com',
+	                lcdPrefix: 'Tokenise your:',
+                statusIdle: 'Ready',
+                statusStarting: 'Waking up...',
+	                serviceWarmingClue: 'Bonzi is waking up. Try the lever again in a few seconds.',
+		                clueBar: '',
+                pwPlaceholder: 'code word',
+                footerMitLic: 'GitHub',
+                footerPrivacy: 'privacy policy',
+                prizeTitle: 'Lucky spin. 😎',
+                prizeDesc: 'You hit the golden emblem. Your prize code:',
+                tgOpen: 'Open @Bonzivista_bot',
+                skillPrizeTitle: 'You found it. 💜🤫',
+                skillPrizeDesc: 'You recognised the sign. Your badge code:',
+                skillTgOpen: 'Claim badge in @Bonzivista_bot',
+                closeModal: 'close',
+                spinChecking: 'Checking…',
+                spinNoReceipt: 'No receipt from server.',
+                spinBlocked: 'Spin blocked',
+                jackpotClaiming: 'Jackpot, getting link…',
+                jackpotOk: 'Jackpot!',
+                prizeFail: 'Could not get prize link.',
+                prizeNet: 'Network error.',
+	                reelInteresting: 'Try the Passage.',
+	                reelFluff: 'No claim on this stop. Try again.',
+                spinNetErr: 'Network error. Try again.',
+                triesLeft: function(a, m) { return 'Tries left: ' + a + ' / ' + m; },
+	                errWrong: 'Wrong code.',
+		                logoHint: 'Hint: open about.html.',
+                infoTitle: 'How To Play',
+                leverAria: 'Pull lever',
+                leverPullLabel: 'PULL',
+                winampGroupAria: 'Retro-style demo audio player',
+                winampPlay: 'Play',
+                winampPause: 'Pause',
+                winampStop: 'Stop',
+                winampPrev: 'Previous track',
+                winampNext: 'Next track',
+                winampStopped: 'STOPPED',
+                winampPlayState: 'PLAY',
+                winampPauseState: 'PAUSE',
+	                hints: {},
+                loadingPassage: 'Loading the Passage…',
+                passageUnavailable: 'Passage unavailable right now.',
+                readPromptSoon: 'Read the prompt again in a moment.',
+                readThenAnswer: 'Read the prompt, then type the answer.',
+                introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.',
+                howtoTitle: 'How to play',
+                howtoStep1: 'Pull the lever.',
+                howtoStep2: 'A hint appears below the 5 heads. Read it literally.',
+                howtoStep3: 'Type the code word in the Passage box and hit Submit.',
+                howtoNote: 'Hit Rules for the full guide.',
+                docTitle: 'Bonzi Vista: Slot',
+                winampBrandText: 'Winamp',
+                footerCtoLabel: 'CTO',
+                footerSponsorPrefix: 'sponsored by ',
+                siteFooterAria: 'Site footer',
+                emailUpdatesAria: 'Email updates',
+                funnelCloseAria: 'Close',
+                holdingPrank: 'Nothing to see here yet.',
+                langGroupAria: 'Language selector',
+                langLabel: 'Language',
+                langEnAria: 'English',
+                langPtAria: 'Portuguese (Brazil)',
+                langPtTitle: 'PT-BR',
+                langZhAria: 'Chinese (Simplified)',
+                langZhTitle: 'Simplified Chinese'
+            },
+            'pt-BR': {
+                claimPending: 'Prêmio pendente - toque para vincular ao Telegram',
+                tagline: 'puxe a alavanca e tente a sorte',
+                notifyMsg: 'Lista cedo: s\u00F3 e-mail.',
+                notifyMsgPending: '',
+                notifyCta: 'Avise-me',
+                notifyBottomTitle: 'Digite o e-mail para atualiza\u00E7\u00F5es.',
+                notifyBottomSub: 'Lista Bonzi.',
+                notifyBottomCta: 'Abrir cadastro',
+                notifyBottomPending: '',
+                winSlotTitle: 'Bonzi slot',
+                winAccessTitle: 'Passagem',
+                winUpdatesTitle: 'Notifica\u00E7\u00F5es',
+                accessSubmitLabel: 'Enviar',
+                waitlistThanks: 'Voc\u00EA est\u00E1 na lista.',
+	                waitlistErr: 'N\u00E3o foi poss\u00EDvel salvar. Tente de novo em instantes.',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: 'OK',
+	                alphaGateTitle: 'Acesso alpha VIP',
+	                alphaGateBody: 'Essa p\u00E1gina faz parte do alpha Silver Fox. Jogue a Passagem para entrar. Por enquanto, investidores de longo prazo seguem pelo caminho VIP enquanto o alpha \u00E9 depurado antes do GTM.',
+	                waitlistJoin: 'Enviar',
+                waitlistEmailPh: 'usuario@exemplo.com',
+                lcdPrefix: 'Tokenize seu:',
+                statusIdle: 'Pronto',
+                statusStarting: 'Acordando...',
+	                serviceWarmingClue: 'Bonzi est\u00E1 acordando. Tente a alavanca de novo em alguns segundos.',
+		                clueBar: '',
+                pwPlaceholder: 'palavra-código',
+                footerMitLic: 'GitHub',
+                footerPrivacy: 'pol\u00EDtica de privacidade',
+                prizeTitle: 'BONZI JACKPOT!',
+                prizeDesc: 'Voc\u00EA acertou o <b>emblema dourado</b> (o Bonzi dourado). Abra o Telegram no bot\u00E3o abaixo.',
+                tgOpen: 'Abrir @Bonzivista_bot',
+                closeModal: 'fechar',
+                spinChecking: 'Verificando\u2026',
+                spinNoReceipt: 'Sem recibo do servidor.',
+                spinBlocked: 'Giro bloqueado',
+                jackpotClaiming: 'Jackpot, buscando link\u2026',
+                jackpotOk: 'Jackpot!',
+                prizeFail: 'N\u00E3o foi poss\u00EDvel obter o link.',
+                prizeNet: 'Erro de rede.',
+                reelHint1: '💜🤫 Um sinal. Mas o que significa? Provavelmente nada.',
+                reelHint2: '😎 Alguém nesta página usa óculos sempre. Quem é?',
+                reelHint3: '🍌 Uma banana. Definitivamente só uma banana. Continue girando.',
+                skillPrizeTitle: 'Você encontrou. 💜🤫',
+                skillPrizeDesc: 'Você reconheceu o sinal. Seu código de badge:',
+                skillTgOpen: 'Resgatar badge em @Bonzivista_bot',
+                reelInteresting: 'Tente a Passagem.',
+                reelFluff: 'Sem claim nesta parada. Tente de novo.',
+                spinNetErr: 'Erro de rede. Tente de novo.',
+                triesLeft: function(a, m) { return 'Tentativas: ' + a + ' / ' + m; },
+                errWrong: 'C\u00F3digo errado.',
+	                logoHint: 'Dica: abra about.html.',
+                infoTitle: 'Como Jogar',
+                leverAria: 'Puxar alavanca',
+                leverPullLabel: 'PUXAR',
+                winampGroupAria: 'Reprodutor demo em estilo retr\u00F4',
+                winampPlay: 'Reproduzir',
+                winampPause: 'Pausar',
+                winampStop: 'Parar',
+                winampPrev: 'Faixa anterior',
+                winampNext: 'Pr\u00F3xima faixa',
+                winampStopped: 'PARADO',
+                winampPlayState: 'TOCAR',
+                winampPauseState: 'PAUSA',
+	                hints: {},
+                loadingPassage: 'Carregando a Passagem\u2026',
+                passageUnavailable: 'Passagem indispon\u00EDvel no momento.',
+                readPromptSoon: 'Leia o prompt em um instante.',
+                readThenAnswer: 'Leia o prompt e digite a resposta.',
+                introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabe\u00E7as. Leia, digite a palavra-c\u00F3digo e clique em Enviar.',
+                howtoTitle: 'Como jogar',
+                howtoStep1: 'Puxe a alavanca.',
+                howtoStep2: 'Uma dica aparece abaixo das 5 cabe\u00E7as. Leia com aten\u00E7\u00E3o.',
+                howtoStep3: 'Digite a palavra-c\u00F3digo na caixa Passagem e clique em Enviar.',
+                howtoNote: 'Clique em Regras para o guia completo.',
+                docTitle: 'Bonzi Vista: Slot',
+                winampBrandText: 'Winamp',
+                footerCtoLabel: 'CTO',
+                footerSponsorPrefix: 'Patrocinado por ',
+                siteFooterAria: 'Rodap\u00E9 do site',
+                emailUpdatesAria: 'Atualiza\u00E7\u00F5es por e-mail',
+                funnelCloseAria: 'Fechar',
+                holdingPrank: 'Nada para ver aqui ainda.',
+                langGroupAria: 'Seletor de idioma',
+                langLabel: 'Idioma',
+                langEnAria: 'Ingl\u00EAs',
+                langPtAria: 'Portugu\u00EAs (Brasil)',
+                langPtTitle: 'PT-BR',
+                langZhAria: 'Chin\u00EAs (simplificado)',
+                langZhTitle: 'Chin\u00EAs simplificado'
+            },
+            'zh-CN': {
+                claimPending: '待领取 - 点击绑定到 Telegram',
+                tagline: '\u62c9\u52a8\u6447\u6746\u78b0\u78b0\u8fd0\u6c14\u3002',
+                notifyMsg: '\u65e9\u671f\u540d\u5355\uff1a\u4ec5\u90ae\u7bb1\u3002',
+                notifyMsgPending: '',
+                notifyCta: '\u63d0\u9192\u6211',
+                notifyBottomTitle: '\u8f93\u5165\u90ae\u7bb1\u4ee5\u83b7\u53d6\u66f4\u65b0\u3002',
+                notifyBottomSub: 'Bonzi \u7b49\u5f85\u540d\u5355\u3002',
+                notifyBottomCta: '\u6253\u5f00\u6ce8\u518c',
+                notifyBottomPending: '',
+                winSlotTitle: 'Bonzi \u8001\u864e\u673a',
+                winAccessTitle: '\u901a\u9053',
+                winUpdatesTitle: '\u66f4\u65b0\u901a\u77e5',
+                accessSubmitLabel: '\u63d0\u4ea4',
+                waitlistThanks: '\u5df2\u52a0\u5165\u540d\u5355\u3002',
+	                waitlistErr: '\u6682\u65f6\u65e0\u6cd5\u4fdd\u5b58\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5\u3002',
+	                waitlistModalTitle: 'Bonzi Vista',
+	                waitlistModalOk: '\u786e\u5b9a',
+	                alphaGateTitle: 'VIP alpha access',
+	                alphaGateBody: 'This page is inside the Silver Fox alpha. Play the Passage to enter. Long-term investors get the clear VIP path while alpha is debugged before GTM launch.',
+	                waitlistJoin: '\u63d0\u4ea4',
+                waitlistEmailPh: 'you@example.com',
+	                lcdPrefix: '\u4ee3\u5e01\u5316\u4f60\u7684\uff1a',
+                statusIdle: '\u5c31\u7eea',
+                statusStarting: '\u5524\u9192\u4e2d\u2026',
+                serviceWarmingClue: 'Bonzi \u6b63\u5728\u5524\u9192\uff0c\u8bf7\u51e0\u79d2\u540e\u518d\u8bd5\u6447\u6746\u3002',
+	                clueBar: '',
+                pwPlaceholder: '\u6697\u53f7',
+                footerMitLic: 'GitHub',
+                footerPrivacy: '\u9690\u79c1\u653f\u7b56',
+                prizeTitle: 'BONZI JACKPOT!',
+                prizeDesc: '\u4f60\u8f6c\u5230\u4e86 <b>\u91d1\u8272\u5927\u5956</b> \u5fbd\u6807\uff08\u91d1\u8272 Bonzi\uff09\u3002\u70b9\u51fb\u4e0b\u65b9\u6309\u94ae\u6253\u5f00 Telegram\u3002',
+                tgOpen: '\u6253\u5f00 @Bonzivista_bot',
+                closeModal: '\u5173\u95ed',
+                spinChecking: '\u68c0\u67e5\u4e2d\u2026',
+                spinNoReceipt: '\u670d\u52a1\u5668\u672a\u8fd4\u56de\u6536\u636e\u3002',
+                spinBlocked: '\u65cb\u8f6c\u5df2\u963b\u6b62',
+                jackpotClaiming: '\u5927\u5956 - \u6b63\u5728\u83b7\u53d6\u94fe\u63a5\u2026',
+                jackpotOk: '\u5927\u5956\uff01',
+                prizeFail: '\u65e0\u6cd5\u83b7\u53d6\u5956\u54c1\u94fe\u63a5\u3002',
+                prizeNet: '\u7f51\u7edc\u9519\u8bef\u3002',
+                reelHint1: '\ud83d\udc9c\ud83e\udd2b \u4e00\u4e2a\u4fe1\u53f7\u3002\u4f46\u8fd9\u610f\u5473\u7740\u4ec0\u4e48\uff1f\u53ef\u80fd\u4ec0\u4e48\u90fd\u4e0d\u662f\u3002',
+                reelHint2: '\ud83d\ude0e \u8fd9\u4e2a\u9875\u9762\u4e0a\u6709\u4eba\u603b\u662f\u6234\u7740\u58a8\u955c\u3002\u662f\u8c01\uff1f',
+                reelHint3: '\ud83c\udf4c \u4e00\u6839\u9999\u8549\u3002\u7edd\u5bf9\u53ea\u662f\u4e00\u6839\u9999\u8549\u3002\u7ee7\u7eed\u8f6c\u52a8\u3002',
+                skillPrizeTitle: '\u4f60\u627e\u5230\u4e86\u3002\ud83d\udc9c\ud83e\udd2b',
+                skillPrizeDesc: '\u4f60\u8ba4\u51fa\u4e86\u6807\u5fd7\u3002\u4f60\u7684\u5fbd\u7ae0\u7801\uff1a',
+                skillTgOpen: '\u5728 @Bonzivista_bot \u9886\u53d6\u5fbd\u7ae0',
+	                reelInteresting: '\u8bd5\u8bd5\u901a\u9053\u3002',
+	                reelFluff: '\u8fd9\u6b21\u6ca1\u6709 claim\u3002\u518d\u8bd5\u4e00\u6b21\u3002',
+                spinNetErr: '\u7f51\u7edc\u9519\u8bef - \u8bf7\u91cd\u8bd5\u3002',
+                triesLeft: function(a, m) { return '\u5269\u4f59\u6b21\u6570\uff1a' + a + ' / ' + m; },
+                errWrong: '\u5bc6\u7801\u9519\u8bef\u3002',
+	                logoHint: '\u63d0\u793a\uff1a\u6253\u5f00 about.html\u3002',
+                infoTitle: '\u6e38\u620f\u8bf4\u660e',
+                leverAria: '\u62c9\u52a8\u6447\u6746',
+                leverPullLabel: '\u62c9',
+                winampGroupAria: '\u590d\u53e4\u98ce\u683c\u6f14\u793a\u97f3\u9891\u64ad\u653e\u5668',
+                winampPlay: '\u64ad\u653e',
+                winampPause: '\u6682\u505c',
+                winampStop: '\u505c\u6b62',
+                winampPrev: '\u4e0a\u4e00\u9996',
+                winampNext: '\u4e0b\u4e00\u9996',
+                winampStopped: '\u5df2\u505c\u6b62',
+                winampPlayState: '\u64ad\u653e',
+                winampPauseState: '\u6682\u505c',
+	                hints: {},
+                loadingPassage: '\u52a0\u8f7d\u901a\u9053\u2026',
+                passageUnavailable: '\u901a\u9053\u6682\u65f6\u4e0d\u53ef\u7528\u3002',
+                readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
+                readThenAnswer: '\u9605\u8bfb\u63d0\u793a\uff0c\u7136\u540e\u8f93\u5165\u7b54\u6848\u3002',
+                introText: '\u62c9\u52a8\u6447\u6746\u30025\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u9605\u8bfb\u63d0\u793a\uff0c\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u70b9\u51fb\u63d0\u4ea4\u3002',
+                howtoTitle: '\u6e38\u620f\u8bf4\u660e',
+                howtoStep1: '\u62c9\u52a8\u6447\u6746\u3002',
+                howtoStep2: '5\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u4ed4\u7ec6\u9605\u8bfb\u3002',
+                howtoStep3: '\u5728\u901a\u9053\u6846\u4e2d\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u7136\u540e\u70b9\u51fb\u63d0\u4ea4\u3002',
+                howtoNote: '\u70b9\u51fb\u89c4\u5219\u67e5\u770b\u5b8c\u6574\u6307\u5357\u3002',
+                docTitle: 'Bonzi Vista: \u8001\u864e\u673a',
+                winampBrandText: 'Winamp',
+                footerCtoLabel: 'CTO',
+                footerSponsorPrefix: '\u8d5e\u52a9 ',
+                siteFooterAria: '\u7f51\u7ad9\u9875\u811a',
+                emailUpdatesAria: '\u90ae\u4ef6\u66f4\u65b0',
+                funnelCloseAria: '\u5173\u95ed',
+                holdingPrank: '\u6682\u65f6\u8fd8\u6ca1\u6709\u5185\u5bb9\u3002',
+                langGroupAria: '\u8bed\u8a00\u9009\u62e9\u5668',
+                langLabel: '\u8bed\u8a00',
+                langEnAria: '\u82f1\u8bed',
+                langPtAria: '\u8461\u8404\u7259\u8bed\uff08\u5df4\u897f\uff09',
+                langPtTitle: 'PT-BR',
+                langZhAria: '\u7b80\u4f53\u4e2d\u6587',
+                langZhTitle: '\u7b80\u4f53\u4e2d\u6587'
+            }
+        };
+
+        function getStr() {
+            return I18N[currentLang] || I18N.en;
+        }
+
+        function hideFunnelMsgModal() {
+            var ov = document.getElementById('funnel-msg-overlay');
+            if (ov) ov.classList.add('hidden');
+        }
+
+        function showFunnelMsgModal(title, msg) {
+            var ov = document.getElementById('funnel-msg-overlay');
+            var hd = document.getElementById('funnel-msg-heading');
+            var tx = document.getElementById('funnel-msg-text');
+            if (!ov || !hd || !tx) return;
+            hd.textContent = title || 'Bonzi Vista';
+            tx.textContent = msg || '';
+            ov.classList.remove('hidden');
+        }
+
+	        (function wireFunnelMsgModal() {
+	            var ov = document.getElementById('funnel-msg-overlay');
+	            if (!ov) return;
+            ov.addEventListener('click', function(ev) {
+                if (ev.target === ov) hideFunnelMsgModal();
+            });
+            var bx = document.getElementById('funnel-msg-close-btn');
+            var ok = document.getElementById('funnel-msg-ok');
+            if (bx) bx.addEventListener('click', hideFunnelMsgModal);
+	            if (ok) ok.addEventListener('click', hideFunnelMsgModal);
+	        })();
+
+	        function readAlphaGateRedirect() {
+	            try {
+	                var params = new URLSearchParams(window.location.search);
+	                return params.get('gate') || params.get('vip') || '';
+	            } catch (eGateRead) {
+	                return '';
+	            }
+	        }
+
+	        function clearAlphaGateRedirect() {
+	            try {
+	                var params = new URLSearchParams(window.location.search);
+	                params.delete('gate');
+	                params.delete('vip');
+	                var cleanUrl = (
+	                    window.location.pathname +
+	                    (params.toString() ? '?' + params.toString() : '') +
+	                    window.location.hash
+	                );
+	                window.history.replaceState({}, '', cleanUrl);
+	            } catch (eGateClear) {}
+	        }
+
+	        function showAlphaGateNoticeIfNeeded() {
+	            if (!readAlphaGateRedirect()) return;
+	            clearAlphaGateRedirect();
+	            var L = getStr();
+	            showFunnelMsgModal(
+	                L.alphaGateTitle || L.waitlistModalTitle || 'Bonzi Vista',
+	                L.alphaGateBody || 'This page is inside the Silver Fox alpha. Play the Passage to enter.'
+	            );
+	        }
+
+	        showAlphaGateNoticeIfNeeded();
+
+	        function persistLang() {
+            try {
+                var slotLang = 'en';
+                var navLang = 'en';
+                var existingNavLang = String(
+                    localStorage.getItem('bonzi_lang') ||
+                    localStorage.getItem('bonzi-lang') ||
+                    ''
+                ).trim().toLowerCase().replace(/_/g, '-');
+                if (currentLang === 'pt-BR') {
+                    slotLang = 'pt-br';
+                    navLang = 'pt';
+                } else if (currentLang === 'zh-CN') {
+                    slotLang = 'zh-cn';
+                    navLang = 'zh';
+                }
+                localStorage.setItem(LOCALE_KEY, slotLang);
+                if (
+                    currentLang === 'en' &&
+                    (existingNavLang === 'fr' || existingNavLang === 'ru' || existingNavLang === 'tr')
+                ) {
+                    return;
+                }
+                localStorage.setItem('bonzi_lang', navLang);
+                localStorage.setItem('bonzi-lang', navLang);
+            } catch (eP) {}
+        }
+
+        function notifySignupUrlIsBlockedTelegram(u) {
+            if (!u) return false;
+            var s = String(u).trim();
+            var low = s.toLowerCase();
+            if (low.indexOf('tg:') === 0 || low.indexOf('telegram:') === 0) return true;
+            try {
+                var pu = new URL(s);
+                if (pu.protocol === 'tg:' || pu.protocol === 'telegram:') return true;
+                if (pu.protocol !== 'https:') return false;
+                var h = (pu.hostname || '').toLowerCase();
+                return h === 't.me' || h === 'telegram.me' || h === 'web.telegram.org';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function notifySignupUrlIsAllowedHttps(u) {
+            return typeof u === 'string' && /^https:\/\//i.test(u.trim());
+        }
+
+        function refreshNotifyBottom(url, looksTelegram, L) {
+            var sec = document.getElementById('email-updates');
+            var title = document.getElementById('notify-bottom-title');
+            var sub = document.getElementById('notify-bottom-sub');
+            var cta = document.getElementById('notify-bottom-cta');
+            var pend = document.getElementById('notify-bottom-pending');
+            if (!sec || !title || !sub || !cta || !pend) return;
+            title.textContent = L.notifyBottomTitle;
+            sub.textContent = L.notifyBottomSub;
+            if (looksTelegram) {
+                sec.classList.add('hidden');
+                return;
+            }
+            sec.classList.remove('hidden');
+            var form = document.getElementById('waitlist-form');
+            var thanks = document.getElementById('waitlist-thanks');
+            if (url && notifySignupUrlIsAllowedHttps(url)) {
+                if (form) form.classList.add('hidden');
+                if (thanks) thanks.classList.add('hidden');
+                cta.href = url;
+                cta.textContent = L.notifyBottomCta;
+                cta.classList.remove('hidden');
+                pend.textContent = '';
+                pend.classList.add('hidden');
+                return;
+            }
+            cta.classList.add('hidden');
+            pend.textContent = L.notifyBottomPending || '';
+            if (L.notifyBottomPending) {
+                pend.classList.remove('hidden');
+            } else {
+                pend.classList.add('hidden');
+            }
+            if (thanks) {
+                thanks.textContent = '';
+                thanks.classList.add('hidden');
+            }
+            if (form) form.classList.remove('hidden');
+        }
+
+        function refreshNotifyBar() {
+            var L = getStr();
+            var m = document.querySelector('meta[name="bonzi-notify-signup-url"]');
+            var url = (m && m.content) ? m.content.trim() : '';
+            var looksTelegram = notifySignupUrlIsBlockedTelegram(url);
+
+            var bar = document.getElementById('notify-bar');
+            var lk = document.getElementById('notify-bar-link');
+            var msgEl = document.getElementById('notify-bar-msg');
+            if (bar && lk && msgEl) {
+                if (looksTelegram) {
+                    bar.classList.add('hidden');
+                    bar.setAttribute('aria-hidden', 'true');
+                    lk.href = '#';
+                } else if (notifySignupUrlIsAllowedHttps(url)) {
+                    msgEl.textContent = L.notifyMsg;
+                    lk.textContent = L.notifyCta;
+                    lk.href = url;
+                    lk.rel = 'noopener noreferrer';
+                    lk.style.display = '';
+                    bar.classList.remove('hidden');
+                    bar.setAttribute('aria-hidden', 'false');
+                } else {
+                    msgEl.textContent = L.notifyMsgPending;
+                    lk.style.display = 'none';
+                    bar.classList.add('hidden');
+                    bar.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            refreshNotifyBottom(url, looksTelegram, L);
+        }
+
+        function applyLang() {
+            var L = getStr();
+            if (currentLang === 'pt-BR') {
+                document.documentElement.lang = 'pt-BR';
+            } else if (currentLang === 'zh-CN') {
+                document.documentElement.lang = 'zh-CN';
+            } else {
+                document.documentElement.lang = 'en';
+            }
+            var gt = document.getElementById('gate-tagline');
+            if (gt) gt.textContent = L.tagline;
+            var swt = document.getElementById('slot-win-title');
+            if (swt && L.winSlotTitle) {
+                swt.textContent = '\uD83C\uDFB0 ' + L.winSlotTitle;
+            }
+            var awt = document.getElementById('access-win-title');
+            if (awt && L.winAccessTitle) awt.textContent = '\uD83D\uDD11 ' + L.winAccessTitle;
+            var uwt = document.getElementById('updates-win-title');
+            if (uwt && L.winUpdatesTitle) uwt.textContent = '\uD83D\uDCE3 ' + L.winUpdatesTitle;
+            var sbtn = document.getElementById('submit-btn');
+            if (sbtn && L.accessSubmitLabel) sbtn.textContent = L.accessSubmitLabel;
+            var lp = document.getElementById('lcd-prefix');
+            if (lp) lp.textContent = L.lcdPrefix;
+            var machineEl = document.getElementById('slot-machine');
+            var warmingNow = machineEl && machineEl.classList.contains('api-warming');
+            var st = document.getElementById('status-ready');
+            if (st) st.textContent = warmingNow ? L.statusStarting : L.statusIdle;
+            var clueTmp = document.getElementById('clue-msg');
+            if (clueTmp) clueTmp.textContent = warmingNow ? L.serviceWarmingClue : L.clueBar;
+            var pw = document.getElementById('pw');
+            if (pw) pw.placeholder = L.pwPlaceholder;
+            var fp = document.getElementById('footer-privacy');
+            if (fp && L.footerPrivacy) fp.textContent = L.footerPrivacy;
+            var fmit = document.getElementById('footer-mit-lic');
+            if (fmit && L.footerMitLic) fmit.textContent = L.footerMitLic;
+            var prt = document.getElementById('prize-title');
+            if (prt) prt.textContent = L.prizeTitle;
+            var prd = document.getElementById('prize-desc');
+            if (prd) prd.innerHTML = L.prizeDesc;
+            var tglab = document.getElementById('tg-link-label');
+            if (tglab) tglab.textContent = L.tgOpen;
+            var cplab = document.getElementById('close-prize-label');
+            if (cplab) cplab.textContent = L.closeModal;
+            var ib = document.getElementById('slot-info-btn');
+            if (ib && L.infoTitle) {
+                ib.setAttribute('title', L.infoTitle);
+                ib.textContent = L.infoTitle;
+            }
+            var levEl = document.getElementById('slot-lever');
+            if (levEl) levEl.setAttribute('aria-label', L.leverAria);
+            var lpl = document.getElementById('lever-pull-label');
+            if (lpl && L.leverPullLabel) lpl.textContent = L.leverPullLabel;
+            var introEl = document.getElementById('slot-intro-text');
+            if (introEl && L.introText) introEl.textContent = L.introText;
+            var hwt = document.getElementById('howto-win-title');
+            if (hwt && L.howtoTitle) hwt.textContent = '🎴 ' + L.howtoTitle;
+            var hs1 = document.getElementById('howto-step1');
+            if (hs1 && L.howtoStep1) hs1.textContent = L.howtoStep1;
+            var hs2 = document.getElementById('howto-step2');
+            if (hs2 && L.howtoStep2) hs2.textContent = L.howtoStep2;
+            var hs3 = document.getElementById('howto-step3');
+            if (hs3 && L.howtoStep3) hs3.textContent = L.howtoStep3;
+            var hn = document.getElementById('howto-note');
+            if (hn && L.howtoNote) hn.textContent = L.howtoNote;
+            var spEl = document.getElementById('skill-prompt');
+            if (spEl) {
+                if (skillChallengeId || skillChallengeLoading) {
+                    skillChallengeId = '';
+                    loadSkillChallenge(true);
+                }
+                else if (L.loadingPassage) spEl.textContent = L.loadingPassage;
+            }
+            var reelWords = document.querySelectorAll('#slot-reel .word');
+            for (var ri = 0; ri < reelWords.length; ri++) {
+                var rk = reelWords[ri].getAttribute('data-reel-key');
+                if (rk) reelWords[ri].textContent = reelLabel(rk);
+            }
+            try {
+                document.title = L.docTitle || 'Bonzi Vista: Slot';
+            } catch (eDoc) {}
+            var wbt = document.getElementById('winamp-brand-text');
+            if (wbt && L.winampBrandText) wbt.textContent = L.winampBrandText;
+            var fcto = document.getElementById('footer-cto-label');
+            if (fcto && L.footerCtoLabel) fcto.textContent = L.footerCtoLabel;
+            var fpref = document.getElementById('footer-sponsor-prefix');
+            if (fpref && L.footerSponsorPrefix) fpref.textContent = L.footerSponsorPrefix;
+            var sf = document.getElementById('site-footer-main');
+            if (sf && L.siteFooterAria) sf.setAttribute('aria-label', L.siteFooterAria);
+            var em = document.getElementById('email-updates');
+            if (em && L.emailUpdatesAria) em.setAttribute('aria-label', L.emailUpdatesAria);
+            var fcb = document.getElementById('funnel-msg-close-btn');
+            if (fcb && L.funnelCloseAria) fcb.setAttribute('aria-label', L.funnelCloseAria);
+            var hph = document.getElementById('holding-prank-hint');
+            if (hph && L.holdingPrank) hph.textContent = L.holdingPrank;
+            var lgroup = document.querySelector('.slot-language-switch');
+            if (lgroup && L.langGroupAria) lgroup.setAttribute('aria-label', L.langGroupAria);
+            var llabel = document.getElementById('slot-lang-label');
+            if (llabel && L.langLabel) llabel.textContent = L.langLabel;
+            var bp = document.getElementById('lang-pt-br');
+            var be = document.getElementById('lang-en');
+            var bz = document.getElementById('lang-zh-cn');
+            if (bp) bp.setAttribute('aria-pressed', currentLang === 'pt-BR' ? 'true' : 'false');
+            if (be) be.setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+            if (bz) bz.setAttribute('aria-pressed', currentLang === 'zh-CN' ? 'true' : 'false');
+            if (bp && L.langPtAria) bp.setAttribute('aria-label', L.langPtAria);
+            if (bp && L.langPtTitle) bp.setAttribute('title', L.langPtTitle);
+            if (be && L.langEnAria) be.setAttribute('aria-label', L.langEnAria);
+            if (bz && L.langZhAria) bz.setAttribute('aria-label', L.langZhAria);
+            if (bz && L.langZhTitle) bz.setAttribute('title', L.langZhTitle);
+            var wem = document.getElementById('waitlist-email');
+            if (wem) wem.placeholder = L.waitlistEmailPh;
+            var wsb = document.getElementById('waitlist-submit');
+            if (wsb) wsb.textContent = L.waitlistJoin;
+            var fld = document.getElementById('funnel-msg-ok');
+            if (fld && L.waitlistModalOk) fld.textContent = L.waitlistModalOk;
+            var fox = document.getElementById('funnel-msg-overlay');
+            var fhd = document.getElementById('funnel-msg-heading');
+            if (fhd && fox && fox.classList.contains('hidden')) {
+                fhd.textContent = L.waitlistModalTitle;
+            }
+            refreshNotifyBar();
+            if (typeof bonziWinampLangRefresh === 'function') bonziWinampLangRefresh();
+        }
+
+	        // === SLOT WORDS ===
+		        // Concrete clue words plus visible emoji stops; the gold scroll still marks the jackpot.
+		        var REEL_I18N = {
+		            'pt-BR': {
+		                'Attention': 'Atenção', 'Loyalty': 'Lealdade', 'Presence': 'Presença', 'Activity': 'Atividade',
+		                'Signal': 'Sinal', 'Trust': 'Confiança', 'Reputation': 'Reputação', 'Time': 'Tempo',
+		                'Streak': 'Sequência', 'Stake': 'Participação', 'Claim': 'Direito', 'Badge': 'Selo',
+		                'Moment': 'Momento', 'Energy': 'Energia', 'Identity': 'Identidade', 'Community': 'Comunidade',
+		                'Story': 'História', 'Voice': 'Voz', 'Action': 'Ação', 'History': 'Histórico',
+		                'Effort': 'Esforço', 'Knowledge': 'Conhecimento', 'Focus': 'Foco', 'Value': 'Valor',
+		                'Impact': 'Impacto', 'Proof': 'Prova', 'Record': 'Registro', 'Score': 'Pontuação',
+		                'Coin': 'Moeda', 'Network': 'Rede', 'Bond': 'Vínculo', 'Choice': 'Escolha'
+		            },
+		            'zh-CN': {
+		                'Attention': '注意力', 'Loyalty': '忠诚', 'Presence': '存在感', 'Activity': '活跃度',
+		                'Signal': '信号', 'Trust': '信任', 'Reputation': '声誉', 'Time': '时间',
+		                'Streak': '连胜', 'Stake': '权益', 'Claim': '主张', 'Badge': '徽章',
+		                'Moment': '时刻', 'Energy': '能量', 'Identity': '身份', 'Community': '社区',
+		                'Story': '故事', 'Voice': '声音', 'Action': '行动', 'History': '历史',
+		                'Effort': '努力', 'Knowledge': '知识', 'Focus': '专注', 'Value': '价值',
+		                'Impact': '影响力', 'Proof': '证明', 'Record': '记录', 'Score': '分数',
+		                'Coin': '代币', 'Network': '网络', 'Bond': '纽带', 'Choice': '选择'
+		            }
+		        };
+		        function reelLabel(key) {
+		            var map = REEL_I18N[currentLang];
+		            return (map && map[key]) ? map[key] : key;
+		        }
+		        var words = [
+		            'Attention', 'Loyalty', 'Presence', 'Activity',
+		            'Signal', 'Trust', 'Reputation', 'Time',
+		            '💜🤫',
+		            'Streak', 'Stake', 'Claim', 'Badge',
+		            'Moment', 'Energy', 'Identity', 'Community',
+		            '😎',
+		            'Story', 'Voice', 'Action', 'History',
+		            'Effort', 'Knowledge', 'Focus', 'Value',
+		            '🍌',
+		            'Impact', 'Proof', 'Record', 'Score',
+		            'Coin', 'Network', 'Bond', 'Choice',
+		            { t: '\u{1F4DC}', cls: 'key-word' },
+		        ];
+
+        var reel = document.getElementById('slot-reel');
+        var lever = document.getElementById('slot-lever');
+        var machine = document.getElementById('slot-machine');
+        var clueEl = document.getElementById('clue-msg');
+        var errEl = document.getElementById('err');
+        var pwEl = document.getElementById('pw');
+        var submitBtn = document.getElementById('submit-btn');
+        var spinCountEl = document.getElementById('spin-count');
+        var bonziImgs = document.querySelectorAll('.bonzi-logo-img');
+        var prizeOverlay = document.getElementById('prize-overlay');
+        var tgLink = document.getElementById('tg-link');
+        var closePrize = document.getElementById('close-prize');
+        var spinning = false;
+        var apiWarmPoll = null;
+        var pos = 0;
+        var spins = 0;
+        var cluesFound = {};
+        var wordH = 60;
+
+        // Build reel
+        words.forEach(function(w) {
+            var span = document.createElement('span');
+            span.className = 'word';
+            if (typeof w === 'object') {
+                span.classList.add(w.cls);
+                if (w.cls === 'key-word') {
+                    span.innerHTML = '<img src="bonzi-logo.png" alt="" class="slot-bonzi-img" style="filter:sepia(1) saturate(3) hue-rotate(15deg) brightness(1.1)">';
+                } else {
+                    span.textContent = w.t;
+                }
+            } else {
+                span.dataset.reelKey = w;
+                span.textContent = reelLabel(w);
+            }
+            reel.appendChild(span);
+        });
+
+        var totalH = words.length * wordH;
+
+        function easeOut(t) { return 1 - Math.pow(1 - t, 5); }
+
+        // Win98 ding
+        function ding() {
+            try {
+                var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                osc.frequency.setValueAtTime(1000, ctx.currentTime + 0.1);
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        // Bonzi radar
+        function setGold(idx) {
+            bonziImgs.forEach(function(img, i) {
+                img.classList.toggle('gold', i === idx);
+            });
+        }
+
+        persistLang();
+        applyLang();
+        (function wireLangButtons() {
+            var langPtBtn = document.getElementById('lang-pt-br');
+            var langEnBtn = document.getElementById('lang-en');
+            var langZhBtn = document.getElementById('lang-zh-cn');
+            if (langPtBtn) {
+                langPtBtn.addEventListener('click', function() {
+                    currentLang = 'pt-BR';
+                    persistLang();
+                    applyLang();
+                });
+            }
+            if (langEnBtn) {
+                langEnBtn.addEventListener('click', function() {
+                    currentLang = 'en';
+                    persistLang();
+                    applyLang();
+                });
+            }
+            if (langZhBtn) {
+                langZhBtn.addEventListener('click', function() {
+                    currentLang = 'zh-CN';
+                    persistLang();
+                    applyLang();
+                });
+            }
+        })();
+
+        function getApiOrigin() {
+            var meta = document.querySelector('meta[name="bonzi-api-origin"]');
+            var raw = (meta && meta.content) ? meta.content.trim().replace(/\/+$/, '') : '';
+            return raw || 'https://bonzi-v5.onrender.com';
+        }
+
+        function _tgLangSuffix() {
+            if (currentLang === 'pt-BR') return '_lang_pt';
+            if (currentLang === 'zh-CN') return '_lang_zh';
+            return '';
+        }
+
+        function _appendLangToTgLink(url) {
+            var s = _tgLangSuffix();
+            if (!s || !url) return url;
+            return url.replace(/(start=)([^&]*)/, function(_, k, v) { return k + v + s; });
+        }
+
+        function getDeviceFingerprint() {
+            var KEY = 'bonzi_slot_fp_v1';
+            try {
+                var v = localStorage.getItem(KEY);
+                if (v && v.length >= 8) return v;
+                v = 'fp-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 18);
+                localStorage.setItem(KEY, v);
+                return v;
+            } catch (e) {
+                return 'fp-fallback-' + String(Date.now()) + Math.random().toString(36).slice(2, 14);
+            }
+        }
+
+        function setApiWarmUi(on) {
+            var L = getStr();
+            var st = document.getElementById('status-ready');
+            if (on) {
+                machine.classList.add('api-warming');
+                lever.classList.add('lever-disabled');
+                lever.setAttribute('aria-disabled', 'true');
+                if (st) st.textContent = L.statusStarting;
+                clueEl.textContent = L.serviceWarmingClue;
+            } else {
+                machine.classList.remove('api-warming');
+                lever.classList.remove('lever-disabled');
+                lever.removeAttribute('aria-disabled');
+                if (st) st.textContent = L.statusIdle;
+                clueEl.textContent = L.clueBar;
+            }
+        }
+
+        function fetchSlotRulesHealth() {
+            var api = getApiOrigin();
+            return fetch(api + '/api/slotgame/rules.json').then(function(r) {
+                return r.text().then(function(text) {
+                    var j = null;
+                    try {
+                        j = JSON.parse(text);
+                    } catch (eIgn) {
+                        j = null;
+                    }
+                    return { ok: r.ok, status: r.status, json: j };
+                });
+            });
+        }
+
+        function startWarmPolling() {
+            if (apiWarmPoll) return;
+            apiWarmPoll = setInterval(function() {
+                if (!machine.classList.contains('api-warming')) {
+                    clearInterval(apiWarmPoll);
+                    apiWarmPoll = null;
+                    return;
+                }
+                fetchSlotRulesHealth().then(function(res) {
+                    var j = res.json || {};
+                    if (res.ok && j.warming !== true && j.ok !== false) {
+                        setApiWarmUi(false);
+                        clearInterval(apiWarmPoll);
+                        apiWarmPoll = null;
+                    }
+                }).catch(function() {});
+            }, 12000);
+        }
+
+        function scheduleRulesHealthProbe() {
+            fetchSlotRulesHealth().then(function(res) {
+                var j = res.json || {};
+                if (!res.ok || j.warming === true || j.ok === false) {
+                    setApiWarmUi(true);
+                    startWarmPolling();
+                } else {
+                    setApiWarmUi(false);
+                }
+            }).catch(function() {
+                setApiWarmUi(true);
+                startWarmPolling();
+            });
+        }
+
+        function _slotFetchJson(url, init) {
+            return fetch(url, init).then(function (r) {
+                return r.text().then(function (text) {
+                    var j;
+                    try {
+                        j = JSON.parse(text);
+                    } catch (eParse) {
+                        throw eParse;
+                    }
+                    return { httpOk: r.ok, status: r.status, json: j };
+                });
+            });
+        }
+
+        function postSlotAttempt() {
+            var api = getApiOrigin();
+            var url = api + '/api/slotgame/attempt';
+            return _slotFetchJson(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint() })
+            });
+        }
+
+	        function postSlotWin(attemptToken) {
+	            var api = getApiOrigin();
+	            var url = api + '/api/slotgame/win';
+	            return _slotFetchJson(url, {
+	                method: 'POST',
+	                credentials: 'include',
+	                headers: { 'Content-Type': 'application/json' },
+	                body: JSON.stringify({
+	                    fingerprint: getDeviceFingerprint(),
+	                    tier: 'gold',
+	                    attempt_token: attemptToken
+	                })
+	            });
+	        }
+
+	        function postSkillClaim(challengeId, answer) {
+	            var api = getApiOrigin();
+	            var url = api + '/api/slotgame/skill_claim';
+	            return _slotFetchJson(url, {
+	                method: 'POST',
+	                credentials: 'include',
+	                headers: { 'Content-Type': 'application/json' },
+	                body: JSON.stringify({
+	                    fingerprint: getDeviceFingerprint(),
+	                    challenge_id: challengeId,
+	                    answer: answer
+	                })
+	            });
+	        }
+
+        var skillPromptEl = document.getElementById('skill-prompt');
+        var skillChallengeId = '';
+        var skillChallengeLoading = null;
+        var skillChallengeRequestToken = 0;
+
+        function setSkillPrompt(text) {
+            if (skillPromptEl) skillPromptEl.textContent = text || '';
+        }
+
+        function loadSkillChallenge(forceReload) {
+            if (skillChallengeLoading && !forceReload) return skillChallengeLoading;
+            var requestToken = ++skillChallengeRequestToken;
+            var requestLang = currentLang;
+            setSkillPrompt((I18N[requestLang] || I18N.en).loadingPassage);
+            var api = getApiOrigin();
+            skillChallengeLoading = _slotFetchJson(api + '/api/slotgame/skill_challenge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint: getDeviceFingerprint(), lang: requestLang })
+            }).then(function (res) {
+                if (requestToken !== skillChallengeRequestToken) return false;
+                skillChallengeLoading = null;
+                var j = res.json || {};
+                if (res.httpOk && j.success && j.challenge_id) {
+                    skillChallengeId = j.challenge_id;
+                    setSkillPrompt(j.prompt || getStr().readThenAnswer);
+                    return true;
+                }
+                skillChallengeId = '';
+                setSkillPrompt(getStr().readPromptSoon);
+                var _rawErr = (j && j.error) ? j.error : '';
+                errEl.textContent = (_rawErr && _rawErr !== 'kill_switch_enabled') ? _rawErr : getStr().passageUnavailable;
+                return false;
+            }).catch(function () {
+                if (requestToken !== skillChallengeRequestToken) return false;
+                skillChallengeLoading = null;
+                skillChallengeId = '';
+                setSkillPrompt(getStr().readPromptSoon);
+                errEl.textContent = getStr().passageUnavailable;
+                return false;
+            });
+            return skillChallengeLoading;
+        }
+
+        function applySkillChallengePayload(payload) {
+            if (!payload) return false;
+            var challenge = payload.challenge || payload;
+            if (challenge && challenge.challenge_id) {
+                skillChallengeId = challenge.challenge_id;
+                setSkillPrompt(challenge.prompt || getStr().readThenAnswer);
+                return true;
+            }
+            return false;
+        }
+
+        (function wireHowto() {
+            var HOWTO_KEY = 'bonzi_howto_dismissed';
+            var hw = document.getElementById('howto-window');
+            try {
+                if (hw && localStorage.getItem(HOWTO_KEY) === '1') hw.classList.add('hidden');
+            } catch (e) {}
+            var hcb = document.getElementById('howto-close-btn');
+            if (hcb && hw) {
+                hcb.addEventListener('click', function() {
+                    hw.classList.add('hidden');
+                    hw.setAttribute('aria-hidden', 'true');
+                    try { localStorage.setItem(HOWTO_KEY, '1'); } catch (e) {}
+                });
+            }
+        })();
+
+        var infoBtn = document.getElementById('slot-info-btn');
+        if (infoBtn) {
+            infoBtn.addEventListener('click', function(ev) {
+                ev.preventDefault();
+                var rulesUrl = getApiOrigin() + '/api/slotgame/rules';
+                if (currentLang === 'pt-BR') {
+                    rulesUrl += '?lang=pt';
+                } else if (currentLang === 'zh-CN') {
+                    rulesUrl += '?lang=zh';
+                }
+                var feats = 'width=480,height=620,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no';
+                var w = window.open(rulesUrl, 'slotrules', feats);
+                if (!w || typeof w.closed === 'undefined')
+                    window.open(rulesUrl, '_blank', 'noopener,noreferrer');
+            });
+        }
+
+        var lastAttemptToken = '';
+
+        // Spin - server attempt receipt first, then animation; jackpot calls /win with that receipt
+        lever.addEventListener('click', function() {
+            if (spinning) return;
+            if (lever.classList.contains('lever-disabled')) return;
+            spinning = true;
+
+            (function leverPullChime() {
+                var ac = document.getElementById('slot-coin');
+                if (!ac) {
+                    ding();
+                    return;
+                }
+                try {
+                    ac.currentTime = 0;
+                    var pr = ac.play();
+                    if (pr && typeof pr.catch === 'function') {
+                        pr.catch(function() {
+                            ding();
+                        });
+                    }
+                } catch (eChime) {
+                    ding();
+                }
+            })();
+
+            clueEl.textContent = getStr().spinChecking;
+
+            postSlotAttempt().then(function(res) {
+                var j = res.json || {};
+                if (!res.httpOk || !j.success) {
+                    spinning = false;
+                    if (j.warming === true || res.status === 503) {
+                        setApiWarmUi(true);
+                        startWarmPolling();
+                        return;
+                    }
+                    var errLow = String(j.error || '').toLowerCase();
+                    if (errLow.indexOf('still starting') !== -1) {
+                        setApiWarmUi(true);
+                        startWarmPolling();
+                        return;
+                    }
+                    clueEl.textContent = j.error || (getStr().spinBlocked + ' (' + res.status + ')');
+                    if (typeof j.tries_remaining === 'number' && spinCountEl) {
+                        spinCountEl.textContent = getStr().triesLeft(j.tries_remaining, j.max_tries || '-');
+                    }
+                    return;
+                }
+
+                lastAttemptToken = (j.attempt_token || '').trim();
+                if (!lastAttemptToken) {
+                    spinning = false;
+                    clueEl.textContent = getStr().spinNoReceipt;
+                    return;
+                }
+
+                if (spinCountEl) {
+                    spinCountEl.textContent = getStr().triesLeft(j.tries_remaining, j.max_tries);
+                }
+
+                clueEl.textContent = getStr().clueBar;
+                spins++;
+
+                machine.classList.remove('jackpot');
+
+	                var target;
+
+                var jackpotIdx = -1;
+                words.forEach(function(w, i) {
+                    if (typeof w === 'object' && w.cls === 'key-word') jackpotIdx = i;
+                });
+
+	                var jackpotChance = Math.min(0.05, Math.max(0, (spins - 4) * 0.01));
+	                if (spins >= 5 && Math.random() < jackpotChance && jackpotIdx >= 0) {
+	                    target = jackpotIdx;
+	                } else {
+	                    // Gold comes only from the deliberate jackpot roll above; keep it out of the random fallback.
+	                    target = Math.floor(Math.random() * words.length);
+	                    if (target === jackpotIdx) target = (target + 1) % words.length;
+	                }
+
+                var targetPos = target * wordH;
+                var rotations = 3 + Math.floor(Math.random() * 2);
+                var dist = (rotations * totalH) + targetPos - (pos % totalH);
+                var startPos = pos;
+                var duration = 3000;
+                var startTime = null;
+
+                lever.classList.add('pulled');
+                setTimeout(function() { lever.classList.remove('pulled'); }, 200);
+
+                function animate(ts) {
+                    if (!startTime) startTime = ts;
+                    var elapsed = ts - startTime;
+                    var progress = Math.min(elapsed / duration, 1);
+                    var eased = easeOut(progress);
+                    pos = startPos + (dist * eased);
+                    reel.style.transform = 'translateY(-' + (pos % totalH) + 'px)';
+
+                    var ci = Math.floor((pos % totalH) / wordH) % words.length;
+                    setGold(ci % 5);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        pos = targetPos;
+                        reel.style.transform = 'translateY(-' + targetPos + 'px)';
+                        setGold(2);
+
+                        var landed = words[target];
+                        if (typeof landed === 'object') {
+	                            if (landed.cls === 'key-word') {
+                                ding();
+                                machine.classList.add('jackpot');
+                                clueEl.textContent = getStr().jackpotClaiming;
+                                bonziImgs.forEach(function(img) { img.classList.add('gold'); });
+
+                                postSlotWin(lastAttemptToken).then(function(wres) {
+                                    var wj = wres.json || {};
+                                    if (wres.httpOk && wj.success && wj.deep_link) {
+                                        clueEl.textContent = getStr().jackpotOk;
+                                        tgLink.href = _appendLangToTgLink(wj.deep_link);
+                                        try { localStorage.setItem('bonzi_pending_claim', JSON.stringify({ deep_link: wj.deep_link, expires_at: wj.expires_at || '', code: wj.code || wj.signed_code || '' })); } catch (e) {}
+                                        var _prt=document.getElementById('prize-title'); if(_prt) _prt.textContent=getStr().prizeTitle||'Lucky spin. 😎';
+                                        var _prd=document.getElementById('prize-desc'); if(_prd) _prd.innerHTML=getStr().prizeDesc||'';
+                                        var _pcd=document.getElementById('prize-code-display'); if(_pcd) _pcd.textContent=wj.code||wj.signed_code||'';
+                                        var _tgl=document.getElementById('tg-link-label'); if(_tgl) _tgl.textContent=getStr().tgOpen||'Open @Bonzivista_bot';
+                                        setTimeout(function() {
+                                            prizeOverlay.classList.add('open');
+                                        }, 400);
+                                    } else {
+                                        clueEl.textContent = wj.error || getStr().prizeFail;
+                                        machine.classList.remove('jackpot');
+                                    }
+                                    setTimeout(function() { setGold(2); }, 5000);
+                                }).catch(function() {
+                                    clueEl.textContent = getStr().prizeNet;
+                                    machine.classList.remove('jackpot');
+                                }).finally(function() {
+                                    spinning = false;
+                                });
+                            }
+                        } else {
+                            var _hs = {
+                                '💜🤫': getStr().reelHint1 || 'Oh look, a sign. But what does it mean? Probably nothing.',
+                                '😎': getStr().reelHint2 || '😎 Someone on this page is always wearing shades. Who is it?',
+                                '🍌': getStr().reelHint3 || '🍌 A banana. Definitely just a banana. Keep spinning.',
+                            };
+                            clueEl.textContent = (typeof landed === 'string' && _hs[landed]) ? _hs[landed] : getStr().reelFluff;
+                            spinning = false;
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }).catch(function () {
+                spinning = false;
+                clueEl.textContent = getStr().spinNetErr;
+            });
+        });
+
+        scheduleRulesHealthProbe();
+
+        (function wireWinampStripe() {
+            var WINAMP_PLAYLIST = [
+                { src: 'sounds/rage-against-the-machine-killing-in-the-name.mp3', title: 'Rage Against the Machine - Killing in the Name' },
+                { src: 'sounds/winamp-demo.wav', title: 'Demo tune' }
+            ];
+
+            var stripe = document.querySelector('.win98-winamp-stripe');
+            var audio = document.getElementById('winamp-player');
+            var timeLine = document.getElementById('winamp-time-line');
+            var titleOuter = document.getElementById('winamp-track-title-outer');
+            var titleMarquee = document.getElementById('winamp-track-title-marquee');
+            var titleA = document.getElementById('winamp-track-title-a');
+            var titleB = document.getElementById('winamp-track-title-b');
+            var titleGapEl = titleMarquee ? titleMarquee.querySelector('.winamp-track-title-gap') : null;
+            var playBtn = document.getElementById('winamp-play');
+            var stopBtn = document.getElementById('winamp-stop');
+            var prevBtn = document.getElementById('winamp-prev');
+            var nextBtn = document.getElementById('winamp-next');
+            if (!stripe || !audio || !timeLine || !titleOuter || !titleMarquee || !titleA || !titleB || !titleGapEl || !playBtn || !stopBtn || !prevBtn || !nextBtn) return;
+
+            var winampTrackIndex = 0;
+            var winampCurrentTitle = '';
+            var winampMarqueeRaf = 0;
+            var winampResizeTimer = 0;
+
+            function setWinampTrackTitle(text) {
+                winampCurrentTitle = (text != null) ? String(text) : '';
+                titleA.textContent = winampCurrentTitle;
+                titleB.textContent = winampCurrentTitle;
+                scheduleWinampMarquee();
+            }
+
+            function scheduleWinampMarquee() {
+                if (!titleOuter || !titleMarquee || !titleA || !titleGapEl) return;
+                if (winampMarqueeRaf) window.cancelAnimationFrame(winampMarqueeRaf);
+                winampMarqueeRaf = window.requestAnimationFrame(function() {
+                    winampMarqueeRaf = 0;
+                    titleMarquee.classList.remove('is-scrolling');
+                    titleMarquee.style.animationDuration = '';
+                    titleMarquee.style.removeProperty('--winamp-marquee-shift');
+                    void titleMarquee.offsetWidth;
+                    if (!winampCurrentTitle) return;
+                    var outerW = titleOuter.clientWidth;
+                    if (outerW < 8) return;
+                    var base = winampCurrentTitle;
+                    var sep = '  \u2022  ';
+                    var pad = base;
+                    titleA.textContent = pad;
+                    titleB.textContent = pad;
+                    var stride = titleA.offsetWidth + titleGapEl.offsetWidth;
+                    var guard = 0;
+                    while (stride > 0 && stride <= outerW + 2 && guard < 28) {
+                        guard += 1;
+                        pad = pad + sep + base;
+                        titleA.textContent = pad;
+                        titleB.textContent = pad;
+                        stride = titleA.offsetWidth + titleGapEl.offsetWidth;
+                    }
+                    if (stride <= 0) return;
+                    if (stride > outerW + 1) {
+                        titleMarquee.style.setProperty('--winamp-marquee-shift', (-stride) + 'px');
+                        var pxPerSec = 40;
+                        var sec = Math.max(10, stride / pxPerSec);
+                        titleMarquee.style.animationDuration = sec + 's';
+                        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        if (!reduced) titleMarquee.classList.add('is-scrolling');
+                    }
+                });
+            }
+
+            function onWinampResize() {
+                if (winampResizeTimer) window.clearTimeout(winampResizeTimer);
+                winampResizeTimer = window.setTimeout(function() {
+                    winampResizeTimer = 0;
+                    scheduleWinampMarquee();
+                }, 160);
+            }
+            window.addEventListener('resize', onWinampResize);
+
+            function durSec() {
+                var d = audio.duration;
+                return (typeof d === 'number' && isFinite(d)) ? d : 0;
+            }
+
+            function fmt(sec) {
+                sec = Math.max(0, Math.floor(sec || 0));
+                var mo = Math.floor(sec / 60);
+                var s = sec % 60;
+                function pad(n) { return (n < 10 ? '0' : '') + n; }
+                return pad(mo) + ':' + pad(s);
+            }
+
+            function lcdPaint(stateTok) {
+                var L = getStr();
+                var st = stateTok !== undefined ? stateTok : L.winampStopped;
+                timeLine.textContent = fmt(audio.currentTime) + ' / ' + fmt(durSec()) + ' - ' + st;
+            }
+
+            function loadTrackAbs(idx, opts) {
+                opts = opts || {};
+                var autoAfterLoad = !!opts.autoplay;
+                var n = WINAMP_PLAYLIST.length;
+                if (n < 1) return;
+                winampTrackIndex = ((idx % n) + n) % n;
+                var tr = WINAMP_PLAYLIST[winampTrackIndex];
+                var wasPlaying = !audio.paused;
+                audio.pause();
+                audio.src = tr.src;
+                audio.load();
+                setWinampTrackTitle(tr.title);
+                if (autoAfterLoad || wasPlaying) {
+                    var pr = audio.play();
+                    if (pr && typeof pr.catch === 'function') pr.catch(function() {});
+                } else {
+                    lcdPaint(getStr().winampStopped);
+                }
+                updateWinampStripe();
+            }
+
+            function loadTrackDelta(delta) {
+                loadTrackAbs(winampTrackIndex + delta, {});
+            }
+
+            function updateWinampStripe() {
+                var L = getStr();
+                stripe.setAttribute('aria-label', L.winampGroupAria + ' - ' + (winampCurrentTitle || ''));
+                stopBtn.setAttribute('aria-label', L.winampStop);
+                prevBtn.setAttribute('aria-label', L.winampPrev);
+                nextBtn.setAttribute('aria-label', L.winampNext);
+                if (audio.paused) {
+                    playBtn.innerHTML = '&#9654;';
+                    playBtn.setAttribute('aria-pressed', 'false');
+                    playBtn.setAttribute('aria-label', L.winampPlay);
+                } else {
+                    playBtn.innerHTML = '&#10074;&#10074;';
+                    playBtn.setAttribute('aria-pressed', 'true');
+                    playBtn.setAttribute('aria-label', L.winampPause);
+                }
+                if (audio.paused && audio.currentTime < 0.05) lcdPaint(L.winampStopped);
+                else if (audio.paused) lcdPaint(L.winampPauseState);
+                else lcdPaint(L.winampPlayState);
+            }
+
+            bonziWinampLangRefresh = updateWinampStripe;
+
+            loadTrackAbs(0, { autoplay: false });
+
+            prevBtn.addEventListener('click', function() { loadTrackDelta(-1); });
+            nextBtn.addEventListener('click', function() { loadTrackDelta(1); });
+
+            playBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    var p = audio.play();
+                    if (p && typeof p.catch === 'function') p.catch(function() {});
+                } else {
+                    audio.pause();
+                }
+            });
+
+            stopBtn.addEventListener('click', function() {
+                audio.pause();
+                audio.currentTime = 0;
+                lcdPaint(getStr().winampStopped);
+                updateWinampStripe();
+            });
+
+            audio.addEventListener('play', function() { lcdPaint(getStr().winampPlayState); updateWinampStripe(); });
+            audio.addEventListener('pause', updateWinampStripe);
+            audio.addEventListener('timeupdate', function() {
+                if (!audio.paused) lcdPaint(getStr().winampPlayState);
+            });
+            audio.addEventListener('loadedmetadata', function() {
+                updateWinampStripe();
+                scheduleWinampMarquee();
+            });
+            audio.addEventListener('ended', function() {
+                loadTrackAbs(winampTrackIndex + 1, { autoplay: true });
+            });
+        })();
+
+        (function wireWaitlistForm() {
+            var form = document.getElementById('waitlist-form');
+            if (!form) return;
+            form.addEventListener('submit', function(ev) {
+                ev.preventDefault();
+                var em = document.getElementById('waitlist-email');
+                var hp = document.getElementById('waitlist-hp');
+                if (!em) return;
+                var email = (em.value || '').trim();
+                if (!email) return;
+                var api = getApiOrigin();
+                var btn = document.getElementById('waitlist-submit');
+                if (btn) btn.disabled = true;
+                fetch(api + '/api/public/waitlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        source: 'slot_home',
+                        website: hp ? hp.value : ''
+                    })
+                }).then(function(r) {
+                    return r.text().then(function(t) {
+                        var j = {};
+                        try { j = JSON.parse(t); } catch (eJ) { j = {}; }
+                        return { ok: r.ok, j: j };
+                    });
+                }).then(function(res) {
+                    if (btn) btn.disabled = false;
+                    if (res.ok && res.j && res.j.success) {
+                        form.classList.add('hidden');
+                        var th = document.getElementById('waitlist-thanks');
+                        if (th) {
+                            th.textContent = getStr().waitlistThanks;
+                            th.classList.remove('hidden');
+                        }
+                    } else {
+                        var err = (res.j && res.j.error) ? res.j.error : getStr().waitlistErr;
+                        showFunnelMsgModal(getStr().waitlistModalTitle, err);
+                    }
+                }).catch(function() {
+                    if (btn) btn.disabled = false;
+                    showFunnelMsgModal(getStr().waitlistModalTitle, getStr().waitlistErr);
+                });
+            });
+        })();
+
+	        // Passage claim: issue a signed CRACKER code, then open Telegram.
+	        function tryCode() {
+	            var val = pwEl.value.trim();
+	            if (!val) return;
+	            if (!skillChallengeId) {
+	                errEl.textContent = getStr().loadingPassage;
+	                loadSkillChallenge(true);
+	                return;
+	            }
+	            submitBtn.disabled = true;
+	            errEl.textContent = getStr().spinChecking;
+	            postSkillClaim(skillChallengeId, val).then(function(res) {
+	                submitBtn.disabled = false;
+	                var j = res.json || {};
+	                if (res.httpOk && j.success && j.deep_link) {
+	                    tgLink.href = _appendLangToTgLink(j.deep_link);
+	                    var _prt2=document.getElementById('prize-title'); if(_prt2) _prt2.textContent=getStr().skillPrizeTitle||'You found it. 💜🤫';
+	                    var _prd2=document.getElementById('prize-desc'); if(_prd2) _prd2.innerHTML=getStr().skillPrizeDesc||'You recognised the sign. Your badge code:';
+	                    var _pcd2=document.getElementById('prize-code-display'); if(_pcd2) _pcd2.textContent=j.code||j.signed_code||'';
+	                    var _tgl2=document.getElementById('tg-link-label'); if(_tgl2) _tgl2.textContent=getStr().skillTgOpen||'Claim badge in @Bonzivista_bot';
+	                    prizeOverlay.classList.add('open');
+	                    return;
+	                }
+	                if (res.status === 428 || j.reason === 'challenge_required') {
+	                    if (applySkillChallengePayload(j)) {
+	                        errEl.textContent = j.error || getStr().readThenAnswer;
+	                    } else {
+	                        errEl.textContent = j.error || getStr().readPromptSoon;
+	                    }
+	                } else {
+	                    var _e2 = (j && j.error && j.error !== "kill_switch_enabled") ? j.error : ""; errEl.textContent = _e2 || getStr().errWrong;
+	                }
+	                pwEl.value = '';
+	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
+	            }).catch(function() {
+	                submitBtn.disabled = false;
+	                errEl.textContent = getStr().prizeNet;
+	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
+	            });
+	        }
+
+        pwEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') tryCode();
+        });
+        submitBtn.addEventListener('click', tryCode);
+        loadSkillChallenge();
+
+        // Easter egg: click logo 5 times for a hint
+        var logoClicks = 0;
+        document.getElementById('logo-click').addEventListener('click', function() {
+            logoClicks++;
+            if (logoClicks === 5) {
+                clueEl.textContent = getStr().logoHint;
+                logoClicks = 0;
+            }
+        });
+
+        // Prize modal close
+        closePrize.addEventListener('click', function() {
+            prizeOverlay.classList.remove('open');
+        });
+        prizeOverlay.addEventListener('click', function(e) {
+            if (e.target === prizeOverlay) prizeOverlay.classList.remove('open');
+        });
+    })();
+    </script>
+    <script>
+    /* Pending-claim bind CTA: a web win binds to Telegram only when the visitor
+       opens the deep link. If they leave without binding, the win is stored and a
+       sticky 'tap to bind' bar shows on return until the claim expires. */
+    (function () {
+        try {
+            var KEY = 'bonzi_pending_claim';
+            var raw = localStorage.getItem(KEY);
+            if (!raw) return;
+            var c = JSON.parse(raw);
+            if (!c || !c.deep_link) return;
+            if (c.expires_at && Date.parse(c.expires_at) <= Date.now()) { localStorage.removeItem(KEY); return; }
+            var bar = document.createElement('a');
+            bar.href = c.deep_link; bar.target = '_blank'; bar.rel = 'noopener';
+            bar.id = 'pending-claim-bar';
+            bar.textContent = (typeof getStr === 'function' && getStr().claimPending) || 'Claim pending - tap to bind it to Telegram';
+            bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;display:block;text-align:center;padding:12px 16px;background:#7C3AED;color:#fff;font-weight:700;text-decoration:none;font-family:inherit;';
+            document.body.appendChild(bar);
+            bar.addEventListener('click', function () { try { localStorage.removeItem(KEY); } catch (e) {} });
+        } catch (e) {}
+    })();
+    </script>
 </body>
 </html>

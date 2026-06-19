@@ -21,6 +21,22 @@ EXPECTED_NAV_LINKS = [
 ]
 
 PUBLIC_NAV_KEYS = ["about", "stake"]
+FORBIDDEN_PUBLIC_NAV_HREFS = [
+    "/page_1",
+    "/page_2",
+    "/page_3",
+    "/page_4",
+    "/alpha",
+    "/demo",
+    "/quest-earn",
+    "/specs",
+    "/research",
+    "/manual",
+    "/economics",
+    "/dao",
+    "/metrics",
+    "/vetter",
+]
 
 # Pages that should have consistent nav
 HTML_PAGES = [
@@ -185,6 +201,10 @@ def validate_public_nav_access(root_dir: Path) -> list[str]:
             )
             if re.search(hidden_pattern, text) or re.search(gated_pattern, text):
                 errors.append(f"{label}: data-nav={nav_key!r} must be public, not gated")
+        for href in FORBIDDEN_PUBLIC_NAV_HREFS:
+            pattern = rf'<a\b[^>]*href="{re.escape(href)}(?:/|\.html|")'
+            if re.search(pattern, text):
+                errors.append(f"{label}: public nav must not expose staging route {href}")
     return errors
 
 

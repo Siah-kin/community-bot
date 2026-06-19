@@ -1621,9 +1621,10 @@
                 winampPlayState: 'PLAY',
                 winampPauseState: 'PAUSE',
 	                hints: {},
-                loadingPassage: 'Loading the Passage…',
-                passageUnavailable: 'Passage unavailable right now.',
-                readPromptSoon: 'Read the prompt again in a moment.',
+	                loadingPassage: 'Loading the Passage…',
+	                passageUnavailable: 'Passage unavailable right now.',
+	                passageServiceBusy: 'Alpha claim service is busy. Your code word is right; try again in a moment.',
+	                readPromptSoon: 'Read the prompt again in a moment.',
                 readThenAnswer: 'Read the prompt, then type the answer.',
                 introText: 'Pull the lever. A hint appears below the 5 heads. Read it, type the code word, hit Submit.',
                 howtoTitle: 'How to play',
@@ -1713,9 +1714,10 @@
                 winampPlayState: 'TOCAR',
                 winampPauseState: 'PAUSA',
 	                hints: {},
-                loadingPassage: 'Carregando a Passagem\u2026',
-                passageUnavailable: 'Passagem indispon\u00EDvel no momento.',
-                readPromptSoon: 'Leia o prompt em um instante.',
+	                loadingPassage: 'Carregando a Passagem\u2026',
+	                passageUnavailable: 'Passagem indispon\u00EDvel no momento.',
+	                passageServiceBusy: 'O servi\u00E7o de claim do alpha est\u00E1 ocupado. Sua palavra-c\u00F3digo est\u00E1 certa; tente de novo em instantes.',
+	                readPromptSoon: 'Leia o prompt em um instante.',
                 readThenAnswer: 'Leia o prompt e digite a resposta.',
                 introText: 'Puxe a alavanca. Uma dica aparece abaixo das 5 cabe\u00E7as. Leia, digite a palavra-c\u00F3digo e clique em Enviar.',
                 howtoTitle: 'Como jogar',
@@ -1805,9 +1807,10 @@
                 winampPlayState: '\u64ad\u653e',
                 winampPauseState: '\u6682\u505c',
 	                hints: {},
-                loadingPassage: '\u52a0\u8f7d\u901a\u9053\u2026',
-                passageUnavailable: '\u901a\u9053\u6682\u65f6\u4e0d\u53ef\u7528\u3002',
-                readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
+	                loadingPassage: '\u52a0\u8f7d\u901a\u9053\u2026',
+	                passageUnavailable: '\u901a\u9053\u6682\u65f6\u4e0d\u53ef\u7528\u3002',
+	                passageServiceBusy: 'Alpha claim service is busy. Your code word is right; try again in a moment.',
+	                readPromptSoon: '\u8bf7\u7a0d\u540e\u518d\u8bfb\u63d0\u793a\u3002',
                 readThenAnswer: '\u9605\u8bfb\u63d0\u793a\uff0c\u7136\u540e\u8f93\u5165\u7b54\u6848\u3002',
                 introText: '\u62c9\u52a8\u6447\u6746\u30025\u4e2aBonzi\u5934\u90e8\u4e0b\u65b9\u4f1a\u663e\u793a\u63d0\u793a\u3002\u9605\u8bfb\u63d0\u793a\uff0c\u8f93\u5165\u4ee3\u7801\u8bcd\uff0c\u70b9\u51fb\u63d0\u4ea4\u3002',
                 howtoTitle: '\u6e38\u620f\u8bf4\u660e',
@@ -2378,19 +2381,28 @@
             });
         }
 
-        function _slotFetchJson(url, init) {
-            return fetch(url, init).then(function (r) {
-                return r.text().then(function (text) {
-                    var j;
-                    try {
-                        j = JSON.parse(text);
-                    } catch (eParse) {
-                        throw eParse;
-                    }
-                    return { httpOk: r.ok, status: r.status, json: j };
-                });
-            });
-        }
+	        function _slotFetchJson(url, init) {
+	            return fetch(url, init).then(function (r) {
+	                return r.text().then(function (text) {
+	                    var j = {};
+	                    try {
+	                        j = JSON.parse(text);
+	                    } catch (eParse) {
+	                        j = { error: text || r.statusText || '', non_json: true };
+	                    }
+	                    return { httpOk: r.ok, status: r.status, json: j };
+	                });
+	            });
+	        }
+
+	        function passageClaimErrorText(res, payload) {
+	            var j = payload || {};
+	            if (j.reason === 'claim_service_unavailable' || res.status >= 500) {
+	                return getStr().passageServiceBusy;
+	            }
+	            if (j.error && j.error !== 'kill_switch_enabled') return j.error;
+	            return getStr().errWrong;
+	        }
 
         function postSlotAttempt() {
             var api = getApiOrigin();
@@ -2941,13 +2953,13 @@
 	                        errEl.textContent = j.error || getStr().readPromptSoon;
 	                    }
 	                } else {
-	                    var _e2 = (j && j.error && j.error !== "kill_switch_enabled") ? j.error : ""; errEl.textContent = _e2 || getStr().errWrong;
+	                    errEl.textContent = passageClaimErrorText(res, j);
 	                }
 	                pwEl.value = '';
 	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
 	            }).catch(function() {
 	                submitBtn.disabled = false;
-	                errEl.textContent = getStr().prizeNet;
+	                errEl.textContent = getStr().passageServiceBusy;
 	                setTimeout(function() { errEl.innerHTML = '&nbsp;'; }, 2500);
 	            });
 	        }

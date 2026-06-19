@@ -37,6 +37,21 @@ REQUIRED_ROUTE_FILES = [
     "specs/index.html",
 ]
 
+SILVER_FOX_STAGING_FILES = [
+    "alpha/index.html",
+    "demo/index.html",
+    "quest-earn/index.html",
+    "page_1/index.html",
+    "page_2/index.html",
+    "page_3/index.html",
+    "page_4/index.html",
+    "specs/index.html",
+    "research/contribution-paper.html",
+    "research/contribution-paper-pt.html",
+    "research/contribution-summary.html",
+    "research/contribution-summary-pt.html",
+]
+
 FORBIDDEN_PAGE_COPY = [
     'href="/stake',
     "href='/stake",
@@ -107,6 +122,17 @@ def main() -> int:
         for phrase in FORBIDDEN_PAGE_COPY:
             if phrase in text:
                 errors.append(f"{page.relative_to(repo_root)} contains forbidden stake route: {phrase}")
+
+    for route_file in SILVER_FOX_STAGING_FILES:
+        page = repo_root / route_file
+        if not page.exists():
+            errors.append(f"missing Silver Fox staging file: {route_file}")
+            continue
+        text = page.read_text()
+        if '<meta name="robots" content="noindex, nofollow">' not in text:
+            errors.append(
+                f"{route_file}: Silver Fox/staging pages must use noindex,nofollow"
+            )
 
     if errors:
         print("New page nav guard FAILED")

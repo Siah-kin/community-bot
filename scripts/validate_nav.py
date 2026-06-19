@@ -17,14 +17,10 @@ from typing import Optional
 # Expected nav structure (source of truth from includes/nav.html)
 EXPECTED_NAV_LINKS = [
     "about",
-    "why",
-    "how",
-    "what",
-    "when",
     "stake bonzi",
 ]
 
-PUBLIC_NAV_KEYS = ["about", "why", "how", "what", "when", "stake"]
+PUBLIC_NAV_KEYS = ["about", "stake"]
 
 # Pages that should have consistent nav
 HTML_PAGES = [

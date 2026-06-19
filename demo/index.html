@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Bonzi Works | Bonzi</title>
+    <meta name="description" content="How Bonzi routes community work from intake to review, evidence, and record-backed follow-up.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css?v=20260619routes">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260619routes" defer></script>
+    <style>
+        .journey-shell { max-width: 860px; margin: 0 auto; padding: 96px 28px 72px; }
+        .journey-kicker { color: var(--purple); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+        .journey-shell h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: 0.98; margin: 18px 0 20px; letter-spacing: 0; }
+        .journey-lead { color: #3f3f46; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.6; max-width: 700px; }
+        .journey-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 42px; }
+        .journey-card { border: 1px solid #e4e4e7; padding: 22px; background: #fff; }
+        .journey-card h2 { font-size: 18px; margin: 0 0 10px; }
+        .journey-card p { color: #52525b; line-height: 1.6; margin: 0; }
+        .journey-note { border-left: 4px solid var(--gold); margin-top: 36px; padding: 16px 18px; color: #3f3f46; background: rgba(212, 175, 55, 0.08); }
+        body.dark-mode .journey-lead, body.dark-mode .journey-card p, body.dark-mode .journey-note { color: #d4d4d8; }
+        body.dark-mode .journey-card { background: #111; border-color: #27272a; }
+        @media (max-width: 720px) { .journey-grid { grid-template-columns: 1fr; } .journey-shell { padding-inline: 20px; } }
+
+    </style>
+</head>
+<body data-theme-default="light">
+    <nav id="nav-container"></nav>
+    <div id="mobile-menu-container"></div>
+    <main class="journey-shell">
+        <div class="journey-kicker">How</div>
+        <h1>How the loop works</h1>
+        <p class="journey-lead">A public-safe walkthrough of the Bonzi journey: enter, contribute, get routed, and see what evidence comes back before deeper permissions exist.</p>
+        <div class="journey-grid">
+            <section class="journey-card"><h2>Entry</h2><p>The visible path starts with an application or signed bot link, then unlocks this static journey for the current browser session.</p></section>
+            <section class="journey-card"><h2>Evidence</h2><p>The demo describes the proof shape without exposing founder-only thresholds, prompts, provider internals, or exploit tests.</p></section>
+            <section class="journey-card"><h2>Routing</h2><p>Contributors see how a report or contribution moves from intake into review without gaining admin authority.</p></section>
+        </div>
+        <p class="journey-note">This page is informational. Access here does not grant payments, voting, operational control, or privileged backend data.</p>
+    </main>
+    <footer style="border-top:1px solid #e4e4e7; padding:28px 24px 34px; text-align:center; font-size:13px;">
+        <span>MIT license</span> |
+        <a href="/legal/privacy.html">privacy</a> |
+        <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer">etherfun.app</a> |
+        <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">defiants.org</a> |
+        <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">unidosprojects.org</a>
+    </footer>
+</body>
+</html>

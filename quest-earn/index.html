@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest and Earn | Bonzi</title>
+    <meta name="description" content="A bounded contribution page explaining how reports, useful feedback, and reviewed work move through Bonzi.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css?v=20260619routes">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260619routes" defer></script>
+    <style>
+        .journey-shell { max-width: 860px; margin: 0 auto; padding: 96px 28px 72px; }
+        .journey-kicker { color: var(--purple); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+        .journey-shell h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: 0.98; margin: 18px 0 20px; letter-spacing: 0; }
+        .journey-lead { color: #3f3f46; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.6; max-width: 700px; }
+        .journey-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 42px; }
+        .journey-card { border: 1px solid #e4e4e7; padding: 22px; background: #fff; }
+        .journey-card h2 { font-size: 18px; margin: 0 0 10px; }
+        .journey-card p { color: #52525b; line-height: 1.6; margin: 0; }
+        .journey-note { border-left: 4px solid var(--gold); margin-top: 36px; padding: 16px 18px; color: #3f3f46; background: rgba(212, 175, 55, 0.08); }
+        body.dark-mode .journey-lead, body.dark-mode .journey-card p, body.dark-mode .journey-note { color: #d4d4d8; }
+        body.dark-mode .journey-card { background: #111; border-color: #27272a; }
+        @media (max-width: 720px) { .journey-grid { grid-template-columns: 1fr; } .journey-shell { padding-inline: 20px; } }
+
+    </style>
+</head>
+<body data-theme-default="light">
+    <nav id="nav-container"></nav>
+    <div id="mobile-menu-container"></div>
+    <main class="journey-shell">
+        <div class="journey-kicker">Quest and Earn</div>
+        <h1>What members can do next</h1>
+        <p class="journey-lead">A constrained action map for contributors who want to help without crossing into payment, vote, or admin authority.</p>
+        <div class="journey-grid">
+            <section class="journey-card"><h2>Quest</h2><p>Follow bounded test prompts, capture confusing states, and submit useful reports through the bot flow.</p></section>
+            <section class="journey-card"><h2>Earn</h2><p>Earn language here means eligibility and review path visibility. Actual rewards require backend validation and governance checks.</p></section>
+            <section class="journey-card"><h2>Feedback</h2><p>Good reports describe reproduction steps, expected behavior, actual behavior, and the page or bot path involved.</p></section>
+        </div>
+        <p class="journey-note">Never put private keys, exploit details, wallet secrets, or sensitive personal data into static-page forms or screenshots.</p>
+    </main>
+    <footer style="border-top:1px solid #e4e4e7; padding:28px 24px 34px; text-align:center; font-size:13px;">
+        <span>MIT license</span> |
+        <a href="/legal/privacy.html">privacy</a> |
+        <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer">etherfun.app</a> |
+        <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">defiants.org</a> |
+        <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">unidosprojects.org</a>
+    </footer>
+</body>
+</html>

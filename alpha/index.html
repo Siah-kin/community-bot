@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Bonzi Exists | Bonzi</title>
+    <meta name="description" content="Why Bonzi exists: useful community work needs records, review, proof, and a fairer way to remember contribution.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css?v=20260619routes">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script src="../js/nav-loader.js?v=20260619routes" defer></script>
+    <style>
+        .journey-shell { max-width: 860px; margin: 0 auto; padding: 96px 28px 72px; }
+        .journey-kicker { color: var(--purple); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+        .journey-shell h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: 0.98; margin: 18px 0 20px; letter-spacing: 0; }
+        .journey-lead { color: #3f3f46; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.6; max-width: 700px; }
+        .journey-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 42px; }
+        .journey-card { border: 1px solid #e4e4e7; padding: 22px; background: #fff; }
+        .journey-card h2 { font-size: 18px; margin: 0 0 10px; }
+        .journey-card p { color: #52525b; line-height: 1.6; margin: 0; }
+        .journey-note { border-left: 4px solid var(--gold); margin-top: 36px; padding: 16px 18px; color: #3f3f46; background: rgba(212, 175, 55, 0.08); }
+        body.dark-mode .journey-lead, body.dark-mode .journey-card p, body.dark-mode .journey-note { color: #d4d4d8; }
+        body.dark-mode .journey-card { background: #111; border-color: #27272a; }
+        @media (max-width: 720px) { .journey-grid { grid-template-columns: 1fr; } .journey-shell { padding-inline: 20px; } }
+
+    </style>
+</head>
+<body data-theme-default="light">
+    <nav id="nav-container"></nav>
+    <div id="mobile-menu-container"></div>
+    <main class="journey-shell">
+        <div class="journey-kicker">Why</div>
+        <h1>Why Bonzi exists</h1>
+        <p class="journey-lead">Bonzi exists because useful community work needs records, review, and proof instead of memory, status, or noise.</p>
+        <div class="journey-grid">
+            <section class="journey-card"><h2>Purpose</h2><p>The early route makes the journey visible while keeping sensitive operating details out of static HTML.</p></section>
+            <section class="journey-card"><h2>Expectation</h2><p>Members are asked to test clear flows, report confusing states, and avoid treating page access as governance authority.</p></section>
+            <section class="journey-card"><h2>Boundary</h2><p>Anything involving real member data, admin action, payouts, or voting remains behind backend validation.</p></section>
+        </div>
+        <p class="journey-note">Public copy stays public-safe by design. Founder-only material belongs behind stronger validation than browser storage.</p>
+    </main>
+    <footer style="border-top:1px solid #e4e4e7; padding:28px 24px 34px; text-align:center; font-size:13px;">
+        <span>MIT license</span> |
+        <a href="/legal/privacy.html">privacy</a> |
+        <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer">etherfun.app</a> |
+        <a href="https://defiants.org" target="_blank" rel="noopener noreferrer">defiants.org</a> |
+        <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer">unidosprojects.org</a>
+    </footer>
+</body>
+</html>

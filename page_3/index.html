@@ -17,6 +17,7 @@
             --what-muted: #52525b;
             --what-line: #e4e4e7;
             --what-soft: #f8fafc;
+            --what-page: #fbfbfc;
             --what-purple: #7c3aed;
             --what-green: #0f9f6e;
             --what-amber: #b7791f;
@@ -26,24 +27,36 @@
 
         body.what-page,
         body.what-page.dark-mode {
-            background: #ffffff;
+            background: var(--what-page);
             color: var(--what-ink);
             color-scheme: light;
+            overflow-x: hidden;
+        }
+
+        body.what-page *,
+        body.what-page *::before,
+        body.what-page *::after {
+            box-sizing: border-box;
         }
 
         .what-shell {
-            width: min(1440px, calc(100% - 80px));
+            width: min(1520px, calc(100vw - 72px));
             margin: 0 auto;
-            padding: clamp(108px, 8vh, 140px) 0 0;
+            padding: 96px 0 0;
+            max-width: calc(100vw - 72px);
         }
 
         .what-hero {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(320px, 460px);
-            gap: clamp(28px, 4vw, 56px);
-            align-items: start;
-            border-bottom: 1px solid var(--what-line);
-            padding-bottom: clamp(34px, 5vw, 58px);
+            grid-template-columns: minmax(0, 760px) 340px;
+            justify-content: space-between;
+            gap: 36px;
+            align-items: center;
+            padding: 34px;
+            border: 1px solid var(--what-line);
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 18px 55px rgba(24, 24, 27, 0.06);
         }
 
         .kicker {
@@ -55,12 +68,13 @@
         }
 
         .what-hero h1 {
-            max-width: 920px;
-            margin: 16px 0 20px;
-            font-size: clamp(2.35rem, 4.35vw, 4.75rem);
-            line-height: 1.02;
+            max-width: 740px;
+            margin: 14px 0 16px;
+            font-size: clamp(2.25rem, 4vw, 4.15rem);
+            line-height: 1.04;
             letter-spacing: 0;
             text-wrap: balance;
+            overflow-wrap: break-word;
         }
 
         .lead {
@@ -75,19 +89,19 @@
             border: 1px solid var(--what-line);
             border-radius: 8px;
             background: var(--what-soft);
-            padding: 28px;
-            max-width: 460px;
-            justify-self: end;
+            padding: 22px;
+            max-width: 340px;
+            justify-self: stretch;
             overflow: hidden;
         }
 
         .hero-panel img {
             display: block;
-            width: min(64%, 280px);
+            width: min(76%, 230px);
             height: auto;
-            max-height: 260px;
+            max-height: 210px;
             object-fit: contain;
-            margin: 0 auto 18px;
+            margin: 0 auto 16px;
         }
 
         .hero-panel p {
@@ -99,29 +113,26 @@
         }
 
         .section {
-            margin-top: clamp(42px, 5vw, 64px);
+            margin-top: 48px;
         }
 
         .section-head {
-            display: grid;
-            grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
-            align-items: end;
-            gap: 28px;
+            max-width: 780px;
             margin-bottom: 18px;
         }
 
         .section-head h2 {
-            max-width: 760px;
+            max-width: 720px;
             margin: 8px 0 0;
-            font-size: clamp(1.7rem, 2.6vw, 2.7rem);
-            line-height: 1.08;
+            font-size: clamp(1.75rem, 2.6vw, 2.55rem);
+            line-height: 1.12;
             letter-spacing: 0;
             text-wrap: balance;
         }
 
         .section-head p {
-            max-width: 560px;
-            margin: 0;
+            max-width: 720px;
+            margin: 12px 0 0;
             color: var(--what-muted);
             font-size: 16px;
             line-height: 1.64;
@@ -131,17 +142,18 @@
         .proof-panel {
             border: 1px solid var(--what-line);
             border-radius: 8px;
-            background: var(--what-soft);
+            background: #ffffff;
             color: var(--what-ink);
-            padding: 26px;
+            padding: 24px;
+            box-shadow: 0 12px 36px rgba(24, 24, 27, 0.04);
         }
 
         .plain-panel p,
         .proof-panel p {
-            max-width: 1260px;
+            max-width: 940px;
             margin: 0 0 14px;
             color: var(--what-muted);
-            font-size: 18px;
+            font-size: 17px;
             line-height: 1.68;
         }
 
@@ -153,7 +165,7 @@
         .grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 16px;
+            gap: 14px;
         }
 
         .grid.four {
@@ -166,11 +178,11 @@
 
         body.what-page .card,
         body.what-page.dark-mode .card {
-            border: 1px solid var(--what-line);
+            border: 1px solid var(--what-line) !important;
             border-radius: 8px;
-            background: #ffffff;
-            color: var(--what-ink);
-            padding: 22px;
+            background: #ffffff !important;
+            color: var(--what-ink) !important;
+            padding: 20px;
             min-height: 0;
             box-shadow: 0 10px 30px rgba(24, 24, 27, 0.04);
         }
@@ -183,17 +195,17 @@
 
         body.what-page .card h3 {
             margin: 0;
-            font-size: 22px;
-            line-height: 1.15;
+            font-size: 20px;
+            line-height: 1.18;
             letter-spacing: 0;
-            color: var(--what-ink);
+            color: var(--what-ink) !important;
         }
 
         body.what-page .card p,
         body.what-page .card li {
-            color: var(--what-muted);
+            color: var(--what-muted) !important;
             font-size: 15px;
-            line-height: 1.58;
+            line-height: 1.56;
         }
 
         body.what-page .card p {
@@ -208,18 +220,18 @@
         .steps {
             display: grid;
             grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 12px;
+            gap: 10px;
             counter-reset: step;
         }
 
         .step {
             position: relative;
-            min-height: 178px;
+            min-height: 0;
             border: 1px solid var(--what-line);
             border-radius: 8px;
-            background: #ffffff;
-            color: var(--what-ink);
-            padding: 20px;
+            background: #ffffff !important;
+            color: var(--what-ink) !important;
+            padding: 18px;
             box-shadow: 0 10px 30px rgba(24, 24, 27, 0.04);
         }
 
@@ -240,7 +252,7 @@
 
         .step h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 17px;
             line-height: 1.22;
         }
 
@@ -263,9 +275,9 @@
         .audience-list li {
             border: 1px solid var(--what-line);
             border-radius: 8px;
-            background: #ffffff;
+            background: #ffffff !important;
             padding: 14px;
-            color: var(--what-ink);
+            color: var(--what-ink) !important;
             font-weight: 800;
             line-height: 1.3;
         }
@@ -322,16 +334,8 @@
 
         @media (max-width: 1320px) {
             .what-shell {
-                width: min(1180px, calc(100% - 56px));
-            }
-
-            .what-hero,
-            .section-head {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-panel {
-                justify-self: start;
+                width: min(1180px, calc(100vw - 48px));
+                max-width: calc(100vw - 48px);
             }
 
             .grid.four,
@@ -343,12 +347,12 @@
 
         @media (max-width: 980px) {
             .what-shell {
-                width: min(100% - 32px, 820px);
+                width: min(calc(100vw - 32px), 820px);
+                max-width: calc(100vw - 32px);
                 padding-top: 92px;
             }
 
             .what-hero,
-            .section-head,
             .grid,
             .grid.two,
             .grid.four,
@@ -356,6 +360,49 @@
             .audience-list {
                 display: grid;
                 grid-template-columns: 1fr;
+            }
+
+            .what-hero {
+                padding: 24px;
+            }
+
+            .hero-panel {
+                max-width: none;
+                justify-self: stretch;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .what-shell {
+                width: calc(100vw - 24px);
+                max-width: calc(100vw - 24px);
+                padding-top: 112px;
+            }
+
+            .what-hero {
+                padding: 20px;
+            }
+
+            .what-hero h1 {
+                font-size: 2rem;
+                line-height: 1.08;
+            }
+
+            .lead {
+                font-size: 1rem;
+                line-height: 1.55;
+            }
+
+            .hero-panel {
+                padding: 16px;
+            }
+
+            .hero-panel img {
+                width: min(88%, 230px);
+            }
+
+            .section-head h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -368,8 +415,8 @@
         <section class="what-hero" aria-labelledby="what-title">
             <div>
                 <div class="kicker">What</div>
-                <h1 id="what-title">Bonzi is a proof-based governance ledger for communities, brands, token projects, and DAOs.</h1>
-                <p class="lead">It helps groups make decisions they can prove: who contributed, who verified, who was affected, and what happened next.</p>
+                <h1 id="what-title">Bonzi is a proof-based governance ledger.</h1>
+                <p class="lead">Built for communities, brands, token projects, and DAOs, it helps groups make decisions they can prove: who contributed, who verified, who was affected, and what happened next.</p>
             </div>
             <div class="hero-panel" aria-label="Bonzi governance ledger visual">
                 <img src="../assets/bonzi/presenting.png" alt="Bonzi presenting a community record">

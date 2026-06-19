@@ -19,7 +19,7 @@ REQUIRED_SUBDIRS = [
     "/page_4",
 ]
 
-PUBLIC_ROUTES = [
+PROTECTED_ROUTES = [
     "/page_1",
     "/page_2",
     "/page_3",
@@ -81,10 +81,10 @@ def main() -> int:
         if marker not in nav_text:
             errors.append(f"nav-loader.js missing Silver Fox route gate marker: {marker}")
 
-    for public_route in PUBLIC_ROUTES:
-        quoted = f"['{public_route}'"
-        if quoted in nav_text:
-            errors.append(f"nav-loader.js must not protect public route: {public_route}")
+    for protected_route in PROTECTED_ROUTES:
+        quoted = f"['{protected_route}'"
+        if quoted not in nav_text:
+            errors.append(f"nav-loader.js must protect VIP route: {protected_route}")
 
     for route_file in REQUIRED_ROUTE_FILES:
         if not (repo_root / route_file).exists():
@@ -103,10 +103,12 @@ def main() -> int:
 
     shared_nav = (repo_root / "includes" / "nav.html").read_text()
     mobile_nav = (repo_root / "includes" / "mobile-menu.html").read_text()
-    if 'href="/stake.html"' not in shared_nav or "Stake $BONZI" not in shared_nav:
-        errors.append("shared nav missing Stake $BONZI button to /stake.html")
     for label, text in [("includes/nav.html", shared_nav), ("includes/mobile-menu.html", mobile_nav)]:
-        for marker in ["data-silver-fox-nav", "hidden>Why", "hidden>How", "hidden>What", "hidden>When", "hidden>Stake"]:
+        if 'href="/stake.html"' not in text or "Stake $BONZI" not in text:
+            errors.append(f"{label} missing VIP Stake $BONZI button to /stake.html")
+        if 'data-nav="stake"' in text and "data-silver-fox-nav" not in text:
+            errors.append(f"{label}: Stake $BONZI must be silver-fox gated")
+        for marker in ["hidden>Why", "hidden>How", "hidden>What", "hidden>When"]:
             if marker in text:
                 errors.append(f"{label} contains obsolete public-nav gate marker: {marker}")
     if "Bonzivista_bot?start=apply" in nav_text:

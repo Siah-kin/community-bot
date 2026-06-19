@@ -20,7 +20,7 @@ EXPECTED_NAV_LINKS = [
     "stake bonzi",
 ]
 
-PUBLIC_NAV_KEYS = ["about", "stake"]
+PUBLIC_NAV_KEYS = ["about"]
 FORBIDDEN_PUBLIC_NAV_HREFS = [
     "/page_1",
     "/page_2",

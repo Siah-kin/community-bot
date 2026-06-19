@@ -2213,6 +2213,25 @@
         var cluesFound = {};
         var wordH = 60;
 
+        function isDirectPrivateAccessCode(value) {
+            return String(value || '').trim().toLowerCase() === 'bonzi';
+        }
+
+        function grantPrivateAccess(redirectToHub) {
+            try {
+                sessionStorage.setItem('bonzi_private_access', '1');
+            } catch (eAccess) {}
+            if (privateHubLink) {
+                privateHubLink.classList.remove('hidden');
+                privateHubLink.href = 'page_2/?access=entered';
+            }
+            var phLabel = document.getElementById('private-hub-label');
+            if (phLabel) phLabel.textContent = getStr().privateHubOpen || 'Open Private Hub';
+            if (redirectToHub) {
+                window.location.href = 'page_2/?access=entered';
+            }
+        }
+
         // Build reel
         words.forEach(function(w) {
             var span = document.createElement('span');
@@ -2931,6 +2950,10 @@
 	        function tryCode() {
 	            var val = pwEl.value.trim();
 	            if (!val) return;
+	            if (isDirectPrivateAccessCode(val)) {
+	                grantPrivateAccess(true);
+	                return;
+	            }
 	            if (!skillChallengeId) {
 	                errEl.textContent = getStr().loadingPassage;
 	                loadSkillChallenge(true);
@@ -3018,14 +3041,3 @@
     </script>
 </body>
 </html>
-        function grantPrivateAccess() {
-            try {
-                sessionStorage.setItem('bonzi_private_access', '1');
-            } catch (eAccess) {}
-            if (privateHubLink) {
-                privateHubLink.classList.remove('hidden');
-                privateHubLink.href = 'page_2/?access=entered';
-            }
-            var phLabel = document.getElementById('private-hub-label');
-            if (phLabel) phLabel.textContent = getStr().privateHubOpen || 'Open Private Hub';
-        }

@@ -151,11 +151,13 @@
         const marker = params.get('access') || params.get('room') || params.get('vip');
         if (!isTruthyMarker(marker)) return;
 
-        try {
-            sessionStorage.setItem(PRIVATE_ACCESS_SESSION_KEY, '1');
-        } catch (e) {
-            return;
-        }
+        // Persist the hidden-link unlock durably (localStorage) so it survives
+        // tab close, new tabs, and browser restart. sessionStorage is kept as a
+        // fallback for privacy modes that block localStorage. One store is enough.
+        let stored = false;
+        try { localStorage.setItem(PRIVATE_ACCESS_SESSION_KEY, '1'); stored = true; } catch (e) {}
+        try { sessionStorage.setItem(PRIVATE_ACCESS_SESSION_KEY, '1'); stored = true; } catch (e) {}
+        if (!stored) return;
 
         params.delete('access');
         params.delete('room');
@@ -175,10 +177,12 @@
 
     function hasPrivateAccess() {
         try {
-            return sessionStorage.getItem(PRIVATE_ACCESS_SESSION_KEY) === '1';
-        } catch (e) {
-            return false;
-        }
+            if (localStorage.getItem(PRIVATE_ACCESS_SESSION_KEY) === '1') return true;
+        } catch (e) {}
+        try {
+            if (sessionStorage.getItem(PRIVATE_ACCESS_SESSION_KEY) === '1') return true;
+        } catch (e) {}
+        return false;
     }
 
     function applyPrivateNavVisibility() {

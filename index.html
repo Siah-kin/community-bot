@@ -2219,6 +2219,7 @@
 
         function grantPrivateAccess(redirectToHub) {
             try {
+                localStorage.setItem('bonzi_private_access', '1');
                 sessionStorage.setItem('bonzi_private_access', '1');
             } catch (eAccess) {}
             if (privateHubLink) {

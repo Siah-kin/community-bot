@@ -17,3 +17,8 @@ node_modules/
 # Avoid committing copyrighted/bloat audio by accident
 *.mp3
 !sounds/rage-against-the-machine-killing-in-the-name.mp3
+
+# StatiCrypt: plaintext sources for encrypted pages (NEVER commit plaintext)
+_private_src/
+scripts/.staticrypt_key.local
+.staticrypt.json

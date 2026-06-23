@@ -139,6 +139,10 @@ def validate_file(filepath: Path) -> list:
     except Exception as e:
         return [f"  - Could not read file: {e}"]
 
+    # Skip StaticCrypt encrypted bundles — they have no footer by design
+    if 'staticrypt-html' in content or 'staticrypt' in content[:500].lower():
+        return []
+
     violations = []
     violations.extend(check_forbidden_before_footer(content, str(filepath)))
     violations.extend(check_required_footer_elements(content, str(filepath)))

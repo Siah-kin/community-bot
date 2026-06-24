@@ -25,21 +25,26 @@ if [ -z "$STATICRYPT_PASSWORD" ]; then
     exit 1
 fi
 
+# staticrypt treats --config and --template as relative to cwd, not as absolute
+# paths (it prepends "./" to any path). Run from repo root with relative paths.
+cd "$REPO"
+
 echo "Encrypting private pages..."
 for PAGE in $PAGES; do
-    INPUT="$SRC/${PAGE}.html"
-    OUT_DIR="$REPO/${PAGE}"
+    INPUT="_private_src/${PAGE}.html"
+    OUT_DIR="${PAGE}"
     if [ ! -f "$INPUT" ]; then
         echo "  SKIP $PAGE (no source in _private_src/)"
         continue
     fi
     # staticrypt writes <basename>.html into -d directory
-    npx staticrypt "$INPUT" -p "$STATICRYPT_PASSWORD" --short --remember false -d "$OUT_DIR" --config "$REPO/.staticrypt.json"
+    npx staticrypt "$INPUT" -p "$STATICRYPT_PASSWORD" --short --remember false \
+        -d "$OUT_DIR" --config ".staticrypt.json" --template "scripts/staticrypt-template.html"
     # Rename output to index.html if needed
-    OUT_FILE="$OUT_DIR/${PAGE}.html"
+    OUT_FILE="${OUT_DIR}/${PAGE}.html"
     if [ -f "$OUT_FILE" ]; then
-        mv "$OUT_FILE" "$OUT_DIR/index.html"
+        mv "$OUT_FILE" "${OUT_DIR}/index.html"
     fi
-    echo "  OK  $PAGE/index.html ($(wc -c < "$OUT_DIR/index.html") bytes)"
+    echo "  OK  $PAGE/index.html ($(wc -c < "${OUT_DIR}/index.html") bytes)"
 done
 echo "Done."

@@ -22,10 +22,6 @@ EXPECTED_NAV_LINKS = [
 
 PUBLIC_NAV_KEYS = ["about", "stake"]
 FORBIDDEN_PUBLIC_NAV_HREFS = [
-    "/page_1",
-    "/page_2",
-    "/page_3",
-    "/page_4",
     "/alpha",
     "/demo",
     "/quest-earn",

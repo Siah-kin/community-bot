@@ -120,10 +120,6 @@
     function protectedPrivatePathKey(pathname) {
         const cleanPath = pathname.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
         const protectedPaths = [
-            ['/page_1', 'how'],
-            ['/page_2', 'why'],
-            ['/page_3', 'what'],
-            ['/page_4', 'when'],
             ['/alpha', 'why'],
             ['/demo', 'how'],
             ['/specs', 'what'],

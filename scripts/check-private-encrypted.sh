@@ -6,7 +6,7 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-PAGES="page_1 page_2 page_3 page_4 alpha demo specs quest-earn"
+PAGES="alpha demo specs quest-earn"
 
 FAIL=0
 

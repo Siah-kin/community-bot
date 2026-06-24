@@ -752,9 +752,8 @@
                 <h1 id="roadmap-title" data-i18n="when.h1">What is proven, what is next, and what is still pending.</h1>
                 <p class="roadmap-lead" data-i18n="when.lead">Timing stays clear: closed, next, not claimed.</p>
                 <div class="hero-actions" aria-label="Roadmap status">
-                    <span class="status-pill green" data-i18n="when.pill_now">Now: Phase 1 closed</span>
+                    <span class="status-pill amber" data-i18n="when.pill_now">Now: Phase 1 reopened for re-check</span>
                     <span class="status-pill amber" data-i18n="when.pill_next">Next: decision log</span>
-                    <span class="status-pill" data-i18n="when.pill_refresh">Refreshes when proof changes</span>
                     <span class="status-pill" data-i18n="when.pill_access">Most proven, not earliest, not richest</span>
                 </div>
             </div>
@@ -764,37 +763,17 @@
             </div>
         </section>
 
-        <section class="refresh-grid" aria-label="Living roadmap refresh model">
-            <article class="refresh-card primary">
-                <span class="metric-label" data-i18n="when.refresh_rule_label">Update rule</span>
-                <strong data-i18n="when.refresh_rule_strong">Change the page when facts change</strong>
-                <p data-i18n="when.refresh_rule_p">Refresh after a phase closes, a blocker changes, or a claim needs correction.</p>
-            </article>
-            <article class="refresh-card">
-                <span class="metric-label" data-i18n="when.refresh_current_label">Current proof</span>
-                <strong data-i18n="when.refresh_current_strong">4/4 Phase 1 points</strong>
-                <p data-i18n="when.refresh_current_p">The first pack produced the required internal records.</p>
-            </article>
-            <article class="refresh-card">
-                <span class="metric-label" data-i18n="when.refresh_next_label">Next proof</span>
-                <strong data-i18n="when.refresh_next_strong">Decision log</strong>
-                <p data-i18n="when.refresh_next_p">Past decisions need clearer sources, reasons, and review context.</p>
-            </article>
-            <article class="refresh-card">
-                <span class="metric-label" data-i18n="when.refresh_boundary_label">Boundary</span>
-                <strong data-i18n="when.refresh_boundary_strong">No launch claim</strong>
-                <p data-i18n="when.refresh_boundary_p">This explains progress. It does not certify full readiness.</p>
-            </article>
-        </section>
+        
+
 
         <section class="summary-grid" aria-label="Roadmap summary">
             <article class="summary-card">
                 <h2 data-i18n="when.summary_now_h">Where Bonzi is now</h2>
-                <p data-i18n="when.summary_now_p">The first set of flows is closed internally. Bonzi can point to records for the first operating flows.</p>
+                <p data-i18n="when.summary_now_p">The first set of flows is built and recording. One record, case review, reopened for re-verification, so Phase 1 is back under check, not closed.</p>
             </article>
             <article class="summary-card">
-                <h2 data-i18n="when.summary_phase1_h">What Phase 1 proved</h2>
-                <p data-i18n="when.summary_phase1_p">Phase 1 proved the bot can listen for reports, route them to review, keep a record, and stay quiet when proof is missing.</p>
+                <h2 data-i18n="when.summary_phase1_h">What the first flows showed</h2>
+                <p data-i18n="when.summary_phase1_p">The bot can listen for reports, route them to review, keep a record, and stay quiet when proof is missing.</p>
             </article>
             <article class="summary-card">
                 <h2 data-i18n="when.summary_next_h">What comes next</h2>
@@ -806,57 +785,8 @@
             </article>
         </section>
 
-        <section class="roadmap-section" aria-labelledby="depth-title">
-            <div class="section-head">
-                <div>
-                    <div class="section-kicker" data-i18n="when.depth_kicker">Why this page exists</div>
-                    <h2 id="depth-title" data-i18n="when.depth_h">A roadmap that does more than announce dates</h2>
-                </div>
-                <p data-i18n="when.depth_lead">The point is not to sound finished. The point is to show what changed, what still needs proof, and when the public story should update.</p>
-            </div>
-            <div class="depth-grid">
-                <article class="depth-card">
-                    <span class="depth-marker" data-i18n="when.depth_state_marker">State</span>
-                    <h3 data-i18n="when.depth_state_h">Show what is real now</h3>
-                    <p data-i18n="when.depth_state_p">Closed work, pending work, and future work should not read the same.</p>
-                    <ul>
-                        <li data-i18n="when.depth_state_li1">Closed means evidence exists.</li>
-                        <li data-i18n="when.depth_state_li2">Pending means the gate is not met.</li>
-                        <li data-i18n="when.depth_state_li3">Future means useful but not claimed.</li>
-                    </ul>
-                </article>
-                <article class="depth-card">
-                    <span class="depth-marker" data-i18n="when.depth_gate_marker">Gate</span>
-                    <h3 data-i18n="when.depth_gate_h">Explain what changes status</h3>
-                    <p data-i18n="when.depth_gate_p">A phase moves only when the evidence changes, not because the language becomes more confident.</p>
-                    <ul>
-                        <li data-i18n="when.depth_gate_li1">Proof closes a stage.</li>
-                        <li data-i18n="when.depth_gate_li2">Blockers keep it open.</li>
-                        <li data-i18n="when.depth_gate_li3">Corrections update the record.</li>
-                    </ul>
-                </article>
-                <article class="depth-card">
-                    <span class="depth-marker" data-i18n="when.depth_review_marker">Review</span>
-                    <h3 data-i18n="when.depth_review_h">Make the sequence easy to follow</h3>
-                    <p data-i18n="when.depth_review_p">Investors and builders should understand the next question without needing private engineering access.</p>
-                    <ul>
-                        <li data-i18n="when.depth_review_li1">What is closed?</li>
-                        <li data-i18n="when.depth_review_li2">What is next?</li>
-                        <li data-i18n="when.depth_review_li3">What is not ready?</li>
-                    </ul>
-                </article>
-                <article class="depth-card">
-                    <span class="depth-marker" data-i18n="when.depth_discipline_marker">Discipline</span>
-                    <h3 data-i18n="when.depth_discipline_h">Keep claims narrow</h3>
-                    <p data-i18n="when.depth_discipline_p">The roadmap is useful only if it separates evidence from ambition.</p>
-                    <ul>
-                        <li data-i18n="when.depth_discipline_li1">Say less when proof is early.</li>
-                        <li data-i18n="when.depth_discipline_li2">Say more when proof improves.</li>
-                        <li data-i18n="when.depth_discipline_li3">Do not turn plans into claims.</li>
-                    </ul>
-                </article>
-            </div>
-        </section>
+        
+
 
         <section class="roadmap-section" aria-labelledby="phase-roadmap-title">
             <div class="section-head">
@@ -867,17 +797,17 @@
                 <p data-i18n="when.phases_lead">Each stage has one job. A phase stays pending until its proof exists.</p>
             </div>
             <div class="phase-grid">
-                <article class="phase-card proven">
-                    <span class="phase-eyebrow green" data-i18n="when.phase1_eyebrow">Proven / Closed</span>
+                <article class="phase-card next">
+                    <span class="phase-eyebrow amber" data-i18n="when.phase1_eyebrow">Reopened / under re-check</span>
                     <h3 data-i18n="when.phase1_h">Phase 1: First verified flows</h3>
-                    <p data-i18n="when.phase1_p">Closed internally. Four required flows produced records.</p>
+                    <p data-i18n="when.phase1_p">Four flows produced records. One, case review, reopened for re-verification.</p>
                     <ul>
                         <li data-i18n="when.phase1_li1">Experiment evidence</li>
                         <li data-i18n="when.phase1_li2">Trust score checks</li>
                         <li data-i18n="when.phase1_li3">Bug credit tracking</li>
                         <li data-i18n="when.phase1_li4">Case review routing</li>
                     </ul>
-                    <div class="phase-status-line" data-i18n="when.phase1_status">Status: closed after re-check</div>
+                    <div class="phase-status-line" data-i18n="when.phase1_status">Status: reopened, re-verifying</div>
                 </article>
                 <article class="phase-card next">
                     <span class="phase-eyebrow amber" data-i18n="when.phase2_eyebrow">Next / Being prepared</span>
@@ -926,143 +856,17 @@
             </div>
         </section>
 
-        <section class="roadmap-section" aria-labelledby="phase-one-title">
-            <div class="section-head">
-                <div>
-                    <div class="section-kicker" data-i18n="when.detail_kicker">Phase 1 detail</div>
-                    <h2 id="phase-one-title" data-i18n="when.detail_h">Phase 1 in plain language</h2>
-                </div>
-                <p>Phase 1 matters because it moved from "we plan to record this" to "the system produced records."</p>
-            </div>
-            <div class="proof-grid">
-                <article class="proof-card">
-                    <span class="proof-label" data-i18n="when.proof1_label">Proof 1</span>
-                    <h3 data-i18n="when.proof1_h">Experiment evidence</h3>
-                    <p data-i18n="when.proof1_p">A test path produced a record. Meaning: work can leave a trace.</p>
-                </article>
-                <article class="proof-card">
-                    <span class="proof-label" data-i18n="when.proof2_label">Proof 2</span>
-                    <h3 data-i18n="when.proof2_h">Trust score in trial mode</h3>
-                    <p data-i18n="when.proof2_p">The trust score ran in test mode before influencing outcomes. Meaning: review comes before power.</p>
-                </article>
-                <article class="proof-card">
-                    <span class="proof-label" data-i18n="when.proof3_label">Proof 3</span>
-                    <h3 data-i18n="when.proof3_h">Bug credit tracking</h3>
-                    <p data-i18n="when.proof3_p">A useful bug signal produced credit evidence. Meaning: helpful users can be recorded fairly.</p>
-                </article>
-                <article class="proof-card">
-                    <span class="proof-label" data-i18n="when.proof4_label">Proof 4</span>
-                    <h3 data-i18n="when.proof4_h">Case review confirmation</h3>
-                    <p data-i18n="when.proof4_p">A serious support moment produced a confirmation record. Meaning: sensitive work can be checked later.</p>
-                </article>
-            </div>
-            <div class="callout">
-                <h3 data-i18n="when.callout_h">Correction note</h3>
-                <p data-i18n="when.callout_p">One closure was reopened because the case review record needed to be stronger. It was checked again and closed only after the missing confirmation was verified.</p>
-            </div>
-        </section>
+        
 
-        <section class="roadmap-section" aria-labelledby="boundary-title">
-            <div class="boundary-panel">
-                <div>
-                    <div class="section-kicker" data-i18n="when.boundary_kicker">Boundaries</div>
-                    <h2 id="boundary-title" data-i18n="when.boundary_h">What this roadmap does not claim</h2>
-                    <p data-i18n="when.boundary_lead">Early proof is valuable because it is narrow. The page should make progress understandable without making it larger than it is.</p>
-                </div>
-                <ul class="boundary-list">
-                    <li data-i18n="when.boundary_li1">Phase 1 does not mean public launch readiness.</li>
-                    <li data-i18n="when.boundary_li2">Phase 1 does not mean final reward economics are complete.</li>
-                    <li data-i18n="when.boundary_li3">Phase 1 does not mean trust score checks are ready for user outcomes.</li>
-                    <li data-i18n="when.boundary_li4">Phase 1 does not mean all support paths are automated.</li>
-                    <li data-i18n="when.boundary_li5">Phase 2-5 work remains pending until the proof gates are satisfied.</li>
-                    <li data-i18n="when.boundary_li6">Contributor onboarding is not a shortcut to formal authority.</li>
-                    <li data-i18n="when.boundary_li7">Internal review mechanics and sensitive operating details stay off this public roadmap surface.</li>
-                    <li data-i18n="when.boundary_li8">Roadmap language follows proof; it does not create proof by itself.</li>
-                </ul>
-            </div>
-        </section>
 
-        <section class="roadmap-section" aria-labelledby="watch-title">
-            <div class="section-head">
-                <div>
-                    <div class="section-kicker" data-i18n="when.watch_kicker">Review questions</div>
-                    <h2 id="watch-title" data-i18n="when.watch_h">Questions for ongoing review</h2>
-                </div>
-                <p data-i18n="when.watch_lead">A useful roadmap gives repeatable questions, not only a timeline.</p>
-            </div>
-            <div class="watch-grid">
-                <article class="watch-card now">
-                    <h3 data-i18n="when.watch_now_h">Current question: memory quality</h3>
-                    <p data-i18n="when.watch_now_p">Can past decisions be reviewed without relying on memory?</p>
-                    <ul>
-                        <li data-i18n="when.watch_now_li1">What source supports the decision?</li>
-                        <li data-i18n="when.watch_now_li2">Why was that choice made?</li>
-                        <li data-i18n="when.watch_now_li3">What changed afterward?</li>
-                    </ul>
-                </article>
-                <article class="watch-card next">
-                    <h3 data-i18n="when.watch_next_h">Next question: external comparison</h3>
-                    <p data-i18n="when.watch_next_p">After memory improves, compare Bonzi with nearby trust and community systems.</p>
-                    <ul>
-                        <li data-i18n="when.watch_next_li1">What is genuinely different?</li>
-                        <li data-i18n="when.watch_next_li2">Which claims are still too early?</li>
-                        <li data-i18n="when.watch_next_li3">Where does the proof base need more depth?</li>
-                    </ul>
-                </article>
-                <article class="watch-card always">
-                    <h3 data-i18n="when.watch_always_h">Constant question: claim discipline</h3>
-                    <p data-i18n="when.watch_always_p">The roadmap must keep separating evidence from ambition.</p>
-                    <ul>
-                        <li data-i18n="when.watch_always_li1">Proof should lead the story.</li>
-                        <li data-i18n="when.watch_always_li2">Boundaries should stay visible.</li>
-                        <li data-i18n="when.watch_always_li3">Public language should change when proof changes.</li>
-                    </ul>
-                </article>
-            </div>
-        </section>
+        
 
-        <section class="roadmap-section" aria-labelledby="stats-title">
-            <div class="section-head">
-                <div>
-                    <div class="section-kicker" data-i18n="when.stats_kicker">Technical appendix</div>
-                    <h2 id="stats-title" data-i18n="when.stats_h">Stats kept at the bottom</h2>
-                </div>
-                <p data-i18n="when.stats_lead">These numbers are orientation only. They do not replace the proof gate.</p>
-            </div>
-            <div class="stats-grid">
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_status_label">Phase 1 status</span>
-                    <strong data-i18n="when.stats_status_strong">Closed</strong>
-                    <p data-i18n="when.stats_status_p">First verified set of flows completed internally.</p>
-                </article>
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_points_label">Proof points</span>
-                    <strong data-i18n="when.stats_points_strong">4/4 proof points</strong>
-                    <p data-i18n="when.stats_points_p">All required Phase 1 evidence surfaces recorded.</p>
-                </article>
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_date_label">Re-closed date</span>
-                    <strong data-i18n="when.stats_date_strong">2026-06-18</strong>
-                    <p data-i18n="when.stats_date_p">Re-closed after the case review record was verified.</p>
-                </article>
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_next2_label">Next phase</span>
-                    <strong data-i18n="when.stats_next2_strong">Pending</strong>
-                    <p data-i18n="when.stats_next2_p">The decision log opens only through controlled sequencing.</p>
-                </article>
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_posture_label">Public posture</span>
-                    <strong data-i18n="when.stats_posture_strong">Bounded</strong>
-                    <p data-i18n="when.stats_posture_p">Public review surface, not a full operating disclosure.</p>
-                </article>
-                <article class="stats-card">
-                    <span class="metric-label" data-i18n="when.stats_refresh_label">Refresh model</span>
-                    <strong data-i18n="when.stats_refresh_strong">Event-led</strong>
-                    <p data-i18n="when.stats_refresh_p">Updated after proof, phase, blocker, or positioning changes.</p>
-                </article>
-            </div>
-            <p class="roadmap-note" data-i18n="when.stats_note">Use this page as a readable timing map. It is not the task queue, not reward policy, and not a replacement for proof-gated execution.</p>
-        </section>
+
+        
+
+
+        
+
     </main>
     <footer class="site-footer bonzi-branded-footer" aria-label="Site footer">
     <div class="footer-cto-row">

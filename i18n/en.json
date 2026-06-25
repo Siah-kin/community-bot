@@ -103,7 +103,7 @@
   "farmers.cmd.link": "Link wallet for claims",
   "farmers.cmd.settings": "Configure preferences",
   "farmers.askearn.title": "Ask & Earn",
-  "farmers.askearn.desc": "Get paid to ask quality questions. AI scores on three dimensions:",
+  "farmers.askearn.desc": "Earn points for quality questions. AI scores on three dimensions:",
   "farmers.askearn.depth": "Depth:",
   "farmers.askearn.depth.desc": "Does it require thought to answer?",
   "farmers.askearn.novelty": "Novelty:",

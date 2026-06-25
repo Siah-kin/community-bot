@@ -1,0 +1,61 @@
+{
+  "subject": "Rebuilt WHEN page (page_4) + docs/ROADMAP.md — public copy reader-check",
+  "date": "2026-06-25",
+  "builder": "operator session (wrote the page)",
+  "reviewer_role": "independent reader-check (anti-self-cert; reviewers did not write the copy)",
+  "legs": {
+    "deepseek": {
+      "model": "deepseek-chat",
+      "ran": true,
+      "verdict": "approve_with_changes",
+      "jargon_leaks": ["shadow CPI score", "row-backed records", "decision ledger", "hardening", "OpenBox episode"],
+      "ai_tells": [
+        "'The bot writes it down. A person checks it. The record decides what comes next.' — triad reflex",
+        "Four repeated 'We move on from X only when Y' — templated rhythm"
+      ],
+      "overclaim": "none",
+      "one_fix": "Replace 'hardening' with plain 'stability checks' / 'reliability testing'."
+    },
+    "codex": {
+      "model": "codex-cli",
+      "ran": true,
+      "verdict": "block",
+      "jargon_leaks": ["shadow CPI score", "row-backed records", "decision ledger", "gated by hardening", "GTM signal"],
+      "ai_tells": [
+        "'What works now, what has to prove itself next.' — antithesis scaffolding",
+        "'The bot writes it down. A person checks it. The record decides what comes next.' — triad reflex",
+        "'keep the working lane narrow, prove it, then widen.' — templated triad",
+        "'starting with the communities already here, not a big-bang launch' — antithesis scaffolding"
+      ],
+      "overclaim": "'NEWS will carry weekly changes.' — promises a weekly cadence the evidence does not establish.",
+      "one_fix": "Replace internal proof-system language with plain community terms."
+    }
+  },
+  "triade_outcome": {
+    "independent_legs_run": 2,
+    "legs_failed": 0,
+    "deepseek_verdict": "approve_with_changes",
+    "codex_verdict": "block",
+    "verdict": "BLOCK (Codex block holds; a single independent block holds the whole sign-off per triade_signoff.md)",
+    "convergence": "Strong. Both legs independently flagged the same jargon leaks (shadow CPI score, row-backed records, decision ledger, hardening) and the same AI tells (the 3-clause 'bot writes it down' triad, the repeated 'We move on from X only when Y' templated rhythm, antithesis scaffolding). Codex additionally caught an overclaim: 'NEWS will carry weekly changes' promises a cadence not yet real.",
+    "required_fixes": {
+      "jargon_to_plain": {
+        "shadow CPI score": "a trust score",
+        "row-backed records": "real records / records that actually exist",
+        "decision ledger": "decision history",
+        "hardening / gated by hardening": "stability checks / still being tested for reliability",
+        "OpenBox episode": "a recorded test run",
+        "GTM signal (UI label)": "When you'll know"
+      },
+      "ai_tells_to_break": [
+        "'The bot writes it down. A person checks it. The record decides what comes next.' -> break the 3-clause triad into two uneven sentences",
+        "The four 'We move on from X only when Y' lines -> vary the shape; not four identical templates",
+        "'What works now, what has to prove itself next.' + 'not a big-bang launch' -> drop the antithesis seesaw",
+        "'keep the working lane narrow, prove it, then widen.' -> de-triad"
+      ],
+      "overclaim_to_cut": "'NEWS will carry weekly changes/updates' -> 'NEWS will carry updates' (drop the weekly cadence promise until it is real)"
+    },
+    "human_leg": "operator decides; can downgrade/block, cannot bless the jargon as clear",
+    "lesson": "Manual copy build re-introduced the exact jargon + AI-tell contamination the session built the copy gate to stop. This is direct evidence FOR the deferred Layer 1 word-catcher linter: Water Prompt test 6 is written but not mechanically enforced, so the writer optimized past it again."
+  }
+}

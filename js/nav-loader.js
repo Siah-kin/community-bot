@@ -49,7 +49,7 @@
 
     function getPathPrefix() {
         const path = window.location.pathname;
-        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/research/', '/research', '/vetter/', '/vetter', '/dao/', '/dao', '/metrics/', '/metrics', '/demo/', '/demo', '/alpha/', '/alpha', '/specs/', '/specs', '/quest-earn/', '/quest-earn', '/page_1/', '/page_1', '/page_2/', '/page_2', '/page_3/', '/page_3', '/page_4/', '/page_4'];
+        const subdirs = ['/manual/', '/manual', '/economics/', '/economics', '/research/', '/research', '/vetter/', '/vetter', '/vet/', '/vet', '/news/', '/news', '/dao/', '/dao', '/metrics/', '/metrics', '/demo/', '/demo', '/alpha/', '/alpha', '/specs/', '/specs', '/quest-earn/', '/quest-earn', '/page_1/', '/page_1', '/page_2/', '/page_2', '/page_3/', '/page_3', '/page_4/', '/page_4'];
         const isSubdir = subdirs.some((dir) => path.includes(dir));
         return isSubdir ? '../' : '';
     }

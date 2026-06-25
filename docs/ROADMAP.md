@@ -12,13 +12,13 @@ The first features work. Right now we are proving they hold up with real use bef
 
 Phase 1 is done when the four features each produce a real, checkable record. Done.
 
-The four records are: a live OpenBox episode, a shadow CPI score, bug reporter credit, and a support escalation record.
+The four records are: a recorded test run that was reviewed, a trust score for each participant, bug reporter credit, and a support escalation record.
 
 ### Phase 2: Real-use evidence
 
 Phase 2 is done when those records come from real users, not test runs.
 
-The next work is the DIF run and the supporting evidence ledger. It stays gated until the hardening work passes.
+The next work is the evidence run and the supporting decision history. It waits for stability checks to pass before the story widens.
 
 ## Mid-term
 
@@ -26,30 +26,28 @@ This stretch turns working pieces into proof people can inspect.
 
 ### Decision record
 
-We move on from the decision record only when a real decision can be found with its reason and source.
+Done when a real decision can be found with its reason and where it came from.
 
 ### Honest comparison
 
-We move on from honest comparison only when the comparison is published with what Bonzi does not claim.
+The milestone: an honest comparison published, including what Bonzi does not cover.
 
 ### On-chain records
 
-We move on from on-chain records only when a public write lands for the parts that need to stay permanent.
+Done when a public write lands for the parts that need to stay permanent.
 
 ### Grounded answers
 
-We move on from grounded answers only when important answers can point back to sources.
+An answer does not count until it can point back to its source.
 
 ## Long-term
 
-Bonzi opens to more people in stages, starting with the communities already here, not a big-bang launch. Access is earned by helping.
+Bonzi opens in stages, starting with the communities already here. How access works: by helping.
 
-You'll know we're at GTM when you can use Bonzi in your own community and see your own tickets handled, end to end.
+You'll know Bonzi is ready for your community when you can use it there and see your own tickets handled, end to end.
 
 The first outside-facing stretch is Bonzi ticket handling, the Ethervista chatbot, and an email update for existing communities. Access levels stay simple: public, alpha, team, and founder-only.
 
 ## Holding Pages
 
-NEWS is the weekly update surface. It keeps the short-term status current without rewriting the whole roadmap.
-
-VET is the community ticket and review surface. It is where "see your own tickets handled" becomes visible.
+NEWS will carry updates when there are things worth reporting. VET is the community ticket and review surface — where "see your own tickets handled" becomes visible.

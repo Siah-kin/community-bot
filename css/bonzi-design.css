@@ -136,13 +136,19 @@ body.dark-mode .nav-connect-btn {
    BRANDED FOOTER
    ======================================== */
 .site-footer.bonzi-branded-footer {
-    background: #111111;
-    border: 1px solid #27272A;
-    color: #A1A1AA;
+    background: #f4f4f5;
+    border: 1px solid #e4e4e7;
+    color: #52525b;
     margin: 60px auto 0;
     max-width: 720px;
     padding: 28px 16px 32px;
     text-align: center;
+}
+
+body.dark-mode .site-footer.bonzi-branded-footer {
+    background: #111111;
+    border: 1px solid #27272A;
+    color: #A1A1AA;
 }
 
 .site-footer.bonzi-branded-footer .footer-cto-row,
@@ -164,13 +170,22 @@ body.dark-mode .nav-connect-btn {
     color: #71717A;
 }
 
+body:not(.dark-mode) .site-footer.bonzi-branded-footer .footer-pipe {
+    color: #a1a1aa;
+}
+
 .site-footer.bonzi-branded-footer .footer-cto-row a,
 .site-footer.bonzi-branded-footer .footer-sponsor-row a {
     align-items: center;
-    color: #FFFFFF;
+    color: #18181b;
     display: inline-flex;
     gap: 8px;
     text-decoration: none;
+}
+
+body.dark-mode .site-footer.bonzi-branded-footer .footer-cto-row a,
+body.dark-mode .site-footer.bonzi-branded-footer .footer-sponsor-row a {
+    color: #FFFFFF;
 }
 
 .site-footer.bonzi-branded-footer .footer-cto-row img {
@@ -193,18 +208,28 @@ body.dark-mode .nav-connect-btn {
 }
 
 .site-footer.bonzi-branded-footer .footer-legal-row {
-    color: #A1A1AA;
+    color: #71717a;
     font-size: 16px;
     margin-top: 18px;
 }
 
 .site-footer.bonzi-branded-footer .footer-legal-row a {
-    color: #A1A1AA;
+    color: #71717a;
     font-weight: 500;
     text-decoration: none;
 }
 
+body.dark-mode .site-footer.bonzi-branded-footer .footer-legal-row,
+body.dark-mode .site-footer.bonzi-branded-footer .footer-legal-row a {
+    color: #A1A1AA;
+}
+
 .site-footer.bonzi-branded-footer a:hover {
+    color: #111111;
+    text-decoration: underline;
+}
+
+body.dark-mode .site-footer.bonzi-branded-footer a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }

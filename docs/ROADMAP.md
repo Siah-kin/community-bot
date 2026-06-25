@@ -10,7 +10,7 @@ The first features work. Right now we are proving they hold up with real use bef
 
 ### Phase 1: First records
 
-Phase 1 is done when the four features each produce a real, checkable record. Done.
+Four features each produced a real, checkable record. A security review is still running before this phase closes.
 
 The four records are: a recorded test run that was reviewed, a trust score for each participant, bug reporter credit, and a support escalation record.
 

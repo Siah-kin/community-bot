@@ -91,6 +91,29 @@
         .alpha-section p strong { color: var(--black); }
         body.dark-mode .alpha-section p strong { color: #fff; }
 
+        .stake-link {
+            color: var(--purple); font-weight: 600;
+            text-decoration: underline; text-underline-offset: 2px;
+        }
+        .stake-link:hover { color: var(--purple-dark); }
+        body.dark-mode .stake-link { color: var(--purple-light); }
+        body.dark-mode .stake-link:hover { color: #C4B5FD; }
+
+        .wallet-note {
+            border: 1px solid #E4E4E7; border-left: 3px solid var(--purple);
+            border-radius: 10px; padding: 18px 20px;
+            margin: 22px 0 6px; max-width: 660px;
+        }
+        body.dark-mode .wallet-note { border-color: #27272A; border-left-color: var(--purple); }
+        .wallet-note h3 { margin: 0 0 10px; font-size: 1.05rem; }
+        .wallet-note ul { margin: 0; padding-left: 18px; }
+        .wallet-note li {
+            font-size: 1rem; color: #3F3F46; line-height: 1.65;
+            margin-bottom: 8px;
+        }
+        body.dark-mode .wallet-note li { color: #D4D4D8; }
+        .wallet-note li:last-child { margin-bottom: 0; }
+
         /* The italic-purple turn line (about.html guess-line) */
         .turn-line {
             font-size: 1.25rem; font-style: italic; font-weight: 500;
@@ -289,6 +312,16 @@
             <h2 data-i18n="alpha.fix_h2">What is broken, and what we are fixing</h2>
             <p data-i18n="alpha.fix_p1">In most of crypto, the money goes to whoever already has the most. The biggest holders put cash in, take the rewards, and leave. If you are not one of them, you did the work and got scraps.</p>
             <p data-i18n="alpha.fix_p2">The token's money side has already been fixed: steady fees instead of a slow bleed, so the token can hold its value. That was the first step. But the rewards still flow to the money, not to the people doing the work.</p>
+            <p data-i18n="alpha.stake_cta">New to the Bonzi token? <a class="stake-link" href="/stake.html">Start at the stake page</a>. You can buy BONZI there, stake it, and read the FAQ on how the fees and the locked pool work.</p>
+            <div class="wallet-note">
+                <h3 data-i18n="alpha.wallet_h">Before you connect a wallet</h3>
+                <ul>
+                    <li data-i18n="alpha.wallet_p1">Connecting shows the site your public address. That is all it gets. It cannot move your funds.</li>
+                    <li data-i18n="alpha.wallet_p2">Money only moves when you approve a transaction inside your own wallet app. Read that popup before you approve; it lists exactly what you are agreeing to.</li>
+                    <li data-i18n="alpha.wallet_p3">Check the address bar says bonzivista.org. Lookalike sites are the real risk, not the connection itself.</li>
+                    <li data-i18n="alpha.wallet_p4">The staking contracts are public on Etherscan, linked from the stake page, so you can check the same numbers the page shows you. And no real site ever asks for your recovery phrase. If anything asks, close the tab.</li>
+                </ul>
+            </div>
             <p data-i18n="alpha.fix_p3">That is the part we are building. A fair way to reward the people who actually help and actually stay. Your work was seen, judged honestly, and recorded, with no institution in the middle. Pay the builders and they keep building, and it grows. Reward only the money and the money drains it and leaves.</p>
             <p data-i18n="alpha.fix_p4">We are building this for the people who stick around after the hype is gone. The ones who actually know what is broken, and who have a nose for what is real.</p>
             <p data-i18n="alpha.fix_p5">The first step of that fix, bug reporting, is live today, and you can try it. The lane is called Bug &amp; Earn.</p>
@@ -394,7 +427,7 @@
                 <a href="/research/contribution-summary.html">Read the short version &rarr;</a>
             </div>
             <div class="feature-link">
-                <strong>The full paper.</strong> The formal model, the threats, and the references. It passed as an honest working draft, with marked spots where field data still goes.<br>
+                <strong>The full paper.</strong> The formal model, the threats, and the references. A working draft. The spots where field data still goes are marked.<br>
                 <a href="/research/contribution-paper.html">Read the full paper &rarr;</a>
             </div>
             <div class="highlight-box gray">
@@ -417,9 +450,11 @@
         </a>
     </div>
     <div class="footer-sponsor-row">
+        <span>Sponsor</span>
+        <span class="footer-pipe" aria-hidden="true">|</span>
         <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
             <svg width="17" height="17" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
-            <span>Ethervista.app sponsor</span>
+            <span>Ethervista.app</span>
         </a>
     </div>
     <div class="footer-legal-row">

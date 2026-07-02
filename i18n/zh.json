@@ -22,7 +22,6 @@
   "agents.title": "AI代理指南",
   "trouble.title": "故障排除",
   "footer.cto": "CTO",
-  "footer.sponsoredBy": "由 Ethervista 赞助",
   "footer.privacy": "隐私政策",
   "about.h1": "为什么需要它",
   "about.p1": "周期吞噬自己。",
@@ -34,6 +33,5 @@
   "about.act_bot": "打开 Bonzi 机器人",
   "about.act_stake": "Stake",
   "about.label": "关于",
-  "about.guess": "这正是 Bonzi 被打造出来填补的空白。",
-  "footer.sponsoredByPrefix": "赞助方"
+  "about.guess": "这正是 Bonzi 被打造出来填补的空白。"
 }

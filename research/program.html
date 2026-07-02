@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Program - Bonzi</title>
+    <meta name="description" content="Bonzi's research program: accountable experiments that replace extraction-only reward loops with repair loops.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Research Program | Bonzi">
+    <meta property="og:description" content="Accountable experiments that test whether rewards can fund real work, trust, and healthier habits.">
+    <meta property="og:image" content="https://bonzivista.org/bonzi-logo.png">
+    <meta property="og:url" content="https://bonzivista.org/research/program.html">
+    <link rel="canonical" href="https://bonzivista.org/research/program.html">
+    <link rel="icon" href="../bonzi-logo.png" type="image/png">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/bonzi-design.css">
+    <script>window.BONZI_LANGS=["en", "pt", "zh", "fr", "ru", "tr"];</script>
+    <script src="../js/nav-loader.js?v=20260623access1" defer></script>
+    <script src="../js/i18n-loader.js" defer></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple: #7C3AED;
+            --purple-light: #A78BFA;
+            --purple-dark: #5B21B6;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray: #71717A;
+            --gray-light: #F4F4F5;
+            --gold: #D4AF37;
+            --green: #10B981;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background: var(--black);
+            color: #FAFAFA;
+        }
+
+        body.dark-mode .hero p,
+        body.dark-mode .section p,
+        body.dark-mode .section li,
+        body.dark-mode .program-note {
+            color: #D4D4D8;
+        }
+        body.dark-mode .section h2,
+        body.dark-mode .mechanism h3 {
+            color: var(--purple-light);
+        }
+        body.dark-mode .highlight-box,
+        body.dark-mode .mechanism {
+            background: #1F1F23;
+        }
+        body.dark-mode .highlight-box,
+        body.dark-mode .mechanism,
+        body.dark-mode .advantage-box {
+            border-color: #3F3F46;
+        }
+
+        .hero {
+            padding: 150px 40px 56px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 6px 12px;
+            color: var(--purple);
+            background: rgba(124, 58, 237, 0.08);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            font-weight: 850;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--gray);
+            font-size: 20px;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px 88px;
+        }
+
+        .section {
+            margin-bottom: 64px;
+            border-top: 1px solid #E4E4E7;
+            padding-top: 40px;
+        }
+
+        .section h2 {
+            color: var(--purple-dark);
+            font-size: 28px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            color: #3F3F46;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .section ul {
+            margin: 16px 0 0 20px;
+        }
+
+        .section li {
+            color: #3F3F46;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: var(--gray-light);
+            border-left: 4px solid var(--purple);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .advantage-box {
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 4px solid var(--gold);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .advantage-box h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .mechanism {
+            background: var(--gray-light);
+            border: 1px solid #E4E4E7;
+            padding: 22px;
+        }
+
+        .mechanism h3 {
+            color: var(--purple);
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .mechanism p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .stage-badge {
+            display: inline-block;
+            padding: 3px 9px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .stage-badge.stage-live { background: #DCFCE7; color: #15803D; }
+        .stage-badge.stage-pilot { background: #FEF3C7; color: #92400E; }
+        .stage-badge.stage-designed { background: #E0E7FF; color: #3730A3; }
+        .stage-badge.stage-future { background: #F4F4F5; color: #52525B; }
+        body.dark-mode .stage-badge.stage-live { background: rgba(21,128,61,0.25); color: #4ADE80; }
+        body.dark-mode .stage-badge.stage-pilot { background: rgba(146,64,14,0.3); color: #FBBF24; }
+        body.dark-mode .stage-badge.stage-designed { background: rgba(55,48,163,0.3); color: #A5B4FC; }
+        body.dark-mode .stage-badge.stage-future { background: #3F3F46; color: #D4D4D8; }
+
+        .program-note {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .term {
+            border-bottom: 1px dotted var(--purple);
+            cursor: help;
+            position: relative;
+            color: inherit;
+        }
+
+        .term:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: 280px;
+            background: #1A1A2E;
+            color: white;
+            padding: 8px 10px;
+            font-size: 12px;
+            line-height: 1.35;
+            z-index: 10;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            display: inline-block;
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid var(--purple);
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--purple);
+        }
+
+        body.dark-mode .btn-secondary {
+            color: var(--purple-light);
+            border-color: var(--purple-light);
+        }
+
+        @media (max-width: 720px) {
+            .hero { padding: 120px 24px 44px; }
+            .content { padding: 0 24px 72px; }
+            .section { margin-bottom: 52px; }
+        }
+    </style>
+</head>
+<body data-theme-default="light">
+    <nav id="nav-container" class="site-nav"></nav>
+    <div id="mobile-menu-container"></div>
+
+    <main>
+        <section class="hero">
+            <div class="eyebrow" data-i18n="research.program.eyebrow">Research Program</div>
+            <h1 data-i18n="research.program.hero.title">Turning extraction loops into repair loops</h1>
+            <p data-i18n="research.program.hero.subtitle">Bonzi tests a simple idea: reward systems that usually drain people can be redesigned to fund real work, useful trust, and healthier choices.</p>
+        </section>
+
+        <div class="content">
+            <section class="section" id="vision">
+                <h2 data-i18n="research.program.vision.title">Vision</h2>
+                <p data-i18n="research.program.vision.p1">The long-term goal is a community economy where incentives point toward repair instead of extraction. Revenue should come from real activity: trades, housing, marketplace work, verified help, and accountable services.</p>
+                <p data-i18n="research.program.vision.p2">Risk stays on the page: the program names what exists, what is still a design, and what evidence would prove us wrong.</p>
+                <div class="highlight-box">
+                    <h3 data-i18n="research.program.vision.box.title">The test</h3>
+                    <p data-i18n="research.program.vision.box.body">Can a token system reward useful behavior without becoming a loop that only pays old participants with new participants' losses?</p>
+                </div>
+            </section>
+
+            <section class="section" id="mission">
+                <h2 data-i18n="research.program.mission.title">Mission</h2>
+                <p data-i18n="research.program.mission.p1">Run small, falsifiable experiments. Publish the stage. Keep the data contestable. Stop when a safety boundary breaks.</p>
+                <p data-i18n="research.program.mission.p2">The research program turns each product into a stress test: trust scoring in Bonzi, real-asset accountability in IMOBX, data-for-credit in Unidos, and habit-support rewards in Touch Grass & Earn.</p>
+            </section>
+
+            <section class="section" id="thesis">
+                <h2 data-i18n="research.program.thesis.title">The meta-thesis</h2>
+                <p data-i18n="research.program.thesis.p1">Many online systems use rewards to keep people clicking, betting, or chasing losses. The same structure can be pointed somewhere else: toward proof of help, proof of work, proof of repayment, or proof of a better habit.</p>
+                <p data-i18n="research.program.thesis.p2">Touch Grass & Earn tests this at the habit layer. It is inspired by <span class="term" data-tip="Rewarding a verified behavior instead of a promise">contingency management</span>: verify a target behavior, credit points, and let the streak multiplier rise. It is not medical treatment, not healthcare advice, and not a claim to treat addiction.</p>
+                <div class="advantage-box">
+                    <h3 data-i18n="research.program.thesis.box.title">What would count as progress?</h3>
+                    <p data-i18n="research.program.thesis.box.body">Progress is not hype or price movement. Progress means more verified useful actions, fewer gaming patterns, clear user consent, and a reward budget that does not depend on participant losses.</p>
+                </div>
+            </section>
+
+            <section class="section" id="projects">
+                <h2 data-i18n="research.program.projects.title">Bonzi/SIAH application lanes</h2>
+                <p data-i18n="research.program.projects.intro">Bonzi/SIAH is a backend protocol for trust and governance. Each lane below is a staged application of that protocol, not a separate product line.</p>
+                <div class="mechanism-grid">
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.projects.bonzi.title">Bonzi: trust from behavior <span class="stage-badge stage-live">Live</span></h3>
+                        <p data-i18n="research.program.projects.bonzi.body">Tests whether wallet behavior, support history, and contribution records can identify cooperation better than hype or wallet size.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.projects.imobx.title">IMOBX: real assets <span class="stage-badge stage-pilot">Pilot</span></h3>
+                        <p data-i18n="research.program.projects.imobx.body">Tests whether the same trust and governance layer can support rent-to-own housing, audited costs, and local compliance.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.projects.unidos.title">Unidos: data for credit <span class="stage-badge stage-designed">Designed</span></h3>
+                        <p data-i18n="research.program.projects.unidos.body">Tests whether farmers with thin records can use verified marketplace activity to open input credit and qualify for better pricing.</p>
+                        <p class="program-note" data-i18n="research.program.projects.unidos.note">The Nakivale farmer training program is real and running. The Bonzi/SIAH bot marketplace layer on top of it is a design, not deployed.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.projects.b2b.title">B2B: business coordination <span class="stage-badge stage-pilot">Pilot</span></h3>
+                        <p data-i18n="research.program.projects.b2b.body">Tests whether the trust and governance layer can carry coordination, referrals, client and supplier tracking, and trust-backed business workflows. Staged as a Phase 3 pilot, not current go-to-market.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.projects.touch.title">Touch Grass & Earn: habit rewards <span class="stage-badge stage-pilot">Phase 3 research/pilot</span></h3>
+                        <p data-i18n="research.program.projects.touch.body">Tests whether points-first rewards for verified healthy-food purchases can support a better habit without promising treatment or automatic ETH.</p>
+                        <p class="program-note" data-i18n="research.program.projects.touch.note">Blocked until Raid & Earn is working. This lane does not open before that dependency clears.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section" id="openbox">
+                <h2 data-i18n="research.program.openbox.title">OpenBox is the research governor</h2>
+                <p data-i18n="research.program.openbox.p1">OpenBox is how we test ourselves before asking anyone else to trust us. It runs adversarial reviews, records failure modes, and keeps releases behind evidence gates.</p>
+                <p data-i18n="research.program.openbox.p2">For Touch Grass & Earn, that means no cash-out bridge without a separate review. For Bonzi, it means trust scores must be contestable. For IMOBX and Unidos, it means claims about housing or credit stay tied to documents, costs, and field evidence.</p>
+                <ul>
+                    <li data-i18n="research.program.openbox.li1">Accountable owner: a named person is responsible for each experiment.</li>
+                    <li data-i18n="research.program.openbox.li2">Evidence path: every important decision leaves a record.</li>
+                    <li data-i18n="research.program.openbox.li3">Contest path: users and reviewers can challenge decisions.</li>
+                    <li data-i18n="research.program.openbox.li4">Bounded stop: the system halts when a safety boundary breaks.</li>
+                </ul>
+            </section>
+
+            <section class="section" id="principles">
+                <h2 data-i18n="research.program.principles.title">Research rules</h2>
+                <div class="mechanism-grid">
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.principles.real.title">Real activity first</h3>
+                        <p data-i18n="research.program.principles.real.body">Revenue must trace to useful activity, not a promise that later buyers will save earlier users.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.principles.stage.title">Stage labels stay visible</h3>
+                        <p data-i18n="research.program.principles.stage.body">Live, pilot, designed, and future work are different. The page should make that difference obvious.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.principles.nohealth.title">No medical claims</h3>
+                        <p data-i18n="research.program.principles.nohealth.body">Habit-support experiments can be useful without claiming to diagnose, treat, or prevent addiction.</p>
+                    </article>
+                    <article class="mechanism">
+                        <h3 data-i18n="research.program.principles.stop.title">Stop rules beat momentum</h3>
+                        <p data-i18n="research.program.principles.stop.body">If incentives cause harm, privacy fails, or funding is not real, the right answer is to halt.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section" id="next">
+                <h2 data-i18n="research.program.next.title">How to read the program</h2>
+                <p data-i18n="research.program.next.p1">Read the research hub as a map of experiments, not a list of promises. Each page should show what is live, what is being tested, and what would falsify the claim.</p>
+                <p class="program-note" data-i18n="research.program.next.note">This page is English-only for this round. Other language files can follow after the research copy is stable.</p>
+                <div class="cta-row">
+                    <a class="btn-primary" href="/research/" data-i18n="research.program.cta.hub">Back to research hub</a>
+                    <a class="btn-secondary" href="/manifesto.html" data-i18n="research.program.cta.manifesto">Read the manifesto</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer bonzi-branded-footer" aria-label="Site footer">
+        <div class="footer-cto-row">
+            <span data-i18n="footer.cto">CTO</span>
+            <span class="footer-pipe" aria-hidden="true">|</span>
+            <a href="/">
+                <img src="/bonzi-logo.png" alt="" width="24" height="24">
+                <span>Bonzivista.org</span>
+            </a>
+        </div>
+        <div class="footer-sponsor-row">
+            <span>Sponsor</span>
+            <span class="footer-pipe" aria-hidden="true">|</span>
+            <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+                <svg width="17" height="17" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                <span>Ethervista.app</span>
+            </a>
+        </div>
+        <div class="footer-legal-row">
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a><span aria-hidden="true">, </span><a href="/privacy.html" data-i18n="footer.privacy">privacy policy</a>
+        </div>
+    </footer>
+</body>
+</html>

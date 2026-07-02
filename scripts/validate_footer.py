@@ -28,13 +28,16 @@ FORBIDDEN_PATTERNS = [
 ]
 
 # Required elements in footer
+# Canonical structure: three rows. CTO row (CTO | Bonzivista.org),
+# sponsor row mirroring it (Sponsor | Ethervista.app), legal row (GITHUB, Privacy).
 REQUIRED_FOOTER_ELEMENTS = [
     r'bonzi-branded-footer',
     r'footer-cto-row',
     r'bonzi-logo\.png',
     r'Bonzivista\.org',
-    r'footer-sponsor-row',
-    r'Ethervista\.app sponsor',
+    # Sponsor row mirrors the CTO row: label, pipe, then the Ethervista link
+    r'footer-sponsor-row[^>]*>\s*<span[^>]*>Sponsor</span>\s*<span class="footer-pipe"',
+    r'Ethervista\.app',
     r'footer-legal-row',
     r'GITHUB',
     r'Privacy',
@@ -156,7 +159,7 @@ def main():
     html_files = get_html_files(base_path)
 
     print(f"Validating {len(html_files)} HTML files for footer compliance...")
-    print(f"Reference: .claude/OG_FOOTER_TEMPLATE.html\n")
+    print(f"Reference: page_4/index.html footer + css/bonzi-footer.css\n")
 
     total_violations = 0
     files_with_issues = []
@@ -177,7 +180,7 @@ def main():
             print()
 
         print(f"Total: {total_violations} violations in {len(files_with_issues)} files")
-        print("\nFix these issues or update .claude/OG_FOOTER_TEMPLATE.html if pattern changed.")
+        print("\nFix these issues or update REQUIRED_FOOTER_ELEMENTS if the canonical pattern changed.")
         return 1
     else:
         print("All files pass footer validation.")

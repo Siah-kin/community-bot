@@ -248,7 +248,6 @@
   "about.act_stake": "Stake",
   "about.label": "Sobre",
   "about.guess": "É essa lacuna que o Bonzi foi feito para preencher.",
-  "footer.sponsoredByPrefix": "patrocinado por",
   "baas.cta.source": "Ver código-fonte",
   "baas.cta.start": "Começar grátis",
   "baas.cta.subscribe": "Assinar",
@@ -533,5 +532,18 @@
   "what.footer_cto": "CTO",
   "what.footer_sponsor": "Patrocinador Ethervista.app",
   "what.footer_github": "GITHUB",
-  "what.footer_privacy": "Privacidade"
+  "what.footer_privacy": "Privacidade",
+  "alpha.stake_cta": "Novo no token Bonzi? <a class=\"stake-link\" href=\"/stake.html\">Comece pela página de stake</a>. Lá você pode comprar BONZI, fazer stake e ler no FAQ como funcionam as taxas e o pool travado.",
+  "alpha.wallet_h": "Antes de conectar uma carteira",
+  "alpha.wallet_p1": "Conectar mostra ao site o seu endereço público. É só isso que ele recebe. Ele não consegue mover seus fundos.",
+  "alpha.wallet_p2": "Dinheiro só se move quando você aprova uma transação dentro do seu próprio aplicativo de carteira. Leia essa janela antes de aprovar; ela lista exatamente com o que você está concordando.",
+  "alpha.wallet_p3": "Confira se a barra de endereço diz bonzivista.org. Sites imitadores são o risco real, não a conexão em si.",
+  "alpha.wallet_p4": "Os contratos de staking são públicos no Etherscan, com link na página de stake, então você pode conferir os mesmos números que a página mostra. E nenhum site de verdade pede sua frase de recuperação. Se algo pedir, feche a aba.",
+  "what.ostrom_deeper_research": "Veja a pesquisa por trás disso",
+  "what.ostrom_deeper_dao": "Veja como a DAO aplica isso",
+  "what.depth_gov_cta_research": "Pesquisa",
+  "what.depth_gov_cta_dao": "DAO",
+  "what.depth_econ_cta_fees": "Modelo de taxas",
+  "what.depth_econ_cta_hardstake": "Recompensas hardstake",
+  "what.depth_econ_cta_stake": "Stake"
 }

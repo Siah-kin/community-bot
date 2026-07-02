@@ -146,10 +146,49 @@
             background: #D4AF37;
             color: #0A0A0A;
         }
+        .tier-badge.b2b-badge {
+            background: #2563EB;
+            color: white;
+        }
+        .tier-badge.touch-badge {
+            background: #15803D;
+            color: white;
+        }
         .tier-title {
             font-size: 20px;
             font-weight: 700;
         }
+
+        .stage-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 0;
+            margin-left: 10px;
+        }
+        .stage-badge.stage-live { background: #DCFCE7; color: #15803D; }
+        .stage-badge.stage-pilot { background: #FEF3C7; color: #92400E; }
+        .stage-badge.stage-designed { background: #E0E7FF; color: #3730A3; }
+        .stage-badge.stage-future { background: #F4F4F5; color: #52525B; }
+        body.dark-mode .stage-badge.stage-live { background: rgba(21,128,61,0.25); color: #4ADE80; }
+        body.dark-mode .stage-badge.stage-pilot { background: rgba(146,64,14,0.3); color: #FBBF24; }
+        body.dark-mode .stage-badge.stage-designed { background: rgba(55,48,163,0.3); color: #A5B4FC; }
+        body.dark-mode .stage-badge.stage-future { background: #27272A; color: #A1A1AA; }
+
+        .compact-card {
+            background: var(--gray-light);
+            border-left: 4px solid #71717A;
+            padding: 20px 22px;
+            margin-bottom: 20px;
+        }
+        body.dark-mode .compact-card { background: #1F1F23; }
+        .compact-card.b2b-card { border-left-color: #2563EB; }
+        .compact-card.touch-card { border-left-color: #15803D; }
+        .compact-card h3 { font-size: 17px; margin-bottom: 8px; display: flex; align-items: center; flex-wrap: wrap; }
+        .compact-card p { font-size: 14px; color: var(--gray); margin-bottom: 0; }
 
         .flow-diagram {
             background: var(--black);
@@ -508,7 +547,7 @@
 
     <section class="hero">
         <h1>Research</h1>
-        <p>Three projects testing whether wallet behavior can replace identity checks. Same trust engine, three real-world stress tests.</p>
+        <p>One protocol, several stress tests. Bonzi/SIAH is the trust and governance backend; each lane below points it at a different real-world problem.</p>
     </section>
 
     <div class="content">
@@ -521,7 +560,10 @@
                 <a href="#bonzi" style="color: #7C3AED; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Bonzi - Trust Scores</a>
                 <a href="#imobx" style="color: #10B981; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">IMOBX - Rent-to-Own Housing</a>
                 <a href="#unidos" style="color: #D4AF37; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Unidos - Farmer Co-op</a>
+                <a href="#b2b" style="color: #2563EB; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">B2B - Business Coordination</a>
+                <a href="#touch-grass" style="color: #15803D; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Touch Grass &amp; Earn - Habit Rewards</a>
                 <a href="#glossary-public" style="color: #71717A; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px;">Glossary</a>
+                <a href="program.html" style="color: #7C3AED; text-decoration: none; padding: 6px 0; border-bottom: 1px solid #F4F4F5; font-size: 15px; font-weight: 600;">Research Program (vision + mission)</a>
             </div>
         </div>
 
@@ -536,17 +578,17 @@
             <h2>What We're Researching</h2>
             <p><strong>Core question:</strong> Can you build a token economy where revenue comes from real activity - trading fees, rental income, marketplace commissions - instead of needing a constant flow of new buyers to pay old holders?</p>
 
-            <p><strong>The experiment:</strong> We test the same trust scoring system across three very different environments: memecoins, real estate, and a farmer marketplace. If it works in all three, the approach is solid. If only one, we learn the limits.</p>
+            <p><strong>The experiment:</strong> One protocol, several stress tests. Bonzi/SIAH is a single trust and governance backend, and each lane below points it at a different problem: memecoin trading, real estate, a farmer marketplace, business coordination, and habit-support rewards. If the same engine holds up across lanes with very different failure modes, the approach is solid. Where it doesn't, we learn the limits and say so.</p>
 
-            <p><strong>Why three?</strong> One project could be luck. Three projects using the same trust engine = pattern. We're running controlled experiments to see if wallet behavior can replace identity checks.</p>
+            <p><strong>Why several lanes, not one?</strong> One project could be luck. The same trust engine holding up across unrelated environments is a pattern worth testing for. Some lanes are live experiments, some are pilots, some are still design work; the <a href="program.html" style="color: #7C3AED; text-decoration: none; font-weight: 600;">Research Program page</a> lays out the full lane map and stage rules.</p>
 
-            <p>Same trust engine, three stress tests. If it works for people trading memecoins, farmers selling mushrooms in a refugee camp, and property investors funding social housing - it works. That is the thesis. Below is how we plan to measure it.</p>
+            <p>If it works for people trading memecoins, farmers selling mushrooms in a refugee camp, property investors funding social housing, small businesses coordinating with suppliers, and people building a healthier habit, that is the case for the approach. Below is how we plan to measure it, lane by lane.</p>
         </div>
 
         <!-- Shared Infrastructure -->
         <div class="section" id="infrastructure">
             <h2>Shared Oracle Infrastructure</h2>
-            <p>All three projects share the same trust backend: <strong>wallet trust scores</strong> - a single number showing how cooperatively a wallet has behaved over time - plus reputation signals and fake-account detection. The code exists; the controlled experiment to validate it across all three environments hasn't run yet. Deep research lives on project-specific pages.</p>
+            <p>Every lane shares the same trust backend: <strong>wallet trust scores</strong> - a single number showing how cooperatively a wallet has behaved over time - plus reputation signals and fake-account detection. The code exists; the controlled experiment to validate it across every lane hasn't run yet. Deep research lives on project-specific pages.</p>
 
             <div class="mechanism-grid">
                 <div class="mechanism">
@@ -569,6 +611,7 @@
             <div class="tier-header">
                 <div class="tier-badge bonzi-badge">BONZI</div>
                 <div class="tier-title">Trust Scores for Wallet Behavior</div>
+                <span class="stage-badge stage-live">Live</span>
             </div>
 
             <p>Bonzi is a memecoin built on <strong><span class="term" data-tip="Flat-fee trading platform">Ethervista</span></strong> with flat ETH fees (not percentages). It's honest about the risk - that's why we built <strong>trust scoring</strong> as the safety layer. The pitch: "Yes it's risky, but that's why we built THIS."</p>
@@ -621,6 +664,7 @@ Long-term holders
             <div class="tier-header">
                 <div class="tier-badge imobx-badge">IMOBX</div>
                 <div class="tier-title">Rent-to-Own Housing on Blockchain</div>
+                <span class="stage-badge stage-pilot">Pilot</span>
             </div>
 
             <p>IMOBX puts housing on the blockchain. Tokenized housing projects + rent-to-own financing, designed as a reusable template that adapts to different countries' laws. Not just "digital real estate" - a framework other communities can copy and use.</p>
@@ -677,6 +721,7 @@ More DAO revenue
             <div class="tier-header">
                 <div class="tier-badge unidos-badge">UNIDOS</div>
                 <div class="tier-title">Farmer Co-op - Data for Credit</div>
+                <span class="stage-badge stage-designed">Designed</span>
             </div>
 
             <p>A farmer in Nakivale refugee settlement harvests 20 kg of mushrooms. A wholesaler drives in from Mbarara, offers 2,000 UGX/kg. She accepts - she has no way to check the real price, and the bus to Mbarara costs $20, ten days of wages. The wholesaler resells at 3x in town. This happens to 130,000 people, every week, and has for 70 years.</p>
@@ -732,6 +777,30 @@ More DAO revenue
             </a>
         </section>
 
+        <!-- Additional lanes: B2B and Touch Grass & Earn -->
+        <div class="section" style="margin-top: 48px;">
+            <h2>More lanes</h2>
+            <p>Two more lanes point the same trust engine at different problems. Both are staged, not live GTM.</p>
+
+            <div class="compact-card b2b-card" id="b2b">
+                <h3>
+                    <span class="tier-badge b2b-badge">B2B</span>
+                    <span style="margin-left: 10px;">Business Coordination</span>
+                    <span class="stage-badge stage-pilot">Phase 3 pilot</span>
+                </h3>
+                <p>Tests whether the same trust and governance layer can carry business-to-business work: coordination between teams, referral tracking, client and supplier records, and workflows that need a trust-backed history instead of a spreadsheet. Staged for a Phase 3 pilot, not current go-to-market.</p>
+            </div>
+
+            <div class="compact-card touch-card" id="touch-grass">
+                <h3>
+                    <span class="tier-badge touch-badge">TOUCH GRASS</span>
+                    <span style="margin-left: 10px;">Habit Rewards</span>
+                    <span class="stage-badge stage-pilot">Phase 3 research/pilot</span>
+                </h3>
+                <p>Tests whether points-first rewards for verified healthy-food purchases can support a better habit, without promising treatment or automatic ETH payout. Blocked until Raid & Earn is working: this lane does not open until that dependency clears. Full detail on the <a href="program.html" style="color: #15803D; text-decoration: none; font-weight: 600;">Research Program page</a>.</p>
+            </div>
+        </div>
+
         <!-- Public Glossary -->
         <div class="section" id="glossary-public" style="margin-top: 64px; border-top: 2px solid rgba(124, 58, 237, 0.2); padding-top: 40px;">
             <h2>Glossary</h2>
@@ -755,14 +824,14 @@ More DAO revenue
 
         <!-- Public Conclusion: How to Read This Research -->
         <div class="section" style="margin-top: 48px; border-top: 2px solid rgba(124, 58, 237, 0.2); padding-top: 40px;">
-            <h2>How These Three Models Connect</h2>
-            <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">Each model above tests the same hypothesis in a different trust-deficit environment. Here is what to look for when evaluating whether this infrastructure holds up.</p>
+            <h2>How These Lanes Connect</h2>
+            <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 20px;">One protocol, several stress tests. Each lane above points the same trust engine at a different trust-deficit environment. Here is what to look for when evaluating whether this infrastructure holds up.</p>
 
             <div style="background: #F9FAFB; border-left: 4px solid #7C3AED; padding: 20px 24px; margin-bottom: 24px;">
                 <p style="font-size: 13px; font-weight: 700; color: #7C3AED; margin-bottom: 12px; letter-spacing: 1px;">WHAT THE DATA SUPPORTS</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>Bonzi</strong> proves that wallet behavior can be scored reliably across 32 signals, and that flat fees remove the incentive to inflate trade volume. If trust scoring works on memecoin traders - people who actively try to game every system - it works on anyone.</p>
-                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>IMOBX</strong> tests whether the same trust engine can back physical assets. If a wallet's trust score is high enough to unlock marketing rewards in Bonzi, the question becomes: is it high enough to unlock access to property investment? Same engine, higher stakes. The SINAPI integration adds government-auditable cost data that no other crypto tool provides.</p>
-                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>Unidos</strong> tests the hardest case - people with no wallets, no credit history, and $2/day income. If 5 bot interactions can start a credit record that local banks accept, that proves behavioral data can replace traditional identity documents. The path from bot interactions to international loans is the bridge from zero infrastructure to formal finance.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>IMOBX</strong> tests whether the same trust engine can back physical assets. If a wallet's trust score is high enough to enable marketing rewards in Bonzi, the question becomes: is it high enough to qualify for property investment access? Same engine, higher stakes. The SINAPI integration adds government-auditable cost data that no other crypto tool provides.</p>
+                <p style="font-size: 14px; color: #3F3F46; margin-bottom: 12px;"><strong>Unidos</strong> tests the hardest case - people with no wallets, no credit history, and $2/day income. If 5 bot interactions can start a credit record that local banks accept, that would show behavioral data can replace traditional identity documents. The path from bot interactions to international loans is the bridge from zero infrastructure to formal finance, and it is still a design, not a running system.</p>
             </div>
 
             <div style="background: #F9FAFB; border-left: 4px solid #D4AF37; padding: 20px 24px; margin-bottom: 24px;">
@@ -770,7 +839,7 @@ More DAO revenue
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">1. <strong>Check the scoring</strong> - CPI uses 253 points across 10 dimensions. Ask: are these signals measurable? Can they be gamed? The answer is in the correlation requirement - gaming one signal while ignoring others gets flagged.</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">2. <strong>Check the economics</strong> - Flat fees ($10-15 per trade) not percentages. Revenue scales with number of users, not size of trades. Ask: does this reward more participants or bigger whales?</p>
                 <p style="font-size: 14px; color: #3F3F46; margin-bottom: 8px;">3. <strong>Check the governance</strong> - The governance score (78 points) measures whether the system is run fairly. If trust scores measure users, the governance score audits the system itself. Ask: who watches the watchman?</p>
-                <p style="font-size: 14px; color: #3F3F46;">4. <strong>Check the stage</strong> - Bonzi is live. IMOBX is pre-revenue (pilot Q3 2026). Unidos has trained 501 farmers but the bot marketplace is not deployed. Honest staging means you know exactly what exists today versus what is planned.</p>
+                <p style="font-size: 14px; color: #3F3F46;">4. <strong>Check the stage</strong> - Bonzi is live: trading and trust scoring run today. IMOBX is pre-revenue (pilot Q3 2026). Unidos has trained 501 farmers but the bot marketplace is not deployed. B2B and Touch Grass &amp; Earn are Phase 3 pilot/research, not current GTM. Honest staging means you know exactly what exists today versus what is planned.</p>
             </div>
 
             <p style="font-size: 15px; line-height: 1.7; color: #3F3F46; margin-bottom: 16px;"><strong>The common thread:</strong> every project feeds two scores. Trust scores measure whether participants are real and cooperative. Governance scores measure whether the system running those checks is fair and accountable. Together, they test this question: can ordinary people finance themselves without banks, using behavior data instead of gatekeepers?</p>
@@ -1327,31 +1396,23 @@ More DAO revenue
     })();
     </script>
 
-    <footer style="background: #0a0a0a; padding: 32px 24px; text-align: center; font-size: 13px;">
-        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
-            <span style="color: #71717A;">sponsored by
-                <a href="https://etherfun.app" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
-                    Ethervista
-                </a>
-            </span>
-            <span style="color: #71717A;">·</span>
-            <span style="color: #71717A;">by co-founder
-                <a href="https://defiants.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    <img src="../defiants-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
-                    Defiants
-                </a>
-            </span>
-            <span style="color: #71717A;">·</span>
-            <span style="color: #71717A;">profits fund
-                <a href="https://unidosprojects.org" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-                    <img src="../unidos-logo.png" alt="" width="16" height="16" onerror="this.style.display='none'">
-                    Unidos Projects
-                </a>
-            </span>
+    <footer class="site-footer bonzi-branded-footer" aria-label="Site footer">
+        <div class="footer-cto-row">
+            <span>CTO</span>
+            <span class="footer-pipe" aria-hidden="true">|</span>
+            <a href="/">
+                <img src="/bonzi-logo.png" alt="" width="24" height="24">
+                <span>Bonzivista.org</span>
+            </a>
         </div>
-        <div style="font-size: 12px; color: #71717A;">
-            open source · mit license · <a href="../privacy.html" style="color: #71717A; text-decoration: none;">privacy policy</a>
+        <div class="footer-sponsor-row">
+            <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+                <svg width="17" height="17" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                <span>Ethervista.app sponsor</span>
+            </a>
+        </div>
+        <div class="footer-legal-row">
+            <a href="https://github.com/Siah-kin/community-bot" target="_blank" rel="noopener noreferrer">GITHUB</a><span aria-hidden="true">, </span><a href="/privacy.html">Privacy</a>
         </div>
     </footer>
 

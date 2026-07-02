@@ -327,7 +327,8 @@
             box-shadow: inset 0 1px 0 var(--layer-bevel-light);
         }
 
-        .slot-footer-zone .slot-stake-footer .footer-cto-row {
+        .slot-footer-zone .slot-stake-footer .footer-cto-row,
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -343,7 +344,8 @@
             color: #52525b;
         }
 
-        .slot-footer-zone .slot-stake-footer .footer-cto-row a {
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a,
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row a {
             color: #ffffff;
             text-decoration: none;
             font-weight: 700;
@@ -353,28 +355,9 @@
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
-        .slot-footer-zone .slot-stake-footer .footer-cto-row a:hover {
+        .slot-footer-zone .slot-stake-footer .footer-cto-row a:hover,
+        .slot-footer-zone .slot-stake-footer .footer-sponsor-row a:hover {
             text-decoration: underline;
-        }
-
-        .slot-footer-zone .slot-stake-footer .footer-sponsor-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 12px;
-            color: var(--footer-muted);
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-        }
-
-        .slot-footer-zone .slot-stake-footer .footer-sponsor-row a {
-            color: #ffffff;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
         }
 
         .slot-footer-zone .slot-stake-footer .footer-legal-row {
@@ -1410,12 +1393,12 @@
                     </a>
                 </div>
                 <div class="footer-sponsor-row">
-                    <span><span id="footer-sponsor-prefix">sponsored by
-                        </span><a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
-                            <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
-                            Ethervista
-                        </a>
-                    </span>
+                    <span id="footer-sponsor-prefix">Sponsor</span>
+                    <span class="footer-pipe">|</span>
+                    <a href="https://www.ethervista.app/" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111" rx="8"/><polygon points="50,12 50,50 22,50" fill="#E25555"/><polygon points="50,12 78,50 50,50" fill="#55B855"/><polygon points="22,50 50,88 50,50" fill="#4477CC"/><polygon points="78,50 50,88 50,50" fill="#CCBB44"/></svg>
+                        Ethervista.app
+                    </a>
                 </div>
                 <div class="footer-legal-row">
                     <a href="https://bonzivista.org/dev.html" id="footer-mit-repo"><span id="footer-mit-lic">Developers</span></a><span aria-hidden="true">, </span><a href="legal/privacy.html" id="footer-privacy">privacy policy</a>
@@ -1565,7 +1548,7 @@
 	                docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
-                footerSponsorPrefix: 'sponsored by ',
+                footerSponsorPrefix: 'Sponsor',
                 siteFooterAria: 'Site footer',
                 emailUpdatesAria: 'Email updates',
                 funnelCloseAria: 'Close',
@@ -1651,7 +1634,7 @@
 	                docTitle: 'Bonzi Vista: Slot',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
-                footerSponsorPrefix: 'Patrocinado por ',
+                footerSponsorPrefix: 'Patrocinador',
                 siteFooterAria: 'Rodap\u00E9 do site',
                 emailUpdatesAria: 'Atualiza\u00E7\u00F5es por e-mail',
                 funnelCloseAria: 'Fechar',
@@ -1737,7 +1720,7 @@
 	                docTitle: 'Bonzi Vista: \u8001\u864e\u673a',
                 winampBrandText: 'Winamp',
                 footerCtoLabel: 'CTO',
-                footerSponsorPrefix: '\u8d5e\u52a9 ',
+                footerSponsorPrefix: '\u8d5e\u52a9\u5546',
                 siteFooterAria: '\u7f51\u7ad9\u9875\u811a',
                 emailUpdatesAria: '\u90ae\u4ef6\u66f4\u65b0',
                 funnelCloseAria: '\u5173\u95ed',

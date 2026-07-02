@@ -22,3 +22,10 @@ node_modules/
 _private_src/
 scripts/.staticrypt_key.local
 .staticrypt.json
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

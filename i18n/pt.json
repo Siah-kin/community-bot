@@ -544,5 +544,7 @@
   "what.depth_gov_cta_dao": "DAO",
   "what.depth_econ_cta_fees": "Modelo de taxas",
   "what.depth_econ_cta_hardstake": "Recompensas hardstake",
-  "what.depth_econ_cta_stake": "Stake"
+  "what.depth_econ_cta_stake": "Stake",
+  "research.hub.h1": "Pesquisa",
+  "research.hub.lead": "Um protocolo, varios testes de estresse. Bonzi/SIAH e o backend de confianca e governanca; cada faixa abaixo o aponta para um problema diferente do mundo real."
 }

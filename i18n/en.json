@@ -322,5 +322,7 @@
   "what.depth_gov_cta_dao": "DAO",
   "what.depth_econ_cta_fees": "Fee model",
   "what.depth_econ_cta_hardstake": "Hardstake rewards",
-  "what.depth_econ_cta_stake": "Stake"
+  "what.depth_econ_cta_stake": "Stake",
+  "research.hub.h1": "Research",
+  "research.hub.lead": "One protocol, several stress tests. Bonzi/SIAH is the trust and governance backend; each lane below points it at a different real-world problem."
 }

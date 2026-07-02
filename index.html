@@ -1464,7 +1464,7 @@
                     </a>
                 </div>
                 <div class="footer-legal-row">
-                    <a href="dev.html" id="footer-mit-repo"><span id="footer-mit-lic">GITHUB</span></a><span aria-hidden="true">, </span><a href="legal/privacy.html" id="footer-privacy">Privacy</a>
+                    <a href="https://github.com/Siah-kin/community-bot" id="footer-mit-repo"><span id="footer-mit-lic">GITHUB</span></a><span aria-hidden="true">, </span><a href="legal/privacy.html" id="footer-privacy">Privacy</a>
                 </div>
             </footer>
 
@@ -2370,6 +2370,7 @@
                         setApiWarmUi(false);
                         clearInterval(apiWarmPoll);
                         apiWarmPoll = null;
+                        if (!skillChallengeId && !skillChallengeLoading) loadSkillChallenge();
                     }
                 }).catch(function() {});
             }, 12000);
@@ -2490,8 +2491,12 @@
                 if (requestToken !== skillChallengeRequestToken) return false;
                 skillChallengeLoading = null;
                 skillChallengeId = '';
-                setSkillPrompt(getStr().readPromptSoon);
-                errEl.textContent = getStr().passageUnavailable;
+                if (machine && machine.classList.contains('api-warming')) {
+                    setSkillPrompt(getStr().loadingPassage);
+                } else {
+                    setSkillPrompt(getStr().readPromptSoon);
+                    errEl.textContent = getStr().passageUnavailable;
+                }
                 return false;
             });
             return skillChallengeLoading;
